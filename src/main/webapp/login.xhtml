@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form prependId="false">
+
+    <p:panelGrid columns="1">
+      <h2>#{msg.login_titulo}</h2>
+
+      <p:outputLabel value="#{msg.login_mensaje_error}" rendered="${!empty param['error']}" />
+
+      <p:inputText id="username" placeholder="#{msg.login_placeholder_usuario}" />
+      <p:password id="password" placeholder="#{msg.login_placeholder_contrasena}" />
+
+      <p:commandButton value="#{msg.login_boton_iniciar}" ajax="false" />
+    </p:panelGrid>
+
+  </h:form>
+</h:body>
+</html>
