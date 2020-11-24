@@ -15,7 +15,8 @@ import lombok.Data;
 @SqlResultSetMappings({
 		@SqlResultSetMapping(name = "Permiso", classes = { @ConstructorResult(targetClass = Permiso.class, columns = {
 				@ColumnResult(name = "ID_PERMISO", type = Integer.class),
-				@ColumnResult(name = "TIPO", type = String.class), @ColumnResult(name = "CLAVE", type = String.class),
+				@ColumnResult(name = "TIPO", type = String.class),
+				@ColumnResult(name = "CLAVE", type = String.class),
 				@ColumnResult(name = "DESCRIPCION", type = String.class),
 				@ColumnResult(name = "STATUS", type = String.class) }) })
 })

@@ -16,11 +16,11 @@ class AforedigitalgtApplicationTests {
 	@Autowired
 	private PermisoService permisoService;
 
-	@Test
-	public void getUserInfoTest() throws AforeException {
-		PermisoResult rest = permisoService.getPermisosUsuario("1904922");
-		System.out.println(rest.getDatos().size());
-		assertThat(rest.getDatos()).isNotEmpty();
-	}
+//	@Test
+//	public void getUserInfoTest() throws AforeException {
+//		PermisoResult rest = permisoService.getPermisosUsuario("1904922");
+//		System.out.println(rest.getDatos().size());
+//		assertThat(rest.getDatos()).isNotEmpty();
+//	}
 
 }

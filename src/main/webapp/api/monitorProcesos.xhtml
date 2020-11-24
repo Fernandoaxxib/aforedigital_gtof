@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:commandButton action="#{monitorProcesos.consultarMonitor}"
+			type="submit" value="#{msg.monitor_boton_consultar}" ajax="false" />
+
+		<h:outputText value="#{monitorProcesos.count}" />
+	</h:form>
+
+	<p:dataTable widgetVar="monitorTable" var="mon" value="#{monitorProcesos.monitor}" rows="10"
+		paginator="true" rowsPerPageTemplate="5,10,15">
+			
+		<p:column headerText="#{msg.monitor_monitor_columna_id}">
+			<h:outputText value="#{mon.sesionId}" />
+		</p:column>
+
+		<p:column headerText="#{msg.monitor_monitor_columna_proceso}">
+			<h:outputText value="#{mon.abrevProceso}" />
+		</p:column>
+
+		<p:column headerText="#{msg.monitor_monitor_columna_estado}">
+			<h:outputText value="#{mon.estadoProceso}" />
+		</p:column>
+
+		<p:column headerText="#{msg.monitor_monitor_columna_fechaInicio}">
+			<h:outputText value="#{mon.fechahoraInicio}" />
+		</p:column>
+	</p:dataTable>
+
+</h:body>
+</html>

@@ -34,3 +34,6 @@ hs_err_pid*
 .settings/org.eclipse.wst.jsdt.ui.superType.name
 .settings/org.eclipse.wst.validation.prefs
 .classpath
+.factorypath
+.settings/org.eclipse.jdt.apt.core.prefs
+.settings/org.springframework.ide.eclipse.prefs

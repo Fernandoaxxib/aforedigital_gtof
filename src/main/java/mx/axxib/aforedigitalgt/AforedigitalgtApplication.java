@@ -32,7 +32,7 @@ public class AforedigitalgtApplication {
 	@Bean
 	public ServletContextInitializer servletContextInitializer() {
 		return servletContext -> {
-			servletContext.setInitParameter("primefaces.THEME", "humanity");
+			servletContext.setInitParameter("primefaces.THEME", "glass-x");
 		};
 	}
 

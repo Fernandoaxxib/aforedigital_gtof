@@ -13,7 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/javax.faces.resource/**", "/login*").permitAll().anyRequest()
+		http.authorizeRequests().antMatchers("/javax.faces.resource/**", "/login*", "api/*").permitAll().anyRequest()
 				.authenticated().and().formLogin().loginPage("/login.jsf").defaultSuccessUrl("/index.jsf")
 				.failureUrl("/login.jsf?error=true").and().logout().logoutSuccessUrl("/login.jsf").and().csrf()
 				.disable();
@@ -22,10 +22,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		BCryptPasswordEncoder encoder = passwordEncoder();
-		String result = encoder.encode("1234");
+		String result = encoder.encode("1");
 
-		auth.inMemoryAuthentication().withUser("user").password(result).roles("USER").and().withUser("admin")
-				.password(result).roles("ADMIN");
+//		auth.inMemoryAuthentication().withUser("user").password(result).roles("USER").and().withUser("admin")
+//				.password(result).roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("1").password(result).roles("ADMIN");
 	}
 
 	@Bean
