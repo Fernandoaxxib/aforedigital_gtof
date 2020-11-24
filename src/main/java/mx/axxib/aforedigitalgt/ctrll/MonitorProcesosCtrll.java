@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
-import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;

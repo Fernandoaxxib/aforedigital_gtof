@@ -1,7 +1,5 @@
 package mx.axxib.aforedigitalgt.eml;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.persistence.ColumnResult;
@@ -47,22 +45,12 @@ public class ObtieneMonitorOut {
 	private String incluidoPor;
 }
 
-//ABREV_PROCESO	VARCHAR2 (30 Byte)	
-//AVANCE_PROCESO	VARCHAR2 (500 Byte)	
-//DESC_PROCESO	VARCHAR2 (100 Byte)	
-//ESTADO_PROCESO	VARCHAR2 (50 Byte)	
-//FECHA_HORA_AVANCE DATE			
-//FECHA_HORA_FINAL  DATE			
-//FECHA_HORA_INICIO DATE			
-//INCLUIDO_POR	VARCHAR2 (25 Byte)	
 //SESION_ID	NUMBER (15)
-
-//SESION_ID,
-//ABREV_PROCESO,
-//DESC_PROCESO,
-//ESTADO_PROCESO,
-//AVANCE_PROCESO,
-//FECHA_HORA_INICIO,
-//FECHA_HORA_FINAL,
-//FECHA_HORA_AVANCE,
-//INCLUIDO_POR
+//ABREV_PROCESO	VARCHAR2 (30 Byte)
+//DESC_PROCESO	VARCHAR2 (100 Byte)
+//ESTADO_PROCESO	VARCHAR2 (50 Byte)
+//AVANCE_PROCESO	VARCHAR2 (500 Byte)	
+//FECHA_HORA_INICIO DATE				
+//FECHA_HORA_FINAL  DATE				
+//FECHA_HORA_AVANCE DATE			
+//INCLUIDO_POR	VARCHAR2 (25 Byte)	
