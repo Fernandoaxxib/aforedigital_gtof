@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.MonitorProcesosRepo;
+import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 
 @Service
@@ -18,6 +19,22 @@ public class MonitorProcesosServ extends ServiceBase {
 	public List<ObtieneMonitorOut> getMonitor() throws AforeException {
 		try {
 			return monitorRepo.getMonitor();
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public List<ObtieneJobsOut> getJobs() throws AforeException {
+		try {
+			return monitorRepo.getJobs();
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public String ejecutar(ObtieneJobsOut job) throws AforeException {
+		try {
+			return monitorRepo.ejecutar(job);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

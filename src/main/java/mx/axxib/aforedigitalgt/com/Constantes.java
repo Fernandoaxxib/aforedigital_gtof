@@ -1,7 +1,7 @@
 package mx.axxib.aforedigitalgt.com;
 
 public class Constantes {
-
+	
 	public static final String USUARIO_PENSION = "ADIGITAL";
 	// Monitor de procesos FOMONIT
 	public static final String MONITOR_PROCESOS_PACKAGE = "PKG_CONSULTA_MUNITOR";

@@ -43,6 +43,6 @@ public class AforeMessage {
 	}
 	
 	public void showMessageFaces(String message) {
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", message));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", message));
 	}
 }
