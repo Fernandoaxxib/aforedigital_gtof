@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	
+
+</h:head>
+
+<h:body>
+	<ui:composition	template="/WEB-INF/facelets/templates/dashboardLayout.xhtml">
+		<ui:define name="content">
+			<h:form>
+			
+			   <p:panel id="pnlSolic"> 
+			    <div class="p-formgroup-inline">
+			       <div class="p-field">
+				    <p:commandButton id="btnRecSolicPend"
+				    	action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
+				    	type="submit" update="table1" value="#{msg.aprob_boton_recuperarSolicitudes}" ajax="true" />
+				    <p:commandButton
+				    	action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
+				    	type="submit" value="#{msg.aprob_boton_generarReporte}" ajax="false" />
+				    																		
+					<p:commandButton 
+					    action="#{aprobSolicTipRetiro.aprobarSolicitud}" 
+					    type="submit" update="table1"  value="#{msg.aprob_boton_aprobar}"  ajax="false" />				    										    
+				   </div>
+
+              
+				<p:dataTable id="table1" var="mon"
+					value="#{aprobSolicTipRetiro.listSolicitudes}"
+					widgetVar="listSolicitudes"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					filteredValue="#{aprobSolicTipRetiro.filtro}"
+					globalFilterFunction="#{aprobSolicTipRetiro.globalFilterFunction}"
+					selection="#{aprobSolicTipRetiro.selectedSolicitud}"
+					rowKey="#{mon.numSolicitud}" style="margin-bottom:0" rows="10"
+					paginator="true" rowsPerPageTemplate="5,10,15">
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">							
+							<h:outputLabel style="font-size:12px" for="flt" value="#{msg.aprob_label_filtro}"/>
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listSolicitudes').filter()" style="width:530px;font-size:12px"
+								placeholder="#{msg.aprob_label_pholder}">
+								<p:ajax event="keyup" update="totalRegistros"
+									listener="#{aprobSolicTipRetiro.getCount}" />
+							</p:inputText>											    
+						</p:outputPanel>
+					</f:facet>
+					
+					<f:facet name="header">
+						<p:outputPanel style="text-align:right">
+							<h:outputLabel for="registros" value="#{msg.aprob_label_totalRegistos}" style="font-size:12px" />
+							<h:outputText id="totalRegistros" value="#{aprobSolicTipRetiro.count}" style="font-size:12px" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center" />
+					<p:column headerText="#{msg.aprob_tabla_columna_noSolicitud}">
+						<h:outputText value="#{mon.numSolicitud}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_tran}">
+						<h:outputText value="#{mon.transaccion}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_subTran}">
+						<h:outputText value="#{mon.subTransaccion}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_fecOpe}">
+						<h:outputText value="#{mon.fechaOperacion}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_cuenta}">
+						<h:outputText value="#{mon.codCuenta}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_titular}">
+						<h:outputText value="#{mon.nombre}" />
+					</p:column>
+				</p:dataTable>
+				</div>
+			</p:panel>	
+				 <p:blockUI block="pnlSolic" trigger="btnRecSolicPend" />                   
+                  
+			</h:form>
+
+			<br></br>
+			<p:panel id="pnDetalleProc" header="#{msg.aprob_tabla_titResProc}"
+				style="margin-bottom:20px">
+				<p:dataTable var="pro"
+					value="#{aprobSolicTipRetiro.procesoEjecutado}" emptyMessage="#{msg.aprob_msj_sinDatos}">
+					<p:column headerText="#{msg.aprob_tabla_columna_idSesion}" >
+						<h:outputText value="#{pro.sesionId}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
+						<h:outputText value="#{pro.abrevProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
+						<h:outputText value="#{pro.estadoProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}">
+						<h:outputText value="#{pro.fechahoraInicio}" />
+					</p:column>
+					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}">
+						<h:outputText value="#{pro.fechahoraFinal}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
