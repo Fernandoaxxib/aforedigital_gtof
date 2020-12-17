@@ -79,9 +79,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc7</artifactId>
-			<version>12.1.0.1</version>
+    		<groupId>com.oracle</groupId>
+   	 		<artifactId>ojdbc7</artifactId>
+    		<version>12.1.0.2</version>
 		</dependency>
 
 		<!-- JSF dependencies -->

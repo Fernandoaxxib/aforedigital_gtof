@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form id="form">
+
+    <p:panelGrid id="porNombre"  columns="2">
+      
+   		<p:inputText id="nombre" placeholder="#{msg.saldo_actual_columna_nombre}" />
+	      
+   		
+   		<p:commandButton action="#{consultaSaldos.consultarNombre}"
+			type="submit" value="#{msg.saldo_actual_boton_nombre}" ajax="false" />
+	</p:panelGrid>	
+	 <p:panelGrid id="porId"  columns="2">
+      
+   		<p:inputText id="nss" placeholder="#{msg.saldo_actual_columna_nns}" />
+	      
+   		
+   		<p:commandButton action="#{consultaSaldos.consultarId}"
+			type="submit" value="#{msg.saldo_actual_boton_id}" ajax="false" />
+	</p:panelGrid>		
+	
+	 <p:panelGrid id="verConsultas" columns="1">	
+		<p:dataTable id="verTableSaldos"  var="verSaldo" value="#{consultaSaldos.consultaSaldo}">
+		    
+		    <p:column headerText="#{msg.saldo_actual_columna_noCuenta}">
+		        <h:outputText value="#{verSaldo.noCuenta}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.saldo_actual_columna_diasAcumulados}">
+		        <h:outputText value="#{verSaldo.diasAcumulados}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.saldo_actual_columna_fechaEmision}">
+		        <h:outputText value="#{verSaldo.fechaEmision}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.saldo_actual_columna_diasPagados}">
+		        <h:outputText value="#{verSaldo.diasPagados}" />
+		    </p:column>
+		 	
+		 	<p:column headerText="#{msg.saldo_actual_columna_agrupacion}">
+		        <h:outputText value="#{verSaldo.agrupacion}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.saldo_actual_columna_saldos}">
+		        <h:outputText value="#{verSaldo.saldos}" />
+		    </p:column>
+		   
+		</p:dataTable>
+	
+	
+    </p:panelGrid>
+		
+  </h:form>
+</h:body>
+</html>

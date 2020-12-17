@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form id="form">
+	<h:outputText value="#{msg.carga_masiva_text_titulo}" />
+    <p:panelGrid id="crearArchivo"  columns="5">
+    	
+        <h:outputText value="#{msg.carga_masiva_text_ruta}" />
+        <p:inputText id="rutaCarga" value="#{cargaMasiva.rutaCarga}" > </p:inputText>
+   		<h:outputText value="#{msg.carga_masiva_text_nombre}" />
+	   	<p:inputText id="nombreCarga" value="#{cargaMasiva.nombreCarga}" />   
+   		
+   		<p:commandButton action="#{cargaMasiva.cargarArchivo}"
+			type="submit" value="#{msg.carga_masiva_boton_cargaArchivo}" ajax="false" />
+		
+		</p:panelGrid>	
+	 	    <p:panelGrid id="revesArchivoMarcas"  columns="1">
+	 		<p:commandButton action="#{cargaMasiva.reversaArchivo}"
+			type="submit" value="#{msg.carga_masiva_boton_reversaArchivo}" ajax="false" />
+		</p:panelGrid>	
+	 
+	 	
+	 	<h:outputText value="#{msg.desmarca_masiva_text_titulo}" />
+	 
+	 	<p:panelGrid id="butonDesmarcaMasiva"  columns="1">
+
+	 		<p:commandButton action="#{cargaMasiva.desmarcaMasiva}"
+			type="submit" value="#{msg.desmarca_masiva_boton_desmarcaArchivo}" ajax="false" />
+		</p:panelGrid>
+		
+		<p:panelGrid id="crearTextDesmarcas"  columns="7">
+		        <h:outputText value="#{msg.desmarca_masiva_text_nss}" />
+		       	<p:inputText id="desmarcaNSS" value="#{cargaMasiva.desmarcaNSS}" > </p:inputText>
+		   		<h:outputText value="#{msg.desmarca_masiva_text_curp}" />
+			   	<p:inputText id="desmarcaCURP" value="#{cargaMasiva.desmarcaCURP}" />  
+			   	<h:outputText value="#{msg.desmarca_masiva_text_clave}" />
+			   	<p:inputText id="desmarcaCLAVE" value="#{cargaMasiva.desmarcaCLAVE}" />  
+		   		
+		   		<p:commandButton action="#{cargaMasiva.desmarcaIndividualCuenta}"
+					type="submit" value="#{msg.desmarca_masiva_boton_desmarcaIndividual}" ajax="false" />
+		</p:panelGrid>	
+		
+			<h:outputText value="#{msg.marca_masiva_text_titulo}" />
+	 	
+			<p:panelGrid id="consultarClaveMarcas"  columns="4">
+
+					<h:outputText value="#{msg.marca_masiva_text_clave}" />
+					<p:inputText id="claveMarca" value="#{cargaMasiva.claveMarca}"  />
+			   	    <p:inputText id="descripcionMarca" value="#{cargaMasiva.descripcionMarca}" />  
+			 		<p:commandButton action="#{cargaMasiva.consultaMarcas}"
+					type="submit" value="#{msg.marca_masiva_boton_consultarClave}" ajax="false" />
+			</p:panelGrid>	
+		
+			<p:panelGrid id="crearArchivoMarcas"  columns="5">
+			       <h:outputText value="#{msg.carga_masiva_text_ruta}" />
+			       
+			   		<p:inputText id="rutaMarcas" value="#{cargaMasiva.rutaMarca}" > </p:inputText>
+			   		<h:outputText value="#{msg.carga_masiva_text_nombre}" />
+				   	<p:inputText id="nombreMarcas" value="#{cargaMasiva.nombreMarca}" />   
+			   		
+			   		<p:commandButton action="#{cargaMasiva.consultaMarcasArchivo}"
+						type="submit" value="#{msg.marca_masiva_boton_consultarMarcas}" ajax="false" />
+					
+			</p:panelGrid>	
+		
+  </h:form>
+</h:body>
+</html>
