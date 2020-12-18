@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/view/layaut.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+
+        <ui:define name="center">
+        <h:outputStylesheet name="estilo-operaciones.css" library="css" />
+         <div class="ui-g" id="secOperaciones">          
+            <h:outputLabel	value="Operaciones y Gestión de Fondos"	style="margin-top: 26px; margin-left: 52px; background: #70b65b; color: white; padding: 15px; border-radius: 0.25rem;" />
+           <div class="ui-g-12">
+            <div class="ui-g-2">
+            <h:form>			
+			   <p:commandButton ajax="false"  value="Transacciones y Dispociciones" type="submit"   >
+			   <h:graphicImage library="Imagenes" name="transacciones.png" class="est-img-trans" />
+			   </p:commandButton>
+           </h:form>
+            </div>
+    <div class="ui-g-2">
+    <h:form>			
+			   <p:commandButton ajax="false"  value="Seguimiento de Procesos" type="submit" >
+			   <h:graphicImage library="Imagenes" name="procesos.png" class="est-img-proc" />
+			   </p:commandButton>
+           </h:form>
+    </div>
+    <div class="ui-g-2">
+    <h:form>			
+			   <p:commandButton ajax="false"  value="Recaudaciones" type="submit" >
+			    <h:graphicImage library="Imagenes" name="recaudaciones.png" class="est-img-rec" />
+			   </p:commandButton>
+           </h:form>
+    </div>
+    <div class="ui-g-2">
+    
+      <h:form>			
+			   <p:commandButton ajax="false"  value="Consultas y Reportes Generales" type="submit" >
+			    <h:graphicImage library="Imagenes" name="reportes.png" class="est-img-rep" />
+			   </p:commandButton>
+           </h:form>
+    </div>
+    
+    <div class="ui-g-1" id="noticiasOperacion" style="margin-left: 310px; margin-top: 72px;">
+		<ul>
+			<li>
+				<h:outputLink  href="" class="est-btn-noticcias"  id="not1" >
+				      <h:graphicImage library="Imagenes" name="noticias.png"
+						class="est-img-not1" />
+			    </h:outputLink>
+			    
+				</li>
+			<li>
+			<h:outputLink href="" class="est-btn-noticcias" >
+				      <h:graphicImage library="Imagenes" name="videos.png"
+						class="est-img-not2" />
+			</h:outputLink>
+			</li>
+		</ul>
+    </div>
+           
+           
+            
+            
+          
+           
+           </div>
+           
+         </div>
+             
+
+	</ui:define>
+
+  </ui:composition>
+
+
+

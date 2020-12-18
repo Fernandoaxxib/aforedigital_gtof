@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/view/layaut.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-introduccion.css" library="css" />
+		<h:outputScript name="introduccion.js" library="js"/>
+		
+		<div class="ui-g" id="seccion1">
+		
+			<div class="ui-g-3">
+				<div class="ui-g-1">
+					<h:outputText
+						value="#{msg.home_titulo_bienvenido}"
+						styleClass="ui-outputlabel" />
+				</div>
+				<div class="est-logo">
+					<h:graphicImage library="Imagenes" name="logo-hex.png"
+						class="est-img-logohex" />
+					<p:growl id="messages" showDetail="true" />
+					<div class="ui-g-1">
+						<h:form>
+							<p:selectOneMenu id="console" value="#{selectOneMenuView.console}" style="width:297px; bottom: 26px;" onchange="operaciones()" widgetVar="test">
+                            <f:selectItem itemLabel="#{msg.home_titulo_administracion}" itemValue="1" ><i class="pi pi-check"></i></f:selectItem>
+                            <f:selectItem itemLabel="#{msg.home_titulo_operacionesG}" itemValue="2" />
+                            </p:selectOneMenu>
+						</h:form>
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui-g-9" id="admonCuentas">
+			  <div class="ui-g-6">
+			   <h:graphicImage library="Imagenes" name="graficas-iim-1.png"	class="est-img-iim" style="margin-left: 226px;"/>
+			</div>
+			<div class="ui-g-6">
+			   <h:graphicImage library="Imagenes" name="graficas-det-2.png"	class="est-img-det2" />
+			   <h:graphicImage library="Imagenes" name="graficas-det-3-3.png"	class="est-img-det3" />
+			   <h:graphicImage library="Imagenes" name="graficas-det-5.png"	class="est-img-det5" />
+			</div>	
+			<h:form>			
+			   <p:commandButton ajax="false"  value="#{msg.home_titulo_ingresar}" type="submit" style="margin-left: 30px;"/>
+           </h:form>
+			</div>
+			
+			<div class="ui-g-9" id="operacionGestion" style="display:none">
+			  <div class="ui-g-12">
+			  <h:outputText	value="#{msg.home_titulo_operaciones}"	styleClass="ui-outputlabel" style="margin-left: 267px;" />
+			   <h:graphicImage library="Imagenes" name="grafica2.png"	class="est-img-grf2" />
+			</div>	
+			<h:form>			
+			
+               <p:commandButton ajax="false"  action="operaciones.jsf"  value="#{msg.home_titulo_ingresar}" type="submit" style="margin-left: 420px;"/>
+		  </h:form>
+			</div>
+			
+			
+		</div>
+	</ui:define>
+	
+</ui:composition>
+
