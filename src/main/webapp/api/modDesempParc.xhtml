@@ -1,0 +1,203 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+	<p:messages id="messages" showDetail="true" closable="true">
+		<p:autoUpdate />
+	</p:messages>
+
+	<h:form id="form">
+
+		<p:commandButton action="#{modDesempParc.consultarSolicitud}"
+			type="submit" value="#{msg.modDesParc_boton_buscarNss}" ajax="false" />
+
+		<h:panelGrid id="solicitud" columns="6" cellpadding="10" width="100%">
+			<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"/>
+			<p:inputText required="true" value="#{modDesempParc.nss}"></p:inputText>
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_numSolicitud}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.noSolicitud}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_curp}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.curp}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_rfc}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.rfc}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_aPaterno}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.primerApellido}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_aMaterno}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.segundoApellido}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_nombres}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.nombre}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_tipoPago}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.clasificacionPago}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_estatusSolicitud}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.estatusSolicitud}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_fondo}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.fondo}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_numResolucion}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.numResolucion}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_totalPrestacion}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.monTotalPrestacion}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_remanente}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.remanente}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_sbcA}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.sbcTipoA}" />
+
+			<p:outputLabel value="#{msg.modDesParc_solicitud_fechaAccion}"/>
+			<p:outputLabel value="#{modDesempParc.datosSol.fechaAccion}" />
+
+		</h:panelGrid>
+
+
+
+		<p:dataTable id="parcialidadesTable" var="par"
+			value="#{modDesempParc.parcialidades}" selectionMode="single"
+			selection="#{modDesempParc.selectedParcialidad}" rowKey="#{par.pago}">
+
+			<p:ajax event="rowSelect" update="form" />
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_pago}">
+				<h:outputText value="#{par.pago}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_importe}">
+				<h:outputText value="#{par.totalPago}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_fecha}">
+				<h:outputText value="#{par.fecha}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}">
+				<h:outputText value="#{par.estatusPagDescrip}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_trabFechaAut}">
+				<h:outputText value="#{par.fechaManifiestoTrab}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_trabajador}">
+				<h:outputText value="#{par.autorizaTrabajador}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaEnv}">
+				<h:outputText value="#{par.fechaEnvAutorizaImss}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaAut}">
+				<h:outputText value="#{par.fechaAutorizaImss}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_imss}">
+				<h:outputText value="#{par.autorizaImss}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}">
+				<h:outputText value="#{par.tipo_pago}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_parcialidades_clabe}">
+				<h:outputText value="#{par.dpCuenta}" />
+			</p:column>
+		</p:dataTable>
+
+
+		<p:dataTable id="administrativoTable" var="adm"
+			value="#{modDesempParc.administrativos}">
+
+			<p:ajax event="rowSelect" update="form" />
+
+			<p:column headerText="#{msg.modDesParc_administrativos_pago}">
+				<h:outputText value="#{adm.descripcionPago}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_administrativos_subcuenta}">
+				<h:outputText value="#{adm.subcuenta}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_administrativos_acciones}">
+				<h:outputText value="#{adm.montoAccion}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_administrativos_importe}">
+				<h:outputText value="#{adm.montoPesos}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_administrativos_estatusPago}">
+				<h:outputText value="#{adm.estatusPago}" />
+			</p:column>
+
+		</p:dataTable>
+
+		<p:dataTable id="marcasTable" var="mar"
+			value="#{modDesempParc.marcas}">
+
+			<p:ajax event="rowSelect" update="form" />
+
+			<p:column headerText="#{msg.modDesParc_marcas_cuenta}">
+				<h:outputText value="#{mar.codCuenta}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_marcas_cve}">
+				<h:outputText value="#{mar.claveProceso}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_marcas_proceso}">
+				<h:outputText value="#{mar.descripcion}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_marcas_incluidoPor}">
+				<h:outputText value="#{mar.incluidoPor}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_marcas_fInicio}">
+				<h:outputText value="#{mar.fechaInicio}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_marcas_fFin}">
+				<h:outputText value="#{mar.fechaFin}" />
+			</p:column>
+
+			<p:column headerText="#{msg.modDesParc_marcas_estado}">
+				<h:outputText value="#{mar.estado}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	
+	<h:form id="formCan">
+		<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}" />
+		<p:selectOneMenu required="true" id="tipoCancelacion" style="width:100px"
+			value="#{modDesempParc.selectedClaveCancelacion}">
+			<f:selectItem itemLabel="#{msg.modDesParc_combo_default}" itemValue="" />
+			<f:selectItems value="#{modDesempParc.listaCancelacion}" var="c"
+				itemLabel="#{c.descripcion}" itemValue="#{c.claveProceso}" />
+		</p:selectOneMenu>
+
+		<p:commandButton action="#{modDesempParc.cancelarSolicitud}"
+			type="submit" value="#{msg.modDesParc_boton_cancelarSolicitud}" ajax="false" />
+
+	</h:form>
+
+</h:body>
+</html>
