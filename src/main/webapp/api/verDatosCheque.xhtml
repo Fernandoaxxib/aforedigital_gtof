@@ -15,12 +15,13 @@
 
     <p:panelGrid id="verNNS"  columns="2">
       
-   		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque}" />
-	      
+   		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/>
+	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" />
    		
    		<p:commandButton action="#{verDatosCheque.consultar}"
 			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
-	</p:panelGrid>		
+	</p:panelGrid>	
+		
 	 <p:panelGrid id="verDetalle" columns="1">	
 		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verCheque}">
 		    <p:column headerText="#{msg.cheque_columna_codigo}">

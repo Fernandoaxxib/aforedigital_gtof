@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		
+		<h:outputText value="#{msg.reporte_parcial_txt_titulo}" />  
+	 	<p:panelGrid id="crearReporteParcial"  columns="2">
+	 	
+	 			<p:outputLabel for="buttonIni" value="#{msg.reporte_parcial_txt_fecha_inicio}" />
+        		<p:datePicker id="buttonIni" value="#{reporteParcial.fechaIni}" showIcon="true" pattern="yyyy-MMM-dd"/>
+        		
+        		<p:outputLabel for="buttonFin" value="#{msg.reporte_parcial_txt_fecha_final}" />
+        		<p:datePicker id="buttonFin" value="#{reporteParcial.fechaFin}" showIcon="true" pattern="yyyy-MMM-dd" />
+	 			
+		        <h:outputText value="#{msg.reporte_parcial_txt_nombre}" />
+		        <p:inputText id="rutaParcial" value="#{reporteParcial.rutaParcial}" > </p:inputText>
+		   		<h:outputText value="#{msg.reporte_parcial_txt_ruta}" />
+			   	<p:inputText id="nombreParcial" value="#{reporteParcial.nombreParcial}" />   
+		
+				
+				<p:commandButton action="#{reporteParcial.ejecutarReporteParcial}"
+					type="submit" value="#{msg.reporte_parcial_txt_genera_reporte}" ajax="false" />
+		</p:panelGrid>
+		
+  </h:form>
+</h:body>
+</html>

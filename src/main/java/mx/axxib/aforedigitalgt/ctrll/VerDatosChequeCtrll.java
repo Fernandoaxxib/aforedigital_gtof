@@ -43,13 +43,13 @@ public class VerDatosChequeCtrll extends ControllerBase{
 //	@Setter
 //	private String codCuenta;
 //	
-//	@Getter
-//	@Setter
-//	private String nombre;
+	@Getter
+	@Setter
+	private String curp;
 	
 	
 	public void consultar() {
-		try {System.out.println("VALOR DE NNS:"+nns);
+		try {System.out.println("VALOR DE NNS:"+nns+"  /valor de curp:"+curp);
 			verCheque=verChequeService.getVerCheque(nns);
 		}catch (Exception e) {
 			GenericException(e);

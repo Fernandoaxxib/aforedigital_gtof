@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputScript library="js" name="calendar-localization.js" />
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<h:outputText value="#{msg.reinventir_compra_proceso_ventas_txt_titulo}" />
+		
+		 	
+		<p:panelGrid id="verEjecutarProceso"  columns="2"> 
+	 								        
+					   		  
+					
+							 <p:outputLabel for="fechaAplicacion" value="#{msg.reinventir_compra_venta_text_FechaAplicado}" />
+			        		<p:datePicker id="fechaAplicacion" value="#{reinversionCompras.fechaAplicacion}" showIcon="true" pattern="yyyy-MMM-dd" locale="es"/>
+							
+							<h:outputText value="#{msg.reinventir_compra_venta_text_lote}" />
+						   	<p:inputText id="noCuenta" value="#{reinversionCompras.lote}" /> 
+							
+							<p:commandButton action="#{reinversionCompras.getEjecutarReporte}"
+							type="submit" value="#{msg.reinventir_compra_venta_boton_reporte}" ajax="false" />
+ 							
+ 							<p:commandButton action="#{reinversionCompras.getEjecutarCompra}"
+							type="submit" value="#{msg.reinventir_compra_boton_compra}" ajax="false" />
+ 	
+						</p:panelGrid> 
+		
+		<p:dataTable var="compras" value="#{reinversionCompras.reinvercionComprasOut}">
+	        
+	        <p:columnGroup type="header">
+	            <p:row>
+	                <p:column headerText="#{msg.reinventir_compra_venta_columna_lote}" />
+	                <p:column headerText="#{msg.reinventir_compra_venta_columna_subcuenta}" />
+	                <p:column headerText="#{msg.reinventir_compra_venta_columna_siefore}" />
+	                <p:column headerText="#{msg.reinventir_compra_venta_columna_monto}" />
+	                <p:column headerText="#{msg.reinventir_compra_venta_columna_acciones}" />
+	            </p:row>
+	        </p:columnGroup>
+	 
+	        <p:column  >
+	            <h:outputText value="#{compras.lote}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{compras.subcuenta}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{compras.siafore}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{compras.monto}">
+	                <f:convertNumber type="currency" currencySymbol="$" />
+	            </h:outputText>
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{compras.acciones}">
+	                <f:convertNumber type="currency" currencySymbol="$" />
+	            </h:outputText>
+	        </p:column>
+	 
+	        <p:columnGroup type="footer">
+	            <p:row>
+	                <p:column colspan="3" style="text-align:right" footerText="#{msg.reinventir_compra_venta_columna_totales}" />
+	                <p:column footerText="#{reinversionCompras.totalReinversionCompras.monto}" />
+	 
+	                <p:column footerText="#{reinversionCompras.totalReinversionCompras.acciones}" />
+	            </p:row>
+	        </p:columnGroup>
+
+	    </p:dataTable>
+	     
+	    
+  	</h:form>
+</h:body>
+</html>

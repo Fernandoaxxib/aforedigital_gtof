@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputScript library="js" name="calendar-localization.js" />
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		
+		<h:outputText value="#{msg.salario_minimo_txt_titulo}" />  
+	 	<p:panelGrid id="verSalarioMinimo"  columns="2">
+	 			
+	 			<h:outputText value="#{msg.salario_minimo_txt_zona}" />
+		        <p:inputText id="zona" value="#{salarioMinimo.zona}"   > </p:inputText>
+		        
+	 			<p:outputLabel for="fechaAplicado" value="#{msg.salario_minimo_txt_fecha_salario}" />
+        		<p:datePicker id="fechaAplicado" value="#{salarioMinimo.fechaIni}" showIcon="true" pattern="yyyy-MMM-dd" locale="es"/>
+        		
+        		<h:outputText value="#{msg.salario_minimo_txt_salario}" />
+		        <p:inputText id="salario" value="#{salarioMinimo.salarioMinOut.montoDiario}" > </p:inputText>
+        		
+        		<p:outputLabel for="fechaUltimo" value="#{msg.salario_minimo_txt_fecha_ultima}" />
+        		<p:datePicker id="fechaUltimo" value="#{salarioMinimo.salarioMinOut.fechaUltimo}" showIcon="true" pattern="yyyy-MMM-dd" locale="es" />
+	 			
+		        
+		        
+		   		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
+			   	<p:inputText id="idUsuariol" value="#{salarioMinimo.salarioMinOut.idUsuario}" />   
+		
+				
+				<p:commandButton action="#{salarioMinimo.getSalarioMinimo}"
+					type="submit" value="#{msg.salario_minimo_boton_salario}" ajax="false" />
+		</p:panelGrid>
+		
+  </h:form>
+</h:body>
+</html>

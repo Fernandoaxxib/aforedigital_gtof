@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form id="form">
+	<h:outputText value="#{msg.consultar_traspasos_txt_titulo}" />  
+	
+	 <p:panelGrid id="verNNSCURP"  columns="2">
+      
+   		<p:inputText id="nss" placeholder="#{msg.consultar_traspasos_txt_nss}" value="#{consultarTraspasos.nss}"/>
+   		<p:commandButton action="#{consultarTraspasos.ejecutarConsultaNss}"
+			type="submit" value="#{msg.consultar_traspasos_boton_maestro}" ajax="false" />
+	    
+	    <p:inputText id="curp" placeholder="#{msg.consultar_traspasos_txt_curp}" value="#{consultarTraspasos.curp}"/>  
+   		<p:commandButton action="#{consultarTraspasos.ejecutarConsultaCurp}"
+			type="submit" value="#{msg.consultar_traspasos_boton_maestro}" ajax="false" />
+	</p:panelGrid>		
+	
+	<p:panelGrid id="verDetalleMaestro" columns="3">	
+		<p:dataTable id="verTraspaso"  var="ver" value="#{consultarTraspasos.consultarNombreCuentaOut}">
+		    <p:column headerText="#{msg.consultar_traspasos_txt_cuenta}">
+		        <h:outputText value="#{verTraspaso.cuenta}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consultar_traspasos_txt_nombre}">
+		        <h:outputText value="#{verTraspaso.nombre}" />
+		    </p:column>
+		 
+		</p:dataTable>
+	<p:commandButton action="#{consultarTraspasos.ejecutarConsultarTraspasos}"
+			type="submit" value="#{msg.consultar_traspasos_boton_maestro_detalle}" ajax="false" />
+	
+    </p:panelGrid>
+	
+	 
+   <p:panelGrid id="verConsultarTraspaso" columns="1">	
+		<p:dataTable id="verTablePago"  var="verTraspaso" value="#{consultarTraspasos.consultarTraspasosOut}">
+		    
+		    <p:column headerText="#{msg.consultar_traspasos_table_clave}">
+		        <h:outputText value="#{verTraspaso.claveProceso}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consultar_traspasos_table_proceso}">
+		        <h:outputText value="#{verTraspaso.descProceso}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consultar_traspasos_table_saldo}">
+		        <h:outputText value="#{verTraspaso.codTipSaldo}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consultar_traspasos_table_desc_saldo}">
+		        <h:outputText value="#{verTraspaso.descSaldo}" />
+		    </p:column>
+		 	
+		 	<p:column headerText="#{msg.consultar_traspasos_table_estado}">
+		        <h:outputText value="#{verTraspaso.estado}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consultar_traspasos_table_desc_estado}">
+		        <h:outputText value="#{verTraspaso.descestado}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consultar_traspasos_table_fecha_ini}">
+		        <h:outputText value="#{verTraspaso.fechaInicio}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consultar_traspasos_table_fecha_fin}">
+		        <h:outputText value="#{verTraspaso.fechaFin}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consultar_traspasos_table_inc_por}">
+		        <h:outputText value="#{verTraspaso.incluidoPor}" />
+		    </p:column>
+		    
+		 	<p:column headerText="#{msg.consultar_traspasos_table_mod_por}">
+		        <h:outputText value="#{verTraspaso.modificadoPor}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consultar_traspasos_table_fecha_inclusion}">
+		        <h:outputText value="#{verTraspaso.fechaInclusion}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consultar_traspasos_table_fecha_mod}">
+		        <h:outputText value="#{verTraspaso.fechaModificacion}" />
+		    </p:column>
+		    
+		</p:dataTable>
+	
+	
+    </p:panelGrid>
+		
+		
+  </h:form>
+</h:body>
+</html>

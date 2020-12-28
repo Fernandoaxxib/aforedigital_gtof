@@ -29,7 +29,7 @@ private final EntityManager entityManager;
 	public List<ConsultaSaldoImssIssteOut> ejecutarImssCarga(String ruta, String nombre) {
 		
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CARGA_IMSS_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
 		query.registerStoredProcedureParameter("p_RutaCrgNss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchCrgNss", String.class, ParameterMode.IN);
@@ -49,7 +49,7 @@ private final EntityManager entityManager;
 	public List<ConsultaSaldoImssIssteOut> ejecutarImssReporte(String ruta, String nombre) {
 		
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CONSULTAR_IMSS_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
 		query.registerStoredProcedureParameter("p_RutaRepSldImss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchRepSldImss", String.class, ParameterMode.IN);
@@ -69,7 +69,7 @@ private final EntityManager entityManager;
 	public List<ConsultaSaldoImssIssteOut> ejecutarIssteCarga(String ruta, String nombre) {
 		
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CARGA_ISSTE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
 		query.registerStoredProcedureParameter("p_RutaCrgCURPIss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchCrgCURPIss", String.class, ParameterMode.IN);
@@ -89,7 +89,7 @@ private final EntityManager entityManager;
 	public List<ConsultaSaldoImssIssteOut> ejecutarIssteReporte(String ruta, String nombre) {
 		
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CONSULTAR_ISSTE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
 		query.registerStoredProcedureParameter("p_RutaRepSldIss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchRepSldIss", String.class, ParameterMode.IN);
@@ -109,7 +109,7 @@ private final EntityManager entityManager;
 	public List<ConsultaSaldoNegativoOut> ejecutarReporteNegativo(String ruta, String nombre,Date fechaMovimiento) {
 		
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CONSULTAR_ISSTE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoNegativoOut");
 
 		query.registerStoredProcedureParameter("p_RutaVol", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchVol", String.class, ParameterMode.IN);

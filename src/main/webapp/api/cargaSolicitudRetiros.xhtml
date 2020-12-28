@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputScript library="js" name="calendar-localization.js" />
+</h:head>
+
+<h:body>
+<h:outputText value="#{msg.carga_solicitud_retiro_txt_titulo}" />
+	<h:form id="form">
+		<p:panelGrid id="ejecutarCarga"  columns="3"> 		
+				<h:outputText value="#{msg.carga_solicitud_retiro_text_nombre}" />
+				<p:inputText id="noCuenta" value="#{cargaSolicitudRetiros.nombre}" />
+				 
+				 <p:commandButton value="#{msg.carga_solicitud_retiro_boton_parcial}" 
+                         widgetVar="placeOrderButton"
+                         actionListener="#{cargaSolicitudRetiros.ejecutarCarga}"
+                         onstart="PF('placeOrderButton').disable();PF('progressPanel').show();"
+                         oncomplete="PF('placeOrderButton').enable();PF('progressPanel').close();"/>
+       	</p:panelGrid> 
+       	
+	 					<p:panelGrid id="verFechaActual"  columns="2"> 
+									 <h3>VER:</h3>
+									<h:outputText value="#{now}">
+									<p:clock pattern="dd-MM-yyyy"/>
+									</h:outputText> 				
+ 						</p:panelGrid> 
+ 
+        <p:panel widgetVar="progressPanel"
+                 visible="false"
+                 style="border:none;"
+                 closable="true"
+                 toggleable="true">
+            <p:progressBar style="height:20px; width:400px;"
+                           mode="indeterminate"/>
+        </p:panel>
+       
+<!--        <h3>Verificando Nombre de Archivo</h3> -->
+<!--     <p:progressBar id="progressBarIndeterminate" style="height:6px" mode="indeterminate"/> -->
+  	</h:form>
+</h:body>
+</html>
