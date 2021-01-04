@@ -31,7 +31,11 @@ public class Constantes {
 	public static final String VENTA_TITULOS_VENTA_TITULOS_MONITOR = "PRC_RET_VENTA_TITULOS_MONITOR";
 	public static final String VENTA_TITULOS_VENTA_TITULOS_MONITOR_CT = "PRC_VENTA_TITULOS_MONITOR_CT";
 	
-	
+	// Notificación de pagos FONOTI16
+	public static final String NOTIFICACION_PAGOS_PACKAGE = "PKG_RET_FUSION_FONOTI16";
+	public static final String NOTIFICACION_PAGOS_LLENA_INFO = "PRC_LLENA_INFO";
+	public static final String NOTIFICACION_PAGOS_ENVIA_FECHA = "PRC_ENVIA_FECHA";
+	public static final String NOTIFICACION_PAGOS_EXPORTAR = "PRC_EXPORTAR";
 	
 		
 	
