@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
-import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.eml.TipoSubTransacOut;
 import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
 

@@ -32,6 +32,8 @@ public class GraficasCtrll extends ControllerBase {
 	@Autowired
 	private GraficasService graficasService;
 
+	@Getter
+	@Setter
 	private LineChartModel lineModel;
 
 	@Getter
@@ -58,6 +60,27 @@ public class GraficasCtrll extends ControllerBase {
 	private Integer totTotal;
 
 	@PostConstruct
+	public void init2() {
+		fechasInicio = new LinkedHashMap<>();
+		fechasInicio.put("ENE-2020", "1");
+		fechasInicio.put("FEB-2020", "2");
+		fechasInicio.put("MAR-2020", "3");
+		fechasInicio.put("ABR-2020", "4");
+		fechasInicio.put("MAY-2020", "5");
+		fechasInicio.put("JUN-2020", "6");
+		fechasInicio.put("JUL-2020", "7");
+		fechasInicio.put("AGO-2020", "8");
+		fechasInicio.put("SEP-2020", "9");
+		fechasInicio.put("OCT-2020", "10");
+		fechasInicio.put("NOV-2020", "11");
+		fechasInicio.put("DIC-2020", "12");
+
+		fechasFin = fechasInicio;
+
+		createLineModel();
+
+	}
+	
 	public void init() {
 		fechasInicio = new LinkedHashMap<>();
 		fechasInicio.put("ENE-2020", "1");
@@ -225,12 +248,6 @@ public class GraficasCtrll extends ControllerBase {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 
-	public LineChartModel getLineModel() {
-		return lineModel;
-	}
 
-	public void setLineModel(LineChartModel lineModel) {
-		this.lineModel = lineModel;
-	}
 
 }

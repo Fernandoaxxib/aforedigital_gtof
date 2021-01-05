@@ -9,5 +9,5 @@ public class DiagnosticoResult {
  private Integer sinSalario;
  private Integer totales;
  private Integer pendientes;
- private String avance;
+ 
 }

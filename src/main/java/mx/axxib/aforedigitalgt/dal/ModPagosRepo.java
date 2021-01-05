@@ -2,7 +2,6 @@ package mx.axxib.aforedigitalgt.dal;
 
 import java.util.Date;
 
-
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
-import mx.axxib.aforedigitalgt.eml.DatosIniResult;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 @Repository
 public class ModPagosRepo extends RepoBase {
@@ -24,110 +23,80 @@ public class ModPagosRepo extends RepoBase {
 		this.entityManager = entityManager;
 	}
 
-	
-	public DatosIniResult getInicioModPagos() throws AforeException{
-		
+	public String getRefresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
+
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
-					.concat(".").concat(Constantes.MOD_PAGOS_INICIO_MODULO);
+					.concat(".").concat(Constantes.MOD_PAGOS_BOTON_REFRESH);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("pFECHA_PROCESO", Date.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pFECHA_RETIRO", Date.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("ic_BotonContinuar", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("id_Fecha_Proceso", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("id_Fecha_Retiro", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
-			DatosIniResult datosOut = new DatosIniResult();
-			datosOut.setPfechaproceso((Date) query.getOutputParameterValue("pFECHA_PROCESO"));
-			datosOut.setPfecharetiro((Date) query.getOutputParameterValue("pFECHA_RETIRO"));
-			datosOut.setPmensaje((String) query.getOutputParameterValue("pMensaje"));
-			return datosOut;
+			query.setParameter("ic_BotonContinuar", ic_BotonContinuar);
+			query.setParameter("id_Fecha_Proceso", id_Fecha_Proceso);
+			query.setParameter("id_Fecha_Retiro", id_Fecha_Retiro);
+
+			String result = (String) query.getOutputParameterValue("oc_Mensaje");
+			return result;
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
-
 	}
-	
-	
-	public String getRefresh(Date fechaproceso,Date fecharetiro,String titlewin ) throws AforeException{
-		
+
+	public EjecucionResult generaFondos(Date id_FechaProceso,String ic_ProcesosRetiro,String ic_TiposPagos ,String ic_TipoFondos ,String ic_Instituto) throws AforeException {
 		try {
-		String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
-				.concat(".").concat(Constantes.MOD_PAGOS_REFRESH_PAGO);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
+					.concat(".").concat(Constantes.MOD_PAGOS_INTERFACE_FONDOS);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-		query.registerStoredProcedureParameter("pd_fechaproceso", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pd_FechaRetiro", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pc_TitleWin", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pmensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("id_FechaProceso", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_ProcesosRetiro", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_TiposPagos", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_TipoFondos", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_Instituto", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_Msg", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+
+			query.setParameter("id_FechaProceso", id_FechaProceso);
+			query.setParameter("ic_ProcesosRetiro", ic_ProcesosRetiro);
+			query.setParameter("ic_TiposPagos", ic_TiposPagos);
+			query.setParameter("ic_TipoFondos", ic_TipoFondos);
+			query.setParameter("ic_Instituto", ic_Instituto);
+			
+			EjecucionResult result= new EjecucionResult();
+			
+			result.setOcMensaje((String) query.getOutputParameterValue("oc_Mensaje"));
+			result.setOcAvance((String) query.getOutputParameterValue("oc_Msg"));
 		
-		query.setParameter("pd_fechaproceso", fechaproceso);
-		query.setParameter("pd_FechaRetiro", fecharetiro);
-		query.setParameter("pc_TitleWin", titlewin);
-		
-		String result =(String) query.getOutputParameterValue("pmensaje");		
-		return result;
-	 }catch (Exception e) {
+			return result;
+		} catch (Exception e) {
 			throw GenericException(e);
-	 }
+		}
 	}
-	
-	public String generaFondos(Date fechaproceso,String procesosRetiro,String tiposPagos,String tipoFondos,String instituto,String titleWin,String globalCliente ) throws AforeException{
-	  try {
-		String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
-				.concat(".").concat(Constantes.MOD_PAGOS_INTERFACE_FONDOS);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-		query.registerStoredProcedureParameter("pd_FechaProceso", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Procesos_Retiro", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Tipos_Pagos", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Tipo_Fondos", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Instituto", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pc_TitleWin", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pg_GlobalCliente", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pg_GlobalCliente", String.class, ParameterMode.OUT);
-		
-		query.setParameter("pd_FechaProceso", fechaproceso);
-		query.setParameter("p_Procesos_Retiro", procesosRetiro);
-		query.setParameter("p_Tipos_Pagos", tiposPagos);
-		query.setParameter("p_Tipo_Fondos", tipoFondos);
-		query.setParameter("p_Instituto", instituto);
-		query.setParameter("pc_TitleWin", titleWin);
-		query.setParameter("pg_GlobalCliente", globalCliente);
-		
-		
-		String result =(String) query.getOutputParameterValue("pg_GlobalCliente");		
-		return result;
-	  }catch (Exception e) {
+	public void generaPagos(Date id_FechaRetiro,String ic_ProcesoRetiro,String ic_Instituto,String ic_TiposPagos) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
+					.concat(".").concat(Constantes.MOD_PAGOS_INTERFACE_PAGOS);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+
+			query.registerStoredProcedureParameter("id_FechaRetiro", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_ProcesoRetiro", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_Instituto", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_TiposPagos", String.class, ParameterMode.IN);
+			
+
+			query.setParameter("id_FechaRetiro", id_FechaRetiro);
+			query.setParameter("ic_ProcesoRetiro", ic_ProcesoRetiro);
+			query.setParameter("ic_Instituto", ic_Instituto);
+			query.setParameter("ic_TiposPagos", ic_TiposPagos);
+						
+			
+		} catch (Exception e) {
 			throw GenericException(e);
-	  }
-	}
-	
-	public String generaPagos(Date fechaRetiro,String procesoRetiro,String instituto,String tiposPagos,String titleWin,String globalRetiro ) throws AforeException{
-	  try{	
-		String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
-				.concat(".").concat(Constantes.MOD_PAGOS_INTERFACE_FONDOS);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
-
-		query.registerStoredProcedureParameter("pd_fechaRetiro", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pc_ProcesoRetiro", String.class, ParameterMode.IN);		
-		query.registerStoredProcedureParameter("p_Instituto", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Tipos_Pagos", String.class, ParameterMode.IN);				
-		query.registerStoredProcedureParameter("pc_TitleWin", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pg_GlobalRetiro", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("pmensaje", String.class, ParameterMode.OUT);
-		
-		query.setParameter("pd_fechaRetiro", fechaRetiro);
-		query.setParameter("pc_ProcesoRetiro", procesoRetiro);
-		query.setParameter("p_Instituto", instituto);
-		query.setParameter("p_Tipos_Pagos", tiposPagos);
-		query.setParameter("pc_TitleWin", titleWin);
-		query.setParameter("pg_GlobalRetiro", globalRetiro);
-		
-		
-		String result =(String) query.getOutputParameterValue("pmensaje");		
-		return result;
-	  }catch (Exception e) {
-	  	throw GenericException(e);
-	  }  
+		}
 	}
 }

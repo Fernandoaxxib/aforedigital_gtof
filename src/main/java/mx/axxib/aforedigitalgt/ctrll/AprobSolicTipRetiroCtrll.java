@@ -7,6 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,9 +15,12 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
+import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroService;
+import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarService;
+import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 
 @Scope(value = "session")
 @Component(value = "aprobSolicTipRetiro")
@@ -26,14 +30,15 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	@Autowired
 	private AprobSolicTipRetiroService service;
 	
-	
+	@Autowired
+	private MonitorProcesosServ monitorService;
 	
 	@Getter
 	private List<SolicitudOut> listSolicitudes;
 	
+	
 	@Getter
-	@Setter
-	private List<ProcesoOut> procesoEjecutado;
+	private List<ObtieneMonitorOut> procesoEjecutado;
 	
 	@Getter
 	@Setter
@@ -45,6 +50,13 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	@Getter
 	private Integer idProceso;
+	
+	@Getter
+	private AprobarSolicResult res;
+	
+	@Getter
+	@Setter
+	private boolean seleccionado;
 	
 	
 	public int getCount() {
@@ -61,17 +73,15 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	public void recuperarSolicPendientes() {
 		try {
-			listSolicitudes = service.getListSolicitudes();
-			recuperarProcesoEjecutado(Integer.valueOf("7014162"));
-			addMessage("Welcome to PrimeFaces!!");
+			listSolicitudes = service.getListSolicitudes();			
 		} catch (Exception e) {
 			GenericException(e);
 		}
 
 	}
-	public void recuperarProcesoEjecutado(Integer idSesion) {
+	public void recuperarProcesoEjecutado() {
 		try {
-			procesoEjecutado = service.getProceso(idSesion);
+			procesoEjecutado = monitorService.getMonitor();
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -110,18 +120,22 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 
 	
-	public void aprobarSolicitud()  {	            
+	public void aprobarSolicitud()  {	
+		addMessage(selectedSolicitud.size()+"");
+	  if(selectedSolicitud.size()>0 && selectedSolicitud!=null)	{
         selectedSolicitud.forEach(p->{
         	try {
-				AprobarSolicResult res=service.aprobarSolicitud(p.getNumSolicitud(), Integer.valueOf(p.getTransaccion().substring(0, 1)), p.getSubTransaccion().substring(0,1));
-				recuperarProcesoEjecutado(recuperarIdProceso(p.getNumSolicitud(),Integer.valueOf(p.getTransaccion().substring(0, 1)), p.getSubTransaccion().substring(0,1)));
-				addMessage("solicitud: "+p.getNumSolicitud()+" msj: "+res.getOcMensaje()); 
+				 res=service.aprobarSolicitud(p.getNumSolicitud(), Integer.valueOf(p.getTransaccion().substring(0, 1)), p.getSubTransaccion().substring(0,1));
+				
         	} catch (Exception e) {
 				GenericException(e);
 			}        	
-        });                
-	    recuperarSolicPendientes();	         
+        });    
+        //recuperarProcesoEjecutado();		
+	    recuperarSolicPendientes();	   
+	   }
 	}
+
 	
 	public void addMessage(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);

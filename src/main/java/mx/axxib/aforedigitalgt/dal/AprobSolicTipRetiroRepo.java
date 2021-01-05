@@ -1,9 +1,6 @@
 package mx.axxib.aforedigitalgt.dal;
 
-import java.util.Date;
 import java.util.List;
-
-import javax.persistence.ColumnResult;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
@@ -14,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
-import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 

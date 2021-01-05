@@ -1,6 +1,8 @@
 package mx.axxib.aforedigitalgt.dal;
 
+
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -12,150 +14,122 @@ import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.DiagnosticoResult;
-import mx.axxib.aforedigitalgt.eml.ProcesResult;
-import mx.axxib.aforedigitalgt.eml.RegSinSalarioOut;
-import mx.axxib.aforedigitalgt.eml.ReporteResult;
+import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 @Repository
 public class ModDesParcProcesoRepo extends RepoBase {
-	
+
 	private final EntityManager entityManager;
 
 	@Autowired
 	public ModDesParcProcesoRepo(final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
-	
-	public DiagnosticoResult getDiagnosticarSolic(Date pdFecha) throws AforeException {
-		  try {	
-			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_SOL_PARC_EXH_SINSALARIO);
+
+	public DiagnosticoResult getRegistrosXProcesar(Date id_dFecha) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PROCESO_FEC_INI);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("pd_Fecha", Date.class, ParameterMode.IN);
-					   	       		
-			query.registerStoredProcedureParameter("pn_Parcialidades", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pn_UnaExhibicion", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pn_Sin_Salario", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pn_Totales", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pn_Pendiente", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_Avance", String.class, ParameterMode.OUT);											
-					
-			query.setParameter("pd_Fecha", pdFecha);		
-			
-			DiagnosticoResult result= new DiagnosticoResult();
-			
-			result.setParcialidades((Integer)query.getOutputParameterValue("pn_Parcialidades"));
-			result.setUnaExhibicion((Integer)query.getOutputParameterValue("pn_UnaExhibicion"));
-			result.setSinSalario((Integer)query.getOutputParameterValue("pn_Sin_Salario"));
-			result.setTotales((Integer)query.getOutputParameterValue("pn_Totales"));
-			result.setPendientes((Integer)query.getOutputParameterValue("pn_Pendiente"));
-			result.setSinSalario((Integer)query.getOutputParameterValue("pc_Avance"));
-			
-			return result;		
-		  }catch(Exception e) {
-				 throw GenericException(e); 
-		  }	
-		}
+			query.registerStoredProcedureParameter("id_dFecha", Date.class, ParameterMode.IN);
 
-	public RegSinSalarioOut getRegSinSalario(Date pdFechaCarga) throws AforeException {
-		  try {	
-			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_MENSUALIDADES);
+			query.registerStoredProcedureParameter("on_Parcialidades", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_UnaExhibicion", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_SinSalario", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Totales", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Pendiente", Integer.class, ParameterMode.OUT);
+
+			query.setParameter("id_dFecha", id_dFecha);
+
+			DiagnosticoResult result = new DiagnosticoResult();
+
+			result.setParcialidades((Integer) query.getOutputParameterValue("on_Parcialidades"));
+			result.setUnaExhibicion((Integer) query.getOutputParameterValue("on_UnaExhibicion"));
+			result.setSinSalario((Integer) query.getOutputParameterValue("on_SinSalario"));
+			result.setTotales((Integer) query.getOutputParameterValue("on_Totales"));
+			result.setPendientes((Integer) query.getOutputParameterValue("on_Pendiente"));
+
+			return result;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<RegisSinSalarioOut> getRegSinSalario(Date id_FechaCarga) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_DET_SAL);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "RegisSinSalarioOut");
+
+			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+
+			query.setParameter("id_FechaCarga", id_FechaCarga);
+
+			List<RegisSinSalarioOut> result = query.getResultList();
+
+			return result;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+
+	public EjecucionResult ejecutar(Date id_FechaCarga, Integer in_Opciones) throws AforeException {
+		try {
+
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_EJECUTAR_PROCESO);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("pd_fecha_carga", Date.class, ParameterMode.IN);
-					   	       		
-			query.registerStoredProcedureParameter("pn_NumSOlicitud", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pn_Nss", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_Curp", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_PrimerApellido", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_SegundoApellido", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_Nombre", String.class, ParameterMode.OUT);											
-					
-			query.setParameter("pd_fecha_carga", pdFechaCarga);		
-			
-			RegSinSalarioOut result= new RegSinSalarioOut();
-			
-			//pendiente la salida, aun no está bien definida
-			
-			
-			return result;		
-		  }catch(Exception e) {
-				 throw GenericException(e); 
-		  }	
+			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("in_Opciones", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("oc_Avance", String.class, ParameterMode.OUT);
+
+			query.setParameter("id_FechaCarga", id_FechaCarga);
+			query.setParameter("in_Opciones", in_Opciones);
+
+			EjecucionResult result = new EjecucionResult();
+
+			result.setOcMensaje((String) query.getOutputParameterValue("oc_Mensaje"));
+			result.setOcAvance((String) query.getOutputParameterValue("oc_Avance"));
+
+			return result;
+		} catch (Exception e) {
+			throw GenericException(e);
 		}
-	
-	public RegSinSalarioOut ejecutar(Date pdFechaCarga, Integer opciones) throws AforeException {
-		  try {	
-			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_EJECUTAR_FECHA);
+	}
+
+	public void guardarDetSal(RegisSinSalarioOut registro) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_GUARDAR_DET_SAL);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("pd_fecha_carga", Date.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("pn_Opciones", Date.class, ParameterMode.IN);
-					   	       		
-			query.registerStoredProcedureParameter("pc_message", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_avance", Integer.class, ParameterMode.OUT);
-														
-					
-			query.setParameter("pd_fecha_carga", pdFechaCarga);		
-			query.setParameter("pd_fecha_carga", opciones);	
-			
-			RegSinSalarioOut result= new RegSinSalarioOut();
-			
-			//pendiente la salida, aún no está bien definida
-			
-			return result;		
-		  }catch(Exception e) {
-				 throw GenericException(e); 
-		  }	
-		}
-	public ReporteResult procesarReporte(Integer p_OpcionReporte, Date pd_fechaInicial) throws AforeException {
-		  try {	
-			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PROCESAR_REPORTES);
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("on_NumSolicitud", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("on_Nss", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("on_sbc_tipo_a", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_curp", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_primer_apellido", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_segundo_apellido", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_nombre", String.class, ParameterMode.IN);
 
-			query.registerStoredProcedureParameter("p_OpcionReporte", Integer.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("pd_fechaInicial", Date.class, ParameterMode.IN);
-					   	       		
-			query.registerStoredProcedureParameter("pc_message", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_avance", Integer.class, ParameterMode.OUT);
-														
-					
-			query.setParameter("p_OpcionReporte", p_OpcionReporte);		
-			query.setParameter("pd_fechaInicial", pd_fechaInicial);	
-			
-			ReporteResult result= new ReporteResult();
-			
-			result.setPcMessage((String)query.getOutputParameterValue("pc_message"));
-			result.setPcAvance((String)query.getOutputParameterValue("pc_avance"));
-			
-			return result;		
-		  }catch(Exception e) {
-				 throw GenericException(e); 
-		  }	
-		}
-	
-	public ProcesResult procesarLayout(Integer pn_Opciones) throws AforeException {
-		  try {	
-			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_LAYOUT_PROCESAR);
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+			query.setParameter("id_FechaCarga", registro.getOdFechaCarga());
+			query.setParameter("on_NumSolicitud", registro.getOnNumSolicitud());
+			query.setParameter("on_Nss", registro.getOnNss());
+			query.setParameter("on_sbc_tipo_a", registro.getOnSbcTipoA());
+			query.setParameter("oc_curp", registro.getOcCurp());
+			query.setParameter("oc_primer_apellido", registro.getOcPrimerApellido());
+			query.setParameter("oc_segundo_apellido", registro.getOcSegundoApellido());
+			query.setParameter("oc_nombre", registro.getOcNombre());
 
-			query.registerStoredProcedureParameter("pn_Opciones", Integer.class, ParameterMode.IN);			
-					   	       		
-			query.registerStoredProcedureParameter("pd_fecha", Date.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_Lote", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pc_Avance", String.class, ParameterMode.OUT);											
-					
-			query.setParameter("pn_Opciones", pn_Opciones);				
-			
-			ProcesResult result= new ProcesResult();
-			
-			result.setPdFecha((Date)query.getOutputParameterValue("pd_fecha"));
-			result.setPcLote((String)query.getOutputParameterValue("pc_Lote"));
-			result.setPcAvance((String)query.getOutputParameterValue("pc_avance"));
-			
-			return result;		
-		  }catch(Exception e) {
-				 throw GenericException(e); 
-		  }	
+		} catch (Exception e) {
+			throw GenericException(e);
 		}
+	}
+
 }
