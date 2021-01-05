@@ -78,11 +78,13 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 
+
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc7</artifactId>
 			<version>12.1.0.1</version>
 		</dependency>
+
 
 		<!-- JSF dependencies -->
 		<dependency>

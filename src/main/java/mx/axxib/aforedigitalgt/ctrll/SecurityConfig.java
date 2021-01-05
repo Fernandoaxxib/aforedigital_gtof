@@ -13,6 +13,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+
 		     http.authorizeRequests().antMatchers("/javax.faces.resource/**", "/login*", "api/*","resources/**","css/**").permitAll()
 		     .anyRequest()
 				.authenticated().and()
@@ -23,15 +24,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.and().logout()
 				.logoutSuccessUrl("/login.jsf").and()
 				.csrf().disable();
+
 	}
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		BCryptPasswordEncoder encoder = passwordEncoder();
 		String result = encoder.encode("1");
+
 //		auth.inMemoryAuthentication().withUser("user").password(result).roles("USER").and().withUser("admin")
 //				.password(result).roles("ADMIN");
 		auth.inMemoryAuthentication().withUser("sygno.afore").password(result).roles("ADMIN");
+
 	}
 
 	@Bean
