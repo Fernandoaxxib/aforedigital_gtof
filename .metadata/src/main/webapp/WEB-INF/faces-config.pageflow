@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16062864314160" configfile="/aforedigital_gtof-develop/src/main/webapp/WEB-INF/faces-config.xml"/>
+
+<pageflow:Pageflow xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf16074470772000" configfile="/aforedigital_gtof/src/main/webapp/WEB-INF/faces-config.xml"/>
+

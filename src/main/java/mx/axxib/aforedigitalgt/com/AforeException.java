@@ -18,9 +18,6 @@ public class AforeException extends Exception {
 	@Getter
 	@Setter
 	private String shortMessage;
-	
-	
-	
-	
+
 
 }

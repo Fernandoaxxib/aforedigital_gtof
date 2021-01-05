@@ -7,23 +7,95 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	
+
 </h:head>
-
 <h:body>
-	<h:form prependId="false">
+	<h:outputStylesheet name="css/estilo-login.css" />
 
-    <p:panelGrid columns="1">
-      <h2>#{msg.login_titulo}</h2>
+	<div class="ui-g est-head">
+		<a href="intro.html"> <h:graphicImage library="Imagenes"
+				name="logo-ban.png" class="est-imgencab" />
+		</a> <a class="afore" href="intro.html"> PLATAFORMA AFORE DIGITAL </a>
+		<ul class="app-bar-menu" id="menu-head">
+			<li><a href="#">ACERCA DE</a></li>
+			<li><a href="#">PRIVACIDAD</a></li>
+		</ul>
+	</div>
+	<div id="noticias">
+		<nav class="fixed">
+		<ul>
+			<li>
+				<h:outputLink  href="" class="est-btn-noticcias"  id="not1" >
+				      <h:graphicImage library="Imagenes" name="noticias.png"
+						class="est-img-not1" />
+			    </h:outputLink>
+			    
+				</li>
+			<li>
+			<h:outputLink href="" class="est-btn-noticcias" >
+				      <h:graphicImage library="Imagenes" name="videos.png"
+						class="est-img-not2" />
+			</h:outputLink>
+			</li>
+		</ul>
+		</nav>
+	</div>
+	<section id="sesion">
+	<div class="ui-g-12 ">
+		<div class="ui-g-6"></div>
+		<div class="ui-g-6" id="log-card">
+			<h:graphicImage library="Imagenes" name="logo-hex.png"
+				class="est-img-logo" />
+			<div class="est-form-login">
+				<div class="card-header ">#{msg.login_titulo}</div>	
+								
+				<div class="card-body">
+					<h:form prependId="false" class="est-form">				
+				     <p:outputLabel  class="est-msg-error" value="#{msg.login_mensaje_error}"
+								rendered="${!empty param['error']}" />
+						<div class="form-group">
+							<h:outputLabel value="#{msg.login_placeholder_usuario}:" />
+							<p:inputText id="username"
+								placeholder="#{msg.login_placeholder_usuario}" />
+							
+						</div>
+						<div class="form-group">
+							<h:outputLabel value="#{msg.login_placeholder_contrasena}:" />
+							<p:password id="password"
+								placeholder="#{msg.login_placeholder_contrasena}" />
+							<br></br>
+						</div>
+						<p:commandButton class="est-btnIS"
+							value="#{msg.login_boton_iniciar}" ajax="false" />
+					</h:form>					
+				</div>	
+				<div class="est-version">[Versión 11.03.01]</div>		
+			</div>
+		</div>
+	</div>
+	</section>
 
-      <p:outputLabel value="#{msg.login_mensaje_error}" rendered="${!empty param['error']}" />
+	
+	<div class="fixed-footer">
+		<div class="ui-g-6">
+			<span>© 2019. Afore XXI Banorte S.A. de C.V. Derechos	Reservados</span>
+		</div>
+		<div class="ui-g-6 est-foot-img">
+			<h:outputLink href="https://twitter.com/XXIBanorte" target="_blank" > <h:graphicImage library="Imagenes"
+					name="icn_tw.svg" width="24" height="24"  style="margin-left: 476px;" />
+			</h:outputLink> 
+			<h:outputLink href="https://www.facebook.com/xxibanorte" target="_blank">
+                       <h:graphicImage library="Imagenes" name="icn_fb.svg"	width="24" height="24" style="margin-left:5px;"  />
+            </h:outputLink>
+            
+            <h:outputLink href="https://www.youtube.com/user/AforeXXIBanorte" target="_blank" >
+                        <h:graphicImage library="Imagenes" name="icn_youtube_circle_.svg"	width="24" height="24" style="margin-left:5px;"/>
+            </h:outputLink>
+            <h:outputLink href="https://mx.linkedin.com/company/afore-xxi-banorte" target="_blank" >
+                       <h:graphicImage library="Imagenes" name="icn_linkedin_circle_.svg"	width="24" height="24" style="margin-left:5px;" />
+            </h:outputLink>
 
-      <p:inputText id="username" placeholder="#{msg.login_placeholder_usuario}" />
-      <p:password id="password" placeholder="#{msg.login_placeholder_contrasena}" />
-
-      <p:commandButton value="#{msg.login_boton_iniciar}" ajax="false" />
-    </p:panelGrid>
-
-  </h:form>
+		</div>
+	    </div>
 </h:body>
 </html>

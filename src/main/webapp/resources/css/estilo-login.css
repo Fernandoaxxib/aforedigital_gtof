@@ -1,0 +1,216 @@
+/*IMANGEN DE FONDO*/
+
+#sesion {
+	background-image:
+		url("/javax.faces.resource/Imagenes/fondo-hex-ani.gif.jsf");
+	height: 600px;
+	background-position: center;
+	background-size: cover;
+	width: 101.2%;
+	margin-left: -7px;
+}
+
+/*HEAD*/
+.est-head {
+	position: fixed;
+	width: 101%;
+	margin-top: -8px;
+	margin-left: -6px;
+	background-color: #FFF;
+	border-bottom: solid 3px #ea324a;
+}
+
+.est-imgencab {
+	margin-top: 5px;
+}
+
+.afore {
+	margin-left: 10px;
+	margin-top: 15px;
+	text-decoration: none;
+	font-family: 'Roboto Condensed', sans-serif;
+	font-size: 14px;
+    color: rgb(0, 82, 155);
+}
+
+.app-bar-menu {
+list-style: none;
+font-style: initial;
+margin-left: -25px;
+height: 38px;
+margin-top: 0px;
+font-family: 'Roboto Condensed', sans-serif;
+}
+.app-bar-menu>li>a {
+    padding: 0 16px;
+    text-decoration: none;
+    font-size: 14px;
+    position: relative;
+}
+
+
+#menu-head ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+
+#menu-head li {
+	float: left;
+}
+
+#menu-head li a {
+	color: grey;
+	text-align: center;
+	text-decoration: none;
+	margin-left: 15px;
+	line-height: 52px;
+	font-size: 15px;
+}
+
+#menu-head li a:hover {
+	color: red;
+}
+
+.app-bar-menu li:hover {
+	border: 1px solid #ea324a;
+}
+
+.fixed {
+	position: fixed;
+	margin: 5% auto;
+	top: 42%;
+	right: 0%;
+	z-index: 1500;
+	float: right;
+}
+
+/*NOTICIAS*/
+#noticias nav li {
+	display: block;
+	margin-top: 6px;
+	margin-right: 5px;
+}
+
+#noticias .est-btn-noticcias {
+	height: 0px;
+display: block;
+color: transparent;
+background-color: #ea324a;
+border: 2px solid #ea324a;
+box-shadow: 0 0 0 0.2rem rgba(229, 230, 230, 0.5);
+border-radius: 2rem;
+padding: 22px 0px;
+width: 46px;
+}
+
+#noticias .est-btn-noticcias:hover {
+	box-shadow: 0 0 0 0.2rem rgba(229, 230, 230, 0.5);
+	background-color: #59ad40 !important;
+	border: #59ad40 !important;
+}
+
+.est-img-not1 {
+	display: block;
+position: relative;
+width: 43px;
+height: 41px;
+bottom: 20px;
+left: 2px;
+}
+
+.est-img-not2 {
+	display: block;
+position: relative;
+width: 43px;
+height: 41px;
+bottom: 20px;
+left: 2px;
+}
+
+/*ESTILO CENTRAL LOGIN*/
+.est-img-logo {
+	height: 183px;
+    margin-left: 90px;
+    margin-top: 56px;
+    width: 308px;
+}
+
+.est-form-login {
+	margin-left: 94px;
+	width: 295px;
+	background-color: #fdfdff;
+	margin-top: 14px;
+}
+
+#sesion .card-body {
+	padding: 0px 1.25rem 0px 1.25rem;
+	color: #3c3c3c;
+	font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+}
+
+#log-card .est-form-login {
+	height: 290px;
+}
+
+.est-form-login:hover {
+	box-shadow: 3px 3px 15px 2px #777575d9;
+}
+
+.form-group {
+	margin-top: 28px;
+}
+
+.est-btnIS {
+	margin-top: 28px;
+}
+
+#sesion .card-header {
+	color: #3c3c3c;
+	font-weight: 500;
+	padding: .7rem;
+	background: #efecec;
+}
+
+.card-header {
+	border-bottom: 1px #eee solid;
+	font-size: 18px;
+	border-radius: 2px 2px 0 0;
+	display: block;
+	text-align: center;
+	font-family: 'Montserrat', sans-serif;
+}
+/*ERROR DE AUTENTICACION*/
+.est-msg-error {
+    color: red;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+
+}
+
+/*FOOTER */
+.fixed-footer {
+    font-family: 'Noto Sans', sans-serif;
+    color: #5d5d5d;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 5px;
+    background-color: #FFF!important;
+    border-top: solid 3px #d2cbcb;
+    z-index: 2000;
+}
+
+.est-foot-img{
+	width: 50%;
+}
+
+.est-version{
+	margin-left: 154px;
+    margin-top: 13px;
+    font-size: 14px;
+    font-family: 'Noto Sans', sans-serif;
+    color: #5d5d5d;
+}

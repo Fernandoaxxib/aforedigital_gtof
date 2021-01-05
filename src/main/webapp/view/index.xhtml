@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/view/layaut.xhtml"
+ xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+
+        <ui:define name="center">
+        
+               <p:messages id="messages" showDetail="true" closable="true">
+		<p:autoUpdate />
+	</p:messages>
+
+	<h:outputText value="#{index.saludo()}" />
+
+	<h:form>
+		<h:outputText value="#{msg.index_tabla_columna_id}" />
+		<p:inputText value="#{index.usuario}"></p:inputText>
+		<p:commandButton action="#{index.getPersonFullNameById}" type="submit"
+			value="#{msg.index_boton_consultarFullName}" ajax="false" />
+
+		<h:outputText value="#{index.count}" />
+	</h:form>
+
+	<h:form onsubmit="this.action='#{request.contextPath}/logout';">
+		<p:commandButton value="#{msg.index_boton_cerrarSesion}" ajax="false" />
+	</h:form>
+
+	</ui:define>
+
+  </ui:composition>
+
+
+
