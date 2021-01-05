@@ -27,7 +27,7 @@ public class ModDesParcReportesRepo extends RepoBase {
 	
 	public EjecucionResult procesarReporte(Integer p_OpcionReporte, Date pd_fechaInicial) throws AforeException {
 		  try {	
-			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PROCESAR_REPORTES);
+			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PROCESAR_REPORTES);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("in_OpcionReporte", Integer.class, ParameterMode.IN);
