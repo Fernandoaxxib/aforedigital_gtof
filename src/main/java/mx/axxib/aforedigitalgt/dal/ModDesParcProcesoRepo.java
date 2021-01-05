@@ -29,8 +29,8 @@ public class ModDesParcProcesoRepo extends RepoBase {
 
 	public DiagnosticoResult getRegistrosXProcesar(Date id_dFecha) throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
-					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PROCESO_FEC_INI);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PROCESO_FEC_INI);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("id_dFecha", Date.class, ParameterMode.IN);
@@ -60,8 +60,8 @@ public class ModDesParcProcesoRepo extends RepoBase {
 	@SuppressWarnings("unchecked")
 	public List<RegisSinSalarioOut> getRegSinSalario(Date id_FechaCarga) throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
-					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_DET_SAL);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_DET_SAL);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "RegisSinSalarioOut");
 
 			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
@@ -80,8 +80,8 @@ public class ModDesParcProcesoRepo extends RepoBase {
 	public EjecucionResult ejecutar(Date id_FechaCarga, Integer in_Opciones) throws AforeException {
 		try {
 
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
-					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_EJECUTAR_PROCESO);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_EJECUTAR_PROCESO);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
@@ -105,8 +105,8 @@ public class ModDesParcProcesoRepo extends RepoBase {
 
 	public void guardarDetSal(RegisSinSalarioOut registro) throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
-					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_GUARDAR_DET_SAL);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_GUARDAR_DET_SAL);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);

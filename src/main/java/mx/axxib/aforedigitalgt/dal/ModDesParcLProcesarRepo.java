@@ -28,8 +28,8 @@ public class ModDesParcLProcesarRepo extends RepoBase {
 	@SuppressWarnings("unchecked")
 	public List<LoteOut> getLotes() throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
-					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_LAYOUT_BTN_LOTES);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_LAYOUT_BTN_LOTES);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteOut");
 
 			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
@@ -42,8 +42,8 @@ public class ModDesParcLProcesarRepo extends RepoBase {
 
 	public ProcesResult generarLayout(Integer pn_Opciones) throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
-					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_LAYOUT_BTN_GENERAR);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_LAYOUT_BTN_GENERAR);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("in_Opciones", Integer.class, ParameterMode.IN);
