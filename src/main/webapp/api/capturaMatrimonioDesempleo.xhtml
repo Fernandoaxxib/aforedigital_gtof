@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form id="form">
+		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_titulo}" />
+    	
+    	<p:panelGrid id="capturaParteUno"  columns="8">
+		        <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_nss}" />
+		        <p:inputText id="capturaNss" value="#{capturaMatrimonioDesempleo.nss}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_curp}" />
+			   	<p:inputText id="capturaCurp" value="#{capturaMatrimonioDesempleo.curp}" />   
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_afiliado}" />
+		        <p:inputText id="capturaAfiliado" value="#{capturaMatrimonioDesempleo.afiliado}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_rfc}" />
+			   	<p:inputText id="capturaRfc" value="#{capturaMatrimonioDesempleo.rfc}" /> 
+		 </p:panelGrid>	
+	 
+	 	<p:panelGrid id="capturaParteDos"  columns="6">
+	 			 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_tipo_retiro}" />
+	 			 <p:inputText id="capturaTipoRetiro" value="#{capturaMatrimonioDesempleo.tipoRetiro}" /> 
+		       	 <p:inputText id="capturaNombreRetiro" value="#{capturaMatrimonioDesempleo.nombreRetiro}" /> 
+	 			 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_tipo_prestacion}" />
+	 			 <p:inputText id="capturaTipoPrestamo" value="#{capturaMatrimonioDesempleo.tipoPrestamo}" /> 
+		       	 <p:inputText id="capturaNombrePrestamo" value="#{capturaMatrimonioDesempleo.nombrePrestamo}" />
+	 	</p:panelGrid>	
+	 	
+	 	
+	 	<p:panelGrid id="capturaParteUnoUno"  columns="6">
+		        <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_no_resolucion}" />
+		        <p:inputText id="noResolucion" value="#{capturaMatrimonioDesempleo.noResolucion}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_desempleo}" />
+			   	<p:inputText id="desempleo" value="#{capturaMatrimonioDesempleo.desempleo}" />   
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_fecha_emision}" />
+		        <p:inputText id="fechaEmision" value="#{capturaMatrimonioDesempleo.fechaEmision}" /> 
+		   		
+		 </p:panelGrid>	
+	 	
+	 			<p:panelGrid id="capturaParteUnoDos"  columns="8">
+		       <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_fecha_vigencia}" />
+			   	<p:inputText id="vigencia" value="#{capturaMatrimonioDesempleo.vigencia}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_aut_matr}" />
+			   	<p:inputText id="autMatricula" value="#{capturaMatrimonioDesempleo.autMatricula}" />   
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_salario_base}" />
+		        <p:inputText id="salarioBase" value="#{capturaMatrimonioDesempleo.salarioBase}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_fecha_folio}" />
+			   	<p:inputText id="fechaFolio" value="#{capturaMatrimonioDesempleo.fechaFolio}" /> 
+		 </p:panelGrid>	
+	 	
+	 		<p:dataTable var="dinero" value="#{capturaMatrimonioDesempleo.siaforesCalculoPesos}">
+	        
+	        <p:columnGroup type="header">
+	            <p:row>
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_txt_siafore}" />
+	                 <p:column headerText="#{msg.captura_Matrimonio_Desempleo_txt_acciones}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_txt_pesos}" />
+	               
+	            </p:row>
+	        </p:columnGroup>
+	 
+	        <p:column>
+	            <h:outputText value="#{dinero.siafore}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{dinero.acciones}">
+	                <f:convertNumber type="currency" currencySymbol="$" />
+	            </h:outputText>
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{dinero.pesos}">
+	                <f:convertNumber type="currency" currencySymbol="$" />
+	            </h:outputText>
+	        </p:column>
+	 
+	        <p:columnGroup type="footer">
+	            <p:row>
+	                <p:column colspan="2" style="text-align:right" footerText="#{msg.reinventir_compra_venta_columna_totales}" />
+	                <p:column footerText="#{dinero.total}" />
+	            </p:row>
+	        </p:columnGroup>
+
+	    </p:dataTable>
+	 	
+	 	<p:panelGrid id="capturaParteUnoUnoDos"  columns="6">
+		        <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_no_empleado}" />
+		        <p:inputText id="noEmpleado" value="#{capturaMatrimonioDesempleo.nss}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_right_fax}" />
+			   	<p:inputText id="rightFax" value="#{capturaMatrimonioDesempleo.curp}" />   
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_fec_inclusion}" />
+		        <p:inputText id="fechaInclusion" value="#{capturaMatrimonioDesempleo.afiliado}" /> 
+		   		
+		 </p:panelGrid>	
+		 
+		 <p:panelGrid id="capturaParteUnoUnoDosDos"  columns="6">
+		        <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_estatus}" />
+		        <p:inputText id="estatus" value="#{capturaMatrimonioDesempleo.nss}" /> 
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_incluido_por}" />
+			   	<p:inputText id="inluidoPor" value="#{capturaMatrimonioDesempleo.curp}" />   
+		   		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_no_solicitud}" />
+		        <p:inputText id="noSolicitud" value="#{capturaMatrimonioDesempleo.afiliado}" /> 
+		   		
+		 </p:panelGrid>	
+	 	
+	 		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        				
+   			    <p:outputLabel for="@next" value="#{msg.captura_Matrimonio_Desempleo_txt_tipo_retiro}:"  />
+   				<p:selectOneMenu id="tipoReporte" value="#{capturaMatrimonioDesempleo.tiposReportes}" style="width:125px">
+           			<f:selectItem itemLabel="Seleccionar Reporte" itemValue="" />
+           			<f:selectItem itemLabel="Reporte Opcion 1" itemValue="#{tipoReporte.reporteTipo1}" />
+            		<f:selectItem itemLabel="Reporte Opcion 2" itemValue="#{tipoReporte.reporteTipo2}" />
+            		
+           		</p:selectOneMenu>
+        		
+   			</h:panelGrid>
+	 	
+	 		<p:panelGrid id="capturaParteCuatro"  columns="8">
+	 			 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_beneficiarios}" />
+	 			 <p:inputText id="beneficiarios" value="#{capturaMatrimonioDesempleo.beneficiarios}" /> 
+	 			 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_porcentaje}" /> 
+		       	 <p:inputText id="porcentaje" value="#{capturaMatrimonioDesempleo.porcentaje}" /> 
+	 			 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_rfc}" />
+	 			 <p:inputText id="rfcc" value="#{capturaMatrimonioDesempleo.rfc}" /> 
+		       	 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_telefono}" />
+		       	 <p:inputText id="telefono" value="#{capturaMatrimonioDesempleo.telefono}" />
+	 	   		  <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_pago_en}" />
+		       	 <p:inputText id="pagoEn" value="#{capturaMatrimonioDesempleo.pagoEn}" />
+	 	    </p:panelGrid>
+	 		
+	 		
+	 		
+	 		<p:panelGrid id="capturaParteCinco"  columns="8">
+	 	
+	 		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_pagar_en}" />
+	 			 <p:inputText id="pagarEn" value="#{capturaMatrimonioDesempleo.pagarEn}" /> 
+	 			 <h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_orden_pago_cuenta}" /> 
+		       	 <p:inputText id="ordenPagoCuenta" value="#{capturaMatrimonioDesempleo.ordenPagoCuenta}" /> 
+	 		<h:outputText value="#{msg.captura_Matrimonio_Desempleo_txt_notas}" />
+    		 <p:inputTextarea rows="3" cols="33" id="notas" value="#{capturaMatrimonioDesempleo.notas}"/>
+	 	
+	 	 	 </p:panelGrid>
+	 	
+	 	
+	 	
+	 		<p:dataTable var="tablaMatrimonio" value="#{capturaMatrimonioDesempleo.capturaMatrimonioTablaOut}">
+	        
+	        <p:columnGroup type="header">
+	            <p:row>
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_inversion}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_tipo_saldo}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_descripcion}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_saldo_actual}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_monto_retirar}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_fecha_aprobacion}" />
+	                <p:column headerText="#{msg.captura_Matrimonio_Desempleo_table_columna_estatus}" />
+	            </p:row>
+	        </p:columnGroup>
+	 
+	        <p:column  >
+	            <h:outputText value="#{tablaMatrimonio.inversion}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{tablaMatrimonio.tipoSaldo}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{tablaMatrimonio.descripcion}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{tablaMatrimonio.saldoActual}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{tablaMatrimonio.montoRetirar}" />
+	        </p:column>
+	 		<p:column>
+	            <h:outputText value="#{tablaMatrimonio.fechaAprovacion}" />
+	        </p:column>
+	        <p:column>
+	            <h:outputText value="#{tablaMatrimonio.estatus}" />
+	        </p:column>
+	    </p:dataTable>
+		
+  </h:form>
+</h:body>
+</html>

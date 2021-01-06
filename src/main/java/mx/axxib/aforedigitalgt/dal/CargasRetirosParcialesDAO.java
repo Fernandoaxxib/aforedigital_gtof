@@ -9,11 +9,12 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.CargasRetirosParcialesOut;
 
 @Repository
-public class CargasRetirosParcialesDAO {
+public class CargasRetirosParcialesDAO extends RepoBase{
 	
 private final EntityManager entityManager;
 	
@@ -25,8 +26,8 @@ private final EntityManager entityManager;
 	
 		
 	@SuppressWarnings("unchecked")
-	public CargasRetirosParcialesOut cargaSolicitudArchivo(String ruta) {
-		
+	public CargasRetirosParcialesOut cargaSolicitudArchivo(String ruta) throws AforeException  {
+		try {
 		String storedFullName =  Constantes.CARGA_RETIRO_PARCIAL_PACKAGE.concat(".").concat(Constantes.CARGA_RETIRO_PARCIAL_CARGA_ARCHIVO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -41,19 +42,25 @@ private final EntityManager entityManager;
 		res.setError((String) query.getOutputParameterValue("P_ERROR"));
 		
 		
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String cargaSolicitudInicio() {
-		
+	public String cargaSolicitudInicio() throws AforeException {
+		try {
 		String storedFullName =  Constantes.CARGA_RETIRO_PARCIAL_PACKAGE.concat(".").concat(Constantes.CARGA_RETIRO_PARCIAL_INICIO_PROCESO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 		query.registerStoredProcedureParameter("P_LINEA", String.class, ParameterMode.OUT);
 					
 		String res = (String) query.getOutputParameterValue("P_LINEA");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 
 }

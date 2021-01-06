@@ -10,13 +10,14 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.VerCheque;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
 
 @Repository
-public class VerDatosChequeDAO {
+public class VerDatosChequeDAO extends RepoBase {
 	
 	private final EntityManager entityManager;
 
@@ -26,7 +27,8 @@ public class VerDatosChequeDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<VerCheque> getVerCheque(String nss) {
+	public List<VerCheque> getVerCheque(String nss) throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.CONSULTA_VER_DETALLE_CHEQUE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerCheque");
 
@@ -38,11 +40,14 @@ public class VerDatosChequeDAO {
 
 		List<VerCheque> res=query.getResultList();
 		return res;
-
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<VerSolicitudChequeOut> getVerSolicitudCheque() {
+	public List<VerSolicitudChequeOut> getVerSolicitudCheque() throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.SOLICITUD_VER_DETALLE_CHEQUE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"SolicitudChequeOut");
 
@@ -62,10 +67,14 @@ public class VerDatosChequeDAO {
 
 		List<VerSolicitudChequeOut> res = query.getResultList();	
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 
 	}
 	@SuppressWarnings("unchecked")
-	public List<VerPagoChequeOut> getVerPagosCheque() {
+	public List<VerPagoChequeOut> getVerPagosCheque() throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.PAGOS_VER_DETALLE_CHEQUE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"PagoChequeOut");
 
@@ -82,6 +91,9 @@ public class VerDatosChequeDAO {
 
 		List<VerPagoChequeOut> res = query.getResultList();	
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 
 	}
 }

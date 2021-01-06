@@ -7,10 +7,11 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 
 @Repository
-public class CargaMasivaDAO {
+public class CargaMasivaDAO extends RepoBase{
 	
 	private final EntityManager entityManager;
 	
@@ -20,8 +21,8 @@ public class CargaMasivaDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String ejecutarArchivoCarga(String ruta, String nombre) {
-		
+	public String ejecutarArchivoCarga(String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_CARGA_MASIVA_PACKAGE.concat(".").concat(Constantes.DETALLE_CARGA_MASIVA_CREAR_ARCHIVO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -36,12 +37,15 @@ public class CargaMasivaDAO {
 		
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String reversaArchivoCarga() {
-		
+	public String reversaArchivoCarga() throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_CARGA_MASIVA_PACKAGE.concat(".").concat(Constantes.DETALLE_CARGA_MASIVA_REVERSA_ARCHIVO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -49,12 +53,15 @@ public class CargaMasivaDAO {
 		
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String desmarcaMasivaCuenta() {
-		
+	public String desmarcaMasivaCuenta() throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_DESMARCA_MASIVA_PACKAGE.concat(".").concat(Constantes.DETALLE_DESMARCA_CUENTAS_MASIVAS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -62,12 +69,15 @@ public class CargaMasivaDAO {
 		
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String desmarcaIndividualCuenta(String nss, String curp, String claveProceso) {
-		
+	public String desmarcaIndividualCuenta(String nss, String curp, String claveProceso) throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_DESMARCA_MASIVA_PACKAGE.concat(".").concat(Constantes.DETALLE_DESMARCA_MASIVA_INDIVIDUAL_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -83,12 +93,15 @@ public class CargaMasivaDAO {
 		
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String consultaMarcas(String claveProceso,String descripcionProceso) {
-		
+	public String consultaMarcas(String claveProceso,String descripcionProceso) throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_DESMARCA_MASIVA_PACKAGE.concat(".").concat(Constantes.DETALLE_CONSULTAR_MARCAS_CLAVE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -103,12 +116,15 @@ public class CargaMasivaDAO {
 				
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String consultaMarcasArchivo(String ruta, String nombre) {
-		
+	public String consultaMarcasArchivo(String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.DETALLE_CONSULTAR_MARCAS_PACKAGE.concat(".").concat(Constantes.DETALLE_CONSULTAR_MARCAS_ARCHIVO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -121,6 +137,9 @@ public class CargaMasivaDAO {
 		
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 }

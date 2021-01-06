@@ -7,10 +7,11 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
 
 @Repository
-public class PermisoDAO {
+public class PermisoDAO extends RepoBase{
 
 	private final EntityManager entityManager;
 
@@ -20,7 +21,8 @@ public class PermisoDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public PermisoResult getPermisosUsuario(String usuario) {
+	public PermisoResult getPermisosUsuario(String usuario) throws AforeException {
+		try {
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery("PKG_ASISTE.SP_OBTIENE_PERMISOS_USUARIO",
 				"Permiso");
 
@@ -34,5 +36,8 @@ public class PermisoDAO {
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		res.setDatos(query.getResultList());	
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 }

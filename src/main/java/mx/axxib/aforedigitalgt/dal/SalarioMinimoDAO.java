@@ -10,11 +10,12 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 
 @Repository
-public class SalarioMinimoDAO  {
+public class SalarioMinimoDAO extends RepoBase {
 
 	
 private final EntityManager entityManager;
@@ -25,9 +26,9 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SalarioMinimoOut getSalarioMinimo(Integer usuario, Date fecha) {
+	public SalarioMinimoOut getSalarioMinimo(Integer usuario, Date fecha) throws AforeException {
 		
-		
+		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALARIO_MINIMO_PACKAGE).concat(".").concat(Constantes.SALARIO_MINIMO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "SalarioMinimoOut");
 		
@@ -43,8 +44,10 @@ private final EntityManager entityManager;
 		res.setMontoDiario((Integer) query.getOutputParameterValue("MONTO_DIARIO"));	
 		res.setUserId((Integer) query.getOutputParameterValue("USR_ID"));
 		res.setFechaUltimo((Date) query.getOutputParameterValue("FCH_ULT_ACT") );
-				
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 }

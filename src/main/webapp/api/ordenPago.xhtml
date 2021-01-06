@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputScript library="js" name="calendar-localization.js" />
+</h:head>
+
+<h:body>
+	<h:form id="form">
+				<h:outputText value="#{msg.orden_pago_txt_titulo}" />
+				
+				
+				<p:panelGrid id="ingresarFecha"  columns="2"> 
+				
+				 <p:outputLabel for="fechaInicio" value="#{msg.orden_pago_txt_fecha_inicio}" />
+			     <p:datePicker id="fechaInicio" value="#{ordenPago.fechaInicio}" showIcon="true" pattern="dd-MMM-yyyy" locale="es"/>
+				
+				
+				 <p:outputLabel for="fechaUltimo" value="#{msg.orden_pago_txt_fecha_final}" />
+			     <p:datePicker id="fechaUltimo" value="#{ordenPago.fechaUltima}" showIcon="true" pattern="dd-MMM-yyyy" locale="es"/>
+				
+					
+				</p:panelGrid> 
+				 
+				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        				
+   			    <p:outputLabel for="@next" value="#{msg.orden_pago_txt_tipo_reporte}:"  />
+   				<p:selectOneMenu id="tipoReporte" value="#{ordenPago.tiposReportes}" style="width:125px">
+           			<f:selectItem itemLabel="Seleccionar Reporte" itemValue="" />
+           			<f:selectItem itemLabel="Reporte Opcion 1" itemValue="#{tipoReporte.reporteTipo1}" />
+            		<f:selectItem itemLabel="Reporte Opcion 2" itemValue="#{tipoReporte.reporteTipo2}" />
+            		
+           		</p:selectOneMenu>
+        		
+   				 </h:panelGrid>
+   				 
+   				 <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        			<p:selectBooleanCheckbox value="#{ordenPago.radio1}" itemLabel="Enviar a la Impresora"/>
+        			<p:selectBooleanCheckbox value="#{ordenPago.radio2}" itemLabel="Generacion de Archivo"/>
+   				  </h:panelGrid>
+   				  
+  						<p:panelGrid id="verEjecutarProceso"  columns="2"> 
+	 								        
+					   		<h:outputText value="#{msg.orden_pago_txt_nombre}" />
+						   	<p:inputText id="noCuenta" value="#{ordenPago.nombre}" />   
+												 	
+							<p:commandButton action="#{ordenPago.generaReporte}"
+							type="submit" value="#{msg.orden_pago_boton_genera_reporte}" ajax="false" />
+ 	
+						</p:panelGrid> 
+					
+	 					 
+ 					
+  	</h:form>
+</h:body>
+</html>

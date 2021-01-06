@@ -10,12 +10,13 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoImssIssteOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoNegativoOut;
 
 @Repository
-public class SaldosImssIssteDAO {
+public class SaldosImssIssteDAO extends RepoBase{
 	
 private final EntityManager entityManager;
 	
@@ -26,8 +27,8 @@ private final EntityManager entityManager;
 	
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoImssIssteOut> ejecutarImssCarga(String ruta, String nombre) {
-		
+	public List<ConsultaSaldoImssIssteOut> ejecutarImssCarga(String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CARGA_IMSS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
@@ -42,12 +43,15 @@ private final EntityManager entityManager;
 		
 		List<ConsultaSaldoImssIssteOut> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoImssIssteOut> ejecutarImssReporte(String ruta, String nombre) {
-		
+	public List<ConsultaSaldoImssIssteOut> ejecutarImssReporte(String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CONSULTAR_IMSS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
@@ -62,12 +66,15 @@ private final EntityManager entityManager;
 		
 		List<ConsultaSaldoImssIssteOut> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoImssIssteOut> ejecutarIssteCarga(String ruta, String nombre) {
-		
+	public List<ConsultaSaldoImssIssteOut> ejecutarIssteCarga(String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CARGA_ISSTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
@@ -82,12 +89,15 @@ private final EntityManager entityManager;
 		
 		List<ConsultaSaldoImssIssteOut> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoImssIssteOut> ejecutarIssteReporte(String ruta, String nombre) {
-		
+	public List<ConsultaSaldoImssIssteOut> ejecutarIssteReporte(String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CONSULTAR_ISSTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoImssIssteOut");
 
@@ -102,12 +112,15 @@ private final EntityManager entityManager;
 		
 		List<ConsultaSaldoImssIssteOut> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoNegativoOut> ejecutarReporteNegativo(String ruta, String nombre,Date fechaMovimiento) {
-		
+	public List<ConsultaSaldoNegativoOut> ejecutarReporteNegativo(String ruta, String nombre,Date fechaMovimiento) throws AforeException {
+		try {
 		String storedFullName =  Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE.concat(".").concat(Constantes.SALDOS_CONSULTAR_ISSTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultaSaldoNegativoOut");
 
@@ -122,6 +135,9 @@ private final EntityManager entityManager;
 		
 		List<ConsultaSaldoNegativoOut> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 

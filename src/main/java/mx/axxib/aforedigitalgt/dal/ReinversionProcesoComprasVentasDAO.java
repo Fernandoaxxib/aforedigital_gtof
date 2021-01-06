@@ -10,12 +10,13 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ReinversionProcesoOut;
 
 
 @Repository
-public class ReinversionProcesoComprasVentasDAO {
+public class ReinversionProcesoComprasVentasDAO extends RepoBase{
 	
 private final EntityManager entityManager;
 	
@@ -25,8 +26,8 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ReinversionProcesoOut> getEjecutarProceso(Integer operacion, Integer codSistema,Integer codAgencia,String codEmpresa,Date fechaIni,Date fechaFin,Date fechaLote) {
-		
+	public List<ReinversionProcesoOut> getEjecutarProceso(Integer operacion, Integer codSistema,Integer codAgencia,String codEmpresa,Date fechaIni,Date fechaFin,Date fechaLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_PROCESO_BOTON_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ReinversionProcesoOut");
 		
@@ -57,12 +58,14 @@ private final EntityManager entityManager;
 		
 		List<ReinversionProcesoOut> res = query.getResultList();
 		return res;
-		
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String crearReporteCompras(String idLote) {
-		
+	public String crearReporteCompras(String idLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_BOTON_GENERA_REPORTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -72,12 +75,15 @@ private final EntityManager entityManager;
 		query.setParameter("p_ID_LOTE",idLote);
 				
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String procesoCompras(String idLote, Date fechaLote) {
-		
+	public String procesoCompras(String idLote, Date fechaLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_BOTON_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -89,12 +95,15 @@ private final EntityManager entityManager;
 		query.setParameter("p_FechaLote",fechaLote);
 			
 		String res = (String) query.getOutputParameterValue("p_Message");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String detalleCompra(String idLote) {
-		
+	public String detalleCompra(String idLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_COMPRA_LOTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -104,13 +113,16 @@ private final EntityManager entityManager;
 		
 			
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	
 	@SuppressWarnings("unchecked")
-	public String crearReporteVentas(String idLote) {
-		
+	public String crearReporteVentas(String idLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_VENTAS_BOTON_GENERA_REPORTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -120,12 +132,15 @@ private final EntityManager entityManager;
 		query.setParameter("p_ID_LOTE",idLote);
 				
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String procesoVentas(String idLote, Date fechaLote) {
-		
+	public String procesoVentas(String idLote, Date fechaLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_VENTAS_BOTON_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -137,12 +152,15 @@ private final EntityManager entityManager;
 		query.setParameter("p_FechaLote",fechaLote);
 			
 		String res = (String) query.getOutputParameterValue("p_Message");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String detalleVentas(String idLote) {
-		
+	public String detalleVentas(String idLote) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REINVERSION_PROCESO_COMPRAS_VENTAS_PACKAGE.concat(".").concat(Constantes.REINVERSION_COMPRAS_VENTAS_LOTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -152,7 +170,10 @@ private final EntityManager entityManager;
 		
 			
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	
 }

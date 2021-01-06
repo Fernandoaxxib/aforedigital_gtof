@@ -9,11 +9,12 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoCliente;
 
 @Repository
-public class ConsultaSaldoClienteDAO {
+public class ConsultaSaldoClienteDAO extends RepoBase{
 
 	private final EntityManager entityManager;
 	
@@ -23,8 +24,8 @@ public class ConsultaSaldoClienteDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoCliente> getConsultaNombre(){
-		
+	public List<ConsultaSaldoCliente> getConsultaNombre() throws AforeException{
+		try {
 		String storedFullName =  Constantes.DETALLE_SALDO_PACKAGE.concat(".").concat(Constantes.CONSULTA_VER_SALDO_NOMBRE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "ConsultaSaldo");
 		
@@ -32,10 +33,13 @@ public class ConsultaSaldoClienteDAO {
 		
 		List<ConsultaSaldoCliente> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 	@SuppressWarnings("unchecked")
-	public List<ConsultaSaldoCliente> getConsultaID(){
-		
+	public List<ConsultaSaldoCliente> getConsultaID() throws AforeException{
+		try {
 		String storedFullName =  Constantes.DETALLE_SALDO_PACKAGE.concat(".").concat(Constantes.CONSULTA_VER_SALDO_ID_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "ConsultaSaldo");
 		
@@ -43,5 +47,8 @@ public class ConsultaSaldoClienteDAO {
 		
 		List<ConsultaSaldoCliente> res = query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 }

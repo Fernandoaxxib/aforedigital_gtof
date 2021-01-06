@@ -10,13 +10,14 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ConsultarNombreCuentaOut;
 import mx.axxib.aforedigitalgt.eml.ConsultarTraspasosOut;
 import mx.axxib.aforedigitalgt.eml.VerCheque;
 
 @Repository
-public class ConsultarTraspasosDAO {
+public class ConsultarTraspasosDAO extends RepoBase{
 	
 	private final EntityManager entityManager;
 
@@ -26,7 +27,8 @@ public class ConsultarTraspasosDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultarTraspasosOut> getConsultarTraspasos() {
+	public List<ConsultarTraspasosOut> getConsultarTraspasos() throws AforeException {
+		try {
 		String storedFullName =  Constantes.CONSULTAR_TRASPASOS_PACKAGE.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarTraspasosOut");
 
@@ -46,11 +48,15 @@ public class ConsultarTraspasosDAO {
 
 		List<ConsultarTraspasosOut> res=query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultarNombreCuentaOut> getConsultarCurp() {
+	public List<ConsultarNombreCuentaOut> getConsultarCurp() throws AforeException {
+		try {
 		String storedFullName =  Constantes.CONSULTAR_TRASPASOS_PACKAGE.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_CURP_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarTraspasosOut");
 
@@ -60,11 +66,15 @@ public class ConsultarTraspasosDAO {
 		
 		List<ConsultarNombreCuentaOut> res=query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultarNombreCuentaOut> getConsultarNss() {
+	public List<ConsultarNombreCuentaOut> getConsultarNss() throws AforeException {
+		try {
 		String storedFullName =  Constantes.CONSULTAR_TRASPASOS_PACKAGE.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_NSS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarTraspasosOut");
 
@@ -74,6 +84,9 @@ public class ConsultarTraspasosDAO {
 		
 		List<ConsultarNombreCuentaOut> res=query.getResultList();
 		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 
 	}
 }

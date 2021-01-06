@@ -9,10 +9,11 @@ import javax.persistence.StoredProcedureQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 
 @Repository
-public class ReporteParcialDAO {
+public class ReporteParcialDAO extends RepoBase {
 	
 private final EntityManager entityManager;
 	
@@ -22,8 +23,8 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String crearReporteParcial(Date fechaIni,Date fechaFin, String ruta, String nombre) {
-		
+	public String crearReporteParcial(Date fechaIni,Date fechaFin, String ruta, String nombre) throws AforeException {
+		try {
 		String storedFullName =  Constantes.REPORTE_PARCIAL_PACKAGE.concat(".").concat(Constantes.REPORTE_PARCIAL_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
@@ -40,7 +41,10 @@ private final EntityManager entityManager;
 		query.setParameter("p_Archivo", nombre);
 		
 		String res = (String) query.getOutputParameterValue("p_Mensaje");
-		return res;	
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
 
 }
