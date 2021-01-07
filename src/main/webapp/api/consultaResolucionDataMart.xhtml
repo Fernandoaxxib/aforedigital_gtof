@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>
+	<h:form id="form">
+
+    <p:panelGrid id="verNNS"  columns="2">
+      
+   		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/>
+	    
+   		
+   		<p:commandButton action="#{consultaResolucionDataMart.getCuentaNombre}"
+			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
+	</p:panelGrid>	
+		
+	 <p:panelGrid id="verDetalle" columns="1">	
+		<p:dataTable id="verTable"  var="ver" value="#{consultaResolucionDataMart.consultarNombreCuentaOut}">
+		    <p:column headerText="#{msg.cheque_columna_codigo}">
+		        <h:outputText value="#{ver.cuenta}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_columna_nombre}">
+		        <h:outputText value="#{ver.nombre}" />
+		    </p:column>
+		
+		</p:dataTable>
+	 <p:commandButton action="#{consultaResolucionDataMart.getConsultarTraspasos}"
+			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
+	
+    </p:panelGrid>
+  	
+  	 <p:panelGrid id="verClienteMart" columns="6">	
+  	  
+  	<h:outputText value="#{msg.consulta_resolucion_data_mart_nss}" />
+  	<h:outputText for="@previous" value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_NSS_TRABAJADOR}" />
+  	<h:outputText value="#{msg.consulta_resolucion_data_mart_curp}" />
+	<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_CURP}" />
+  	<h:outputText value="#{msg.consulta_resolucion_data_mart_datamart}" />
+	<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_NOMBRE_DATAMART}" />
+  	
+  	 </p:panelGrid>
+  	 
+  	  <p:panelGrid id="verClienteMart2" columns="10">	
+  		<h:outputText value="#{msg.consulta_resolucion_data_mart_nombre}" />
+		<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_NOMBRE_AFORE}" />
+  		<h:outputText value="#{msg.consulta_resolucion_data_mart_paterno}" />
+		<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_PATERNO_AFORE}" />
+  		<h:outputText value="#{msg.consulta_resolucion_data_mart_materno}" />
+		<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_MATERNO_AFORE}" />
+  		<h:outputText value="#{msg.consulta_resolucion_data_mart_derecho}" />
+		<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_DERECHO}" />
+  		<h:outputText value="#{msg.consulta_resolucion_data_mart_descripcion}"   />
+		<h:outputText value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut.P_DESC_DERECHO}"  rows="6" cols="30"/>
+  	  </p:panelGrid>
+	 
+	  <p:panelGrid id="verPagoCheque" columns="1">	
+		<p:dataTable id="verTablePago"  var="verDataMart" value="#{consultaResolucionDataMart.listConsultaResolucionDataMartOut}">
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_sec}">
+		        <h:outputText value="#{verDataMart.P_SEC_PENSION}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_mov}">
+		        <h:outputText value="#{verDataMart.P_TIPO_MOVIMTO}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_reg}">
+		        <h:outputText value="#{verDataMart.P_REGIMEN}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_tr}">
+		        <h:outputText value="#{verDataMart.P_TIPO_RETIRO}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_ts}">
+		        <h:outputText value="#{verDataMart.P_TIPO_SEGURO}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_tp}">
+		        <h:outputText value="#{verDataMart.P_TIPO_PENSION}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_tpr}">
+		        <h:outputText value="#{verDataMart.P_TIPO_PRESTACION}" />
+		    </p:column>
+		    
+		     <p:column headerText="#{msg.consulta_resolucion_data_mart_art_n}">
+		        <h:outputText value="#{verDataMart.P_ART_NEGATIVA}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_frac_NEG}">
+		        <h:outputText value="#{verDataMart.P_FRACC_NEGATIVA}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_no_cons}">
+		        <h:outputText value="#{verDataMart.P_NUM_CONSIDERANDO}" />
+		    </p:column>
+		 	
+		 	  <p:column headerText="#{msg.consulta_resolucion_data_mart_no_resol}">
+		        <h:outputText value="#{verDataMart.P_NUM_RESOLUCION}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_fec_ini_pen}">
+		        <h:outputText value="#{verDataMart.P_FEC_INI_PENSION}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_fec_emi_res}">
+		        <h:outputText value="#{verDataMart.P_FEC_EMI_RESOLUCION}" />
+		    </p:column>
+		      <p:column headerText="#{msg.consulta_resolucion_data_mart_porc}">
+		        <h:outputText value="#{verDataMart.P_PORCENTAJE_VALUACION}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_semcot}">
+		        <h:outputText value="#{verDataMart.P_SEMANAS_COTIZADAS}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_diag}">
+		        <h:outputText value="#{verDataMart.P_DIAG_REGISTRO}" />
+		    </p:column>
+		 	
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_sbca}">
+		        <h:outputText value="#{verDataMart.P_SBC_TIPO_A}" />
+		    </p:column>
+		 	
+		 	<p:column headerText="#{msg.consulta_resolucion_data_mart_sbcb}">
+		        <h:outputText value="#{verDataMart.P_SBC_TIPO_B}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_comp}">
+		        <h:outputText value="#{verDataMart.P_PAGO_COMP}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_retiro_org}">
+		        <h:outputText value="#{verDataMart.P_MONTO_RETIRO_ORG}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_saldo_ant}">
+		        <h:outputText value="#{verDataMart.P_SALDO_ANT}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.consulta_resolucion_data_mart_cs}">
+		        <h:outputText value="#{verDataMart.P_TIPO_AP_CS}" />
+		    </p:column>
+		    
+		 	
+		</p:dataTable>
+	
+	
+    </p:panelGrid>
+  
+		
+  </h:form>
+</h:body>
+</html>

@@ -24,7 +24,7 @@ public class ConsultarTraspasosService extends ServiceBase {
 			}
 		}
 	
-	public List<ConsultarNombreCuentaOut> getConsultarCurp() throws AforeException {
+	public ConsultarNombreCuentaOut getConsultarCurp() throws AforeException {
 		try {
 			return consultarTraspasos.getConsultarCurp();
 		} catch (Exception e) {
@@ -32,7 +32,7 @@ public class ConsultarTraspasosService extends ServiceBase {
 		}
 	}
 
-	public List<ConsultarNombreCuentaOut> getConsultarNss() throws AforeException {
+	public ConsultarNombreCuentaOut getConsultarNss() throws AforeException {
 		try {
 			return consultarTraspasos.getConsultarNss();
 		} catch (Exception e) {

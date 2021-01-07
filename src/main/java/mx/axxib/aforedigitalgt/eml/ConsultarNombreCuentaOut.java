@@ -12,15 +12,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
-@MappedSuperclass
-@SqlResultSetMappings({
-		@SqlResultSetMapping(name = "ConsultarNombreCuentaOut", classes = { @ConstructorResult(targetClass = ConsultarNombreCuentaOut.class, columns = {
-
-				@ColumnResult(name ="P_CUENTA", type = String.class),
-				@ColumnResult(name ="P_NOMBRE", type = String.class)
-		}) })
-})
+//@AllArgsConstructor
+//@MappedSuperclass
+//@SqlResultSetMappings({
+//		@SqlResultSetMapping(name = "ConsultarNombreCuentaOut", classes = { @ConstructorResult(targetClass = ConsultarNombreCuentaOut.class, columns = {
+//
+//				@ColumnResult(name ="P_CUENTA", type = String.class),
+//				@ColumnResult(name ="P_NOMBRE", type = String.class)
+//		}) })
+//})
 
 public class ConsultarNombreCuentaOut {
 	

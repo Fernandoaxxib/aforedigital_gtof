@@ -55,7 +55,7 @@ public class ConsultarTraspasosDAO extends RepoBase{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultarNombreCuentaOut> getConsultarCurp() throws AforeException {
+	public ConsultarNombreCuentaOut getConsultarCurp() throws AforeException {
 		try {
 		String storedFullName =  Constantes.CONSULTAR_TRASPASOS_PACKAGE.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_CURP_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarTraspasosOut");
@@ -64,7 +64,9 @@ public class ConsultarTraspasosDAO extends RepoBase{
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
 		
-		List<ConsultarNombreCuentaOut> res=query.getResultList();
+		ConsultarNombreCuentaOut res= new ConsultarNombreCuentaOut ();
+		res.setCuenta((String) query.getOutputParameterValue("P_CUENTA"));
+		res.setNombre((String) query.getOutputParameterValue("P_NOMBRE"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -73,7 +75,7 @@ public class ConsultarTraspasosDAO extends RepoBase{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ConsultarNombreCuentaOut> getConsultarNss() throws AforeException {
+	public ConsultarNombreCuentaOut getConsultarNss() throws AforeException {
 		try {
 		String storedFullName =  Constantes.CONSULTAR_TRASPASOS_PACKAGE.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_NSS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarTraspasosOut");
@@ -82,7 +84,9 @@ public class ConsultarTraspasosDAO extends RepoBase{
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
 		
-		List<ConsultarNombreCuentaOut> res=query.getResultList();
+		ConsultarNombreCuentaOut res= new ConsultarNombreCuentaOut ();
+		res.setCuenta((String) query.getOutputParameterValue("P_CUENTA"));
+		res.setNombre((String) query.getOutputParameterValue("P_NOMBRE"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
