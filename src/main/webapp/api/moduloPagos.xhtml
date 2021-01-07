@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+</h:head>
+
+<h:body>    
+    <h:outputScript library="js" name="calendar-localization.js"></h:outputScript>
+	<h:form>
+	    <p:growl id="msj" life="2000" />
+	    <p:panelGrid columns="2" layout="grid">
+			<p:outputPanel style="text-align:right">
+				<h:outputLabel value="#{msg.modulo_pagos_titulo1}" 	for="tituloModPagos" style="font-size:20px;text-align:center" />
+			</p:outputPanel>
+			<p:outputPanel style="text-align:center">
+				<p:commandButton action="#{moduloPagos.refresh}" type="submit" value="#{msg.modulo_pagos_btn_refresh}" update="msj" ajax="true"  />
+			</p:outputPanel>
+		</p:panelGrid>
+		<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center">
+			<p:panel id="pFondos" header="#{msg.modulo_pagos_titulo2}" style="margin-bottom:20px;font-size:12px">
+			   <p:panelGrid columns="2" cellpadding="5" layout="grid">
+				<p:outputLabel for="slPagos" value="#{msg.modulo_pagos_label_pagosAfil}" />
+				<p:selectOneMenu id="slPagos" value="#{moduloPagos.pagosAfiliados}" style="width:250px">					
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_basicos}"     itemValue="#{msg.modulo_pagos_item_basicas}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_adicionales}" itemValue="#{msg.modulo_pagos_item_adicionales}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"       itemValue="#{msg.modulo_pagos_item_todfon}" />									
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="fProceso" value="#{msg.modulo_pagos_label_fechaProceso}" />				
+                <p:calendar id="fProceso" value="#{moduloPagos.fechaProceso}"  locale="es" navigator="true" pattern="dd-MM-yyyy" showOn="button" style="width:250px">
+                  <p:ajax  listener="#{moduloPagos.fechaProceso}" />
+                </p:calendar>
+			    
+			    <p:commandButton type="submit"  value="#{msg.modulo_pagos_btn_generaFondos}" action="#{moduloPagos.generarFondos}" update="msj" />
+			   </p:panelGrid>	
+			</p:panel>
+															
+			<p:panel id="pRetiros" header="#{msg.modulo_pagos_titulo3}" style="margin-bottom:20px;font-size:12px">
+			  <p:panelGrid columns="2" cellpadding="5" layout="grid">
+				<p:outputLabel for="slRetiros" value="#{msg.modulo_pagos_label_procesRetiros}" />
+				<p:selectOneMenu id="slRetiros" value="#{moduloPagos.procesosRetiros}" style="width:250px">					
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_dispos}"     itemValue="#{msg.modulo_pagos_item_disposv}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_parciales}"  itemValue="#{msg.modulo_pagos_item_parcV}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_retVolun}"   itemValue="#{msg.modulo_pagos_item_volunV}" />	
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_penMinGar}"  itemValue="#{msg.modulo_pagos_item_pmgV}" />	
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"      itemValue="#{msg.modulo_pagos_item_todV}" />									
+				</p:selectOneMenu>			  			  
+			  
+				<p:outputLabel for="slInstitucion" value="#{msg.modulo_pagos_label_institucion}" />
+				<p:selectOneMenu id="slInstitucion" value="#{moduloPagos.institucion}" style="width:250px">					
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_issste}"     itemValue="#{msg.modulo_pagos_item_isssteV}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_imss}"  itemValue="#{msg.modulo_pagos_item_imssV}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"   itemValue="#{msg.modulo_pagos_item_todIns}" />															
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="sltiposPagos" value="#{msg.modulo_pagos_label_tiposPagos}" />
+				<p:selectOneMenu id="sltiposPagos" value="#{moduloPagos.tiposPagos}" style="width:250px">					
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_tranInter}"     itemValue="#{msg.modulo_pagos_item_ti}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_ordPagos}"  itemValue="#{msg.modulo_pagos_item_op}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_cheques}"   itemValue="#{msg.modulo_pagos_item_ch}" />	
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_tdp}"  itemValue="#{msg.modulo_pagos_item_tdpv}" />
+					<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"   itemValue="#{msg.modulo_pagos_item_todPag}" />															
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="fProcesoP" value="#{msg.modulo_pagos_label_fechaProceso}" />				
+                <p:calendar id="fProcesoP" value="#{moduloPagos.fechaProcesoPagos}"  locale="es" navigator="true" pattern="dd-MM-yyyy" showOn="button" style="width:250px"/>
+			  
+			    <p:commandButton type="submit"  value="#{msg.modulo_pagos_btn_generaPagos}" action="#{moduloPagos.generarPagos}" update="msj"/>
+			  </p:panelGrid>
+			</p:panel>
+		</p:panelGrid>
+	</h:form>
+</h:body>
+</html>

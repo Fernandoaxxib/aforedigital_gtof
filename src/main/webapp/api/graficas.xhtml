@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+</h:head>
+<h:body>
+	<h:form>
+	    <p:growl id="out3" showDetail="true" skipDetailIfEqualsSummary="true" />
+		
+		<p:panel id="basic" header="HISTÓRICO DE APROBACIONES EN RETIROS."
+			style="margin-bottom:20px">
+
+
+			<h:panelGrid columns="2" layout="flex"
+				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
+				styleClass="customPanelGrid" contentStyleClass="ui-fluid">
+				<h:outputLabel for="periodoIni" value="PERIODO DEL:" />
+				
+				<p:selectOneMenu id="fInicio" value="#{graficasCtrll.fechaInicioCombo}" panelStyle="width:180px" effect="fade" style="width:160px">										
+					<p:ajax event="change" listener="#{graficasCtrll.reset}" update="fFin" />   
+					<f:selectItem itemLabel="------" itemValue="0" />
+					<f:selectItems value="#{graficasCtrll.fechasInicio}"/>                    
+				</p:selectOneMenu>
+				
+			    <h:outputLabel for="periodoFin" value="AL:" />
+				
+				<p:selectOneMenu id="fFin" value="#{graficasCtrll.fechaFinCombo}" panelStyle="width:180px" effect="fade" style="width:160px">                         							
+					<p:ajax event="change" listener="#{graficasCtrll.onCountryChange}" update="out" />   
+					<f:selectItem itemLabel="------" itemValue="0" />
+					<f:selectItems value="#{graficasCtrll.fechasFin}"/>                    
+				</p:selectOneMenu>
+			</h:panelGrid>
+			
+            <h:panelGrid id="out" columns="2" style="margin-bottom:10px" cellpadding="5">
+               <h:outputLabel for="totalGeneral" value="TOTAL GENERAL EN PARCIALES: " />
+               <h:outputLabel for="totalGR" value="#{graficasCtrll.totParcial}" />
+               <h:outputLabel for="totalGeneral" value="TOTAL GENERAL EN TOTALES: " />
+               <h:outputLabel for="totalGTR" value="#{graficasCtrll.totTotal}" />
+               <p:commandButton actionListener="#{graficasCtrll.init}" ajax="true" update="basic" type="submit" value="getGrafica"  />
+               
+            </h:panelGrid>
+            <h:panelGrid id="grafica" style="margin-bottom:10px" cellpadding="5">
+               <p:lineChart  id="out2" model="#{graficasCtrll.lineModel}" style="width: 100%; height: 200px;" />               
+            </h:panelGrid>						
+			
+			
+			
+		</p:panel>
+		<p:commandButton actionListener="#{graficasCtrll.exit}" ajax="false" action="/login.jsf"  type="submit" value="Salir"  />
+		 						
+	</h:form>
+
+</h:body>
+
+
+</html>
