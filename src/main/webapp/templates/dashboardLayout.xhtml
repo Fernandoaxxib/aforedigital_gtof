@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	 
+<h:head>
+  <title>DASHBOARD</title>
+</h:head>
+<h:body>
+	<p:layout fullPage="true">		
+		<p:layoutUnit position="north" size="80" resizable="false" closable="true" collapsible="true">
+            <ui:insert name="top">
+		      <div id="header">
+		        <div id="logo">		        
+		          
+		        </div>
+		      </div>		   
+		    </ui:insert>
+        </p:layoutUnit>
+
+        <p:layoutUnit position="west" resizable="false" size="500" minSize="400" maxSize="400">       
+          <ui:insert name="leftmenu">
+             
+                 <ui:include  src="/api/graficas.xhtml" />
+            
+           </ui:insert>        
+        </p:layoutUnit>
+      
+        <p:layoutUnit position="center">
+                   <ui:insert name="content">
+                        Select one of the links on the left to proceed.
+                    </ui:insert>
+        </p:layoutUnit>
+	    
+	    <p:layoutUnit position="south" size="70" closable="true" collapsible="true">
+                    <ui:insert name="botton">Derechos  Reservados</ui:insert>	
+        </p:layoutUnit>
+	      
+	    
+	</p:layout>
+	
+	
+</h:body>
+</html>

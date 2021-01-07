@@ -11,6 +11,7 @@
 </h:head>
 
 <h:body>
+
 	<p:messages id="messages" showDetail="true" closable="true">
 		<p:autoUpdate />
 	</p:messages>
@@ -86,7 +87,7 @@
 				<h:outputText value="#{job.nextDate}" />
 			</p:column>
 
-			<p:column headerText="#{msg.monitor_job_columna_what}">
+			<p:column headerText="#{msg.monitor_job_columna_what}" width="50%">
 				<h:outputText value="#{job.what}" />
 			</p:column>
 
@@ -99,7 +100,6 @@
 			type="submit" value="#{msg.monitor_boton_ejecutar}" ajax="false" />
 
 	</h:form>
-
 
 </h:body>
 </html>
