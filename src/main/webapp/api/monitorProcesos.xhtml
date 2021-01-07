@@ -1,105 +1,104 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/view/layaut.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
+	<ui:define name="center">
 
-</h:head>
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
 
-<h:body>
-	<p:messages id="messages" showDetail="true" closable="true">
-		<p:autoUpdate />
-	</p:messages>
+		<h:form id="form">
+			<p:commandButton action="#{monitorProcesos.consultarMonitor}"
+				type="submit" value="#{msg.monitor_boton_consultar}" ajax="false" />
 
-	<h:form id="form">
-		<p:commandButton action="#{monitorProcesos.consultarMonitor}"
-			type="submit" value="#{msg.monitor_boton_consultar}" ajax="false" />
+			<p:commandButton action="#{monitorProcesos.consultarJobs}"
+				type="submit" value="#{msg.monitor_boton_jobs}" ajax="false" />
 
-		<p:commandButton action="#{monitorProcesos.consultarJobs}"
-			type="submit" value="#{msg.monitor_boton_jobs}" ajax="false" />
+			<p:dataTable id="monitorTable" var="mon"
+				value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
+				selection="#{monitorProcesos.selectedMonitor}"
+				rowKey="#{mon.sesionId}" paginator="true"
+				rowsPerPageTemplate="5,10,15">
 
-		<p:dataTable id="monitorTable" var="mon"
-			value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
-			selection="#{monitorProcesos.selectedMonitor}"
-			rowKey="#{mon.sesionId}" paginator="true"
-			rowsPerPageTemplate="5,10,15">
+				<p:ajax event="rowSelect" update="form" />
 
-			<p:ajax event="rowSelect" update="form" />
+				<p:column headerText="#{msg.monitor_monitor_columna_id}">
+					<h:outputText value="#{mon.sesionId}" />
+				</p:column>
 
-			<p:column headerText="#{msg.monitor_monitor_columna_id}">
-				<h:outputText value="#{mon.sesionId}" />
-			</p:column>
+				<p:column headerText="#{msg.monitor_monitor_columna_proceso}">
+					<h:outputText value="#{mon.abrevProceso}" />
+				</p:column>
 
-			<p:column headerText="#{msg.monitor_monitor_columna_proceso}">
-				<h:outputText value="#{mon.abrevProceso}" />
-			</p:column>
+				<p:column headerText="#{msg.monitor_monitor_columna_estado}">
+					<h:outputText value="#{mon.estadoProceso}" />
+				</p:column>
 
-			<p:column headerText="#{msg.monitor_monitor_columna_estado}">
-				<h:outputText value="#{mon.estadoProceso}" />
-			</p:column>
+				<p:column headerText="#{msg.monitor_monitor_columna_fechaInicio}">
+					<h:outputText value="#{mon.fechahoraInicio}" />
+				</p:column>
+			</p:dataTable>
 
-			<p:column headerText="#{msg.monitor_monitor_columna_fechaInicio}">
-				<h:outputText value="#{mon.fechahoraInicio}" />
-			</p:column>
-		</p:dataTable>
+			<p:panelGrid id="monitorDetalle" columns="2">
+				<h:outputText value="#{msg.monitor_detalle_columna_descripcion}" />
+				<h:outputText value="#{monitorProcesos.selectedMonitor.descProceso}" />
 
-		<p:panelGrid id="monitorDetalle" columns="2">
-			<h:outputText value="#{msg.monitor_detalle_columna_descripcion}" />
-			<h:outputText value="#{monitorProcesos.selectedMonitor.descProceso}" />
+				<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}" />
+				<h:outputText
+					value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
 
-			<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}" />
-			<h:outputText
-				value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
+				<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}" />
+				<h:outputText
+					value="#{monitorProcesos.selectedMonitor.fechahoraInicio}" />
 
-			<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}" />
-			<h:outputText
-				value="#{monitorProcesos.selectedMonitor.fechahoraInicio}" />
+				<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}" />
+				<h:outputText
+					value="#{monitorProcesos.selectedMonitor.fechahoraAvance}" />
 
-			<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}" />
-			<h:outputText
-				value="#{monitorProcesos.selectedMonitor.fechahoraAvance}" />
+				<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}" />
+				<h:outputText
+					value="#{monitorProcesos.selectedMonitor.fechahoraFinal}" />
 
-			<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}" />
-			<h:outputText
-				value="#{monitorProcesos.selectedMonitor.fechahoraFinal}" />
+				<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}" />
+				<h:outputText value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
+			</p:panelGrid>
 
-			<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}" />
-			<h:outputText value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
-		</p:panelGrid>
+			<p:dataTable id="jobTable" var="job" value="#{monitorProcesos.jobs}"
+				rows="10" selectionMode="single"
+				selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
+				paginator="true" rowsPerPageTemplate="5,10,15">
 
-		<p:dataTable id="jobTable" var="job" value="#{monitorProcesos.jobs}"
-			rows="10" selectionMode="single"
-			selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
-			paginator="true" rowsPerPageTemplate="5,10,15">
+				<p:ajax event="rowSelect" update="form" />
 
-			<p:ajax event="rowSelect" update="form" />
+				<p:column headerText="#{msg.monitor_job_columna_job}">
+					<h:outputText value="#{job.job}" />
+				</p:column>
 
-			<p:column headerText="#{msg.monitor_job_columna_job}">
-				<h:outputText value="#{job.job}" />
-			</p:column>
+				<p:column headerText="#{msg.monitor_job_columna_nextDate}">
+					<h:outputText value="#{job.nextDate}" />
+				</p:column>
 
-			<p:column headerText="#{msg.monitor_job_columna_nextDate}">
-				<h:outputText value="#{job.nextDate}" />
-			</p:column>
+				<p:column headerText="#{msg.monitor_job_columna_what}" width="50%">
+					<h:outputText value="#{job.what}" />
+				</p:column>
 
-			<p:column headerText="#{msg.monitor_job_columna_what}" width="50%">
-				<h:outputText value="#{job.what}" />
-			</p:column>
+				<p:column headerText="#{msg.monitor_job_columna_totalTime}">
+					<h:outputText value="#{job.totalTime}" />
+				</p:column>
+			</p:dataTable>
 
-			<p:column headerText="#{msg.monitor_job_columna_totalTime}">
-				<h:outputText value="#{job.totalTime}" />
-			</p:column>
-		</p:dataTable>
+			<p:commandButton action="#{monitorProcesos.ejecutar}" type="submit"
+				value="#{msg.monitor_boton_ejecutar}" ajax="false" />
 
-	<p:commandButton action="#{monitorProcesos.ejecutar}"
-			type="submit" value="#{msg.monitor_boton_ejecutar}" ajax="false" />
-
-	</h:form>
+		</h:form>
 
 
-</h:body>
-</html>
+	</ui:define>
+
+</ui:composition>

@@ -74,21 +74,21 @@ public class VentaTitulosCtrll extends ControllerBase {
 
 	@Getter
 	@Setter
-	private String selectedTipoRetiro;
+	private ObtenerTipoRetiroOut selectedTipoRetiro;
 
 	@Getter
 	private List<ObtenerLoteTraspasosOut> loteTraspasos;
 
 	@Getter
 	@Setter
-	private String selectedLoteTraspaso;
+	private ObtenerLoteTraspasosOut selectedLoteTraspaso;
 
 	@Getter
 	private List<ObtenerRgDevExcesOut> rgDevExces;
 
 	@Getter
 	@Setter
-	private String selectedrgDevExces;
+	private ObtenerRgDevExcesOut selectedrgDevExces;
 
 	@Getter
 	private List<ObtieneMonto> montos;
@@ -163,15 +163,11 @@ public class VentaTitulosCtrll extends ControllerBase {
 				parametrosR.setFechaFinal(fechaFinal);
 				parametrosR.setFechaInicial(fechaInicial);
 				if(selectedTipoRetiro != null) {
-					parametrosR.setTipoRetiro(selectedTipoRetiro);
-					Optional<ObtenerTipoRetiroOut> selec = tipoRetiros.stream()
-							.filter(p -> p.getDescripcion().equals(selectedTipoRetiro)).findFirst();
-					if (selec.isPresent()) {
-						parametrosR.setTipoTransaccion(selec.get().getTipoTransaccion());
-						parametrosR.setSubTipoTransaccion(selec.get().getSubTipoTransaccion());
-						montos = ventaTitulosService.getObtieneMontoRetiro(parametrosR);
-						mostrarVenta = true;
-					}
+					parametrosR.setTipoRetiro(selectedTipoRetiro.getDescripcion());
+					parametrosR.setTipoTransaccion(selectedTipoRetiro.getTipoTransaccion());
+					parametrosR.setSubTipoTransaccion(selectedTipoRetiro.getSubTipoTransaccion());
+					montos = ventaTitulosService.getObtieneMontoRetiro(parametrosR);
+					mostrarVenta = true;
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Retiros"} );
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
@@ -181,7 +177,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				ObtieneMontoTraspasosIn parametrosA = new ObtieneMontoTraspasosIn();
 				parametrosA.setFecha(fechaInicial);
 				if (selectedLoteTraspaso != null) {
-					parametrosA.setLoteTraspaso(selectedLoteTraspaso);
+					parametrosA.setLoteTraspaso(selectedLoteTraspaso.getIdLote());
 					montos = ventaTitulosService.getObtieneMontoTraspasos(parametrosA);
 					mostrarVenta = true;
 				} else {
@@ -193,7 +189,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				ObtieneMontoDevIn parametrosV = new ObtieneMontoDevIn();
 				parametrosV.setFecha(fechaInicial);
 				if (selectedrgDevExces != null) {
-					parametrosV.setLoteRev(selectedrgDevExces);
+					parametrosV.setLoteRev(selectedrgDevExces.getIdLote());
 					montos = ventaTitulosService.getObtieneMontoDev(parametrosV);
 					mostrarVenta = true;
 				} else {
@@ -234,18 +230,14 @@ public class VentaTitulosCtrll extends ControllerBase {
 				parametros.setUsuario(dataSource.getUsername()); 
 				switch (opcion) {
 					case "R":
-						Optional<ObtenerTipoRetiroOut> selec = tipoRetiros.stream()
-						.filter(p -> p.getDescripcion().equals(selectedTipoRetiro)).findFirst();
-						if (selec.isPresent()) {
-							parametros.setTransacMov(selec.get().getTipoTransaccion());
-							parametros.setSubtransMov(selec.get().getSubTipoTransaccion()); 
-						}		
+						parametros.setTransacMov(selectedTipoRetiro.getTipoTransaccion());
+						parametros.setSubtransMov(selectedTipoRetiro.getSubTipoTransaccion()); 	
 						break;
 					case "A": 
-						parametros.setIdLote(selectedLoteTraspaso);
+						parametros.setIdLote(selectedLoteTraspaso.getIdLote());
 						break;
 					case "V": 
-						parametros.setLoteRev(selectedrgDevExces);
+						parametros.setLoteRev(selectedrgDevExces.getIdLote());
 						break;
 				}
 				ventaTitulosService.ventaTitulosMonitor(parametros );
