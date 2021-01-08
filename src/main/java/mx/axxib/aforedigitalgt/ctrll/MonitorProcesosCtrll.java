@@ -54,15 +54,17 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	}
 	
 	public void actualizar() {
-		selectedMonitor = new ObtieneMonitorOut();
-		selectedJob = null;
 		consultarMonitor();
 		consultarJobs();
 	}
 
 	public void consultarMonitor() {
 		try {
+			selectedMonitor = null;
 			monitor = monitorService.getMonitor();
+			if(monitor != null && monitor.size()>0) {
+				selectedMonitor = monitor.get(0);
+			}
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -70,6 +72,7 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	
 	public void consultarJobs() {
 		try {
+			selectedJob = null;
 			jobs = monitorService.getJobs();
 		} catch (Exception e) {
 			GenericException(e);
