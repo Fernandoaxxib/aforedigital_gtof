@@ -1,8 +1,9 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.util.Date;
 import java.util.List;
 
-
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -48,7 +49,17 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	@Setter
 	private ObtieneJobsOut selectedJob;
 
-
+	@PostConstruct
+	public void init() {
+		actualizar();
+	}
+	
+	public void actualizar() {
+		consultarMonitor();
+		consultarJobs();
+		selectedMonitor = new ObtieneMonitorOut();
+		selectedJob = null;
+	}
 
 	public void consultarMonitor() {
 		try {
