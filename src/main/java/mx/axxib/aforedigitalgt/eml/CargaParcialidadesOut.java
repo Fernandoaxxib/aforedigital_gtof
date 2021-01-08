@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.eml;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.ColumnResult;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 					columns = {
 						@ColumnResult(name = "PAGO", type = String.class),
 						@ColumnResult(name = "SOLICITUD", type = String.class),
-						@ColumnResult(name = "TOTAL_PAGO", type = String.class),
+						@ColumnResult(name = "TOTAL_PAGO", type = BigDecimal.class),
 						@ColumnResult(name = "TOTAL_ACCION", type = String.class),
 						@ColumnResult(name = "ESTATUS", type = String.class),
 						@ColumnResult(name = "FECHA", type = Date.class),
@@ -44,7 +45,7 @@ import lombok.NoArgsConstructor;
 public class CargaParcialidadesOut {
 	private String pago;
 	private String solicitud;
-	private String totalPago;
+	private BigDecimal totalPago;
 	private String totalAccion;
 	private String estatus;
 	private Date fecha;

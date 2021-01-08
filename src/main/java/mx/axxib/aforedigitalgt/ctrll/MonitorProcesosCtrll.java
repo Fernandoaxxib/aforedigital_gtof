@@ -1,6 +1,5 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -55,10 +54,10 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	}
 	
 	public void actualizar() {
-		consultarMonitor();
-		consultarJobs();
 		selectedMonitor = new ObtieneMonitorOut();
 		selectedJob = null;
+		consultarMonitor();
+		consultarJobs();
 	}
 
 	public void consultarMonitor() {

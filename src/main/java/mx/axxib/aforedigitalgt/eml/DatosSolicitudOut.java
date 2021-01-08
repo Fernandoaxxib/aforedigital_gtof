@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.eml;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.MappedSuperclass;
@@ -18,7 +19,7 @@ public class DatosSolicitudOut {
 	private String primerApellido;
 	private String segundoApellido;
 	private String nombre;
-	private String monTotalPrestacion;
+	private BigDecimal monTotalPrestacion;
 	private Integer sbcTipoA;
 	private String codEmpresa;
 	private String clasificacionPago;
@@ -29,7 +30,7 @@ public class DatosSolicitudOut {
 	private Date fechaAccion;
 	private String fondoDescripcion;
 	private String pagoDescripcion;
-	private String remanente;
+	private BigDecimal remanente;
 	
 }
 

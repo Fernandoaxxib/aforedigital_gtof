@@ -44,11 +44,11 @@
 					<h:outputLabel for="opt2" value="Retiros" />
 					<p:selectOneMenu style="width:200px" var="t"
 						converter="selectOneMenuConverter"
-						value="#{ventaTitulos.selectedTipoRetiro}">
+						value="#{ventaTitulos.selectedTipoRetiro}" >
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
 						<f:selectItems value="#{ventaTitulos.tipoRetiros}" var="c"
-							itemLabel="#{c.montoMovimiento}" itemValue="#{c}" />
+							itemLabel="#{c.descripcion}" itemValue="#{c}" />
 
 						<p:column>
 							<f:facet name="header">
@@ -60,7 +60,9 @@
 							<f:facet name="header">
 								<h:outputText value="Monto" />
 							</f:facet>
-							<h:outputText value="#{t.montoMovimiento}" />
+							<h:outputText value="#{t.montoMovimiento}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
 						</p:column>
 					</p:selectOneMenu>
 
@@ -72,7 +74,7 @@
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
 						<f:selectItems value="#{ventaTitulos.loteTraspasos}" var="c"
-							itemLabel="#{c.montoMovimiento}" itemValue="#{c}" />
+							itemLabel="#{c.idLote}" itemValue="#{c}" />
 
 						<p:column>
 							<f:facet name="header">
@@ -84,7 +86,9 @@
 							<f:facet name="header">
 								<h:outputText value="Monto" />
 							</f:facet>
-							<h:outputText value="#{t.montoMovimiento}" />
+							<h:outputText value="#{t.montoMovimiento}" >
+							<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
 						</p:column>
 					</p:selectOneMenu>
 
@@ -96,7 +100,7 @@
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
 						<f:selectItems value="#{ventaTitulos.rgDevExces}" var="c"
-							itemLabel="#{c.montoMovimiento}" itemValue="#{c}" />
+							itemLabel="#{c.idLote}" itemValue="#{c}" />
 
 						<p:column>
 							<f:facet name="header">
@@ -108,7 +112,9 @@
 							<f:facet name="header">
 								<h:outputText value="Monto" />
 							</f:facet>
-							<h:outputText value="#{t.montoMovimiento}" />
+							<h:outputText value="#{t.montoMovimiento}" >
+							<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
 						</p:column>
 					</p:selectOneMenu>
 

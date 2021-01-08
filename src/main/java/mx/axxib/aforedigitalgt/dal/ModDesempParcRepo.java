@@ -1,5 +1,7 @@
 package mx.axxib.aforedigitalgt.dal;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class ModDesempParcRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_PRIMER_APELLIDO", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_SEGUNDO_APELLIDO", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("P_MON_TOTAL_PRESTACION", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_MON_TOTAL_PRESTACION", BigDecimal.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_SBC_TIPO_A", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_COD_EMPRESA", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_CLASIFICACION_PAGO", String.class, ParameterMode.OUT);
@@ -57,7 +59,7 @@ public class ModDesempParcRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_FECHA_ACCION", Date.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_FONDO_DESCRIPCION", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_PAGO_DESC", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("P_REMANENTE", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_REMANENTE", BigDecimal.class, ParameterMode.OUT);
 
 			query.setParameter("P_NSS", parametros.getNss());
 
@@ -68,7 +70,7 @@ public class ModDesempParcRepo extends RepoBase {
 			res.setPrimerApellido((String) query.getOutputParameterValue("P_PRIMER_APELLIDO"));
 			res.setSegundoApellido((String) query.getOutputParameterValue("P_SEGUNDO_APELLIDO"));
 			res.setNombre((String) query.getOutputParameterValue("P_NOMBRE"));
-			res.setMonTotalPrestacion((String) query.getOutputParameterValue("P_MON_TOTAL_PRESTACION"));
+			res.setMonTotalPrestacion((BigDecimal) query.getOutputParameterValue("P_MON_TOTAL_PRESTACION"));
 			res.setSbcTipoA((Integer) query.getOutputParameterValue("P_SBC_TIPO_A"));
 			res.setCodEmpresa((String) query.getOutputParameterValue("P_COD_EMPRESA"));
 			res.setClasificacionPago((String) query.getOutputParameterValue("P_CLASIFICACION_PAGO"));
@@ -79,7 +81,7 @@ public class ModDesempParcRepo extends RepoBase {
 			res.setFechaAccion((Date) query.getOutputParameterValue("P_FECHA_ACCION"));
 			res.setFondoDescripcion((String) query.getOutputParameterValue("P_FONDO_DESCRIPCION"));
 			res.setPagoDescripcion((String) query.getOutputParameterValue("P_PAGO_DESC"));
-			res.setRemanente((String) query.getOutputParameterValue("P_REMANENTE"));
+			res.setRemanente((BigDecimal) query.getOutputParameterValue("P_REMANENTE"));
 
 			return res;
 		} catch (Exception e) {

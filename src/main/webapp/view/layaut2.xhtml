@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link type="text/css" rel="stylesheet"
+		href="../resources/css/estilo-layaut.css"></link>
+</h:head>
+
+<h:body>
+	<h:outputStylesheet name="primeicons/primeicons.css"
+		library="primefaces" />
+	<section id="img-fondo"> <p:layout fullPage="true">
+		<p:layoutUnit position="north" size="50"
+			style="border:transparent; background-color:transparent;">
+			<div class="ui-g est-head" id="header">
+				<ui:insert name="head">
+					<h:outputLink href="#">
+						<h:graphicImage library="Imagenes" name="logo-ban.png"
+							class="est-imgencab" />
+					</h:outputLink>
+					<h:outputLink class="afore" href="introduccion.jsf"> PLATAFORMA AFORE DIGITAL </h:outputLink>
+					<ul class="app-bar-menu" id="menu-head">
+						<li><h:outputLink href="#">ACERCA DE</h:outputLink></li>
+						<li><h:outputLink href="#">PRIVACIDAD</h:outputLink></li>
+					</ul>
+				</ui:insert>
+
+				<div id="perfil">
+					<div class="ui-g-6"
+						style="margin-top: -48px; margin-left: 1000px; color: #959595; font-size: 17px; font-family: 'Roboto Condensed', sans-serif;">
+						<h:outputText value="#{home.saludo()}" />
+					</div>
+					<div class="ui-g-6" style="margin-left: 1227px; margin-top: -50px;">
+						<h:form onsubmit="this.action='#{request.contextPath}/logout';">
+							<h:commandLink value="#{msg.login_boton_cerrarSesion}"
+								style="color: red; font-size: 15px; font-family: 'Roboto Condensed', sans-serif;"></h:commandLink>
+						</h:form>
+					</div>
+
+				</div>
+			</div>
+
+
+
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" size="500" resizable="false"
+			style="border:transparent; background-color:transparent;">
+			<ui:insert name="left" />
+		</p:layoutUnit>
+
+		
+
+
+		<p:layoutUnit styleClass="trans" size="250" position="center"
+			id="graf" style="border:transparent; background-color:transparent;">
+			<ui:insert name="center" />
+		</p:layoutUnit>
+
+		<p:layoutUnit position="south" size="40"
+			style="border:transparent; background-color: white;">
+			<ui:insert name="foot">
+				<div class="fixed-footer">
+					<div class="ui-g-6 fixed">
+						<span>© 2019. Afore XXI Banorte S.A. de C.V. Derechos
+							Reservados</span>
+					</div>
+					<div class="ui-g-6 est-foot-img">
+						<h:outputLink href="https://twitter.com/XXIBanorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes" name="icn_tw.svg" width="23"
+								height="23" style="margin-left: 1137px;" />
+						</h:outputLink>
+						<h:outputLink href="https://www.facebook.com/xxibanorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes" name="icn_fb.svg" width="23"
+								height="23" style="margin-left:5px;" />
+						</h:outputLink>
+
+						<h:outputLink href="https://www.youtube.com/user/AforeXXIBanorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes" name="icn_youtube_circle_.svg"
+								width="23" height="23" style="margin-left:5px;" />
+						</h:outputLink>
+						<h:outputLink
+							href="https://mx.linkedin.com/company/afore-xxi-banorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes"
+								name="icn_linkedin_circle_.svg" width="23" height="23"
+								style="margin-left:5px;" />
+						</h:outputLink>
+
+					</div>
+				</div>
+			</ui:insert>
+		</p:layoutUnit>
+	</p:layout> </section>
+</h:body>
+</html>
