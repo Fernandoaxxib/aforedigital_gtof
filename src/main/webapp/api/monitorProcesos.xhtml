@@ -41,7 +41,9 @@
 					</p:column>
 
 					<p:column headerText="#{msg.monitor_monitor_columna_fechaInicio}">
-						<h:outputText value="#{mon.fechahoraInicio}" />
+						<h:outputText value="#{mon.fechahoraInicio}" >
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
