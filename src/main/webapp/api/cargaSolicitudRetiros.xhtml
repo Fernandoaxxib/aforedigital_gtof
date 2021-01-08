@@ -1,16 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/view/layaut.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-	<h:outputScript library="js" name="calendar-localization.js" />
-</h:head>
+	<ui:define name="center">
 
-<h:body>
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
 <h:outputText value="#{msg.carga_solicitud_retiro_txt_titulo}" />
 	<h:form id="form">
 		<p:panelGrid id="ejecutarCarga"  columns="3"> 		
@@ -43,5 +46,6 @@
 <!--        <h3>Verificando Nombre de Archivo</h3> -->
 <!--     <p:progressBar id="progressBarIndeterminate" style="height:6px" mode="indeterminate"/> -->
   	</h:form>
-</h:body>
-</html>
+</ui:define>
+
+</ui:composition>

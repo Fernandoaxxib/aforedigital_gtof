@@ -1,26 +1,29 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/view/layaut.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
-	
-</h:head>
+	<ui:define name="center">
 
-<h:body>
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		
 	<h:form id="form">
 		
 		<h:outputText value="#{msg.reporte_parcial_txt_titulo}" />  
 	 	<p:panelGrid id="crearReporteParcial"  columns="2">
 	 	
 	 			<p:outputLabel for="buttonIni" value="#{msg.reporte_parcial_txt_fecha_inicio}" />
-        		<p:datePicker id="buttonIni" value="#{reporteParcial.fechaIni}" showIcon="true" pattern="yyyy-MMM-dd"/>
+        		<p:datePicker id="buttonIni" value="#{reporteParcial.fechaIni}" showIcon="true" pattern="yyyy-MMM-dd"  locale="es"/>
         		
         		<p:outputLabel for="buttonFin" value="#{msg.reporte_parcial_txt_fecha_final}" />
-        		<p:datePicker id="buttonFin" value="#{reporteParcial.fechaFin}" showIcon="true" pattern="yyyy-MMM-dd" />
+        		<p:datePicker id="buttonFin" value="#{reporteParcial.fechaFin}" showIcon="true" pattern="yyyy-MMM-dd"  locale="es"/>
 	 			
 		        <h:outputText value="#{msg.reporte_parcial_txt_nombre}" />
 		        <p:inputText id="rutaParcial" value="#{reporteParcial.rutaParcial}" > </p:inputText>
@@ -33,5 +36,6 @@
 		</p:panelGrid>
 		
   </h:form>
-</h:body>
-</html>
+</ui:define>
+
+</ui:composition>
