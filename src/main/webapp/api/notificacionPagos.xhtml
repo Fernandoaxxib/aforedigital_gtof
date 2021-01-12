@@ -8,59 +8,84 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<ui:define name="center">
-
+		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript name="js/calendar-localization.js" />
+
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
 		</p:messages>
 
 		<h:form id="form">
+			<p:panel id="busqueda" header="Consultar" style="margin-top:20px">
+				<p:panelGrid id="fechas" columns="3" styleClass="ui-noborder">
+					<p:outputLabel value="Fecha de proceso" style="font-weight: bold" />
+					<p:datePicker id="fecha" value="#{notificacionPagos.fecha}"
+						inputStyle="width:120px; text-align:right;" yearNavigator="true"
+						monthNavigator="true" showIcon="true" locale="es"
+						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-			<p:outputLabel value="Fecha de proceso" />
-			<p:datePicker id="fecha" value="#{notificacionPagos.fecha}"
-				yearNavigator="true" monthNavigator="true" showIcon="true"
-				locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
+					<p:commandButton action="#{notificacionPagos.buscarPagos}"
+						type="submit" value="Consultar" ajax="false" />
+				</p:panelGrid>
+			</p:panel>
 
-			<p:commandButton action="#{notificacionPagos.buscarPagos}"
-				type="submit" value="Consultar" ajax="false" />
+			<p:panel id="pagos" header="Pagos pendientes de notificación"
+				style="margin-top:20px">
+				<p:dataTable id="notificacionTable" var="pag"
+					sortBy="#{pag.fechaAprobacion}" paginatorPosition="bottom"
+					value="#{notificacionPagos.pagos}" rows="10" paginator="true"
+					rowsPerPageTemplate="5,10,15">
 
-			<p:dataTable id="notificacionTable" var="pag"
-				value="#{notificacionPagos.pagos}" rows="10" paginator="true"
-				rowsPerPageTemplate="5,10,15">
+					<p:column headerText="Fecha">
+						<h:outputText value="#{pag.fechaAprobacion}" style="float:right">
+							<f:convertDateTime pattern="dd-MM-yyyy" />
+						</h:outputText>
+					</p:column>
 
-				<p:column headerText="Fecha">
-					<h:outputText value="#{pag.fechaAprobacion}">
-						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
-					</h:outputText>
-				</p:column>
+					<p:column headerText="Titulos">
+						<h:outputText value="#{pag.acciones}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+						<f:facet name="footer">
+							<h:outputText value="#{notificacionPagos.totTitulos}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</f:facet>
+					</p:column>
 
-				<p:column headerText="Titulos">
-					<h:outputText value="#{pag.acciones}" />
-				</p:column>
+					<p:column headerText="Pesos">
+						<h:outputText value="#{pag.pesos}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+						<f:facet name="footer">
+							<h:outputText value="#{notificacionPagos.totPesos}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</f:facet>
+					</p:column>
 
-				<p:column headerText="Pesos">
-					<h:outputText value="#{pag.pesos}" />
-				</p:column>
+					<p:column headerText="NSS">
+						<h:outputText value="#{pag.nss}" />
+					</p:column>
 
-				<p:column headerText="NSS">
-					<h:outputText value="#{pag.nss}" />
-				</p:column>
+					<p:column headerText="Beneficiario">
+						<h:outputText value="#{pag.beneficiario}" />
+					</p:column>
 
-				<p:column headerText="Beneficiario">
-					<h:outputText value="#{pag.beneficiario}" />
-				</p:column>
-			</p:dataTable>
+					
+				</p:dataTable>
+			</p:panel>
 
-			<p:outputLabel value="Total Titulos: " />
-			<h:outputText value="#{notificacionPagos.totTitulos}" />
-			<p:outputLabel value="Total Pesos: " />
-			<h:outputText value="#{notificacionPagos.totPesos}" />
+			<p:panel id="notificacion" header="Notificación de pago"
+				style="margin-top:20px">
+				<p:commandButton action="#{notificacionPagos.enviar}" type="submit"
+					value="Enviar" ajax="false" />
 
-			<p:commandButton action="#{notificacionPagos.enviar}" type="submit"
-				value="Enviar" ajax="false" />
-
-			<p:commandButton action="#{notificacionPagos.exportar}" type="submit"
-				value="Exportar" ajax="false" />
+				<p:commandButton action="#{notificacionPagos.exportar}"
+					type="submit" value="Exportar" ajax="false" />
+			</p:panel>
 		</h:form>
 
 	</ui:define>

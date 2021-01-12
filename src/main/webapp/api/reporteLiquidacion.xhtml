@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/view/layaut.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="Parámetros" style="margin-top:20px">
+				<p:panelGrid id="panel" columns="6" styleClass="ui-noborder"
+					cellpadding="10" width="100%">
+					<p:outputLabel value="Estatus" style="font-weight: bold" />
+					<p:selectOneMenu style="width:200px" required="true"
+						value="#{reporteLiquidacion.selectedEstatus}">
+						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+							itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItem itemLabel="Pendientes" itemValue="P" />
+						<f:selectItem itemLabel="Aplicados" itemValue="A" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Lote" style="font-weight: bold" />
+					<h:outputText id="lote" value="#{reporteLiquidacion.lote}" />
+
+					<p:outputLabel value="Tipo" style="font-weight: bold" />
+					<p:selectOneMenu style="width:200px" required="true"
+						value="#{reporteLiquidacion.selectedTipo}">
+						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+							itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItem itemLabel="Detallado" itemValue="D" />
+						<f:selectItem itemLabel="Resumen" itemValue="R" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Tipo retiro" style="font-weight: bold" />
+					<p:selectOneMenu style="width:200px" required="true"
+						value="#{reporteLiquidacion.selectedTipoRetiro}">
+						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+							itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItem itemLabel="Todos" itemValue="%" />
+						<f:selectItem itemLabel="Desempleo" itemValue="6" />
+						<f:selectItem itemLabel="Matrimonio" itemValue="7" />
+						<f:selectItem itemLabel="Voluntarias" itemValue="8" />
+						<f:selectItem itemLabel="Negativa Pensión" itemValue="3" />
+						<f:selectItem itemLabel="Plan Privado" itemValue="4" />
+						<f:selectItem itemLabel="Sar" itemValue="5" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Siefore" style="font-weight: bold" />
+					<p:selectOneMenu style="width:200px" var="t" 
+						converter="selectOneMenuConverter" required="true"
+						value="#{reporteLiquidacion.selectedSiefore}">
+						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+							itemValue="#{null}" noSelectionOption="true" />
+						<f:selectItems value="#{reporteLiquidacion.sieforeList}" var="c"
+							itemLabel="#{c.descripcion}" itemValue="#{c}" />
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Siefore" />
+							</f:facet>
+							<h:outputText value="#{t.siefore}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="Descripción" />
+							</f:facet>
+							<h:outputText value="#{t.descripcion}" />
+						</p:column>
+					</p:selectOneMenu>
+
+					<p:outputLabel value="" />
+					<p:commandButton action="#{reporteLiquidacion.ejecutarReporte}"
+						type="submit" value="Ejecutar el reporte" ajax="false" />
+				</p:panelGrid>
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

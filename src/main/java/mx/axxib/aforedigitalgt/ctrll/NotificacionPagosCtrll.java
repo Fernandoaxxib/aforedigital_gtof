@@ -82,8 +82,14 @@ public class NotificacionPagosCtrll extends ControllerBase {
 			ExportarIn parametros = new ExportarIn();
 			parametros.setFecha(fecha);
 			ExportarOut res = notificacionPagosServ.exportar(parametros );
+			if(res.getMensaje() == null && res.getError() == null) {
+				String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+			} else {
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, res.getMensaje()));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, null, res.getMensaje()+" "+res.getError()));
+			}
 		} catch (Exception e) {
 			GenericException(e);
 		}

@@ -3,12 +3,12 @@ package mx.axxib.aforedigitalgt.com;
 public class Constantes {
 
 	public static final String USUARIO_PENSION = "ADIGITAL";
+	
 	// Monitor de procesos FOMONIT
 	public static final String MONITOR_PROCESOS_PACKAGE = "PKG_CONSULTA_MUNITOR";
 	public static final String MONITOR_PROCESOS_OBTIENE_MONITOR = "PRC_RET_OBTIENE_MONITOR";
 	public static final String MONITOR_PROCESOS_OBTIENE_JOBS = "PRC_RET_OBTIENE_JOBS";
 	public static final String MONITOR_PROCESOS_EJECUTA_JOB = "PRC_RET_EJECUTA_JOB";
-	
 
 	//GRAFICAS	
 	public static final String APRO_SOLIC_PRC_TIPO_TRANSAC= "PRC_TIPO_TRANSAC";
@@ -66,6 +66,10 @@ public class Constantes {
 	public static final String NOTIFICACION_PAGOS_ENVIA_FECHA = "PRC_ENVIA_FECHA";
 	public static final String NOTIFICACION_PAGOS_EXPORTAR = "PRC_EXPORTAR";
 	
-
+	// Reporte de liquidación FOLIQDIS
+	public static final String REPORTE_LIQUIDACION_PACKAGE = "PKG_RET_FOLIQDIS";
+	public static final String REPORTE_LIQUIDACION_OBTIENE_PARAMETROS = "PRC_OBTIENE_PARAMETROS";
+	public static final String REPORTE_LIQUIDACION_OBTIENE_SIEFORE = "PRC_OBTIENE_SIEFORE";
+	public static final String REPORTE_LIQUIDACION_EJECUTA_REPORTE = "PRC_EJECUTA_REPORTE";
 	
 }
