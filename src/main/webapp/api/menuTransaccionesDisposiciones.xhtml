@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<style>
+.ui-menu {
+	white-space: nowrap;
+	width: auto !important;
+}
+</style>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:menuButton icon="pi pi-th-large">
+			<p:menuitem value="Aprobación de solicitudes por tipo de retiro"
+				outcome="/api/aprobSolicTipRetiro.xhtml" />
+			<p:separator />
+			<p:menuitem value="Desempleo Parcialidades"
+				outcome="/api/modDesempParc.jsf" />
+			<p:separator />
+			<p:menuitem value="Venta de titulos"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Carga OP84 y OP85"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Notificaciones de Pago"
+				outcome="/api/notificacionPagos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Proceso Retiros Parciales"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Carga Masiva RIGHT FAX"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Transferencias SB90 Parcialidades"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Certificación de Inactividad"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Rechazo de Solicitudes"
+				outcome="/api/ventaTitulos.xhtml" />
+			<p:separator />
+			<p:menuitem value="Captura de Solicitudes Matrimonio y Desempleo"
+				outcome="/api/ventaTitulos.xhtml" />
+
+		</p:menuButton>
+
+
+	</h:form>
+
+
+</h:body>
+
+
+</html>

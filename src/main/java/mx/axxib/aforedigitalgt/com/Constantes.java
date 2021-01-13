@@ -72,4 +72,9 @@ public class Constantes {
 	public static final String REPORTE_LIQUIDACION_OBTIENE_SIEFORE = "PRC_OBTIENE_SIEFORE";
 	public static final String REPORTE_LIQUIDACION_EJECUTA_REPORTE = "PRC_EJECUTA_REPORTE";
 	
+	// Carga Masiva de Right Fax FOCAMRIG
+	public static final String CARGA_RIGHT_PACKAGE = "PKG_RET_FOCAMRIG";
+	public static final String CARGA_RIGHT_OBTIENE_CRUCE_PREVIO = "PRC_CREUCE_PREVIO";
+	public static final String CARGA_RIGHT_OBTIENE_CARGA = "PRC_CARGA";
+	
 }

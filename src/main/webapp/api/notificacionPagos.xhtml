@@ -1,13 +1,14 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/view/layaut.xhtml"
+<ui:composition template="/view/layaut2.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<ui:define name="center">
+		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript name="js/calendar-localization.js" />
 
@@ -74,7 +75,7 @@
 						<h:outputText value="#{pag.beneficiario}" />
 					</p:column>
 
-					
+
 				</p:dataTable>
 			</p:panel>
 
@@ -88,6 +89,12 @@
 			</p:panel>
 		</h:form>
 
+	</ui:define>
+	
+<ui:define name="left">
+		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES.">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
 	</ui:define>
 
 </ui:composition>

@@ -9,6 +9,10 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<ui:define name="center">
+		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES.">
+			<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+		</p:panel>
+
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 
 		<p:messages id="messages" showDetail="true" closable="true">
@@ -72,14 +76,14 @@
 
 					<p:outputLabel value="#{msg.modDesParc_solicitud_totalPrestacion}"
 						style="font-weight: bold" />
-					<h:outputText value="#{modDesempParc.datosSol.monTotalPrestacion}" >
+					<h:outputText value="#{modDesempParc.datosSol.monTotalPrestacion}">
 						<f:convertNumber type="currency" currencySymbol="$"
 							maxFractionDigits="2" />
 					</h:outputText>
 
 					<p:outputLabel value="#{msg.modDesParc_solicitud_remanente}"
 						style="font-weight: bold" />
-					<p:outputLabel value="#{modDesempParc.datosSol.remanente}" >
+					<p:outputLabel value="#{modDesempParc.datosSol.remanente}">
 						<f:convertNumber type="currency" currencySymbol="$"
 							maxFractionDigits="2" />
 					</p:outputLabel>
@@ -116,7 +120,8 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_fecha}" style="width:180px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_fecha}"
+						style="width:180px">
 						<h:outputText value="#{par.fecha}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
@@ -126,29 +131,36 @@
 						<h:outputText value="#{par.estatusPagDescrip}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_trabFechaAut}" style="width:180px">
-						<h:outputText value="#{par.fechaManifiestoTrab}" style="float:right">
+					<p:column headerText="#{msg.modDesParc_parcialidades_trabFechaAut}"
+						style="width:180px">
+						<h:outputText value="#{par.fechaManifiestoTrab}"
+							style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_trabajador}" style="text-align: center">
+					<p:column headerText="#{msg.modDesParc_parcialidades_trabajador}"
+						style="text-align: center">
 						<h:outputText value="#{par.autorizaTrabajador}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaEnv}" style="width:180px">
-						<h:outputText value="#{par.fechaEnvAutorizaImss}" style="float:right">
+					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaEnv}"
+						style="width:180px">
+						<h:outputText value="#{par.fechaEnvAutorizaImss}"
+							style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaAut}" style="width:180px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaAut}"
+						style="width:180px">
 						<h:outputText value="#{par.fechaAutorizaImss}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_imss}" style="text-align: center">
+					<p:column headerText="#{msg.modDesParc_parcialidades_imss}"
+						style="text-align: center">
 						<h:outputText value="#{par.autorizaImss}" />
 					</p:column>
 
@@ -192,7 +204,8 @@
 					</p:column>
 
 					<p:column
-						headerText="#{msg.modDesParc_administrativos_estatusPago}" style="text-align: center">
+						headerText="#{msg.modDesParc_administrativos_estatusPago}"
+						style="text-align: center">
 						<h:outputText value="#{adm.estatusPago}" />
 					</p:column>
 
@@ -265,5 +278,6 @@
 		</h:form>
 
 	</ui:define>
+
 
 </ui:composition>
