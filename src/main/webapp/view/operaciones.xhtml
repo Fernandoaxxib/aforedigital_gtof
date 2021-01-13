@@ -16,14 +16,14 @@
            <div class="ui-g-12">
             <div class="ui-g-2">
             <h:form>			
-			   <p:commandButton ajax="false"  value="Transacciones y Dispociciones" type="submit"   >
-			   <h:graphicImage library="Imagenes" name="transacciones.png" class="est-img-trans" />
+			   <p:commandButton ajax="false"  value="Transacciones y Dispociciones"  action="../api/aprobSolicTipRetiro.xhtml?faces-redirect=true"  >
+			   	<h:graphicImage library="Imagenes" name="transacciones.png" class="est-img-trans" />
 			   </p:commandButton>
            </h:form>
             </div>
     <div class="ui-g-2">
     <h:form>			
-			   <p:commandButton ajax="false"  value="Seguimiento de Procesos" type="submit" >
+			   <p:commandButton ajax="false"  value="Seguimiento de Procesos" action="../api/monitorProcesos.xhtml?faces-redirect=true">
 			   <h:graphicImage library="Imagenes" name="procesos.png" class="est-img-proc" />
 			   </p:commandButton>
            </h:form>

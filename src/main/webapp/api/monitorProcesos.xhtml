@@ -18,7 +18,7 @@
 				<p:autoUpdate />
 			</p:messages>
 
-			<p:panel id="monitor" header="Monitor" style="margin-top:20px">
+			<p:panel id="monitor" header="Monitor" >
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
 					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedMonitor}"
@@ -88,50 +88,52 @@
 
 	<ui:define name="left">
 
-		<h:form id="form2">
-			<p:panel id="detalle" header="Detalle Monitor"
-				style="margin-top:20px">
-				<p:panelGrid id="monitorDetalle" columns="2">
-					<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
-						style="font-weight: bold" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.descProceso}" />
+		<p:panel id="modulo" header="MÓDULO: SEGUIMIENTO DE PROCESOS.">
 
-					<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}"
-						style="font-weight: bold" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
+			<h:form id="form2">
+			
+					<p:panelGrid id="monitorDetalle" columns="2">
+						<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
+							style="font-weight: bold" />
+						<h:outputText
+							value="#{monitorProcesos.selectedMonitor.descProceso}" />
 
-					<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
-						style="font-weight: bold" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
-						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
+						<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}"
+							style="font-weight: bold" />
+						<h:outputText
+							value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
 
-					<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
-						style="font-weight: bold" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
-						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
+						<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
+							style="font-weight: bold" />
+						<h:outputText
+							value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
 
-					<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
-						style="font-weight: bold" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
-						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
+						<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
+							style="font-weight: bold" />
+						<h:outputText
+							value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
 
-					<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
-						style="font-weight: bold" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
-				</p:panelGrid>
-			</p:panel>
-		</h:form>
+						<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
+							style="font-weight: bold" />
+						<h:outputText
+							value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
 
+						<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
+							style="font-weight: bold" />
+						<h:outputText
+							value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
+					</p:panelGrid>
+				
+			</h:form>
+		</p:panel>
 	</ui:define>
+
 
 
 
