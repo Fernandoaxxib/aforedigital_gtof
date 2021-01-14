@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/view/layaut.xhtml"
+<ui:composition template="layaut.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -54,7 +54,7 @@
 			</div>	
 			<h:form>			
 			
-               <p:commandButton ajax="false"  action="operaciones.jsf"  value="#{msg.home_titulo_ingresar}" type="submit" style="margin-left: 420px;"/>
+               <p:commandButton ajax="false"  action="operaciones.xhtml?faces-redirect=true"  value="#{msg.home_titulo_ingresar}" type="submit" style="margin-left: 420px;"/>
 		  </h:form>
 			</div>
 			

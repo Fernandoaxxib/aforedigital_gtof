@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,6 @@ import mx.axxib.aforedigitalgt.eml.CargaRightOut;
 
 @Repository
 public class CargaRightRepo extends RepoBase {
-
-
-	private final EntityManager entityManager;
-
-	@Autowired
-	public CargaRightRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
 
 
 	public CargaRightOut getCrucePrevio(CargaRightIn parametros) throws AforeException {

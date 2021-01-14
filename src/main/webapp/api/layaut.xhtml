@@ -7,13 +7,11 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<link type="text/css" rel="stylesheet"
-		href="../resources/css/estilo-layaut.css"></link>
+	<link type="text/css" rel="stylesheet"	href="#{request.contextPath}/resources/css/estilo-layaut.css"></link>
 </h:head>
 
 <h:body>
-	<h:outputStylesheet name="primeicons/primeicons.css"
-		library="primefaces" />
+	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
 	<section id="img-fondo"> <p:layout fullPage="true">
 		<p:layoutUnit position="north" size="50"
 			style="border:transparent; background-color:transparent;">
@@ -23,40 +21,30 @@
 						<h:graphicImage library="Imagenes" name="logo-ban.png"
 							class="est-imgencab" />
 					</h:outputLink>
-					<h:outputLink class="afore" value="../view/introduccion.jsf"> PLATAFORMA AFORE DIGITAL </h:outputLink>
+					<h:outputLink class="afore" value="../api/introduccion.jsf"> PLATAFORMA AFORE DIGITAL </h:outputLink>
 					<ul class="app-bar-menu" id="menu-head">
 						<li><h:outputLink href="#">ACERCA DE</h:outputLink></li>
 						<li><h:outputLink href="#">PRIVACIDAD</h:outputLink></li>
 					</ul>
 				</ui:insert>
 
-				<div id="perfil">
-					<div class="ui-g-6"
-						style="margin-top: -48px; margin-left: 1000px; color: #959595; font-size: 17px; font-family: 'Roboto Condensed', sans-serif;">
-						<h:outputText value="#{home.saludo()}" />
-					</div>
-					<div class="ui-g-6" style="margin-left: 1227px; margin-top: -50px;">
-						<h:form onsubmit="this.action='#{request.contextPath}/logout';">
-							<h:commandLink value="#{msg.login_boton_cerrarSesion}"
-								style="color: red; font-size: 15px; font-family: 'Roboto Condensed', sans-serif;"></h:commandLink>
-						</h:form>
-					</div>
-
+				<div  id="perfil">
+				<div class="ui-g-6" style="margin-top: -48px; margin-left: 1000px; color: #959595; font-size: 17px; font-family: 'Roboto Condensed', sans-serif;">
+			     	<h:outputText value="#{home.saludo()}" />
 				</div>
-			</div>
-
+				<div class="ui-g-6" style="margin-left: 1227px; margin-top: -50px;">
+				<h:form onsubmit="this.action='#{request.contextPath}/logout';">
+		         <h:commandLink  value="#{msg.login_boton_cerrarSesion}" style="color: red; font-size: 15px; font-family: 'Roboto Condensed', sans-serif;"></h:commandLink>
+	            </h:form>
+				</div>				 
+				 
+				</div>
+				</div>
+			
 
 
 		</p:layoutUnit>
-
-		<p:layoutUnit position="west" size="500" resizable="false"
-			style="border:transparent; background-color:transparent;">
-			<ui:insert name="left" />
-		</p:layoutUnit>
-
-		
-
-
+                
 		<p:layoutUnit styleClass="trans" size="250" position="center"
 			id="graf" style="border:transparent; background-color:transparent;">
 			<ui:insert name="center" />

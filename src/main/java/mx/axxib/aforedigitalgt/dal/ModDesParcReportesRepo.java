@@ -16,15 +16,7 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 @Repository
 public class ModDesParcReportesRepo extends RepoBase {
 
-	private final EntityManager entityManager;
 
-	@Autowired
-	public ModDesParcReportesRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-	
-	
-	
 	public EjecucionResult procesarReporte(Integer p_OpcionReporte, Date pd_fechaInicial) throws AforeException {
 		  try {	
 			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PROCESAR_REPORTES);

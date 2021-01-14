@@ -16,7 +16,7 @@ import mx.axxib.aforedigitalgt.serv.PermisoService;
 @Scope(value = "session")
 @Component(value = "home")
 @ELBeanName(value = "home")
-@Join(path = "/home", to = "/view/introduccion.jsf")
+@Join(path = "/home", to = "/api/introduccion.jsf")
 public class HomeCtrll extends ControllerBase {
 
 	@Autowired

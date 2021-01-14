@@ -20,13 +20,6 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 @Repository
 public class ModDesParcProcesoRepo extends RepoBase {
 
-	private final EntityManager entityManager;
-
-	@Autowired
-	public ModDesParcProcesoRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 	public DiagnosticoResult getRegistrosXProcesar(Date id_dFecha) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)

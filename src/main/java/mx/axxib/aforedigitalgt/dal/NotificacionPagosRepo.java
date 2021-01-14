@@ -18,13 +18,6 @@ import mx.axxib.aforedigitalgt.eml.LlenaInfoOut;
 @Repository
 public class NotificacionPagosRepo extends RepoBase {
 
-	private final EntityManager entityManager;
-
-	@Autowired
-	public NotificacionPagosRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 	@SuppressWarnings("unchecked")
 	public LlenaInfoOut llenaInfo(Date fecha) throws AforeException {
 		try {

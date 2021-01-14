@@ -16,13 +16,6 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 @Repository
 public class ModPagosRepo extends RepoBase {
 
-	private final EntityManager entityManager;
-
-	@Autowired
-	public ModPagosRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 	public String getRefresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
 
 		try {

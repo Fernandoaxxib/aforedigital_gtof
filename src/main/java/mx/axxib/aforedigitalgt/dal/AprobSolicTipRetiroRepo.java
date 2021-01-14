@@ -1,11 +1,15 @@
 package mx.axxib.aforedigitalgt.dal;
 
 import java.util.List;
+
+import javax.inject.Qualifier;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
@@ -16,13 +20,6 @@ import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 
 @Repository
 public class AprobSolicTipRetiroRepo extends RepoBase {
-
-	private final EntityManager entityManager;
-
-	@Autowired
-	public AprobSolicTipRetiroRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
 	
 	
 	@SuppressWarnings("unchecked")
@@ -38,6 +35,7 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 		 throw GenericException(e); 
 	  }
 	}
+	
     public AprobarSolicResult aprobarSolicitud(Integer inNoSolicitud,Integer inTipTransac,String icSubTipTransac) throws AforeException {
 	  try {	
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.APRO_SOLIC_TIPO_RETIRO_PACKAGE).concat(".").concat(Constantes.APRO_SOLIC_TIPO_RETIRO_APROBAR_SELECCIONADOS);

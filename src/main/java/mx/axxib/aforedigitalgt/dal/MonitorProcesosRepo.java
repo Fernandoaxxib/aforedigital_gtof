@@ -18,15 +18,6 @@ import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 @Repository
 public class MonitorProcesosRepo extends RepoBase {
 
-
-	private final EntityManager entityManager;
-
-	@Autowired
-	public MonitorProcesosRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
-
 	@SuppressWarnings("unchecked")
 	public List<ObtieneMonitorOut> getMonitor() throws AforeException {
 		try {

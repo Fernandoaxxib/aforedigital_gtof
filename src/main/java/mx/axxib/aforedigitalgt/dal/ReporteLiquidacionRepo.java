@@ -19,19 +19,7 @@ import mx.axxib.aforedigitalgt.eml.LiqObtieneSieforeOut;
 @Repository
 public class ReporteLiquidacionRepo extends RepoBase {
 
-
-	private final EntityManager entityManager;
-
-	@Autowired
-	public ReporteLiquidacionRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 	public LiqObtieneParametrosOut getObtieneParametros() throws AforeException {
-//		PRC_OBTIENE_PARAMETROS (  P_ID_LOTE OUT VARCHAR2,
-//                P_TIP_TRANSAC_TOTAL OUT VARCHAR2,
-//                P_TIP_TRANSAC_PARCIAL OUT VARCHAR2,
-//                P_FECHA_SISTEMA OUT DATE)
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REPORTE_LIQUIDACION_PACKAGE)
 					.concat(".").concat(Constantes.REPORTE_LIQUIDACION_OBTIENE_PARAMETROS);
@@ -54,7 +42,6 @@ public class ReporteLiquidacionRepo extends RepoBase {
 
 	@SuppressWarnings("unchecked")
 	public List<LiqObtieneSieforeOut> getObtieneSiefore() throws AforeException {
-//		PRC_OBTIENE_SIEFORE(P_CUR_SIEFORE OUT SYS_REFCURSOR
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REPORTE_LIQUIDACION_PACKAGE)
 					.concat(".").concat(Constantes.REPORTE_LIQUIDACION_OBTIENE_SIEFORE);
@@ -69,15 +56,6 @@ public class ReporteLiquidacionRepo extends RepoBase {
 	}
 
 	public String ejecutaReporte(LiqEjecutaReporteIn parametros) throws AforeException {
-//		 PROCEDURE PRC_EJECUTA_REPORTE(P_TIPO_REPORTE IN VARCHAR2,
-//      P_SIEFORE IN VARCHAR2,
-//      P_ID_LOTE IN VARCHAR2,
-//      P_TIPO_RETIRO IN VARCHAR2,
-//      P_ESTADO IN VARCHAR2,
-//      P_USUARIO IN VARCHAR2,
-//      P_DESC_SIEFORE IN VARCHAR2,
-//      P_FECHA_SISTEMA IN DATE,
-//      V_MENSAJE out varchar2)
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REPORTE_LIQUIDACION_PACKAGE)
 					.concat(".").concat(Constantes.REPORTE_LIQUIDACION_EJECUTA_REPORTE);

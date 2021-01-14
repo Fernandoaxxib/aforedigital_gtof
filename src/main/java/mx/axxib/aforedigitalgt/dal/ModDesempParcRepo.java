@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ import mx.axxib.aforedigitalgt.eml.RetparDetaOut;
 @Repository
 public class ModDesempParcRepo extends RepoBase {
 
-	private final EntityManager entityManager;
+    private EntityManager entityManager = null;
 
-	@Autowired
-	public ModDesempParcRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+    @PersistenceContext
+    public void setEntityManager(EntityManager em) {
+        this.entityManager = em;
+    }
 
 	public DatosSolicitudOut getDatosSolicitud(DatosSolicitudIn parametros) throws AforeException {
 		try {

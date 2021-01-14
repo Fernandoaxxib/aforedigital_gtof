@@ -2,7 +2,7 @@
 
 #sesion {
 	background-image:
-		url("/javax.faces.resource/Imagenes/fondo-hex-ani.gif.jsf");
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/fondo-hex-ani.gif.jsf");
 	height: 600px;
 	background-position: center;
 	background-size: cover;

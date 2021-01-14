@@ -8,20 +8,27 @@ import javax.servlet.DispatcherType;
 import org.ocpsoft.rewrite.servlet.RewriteFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @SpringBootApplication(scanBasePackages={"mx.axxib.aforedigitalgt.*"})
 
-public class AforedigitalgtApplication {
+public class AforedigitalgtApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(AforedigitalgtApplication.class, args);
 	}
+	
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(AforedigitalgtApplication.class);
+    }
 	
 	@Bean
 	public ServletRegistrationBean<FacesServlet> servletRegistrationBean() {

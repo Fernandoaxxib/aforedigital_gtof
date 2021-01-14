@@ -230,7 +230,7 @@ text-decoration: none;
 }
 
 #img-fondo {
-	background-image:url("/javax.faces.resource/Imagenes/intro-ad-op.jpg.jsf");
+	background-image:url("../Imagenes/intro-ad-op.jpg");
 	height: 100%;
 	background-position: center;
 	background-size: cover;

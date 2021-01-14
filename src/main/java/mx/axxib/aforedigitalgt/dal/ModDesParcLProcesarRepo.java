@@ -18,13 +18,6 @@ import mx.axxib.aforedigitalgt.eml.ProcesResult;
 @Repository
 public class ModDesParcLProcesarRepo extends RepoBase {
 
-	private final EntityManager entityManager;
-
-	@Autowired
-	public ModDesParcLProcesarRepo(final EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<LoteOut> getLotes() throws AforeException {
 		try {

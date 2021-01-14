@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
+import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,6 @@ import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
 	@Repository
 	public class GraficasRepo extends RepoBase {
 
-		private final EntityManager entityManager;
-
-		@Autowired
-		public GraficasRepo(final EntityManager entityManager) {
-			this.entityManager = entityManager;
-		}
 		
 		@SuppressWarnings("unchecked")
 		public List<TipoTransacOut> getTipoTransacciones(String vFECHA_I,String vFECHA_F) throws AforeException {
