@@ -1,25 +1,26 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
-import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroService;
-import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarService;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 
 @Scope(value = "session")
@@ -58,6 +59,11 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	@Setter
 	private boolean seleccionado;
 	
+	@PostConstruct
+	public void init() {
+		recuperarSolicPendientes();
+		PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
+	}
 	
 	public int getCount() {
 	
@@ -73,7 +79,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	public void recuperarSolicPendientes() {
 		try {
-			listSolicitudes = service.getListSolicitudes();			
+			listSolicitudes = service.getListSolicitudes();	
+			//PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -100,30 +107,36 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
         if (filterText == null || filterText.equals("")) {
             return true;
         }
-        int filterInt = getInteger(filterText);
+        
+        
  
         SolicitudOut car = (SolicitudOut) value;
-        return car.getNumSolicitud()< filterInt
+        
+        String fechaOperacion= cadenaFecha(car.getFechaOperacion());
+        return car.getNumSolicitud().toString().contains(filterText)
                 || car.getTransaccion().toLowerCase().contains(filterText)
                 || car.getSubTransaccion().toLowerCase().contains(filterText)
-                || car.getCodCuenta().contains(filterText)             
+                || car.getCodCuenta().contains(filterText)   
+                || fechaOperacion.contains(filterText)       
                 || car.getNombre().toLowerCase().contains(filterText) ;
     }
-	private int getInteger(String string) {
-        try {
-            return Integer.valueOf(string);
-        }
-        catch (NumberFormatException ex) {
-            return 0;
-        }
-    }
+	
+	private String cadenaFecha(Date fecha) {
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
+		String strDate = dateFormat.format(fecha);  
+		
+		return strDate;
+	}
+	
 
 
 	
 	public void aprobarSolicitud()  {	
-		addMessage(selectedSolicitud.size()+"");
+		
 	  if(selectedSolicitud.size()>0 && selectedSolicitud!=null)	{
-        selectedSolicitud.forEach(p->{
+		  addMessageOK("Proceso ejecutado!");
+          selectedSolicitud.forEach(p->{
         	try {
 				 res=service.aprobarSolicitud(p.getNumSolicitud(), Integer.valueOf(p.getTransaccion().substring(0, 1)), p.getSubTransaccion().substring(0,1));
 				
@@ -131,14 +144,20 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 				GenericException(e);
 			}        	
         });    
-        //recuperarProcesoEjecutado();		
+        recuperarProcesoEjecutado();		
 	    recuperarSolicPendientes();	   
+	   }else {
+		  addMessageFail("Seleccionar solicitud!"); 
 	   }
 	}
 
 	
-	public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+	public void addMessageOK(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exitoso", summary);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+	public void addMessageFail(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", summary);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

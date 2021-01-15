@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<ui:composition template="/templates/dashboardLayout.xhtml"
+<ui:composition template="/api/layaut2.xhtml"
     xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"	
@@ -10,14 +10,26 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
   
-    
-	<ui:define name="content">
+    <ui:define name="left">
+		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
+	</ui:define>
+	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js"></h:outputScript>
-		<h:form>
-		    <p:commandButton action="/api/modDesParc.xhtml" value="#{msg.modulo_desempleoParc_btnPM}" style="font-size:12px" />
-			<p:commandButton action="/api/modDesParcReportes.xhtml" value="#{msg.modulo_desempleoParc_btnReportes}" style="font-size:12px" />
-			<p:commandButton action="/api/modDesParcLProcesar.xhtml" value="#{msg.modulo_desempleoParc_btnLProcesar}" style="font-size:12px" /> 
-	    </h:form>
+		
+		<div class="ui-g">
+	       <div class="ui-g-1">
+	          <ui:include src="menuTransaccionesDisposiciones.xhtml" />
+	       </div>
+	       <div class="ui-g-11" style="text-align:left">
+	          <h:form>
+			     <p:commandButton action="/api/modDesParc.xhtml?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnPM}" style="font-size:12px" />
+			     <p:commandButton action="/api/modDesParcReportes.xhtml?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnReportes}" style="font-size:12px" />
+			     <p:commandButton action="/api/modDesParcLProcesar.xhtm?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnLProcesar}" style="font-size:12px" />
+		      </h:form>
+	       </div>
+	    </div>
 		<h:form id="form">
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo2}" style="margin-bottom:20px;font-size:12px">
 				    <p:selectOneRadio id="customRadio2" required="true" layout="pageDirection" value="#{modDesParcReportes.radioSelected}" style="font-size:12px">				    	
@@ -31,28 +43,28 @@
 				
                     <div class="ui-g">					
                         <div class="ui-g-2"><p:outputLabel for="fCapturada2" value="#{msg.modulo_desempleoParc_lblfecha}" style="font-size:12px;font-weight:bold" /></div>
-                        <div class="ui-g-3">
+                        <div class="ui-g-4">
                             <p:calendar id="fCapturada2" value="#{modDesParcReportes.fecha}" locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true" showOn="button" required="true"  style="font-size:12px">                                                    
 								<p:ajax event="dateSelect" listener="#{modDesParcReportes.opcionSeleccionada}" update="pnl1"></p:ajax>
 							</p:calendar>                            															
-                        </div>                         
-                        <div class="ui-g-7"><p:commandButton type="submit" value="#{msg.modulo_desempleoParc_btnProcesar}" action="#{modDesParcReportes.procesarReporte}"  update="pnl1 pnDetalleProc" style="font-size:12px" /></div>                                            
+                        </div>                          
+                        <div class="ui-g-6" style="text-align:left">
+                           <p:commandButton type="submit" value="#{msg.modulo_desempleoParc_btnProcesar}" action="#{modDesParcReportes.procesarReporte}"  update="pnDetalleProc" style="font-size:12px" />
+                        </div>                                                                                                                
                      </div>  
                      <div class="ui-g">					
-                        <div class="ui-g-2"><p:outputLabel for="ruta" value="#{msg.modulo_desempleoParc_lblRuta}" style="font-size:12px;font-weight:bold" /></div>
-                        <div class="ui-g-10"><p:inputText id="ruta" disabled="true"  value="#{modDesParcReportes.ruta}" style="text-Align:left;font-size:12px;width:350px" /></div>                       
+                        <div class="ui-g-2"><p:outputLabel  value="#{msg.modulo_desempleoParc_lblRuta}" style="font-size:12px;font-weight:bold" /></div>
+                        <div class="ui-g-10" style="background: #dddddd;border-radius: 5px;height:25px;width:350px;text-align: left;"><p:outputLabel   value="#{modDesParcReportes.ruta}" style="text-align:left;font-size:12px;width:350px" /></div>                       
                      </div> 
-                      <div class="ui-g">					
-                        <div class="ui-g-2"><p:outputLabel for="archivo" value="#{msg.modulo_desempleoParc_lblArchivo}" style="font-size:12px;font-weight:bold" /></div>
-                        <div class="ui-g-10"><p:inputText id="archivo" disabled="true" value="#{modDesParcReportes.archivo}" style="text-Align:left;font-size:12px;width:350px" /></div>                       
-                     </div> 
+                      <div class="ui-g" style="margin-top:10px;">					
+                        <div class="ui-g-2"><p:outputLabel  value="#{msg.modulo_desempleoParc_lblArchivo}" style="font-size:12px;font-weight:bold" /></div>
+                        <div class="ui-g-10" style="background: #dddddd;border-radius: 5px;height:25px;width:350px;text-align: left;"><p:outputLabel  value="#{modDesParcReportes.archivo}" style="text-align:left;font-size:12px;width:350px" /></div>                       
+                     </div>                      
 		    </p:panel>
 		</h:form>
 		<p:panel id="pnDetalleProc" header="#{msg.aprob_tabla_titResProc}" style="margin-bottom:20px;font-size:12px">
 				<p:dataTable var="pro" value="#{modDesParcReportes.proceso}" emptyMessage="#{msg.aprob_msj_sinDatos}" >
-					<p:column headerText="#{msg.aprob_tabla_columna_idSesion}" >
-						<h:outputText value="#{pro.sesionId}" style="font-size:12px"/>
-					</p:column>
+					
 
 					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
 						<h:outputText value="#{pro.abrevProceso}" style="font-size:12px"/>
@@ -64,12 +76,12 @@
 
 					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}">
 						<h:outputText value="#{pro.fechahoraInicio}" style="font-size:12px">
-						   <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+						   <f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm"/>
 						</h:outputText>
 					</p:column>
 					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}">
 						<h:outputText value="#{pro.fechahoraFinal}" style="font-size:12px">
-						  <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+						  <f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm"/>
 						</h:outputText>
 					</p:column>
 				</p:dataTable>

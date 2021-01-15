@@ -56,6 +56,22 @@ public class ModDesParcReportesCtrll extends ControllerBase{
 				proceso.setFechahoraFinal(format.format(new Date()));
 				proceso.setAbrevProceso(result.getOcMensaje());
 				proceso.setEstadoProceso(result.getOcAvance());
+				
+				switch(radioSelected) {
+				  
+				  case "1":    proceso.setAbrevProceso("Reporte de Diagnóstico");
+					           break;				            
+				  case "2":    proceso.setAbrevProceso("Generación layout pagos");
+			                   break;				           
+				  case "3":    proceso.setAbrevProceso("Reporte negativos subcuentas");
+					           break;				           
+				  case "4":    proceso.setAbrevProceso("Reporte movimientos aplicados");
+			                   break;			               
+				  default:
+			          proceso.setAbrevProceso("");
+				  
+				  } 
+				
 				reset();
 			}catch (Exception e) {			
 				 GenericException(e);		
@@ -77,22 +93,26 @@ public class ModDesParcReportesCtrll extends ControllerBase{
 	  
 	  case "1": 
 		           this.ruta="/RESPALDOS/operaciones/pruebas";		           
-		           this.archivo="RepParDiag_"+f+".xls";	   
+		           this.archivo="RepParDiag_"+f+".xls";
+		           this.proceso.setAbrevProceso("Reporte de Diagnóstico");
 		           break;
 	            
 	  case "2":
 		  		   this.ruta="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";		           
                    this.archivo="LayoutPagos_"+f+".xls";	
+                   this.proceso.setAbrevProceso("Generación layout pagos");
                    break;
 	           
 	  case "3":
 		           this.ruta="/RESPALDOS/operaciones/pruebas";
 		           this.archivo="RepParNeg_"+f+".xls";
+		           this.proceso.setAbrevProceso("Reporte negativos subcuentas");
 		           break;
 	           
 	  case "4":
                    this.archivo="Reporte Pendiente de Confirmar";
                    this.ruta="Reporte Pendiente de Confirmar";
+                   this.proceso.setAbrevProceso("Reporte movimientos aplicados");
                    break;
                
 	  default:

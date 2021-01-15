@@ -121,7 +121,7 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 				addMessage("entro a lotes: " + listLotes);
 
 			}			
-			PrimeFaces.current().executeScript("PF('dlg2').show()");
+			//PrimeFaces.current().executeScript("PF('dlg2').show()");
 		} catch (Exception e) {
 			GenericException(e);
 		}

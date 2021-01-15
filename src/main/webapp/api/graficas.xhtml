@@ -12,10 +12,11 @@
 </h:head>
 <h:body>
 	<h:form>
+	    <p:blockUI block="basic" trigger="fFin" />
 	    <p:growl id="out3" showDetail="true" skipDetailIfEqualsSummary="true" />
 		
 		<p:panel id="basic"
-			style="margin-bottom:20px">
+			style="margin-bottom:20px;margin-top:10px">
 
 
 			<h:panelGrid columns="2" layout="flex"
@@ -49,11 +50,8 @@
             <h:panelGrid id="grafica" style="margin-bottom:10px" cellpadding="5">
                <p:lineChart  id="out2" model="#{graficasCtrll.lineModel}" style="width: 100%; height: 200px;" />               
             </h:panelGrid>						
-			
-			
-			
+			<p:commandButton actionListener="#{graficasCtrll.exit}" ajax="false" action="/login.jsf"  type="submit" value="Salir"  />		 															
 		</p:panel>
-		<p:commandButton actionListener="#{graficasCtrll.exit}" ajax="false" action="/login.jsf"  type="submit" value="Salir"  />
 		 						
 	</h:form>
 
