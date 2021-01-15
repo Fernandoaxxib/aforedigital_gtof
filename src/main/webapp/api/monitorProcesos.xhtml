@@ -9,7 +9,7 @@
 
 
 	<ui:define name="center">
-
+		<ui:include src="menuSeguimientoProcesos.xhtml" />
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 
 		<h:form id="form">
@@ -18,7 +18,7 @@
 				<p:autoUpdate />
 			</p:messages>
 
-			<p:panel id="monitor" header="Monitor" >
+			<p:panel id="monitor" header="Monitor" style="margin-top:20px">
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
 					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedMonitor}"
@@ -88,7 +88,7 @@
 
 	<ui:define name="left">
 
-		<p:panel id="modulo" header="MÓDULO: SEGUIMIENTO DE PROCESOS.">
+		<p:panel id="modulo" header="MÓDULO: SEGUIMIENTO DE PROCESOS." style="font-size:12px">
 
 			<h:form id="form2">
 			
