@@ -35,6 +35,20 @@ public class CargaRightCtrll extends ControllerBase {
 	@Getter
 	private String linea;
 	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			fecha = null;
+			archivo = null;
+			mensaje = null;
+			linea = null;
+			
+			// Cancelar inicialización sobre la misma pantalla
+			init = false;
+		}
+	}
+	
 	public void crucePrevio() {
 		try {
 			CargaRightIn parametros = new CargaRightIn();

@@ -7,6 +7,10 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+	<f:metadata>
+		<f:event listener="#{notificacionPagos.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
 	<ui:define name="center">
 		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
 		<h:outputStylesheet name="estilo-base.css" library="css" />

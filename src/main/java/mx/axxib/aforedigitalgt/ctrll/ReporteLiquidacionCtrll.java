@@ -60,10 +60,21 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 	@Getter
 	private String lote;
 	
-	@PostConstruct
-	public void init() {
-		getObtieneParametros();
-		getObtieneSiefores();
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			selectedEstatus = null;
+			selectedTipoRetiro = null;
+			selectedSiefore = null;
+			selectedTipo = null;
+			lote = null;
+			getObtieneParametros();
+			getObtieneSiefores();
+			
+			// Cancelar inicialización sobre la misma pantalla
+			init = false;
+		}
 	}
 
 	public void getObtieneParametros() {

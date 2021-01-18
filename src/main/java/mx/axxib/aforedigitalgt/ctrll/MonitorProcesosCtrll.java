@@ -2,24 +2,19 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
-
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
-
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 
@@ -48,9 +43,16 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	@Setter
 	private ObtieneJobsOut selectedJob;
 
-	@PostConstruct
-	public void init() {
-		actualizar();
+
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			actualizar();
+			
+			// Cancelar inicialización sobre la misma pantalla
+			init = false;
+		}
 	}
 	
 	public void actualizar() {

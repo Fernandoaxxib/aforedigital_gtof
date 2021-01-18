@@ -46,9 +46,19 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	@Getter
 	private Integer totPesos;
 	
-	@PostConstruct
-	public void init() {
-		fecha = new Date();
+
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			fecha = new Date();
+			pagos = null;
+			totTitulos = null;
+			totPesos = null;
+			
+			// Cancelar inicialización sobre la misma pantalla
+			init = false;
+		}
 	}
 
 	public void buscarPagos() {
