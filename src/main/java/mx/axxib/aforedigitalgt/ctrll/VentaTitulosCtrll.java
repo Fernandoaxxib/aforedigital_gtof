@@ -3,9 +3,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -103,16 +101,34 @@ public class VentaTitulosCtrll extends ControllerBase {
 	@Setter
 	private ObtieneMonto selectedSiefore;
 
-	@PostConstruct
-	public void init() {
-		mostrarVenta = false;
-		mostrarVentaCT = false;
-		fechaActual = new Date();
-		fechaInicial = fechaActual;
-		fechaFinal = fechaActual;
-		obtenerTipoRetiro();
-		obtenerLoteTraspaso();
-		obtenerRgDevExces();
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			// Limpiar objetos
+			opcion = null;
+			selectedTipoRetiro = null;
+			selectedLoteTraspaso = null;
+			selectedrgDevExces = null;
+			lote = null;
+			montos = null;
+			selectedSiefore = null;
+			
+			// Establecer valor inicial
+			mostrarVenta = false;
+			mostrarVentaCT = false;
+			fechaActual = new Date();
+			fechaInicial = fechaActual;
+			fechaFinal = fechaActual;
+			
+			// Obtener catálogos necesarios
+			obtenerTipoRetiro();
+			obtenerLoteTraspaso();
+			obtenerRgDevExces();
+			
+			// Cancelar inicialización sobre la misma pantalla
+			init = false;
+		}
 	}
 
 	public void obtenerTipoRetiro() {

@@ -2,16 +2,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<ui:composition template="layaut.xhtml"
+<ui:composition template="layaut2.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+	<f:metadata>
+		<f:event listener="#{modDesempParc.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
 	<ui:define name="center">
-		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
-			<ui:include src="menuTransaccionesDisposiciones.xhtml" />
-		</p:panel>
+		
+		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
 
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 
@@ -28,7 +31,7 @@
 					<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
 						style="font-weight: bold" />
 					<h:panelGrid columns="2">
-						<p:inputText required="true" value="#{modDesempParc.nss}"></p:inputText>
+						<p:inputText required="true" value="#{modDesempParc.nss}" style="width:90px"></p:inputText>
 						<p:commandButton action="#{modDesempParc.consultarSolicitud}"
 							type="submit" value="#{msg.modDesParc_boton_buscarNss}"
 							ajax="false" />
@@ -103,36 +106,36 @@
 
 			<p:panel id="detalle" header="Detalle de Parcialidades"
 				style="margin-top:20px">
-				<p:dataTable id="parcialidadesTable" var="par"
-					value="#{modDesempParc.parcialidades}" selectionMode="single"
+				<p:dataTable id="parcialidadesTable" var="par"  scrollable="true" scrollWidth="800px"
+					value="#{modDesempParc.parcialidades}" selectionMode="single" 
 					selection="#{modDesempParc.selectedParcialidad}"
 					rowKey="#{par.pago}">
 
 					<p:ajax event="rowSelect" update="form" />
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_pago}">
+					<p:column headerText="#{msg.modDesParc_parcialidades_pago}" style="width:50px">
 						<h:outputText value="#{par.pago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_importe}">
+					<p:column headerText="#{msg.modDesParc_parcialidades_importe}" style="width:100px">
 						<h:outputText value="#{par.totalPago}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="#{msg.modDesParc_parcialidades_fecha}"
-						style="width:180px">
+						style="width:150px">
 						<h:outputText value="#{par.fecha}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}">
+					<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}" style="width:100px">
 						<h:outputText value="#{par.estatusPagDescrip}" />
 					</p:column>
 
 					<p:column headerText="#{msg.modDesParc_parcialidades_trabFechaAut}"
-						style="width:180px">
+						style="width:150px">
 						<h:outputText value="#{par.fechaManifiestoTrab}"
 							style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
@@ -140,12 +143,12 @@
 					</p:column>
 
 					<p:column headerText="#{msg.modDesParc_parcialidades_trabajador}"
-						style="text-align: center">
+						style="text-align: center; width:50px">
 						<h:outputText value="#{par.autorizaTrabajador}" />
 					</p:column>
 
 					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaEnv}"
-						style="width:180px">
+						style="width:150px">
 						<h:outputText value="#{par.fechaEnvAutorizaImss}"
 							style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
@@ -153,22 +156,22 @@
 					</p:column>
 
 					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaAut}"
-						style="width:180px">
+						style="width:150px">
 						<h:outputText value="#{par.fechaAutorizaImss}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="#{msg.modDesParc_parcialidades_imss}"
-						style="text-align: center">
+						style="text-align: center; width:50px">
 						<h:outputText value="#{par.autorizaImss}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}">
+					<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}" style="width:150px">
 						<h:outputText value="#{par.tipo_pago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_clabe}">
+					<p:column headerText="#{msg.modDesParc_parcialidades_clabe}" style="width:200px">
 						<h:outputText value="#{par.dpCuenta}" />
 					</p:column>
 				</p:dataTable>
@@ -257,7 +260,7 @@
 
 		<h:form id="formCan">
 			<p:panel id="acciones" header="Acciones" style="margin-top:20px">
-				<h:panelGrid columns="3" width="50%">
+				<h:panelGrid columns="3" width="80%">
 					<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
 						style="float:right" />
 
@@ -279,5 +282,10 @@
 
 	</ui:define>
 
+	<ui:define name="left">
+		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
+	</ui:define>
 
 </ui:composition>

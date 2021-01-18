@@ -2,7 +2,6 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.eml.CancelarSolicitudIn;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesIn;
@@ -34,9 +32,6 @@ public class ModDesempParcCtrll extends ControllerBase {
 
 	@Autowired
 	private ModDesempParcServ modDesempParcServ;
-
-	@Autowired
-	private AforeMessage aforeMessage;
 
 	@Getter
 	@Setter
@@ -79,9 +74,19 @@ public class ModDesempParcCtrll extends ControllerBase {
 	@Setter
 	private Integer selectedClaveCancelacion;
 
-	@PostConstruct
-	public void init() {
-		datosSol = new DatosSolicitudOut();
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			nss = null;
+			datosSol = new DatosSolicitudOut();
+			parcialidades = null;
+			administrativos = null;
+			marcas = null;
+			selectedParcialidad = null;
+			selectedClaveCancelacion = null;
+			init = false;
+		}
 	}
 
 	public void setSelectedParcialidad(CargaParcialidadesOut selected) {

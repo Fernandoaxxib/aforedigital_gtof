@@ -1,20 +1,54 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.util.Map;
+
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import lombok.Getter;
+import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.util.AforeLogger;
 
 public class ControllerBase {
 
+	@Getter
+	@Setter
+	public boolean init;
+	
+	private boolean force;
 
 	@Autowired
-	private AforeMessage aforeMessage;
+	protected AforeMessage aforeMessage;
 
 	@Autowired
 	private AforeLogger aforeLogger;
 	
+	@PostConstruct
+	public void init() {
+		force = true;
+		iniciar();
+	}
+	
+	public void iniciar() {
+		if(force) {
+			init = true;
+			force = false;
+			return;
+		}
+		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		if(params.size() == 1) {
+			String param = params.get("init");
+			if(param != null) {
+				init = param.equals("true");
+				return;
+			}
+		}
+		init = false;
+	}
 	
 	protected void GenericException(Exception e) {		
 		AforeException error;

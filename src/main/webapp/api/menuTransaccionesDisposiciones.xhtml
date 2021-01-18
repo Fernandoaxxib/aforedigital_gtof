@@ -20,40 +20,61 @@
 	<h:form>
 		<p:menuButton icon="pi pi-th-large">
 			<p:menuitem value="* Aprobación de solicitudes por tipo de retiro"
-				outcome="/api/aprobSolicTipRetiro.xhtml" />
+				outcome="/api/aprobSolicTipRetiro.jsf" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="* Desempleo Parcialidades"
-				outcome="/api/modDesParc.jsf" />
+				outcome="/api/modDesParc.jsf" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="* Desempleo Parcialidades 2"
-				outcome="/api/modDesempParc.jsf" />
+				outcome="/api/modDesempParc.jsf" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="* Venta de títulos"
-				outcome="/api/ventaTitulos.xhtml" />
+				outcome="/api/ventaTitulos.jsf" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
-			<p:menuitem value="Carga OP84 y OP85"
-				 />
+			<p:menuitem value="Carga OP84 y OP85" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="* Notificaciones de Pago"
-				outcome="/api/notificacionPagos.xhtml" />
+				outcome="/api/notificacionPagos.xhtml" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="Proceso Retiros Parciales"
-				/>
+				includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
-			<p:menuitem value="Carga Masiva RIGHT FAX"
-				/>
+			<p:menuitem value="Carga Masiva RIGHT FAX" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="Transferencias SB90 Parcialidades"
-				 />
+				includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="Certificación de Inactividad"
-				/>
+				includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
-			<p:menuitem value="Rechazo de Solicitudes"
-				/>
+			<p:menuitem value="Rechazo de Solicitudes" includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 			<p:separator />
 			<p:menuitem value="Captura de Solicitudes Matrimonio y Desempleo"
-				 />
+				includeViewParams="true">
+				<f:param name="init" value="true" />
+			</p:menuitem>
 
 		</p:menuButton>
 

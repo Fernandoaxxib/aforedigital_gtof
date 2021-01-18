@@ -243,4 +243,6 @@ text-decoration: none;
 border:transparent;
 }
 
-
+#content{
+	font-size: 12px
+}
