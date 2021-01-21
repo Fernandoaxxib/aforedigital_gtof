@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<f:metadata>
+		<f:event listener="#{ventaTitulos.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
+	<ui:define name="center">
+		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript name="js/calendar-localization.js" />
+		
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		
+	<h:form id="form">
+		
+		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
+        <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
+		<p:commandButton action="#{salarioMinimo.botonGenerarTabla}"
+							type="submit" value="#{msg.salario_minimo_boton_salario}" ajax="false" />
+		
+		 <p:growl id="msgs" showDetail="true"/>
+ 
+    <p:dataTable id="tableSalario" widgetVar="salario1" var="salario" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-bottom:20px">
+        <f:facet name="header">
+            Salario Minimo (diario)
+        </f:facet>
+ 
+ 		
+ 
+        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:msgs :form:tableSalario" />
+        <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:msgs" />
+ 
+        <p:column headerText="CdZona">
+            <p:cellEditor>
+                <f:facet name="output"> <h:outputText value="#{salario.cdZona}" /> </f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.cdZona}" style="width:100%" /> </f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+          <p:column headerText="FechaCalendario">
+            <p:cellEditor>
+                <f:facet name="output">
+                			<p:datePicker disabled="true"  id="calendarioOut" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:center;" showIcon="false"
+							locale="es" pattern="dd/MM/yyyy" />
+                                       
+                </f:facet>
+                <f:facet name="input">
+                			 <p:datePicker id="calendarioIn" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:center;" showIcon="true"
+							locale="es" pattern="dd/MM/yyyy" />
+                			
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        
+        <p:column headerText="Monto">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{salario.montoDiario}" style="float:right" >  
+                					   <f:convertNumber type="currency" currencySymbol="$" />
+									   </h:outputText>
+                </f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.montoDiario}" style="width:100%" /> </f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="FechaUltimo">
+            <p:cellEditor>
+                <f:facet name="output">
+                						<p:datePicker disabled="true"  id="fechaUltOut" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:center;" showIcon="false"
+										locale="es" pattern="dd/MM/yyyy" />
+                </f:facet>
+                <f:facet name="input">
+                					   <p:datePicker id="fechaUltIn" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:right;" showIcon="true"
+										locale="es" pattern="dd/MM/yyyy" />
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        
+           <p:column headerText="Id User">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{salario.userId}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.userId}" style="width:100%" /></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column style="width:35px">
+            <p:rowEditor />
+        </p:column>
+    </p:dataTable>
+		
+		<h:panelGrid columns="1" cellpadding="5">
+    		<p:commandButton value="Agregar" type="button" onclick="PF('tabla2').show();" />
+        </h:panelGrid>
+			<p:dialog header="Agregar Usuario" widgetVar="tabla2" minHeight="40">
+   			 	<h:outputText value="Ingresar Usuario" />
+   			 	<h:inputText id="usuarioInsert" value="#{salarioMinimo.insertUsuario}" />
+   			 	
+   			 	
+   			 	
+   			 	
+   				 <h:outputText value="Ingresar Fecha Calendario" />
+   				 <p:datePicker id="calendario" value="#{salarioMinimo.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
+							locale="es" pattern="dd/MM/yyyy" />
+      			
+   			 	
+   			 	<h:outputText value="Ingresar Monto" />
+   			 	<h:inputText id="montoDiarionInsert" value="#{salarioMinimo.montoDiario}" />
+   			 	
+   			 	<p:commandButton action="#{salarioMinimo.onAddNew}"
+				type="submit" value="#{msg.salario_minimo_boton_enviar}" ajax="false" />
+	
+			
+		</p:dialog>
+		
+  </h:form>
+</ui:define>
+
+    <ui:define name="left">
+		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
+	</ui:define>
+
+</ui:composition>

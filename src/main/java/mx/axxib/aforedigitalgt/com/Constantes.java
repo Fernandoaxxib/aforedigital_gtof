@@ -77,4 +77,10 @@ public class Constantes {
 	public static final String CARGA_RIGHT_OBTIENE_CRUCE_PREVIO = "PRC_CREUCE_PREVIO";
 	public static final String CARGA_RIGHT_OBTIENE_CARGA = "PRC_CARGA";
 	
+	// VER REPORTE PARCIAL FOVALDSM
+		public static final String SALARIO_MINIMO_PACKAGE = "PKG_RET_FOVALDSM";
+		public static final String SALARIO_MINIMO_STORED = "PRC_SALARIO_MIN";
+		public static final String SALARIO_MINIMO_INSERT_STORED = "PRC_SALARIO_MIN_INSERT";
+		public static final String SALARIO_MINIMO_UPDATE_STORED = "PRC_SALARIO_MINIMO_UPD";
+	
 }
