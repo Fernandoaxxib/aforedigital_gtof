@@ -44,8 +44,8 @@ public class MenuOperacionesCtrll extends ControllerBase {
 		navigate();
 	}
 	
-	public void reporte() {
-		outcome = null;
+	public void reportes() {
+		outcome = "/api/reporteLiquidacion.jsf";
 		navigate();
 	}
 }

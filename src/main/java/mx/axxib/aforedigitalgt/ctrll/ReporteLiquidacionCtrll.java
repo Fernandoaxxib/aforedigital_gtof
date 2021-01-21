@@ -2,7 +2,6 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -108,10 +107,10 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 			String msg = reporteLiquidacionService.ejecutarReporte(parametros);
 			if(msg.toUpperCase().contains("PROCESO TERMINADO")) {
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
 			} else {
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 			}
 		} catch (Exception e) {
 			GenericException(e);

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="layaut.xhtml"
+<ui:composition template="layaut2.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -11,19 +11,25 @@
 		<f:event listener="#{reporteLiquidacion.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
 	<ui:define name="center">
+	
 		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<ui:include src="menuReportes.xhtml" />
 
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
 		</p:messages>
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="Parámetros" style="margin-top:20px">
+			<p:panel id="busqueda" header="Reporte de liquidación" style="margin-top:20px">
 				<p:panelGrid id="panel" columns="6" styleClass="ui-noborder"
 					cellpadding="10" width="100%">
 					<p:outputLabel value="Estatus" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true"
+					<p:selectOneMenu style="width:200px" required="true" requiredMessage="Estatus es requerido"
 						value="#{reporteLiquidacion.selectedEstatus}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -35,7 +41,7 @@
 					<h:outputText id="lote" value="#{reporteLiquidacion.lote}" />
 
 					<p:outputLabel value="Tipo" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true"
+					<p:selectOneMenu style="width:200px" required="true" requiredMessage="Tipo es requerido"
 						value="#{reporteLiquidacion.selectedTipo}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -44,7 +50,7 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Tipo retiro" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true"
+					<p:selectOneMenu style="width:200px" required="true" requiredMessage="Tipo retiro es requerido"
 						value="#{reporteLiquidacion.selectedTipoRetiro}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -59,7 +65,7 @@
 
 					<p:outputLabel value="Siefore" style="font-weight: bold" />
 					<p:selectOneMenu style="width:200px" var="t" 
-						converter="selectOneMenuConverter" required="true"
+						converter="selectOneMenuConverter" required="true" requiredMessage="Siefore es requerido"
 						value="#{reporteLiquidacion.selectedSiefore}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -88,6 +94,12 @@
 
 		</h:form>
 
+	</ui:define>
+
+	<ui:define name="left">
+		<p:panel id="modulo" header="CONSULTAS Y REPORTES GENERALES.">
+			
+		</p:panel>
 	</ui:define>
 
 </ui:composition>

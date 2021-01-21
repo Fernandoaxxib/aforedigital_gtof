@@ -17,7 +17,7 @@
             <f:selectItem itemLabel="Transacciones y disposiciones" itemValue="/api/aprobSolicTipRetiro.jsf" />
             <f:selectItem itemLabel="Seguimiento de procesos" itemValue="/api/monitorProcesos.jsf" />
             <f:selectItem itemLabel="Recaudaciones" itemValue="" itemDisabled="true"/>
-            <f:selectItem itemLabel="Consultas y reportes generales" itemValue="" itemDisabled="true"/>
+            <f:selectItem itemLabel="Consultas y reportes generales" itemValue="/api/reporteLiquidacion.jsf" />
             <p:ajax event="change" listener="#{menuOperaciones.navigate}" />
         </p:selectOneMenu>
 	</h:form>
