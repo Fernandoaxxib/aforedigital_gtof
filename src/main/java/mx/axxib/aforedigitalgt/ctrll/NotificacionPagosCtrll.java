@@ -36,26 +36,25 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Date fecha;
-	
+
 	@Getter
 	private List<LlenaInfo> pagos;
-	
+
 	@Getter
 	private Integer totTitulos;
-	
+
 	@Getter
 	private Integer totPesos;
-	
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
+		if (init) {
 			fecha = new Date();
 			pagos = null;
 			totTitulos = null;
 			totPesos = null;
-			
+
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
 		}
@@ -67,7 +66,7 @@ public class NotificacionPagosCtrll extends ControllerBase {
 			totTitulos = null;
 			totPesos = null;
 			LlenaInfoOut res = notificacionPagosServ.llenaInfo(fecha);
-			if(res != null && res.getDatos() != null && res.getDatos().size()>0) {
+			if (res != null && res.getDatos() != null && res.getDatos().size() > 0) {
 				pagos = res.getDatos();
 				totTitulos = res.getTotTitulos();
 				totPesos = res.getTotPesos();
@@ -76,29 +75,33 @@ public class NotificacionPagosCtrll extends ControllerBase {
 			GenericException(e);
 		}
 	}
-	
+
 	public void enviar() {
 		try {
-			String res = notificacionPagosServ.enviaFecha(fecha);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, res));
+			if (pagos != null && pagos.size() > 0) {
+				String res = notificacionPagosServ.enviaFecha(fecha);
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", res));
+			}
 		} catch (Exception e) {
 			GenericException(e);
 		}
 	}
-	
+
 	public void exportar() {
 		try {
-			ExportarIn parametros = new ExportarIn();
-			parametros.setFecha(fecha);
-			ExportarOut res = notificacionPagosServ.exportar(parametros );
-			if(res.getMensaje() == null && res.getError() == null) {
-				String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-			} else {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, null, res.getMensaje()+" "+res.getError()));
+			if (pagos != null && pagos.size() > 0) {
+				ExportarIn parametros = new ExportarIn();
+				parametros.setFecha(fecha);
+				ExportarOut res = notificacionPagosServ.exportar(parametros);
+				if (res.getMensaje() == null && res.getError() == null) {
+					String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+					FacesContext.getCurrentInstance().addMessage(null,
+							new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+				} else {
+					FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"", res.getMensaje() + " " + res.getError()));
+				}
 			}
 		} catch (Exception e) {
 			GenericException(e);

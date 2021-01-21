@@ -10,6 +10,10 @@
 	<f:metadata>
 		<f:event listener="#{monitorProcesos.iniciar}" type="preRenderView"/>
 	</f:metadata>
+	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
 
 	<ui:define name="center">
 		<ui:include src="menuSeguimientoProcesos.xhtml" />
@@ -21,8 +25,8 @@
 				<p:autoUpdate />
 			</p:messages>
 
-			<p:panel id="monitor" header="Monitor" style="margin-top:20px">
-				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
+			<p:panel id="monitor" header="Monitor de procesos" style="margin-top:20px">
+				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedMonitor}"
 					rowKey="#{mon.sesionId}" paginator="true"
@@ -54,7 +58,7 @@
 				style="margin-top:20px" value="Actualizar" ajax="false" />
 
 			<p:panel id="jobs" header="Jobs" style="margin-top:20px">
-				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom"
+				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{monitorProcesos.jobs}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
 					paginator="true" rowsPerPageTemplate="5,10,15">
@@ -91,7 +95,7 @@
 
 	<ui:define name="left">
 
-		<p:panel id="modulo" header="MÓDULO: SEGUIMIENTO DE PROCESOS." style="font-size:12px">
+		<p:panel id="modulo" header="SEGUIMIENTO DE PROCESOS.">
 
 			<h:form id="form2">
 			

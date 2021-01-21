@@ -8,12 +8,16 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
 
 	<ui:define name="left">
-		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
+		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
 			<ui:include src="graficas.xhtml" />
 		</p:panel>
 	</ui:define>
+	
 	<ui:define name="center">
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 		

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:selectOneMenu id="mod" class="menu menu-box" style="width:auto" value="#{menuOperaciones.outcome}">
+            <f:selectItem itemLabel="Transacciones y disposiciones" itemValue="/api/aprobSolicTipRetiro.jsf" />
+            <f:selectItem itemLabel="Seguimiento de procesos" itemValue="/api/monitorProcesos.jsf" />
+            <f:selectItem itemLabel="Recaudaciones" itemValue="" itemDisabled="true"/>
+            <f:selectItem itemLabel="Consultas y reportes generales" itemValue="" itemDisabled="true"/>
+            <p:ajax event="change" listener="#{menuOperaciones.navigate}" />
+        </p:selectOneMenu>
+	</h:form>
+
+
+</h:body>
+</html>

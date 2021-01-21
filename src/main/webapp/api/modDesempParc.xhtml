@@ -12,6 +12,10 @@
 		<f:event listener="#{modDesempParc.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
 	<ui:define name="center">
 		
 		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
@@ -25,13 +29,13 @@
 		<h:form id="form">
 
 
-			<p:panel id="datos" header="Datos Solicitud" style="margin-top:20px">
+			<p:panel id="datos" header="Desempleo parcialidades" style="margin-top:20px">
 				<h:panelGrid id="solicitud" columns="6" cellpadding="10"
 					width="100%">
 					<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
 						style="font-weight: bold" />
 					<h:panelGrid columns="2">
-						<p:inputText required="true" value="#{modDesempParc.nss}" style="width:90px"></p:inputText>
+						<p:inputText required="true" requiredMessage="NSS es requerido" value="#{modDesempParc.nss}" style="width:90px"></p:inputText>
 						<p:commandButton action="#{modDesempParc.consultarSolicitud}"
 							type="submit" value="#{msg.modDesParc_boton_buscarNss}"
 							ajax="false" />
@@ -106,7 +110,7 @@
 
 			<p:panel id="detalle" header="Detalle de Parcialidades"
 				style="margin-top:20px">
-				<p:dataTable id="parcialidadesTable" var="par"  scrollable="true" scrollWidth="800px"
+				<p:dataTable id="parcialidadesTable" var="par"  scrollable="true" emptyMessage="#{msg.aprob_msj_sinDatos}" 
 					value="#{modDesempParc.parcialidades}" selectionMode="single" 
 					selection="#{modDesempParc.selectedParcialidad}"
 					rowKey="#{par.pago}">
@@ -179,7 +183,7 @@
 
 			<p:panel id="admin" header="Datos Administrativos"
 				style="margin-top:20px">
-				<p:dataTable id="administrativoTable" var="adm"
+				<p:dataTable id="administrativoTable" var="adm" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{modDesempParc.administrativos}">
 
 					<p:ajax event="rowSelect" update="form" />
@@ -216,7 +220,7 @@
 			</p:panel>
 
 			<p:panel id="marcas" header="Marcas" style="margin-top:20px">
-				<p:dataTable id="marcasTable" var="mar"
+				<p:dataTable id="marcasTable" var="mar" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{modDesempParc.marcas}">
 
 					<p:ajax event="rowSelect" update="form" />
@@ -264,7 +268,7 @@
 					<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
 						style="float:right" />
 
-					<p:selectOneMenu required="true" id="tipoCancelacion"
+					<p:selectOneMenu required="true" id="tipoCancelacion" requiredMessage="Tipo cancelación es requerido"
 						style="width:200px"
 						value="#{modDesempParc.selectedClaveCancelacion}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -283,7 +287,7 @@
 	</ui:define>
 
 	<ui:define name="left">
-		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
+		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
 			<ui:include src="graficas.xhtml" />
 		</p:panel>
 	</ui:define>

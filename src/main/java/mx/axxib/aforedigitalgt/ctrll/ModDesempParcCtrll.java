@@ -151,11 +151,11 @@ public class ModDesempParcCtrll extends ControllerBase {
 				if (msg.trim().toUpperCase().equals("OK")) {
 					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
 					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+							new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
 				} else {
 					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
 					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+							new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 				}
 			}
 		} catch (Exception e) {

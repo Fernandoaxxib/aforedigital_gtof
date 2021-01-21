@@ -11,6 +11,10 @@
 		<f:event listener="#{ventaTitulos.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
 	<ui:define name="center">
 		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
 		<h:outputStylesheet name="estilo-base.css" library="css" />
@@ -22,7 +26,7 @@
 
 		<h:form id="form">
 
-			<p:panel id="busqueda" header="Módulo" style="margin-top:20px">
+			<p:panel id="busqueda" header="Venta de títulos" style="margin-top:20px">
 				<p:panelGrid id="pBusqueda" columns="1" styleClass="ui-noborder">
 					<p:panelGrid id="fechas" columns="3">
 						<p:outputLabel value="Fecha Corte" style="font-weight: bold" />
@@ -39,7 +43,7 @@
 					</p:panelGrid>
 
 					<p:outputPanel id="customPanel">
-						<p:selectOneRadio id="customRadio" value="#{ventaTitulos.opcion}"
+						<p:selectOneRadio id="customRadio" value="#{ventaTitulos.opcion}" required="true" requiredMessage="Debe seleccionar un módulo"
 							layout="custom">
 							<f:selectItem itemLabel="Todos" itemValue="T" />
 							<f:selectItem itemLabel="Retiros" itemValue="R" />
@@ -147,7 +151,7 @@
 			</p:panel>
 
 			<p:panel id="siefore" header="Siefores" style="margin-top:20px">
-				<p:dataTable id="ventaTable" var="ven" paginatorPosition="bottom"
+				<p:dataTable id="ventaTable" var="ven" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{ventaTitulos.montos}" rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15" selectionMode="single"
 					selection="#{ventaTitulos.selectedSiefore}" rowKey="#{ven.siefore}">
@@ -209,7 +213,7 @@
 	</ui:define>
 
 	<ui:define name="left">
-		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
+		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
 			<ui:include src="graficas.xhtml" />
 		</p:panel>
 	</ui:define>

@@ -186,7 +186,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 					mostrarVenta = true;
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Retiros"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 				}
 				break;
 			case "A":
@@ -198,7 +198,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 					mostrarVenta = true;
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Traspasos Afore-Afore"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 				}
 				break;
 			case "V":
@@ -210,7 +210,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 					mostrarVenta = true;
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Dev pago excs lote"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 				}
 				break;
 			case "L":
@@ -222,7 +222,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 					mostrarVentaCT = true;
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Lote corte"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 				}
 				break;
 			}
@@ -259,10 +259,10 @@ public class VentaTitulosCtrll extends ControllerBase {
 				ventaTitulosService.ventaTitulosMonitor(parametros );
 				String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
 			} else {
 				String msg = aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null );
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 			}
 		} catch (Exception e) {
 			GenericException(e);
@@ -283,10 +283,10 @@ public class VentaTitulosCtrll extends ControllerBase {
 				ventaTitulosService.ventaTitulosMonitorCT(parametros );
 				String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
 				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
 			} else {
 				String msg = aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null );
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 			}
 		} catch (Exception e) {
 			GenericException(e);

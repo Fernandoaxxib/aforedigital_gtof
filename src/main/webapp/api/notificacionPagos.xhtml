@@ -11,6 +11,10 @@
 		<f:event listener="#{notificacionPagos.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
 	<ui:define name="center">
 		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
 		<h:outputStylesheet name="estilo-base.css" library="css" />
@@ -21,7 +25,7 @@
 		</p:messages>
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="Consultar" style="margin-top:20px">
+			<p:panel id="busqueda" header="Notificaciones de pago" style="margin-top:20px">
 				<p:panelGrid id="fechas" columns="3" styleClass="ui-noborder">
 					<p:outputLabel value="Fecha de proceso" style="font-weight: bold" />
 					<p:datePicker id="fecha" value="#{notificacionPagos.fecha}"
@@ -36,7 +40,7 @@
 
 			<p:panel id="pagos" header="Pagos pendientes de notificación"
 				style="margin-top:20px">
-				<p:dataTable id="notificacionTable" var="pag"
+				<p:dataTable id="notificacionTable" var="pag" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					sortBy="#{pag.fechaAprobacion}" paginatorPosition="bottom"
 					value="#{notificacionPagos.pagos}" rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15">
@@ -95,8 +99,8 @@
 
 	</ui:define>
 	
-<ui:define name="left">
-		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES." style="font-size:12px">
+	<ui:define name="left">
+		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
 			<ui:include src="graficas.xhtml" />
 		</p:panel>
 	</ui:define>

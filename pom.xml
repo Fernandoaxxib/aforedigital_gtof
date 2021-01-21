@@ -135,6 +135,13 @@
 			<artifactId>primefaces</artifactId>
 			<version>8.0</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+			<version>8.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.primefaces.extensions</groupId>
 			<artifactId>all-themes</artifactId>

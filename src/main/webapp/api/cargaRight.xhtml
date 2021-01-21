@@ -11,6 +11,10 @@
 		<f:event listener="#{cargaRight.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
+		<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
 	<ui:define name="center">
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript name="js/calendar-localization.js" />
