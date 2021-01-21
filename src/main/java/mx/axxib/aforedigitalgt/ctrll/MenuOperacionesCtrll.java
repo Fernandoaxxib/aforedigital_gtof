@@ -28,4 +28,24 @@ public class MenuOperacionesCtrll extends ControllerBase {
 		            + "?init=true&faces-redirect=true");
 		}
 	}
+	
+	public void transacciones() {
+		outcome = "/api/aprobSolicTipRetiro.jsf";
+		navigate();
+	}
+	
+	public void monitor() {
+		outcome = "/api/monitorProcesos.jsf";
+		navigate();
+	}
+	
+	public void recaudaciones() {
+		outcome = null;
+		navigate();
+	}
+	
+	public void reporte() {
+		outcome = null;
+		navigate();
+	}
 }
