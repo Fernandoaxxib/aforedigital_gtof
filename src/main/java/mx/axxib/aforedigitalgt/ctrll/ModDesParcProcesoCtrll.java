@@ -1,7 +1,6 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.CellEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -59,8 +59,17 @@ public class ModDesParcProcesoCtrll  extends ControllerBase{
 	@Setter
 	private Date fecha;
 	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			reset();
+		}
+	}
+	
 	 public void radioSelected() {}
 	 public void buscarRegXProcesar() {
+		 
 			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 			String f=format.format(fecha);
 			addMessage("si entro con la fecha "+f+" radio selected: "+radioSelected);
@@ -89,7 +98,8 @@ public class ModDesParcProcesoCtrll  extends ControllerBase{
 			 			}  
 			    		  
 			    	  });
-			      }
+			       }
+			      buscarRegXProcesar();
 		} catch (Exception e) {			
 				 GenericException(e);		
 		}
@@ -97,7 +107,7 @@ public class ModDesParcProcesoCtrll  extends ControllerBase{
 	 public void mostrarRegistros() {
 	    	try {
 	    		
-	    		listSolicitudes=service.getRegSinSalario(fecha);    		    			    		
+	    		listSolicitudes=service.getRegSinSalario();    		    			    		
 			} catch (Exception e) {
 				GenericException(e);
 			}

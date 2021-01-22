@@ -109,10 +109,22 @@ public class GraficasCtrll extends ControllerBase {
 
 	public void onCountryChange() {
 		// **************************
+		String fechaI="";
+		String fechaF="";
 		addMessage("Fecha inicio: " + fechaInicioCombo + " Fecha fin: " + fechaFinCombo);
 
-		String fechaI="2020".concat("0"+fechaInicioCombo).concat("01");
-		String fechaF="2020".concat("0"+fechaFinCombo).concat("01");
+		if(Integer.parseInt(fechaInicioCombo)<10) {
+		   fechaI="01".concat("0"+fechaInicioCombo).concat("20");
+		}else {
+			 fechaI="01".concat(fechaInicioCombo).concat("20");
+		}
+		
+		if(Integer.parseInt(fechaFinCombo)<10) {
+			fechaF="01".concat("0"+fechaFinCombo).concat("20");
+		}else {
+			fechaF="01".concat(fechaFinCombo).concat("20");
+		}
+		
 		try {
 			List<TipoTransacOut> tipoTransacciones= graficasService.getTipoTransacciones(fechaI, fechaF);
 			totParcial=tipoTransacciones.get(0).getTotParcial();

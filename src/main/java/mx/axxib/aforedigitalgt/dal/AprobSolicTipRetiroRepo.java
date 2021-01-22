@@ -38,7 +38,8 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 	
     public AprobarSolicResult aprobarSolicitud(Integer inNoSolicitud,Integer inTipTransac,String icSubTipTransac) throws AforeException {
 	  try {	
-		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.APRO_SOLIC_TIPO_RETIRO_PACKAGE).concat(".").concat(Constantes.APRO_SOLIC_TIPO_RETIRO_APROBAR_SELECCIONADOS);
+		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.APRO_SOLIC_TIPO_RETIRO_PACKAGE).concat(".")
+				.concat(Constantes.APRO_SOLIC_TIPO_RETIRO_APROBAR_SELECCIONADOS);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 		query.registerStoredProcedureParameter("in_NoSolicitud", Integer.class, ParameterMode.IN);

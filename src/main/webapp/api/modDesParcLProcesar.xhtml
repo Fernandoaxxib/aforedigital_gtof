@@ -1,13 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-
 <ui:composition template="/api/layaut2.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <f:metadata>
+		<f:event listener="#{modDesParcLProcesar.iniciar}" type="preRenderView"/>		
+	</f:metadata>
 
 	<ui:define name="menu" >
 		<ui:include src="menuOperaciones.xhtml" />
@@ -26,12 +29,20 @@
 	       <div class="ui-g-1">
 	          <ui:include src="menuTransaccionesDisposiciones.xhtml" />
 	       </div>
-	       <div class="ui-g-11" style="text-align:left">
-	          <h:form>
-			     <p:commandButton action="/api/modDesParc.xhtml?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnPM}" style="font-size:12px" />
-			     <p:commandButton action="/api/modDesParcReportes.xhtml?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnReportes}" style="font-size:12px" />
-			     <p:commandButton action="/api/modDesParcLProcesar.xhtm?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnLProcesar}" style="font-size:12px" />
-		      </h:form>
+	       <div class="ui-g-11" style="text-align:left">	         
+			 <h:form>
+			     <p:linkButton  outcome="/api/modDesParc.jsf" includeViewParams="true" value="#{msg.modulo_desempleoParc_btnPM}" >			         
+				    <f:param name="init" value="true" />
+			     </p:linkButton>
+			    			     			    
+			     <p:linkButton outcome="/api/modDesParcReportes.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnReportes}" >
+			        <f:param name="init" value="true" />
+			     </p:linkButton>			      			    
+			    
+			     <p:linkButton outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnLProcesar}" >
+			         <f:param name="init" value="true" />
+			     </p:linkButton>			      
+			 </h:form>  
 	       </div>
 	    </div>
 

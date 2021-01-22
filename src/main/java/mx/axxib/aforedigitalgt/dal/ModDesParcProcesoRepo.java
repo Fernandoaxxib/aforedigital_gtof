@@ -3,14 +3,9 @@ package mx.axxib.aforedigitalgt.dal;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.DiagnosticoResult;
@@ -51,16 +46,13 @@ public class ModDesParcProcesoRepo extends RepoBase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<RegisSinSalarioOut> getRegSinSalario(Date id_FechaCarga) throws AforeException {
+	public List<RegisSinSalarioOut> getRegSinSalario() throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
 					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_DET_SAL);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "RegisSinSalarioOut");
-
-			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
+			
 			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
-
-			query.setParameter("id_FechaCarga", id_FechaCarga);
 
 			List<RegisSinSalarioOut> result = query.getResultList();
 
@@ -102,23 +94,14 @@ public class ModDesParcProcesoRepo extends RepoBase {
 					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_GUARDAR_DET_SAL);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("id_FechaCarga", Date.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("on_NumSolicitud", Integer.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("on_Nss", Integer.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("on_sbc_tipo_a", Integer.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_curp", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_primer_apellido", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_segundo_apellido", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_nombre", String.class, ParameterMode.IN);
-
-			query.setParameter("id_FechaCarga", registro.getOdFechaCarga());
-			query.setParameter("on_NumSolicitud", registro.getOnNumSolicitud());
-			query.setParameter("on_Nss", registro.getOnNss());
-			query.setParameter("on_sbc_tipo_a", registro.getOnSbcTipoA());
-			query.setParameter("oc_curp", registro.getOcCurp());
-			query.setParameter("oc_primer_apellido", registro.getOcPrimerApellido());
-			query.setParameter("oc_segundo_apellido", registro.getOcSegundoApellido());
-			query.setParameter("oc_nombre", registro.getOcNombre());
+			
+			query.registerStoredProcedureParameter("on_NumSolicitud", Integer.class, ParameterMode.IN);			
+			query.registerStoredProcedureParameter("on_sbc_tipo_a", Double.class, ParameterMode.IN);
+					
+			query.setParameter("on_NumSolicitud", registro.getOnNumSolicitud());			
+			query.setParameter("on_sbc_tipo_a", registro.getOnSbcTipoA());	
+			
+			query.execute();
 
 		} catch (Exception e) {
 			throw GenericException(e);

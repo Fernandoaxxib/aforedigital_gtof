@@ -43,6 +43,15 @@ public class ModDesParcReportesCtrll extends ControllerBase{
 	@Setter
 	private String radioSelected;
 	
+	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			reset();
+		}
+	}
+	
 	public void radioSelected() {}
 	public void procesarReporte() {
     	if(fecha!=null) {

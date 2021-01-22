@@ -8,10 +8,15 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+    <f:metadata>
+		<f:event listener="#{aprobSolicTipRetiro.iniciar}" type="preRenderView"/>
+		
+	</f:metadata>
+
 	<ui:define name="menu" >
 		<ui:include src="menuOperaciones.xhtml" />
     </ui:define>
-
+   
 	<ui:define name="left">
 		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
 			<ui:include src="graficas.xhtml" />
@@ -19,31 +24,24 @@
 	</ui:define>
 	
 	<ui:define name="center">
-		<h:outputStylesheet name="estilo-base.css" library="css" />
-		
-		<div class="ui-g" style="backgroud-color: white">
-			<div class="ui-g-1">
-				<ui:include src="menuTransaccionesDisposiciones.xhtml" />
-			</div>
-			<div class="ui-g-11" style="text-align: left">
-				<p:commandButton value="#{msg.aprob_boton_generarReporte}"
-					style="font-size:12px" />
-			</div>
-		</div>
+		<h:outputStylesheet name="estilo-base.css" library="css" />		
+				
+		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
 
-		<h:form>
+		<h:form >
 		<p:blockUI block="table1" trigger="btnRecSolicPend" />
+		  <p:panel header="Aprobación de solicitudes por tipo de retiro" style="margin-top:20px">
 			<p:commandButton id="btnRecSolicPend"
 				action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
-				type="submit" update="table1"
+				type="submit" update="table1" oncomplete="PF('listSolicitudes').selectAllRows()"
 				value="#{msg.aprob_boton_recuperarSolicitudes}"
 				style="font-size:12px;background" ajax="true" />
 
-
-			<p:dataTable id="table1" var="mon"
+          
+			<p:dataTable id="table1" var="mon" 
 				value="#{aprobSolicTipRetiro.listSolicitudes}"
 				widgetVar="listSolicitudes" emptyMessage="#{msg.aprob_msj_sinDatos}"
-				filteredValue="#{aprobSolicTipRetiro.filtro}"
+				filteredValue="#{aprobSolicTipRetiro.filtro}"  
 				globalFilterFunction="#{aprobSolicTipRetiro.globalFilterFunction}"
 				selection="#{aprobSolicTipRetiro.selectedSolicitud}"
 				rowKey="#{mon.numSolicitud}" style="padding-top:10px;font-size:12px"
@@ -125,15 +123,14 @@
 				</p:column>
 			</p:dataTable>
 
-
+         </p:panel>
 			
 
 		</h:form>
 
 
 		<p:dataTable var="pro" value="#{aprobSolicTipRetiro.procesoEjecutado}"
-			emptyMessage="#{msg.aprob_msj_sinDatos}" scrollable="true"
-			scrollHeight="200" style="font-size:12px;margin-top:30px">
+			emptyMessage="#{msg.aprob_msj_sinDatos}"   style="font-size:12px;margin-top:30px">
 
 			<f:facet name="header">
 				<p:outputPanel style="text-align:left">
@@ -160,5 +157,6 @@
 				</h:outputText>
 			</p:column>
 		</p:dataTable>
+		
 	</ui:define>
 </ui:composition>

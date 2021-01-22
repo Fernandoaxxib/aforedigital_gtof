@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/api/layaut2.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="left">
+		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES."
+			style="font-size:12px">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
+	</ui:define>
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript library="js" name="calendar-localization.js" />
+
+		<div class="ui-g">
+			<div class="ui-g-1">
+				<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+			</div>
+			<div class="ui-g-11" style="text-align: left">
+				<h:form>
+					<p:commandButton
+						action="/api/retParImssOP84.xhtml?faces-redirect=true"
+						value="#{msg.retPar_imss_op84_btnOP84}" style="font-size:12px" />
+					<p:commandButton
+						action="/api/retParImssOP8586.xhtml?faces-redirect=true"
+						value="#{msg.retPar_imss_op84_btnOP8586}" style="font-size:12px" />
+				</h:form>
+			</div>
+		</div>
+		<h:form id="form">
+			<p:growl id="message" sticky="true" />
+			<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
+				appendTo="@(body)" widgetVar="dlg2" modal="true" width="40%"
+				height="300" resizable="false" style="font-size:12px">
+				<p:dataTable var="registro" value="#{retParImssOP84.listLotes}"
+					selectionMode="single" selection="#{retParImssOP84.selectedLote}"
+					rowKey="#{registro.ID_LOTE}" style="padding-bottom:10px">
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{retParImssOP84.onRowSelect}" />
+
+					<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}">
+						<h:outputText value="#{registro.ID_LOTE}" />
+					</p:column>
+					<p:column headerText="#{msg.modulo_desempleoParc_lblFecOperacion}">
+						<h:outputText value="#{registro.FECHA_LOTE}" />
+					</p:column>
+					<p:column headerText="#{msg.modulo_desempleoParc_lblFecOperacion}">
+						<h:outputText value="#{registro.NUMERO_REGISTROS}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="text-align:right">
+					<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
+						style="font-size:12px;margin-right:10px" />
+					<p:commandButton value="Guardar"
+						actionListener="#{retParImssOP84.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update=":form:pnl2"
+						style="font-size:12px" />
+				</p:outputPanel>
+			</p:dialog>
+
+
+			<div class="ui-g">
+				<div class="ui-g-7">
+					<p:panel id="pnl1" header="#{msg.retPar_imss_op84_titulo1}"
+						style="font-size:12px;">
+						<p:panel header="#{msg.retPar_imss_op84_titulo2}">
+							<div class="ui-g">
+								<div class="ui-g-3" style="text-align: left">
+									<p:outputLabel value="#{msg.retPar_imss_op84_lblRuta}" />
+								</div>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; width: 350px; text-align: left;">
+									<p:outputLabel value="#{retParImssOP84.ruta}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-3" style="text-align: left">
+									<p:outputLabel value="#{msg.retPar_imss_op84_lblNomArc}" />
+								</div>
+								<div class="ui-g-9" style="text-align: left">
+									<p:inputText value="#{retParImssOP84.nombreArchivo}" />
+								</div>
+							</div>
+							<div class="ui-g">
+								<div class="ui-g-12" style="text-align: right">
+									<p:commandButton type="submit"
+										value="#{msg.retPar_imss_op84_btnCargar}"
+										action="#{retParImssOP84.cargarArchivo}" update="message"
+										ajax="true" />
+								</div>
+							</div>
+						</p:panel>
+
+						<div class="ui-g">
+							<div class="ui-g-12">
+								<p:outputPanel>
+									<p:dataTable id="table1" var="mon"
+										value="#{retParImssOP84.registros}"
+										emptyMessage="#{msg.aprob_msj_sinDatos}" scrollable="true"
+										scrollHeight="100" style="font-size:12px;margin-top:10px">
+
+										<p:column headerText="#{msg.retPar_imss_op84_lblCurp}"
+											width="80">
+											<h:outputText value="#{mon.CURP_TRABAJADOR}"
+												style="float:left;" />
+										</p:column>
+										<p:column headerText="#{msg.retPar_imss_op84_lblNss}"
+											width="80">
+											<h:outputText value="#{mon.NSS_TRABAJADOR}"
+												style="float:right;" />
+										</p:column>
+										<p:column headerText="#{msg.retPar_imss_op84_lblDiag}"
+											width="80">
+											<h:outputText value="#{mon.DIAGNOSTICO_IMSS}"
+												style="float:right;" />
+										</p:column>
+										<p:column headerText="#{msg.retPar_imss_op84_lblFecEnvio}"
+											width="80">
+											<h:outputText value="#{mon.FECHA_ENVIO_NOTIFICACION_PAGO}"
+												style="float:right;" />
+										</p:column>
+									</p:dataTable>
+								</p:outputPanel>
+							</div>
+						</div>
+					</p:panel>
+				</div>
+				<div class="ui-g-5">
+					<p:panel id="pnl2" style="font-size:12px;height:307px">
+
+						<div class="ui-g">
+							<div class="ui-g-3" style="text-align: left">
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblFecIni}" />
+							</div>
+							<div class="ui-g-9" style="text-align: left">
+								<p:calendar value="#{retParImssOP84.fecIni}" size="10"
+									locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true"
+									showOn="button" maxdate="#{retParImssOP84.today}"
+									validatorMessage="Error en el rango de fecha"
+									style="font-size:12px">
+									<p:ajax event="dateSelect" listener="#{retParImssOP84.limpiar}"
+										update="pnl2" />
+								</p:calendar>
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-3" style="text-align: left">
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblFecFin}" />
+							</div>
+							<div class="ui-g-9" style="text-align: left">
+								<p:calendar value="#{retParImssOP84.fecFin}" size="10"
+									locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true"
+									showOn="button" maxdate="#{retParImssOP84.today}"
+									validatorMessage="Error en el rango de fecha"
+									style="font-size:12px" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-2" style="text-align: left">
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblLote}" />
+							</div>
+							<div class="ui-g-6"
+								style="text-align: left; background: #dddddd; border-radius: 5px; height: 25px;">
+								<p:outputLabel value="#{retParImssOP84.lote}" />
+							</div>
+							<div class="ui-g-2" style="text-align: left">
+								<p:commandButton value="..." action="#{retParImssOP84.getLotes}"
+									update="dlg1" oncomplete="PF('dlg2').show();" />
+							</div>
+						</div>
+						<div class="ui-g" style="margin-bottom: 20px">
+							<div class="ui-g-12" style="text-align: right">
+								<p:commandButton type="submit"
+									value="#{msg.retPar_imss_op84_btnConsultar}"
+									action="#{retParImssOP84.consultarOP84}"
+									update="table1 message" ajax="true" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-2">
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblRuta}" />
+							</div>
+							<div class="ui-g-10"
+								style="background: #dddddd; border-radius: 5px; font-size: 9px; width: 230px; height: 25px; text-align: left;">
+								<p:outputLabel value="#{retParImssOP84.ruta2}" />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-3" style="text-align: left">
+								<p:outputLabel value="Archivo:" />
+							</div>
+							<div class="ui-g-4" style="text-align: left">
+								<p:inputText value="#{retParImssOP84.archivo}" required="true"
+									requiredMessage="Ingrese el nombre del archivo a generar." />
+							</div>
+						</div>
+						<div class="ui-g">
+							<div class="ui-g-12" style="text-align: right">
+								<p:commandButton type="submit" value="Generar Reporte"
+									action="#{retParImssOP84.generarReporte}" update="message"
+									ajax="true" />
+							</div>
+						</div>
+					</p:panel>
+				</div>
+			</div>
+
+			<p:dataTable id="pnDetalleProc" var="pro"
+				value="#{modDesParcProceso.proceso}"
+				emptyMessage="#{msg.aprob_msj_sinDatos}" style="font-size:12px">
+				<f:facet name="header">
+					<p:outputPanel style="text-align:left">
+						<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
+					<h:outputText value="#{pro.abrevProceso}" />
+				</p:column>
+
+				<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
+					<h:outputText value="#{pro.estadoProceso}" />
+				</p:column>
+
+				<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}">
+					<h:outputText value="#{pro.fechahoraInicio}" />
+				</p:column>
+				<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}">
+					<h:outputText value="#{pro.fechahoraFinal}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

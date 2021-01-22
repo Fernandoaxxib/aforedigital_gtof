@@ -8,7 +8,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
     
-    	<ui:define name="menu" >
+    <f:metadata>
+		<f:event listener="#{modDesParcProceso.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
+    <ui:define name="menu" >
 		<ui:include src="menuOperaciones.xhtml" />
     </ui:define>
     
@@ -26,11 +30,19 @@
 	          <ui:include src="menuTransaccionesDisposiciones.xhtml" />
 	       </div>
 	       <div class="ui-g-11" style="text-align:left">
-	          <h:form>
-			     <p:commandButton action="/api/modDesParc.xhtml?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnPM}" style="font-size:12px" />
-			     <p:commandButton action="/api/modDesParcReportes.xhtml?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnReportes}" style="font-size:12px" />
-			     <p:commandButton action="/api/modDesParcLProcesar.xhtm?faces-redirect=true" value="#{msg.modulo_desempleoParc_btnLProcesar}" style="font-size:12px" />
-		      </h:form>
+	         <h:form>
+			     <p:linkButton  outcome="/api/modDesParc.jsf" includeViewParams="true" value="#{msg.modulo_desempleoParc_btnPM}" >			         
+				    <f:param name="init" value="true" />
+			     </p:linkButton>
+			    			     			    
+			     <p:linkButton outcome="/api/modDesParcReportes.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnReportes}" >
+			        <f:param name="init" value="true" />
+			     </p:linkButton>			      			    
+			    
+			     <p:linkButton outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnLProcesar}" >
+			         <f:param name="init" value="true" />
+			     </p:linkButton>			      
+			 </h:form>   
 	       </div>
 	    </div>
 				
@@ -39,33 +51,35 @@
 			   <h:form>	
 				<p:dataTable id="idTablaRegistros" var="registro" value="#{modDesParcProceso.listSolicitudes}" emptyMessage="#{msg.aprob_msj_sinDatos}" editable="true" editMode="cell" widgetVar="celdas" style="padding-bottom:10px;font-size:12px">
 					<p:ajax event="cellEdit"  listener="#{modDesParcProceso.onCellEdit}" update="columnEdited"  immediate="true"/>
-					<p:column headerText="#{msg.modulo_desempleoParc_column_numSolic}">
+					<p:column headerText="#{msg.modulo_desempleoParc_column_numSolic}" style="text-align:right">
 						<h:outputText value="#{registro.onNumSolicitud}" />
 					</p:column>
-					<p:column headerText="#{msg.modulo_desempleoParc_column_nss}">
+					<p:column headerText="#{msg.modulo_desempleoParc_column_nss}" style="text-align:right">
 						<h:outputText value="#{registro.onNss}" />
 					</p:column>
-					<p:column id="columnEdited" headerText="#{msg.modulo_desempleoParc_column_sbca}">
+					<p:column id="columnEdited" headerText="#{msg.modulo_desempleoParc_column_sbca}" style="text-align:right">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="#{registro.onSbcTipoA}">
-									<f:convertNumber currencySymbol="$" type="currency" />
+									<f:convertNumber  type="number" />
 								</h:outputText>
 							</f:facet>
 							<f:facet name="input">
 								<p:inputText value="#{registro.onSbcTipoA}">
-									<f:convertNumber currencySymbol="$" type="currency" />
+									<f:convertNumber  type="number" />
 								</p:inputText>
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
-					<p:column headerText="#{msg.modulo_desempleoParc_column_fechaCarga}">
-						<h:outputText value="#{registro.odFechaCarga}" />
+					<p:column headerText="#{msg.modulo_desempleoParc_column_fechaCarga}" style="text-align:right">
+						<h:outputText value="#{registro.odFechaCarga}">
+						   <f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
 					</p:column>
 				</p:dataTable>
 				<p:outputPanel style="text-align:right">
 				   <p:commandButton value="#{msg.modulo_desempleoParc_btnRegresar}"  onclick="PF('dlg2').hide();" style="font-size:12px;margin-right:10px" />
-				   <p:commandButton value="#{msg.modulo_desempleoParc_btnGuardar}" actionListener="#{modDesParcProceso.guardar}" oncomplete="PF('dlg2').hide();" style="font-size:12px;padding-left:10px" />
+				   <p:commandButton value="#{msg.modulo_desempleoParc_btnGuardar}" action="#{modDesParcProceso.guardar}" update="form" oncomplete="PF('dlg2').hide();"  style="font-size:12px;padding-left:10px;" />
 				</p:outputPanel>				
 			   </h:form>
 			</p:dialog>
@@ -85,7 +99,8 @@
 					<p:outputPanel style="margin-top:10px">
 						<p:outputLabel for="fCapturada" value="#{msg.modulo_desempleoParc_lblfecCap}" style="font-size:12px" />
 						<p:calendar id="fCapturada" value="#{modDesParcProceso.fecha}" locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true" showOn="button" required="true"  style="font-size:12px" >
-							<p:ajax event="dateSelect" listener="#{modDesParcProceso.buscarRegXProcesar}" update="pnlResult"></p:ajax>
+							<p:ajax event="dateSelect" listener="#{modDesParcProceso.buscarRegXProcesar}"  update="pnlResult"></p:ajax>
+							
 						</p:calendar>
 					</p:outputPanel>
 				</p:panelGrid>
@@ -139,7 +154,7 @@
 					      </div>
 					      <div class="ui-g">
 					          <div class="ui-g-12" style="text-align:right">
-					            <p:commandButton type="submit" value="#{msg.modulo_desempleoParc_btnEjecutar}" action="#{modDesParcProceso.ejecutarAccion}" update="pnDetalleProc" style="font-size:12px"/>
+					            <p:commandButton type="submit" value="#{msg.modulo_desempleoParc_btnEjecutar}" action="#{modDesParcProceso.ejecutarAccion}" update="form pnDetalleProc" style="font-size:12px"/>
 					          </div>
 					      </div>					     				      
 					    </div>										

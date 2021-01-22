@@ -43,9 +43,9 @@ public class ModDesParcProcesoService extends ServiceBase {
 		}
 		
 	}
-	public List<RegisSinSalarioOut> getRegSinSalario(Date pdFechaCarga)  throws AforeException {
+	public List<RegisSinSalarioOut> getRegSinSalario()  throws AforeException {
 		try {
-			return desParcRepo.getRegSinSalario(pdFechaCarga);
+			return desParcRepo.getRegSinSalario();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

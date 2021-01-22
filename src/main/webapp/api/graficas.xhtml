@@ -15,14 +15,12 @@
 	    <p:blockUI block="basic" trigger="fFin" />
 	    <p:growl id="out3" showDetail="true" skipDetailIfEqualsSummary="true" />
 		
-		<p:panel id="basic"
+		<p:panel id="basic" header="Histórico de aprobaciones en retiros."
 			style="margin-bottom:20px;margin-top:10px">
 
 
-			<h:panelGrid columns="2" layout="flex"
-				columnClasses="p-col-12 p-md-3 p-xl-2, p-col-12 p-md-9 p-xl-4"
-				styleClass="customPanelGrid" contentStyleClass="ui-fluid">
-				<h:outputLabel for="periodoIni" value="PERIODO DEL:" />
+			<h:panelGrid columns="2" layout="flex">
+				<h:outputLabel for="periodoIni" value="Periodo del:" />
 				
 				<p:selectOneMenu id="fInicio" value="#{graficasCtrll.fechaInicioCombo}" panelStyle="width:180px" effect="fade" style="width:160px">										
 					<p:ajax event="change" listener="#{graficasCtrll.reset}" update="fFin" />   
@@ -30,7 +28,7 @@
 					<f:selectItems value="#{graficasCtrll.fechasInicio}"/>                    
 				</p:selectOneMenu>
 				
-			    <h:outputLabel for="periodoFin" value="AL:" />
+			    <h:outputLabel for="periodoFin" value="Al:" />
 				
 				<p:selectOneMenu id="fFin" value="#{graficasCtrll.fechaFinCombo}" panelStyle="width:180px" effect="fade" style="width:160px">                         							
 					<p:ajax event="change" listener="#{graficasCtrll.onCountryChange}" update="out" />   
@@ -40,17 +38,11 @@
 			</h:panelGrid>
 			
             <h:panelGrid id="out" columns="2" style="margin-bottom:10px" cellpadding="5">
-               <h:outputLabel for="totalGeneral" value="TOTAL GENERAL EN PARCIALES: " />
+               <h:outputLabel for="totalGeneral" value="Total general en parciales: " />
                <h:outputLabel for="totalGR" value="#{graficasCtrll.totParcial}" />
-               <h:outputLabel for="totalGeneral" value="TOTAL GENERAL EN TOTALES: " />
-               <h:outputLabel for="totalGTR" value="#{graficasCtrll.totTotal}" />
-               <p:commandButton actionListener="#{graficasCtrll.init}" ajax="true" update="basic" type="submit" value="getGrafica"  />
-               
-            </h:panelGrid>
-            <h:panelGrid id="grafica" style="margin-bottom:10px" cellpadding="5">
-               <p:lineChart  id="out2" model="#{graficasCtrll.lineModel}" style="width: 100%; height: 200px;" />               
-            </h:panelGrid>						
-			<p:commandButton actionListener="#{graficasCtrll.exit}" ajax="false" action="/login.jsf"  type="submit" value="Salir"  />		 															
+               <h:outputLabel for="totalGeneral" value="Total general en totales: " />
+               <h:outputLabel for="totalGTR" value="#{graficasCtrll.totTotal}" />                             
+            </h:panelGrid>            		 															
 		</p:panel>
 		 						
 	</h:form>

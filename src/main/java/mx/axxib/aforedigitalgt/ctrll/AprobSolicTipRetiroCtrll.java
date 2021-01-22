@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
@@ -23,7 +22,7 @@ import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroService;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 
-@Scope(value = "session")
+@Scope(value ="session")
 @Component(value = "aprobSolicTipRetiro")
 @ELBeanName(value = "aprobSolicTipRetiro")
 public class AprobSolicTipRetiroCtrll  extends ControllerBase{
@@ -57,12 +56,16 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	@Getter
 	@Setter
-	private boolean seleccionado;
+	private boolean seleccionado;		
 	
-	@PostConstruct
-	public void init() {
-		recuperarSolicPendientes();
-		PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			recuperarSolicPendientes();
+			PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
+			
+		}
 	}
 	
 	public int getCount() {
@@ -80,6 +83,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	public void recuperarSolicPendientes() {
 		try {
 			listSolicitudes = service.getListSolicitudes();	
+			
 			//PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
 		} catch (Exception e) {
 			GenericException(e);
@@ -144,7 +148,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 				GenericException(e);
 			}        	
         });    
-        recuperarProcesoEjecutado();		
+        //recuperarProcesoEjecutado();		
 	    recuperarSolicPendientes();	   
 	   }else {
 		  addMessageFail("Seleccionar solicitud!"); 

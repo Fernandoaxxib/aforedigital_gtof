@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/api/layaut2.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="left">
+		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES."
+			style="font-size:12px">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
+	</ui:define>
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript library="js" name="calendar-localization.js" />
+
+		<div class="ui-g">
+			<div class="ui-g-1">
+				<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+			</div>
+			<div class="ui-g-11" style="text-align: left">
+				<h:form>
+					<p:commandButton
+						action="/api/retParImssOP84.xhtml?faces-redirect=true"
+						value="#{msg.retPar_imss_op84_btnOP84}" style="font-size:12px" />
+					<p:commandButton
+						action="/api/retParImssOP8586.xhtml?faces-redirect=true"
+						value="#{msg.retPar_imss_op84_btnOP8586}" style="font-size:12px" />
+				</h:form>
+			</div>
+		</div>
+
+		<h:form id="form">
+			<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
+				style="font-size:12px;margin-bottom:20px">
+				<div class="ui-g">
+					<div class="ui-g-6">
+						<p:panel header="#{msg.retPar_imss_op8586_titulo2}">
+							<div class="ui-g">
+								<div class="ui-g-3">
+									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
+								</div>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+									<p:outputLabel value="#{retParImssOP8586.ruta}" />
+								</div>
+							</div>
+							<div class="ui-g" style="margin-top: 10px;">
+								<div class="ui-g-3">
+									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+								</div>
+								<div class="ui-g-9">
+									<p:inputText value="#{retParImssOP8586.archivo}" />
+								</div>
+							</div>
+							<div class="ui-g" style="text-align: right;">
+								<div class="ui-g-12">
+									<p:commandButton value="#{msg.retPar_imss_op8586_btnGenerar85}" />
+								</div>
+							</div>
+						</p:panel>
+					</div>
+					<div class="ui-g-6">
+						<p:panel header="#{msg.retPar_imss_op8586_titulo3}">
+							<div class="ui-g">
+								<div class="ui-g-3">
+									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
+								</div>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+									<p:outputLabel value="#{retParImssOP8586.ruta2}" />
+								</div>
+							</div>
+							<div class="ui-g" style="margin-top: 10px;">
+								<div class="ui-g-3">
+									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+								</div>
+								<div class="ui-g-9">
+									<p:inputText value="#{retParImssOP8586.archivo2}" />
+								</div>
+							</div>
+							<div class="ui-g" style="text-align: right;">
+								<div class="ui-g-12">
+									<p:commandButton value="#{msg.retPar_imss_op8586_btnCargar86}" />
+								</div>
+							</div>
+						</p:panel>
+					</div>
+				</div>
+				<p:panel>
+					<div class="ui-g">
+						<div class="ui-g-6">
+						  <div class="ui-g">
+						     <div class="ui-g-6">
+						       <p:outputLabel value="#{msg.retPar_imss_op8586_lblinicio}" />
+						     </div>
+						     <div class="ui-g-6">
+						        <p:calendar value="#{retParImssOP8586.fecIni}" size="10"
+									locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true"
+									showOn="button" maxdate="#{retParImssOP8586.today}"
+									validatorMessage="Error en el rango de fecha"
+									style="font-size:12px" />	
+						     </div>
+						 </div>
+						 <div class="ui-g">
+						     <div class="ui-g-6">
+						       <p:outputLabel value="#{msg.retPar_imss_op8586_lblfin}" />
+						     </div>
+						     <div class="ui-g-6">
+						        <p:calendar value="#{retParImssOP8586.fecFin}" size="10"
+									locale="es" navigator="true" pattern="dd-MM-yyyy" mask="true"
+									showOn="button" maxdate="#{retParImssOP8586.today}"
+									validatorMessage="Error en el rango de fecha"
+									style="font-size:12px" />	
+						     </div>
+						 </div>   
+						 <div class="ui-g">
+						     <div class="ui-g-5">
+						       <p:outputLabel value="#{msg.retPar_imss_op8586_lblLote}" />
+						     </div>
+						     <div class="ui-g-4" style="background: #dddddd; border-radius: 5px; font-size: 9px; width: 120px; height: 25px; text-align: left;">
+						        <p:outputLabel value="#{retParImssOP8586.lote}"/>	
+						     </div>
+						     <div class="ui-g-3">
+						        <p:commandButton value="..."/>
+						     </div>
+						 </div> 
+						    					    
+						</div>
+						<div class="ui-g-6">
+						   <div class="ui-g">
+								<div class="ui-g-3">
+									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
+								</div>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+									<p:outputLabel value="#{retParImssOP8586.ruta3}" />
+								</div>
+							</div>
+							<div class="ui-g" style="margin-top: 10px;">
+								<div class="ui-g-3">
+									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+								</div>
+								<div class="ui-g-9">
+									<p:inputText value="#{retParImssOP8586.archivo3}" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</p:panel>
+
+				<p:dataTable id="pnDetalleProc" var="pro"
+					value="#{retParImssOP8586.proceso}"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					style="margin-top:20px;font-size:12px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
+						<h:outputText value="#{pro.abrevProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
+						<h:outputText value="#{pro.estadoProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}">
+						<h:outputText value="#{pro.fechahoraInicio}" />
+					</p:column>
+					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}">
+						<h:outputText value="#{pro.fechahoraFinal}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -3,40 +3,39 @@ package mx.axxib.aforedigitalgt.com;
 public class Constantes {
 
 	public static final String USUARIO_PENSION = "ADIGITAL";
-	
+
 	// Monitor de procesos FOMONIT
 	public static final String MONITOR_PROCESOS_PACKAGE = "PKG_CONSULTA_MUNITOR";
 	public static final String MONITOR_PROCESOS_OBTIENE_MONITOR = "PRC_RET_OBTIENE_MONITOR";
 	public static final String MONITOR_PROCESOS_OBTIENE_JOBS = "PRC_RET_OBTIENE_JOBS";
 	public static final String MONITOR_PROCESOS_EJECUTA_JOB = "PRC_RET_EJECUTA_JOB";
 
-	//GRAFICAS	
-	public static final String APRO_SOLIC_PRC_TIPO_TRANSAC= "PRC_TIPO_TRANSAC";
-	public static final String APRO_SOLIC_PRC_TIPO_SUBTRAN= "PRC_TIPO_SUBTRAN";
-	
-	//Aprobación de solicitudes X tipo de retiro FOAPSORE
-	public static final String APRO_SOLIC_TIPO_RETIRO_PACKAGE= "PKG_RET_FOAPSORE";
-	public static final String APRO_SOLIC_TIPO_RETIRO_APROBAR_SELECCIONADOS="PRC_APROBAR_SELECCIONADOS";
-	public static final String APRO_SOLIC_TIPO_RETIRO_RECUP_SOLIC_PEND="PRC_REC_SOLIC_PEND";	
-	public static final String APRO_SOLIC_TIPO_RETIRO_MONITOR_SESION="PRC_MONITOR_SESION";
-	public static final String APRO_SOLIC_TIPO_RETIRO_OBTIENE_ID_SESION="PRC_APRUEBA_SOL_RET_PAR";
-	
-	//Módulo desempleo parcialidades FOPROUNI
-	public static final String MOD_DESEMPLEO_PARCF_PACKAGE="PKG_RET_FOPROUNI";
-	public static final String MOD_DESEMPLEO_PARCF_PROCESO_FEC_INI="PRC_PROCESO_FECHA_INICIAL";
-	public static final String MOD_DESEMPLEO_PARCF_DET_SAL="PRC_PROCESO_BOTON_DETSAL";
-	public static final String MOD_DESEMPLEO_PARCF_GUARDAR_DET_SAL="PRC_BOTON_GUARDA_DETSAL";
-	public static final String MOD_DESEMPLEO_PARCF_EJECUTAR_PROCESO="PRC_PROCESO_BOTON_EJECUTAR";
-	public static final String MOD_DESEMPLEO_PARCF_PROCESAR_REPORTES="PRC_REPORTES_BOTON_PROCESAR";
-	public static final String MOD_DESEMPLEO_PARCF_LAYOUT_BTN_LOTES="PRC_LAYOUT_BOTON_LOTES";
-	public static final String MOD_DESEMPLEO_PARCF_LAYOUT_BTN_GENERAR="PRC_LAYOUT_BOTON_GENERAR";
+	// GRAFICAS
+	public static final String APRO_SOLIC_PRC_TIPO_TRANSAC = "PRC_TIPO_TRANSAC";
+	public static final String APRO_SOLIC_PRC_TIPO_SUBTRAN = "PRC_TIPO_SUBTRAN";
 
-	
-	//Interfaz del módulo de pagos FOINTFA1
-	public static final String MOD_PAGOS_PACKAGE="PKG_RET_FOINTFA1";	
-	public static final String MOD_PAGOS_BOTON_REFRESH="PRC_BOTON_REFRESH";
-	public static final String MOD_PAGOS_INTERFACE_FONDOS="PRC_GENERA_INTERFACE_FONDOS";
-	public static final String MOD_PAGOS_INTERFACE_PAGOS= "PRC_GENERA_INTERFACE_PAGOS";
+	// Aprobación de solicitudes X tipo de retiro FOAPSORE
+	public static final String APRO_SOLIC_TIPO_RETIRO_PACKAGE = "PKG_RET_FOAPSORE";
+	public static final String APRO_SOLIC_TIPO_RETIRO_APROBAR_SELECCIONADOS = "PRC_APROBAR_SELECCIONADOS";
+	public static final String APRO_SOLIC_TIPO_RETIRO_RECUP_SOLIC_PEND = "PRC_REC_SOLIC_PEND";
+	public static final String APRO_SOLIC_TIPO_RETIRO_MONITOR_SESION = "PRC_MONITOR_SESION";
+	public static final String APRO_SOLIC_TIPO_RETIRO_OBTIENE_ID_SESION = "PRC_APRUEBA_SOL_RET_PAR";
+
+	// Módulo desempleo parcialidades FOPROUNI
+	public static final String MOD_DESEMPLEO_PARCF_PACKAGE = "PKG_RET_FOPROUNI";
+	public static final String MOD_DESEMPLEO_PARCF_PROCESO_FEC_INI = "PRC_PROCESO_FECHA_INICIAL";
+	public static final String MOD_DESEMPLEO_PARCF_DET_SAL = "PRC_PROCESO_BOTON_DETSAL";
+	public static final String MOD_DESEMPLEO_PARCF_GUARDAR_DET_SAL = "PRC_BOTON_GUARDA_DETSAL";
+	public static final String MOD_DESEMPLEO_PARCF_EJECUTAR_PROCESO = "PRC_PROCESO_BOTON_EJECUTAR";
+	public static final String MOD_DESEMPLEO_PARCF_PROCESAR_REPORTES = "PRC_REPORTES_BOTON_PROCESAR";
+	public static final String MOD_DESEMPLEO_PARCF_LAYOUT_BTN_LOTES = "PRC_LAYOUT_BOTON_LOTES";
+	public static final String MOD_DESEMPLEO_PARCF_LAYOUT_BTN_GENERAR = "PRC_LAYOUT_BOTON_GENERAR";
+
+	// Interfaz del módulo de pagos FOINTFA1
+	public static final String MOD_PAGOS_PACKAGE = "PKG_RET_FOINTFA1";
+	public static final String MOD_PAGOS_BOTON_REFRESH = "PRC_BOTON_REFRESH";
+	public static final String MOD_PAGOS_INTERFACE_FONDOS = "PRC_GENERA_INTERFACE_FONDOS";
+	public static final String MOD_PAGOS_INTERFACE_PAGOS = "PRC_GENERA_INTERFACE_PAGOS";
 
 	// Modo Desempleo Parcialidad FOCEPARC
 	public static final String MOD_DESEMPLEO_PARC_PACKAGE = "PKG_RET_FUSION_FODEPARCE";
@@ -46,7 +45,7 @@ public class Constantes {
 	public static final String MOD_DESEMPLEO_PARC_MARCAS = "PRC_MARCAS";
 	public static final String MOD_DESEMPLEO_PARC_LISTA_CANCELACION = "PRC_LISTA_CANCELACION";
 	public static final String MOD_DESEMPLEO_PARC_CANCELAR_SOLICITUD = "PRC_CANCELAR_SOLICITUD";
-	
+
 	// Venta de titulos por sector de inversión FOVENTIT
 	public static final String VENTA_TITULOS_PACKAGE = "PKG_RET_FOVENTIT";
 	public static final String VENTA_TITULOS_OBTIENE_MONTO_TOTAL = "PRC_RET_OBTIENE_MONTO_TOTAL";
@@ -59,34 +58,55 @@ public class Constantes {
 	public static final String VENTA_TITULOS_OBTIENE_MONTO_DEV = "PRC_RET_OBTIENE_MONTO_DEV";
 	public static final String VENTA_TITULOS_VENTA_TITULOS_MONITOR = "PRC_RET_VENTA_TITULOS_MONITOR";
 	public static final String VENTA_TITULOS_VENTA_TITULOS_MONITOR_CT = "PRC_VENTA_TITULOS_MONITOR_CT";
-	
+
 	// Notificación de pagos FONOTI16
 	public static final String NOTIFICACION_PAGOS_PACKAGE = "PKG_RET_FUSION_FONOTI16";
 	public static final String NOTIFICACION_PAGOS_LLENA_INFO = "PRC_LLENA_INFO";
 	public static final String NOTIFICACION_PAGOS_ENVIA_FECHA = "PRC_ENVIA_FECHA";
 	public static final String NOTIFICACION_PAGOS_EXPORTAR = "PRC_EXPORTAR";
-	
+
 	// Reporte de liquidación FOLIQDIS
 	public static final String REPORTE_LIQUIDACION_PACKAGE = "PKG_RET_FOLIQDIS";
 	public static final String REPORTE_LIQUIDACION_OBTIENE_PARAMETROS = "PRC_OBTIENE_PARAMETROS";
 	public static final String REPORTE_LIQUIDACION_OBTIENE_SIEFORE = "PRC_OBTIENE_SIEFORE";
 	public static final String REPORTE_LIQUIDACION_EJECUTA_REPORTE = "PRC_EJECUTA_REPORTE";
-	
+
 	// Carga Masiva de Right Fax FOCAMRIG
 	public static final String CARGA_RIGHT_PACKAGE = "PKG_RET_FOCAMRIG";
 	public static final String CARGA_RIGHT_OBTIENE_CRUCE_PREVIO = "PRC_CREUCE_PREVIO";
 	public static final String CARGA_RIGHT_OBTIENE_CARGA = "PRC_CARGA";
-	
+
 	// VER REPORTE PARCIAL FOVALDSM
 	public static final String SALARIO_MINIMO_PACKAGE = "PKG_RET_FOVALDSM";
 	public static final String SALARIO_MINIMO_STORED = "PRC_SALARIO_MIN";
 	public static final String SALARIO_MINIMO_INSERT_STORED = "PRC_SALARIO_MIN_INSERT";
 	public static final String SALARIO_MINIMO_UPDATE_STORED = "PRC_SALARIO_MINIMO_UPD";
-	
-	//VER ORDEN DE PAGO FOREPALE
-	public static final String ORDEN_PAGO_PACKAGE ="PKG_RET_FUSION_FOREPALE";
-	public static final String ORDEN_PAGO_OBTIENE_FECHA_STORED="PRC_OBTIENE_FECHAS";
-	public static final String ORDEN_PAGO_REPORTE_ANTERIOR_STORED="PRC_GENERA_REPORTE_ANT";
-	public static final String ORDEN_PAGO_CREA_REPORTE_STORED="PRC_REPORTE";
-	public static final String ORDEN_PAGO_GENERA_REPORTE_STORED="PRC_GENERA_REPORTE";
+
+	// VER ORDEN DE PAGO FOREPALE
+	public static final String ORDEN_PAGO_PACKAGE = "PKG_RET_FUSION_FOREPALE";
+	public static final String ORDEN_PAGO_OBTIENE_FECHA_STORED = "PRC_OBTIENE_FECHAS";
+	public static final String ORDEN_PAGO_REPORTE_ANTERIOR_STORED = "PRC_GENERA_REPORTE_ANT";
+	public static final String ORDEN_PAGO_CREA_REPORTE_STORED = "PRC_REPORTE";
+	public static final String ORDEN_PAGO_GENERA_REPORTE_STORED = "PRC_GENERA_REPORTE";
+
+	// Retiros parciales IMSS OP84 FOCARG84
+	public static final String RET_PARIMSS_OP84_PACKAGE = "PKG_RET_FOCARG84";
+	public static final String RET_PARIMSS_OP84_CARGA_ARCH_OP84 = "PRC_CARGA_ARCHIVO_OPE084";
+	public static final String RET_PARIMSS_OP84_BTN_LOTES_OP84 = "PRC_BOTON_LOTES_OP84";
+	public static final String RET_PARIMSS_OP84_CONSULTA_OP84 = "PRC_CONSULTA_OP084";
+	public static final String RET_PARIMSS_OP84_GENEREA_REPOP84 = "PRC_GENERA_REPORTE_OPE084";
+	public static final String RET_PARIMSS_OP84_CARGA_ARCH_OP85 = "PRC_CARGA_ARCHIVO_OPE085";
+	public static final String RET_PARIMSS_OP84_CARGA_ARCH_OP86 = "PRC_CARGA_ARCHIVO_OPE086";
+	public static final String RET_PARIMSS_OP84_BTN_LOTES_OP85 = "PRC_BOTON_LOTES_OP85";
+	public static final String RET_PARIMSS_OP84_GENEREA_REPOP86 = "PRC_GENERA_REPORTE_OPE086";
+
+	// Proceso certificación de inactividad FOPROINA
+	public static final String PRO_CERT_INACTIVIDAD_PACKAGE = "PKG_RET_FOPROINA";
+	public static final String PRO_CERT_INACTIVIDAD_PROCESO_BTN_EJECUTAR = "PRC_PROCESO_BOTON_EJECUTAR";
+	public static final String PRO_CERT_INACTIVIDAD_REPORTES_BTN_PROCESAR = "PRC_REPORTES_BOTON_PROCESAR";
+	public static final String PRO_CERT_INACTIVIDAD_BTN_LOTES = "PRC_BOTON_LOTES";
+	public static final String PRO_CERT_INACTIVIDAD_LAYOUTPROC_BTN_GENERAR = "PRC_LAYOUTPROC_BOTON_GENERAR";
+	public static final String PRO_CERT_INACTIVIDAD_APPMOVIL_BTN_EJECUTAR = "PRC_APPMOVIL_BOTON_EJECUTAR";
+	public static final String PRO_CERT_INACTIVIDAD_APPMOVIL_BTN_GENARCH = "PRC_APPMOVIL_BOTON_GENARCH";
+
 }

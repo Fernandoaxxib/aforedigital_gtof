@@ -44,10 +44,14 @@ public class ModuloPagosCtrll extends ControllerBase{
 	@Setter
 	private Date fechaProcesoPagos;
 	
-	@PostConstruct
-	public void init() {
-		fechaProceso= new Date();
-		fechaProcesoPagos= new Date();
+	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			fechaProceso= new Date();
+			fechaProcesoPagos= new Date();
+		}
 	}
 	public void fechaProceso() {}
 	
@@ -55,7 +59,7 @@ public class ModuloPagosCtrll extends ControllerBase{
 		try {
 			if(fechaProceso!=null && fechaProcesoPagos!=null ) {
 				String resp=service.refresh("SI", fechaProceso, fechaProcesoPagos);
-				addMessageOK(resp);
+				//addMessageOK(resp);
 			}else {
 				addMessageFail("Seleccione la fecha de proceso y la fecha de retiro");
 			}
@@ -84,7 +88,7 @@ public class ModuloPagosCtrll extends ControllerBase{
 		if(procesosRetiros!=null && tiposPagos!=null && institucion!=null && fechaProcesoPagos!=null ) {
 			try {
 				service.generarPagos(fechaProcesoPagos, procesosRetiros, institucion, tiposPagos);
-				addMessageOK("Proceso realizado.");
+				addMessageOK("null");
 			} catch (Exception e) {
 				GenericException(e);
 			}

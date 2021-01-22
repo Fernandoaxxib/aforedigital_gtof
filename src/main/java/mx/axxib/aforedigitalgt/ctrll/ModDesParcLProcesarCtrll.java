@@ -57,6 +57,15 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Getter
 	private List<LoteOut> listLotes;
 
+	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			reset();
+		}
+	}
+	
 	public void radioSelected() {
 		if(!radioSelected.equals("3")) {
 			ruta=null;
