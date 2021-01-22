@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
 	<f:metadata>
-		<f:event listener="#{ventaTitulos.iniciar}" type="preRenderView"/>
+		<f:event listener="#{ordenPago.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
 	<ui:define name="menu" >
@@ -29,7 +29,7 @@
 				<p:panel id="datos" header="Orden Pago" style="margin-top:20px">
 				
 				
-				<p:panelGrid id="ingresarFecha"  columns="2"> 
+				<p:panelGrid id="ingresarFecha"  columns="2" styleClass="ui-noborder"> 
 				
 				 <p:outputLabel for="fechaInicio" value="#{msg.orden_pago_txt_fecha_inicio}" />
 			    <p:inputText id="fechaInicio" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaInicio}" style="text-Align:center;font-size:15px;width:120px">
@@ -51,7 +51,7 @@
 	            <f:selectItems value="#{ordenPago.tipoReporte}"/>
 	           	</p:selectOneMenu>
    				  
-   				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+   				<p:panelGrid columns="1" styleClass="ui-noborder" style="margin-bottom:10px" cellpadding="5" >
        			 <p:selectOneRadio id="impresora" value="#{ordenPago.boxUno}" unselectable="true">
            		 <f:selectItem itemLabel="Enviar a la Impresora" itemValue="1" />
        			 </p:selectOneRadio>
@@ -59,7 +59,7 @@
            		 <f:selectItem itemLabel="Generacion de Archivo" itemValue="2" />
         </p:selectOneRadio>
         
-    </h:panelGrid>
+    </p:panelGrid>
    				  
    				  <p:commandButton action="#{ordenPago.botonGenerarReporte}"
 							type="submit" value="#{msg.orden_pago_boton_genera_reporte}" ajax="false" />

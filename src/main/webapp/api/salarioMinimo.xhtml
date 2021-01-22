@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
 	<f:metadata>
-		<f:event listener="#{ventaTitulos.iniciar}" type="preRenderView"/>
+		<f:event listener="#{salarioMinimo.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
 	<ui:define name="menu" >
@@ -34,8 +34,8 @@
 		
 		 <p:growl id="msgs" showDetail="true"/>
  
-    <p:dataTable id="tableSalario" widgetVar="salario1" var="salario" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-bottom:20px">
-        <f:facet name="header">
+    <p:dataTable id="tableSalario" widgetVar="salario1" var="salario" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
+        <f:facet name="header" style="text-align: left;">
             Salario Minimo (diario)
         </f:facet>
  
