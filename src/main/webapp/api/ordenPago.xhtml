@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<f:metadata>
+		<f:event listener="#{ventaTitulos.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
+	<ui:define name="menu" >
+		<ui:include src="menuOperaciones.xhtml" />
+    </ui:define>
+	
+	<ui:define name="center">
+		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript name="js/calendar-localization.js" />
+		
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		
+		
+	<h:form id="form">
+				<p:panel id="datos" header="Orden Pago" style="margin-top:20px">
+				
+				
+				<p:panelGrid id="ingresarFecha"  columns="2"> 
+				
+				 <p:outputLabel for="fechaInicio" value="#{msg.orden_pago_txt_fecha_inicio}" />
+			    <p:inputText id="fechaInicio" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaInicio}" style="text-Align:center;font-size:15px;width:120px">
+				<f:convertDateTime pattern = "dd/mm/yyyy" />
+        		 </p:inputText>
+				
+				 <p:outputLabel for="fechaUltimo" value="#{msg.orden_pago_txt_fecha_final}" />
+			      <p:inputText id="fechaUltimo" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaFin}" style="text-Align:center;font-size:15px;width:120px">
+				<f:convertDateTime pattern = "dd/mm/yyyy" />
+        		 </p:inputText>
+				
+				</p:panelGrid> 
+				 
+				  				 
+   				
+   				<p:outputLabel for="listSelect" value="#{msg.orden_pago_txt_tipo_reporte}:" />
+   				<p:selectOneMenu id="listSelect"  required="true" requiredMessage="Por favor seleccione una Opcion!"  value="#{ordenPago.seleccionarA}" >
+	            <f:selectItem itemLabel="Seleccionar ..." itemValue="#{null}" noSelectionOption="true" />
+	            <f:selectItems value="#{ordenPago.tipoReporte}"/>
+	           	</p:selectOneMenu>
+   				  
+   				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
+       			 <p:selectOneRadio id="impresora" value="#{ordenPago.boxUno}" unselectable="true">
+           		 <f:selectItem itemLabel="Enviar a la Impresora" itemValue="1" />
+       			 </p:selectOneRadio>
+       			 <p:selectOneRadio id="gerArchivo" value="#{ordenPago.boxDos}" unselectable="true">
+           		 <f:selectItem itemLabel="Generacion de Archivo" itemValue="2" />
+        </p:selectOneRadio>
+        
+    </h:panelGrid>
+   				  
+   				  <p:commandButton action="#{ordenPago.botonGenerarReporte}"
+							type="submit" value="#{msg.orden_pago_boton_genera_reporte}" ajax="false" />
+  						<p:panelGrid id="verEjecutarProceso"  columns="2"> 
+	 					
+ 							<p:outputLabel for="nombre" value="#{msg.orden_pago_txt_nombre}" />
+			     			<p:inputText id="nombre" disabled="true" 	value="#{ordenPago.nombre}" style="text-Align:left;font-size:15px;width:150px" />
+										
+						</p:panelGrid> 
+					
+	 					 
+ 		</p:panel>			
+  	</h:form>
+</ui:define>
+
+	<ui:define name="left">
+		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
+			<ui:include src="graficas.xhtml" />
+		</p:panel>
+	</ui:define>
+
+</ui:composition>

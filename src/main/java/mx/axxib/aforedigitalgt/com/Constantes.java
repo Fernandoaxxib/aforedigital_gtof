@@ -78,9 +78,15 @@ public class Constantes {
 	public static final String CARGA_RIGHT_OBTIENE_CARGA = "PRC_CARGA";
 	
 	// VER REPORTE PARCIAL FOVALDSM
-		public static final String SALARIO_MINIMO_PACKAGE = "PKG_RET_FOVALDSM";
-		public static final String SALARIO_MINIMO_STORED = "PRC_SALARIO_MIN";
-		public static final String SALARIO_MINIMO_INSERT_STORED = "PRC_SALARIO_MIN_INSERT";
-		public static final String SALARIO_MINIMO_UPDATE_STORED = "PRC_SALARIO_MINIMO_UPD";
+	public static final String SALARIO_MINIMO_PACKAGE = "PKG_RET_FOVALDSM";
+	public static final String SALARIO_MINIMO_STORED = "PRC_SALARIO_MIN";
+	public static final String SALARIO_MINIMO_INSERT_STORED = "PRC_SALARIO_MIN_INSERT";
+	public static final String SALARIO_MINIMO_UPDATE_STORED = "PRC_SALARIO_MINIMO_UPD";
 	
+	//VER ORDEN DE PAGO FOREPALE
+	public static final String ORDEN_PAGO_PACKAGE ="PKG_RET_FUSION_FOREPALE";
+	public static final String ORDEN_PAGO_OBTIENE_FECHA_STORED="PRC_OBTIENE_FECHAS";
+	public static final String ORDEN_PAGO_REPORTE_ANTERIOR_STORED="PRC_GENERA_REPORTE_ANT";
+	public static final String ORDEN_PAGO_CREA_REPORTE_STORED="PRC_REPORTE";
+	public static final String ORDEN_PAGO_GENERA_REPORTE_STORED="PRC_GENERA_REPORTE";
 }
