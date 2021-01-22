@@ -12,10 +12,7 @@
 	<ui:define name="center">
 		<h:outputStylesheet name="estilo-operaciones.css" library="css" />
 
-
-
 		<h:form>
-
 			<p:panelGrid class="no-border tb"
 				style="width: 100%;">
 				<p:row>
@@ -24,33 +21,27 @@
 							value="Operaciones y Gestión de Fondos" />
 					</p:column>
 				</p:row>
-
-				
-
 				<p:row>
 					<p:column style="width:350px; text-align: right;">
-						<p:commandButton ajax="false" styleClass="tran"
+						<p:commandButton ajax="false" styleClass="tran corn"
 							value="Transacciones y disposiciones"
 							actionListener="#{menuOperaciones.transacciones}">
 
 						</p:commandButton>
 					</p:column>
-
 					<p:column style="width:150px; text-align: center;">
-						<p:commandButton ajax="false" styleClass="proc"
+						<p:commandButton ajax="false" styleClass="proc corn"
 							value="Seguimiento de procesos"
 							actionListener="#{menuOperaciones.monitor}">
 						</p:commandButton>
 					</p:column>
-
 					<p:column style="width:150px; text-align: center;">
-						<p:commandButton ajax="false" styleClass="reca"
+						<p:commandButton ajax="false" styleClass="reca corn"
 							value="Recaudaciones" actionListener="#{menuOperaciones.recaudaciones}">
 						</p:commandButton>
 					</p:column>
-
 					<p:column style="width:350px; text-align: left;">
-						<p:commandButton ajax="false" styleClass="repo"
+						<p:commandButton ajax="false" styleClass="repo corn"
 							value="Consultas y reportes generales" actionListener="#{menuOperaciones.reportes}">
 						</p:commandButton>
 					</p:column>

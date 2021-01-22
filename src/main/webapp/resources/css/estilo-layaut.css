@@ -212,7 +212,7 @@
 }
 
 .img .ui-state-default .ui-icon{
-	background-image: url("/javax.faces.resource/Imagenes/menu.png.jsf") ;
+	background-image: url("../Imagenes/menu.png") ;
 	background-position: center;
 }
 

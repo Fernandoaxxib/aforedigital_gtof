@@ -1,24 +1,24 @@
 .tran.ui-state-default {
 	background: #003f77
-		url("/javax.faces.resource/Imagenes/transacciones.png.jsf") center
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/transacciones.png.jsf") center
 		no-repeat;
 }
 
 .proc.ui-state-default {
 	background: #003f77
-		url("/javax.faces.resource/Imagenes/procesos.png.jsf") center
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/procesos.png.jsf") center
 		no-repeat;
 }
 
 .reca.ui-state-default {
 	background: #003f77
-		url("/javax.faces.resource/Imagenes/recaudaciones.png.jsf") center
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/recaudaciones.png.jsf") center
 		no-repeat;
 }
 
 .repo.ui-state-default {
 	background: #003f77
-		url("/javax.faces.resource/Imagenes/reportes.png.jsf") center
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/reportes.png.jsf") center
 		no-repeat;
 }
 
@@ -49,6 +49,6 @@
 	font-size: 18px;
 }
 
-.ui-corner-all {
+.corn.ui-corner-all {
     border-radius: 20px !important;
 }
