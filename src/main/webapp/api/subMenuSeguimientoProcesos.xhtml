@@ -18,15 +18,14 @@
 <h:body>
 
 	<h:form>
-		<p:menuButton class="img">
-			<p:menuitem value="Reporte de Liquidación"
-				outcome="/api/reporteLiquidacion.jsf" includeViewParams="true">
-				<f:param name="init" value="true" />
-			</p:menuitem>
-			<p:separator />
-		</p:menuButton>
-
-
+		<p:selectOneMenu id="sub" class="submenu img" style="width:auto" value="#{menu.submenu}" dir="rtl">
+			<f:selectItem
+				itemLabel="Monitor de Procesos"
+				itemValue="/api/monitorProcesos.jsf" />
+			<f:selectItem itemLabel="Liquidación de Fondos y Tipos de Pagos"
+				itemValue="/api/moduloPagos.js" />
+			<p:ajax event="change" listener="#{menu.navigateSub}" />
+		</p:selectOneMenu>
 	</h:form>
 
 

@@ -9,43 +9,55 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 
-	<ui:define name="center">
+	<ui:define name="center" id="img-fondo-oper">
 		<h:outputStylesheet name="estilo-operaciones.css" library="css" />
 
 		<h:form>
-			<p:panelGrid class="no-border tb"
-				style="width: 100%;">
-				<p:row>
-					<p:column style="width:200px; height:200px;">
-						<h:outputLabel class="btn-p"
-							value="Operaciones y Gestión de Fondos" />
-					</p:column>
-				</p:row>
-				<p:row>
-					<p:column style="width:350px; text-align: right;">
-						<p:commandButton ajax="false" styleClass="tran corn"
-							value="Transacciones y disposiciones"
-							actionListener="#{menuOperaciones.transacciones}">
+			<p:panelGrid columns="1" class="no-border tb"
+				style="width: 100%; height: 100%">
 
-						</p:commandButton>
-					</p:column>
-					<p:column style="width:150px; text-align: center;">
-						<p:commandButton ajax="false" styleClass="proc corn"
-							value="Seguimiento de procesos"
-							actionListener="#{menuOperaciones.monitor}">
-						</p:commandButton>
-					</p:column>
-					<p:column style="width:150px; text-align: center;">
-						<p:commandButton ajax="false" styleClass="reca corn"
-							value="Recaudaciones" actionListener="#{menuOperaciones.recaudaciones}">
-						</p:commandButton>
-					</p:column>
-					<p:column style="width:350px; text-align: left;">
-						<p:commandButton ajax="false" styleClass="repo corn"
-							value="Consultas y reportes generales" actionListener="#{menuOperaciones.reportes}">
-						</p:commandButton>
-					</p:column>
-				</p:row>
+
+				<p:panelGrid class="no-border tb"
+					style="margin-top:30px; width: 100%; text-align:center;">
+					<p:row>
+						<p:column style="text-align:center;">
+							<h:outputLabel class="btn-p"
+								value="OPERACIONES Y GESTIÓN DE FONDOS" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panelGrid class="no-border tb"
+					style="margin-top:70px; width: 100%; text-align:center;">
+					<p:row>
+						<p:column style="width:400px; text-align: right;">
+							<p:commandButton ajax="false" styleClass="tran corn"
+								value="TRANSACCIONES Y DISPOSICIONES"
+								actionListener="#{menu.transacciones}">
+
+							</p:commandButton>
+						</p:column>
+						<p:column style="width:150px; text-align: center;">
+							<p:commandButton ajax="false" styleClass="proc corn"
+								value="SEGUIMIENTO DE PROCESOS"
+								actionListener="#{menu.monitor}">
+							</p:commandButton>
+						</p:column>
+						<p:column style="width:150px; text-align: center;">
+							<p:commandButton ajax="false" styleClass="reca corn"
+								value="RECAUDACIONES"
+								actionListener="#{menu.recaudaciones}">
+							</p:commandButton>
+						</p:column>
+						<p:column style="width:350px; text-align: left;">
+							<p:commandButton ajax="false" styleClass="repo corn"
+								value="REPORTES GENERALES"
+								actionListener="#{menu.reportes}">
+							</p:commandButton>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
 			</p:panelGrid>
 		</h:form>
 

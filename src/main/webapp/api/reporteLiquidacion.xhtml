@@ -12,13 +12,17 @@
 	</f:metadata>
 	
 	<ui:define name="menu" >
-		<ui:include src="menuOperaciones.xhtml" />
+		<ui:include src="menu.xhtml" />
     </ui:define>
+    
+    <ui:define name="left">
+		
+	</ui:define>
 	
 	<ui:define name="center">
 	
 		<h:outputStylesheet name="estilo-base.css" library="css" />
-		<ui:include src="menuReportes.xhtml" />
+		<ui:include src="subMenuReportes.xhtml" />
 
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
@@ -96,10 +100,5 @@
 
 	</ui:define>
 
-	<ui:define name="left">
-		<p:panel id="modulo" header="CONSULTAS Y REPORTES GENERALES.">
-			
-		</p:panel>
-	</ui:define>
 
 </ui:composition>

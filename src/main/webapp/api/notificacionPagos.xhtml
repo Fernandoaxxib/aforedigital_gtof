@@ -12,12 +12,15 @@
 	</f:metadata>
 	
 	<ui:define name="menu" >
-		<ui:include src="menuOperaciones.xhtml" />
+		<ui:include src="menu.xhtml" />
     </ui:define>
+    
+    <ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
 	
 	<ui:define name="center">
-		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
-		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<ui:include src="subMenuTransacciones.xhtml" />
 		<h:outputScript name="js/calendar-localization.js" />
 
 		<p:messages id="messages" showDetail="true" closable="true">
@@ -33,7 +36,7 @@
 						monthNavigator="true" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-					<p:commandButton action="#{notificacionPagos.buscarPagos}"
+					<p:commandButton class="blue" action="#{notificacionPagos.buscarPagos}"
 						type="submit" value="Consultar" ajax="false" />
 				</p:panelGrid>
 			</p:panel>
@@ -89,7 +92,7 @@
 
 			<p:panel id="notificacion" header="Notificación de pago"
 				style="margin-top:20px">
-				<p:commandButton action="#{notificacionPagos.enviar}" type="submit"
+				<p:commandButton action="#{notificacionPagos.enviar}" type="submit" disabled="true"
 					value="Enviar" ajax="false" />
 
 				<p:commandButton action="#{notificacionPagos.exportar}"
@@ -99,10 +102,6 @@
 
 	</ui:define>
 	
-	<ui:define name="left">
-		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
-			<ui:include src="graficas.xhtml" />
-		</p:panel>
-	</ui:define>
+
 
 </ui:composition>

@@ -8,19 +8,18 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
+   
 	<ui:define name="left">
-		<p:panel id="modulo" header="MÓDULO: TRANSACCIONES Y DISPOSICIONES."
-			style="font-size:12px">
-			<ui:include src="graficas.xhtml" />
-		</p:panel>
+		<ui:include src="graficas.xhtml" />
 	</ui:define>
+	
 	<ui:define name="center">
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<div class="ui-g">
 			<div class="ui-g-1">
-				<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+				<ui:include src="subMenuTransacciones.xhtml" />
 			</div>
 			<div class="ui-g-11" style="text-align: left">
 				<h:form>

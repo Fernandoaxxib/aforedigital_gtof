@@ -15,8 +15,8 @@
 	    <p:blockUI block="basic" trigger="fFin" />
 	    <p:growl id="out3" showDetail="true" skipDetailIfEqualsSummary="true" />
 		
-		<p:panel id="basic" header="Histórico de aprobaciones en retiros."
-			style="margin-bottom:20px;margin-top:10px">
+		<p:panel id="basic" header="HISTÓRICO DE APROBACIONES EN RETIROS"
+			>
 
 
 			<h:panelGrid columns="2" layout="flex">
@@ -43,6 +43,11 @@
                <h:outputLabel for="totalGeneral" value="Total general en totales: " />
                <h:outputLabel for="totalGTR" value="#{graficasCtrll.totTotal}" />                             
             </h:panelGrid>            		 															
+		</p:panel>
+		
+		<p:panel id="basic1" header="RESUMEN DETALLE POR TIPO DE RETIRO: TOTALES"
+			style="margin-top:20px;">
+         		 															
 		</p:panel>
 		 						
 	</h:form>

@@ -13,12 +13,16 @@
 	</f:metadata>
 	
 	<ui:define name="menu" >
-		<ui:include src="menuOperaciones.xhtml" />
+		<ui:include src="menu.xhtml" />
     </ui:define>
+    
+    <ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
 	
 	<ui:define name="center">
 		
-		<ui:include src="menuTransaccionesDisposiciones.xhtml" />
+		<ui:include src="subMenuTransacciones.xhtml" />
 
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 
@@ -286,10 +290,5 @@
 
 	</ui:define>
 
-	<ui:define name="left">
-		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES.">
-			<ui:include src="graficas.xhtml" />
-		</p:panel>
-	</ui:define>
 
 </ui:composition>

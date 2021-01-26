@@ -12,90 +12,12 @@
 	</f:metadata>
 	
 	<ui:define name="menu" >
-		<ui:include src="menuOperaciones.xhtml" />
+		<ui:include src="menu.xhtml" />
     </ui:define>
+    
+    <ui:define name="left">
 
-	<ui:define name="center">
-		<ui:include src="menuSeguimientoProcesos.xhtml" />
-		<h:outputStylesheet name="estilo-base.css" library="css" />
-
-		<h:form id="form">
-
-			<p:messages id="messages" showDetail="true" closable="true">
-				<p:autoUpdate />
-			</p:messages>
-
-			<p:panel id="monitor" header="Monitor de procesos" style="margin-top:20px">
-				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
-					selection="#{monitorProcesos.selectedMonitor}"
-					rowKey="#{mon.sesionId}" paginator="true"
-					rowsPerPageTemplate="5,10,15">
-
-					<p:ajax event="rowSelect" update="form2" />
-					<!-- 
-				<p:column headerText="#{msg.monitor_monitor_columna_id}">
-					<h:outputText value="#{mon.sesionId}" />
-				</p:column>
- -->
-					<p:column headerText="#{msg.monitor_monitor_columna_proceso}">
-						<h:outputText value="#{mon.abrevProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.monitor_monitor_columna_estado}">
-						<h:outputText value="#{mon.estadoProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.monitor_monitor_columna_fechaInicio}">
-						<h:outputText value="#{mon.fechahoraInicio}" style="float:right">
-							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
-			</p:panel>
-
-			<p:commandButton action="#{monitorProcesos.actualizar}" type="submit"
-				style="margin-top:20px" value="Actualizar" ajax="false" />
-
-			<p:panel id="jobs" header="Jobs" style="margin-top:20px">
-				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{monitorProcesos.jobs}" rows="10" selectionMode="single"
-					selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
-					paginator="true" rowsPerPageTemplate="5,10,15">
-
-					<p:ajax event="rowSelect" update="form2" />
-
-					<p:column headerText="#{msg.monitor_job_columna_job}">
-						<h:outputText value="#{job.job}" />
-					</p:column>
-
-					<p:column headerText="#{msg.monitor_job_columna_what}" width="80%">
-						<h:outputText value="#{job.what}" />
-					</p:column>
-
-					<!--
-				<p:column headerText="#{msg.monitor_job_columna_nextDate}">
-					<h:outputText value="#{job.nextDate}" />
-				</p:column>
-
-				<p:column headerText="#{msg.monitor_job_columna_totalTime}">
-					<h:outputText value="#{job.totalTime}" />
-				</p:column>
-				-->
-				</p:dataTable>
-
-				<p:commandButton action="#{monitorProcesos.ejecutar}" type="submit"
-					value="#{msg.monitor_boton_ejecutar}" ajax="false"
-					style="margin-top:20px" />
-			</p:panel>
-
-		</h:form>
-
-	</ui:define>
-
-	<ui:define name="left">
-
-		<p:panel id="modulo" header="SEGUIMIENTO DE PROCESOS.">
+		<p:panel id="modulo" header="Detalle del proceso">
 
 			<h:form id="form2">
 			
@@ -140,6 +62,86 @@
 			</h:form>
 		</p:panel>
 	</ui:define>
+
+	<ui:define name="center">
+		<ui:include src="subMenuSeguimientoProcesos.xhtml" />
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+
+		<h:form id="form">
+
+			<p:messages id="messages" showDetail="true" closable="true">
+				<p:autoUpdate />
+			</p:messages>
+
+			<p:panel id="monitor" header="Monitor de procesos" style="margin-top:20px">
+				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
+					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
+					selection="#{monitorProcesos.selectedMonitor}"
+					rowKey="#{mon.sesionId}" paginator="true"
+					rowsPerPageTemplate="5,10,15">
+
+					<p:ajax event="rowSelect" update="form2" />
+					<!-- 
+				<p:column headerText="#{msg.monitor_monitor_columna_id}">
+					<h:outputText value="#{mon.sesionId}" />
+				</p:column>
+ -->
+					<p:column headerText="#{msg.monitor_monitor_columna_proceso}">
+						<h:outputText value="#{mon.abrevProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.monitor_monitor_columna_estado}">
+						<h:outputText value="#{mon.estadoProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.monitor_monitor_columna_fechaInicio}">
+						<h:outputText value="#{mon.fechahoraInicio}" style="float:right">
+							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:commandButton class="green" action="#{monitorProcesos.actualizar}" type="submit"
+				style="margin-top:20px" value="Actualizar" ajax="false" />
+
+			<p:panel id="jobs" header="Jobs" style="margin-top:20px">
+				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
+					value="#{monitorProcesos.jobs}" rows="10" selectionMode="single"
+					selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
+					paginator="true" rowsPerPageTemplate="5,10,15">
+
+					<p:ajax event="rowSelect" update="form2" />
+
+					<p:column headerText="#{msg.monitor_job_columna_job}">
+						<h:outputText value="#{job.job}" />
+					</p:column>
+
+					<p:column headerText="#{msg.monitor_job_columna_what}" width="80%">
+						<h:outputText value="#{job.what}" />
+					</p:column>
+
+					<!--
+				<p:column headerText="#{msg.monitor_job_columna_nextDate}">
+					<h:outputText value="#{job.nextDate}" />
+				</p:column>
+
+				<p:column headerText="#{msg.monitor_job_columna_totalTime}">
+					<h:outputText value="#{job.totalTime}" />
+				</p:column>
+				-->
+				</p:dataTable>
+
+				<p:commandButton class="blue" action="#{monitorProcesos.ejecutar}" type="submit"
+					value="#{msg.monitor_boton_ejecutar}" ajax="false"
+					style="margin-top:20px" />
+			</p:panel>
+
+		</h:form>
+
+	</ui:define>
+
+	
 
 
 

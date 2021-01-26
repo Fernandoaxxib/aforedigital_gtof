@@ -1,5 +1,23 @@
+/* Buttons */
+.blue.ui-button .ui-button-text {
+    background: #00529b;
+    color: white;
+    font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+.green.ui-button .ui-button-text {
+    background: #59ad40;
+    color: white;
+    font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
+}
+
+/* DataTable */
 .ui-paginator {
 	text-align: right !important;
+	background: white !important;
+	border: white !important;	
 }
 
 .ui-paginator span {
@@ -7,8 +25,107 @@
 }
 
 
-
-.content {
-	font-size: 12px
+.ui-paginator.ui-state-active, .ui-paginator.ui-widget-content .ui-state-active, .ui-paginator.ui-widget-header .ui-state-active {
+    border: 1px solid #000000 !important;
+    background: #00529b !important;
+    color: #ffffff;
+	  opacity: 1.0 !important;;
 }
+
+.ui-paginator.ui-state-default, .ui-paginator.ui-widget-content .ui-state-default, .ui-paginator.ui-widget-header .ui-state-default {
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000 !important;
+	  opacity: 0.70;
+}
+
+.ui-datatable-tablewrapper .ui-state-default {
+	background: white !important;
+	color: #00529b !important;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
+	border: white !important;	
+}
+
+/* PanelGrid */
+.ui-panel .ui-panel-titlebar {
+	background: #59ad40;
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 14px;
+	font-family: 'Montserrat', sans-serif;
+	text-align: left;
+}
+
+.ui-panel.ui-widget-content {
+	border: 1px solid green !important;
+}
+
+/* SelectOne */
+.ui-selectonemenu-items-wrapper .ui-widget {
+	font-size: 12px !important;
+	color: #00529b !important;
+	font-family: 'Montserrat', sans-serif !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+	font-size: 12px !important;
+	font-family: 'Montserrat', sans-serif !important;
+	color: #3c3c3c !important;
+	box-shadow: none !important;
+}
+
+.ui-selectonemenu.ui-state-default, .ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default{
+	background: transparent !important;
+}
+
+/*.ui-selectonemenu.ui-state-default {
+    border: 1px solid #00529b !important;
+}*/
+
+/* Texto general toda la app */
+.ui-widget {
+	font-family: Montserrat, sans-serif !important;
+	font-size: 12px !important;
+}
+
+.ui-widget-content {
+	font-family: Montserrat, sans-serif !important;
+	font-size: 12px !important;
+}
+
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+	font-family: Montserrat, sans-serif !important;
+	font-size: 12px !important;
+}
+
+.ui-widget.ui-widget-content {
+	border: 1px solid #59ad40 !important;
+}
+.ui-widget-content {
+	border: 1px solid #59ad40;
+	background: #ffffff;
+	color: #000000;
+}
+.ui-widget-content a {
+	color: #000000;
+}
+.ui-widget-header {
+	border: 1px solid #59ad40 !important;
+	background: #59ad40 !important;
+	color: #ffffff !important;
+	font-weight: bold !important;
+}
+.ui-widget-header a {
+	color: #ffffff;
+}
+
+
+
+
+
 

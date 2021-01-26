@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<style>
+	.ui-menu {
+		white-space: nowrap;
+		width: auto !important;
+	}
+	</style>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:selectOneMenu id="sub" class="submenu img" style="width:auto" value="#{menu.submenu}" dir="rtl">
+            <f:selectItem itemLabel="Aprobación de solicitudes por tipo de retiro" itemValue="/api/aprobSolicTipRetiro.jsf" />
+            <f:selectItem itemLabel="Desempleo Parcialidades" itemValue="/api/modDesParc.jsf" />
+            <f:selectItem itemLabel="Desempleo Parcialidades 2" itemValue="/api/modDesempParc.jsf" />
+            <f:selectItem itemLabel="Venta de Títulos" itemValue="/api/ventaTitulos.jsf" />
+            <f:selectItem itemLabel="Notificaciones de Pago" itemValue="/api/notificacionPagos.jsf" />
+            <f:selectItem itemLabel="Salario Mínimo" itemValue="/api/salarioMinimo.jsf" />
+            <f:selectItem itemLabel="Órden Pago" itemValue="/api/ordenPago.jsf" />
+            <p:ajax event="change" listener="#{menu.navigateSub}" />
+        </p:selectOneMenu>
+        
+
+	</h:form>
+
+
+</h:body>
+
+
+</html>

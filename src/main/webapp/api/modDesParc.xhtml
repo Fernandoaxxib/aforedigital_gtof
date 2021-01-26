@@ -12,39 +12,41 @@
 		<f:event listener="#{modDesParcProceso.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
-    <ui:define name="menu" >
-		<ui:include src="menuOperaciones.xhtml" />
+	<ui:define name="menu" >
+		<ui:include src="menu.xhtml" />
     </ui:define>
     
 	<ui:define name="left">
-		<p:panel id="modulo" header="TRANSACCIONES Y DISPOSICIONES." >
-			<ui:include src="graficas.xhtml" />
-		</p:panel>
+    	<ui:include src="graficas.xhtml" />
 	</ui:define>
+	
 	<ui:define name="center">
 	    <h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript library="js" name="calendar-localization.js" />
 		
-		<div class="ui-g">
-	       <div class="ui-g-1">
-	          <ui:include src="menuTransaccionesDisposiciones.xhtml" />
-	       </div>
-	       <div class="ui-g-11" style="text-align:left">
-	         <h:form>
-			     <p:linkButton  outcome="/api/modDesParc.jsf" includeViewParams="true" value="#{msg.modulo_desempleoParc_btnPM}" >			         
-				    <f:param name="init" value="true" />
-			     </p:linkButton>
-			    			     			    
-			     <p:linkButton outcome="/api/modDesParcReportes.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnReportes}" >
-			        <f:param name="init" value="true" />
-			     </p:linkButton>			      			    
-			    
-			     <p:linkButton outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnLProcesar}" >
-			         <f:param name="init" value="true" />
-			     </p:linkButton>			      
-			 </h:form>   
-	       </div>
-	    </div>
+		
+		<p:panelGrid class="no-border" style="width: 100%">
+			<p:row>
+			<p:column>
+		          <ui:include src="subMenuTransacciones.xhtml" />
+		    </p:column>
+		    <p:column>
+		         <h:form>
+				     <p:linkButton  outcome="/api/modDesParc.jsf" includeViewParams="true" value="#{msg.modulo_desempleoParc_btnPM}" >			         
+					    <f:param name="init" value="true" />
+				     </p:linkButton>
+				    			     			    
+				     <p:linkButton outcome="/api/modDesParcReportes.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnReportes}" >
+				        <f:param name="init" value="true" />
+				     </p:linkButton>			      			    
+				    
+				     <p:linkButton outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"  value="#{msg.modulo_desempleoParc_btnLProcesar}" >
+				         <f:param name="init" value="true" />
+				     </p:linkButton>	
+				 </h:form>
+			</p:column>     		      
+			 </p:row>   
+	    </p:panelGrid>
 				
 		
 		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo4}" appendTo="@(body)"  widgetVar="dlg2"  resizable="false" width="60%" modal="true" style="font-size:12px">

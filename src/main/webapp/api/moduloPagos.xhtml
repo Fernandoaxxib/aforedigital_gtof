@@ -12,18 +12,16 @@
 		<f:event listener="#{moduloPagos.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	<ui:define name="menu">
-		<ui:include src="menuOperaciones.xhtml" />
-	</ui:define>
+	<ui:define name="menu" >
+		<ui:include src="menu.xhtml" />
+    </ui:define>
 
-	<ui:define name="left">
-		<p:panel id="modulo" header="SEGUIMIENTO DE PROCESOS."
-			style="font-size:12px">
-			<ui:include src="/api/graficas.xhtml" />
-		</p:panel>
+    <ui:define name="left">
+		<ui:include src="graficas.xhtml" />
 	</ui:define>
+	
 	<ui:define name="center">
-		<ui:include src="menuSeguimientoProcesos.xhtml" />
+		<ui:include src="subMenuSeguimientoProcesos.xhtml" />
 
 		<h:outputScript library="js" name="calendar-localization.js"></h:outputScript>
 		<h:form>
