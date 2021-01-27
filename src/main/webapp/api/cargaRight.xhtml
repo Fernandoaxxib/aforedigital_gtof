@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="layaut.xhtml"
+<ui:composition template="layaut2.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -30,22 +30,22 @@
 		</p:messages>
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="Parámetros" style="margin-top:20px">
+			<p:panel id="busqueda" header="Cargas masiva right fax" style="margin-top:20px">
 				<p:panelGrid id="panel" columns="3" styleClass="ui-noborder"
 					cellpadding="10" width="100%">
 					<p:outputLabel value="Fecha de Right Fax" style="font-weight: bold" />
-					<p:datePicker id="fecha" required="true"
+					<p:datePicker id="fecha" required="true" requiredMessage="Fecha requerida"
 						inputStyle="width:120px; text-align:right;"
 						value="#{cargaRight.fecha}" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-					<p:commandButton action="#{cargaRight.crucePrevio}" type="submit"
+					<p:commandButton class="green" action="#{cargaRight.crucePrevio}" type="submit"
 						value="Cruce previo" ajax="false" />
 
-					<p:outputLabel value="Archivo" style="font-weight: bold" />
-					<p:inputText required="true" value="#{cargaRight.archivo}"></p:inputText>
+					<p:outputLabel  value="Archivo" style="font-weight: bold" />
+					<p:inputText required="true" value="#{cargaRight.archivo}" requiredMessage="Nombre de archivo requerido"></p:inputText>
 
-					<p:commandButton action="#{cargaRight.cargar}" type="submit"
+					<p:commandButton class="blue" action="#{cargaRight.cargar}" type="submit"
 						value="Cargar" ajax="false" />
 				</p:panelGrid>
 

@@ -148,7 +148,7 @@
 
 
 
-					<p:commandButton action="#{ventaTitulos.buscarMontos}"
+					<p:commandButton class="blue" action="#{ventaTitulos.buscarMontos}"
 						type="submit" value="Buscar" ajax="false" />
 
 				</p:panelGrid>
@@ -203,11 +203,11 @@
 					</p:column>
 				</p:dataTable>
 
-				<p:commandButton action="#{ventaTitulos.ventaTitulosMonitor}"
+				<p:commandButton class="blue" action="#{ventaTitulos.ventaTitulosMonitor}"
 					style="margin-top:20px" rendered="#{ventaTitulos.mostrarVenta}"
 					type="submit" value="Venta en monitor" ajax="false" />
 
-				<p:commandButton action="#{ventaTitulos.ventaTitulosMonitorCT}"
+				<p:commandButton class="blue" action="#{ventaTitulos.ventaTitulosMonitorCT}"
 					style="margin-top:20px" rendered="#{ventaTitulos.mostrarVentaCT}"
 					type="submit" value="Venta en monitor corte trans" ajax="false" />
 			</p:panel>

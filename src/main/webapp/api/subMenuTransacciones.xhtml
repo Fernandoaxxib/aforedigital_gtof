@@ -18,12 +18,13 @@
 <h:body>
 
 	<h:form>
-		<p:selectOneMenu id="sub" class="submenu img" style="width:auto" value="#{menu.submenu}" dir="rtl">
+		<p:selectOneMenu id="sub" class="submenu img" style="width:auto;" value="#{menu.submenu}" dir="rtl">
             <f:selectItem itemLabel="Aprobación de solicitudes por tipo de retiro" itemValue="/api/aprobSolicTipRetiro.jsf" />
             <f:selectItem itemLabel="Desempleo Parcialidades" itemValue="/api/modDesParc.jsf" />
             <f:selectItem itemLabel="Desempleo Parcialidades 2" itemValue="/api/modDesempParc.jsf" />
             <f:selectItem itemLabel="Venta de Títulos" itemValue="/api/ventaTitulos.jsf" />
             <f:selectItem itemLabel="Notificaciones de Pago" itemValue="/api/notificacionPagos.jsf" />
+            <f:selectItem itemLabel="Cargas Masiva Right Fax" itemValue="/api/cargaRight.jsf" />
             <f:selectItem itemLabel="Salario Mínimo" itemValue="/api/salarioMinimo.jsf" />
             <f:selectItem itemLabel="Órden Pago" itemValue="/api/ordenPago.jsf" />
             <p:ajax event="change" listener="#{menu.navigateSub}" />
