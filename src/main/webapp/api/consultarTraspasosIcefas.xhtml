@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<f:metadata>
+		<f:event listener="#{salarioMinimo.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
+	<ui:define name="menu" >
+		<ui:include src="menu.xhtml" />
+    </ui:define>
+    
+        <ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+	
+	<ui:define name="center">
+		<ui:include src="subMenuTransacciones.xhtml" />
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript name="js/calendar-localization.js" />
+		
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
+	<h:form id="form">
+	<p:panel id="datosSalario" header="Consultar Traspasos Icefas" style="margin-top:20px">
+					<p:outputPanel style="text-align:left">
+						<h:outputLabel style="font-size:12px" for="flt"
+							value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" />
+						<p:inputText id="icefasFilter"
+							style="width:150px;font-size:12px"
+							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarTraspasosIcefas.curp_o_nssIn}" required="true">	
+						</p:inputText>
+						<p:commandButton action="#{consultarTraspasosIcefas.validarNssRfc}"
+						type="submit"  ajax="false"  icon="pi pi-search" styleClass="rounded-button ui-button-success ui-button-flat" style="font-size:12px;background"  />
+						
+					</p:outputPanel>
+			
+					
+				<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpDatos}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"   style="font-size:12px;margin-top:30px">
+
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_clave}">
+										<h:outputText value="#{pro.CLAVE_PROCESO}" />
+									</p:column>
+				
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_proceso}">
+										<h:outputText value="#{pro.DESC_PROCESO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_saldo}">
+										<h:outputText value="#{pro.COD_TIPSALDO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_saldo}">
+										<h:outputText value="#{pro.DESC_TIPSALDO}" />
+									</p:column>
+									
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_estado}">
+										<h:outputText value="#{pro.ESTADO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_estado}">
+										<h:outputText value="#{pro.DESC_ESTADO}" />
+									</p:column>
+				
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}">
+										<h:outputText value="#{pro.FECHA_INICIO}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_fecha_fin}">
+										<h:outputText value="#{pro.FECHA_FIN}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									 <p:column style="width:32px">
+                       					 <p:commandButton update=":form:display" oncomplete="PF('productDialog').show()"
+                                         icon="pi pi-search" action="#{consultarTraspasosIcefas.ejecutarConsultarTraspasos}" >
+                           				 <f:setPropertyActionListener value="#{pro}"
+                                                         target="#{consultarTraspasosIcefas.cpDatos2}"/>
+                       					 </p:commandButton>
+                   					 </p:column>
+									
+					</p:dataTable>	
+				
+						<p:dialog header="Product Detail" widgetVar="productDialog"  minHeight="40">
+						 <p:outputPanel id="display">
+						<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpDatos}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"   style="font-size:12px;margin-top:30px">
+
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_clave}">
+										<h:outputText value="#{pro.CLAVE_PROCESO}" />
+									</p:column>
+				
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_proceso}">
+										<h:outputText value="#{pro.DESC_PROCESO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}">
+										<h:outputText value="#{pro.FECHA_INICIO}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_fecha_fin}">
+										<h:outputText value="#{pro.FECHA_FIN}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+						
+						</p:dataTable>	
+						 </p:outputPanel>
+						</p:dialog>
+						</p:panel>	
+  </h:form>
+</ui:define>
+
+
+</ui:composition>
