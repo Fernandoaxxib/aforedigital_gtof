@@ -30,7 +30,7 @@ public class ConsultarTraspasosIcefasService extends ServiceBase {
 				Date date = new Date();
 				List<ConsultarDatosIcefasOut> lista=new ArrayList<ConsultarDatosIcefasOut>();
 				
-				ConsultarDatosIcefasOut out= null;
+				ConsultarDatosIcefasOut out= new ConsultarDatosIcefasOut(estado, estado, date, date);
 				out.setFEC_INCLUSION(date);
 				out.setFEC_MODIFICACION(date);
 				out.setINCLUIDO_POR("PRUEBA INCLUIDO");
