@@ -212,7 +212,7 @@ div[id$="mod_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
 
 /* Combo submenu */
 .submenu.ui-inputfield, .ui-widget-content .ui-inputfield {
-	background: transparent !important;
+	background: #ffffff !important;
 }
 
 div[id$="sub_panel"] .ui-selectonemenu-items-wrapper .ui-widget {

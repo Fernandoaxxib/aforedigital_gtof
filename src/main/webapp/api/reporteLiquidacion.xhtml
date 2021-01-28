@@ -1,39 +1,44 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="layaut2.xhtml"
+<ui:composition template="layaut.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{reporteLiquidacion.iniciar}" type="preRenderView"/>
+		<f:event listener="#{reporteLiquidacion.iniciar}" type="preRenderView" />
 	</f:metadata>
-	
-	<ui:define name="menu" >
-		<ui:include src="menu.xhtml" />
-    </ui:define>
-    
-    <ui:define name="left">
-		
-	</ui:define>
-	
+
+
 	<ui:define name="center">
-	
+
 		<h:outputStylesheet name="estilo-base.css" library="css" />
-		<ui:include src="subMenuReportes.xhtml" />
+
+		<p:panelGrid width="100%" styleClass="ui-noborder">
+			<p:row>
+				<p:column>
+					<ui:include src="menu.xhtml" />
+				</p:column>
+				<p:column style="margin-left:50px">
+					<ui:include src="subMenuReportes.xhtml" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
 
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
 		</p:messages>
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="Reporte de liquidación" style="margin-top:20px">
+			<p:panel id="busqueda" header="Reporte de liquidación"
+				style="margin-top:20px">
 				<p:panelGrid id="panel" columns="6" styleClass="ui-noborder"
 					cellpadding="10" width="100%">
 					<p:outputLabel value="Estatus" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true" requiredMessage="Estatus es requerido"
+					<p:selectOneMenu style="width:200px" required="true"
+						requiredMessage="Estatus es requerido"
 						value="#{reporteLiquidacion.selectedEstatus}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -45,7 +50,8 @@
 					<h:outputText id="lote" value="#{reporteLiquidacion.lote}" />
 
 					<p:outputLabel value="Tipo" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true" requiredMessage="Tipo es requerido"
+					<p:selectOneMenu style="width:200px" required="true"
+						requiredMessage="Tipo es requerido"
 						value="#{reporteLiquidacion.selectedTipo}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -54,7 +60,8 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Tipo retiro" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true" requiredMessage="Tipo retiro es requerido"
+					<p:selectOneMenu style="width:200px" required="true"
+						requiredMessage="Tipo retiro es requerido"
 						value="#{reporteLiquidacion.selectedTipoRetiro}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -68,8 +75,9 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Siefore" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" var="t" 
-						converter="selectOneMenuConverter" required="true" requiredMessage="Siefore es requerido"
+					<p:selectOneMenu style="width:200px" var="t"
+						converter="selectOneMenuConverter" required="true"
+						requiredMessage="Siefore es requerido"
 						value="#{reporteLiquidacion.selectedSiefore}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -91,8 +99,9 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="" />
-					<p:commandButton action="#{reporteLiquidacion.ejecutarReporte}"
-						type="submit" value="Ejecutar el reporte" ajax="false" />
+					<p:commandButton class="blue"
+						action="#{reporteLiquidacion.ejecutarReporte}" type="submit"
+						value="Ejecutar el reporte" ajax="false" />
 				</p:panelGrid>
 			</p:panel>
 

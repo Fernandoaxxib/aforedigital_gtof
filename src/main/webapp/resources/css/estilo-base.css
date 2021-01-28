@@ -24,12 +24,9 @@
 	text-align: left !important;
 }
 
-
-.ui-paginator.ui-state-active, .ui-paginator.ui-widget-content .ui-state-active, .ui-paginator.ui-widget-header .ui-state-active {
-    border: 1px solid #000000 !important;
-    background: #00529b !important;
-    color: #ffffff;
-	  opacity: 1.0 !important;;
+.ui-paginator.ui-widget-header .ui-state-active {
+    background: lightblue !important;
+    color: #ffffff !important;
 }
 
 .ui-paginator.ui-state-default, .ui-paginator.ui-widget-content .ui-state-default, .ui-paginator.ui-widget-header .ui-state-default {
@@ -39,13 +36,21 @@
 	  opacity: 0.70;
 }
 
-.ui-datatable-tablewrapper .ui-state-default {
+.ui-datatable-tablewrapper .ui-state-default, .ui-datatable-scrollable-header .ui-state-default {
 	background: white !important;
 	color: #00529b !important;
 	font-weight: bold;
 	font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
 	border: white !important;	
+}
+
+.ui-datatable .ui-widget-header{
+	border: 1px solid #ffffff !important;
+}
+
+.sinfondo.ui-datatable .ui-state-highlight{ /* especifico para quitar el color de seleccion en tablas con checks */ 
+	background: #ffffff !important;
 }
 
 /* PanelGrid */
@@ -80,9 +85,24 @@
 	background: transparent !important;
 }
 
-/*.ui-selectonemenu.ui-state-default {
-    border: 1px solid #00529b !important;
-}*/
+.ui-selectonemenu-items-wrapper .ui-widget-content .ui-state-default{ /* encabezado de tablas dentro de un selecOneMenu */
+	background: white !important;
+	color: #00529b !important;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: 'Montserrat', sans-serif;
+	border: white !important;	
+}
+
+/* Datepicker */
+.ui-datepicker-trigger{
+    background: #00529b54 !important    
+}
+
+.ui-datepicker-calendar .ui-state-default {
+	border: 0px !important;
+	background: transparent !important;
+}
 
 /* Texto general toda la app */
 .ui-widget {
@@ -123,6 +143,20 @@
 .ui-widget-header a {
 	color: #ffffff;
 }
+
+
+.ui-inputfield.ui-state-default, .ui-selectonemenu, .ui-radiobutton-box, .ui-chkbox-box .ui-chkbox-icon {
+    border: 1px solid #00529b !important;
+}
+
+.ui-selectonemenu-trigger {
+	border: 1px solid transparent !important;
+}
+
+.ui-state-highlight{
+	background: #00529b54 !important;
+}
+
 
 
 
