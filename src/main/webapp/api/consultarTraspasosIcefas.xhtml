@@ -29,7 +29,7 @@
 		</p:messages>
 
 	<h:form id="form">
-	<p:panel id="datosSalario" header="Consultar Traspasos Icefas" style="margin-top:20px">
+	<p:panel id="datosSalario" header="Consulta Marcas de Cuentas" style="margin-top:20px">
 					<p:outputPanel style="text-align:left">
 						<h:outputLabel style="font-size:12px" for="flt"
 							value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" />
@@ -39,52 +39,62 @@
 						</p:inputText>
 						<p:commandButton action="#{consultarTraspasosIcefas.validarNssRfc}"
 						type="submit"  value="Buscar" ajax="false" class="blue"  />
-						
 					</p:outputPanel>
-			
-					
+				<p:panelGrid id="verDetalleProceso"  columns="8"> 
+	 					
+ 							<p:outputLabel for="nombre" value="#{msg.consultar_traspasos_icefas_txt_nombre}" />
+			     			<p:inputText id="nombre" disabled="true" 	value="#{consultarTraspasosIcefas.nombre}" style="text-Align:left;font-size:15px;width:250px" />
+							<p:outputLabel for="nss" value="#{msg.consultar_traspasos_icefas_txt_nss}" />
+							
+			     			<p:inputText id="nss" disabled="true" 	value="#{consultarTraspasosIcefas.nss}" style="text-Align:left;font-size:15px;width:80px" />
+							<p:outputLabel for="curp" value="#{msg.consultar_traspasos_icefas_txt_curp}" />
+			     			<p:inputText id="curp" disabled="true" 	value="#{consultarTraspasosIcefas.curp }" style="text-Align:left;font-size:15px;width:150px" />
+							<p:outputLabel for="codCuenta" value="#{msg.consultar_traspasos_icefas_txt_cuenta}" />
+			     			<p:inputText id="codCuenta" disabled="true" 	value="#{consultarTraspasosIcefas.cuenta}" style="text-Align:left;font-size:15px;width:80px" />
+										
+				</p:panelGrid> 
 				<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpDatos}"
-						emptyMessage="#{msg.aprob_msj_sinDatos}"   style="font-size:12px;margin-top:25px">
+						emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15">
 
 									
-									<p:column  width="20"  headerText="#{msg.consultar_traspasos_icefas_table_clave}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_clave}" style="width:50px">
 										<h:outputText value="#{pro.CLAVE_PROCESO}" />
 									</p:column>
 				
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_table_proceso}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_proceso}" style="width:150px">
 										<h:outputText value="#{pro.DESC_PROCESO}" />
 									</p:column>
 									
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_table_saldo}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_saldo}" style="width:50px">
 										<h:outputText value="#{pro.COD_TIPSALDO}" />
 									</p:column>
 									
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_table_desc_saldo}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_saldo}" style="width:120px">
 										<h:outputText value="#{pro.DESC_TIPSALDO}" />
 									</p:column>
 									
 									
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_table_estado}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_estado}" style="width:50px">
 										<h:outputText value="#{pro.ESTADO}" />
 									</p:column>
 									
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_table_desc_estado}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_estado}" style="width:100px">
 										<h:outputText value="#{pro.DESC_ESTADO}" />
 									</p:column>
 				
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}" style="width:70px">
 										<h:outputText value="#{pro.FECHA_INICIO}">
 											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 										</h:outputText>
 									</p:column>
-									<p:column  width="20" headerText="#{msg.consultar_traspasos_icefas_fecha_fin}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_fecha_fin}" style="width:70px">
 										<h:outputText value="#{pro.FECHA_FIN}">
 											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 										</h:outputText>
 									</p:column>
-									 <p:column  width="15"  style="text-align: center">
+									  <p:column  style="text-align: center: width:50px">
                        					 <p:commandButton update=":form:display" oncomplete="PF('productDialog').show()"
-                                          action="#{consultarTraspasosIcefas.ejecutarConsultarTraspasos}" value="Buscar" class="blue">
+                                          action="#{consultarTraspasosIcefas.ejecutarConsultarTraspasos}" value="Ver Detalle" class="blue">
                            				 <f:setPropertyActionListener  value="#{pro}" ajax="false" class="blue"
                                                          target="#{consultarTraspasosIcefas.cpDatos2}"/>
                        					 </p:commandButton>
@@ -92,27 +102,24 @@
 									
 					</p:dataTable>	
 				
-						<p:dialog header="Product Detail"  widgetVar="productDialog" minWidth="50" minHeight="20">
+						<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="50%" modal="true" style="font-size:12px">
 						 <p:outputPanel id="display">
-						<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpDatos}"
-						emptyMessage="#{msg.aprob_msj_sinDatos}"   style="font-size:12px;margin-top:25px">
+						<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpCursor}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  rows="5" paginator="true" rowsPerPageTemplate="5,10,15" >
 
-									
-									<p:column width="20" headerText="#{msg.consultar_traspasos_icefas_table_clave}" style="text-align: left">
-										<h:outputText value="#{pro.CLAVE_PROCESO}" />
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_inc_por}" style="width:20px">
+										<h:outputText value="#{pro.INCLUIDO_POR}" />
 									</p:column>
-				
-									<p:column width="20" headerText="#{msg.consultar_traspasos_icefas_table_proceso}" style="text-align: left">
-										<h:outputText value="#{pro.DESC_PROCESO}" />
-									</p:column>
-									
-									<p:column width="20" headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}" style="text-align: center">
-										<h:outputText value="#{pro.FECHA_INICIO}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_inclusion}" style="width:20px">
+										<h:outputText value="#{pro.FEC_INCLUSION}">
 											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 										</h:outputText>
 									</p:column>
-									<p:column width="20" headerText="#{msg.consultar_traspasos_icefas_fecha_fin}" style="text-align: center">
-										<h:outputText value="#{pro.FECHA_FIN}">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_mod_por}" style="width:50px">
+										<h:outputText value="#{pro.MODIFICADO_POR}" />
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_mod}" style="width:20px">
+										<h:outputText value="#{pro.FEC_MODIFICACION}">
 											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 										</h:outputText>
 									</p:column>

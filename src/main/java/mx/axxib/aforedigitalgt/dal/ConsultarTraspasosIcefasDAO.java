@@ -29,6 +29,7 @@ public class ConsultarTraspasosIcefasDAO extends RepoBase{
 	@SuppressWarnings("unchecked")
 	public ConsultarTraspasosIcefasOut getConsultarTraspasos(String codCuenta,String codTipoSaldo,String claveProceso, String estado) throws AforeException {
 		try {
+		System.out.println("Parametros codCuenta,codTipoSaldo,claveProceso,estado+: "+codCuenta+"|"+codTipoSaldo+"|"+claveProceso+"|"+estado);
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_PACKAGE).concat(".").concat(Constantes.CONSULTAR_TRASPASOS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarDatosIcefasOut");
 
@@ -94,6 +95,7 @@ public class ConsultarTraspasosIcefasDAO extends RepoBase{
 	@SuppressWarnings("unchecked")
 	public ConsultarNombreCuentaIcefasOut getConsultarNss(String nss) throws AforeException {
 		try {
+			System.out.println("PARAMETRO NSS: "+nss);
 			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_PACKAGE).concat(".").concat(Constantes.CONSULTAR_TRASPASOS_NSS_STORED);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"CpDatosIcefasOut");
 
@@ -104,7 +106,7 @@ public class ConsultarTraspasosIcefasDAO extends RepoBase{
 			query.registerStoredProcedureParameter("CP_DATOS", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
-			query.setParameter("P_NSS: ", nss);
+			query.setParameter("P_NSS", nss);
 			
 			ConsultarNombreCuentaIcefasOut res= new ConsultarNombreCuentaIcefasOut ();
 			Object cursor = query.getOutputParameterValue("CP_DATOS");

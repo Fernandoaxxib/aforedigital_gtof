@@ -80,6 +80,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		montoDiario=null;
 		fechaIni=null;
 		zona=null;
+		salarioMinimoTablaOut=null;
 	}
 	}
 	

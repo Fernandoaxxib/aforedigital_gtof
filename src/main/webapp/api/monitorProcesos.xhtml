@@ -77,7 +77,7 @@
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedMonitor}"
-					rowKey="#{mon.sesionId}" paginator="true"
+					 paginator="true"
 					rowsPerPageTemplate="5,10,15">
 
 					<p:ajax event="rowSelect" update="form2" />

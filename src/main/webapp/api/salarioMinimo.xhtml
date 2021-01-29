@@ -33,7 +33,7 @@
 		
 		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
         <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
-		<p:commandButton action="#{salarioMinimo.botonGenerarTabla}"
+		<p:commandButton class="blue"  action="#{salarioMinimo.botonGenerarTabla}"
 							type="submit" value="#{msg.salario_minimo_boton_salario}" ajax="false" />
 		
 		 <p:growl id="msgs" showDetail="true"/>
@@ -107,7 +107,7 @@
     </p:dataTable>
 		
 		<h:panelGrid columns="1" cellpadding="5">
-    		<p:commandButton value="Agregar" type="button" onclick="PF('tabla2').show();" />
+    		<p:commandButton class="blue" value="Agregar" type="button" onclick="PF('tabla2').show();" />
         </h:panelGrid>
 			<p:dialog header="Agregar Usuario" widgetVar="tabla2" minHeight="40">
    			 	<h:outputText value="Ingresar Usuario" />
@@ -124,7 +124,7 @@
    			 	<h:outputText value="Ingresar Monto" />
    			 	<h:inputText id="montoDiarionInsert" value="#{salarioMinimo.montoDiario}" />
    			 	
-   			 	<p:commandButton action="#{salarioMinimo.onAddNew}"
+   			 	<p:commandButton class="blue" action="#{salarioMinimo.onAddNew}"
 				type="submit" value="#{msg.salario_minimo_boton_enviar}" ajax="false" />
 	
 			

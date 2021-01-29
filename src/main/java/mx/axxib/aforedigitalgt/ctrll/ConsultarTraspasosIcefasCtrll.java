@@ -75,6 +75,10 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 	@Setter
 	private String curp;
 	
+	@Getter
+	@Setter
+	private String valor;
+	
 	public void validarNssRfc() {
 		try {
 			if (validarCURP(curp_o_nssIn)) {
@@ -100,9 +104,10 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 				cpDatos=res.getCpDatos();
 				nombre=res.getNombre();
 				cuenta=res.getCuenta();
-				curp_o_nss_Out=res.getCurp_o_nss();
+				curp=res.getCurp_o_nss();
 				mensaje=res.getMensaje();
 				nss=nssIn;
+				valor="1";
 			}
 		}catch (Exception e) {
 			GenericException(e);
@@ -117,9 +122,10 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 					cpDatos=res.getCpDatos();
 					nombre=res.getNombre();
 					cuenta=res.getCuenta();
-					curp_o_nss_Out=res.getCurp_o_nss();
+					nss=res.getCurp_o_nss();
 					mensaje=res.getMensaje();
 					curp=curpIn;
+					valor="1";
 				}
 			}catch (Exception e) {
 				GenericException(e);
@@ -128,11 +134,14 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 	
 	public void ejecutarConsultarTraspasos() {
 		try {
-			System.out.println("VALOR DE VISTA cuenta:"+cuenta+" "+ cpDatos2);
-			ConsultarTraspasosIcefasOut res=consultarTraspasosIcefasServices.getConsultarTraspasos(codCuenta, codTipoSaldo, claveProceso, estado);			
+			System.out.println("*****************VALOR DE VISTA cuenta:"+cuenta+" "+ cpDatos2);
+			//ConsultarTraspasosIcefasOut res=consultarTraspasosIcefasServices.getConsultarTraspasos(codCuenta, codTipoSaldo, claveProceso, estado);
+			
+			ConsultarTraspasosIcefasOut res=consultarTraspasosIcefasServices.getConsultarTraspasos(Integer.toString(cuenta), cpDatos2.getCOD_TIPSALDO(), Integer.toString(cpDatos2.getCLAVE_PROCESO()), cpDatos2.getESTADO());			
 			if((res != null && res.getCpCursor() != null && res.getCpCursor().size() > 0)) {
 				cpCursor=res.getCpCursor();
 				mensaje=res.getMensaje();
+			
 			}
 		}catch (Exception e) {
 			GenericException(e);
