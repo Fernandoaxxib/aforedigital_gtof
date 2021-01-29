@@ -17,12 +17,12 @@ import mx.axxib.aforedigitalgt.eml.ConsultarTraspasosIcefasOut;
 
 
 @Repository
-public class ConsultarTraspasosIcefasDAO extends RepoBase{
+public class ConsultarMarcasCuentasDAO extends RepoBase{
 	
 	private final EntityManager entityManager;
 
 	@Autowired
-	public ConsultarTraspasosIcefasDAO (final EntityManager entityManager) {
+	public ConsultarMarcasCuentasDAO (final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
