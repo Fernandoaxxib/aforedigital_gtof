@@ -27,7 +27,7 @@
 }
 
 #centro.ui-layout-center {
-	background: url("/javax.faces.resource/Imagenes/logos.jpg.jsf") !important;
+	background: url("#{request.contextPath}/javax.faces.resource/Imagenes/logos.jpg.jsf") !important;
 	background-size: 100% !important;
 }
 

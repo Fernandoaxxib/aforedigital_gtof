@@ -1,6 +1,6 @@
 .ui-g {
 	background: #ffffff
-		url("/javax.faces.resource/Imagenes/intro-ad-op.jpg.jsf") !important;
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/intro-ad-op.jpg.jsf") !important;
 	background-position-x: 0;
 	background-position-y: 0;
 }
@@ -72,9 +72,8 @@
 }
 
 .est-img-iim {
-	width: 194px;
-	height: 467px;
-	margin-left: 110px;
+	width: 198px;
+	
 }
 
 .est-img-det2 {
