@@ -16,15 +16,15 @@ import mx.axxib.aforedigitalgt.eml.ConsultarNombreCuentaIcefasOut;
 import mx.axxib.aforedigitalgt.eml.ConsultarTraspasosIcefasOut;
 import mx.axxib.aforedigitalgt.eml.CpDatosIcefasOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoInsertTablaOut;
-import mx.axxib.aforedigitalgt.serv.ConsultarTraspasosIcefasService;
+import mx.axxib.aforedigitalgt.serv.ConsultarMarcasCuentasService;
 
 @Scope(value = "session")
-@Component(value = "consultarTraspasosIcefas")
-@ELBeanName(value = "consultarTraspasosIcefas")
-public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
+@Component(value = "consultarMarcasCuentas")
+@ELBeanName(value = "consultarMarcasCuentas")
+public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 
 	@Autowired
-	ConsultarTraspasosIcefasService consultarTraspasosIcefasServices;
+	ConsultarMarcasCuentasService consultarMarcasCuentasServices;
 	
 	@Autowired
 	private AforeMessage aforeMessage;
@@ -79,6 +79,21 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 	@Setter
 	private String valor;
 	
+	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+		curp_o_nssIn=null;
+		nombre=null;
+		nss=null;
+		curp =null;
+		cuenta=null;
+		cpDatos=null;
+		cpCursor=null;
+	}
+	}
+	
 	public void validarNssRfc() {
 		try {
 			if (validarCURP(curp_o_nssIn)) {
@@ -98,7 +113,7 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 	
 	public void ejecutarConsultaNss(String nssIn) {
 		try {
-			ConsultarNombreCuentaIcefasOut res=consultarTraspasosIcefasServices.getConsultarNss(nssIn);	
+			ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarNss(nssIn);	
 			System.out.println("DATOS POR NSS: "+res);
 			if (res != null && res.getCpDatos() != null && res.getCpDatos().size() > 0) {
 				cpDatos=res.getCpDatos();
@@ -116,7 +131,7 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 	
 	public void ejecutarConsultaCurp(String curpIn) {
 			try {
-				ConsultarNombreCuentaIcefasOut res=consultarTraspasosIcefasServices.getConsultarCurp(curpIn);	
+				ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarCurp(curpIn);	
 				System.out.println("DATOS POR CURP: "+res);
 				if (res != null && res.getCpDatos() != null && res.getCpDatos().size() > 0) {
 					cpDatos=res.getCpDatos();
@@ -135,9 +150,9 @@ public class ConsultarTraspasosIcefasCtrll extends ControllerBase {
 	public void ejecutarConsultarTraspasos() {
 		try {
 			System.out.println("*****************VALOR DE VISTA cuenta:"+cuenta+" "+ cpDatos2);
-			//ConsultarTraspasosIcefasOut res=consultarTraspasosIcefasServices.getConsultarTraspasos(codCuenta, codTipoSaldo, claveProceso, estado);
+			//ConsultarTraspasosIcefasOut res=consultarMarcasCuentasServices.getConsultarTraspasos(codCuenta, codTipoSaldo, claveProceso, estado);
 			
-			ConsultarTraspasosIcefasOut res=consultarTraspasosIcefasServices.getConsultarTraspasos(Integer.toString(cuenta), cpDatos2.getCOD_TIPSALDO(), Integer.toString(cpDatos2.getCLAVE_PROCESO()), cpDatos2.getESTADO());			
+			ConsultarTraspasosIcefasOut res=consultarMarcasCuentasServices.getConsultarTraspasos(Integer.toString(cuenta), cpDatos2.getCOD_TIPSALDO(), Integer.toString(cpDatos2.getCLAVE_PROCESO()), cpDatos2.getESTADO());			
 			if((res != null && res.getCpCursor() != null && res.getCpCursor().size() > 0)) {
 				cpCursor=res.getCpCursor();
 				mensaje=res.getMensaje();

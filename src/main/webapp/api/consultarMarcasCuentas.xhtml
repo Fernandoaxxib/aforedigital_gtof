@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 	
 	<f:metadata>
-		<f:event listener="#{salarioMinimo.iniciar}" type="preRenderView"/>
+		<f:event listener="#{consultarMarcasCuentas.iniciar}" type="preRenderView"/>
 	</f:metadata>
 	
 	<ui:define name="menu" >
@@ -35,25 +35,25 @@
 							value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" />
 						<p:inputText id="icefasFilter"
 							style="width:150px;font-size:12px"
-							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarTraspasosIcefas.curp_o_nssIn}" required="true">	
+							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}" required="true">	
 						</p:inputText>
-						<p:commandButton action="#{consultarTraspasosIcefas.validarNssRfc}"
+						<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"
 						type="submit"  value="Buscar" ajax="false" class="blue"  />
 					</p:outputPanel>
 				<p:panelGrid id="verDetalleProceso"  columns="8"> 
 	 					
  							<p:outputLabel for="nombre" value="#{msg.consultar_traspasos_icefas_txt_nombre}" />
-			     			<p:inputText id="nombre" disabled="true" 	value="#{consultarTraspasosIcefas.nombre}" style="text-Align:left;font-size:15px;width:250px" />
+			     			<p:inputText id="nombre" disabled="true" 	value="#{consultarMarcasCuentas.nombre}" style="text-Align:left;font-size:15px;width:250px" />
 							<p:outputLabel for="nss" value="#{msg.consultar_traspasos_icefas_txt_nss}" />
 							
-			     			<p:inputText id="nss" disabled="true" 	value="#{consultarTraspasosIcefas.nss}" style="text-Align:left;font-size:15px;width:80px" />
+			     			<p:inputText id="nss" disabled="true" 	value="#{consultarMarcasCuentas.nss}" style="text-Align:left;font-size:15px;width:80px" />
 							<p:outputLabel for="curp" value="#{msg.consultar_traspasos_icefas_txt_curp}" />
-			     			<p:inputText id="curp" disabled="true" 	value="#{consultarTraspasosIcefas.curp }" style="text-Align:left;font-size:15px;width:150px" />
+			     			<p:inputText id="curp" disabled="true" 	value="#{consultarMarcasCuentas.curp}" style="text-Align:left;font-size:15px;width:150px" />
 							<p:outputLabel for="codCuenta" value="#{msg.consultar_traspasos_icefas_txt_cuenta}" />
-			     			<p:inputText id="codCuenta" disabled="true" 	value="#{consultarTraspasosIcefas.cuenta}" style="text-Align:left;font-size:15px;width:80px" />
+			     			<p:inputText id="codCuenta" disabled="true" 	value="#{consultarMarcasCuentas.cuenta}" style="text-Align:left;font-size:15px;width:80px" />
 										
 				</p:panelGrid> 
-				<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpDatos}"
+				<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpDatos}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15">
 
 									
@@ -94,9 +94,9 @@
 									</p:column>
 									  <p:column  style="text-align: center: width:50px">
                        					 <p:commandButton update=":form:display" oncomplete="PF('productDialog').show()"
-                                          action="#{consultarTraspasosIcefas.ejecutarConsultarTraspasos}" value="Ver Detalle" class="blue">
+                                          action="#{consultarMarcasCuentas.ejecutarConsultarTraspasos}" value="Ver Detalle" class="blue">
                            				 <f:setPropertyActionListener  value="#{pro}" ajax="false" class="blue"
-                                                         target="#{consultarTraspasosIcefas.cpDatos2}"/>
+                                                         target="#{consultarMarcasCuentas.cpDatos2}"/>
                        					 </p:commandButton>
                    					 </p:column>
 									
@@ -104,7 +104,7 @@
 				
 						<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="50%" modal="true" style="font-size:12px">
 						 <p:outputPanel id="display">
-						<p:dataTable var="pro" value="#{consultarTraspasosIcefas.cpCursor}"
+						<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpCursor}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  rows="5" paginator="true" rowsPerPageTemplate="5,10,15" >
 
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_inc_por}" style="width:20px">
