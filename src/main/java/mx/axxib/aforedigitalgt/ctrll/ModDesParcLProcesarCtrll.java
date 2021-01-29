@@ -3,18 +3,15 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
@@ -56,7 +53,18 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	private LoteOut selectedLote;
 	@Getter
 	private List<LoteOut> listLotes;
+	
+	@Getter
+	@Setter
+	private String display;
 
+	@Getter
+	@Setter
+	private String display2;
+	
+	@Getter
+	@Setter
+	private String display3;
 	
 	@Override
 	public void iniciar() {
@@ -67,10 +75,21 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	}
 	
 	public void radioSelected() {
-		if(!radioSelected.equals("3")) {
-			ruta=null;
-			archivo=null;
-			fecha=null;
+		
+		if(radioSelected.equals("1")) {
+			display="none";
+			display2="none";
+			
+		}
+		if(radioSelected.equals("2")) {
+			display="inline";
+			display2="inline";
+			
+		}
+		if(radioSelected.equals("3")) {
+			display="none";
+			display2="inline";
+			
 		}
 		
 	}
@@ -86,51 +105,63 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	}
 
 	public void opcionSeleccionada2() {
-		addMessage("El lote1 :" + Lote1);
-		lote = Lote1.getID_LOTE();
-		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";
-		ruta = "/RESPALDOS/operaciones/pruebas";
-
+		if(Lote1!=null) {
+			lote = Lote1.getID_LOTE();			
+		}
 	}
 
 	public void generarAccion() {		
 		if(radioSelected!=null) {
 			String idProceso=null;
 			
-			if (radioSelected.equals("1"))
-				idProceso="Generación Lote";
-			else if(radioSelected.equals("2"))
-				idProceso="Generación Archivo ProceSAR";
-			else if(radioSelected.equals("3"))
-				idProceso="Carga Archivo ProceSAR";
+			if (radioSelected.equals("1")) {
+				if(fecha!=null) {
+					idProceso="Generación Lote";
+					generar(idProceso);
+				}else {
+					addMessageFail("Seleccione la fecha");
+				}
+			}
+				
+		    if (radioSelected.equals("2")) {
+					if(lote!=null) {
+						idProceso="Generación archivo ProceSAR";
+						generar(idProceso);
+					}else {
+						addMessageFail("Seleccione un lote");
+					}
+		    }
+		    
+		    if (radioSelected.equals("3")) {				
+					idProceso="Carga archivo respuesta ProceSAR";
+					generar(idProceso);				
+	        }
 			
 			
-			try {		
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-				proceso= new ProcesoOut();	
-				proceso.setFechahoraInicio(format.format(new Date()));
-				ProcesResult result=	service.generarLayout(Integer.valueOf(radioSelected));
-				proceso.setFechahoraFinal(format.format(new Date()));					
-				proceso.setAbrevProceso(idProceso);
-				proceso.setEstadoProceso(result.getPcAvance());
-				
-				if(radioSelected.equals("3")) {
-					reset();
-				}								
-				
-			} catch (Exception e) {
-				GenericException(e);
-			} 
+		}else {
+			addMessageFail("Seleccione una opción");
 		}
+	}
+	public void generar(String idProceso) {
+		try {		
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+			Date today= new Date();	
+			proceso= new ProcesoOut();	
+			proceso.setFechahoraInicio(format.format(today));
+			ProcesResult result=	service.generarLayout(Integer.valueOf(radioSelected));
+			Date today2= new Date();	
+			proceso.setFechahoraFinal(format.format(today2));					
+			proceso.setAbrevProceso(idProceso);
+			proceso.setEstadoProceso(result.getPcAvance());																	
+		} catch (Exception e) {
+			GenericException(e);
+		} 
 	}
 	public void getLotes() {
 		try {
 			if (listLotes == null) {
 				listLotes = service.getLotes();
-				addMessage("entro a lotes: " + listLotes);
-
-			}			
-			//PrimeFaces.current().executeScript("PF('dlg2').show()");
+			}					
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -142,17 +173,24 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		
 		radioSelected=null;
 		
-		archivo=null;
+		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";
+		ruta = "/RESPALDOS/operaciones/pruebas";	
+		display="none";
+		display2="none";
+		display3="none";
 		
-		ruta=null;
-		
+		proceso=null;
 		lote=null;
 		Lote1=null;
 		selectedLote=null;
 		listLotes=null;
 	}
-	public void addMessage(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+	public void addMessageOK(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+	public void addMessageFail(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
 }

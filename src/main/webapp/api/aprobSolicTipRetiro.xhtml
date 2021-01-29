@@ -29,11 +29,11 @@
 		<h:form >
 		<p:blockUI block="table1" trigger="btnRecSolicPend" />
 		  <p:panel header="Aprobación de solicitudes por tipo de retiro" style="margin-top:20px">
-			<p:commandButton id="btnRecSolicPend"
-				action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
+			<p:commandButton id="btnRecSolicPend" styleClass="blue ui-button-text"
+				action="#{aprobSolicTipRetiro.recuperarSolicPendientes}" 
 				type="submit" update="table1" oncomplete="PF('listSolicitudes').selectAllRows()"
 				value="#{msg.aprob_boton_recuperarSolicitudes}"
-				style="font-size:12px;background" ajax="true" />
+				ajax="true" />
 
           
 			<p:dataTable id="table1" var="mon" class="sinfondo"
@@ -64,21 +64,21 @@
 					<div class="ui-g">
 
 						<div class="ui-g-2" style="text-align: left;width:150px">
-							<p:commandButton type="button" update="table1"
+							<p:commandButton styleClass="blue ui-button-text" type="button" update="table1"
 								onclick="PF('listSolicitudes').selectAllRows()"
-								value="#{msg.aprob_boton_marcar}" style="font-size:12px;"
+								value="#{msg.aprob_boton_marcar}" 
 								ajax="true" />
 						</div>
 						<div class="ui-g-3" style="text-align: left; width: 170px">
-							<p:commandButton type="button" update="table1"
+							<p:commandButton styleClass="blue ui-button-text" type="button" update="table1"
 								onclick="PF('listSolicitudes').unselectAllRows()"
-								value="#{msg.aprob_boton_desmarcar}" style="font-size:12px;"
+								value="#{msg.aprob_boton_desmarcar}"
 								ajax="true" />
 						</div>
 						<div class="ui-g-3" style="text-align: left; width: 210px">
-							<p:commandButton action="#{aprobSolicTipRetiro.aprobarSolicitud}"
+							<p:commandButton styleClass="blue ui-button-text" action="#{aprobSolicTipRetiro.aprobarSolicitud}"
 								type="submit" update="table1" value="#{msg.aprob_boton_aprobar}"
-								style="font-size:12px" ajax="false" />
+								ajax="false" />
 						</div>
 						<div class="ui-g-4" style="text-align: right">
 							<h:outputLabel for="registros"
@@ -126,15 +126,9 @@
 
 		</h:form>
 
-
+        <p:panel header="#{msg.aprob_tabla_titResProc}" style="margin-top:20px">
 		<p:dataTable var="pro" value="#{aprobSolicTipRetiro.procesoEjecutado}"
-			emptyMessage="#{msg.aprob_msj_sinDatos}"   style="font-size:12px;margin-top:30px">
-
-			<f:facet name="header">
-				<p:outputPanel style="text-align:left">
-					<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-				</p:outputPanel>
-			</f:facet>
+			emptyMessage="#{msg.aprob_msj_sinDatos}" >
 
 			<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
 				<h:outputText value="#{pro.abrevProceso}" />
@@ -155,6 +149,6 @@
 				</h:outputText>
 			</p:column>
 		</p:dataTable>
-		
+		</p:panel>
 	</ui:define>
 </ui:composition>

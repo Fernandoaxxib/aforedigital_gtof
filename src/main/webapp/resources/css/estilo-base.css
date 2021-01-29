@@ -53,6 +53,9 @@
 	background: #ffffff !important;
 }
 
+.sinfondo.ui-datatable .ui-selection-column .ui-chkbox-all {
+	display:none;
+}
 /* PanelGrid */
 .ui-panel .ui-panel-titlebar {
 	background: #59ad40;
@@ -144,6 +147,18 @@
 	color: #ffffff;
 }
 
+.gridCell-right{
+	text-align:right;
+}
+
+.outputlabel-shadow{
+	background: #dddddd;
+	border-radius: 5px;
+	height:25px;
+	width:350px;
+	text-align: left;
+}
+
 
 .ui-inputfield.ui-state-default, .ui-selectonemenu, .ui-radiobutton-box, .ui-chkbox-box .ui-chkbox-icon {
     border: 1px solid #00529b !important;
@@ -157,9 +172,8 @@
 	background: #00529b54 !important;
 }
 
-
-
-
-
-
-
+.gridCell-green th{
+	background: #59ad40 !important;
+    border-color: #59ad40 !important;
+    color:#ffffff;
+}

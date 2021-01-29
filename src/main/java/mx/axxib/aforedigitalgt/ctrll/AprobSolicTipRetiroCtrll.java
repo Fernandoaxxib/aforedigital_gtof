@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Locale;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +60,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
+			listSolicitudes=null;
 			recuperarSolicPendientes();
 			PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
 			
@@ -97,14 +96,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			GenericException(e);
 		}
 	}
-	public Integer recuperarIdProceso(Integer pnNoSolicitud ,Integer pTipTransac,String pSubTipTransac)  {
-		try {			
-			return service.getIdProceso(pnNoSolicitud, pTipTransac, pSubTipTransac);
-		} catch (Exception e) {
-			 GenericException(e);			
-		}	
-		return 0;
-	}
+	
 	
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
         String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
@@ -138,6 +130,10 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	public void aprobarSolicitud()  {	
 		
+		
+		
+		
+		
 	  if(selectedSolicitud.size()>0 && selectedSolicitud!=null)	{
 		  addMessageOK("Proceso ejecutado!");
           selectedSolicitud.forEach(p->{
@@ -153,6 +149,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	   }else {
 		  addMessageFail("Seleccionar solicitud!"); 
 	   }
+	
 	}
 
 	

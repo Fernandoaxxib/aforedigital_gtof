@@ -1,21 +1,21 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.LoteOP84Out;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
@@ -75,13 +75,17 @@ public class RetParImssOP84Ctrll extends ControllerBase{
 	@Setter
 	private ProcesoOut proceso;
 	
-	@PostConstruct
-	public void init() {
-		ruta="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";		
-		ruta2="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";	
-		today= new Date();
-		//getListaRegistros();
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			ruta="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";		
+			ruta2="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";	
+			today= new Date();
+			reset();
+		}
 	}
+	
 	
 	public void getListaRegistros(){
 		try {
@@ -96,12 +100,11 @@ public class RetParImssOP84Ctrll extends ControllerBase{
 	}
 	public void getLotes() {
 		try {
-			if (listLotes == null) {
-				listLotes = service.getLotesOP84();
-			
-
+			if (listLotes == null) {				
+				listLotes = service.getLotesOP84();			
 			}			
-			//PrimeFaces.current().executeScript("PF('dlg2').show()");
+			fecIni=null;
+			fecFin=null;
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -114,11 +117,44 @@ public class RetParImssOP84Ctrll extends ControllerBase{
 	}
 	public void generarReporte() {
 		try {			
-			String resp=service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin, "QUERY");
-			addMessageOK(resp);
-		} catch (AforeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(lote!=null) {
+				if(archivo!=null && !archivo.isEmpty() ) {
+					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+					Date today= new Date();		
+					proceso = new ProcesoOut();
+					proceso.setFechahoraInicio(format.format(today));
+					String resp=service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin, "QUERY");
+					Date today2= new Date();		
+					proceso.setFechahoraFinal(format.format(today2));
+					proceso.setAbrevProceso("Generar reporte");
+					proceso.setEstadoProceso("Proceso ejecutado");													
+					addMessageOK(resp);
+				}else {
+					addMessageFail("Ingrese el nombre del reporte a generar. ");
+				}
+			}else {
+				if(fecIni!=null && fecFin!=null) {
+					if(archivo!=null && !archivo.isEmpty()) {
+						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+						Date today= new Date();		
+						proceso = new ProcesoOut();
+						proceso.setFechahoraInicio(format.format(today));
+						String resp=service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin, "QUERY");
+						Date today2= new Date();		
+						proceso.setFechahoraFinal(format.format(today2));
+						proceso.setAbrevProceso("Generar reporte");
+						proceso.setEstadoProceso("Proceso ejecutado");													
+						addMessageOK(resp);
+					}else {
+						addMessageFail("Ingrese el nombre del reporte a generar. ");
+					}					
+				}else {
+					addMessageFail("Seleccione la fecha de inicio y fin o el lote.");
+				}
+			}
+			
+		} catch (Exception e) {
+			GenericException(e);
 		}
 	}
 	
@@ -138,6 +174,9 @@ public class RetParImssOP84Ctrll extends ControllerBase{
 					if(fecIni!=null && fecFin !=null) {									
 						if(fecIni.before(fecFin)||fecIni.equals(fecFin)) {
 								registros=service.getConsultaOP84(fecIni, fecFin, lote);
+								if(registros==null || registros.isEmpty()) {
+									addMessageFail("No hay registros.");
+								}
 						}else {
 							    addMessageFail("La fecha inicio debe ser menor o igual a la fecha fin.");
 						}																																				
@@ -157,7 +196,15 @@ public class RetParImssOP84Ctrll extends ControllerBase{
 			addMessageFail("Ingrese el nombre del archivo.");
 		}else {
 			try {
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+				Date today= new Date();		
+				proceso = new ProcesoOut();
+				proceso.setFechahoraInicio(format.format(today));
 				String resp=service.cargarArchivoOP84(ruta, nombreArchivo);
+				Date today2= new Date();		
+				proceso.setFechahoraFinal(format.format(today2));
+				proceso.setAbrevProceso("Carga de Archivo");
+				proceso.setEstadoProceso("Proceso ejecutado");													
 				addMessageOK(resp);
 			} catch (Exception e) {
 				GenericException(e);
@@ -176,5 +223,13 @@ public class RetParImssOP84Ctrll extends ControllerBase{
 	}
 	public void limpiar() {
 		lote=null;
+	}
+	public void reset() {
+		nombreArchivo=null;
+		lote=null;
+		fecIni=null;
+		fecFin=null;
+		archivo=null;
+		proceso=null;
 	}
 }

@@ -1,19 +1,14 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.Date;
-
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
-
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.serv.ModPagosService;
 
@@ -59,7 +54,7 @@ public class ModuloPagosCtrll extends ControllerBase{
 		try {
 			if(fechaProceso!=null && fechaProcesoPagos!=null ) {
 				String resp=service.refresh("SI", fechaProceso, fechaProcesoPagos);
-				//addMessageOK(resp);
+				addMessageOK(resp);
 			}else {
 				addMessageFail("Seleccione la fecha de proceso y la fecha de retiro");
 			}

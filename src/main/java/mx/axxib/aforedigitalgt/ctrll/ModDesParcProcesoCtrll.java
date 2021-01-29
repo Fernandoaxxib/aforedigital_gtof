@@ -3,12 +3,12 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
-import org.primefaces.PrimeFaces;
 import org.primefaces.event.CellEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -22,15 +22,14 @@ import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
 import mx.axxib.aforedigitalgt.serv.ModDesParcProcesoService;
 
-
 @Scope(value = "session")
 @Component(value = "modDesParcProceso")
 @ELBeanName(value = "modDesParcProceso")
-public class ModDesParcProcesoCtrll  extends ControllerBase{
+public class ModDesParcProcesoCtrll extends ControllerBase {
 
 	@Autowired
 	private ModDesParcProcesoService service;
-	
+
 	@Getter
 	@Setter
 	private List<RegisSinSalarioOut> listSolicitudes;
@@ -42,7 +41,7 @@ public class ModDesParcProcesoCtrll  extends ControllerBase{
 	private ProcesoOut proceso;
 	@Getter
 	@Setter
-	private Integer pendientes; 
+	private Integer pendientes;
 	@Getter
 	@Setter
 	private Integer totales;
@@ -51,116 +50,135 @@ public class ModDesParcProcesoCtrll  extends ControllerBase{
 	private Integer unaExhibicion;
 	@Getter
 	@Setter
-	private Integer sinSalario; 
+	private Integer sinSalario;
 	@Getter
 	@Setter
 	private Integer parcialidades;
 	@Getter
 	@Setter
 	private Date fecha;
-	
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
+		if (init) {
 			reset();
+			proceso=null;
 		}
 	}
-	
-	 public void radioSelected() {}
-	 public void buscarRegXProcesar() {
-		 
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-			String f=format.format(fecha);
-			addMessage("si entro con la fecha "+f+" radio selected: "+radioSelected);
-			
-			try {
-				DiagnosticoResult res=service.getRegistrosXProcesar(fecha);			
-				parcialidades=res.getParcialidades();
-				unaExhibicion=res.getUnaExhibicion();
-				sinSalario=res.getSinSalario();
-				totales=res.getTotales();
-				pendientes=res.getPendientes();
-				
-			} catch (Exception e) {
-				 GenericException(e);
-			}
+
+	public void radioSelected() {
+	}
+
+	public void buscarRegXProcesar() {
+		if (radioSelected != null) {
+          if(radioSelected.equals("1")) {
+        	  try {
+  				DiagnosticoResult res = service.getRegistrosXProcesar(fecha);
+  				parcialidades = res.getParcialidades();
+  				unaExhibicion = res.getUnaExhibicion();
+  				sinSalario = res.getSinSalario();
+  				totales = res.getTotales();
+  				pendientes = res.getPendientes();
+
+  			} catch (Exception e) {
+  				GenericException(e);
+  			}
+          }
+		} else {
+			addMessageFail("Debe seleccionar una opción") ;
 		}
+	}
+
 	public void guardar() {
-		try {											      			    			     
-			      if(radioSelected!=null && fecha!=null) {
-			    	  listSolicitudes.forEach(p->{
-			    		  try {
-			 				 service.guardarDetSal(p);
-			 				
-			         	} catch (Exception e) {
-			 				GenericException(e);
-			 			}  
-			    		  
-			    	  });
-			       }
-			      buscarRegXProcesar();
-		} catch (Exception e) {			
-				 GenericException(e);		
+		try {
+			if (radioSelected != null && fecha != null) {
+				listSolicitudes.forEach(p -> {
+					try {
+						service.guardarDetSal(p);
+
+					} catch (Exception e) {
+						GenericException(e);
+					}
+
+				});
+			}
+			buscarRegXProcesar();
+		} catch (Exception e) {
+			GenericException(e);
 		}
 	}
-	 public void mostrarRegistros() {
-	    	try {
-	    		
-	    		listSolicitudes=service.getRegSinSalario();    		    			    		
-			} catch (Exception e) {
-				GenericException(e);
-			}
-	    	
-	 }
-	 public void onCellEdit(CellEditEvent event) {
-	        Object oldValue = event.getOldValue();
-	        Object newValue = event.getNewValue();
-	         
-	        if(newValue != null && !newValue.equals(oldValue)) {
-	            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
-	            FacesContext.getCurrentInstance().addMessage(null, msg);
-	        }
-	        addMessage("lista: "+listSolicitudes);
-	 }
-	 public void ejecutarAccion() {
-			
-			try {
-				if(fecha!=null && radioSelected!=null) {										
-					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-					proceso= new ProcesoOut();					
-					proceso.setFechahoraInicio(format.format(new Date()));					
-					EjecucionResult result=service.ejecutar(fecha,Integer.valueOf(radioSelected));					
-					proceso.setFechahoraFinal(format.format(new Date()));
-					proceso.setAbrevProceso(result.getOcMensaje());
-					proceso.setEstadoProceso(result.getOcAvance());
-					
-					if(radioSelected.equals("1")) {
-						buscarRegXProcesar();
-					}else {
-						reset();
-					}
-					
+
+	public void mostrarRegistros() {
+		try {
+			if (sinSalario!=null) {
+				if(sinSalario > 0) {
+					listSolicitudes = service.getRegSinSalario();
+				}else {
+					listSolicitudes = null;
 				}
+			}	
+			
+		} catch (Exception e) {
+			GenericException(e);
+		}
+
+	}
+
+	public void onCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed",
+					"Old: " + oldValue + ", New:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
+	public void ejecutarAccion() {
+
+		try {
+			if (fecha != null && radioSelected != null) {	
+				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+				Date today= new Date();		
+				proceso = new ProcesoOut();
+				proceso.setFechahoraInicio(format.format(today));
+				EjecucionResult result = service.ejecutar(fecha, Integer.valueOf(radioSelected));
+				Date today2= new Date();		
+				proceso.setFechahoraFinal(format.format(today2));
+				proceso.setAbrevProceso(result.getOcMensaje());
+				proceso.setEstadoProceso(result.getOcAvance());		
 				
-				
-			} catch (Exception e) {			
-					 GenericException(e);		
+				if(radioSelected.equals("2")){
+					reset();
+				}
+			}else {
+				 addMessageFail("Debe seleccionar una acción a ejecutar y la fecha");
 			}
+		} catch (Exception e) {
+			GenericException(e);
 		}
-	 public void reset() {			
-			fecha=null;					
-			listSolicitudes=null;
-			radioSelected=null;			
-			pendientes=null; 
-			totales=null;
-			unaExhibicion=null;
-			sinSalario=null; 
-			parcialidades=null;
-			 
-		}
-	public void addMessage(String summary) {
+	}
+
+	public void reset() {
+		fecha = null;
+		listSolicitudes = null;
+		radioSelected = null;
+		pendientes = null;
+		totales = null;
+		unaExhibicion = null;
+		sinSalario = null;
+		parcialidades = null;
+	}
+
+	
+	public void addMessageOK(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+	public void addMessageFail(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

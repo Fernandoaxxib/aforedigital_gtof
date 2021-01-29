@@ -79,7 +79,7 @@ public class RetParImssOP8586Repo extends RepoBase {
 	public String generarReporteOP86(String p_Path,String p_Nombre_Archivo,String p_Lote,Date p_Fecha_Inicial,Date p_Fecha_Final) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE)
-					.concat(".").concat(Constantes.RET_PARIMSS_OP84_GENEREA_REPOP84);
+					.concat(".").concat(Constantes.RET_PARIMSS_OP84_GENEREA_REPOP86);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("p_Path", String.class, ParameterMode.IN);

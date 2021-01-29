@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/api/layaut.xhtml"
+<ui:composition template="layaut.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -32,20 +32,16 @@
 
 
 
-			<p:panel header="#{msg.modulo_pagos_titulo1}" style="margin-top:20px">
-				<p:outputPanel style="text-align:right">
-					<p:commandButton action="#{moduloPagos.refresh}" type="submit"
-						value="#{msg.modulo_pagos_btn_refresh}" ajax="false" />
-				</p:outputPanel>
+			<p:panel header="Liquidación fondos y tipos de pago." style="margin-top:20px">
+				
 
 				<p:panel id="pFondos" header="#{msg.modulo_pagos_titulo2}"
 					style="margin-top:10px;margin-bottom:10px;">
-					<p:panelGrid styleClass="ui-noborder" columns="2" cellpadding="5"
-						layout="grid">
+					<p:panelGrid styleClass="ui-noborder" columns="5" cellpadding="10">
 						<p:outputLabel for="slPagos"
 							value="#{msg.modulo_pagos_label_pagosAfil}" />
 						<p:selectOneMenu id="slPagos"
-							value="#{moduloPagos.pagosAfiliados}" style="width:190px">
+							value="#{moduloPagos.pagosAfiliados}" style="width:160px">
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_basicos}"
 								itemValue="#{msg.modulo_pagos_item_basicas}" />
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_adicionales}"
@@ -55,26 +51,27 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel for="fProceso"
-							value="#{msg.modulo_pagos_label_fechaProceso}" />
-						<p:calendar id="fProceso" value="#{moduloPagos.fechaProceso}"
-							size="10" locale="es" navigator="true" pattern="dd-MM-yyyy"
-							mask="true" showOn="button" style="font-size:12px">
-							<p:ajax listener="#{moduloPagos.fechaProceso}" />
-						</p:calendar>
-						<p:commandButton type="submit"
+							value="#{msg.modulo_pagos_label_fechaProceso}" />									
+						<p:datePicker id="fProceso" value="#{moduloPagos.fechaProceso}" locale="es" showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true" inputStyle="width:120px; text-align:right;" readonlyInput="true">
+							
+						</p:datePicker>
+						<p:commandButton styleClass="blue ui-button-text"  type="submit"
 							value="#{msg.modulo_pagos_btn_generaFondos}"
 							action="#{moduloPagos.generarFondos}" update="msj" />
 					</p:panelGrid>
 				</p:panel>
 
 				<p:panel id="pRetiros" header="#{msg.modulo_pagos_titulo3}"
-					style="margin-bottom:10px;">
-					<p:panelGrid styleClass="ui-noborder" columns="2" cellpadding="5"
-						layout="grid">
+					style="margin-bottom:20px;">
+					
+									
+					
+					
+					<p:panelGrid styleClass="ui-noborder" columns="8" cellpadding="10">					
 						<p:outputLabel for="slRetiros"
 							value="#{msg.modulo_pagos_label_procesRetiros}" />
 						<p:selectOneMenu id="slRetiros"
-							value="#{moduloPagos.procesosRetiros}" style="width:190px">
+							value="#{moduloPagos.procesosRetiros}" style="width:160px">
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_dispos}"
 								itemValue="#{msg.modulo_pagos_item_disposv}" />
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_parciales}"
@@ -90,7 +87,7 @@
 						<p:outputLabel for="slInstitucion"
 							value="#{msg.modulo_pagos_label_institucion}" />
 						<p:selectOneMenu id="slInstitucion"
-							value="#{moduloPagos.institucion}" style="width:190px">
+							value="#{moduloPagos.institucion}" style="width:160px">
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_issste}"
 								itemValue="#{msg.modulo_pagos_item_isssteV}" />
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_imss}"
@@ -102,7 +99,7 @@
 						<p:outputLabel for="sltiposPagos"
 							value="#{msg.modulo_pagos_label_tiposPagos}" />
 						<p:selectOneMenu id="sltiposPagos"
-							value="#{moduloPagos.tiposPagos}" style="width:190px">
+							value="#{moduloPagos.tiposPagos}" style="width:160px">
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_tranInter}"
 								itemValue="#{msg.modulo_pagos_item_ti}" />
 							<f:selectItem itemLabel="#{msg.modulo_pagos_item_ordPagos}"
@@ -117,13 +114,15 @@
 
 						<p:outputLabel for="fProcesoP"
 							value="#{msg.modulo_pagos_label_fechaProceso}" />
-						<p:calendar id="fProcesoP"
-							value="#{moduloPagos.fechaProcesoPagos}" mask="true" size="10"
-							locale="es" navigator="true" pattern="dd-MM-yyyy" showOn="button" />
-						<p:commandButton type="submit"
+						<p:datePicker id="fProcesoP"  value="#{moduloPagos.fechaProcesoPagos}" locale="es" showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true" inputStyle="width:120px; text-align:right;" readonlyInput="true" />											
+					</p:panelGrid>
+					<div class="ui-g">
+						  <div class="ui-g-12" style="text-align:right">
+						    <p:commandButton styleClass="blue ui-button-text"  type="submit"
 							value="#{msg.modulo_pagos_btn_generaPagos}"
 							action="#{moduloPagos.generarPagos}" update="msj" />
-					</p:panelGrid>
+						  </div>
+					</div>	
 				</p:panel>
 			</p:panel>
 		</h:form>
