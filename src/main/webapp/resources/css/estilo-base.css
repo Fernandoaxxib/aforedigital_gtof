@@ -45,6 +45,10 @@
 	/*border: white !important;*/	
 }
 
+.ui-datatable-data .ui-widget-content{
+	border: 1px solid #acbece !important;
+}
+
 .ui-datatable .ui-widget-header{
 	border: 1px solid #ffffff !important;
 }

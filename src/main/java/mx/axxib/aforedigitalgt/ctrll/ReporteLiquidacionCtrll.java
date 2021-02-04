@@ -14,7 +14,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.eml.LiqEjecutaReporteIn;
 import mx.axxib.aforedigitalgt.eml.LiqObtieneParametrosOut;
 import mx.axxib.aforedigitalgt.eml.LiqObtieneSieforeOut;
@@ -30,9 +29,6 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 	
 	@Autowired
 	private ReporteLiquidacionServ reporteLiquidacionService;
-
-	@Autowired
-	private AforeMessage aforeMessage;
 	
 	@Getter
 	private LiqObtieneParametrosOut parametros;
