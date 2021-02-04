@@ -40,7 +40,7 @@
 						<h:form id="form">
 							<p:outputLabel value="Buscar por: " style="font-weight: bold" />
 							<p:inputText value="#{diagCuenta.valor}" style="width:215px"
-								placeholder="NSS/CURP" />
+								placeholder="NSS/CURP" required="true" requiredMessage="Debe especificar un NSS/CURP" />
 							<p:commandButton class="blue"
 								action="#{diagCuenta.obtieneCodCuenta}" type="submit"
 								value="Buscar" ajax="false" />

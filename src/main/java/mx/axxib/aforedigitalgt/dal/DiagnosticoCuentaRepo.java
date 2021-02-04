@@ -37,8 +37,10 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			
 			if(isCurp) {
 				query.setParameter("P_CURP", parametro);
+				query.setParameter("P_NSS", null);
 			} else {
 				query.setParameter("P_NSS", parametro);
+				query.setParameter("P_CURP", null);
 			}
 			
 			ObtieneCodCuentaOut res = new ObtieneCodCuentaOut();

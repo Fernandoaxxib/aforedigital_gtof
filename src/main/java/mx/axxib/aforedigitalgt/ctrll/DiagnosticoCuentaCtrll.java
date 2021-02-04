@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 			valor = null;
 			codCuenta = null;
 			nombre = null;
-			tipos = null;
+			tipos = new ArrayList<ObtieneTipoProceso>();
 			selectedTipo = null;
 			fechaInicio = null;
 			fechaFin = null;
