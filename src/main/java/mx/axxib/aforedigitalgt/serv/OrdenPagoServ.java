@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
-import mx.axxib.aforedigitalgt.dal.OrdenPagoDAO;
+import mx.axxib.aforedigitalgt.dal.OrdenPagoRepo;
 import mx.axxib.aforedigitalgt.eml.OrdenPagoFechasOut;
 import mx.axxib.aforedigitalgt.eml.TiposReportes;
 
@@ -15,11 +15,11 @@ import mx.axxib.aforedigitalgt.eml.TiposReportes;
 public class OrdenPagoServ extends ServiceBase {
 	
 	@Autowired
-	private OrdenPagoDAO  ordenPagoDAO;
+	private OrdenPagoRepo  ordenPagoRepo;
 	
 	public OrdenPagoFechasOut cargaFechas() throws AforeException {
 		try {
-			return ordenPagoDAO.cargaFechas();
+			return ordenPagoRepo.cargaFechas();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
@@ -28,7 +28,7 @@ public class OrdenPagoServ extends ServiceBase {
 	
 	public String enviarImpresora(OrdenPagoFechasOut parametro, Integer boxImpresora) throws AforeException {
 		try {
-			return ordenPagoDAO.impresoraReporte(parametro,boxImpresora);
+			return ordenPagoRepo.impresoraReporte(parametro,boxImpresora);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
@@ -36,7 +36,7 @@ public class OrdenPagoServ extends ServiceBase {
 	
 	public String generarArchivo(OrdenPagoFechasOut parametro, Integer boxGenerar) throws AforeException {
 		try {
-			return ordenPagoDAO.impresoraReporte(parametro,boxGenerar);
+			return ordenPagoRepo.impresoraReporte(parametro,boxGenerar);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
@@ -44,7 +44,7 @@ public class OrdenPagoServ extends ServiceBase {
 	
 	public TiposReportes creaTipoReporte(String tipoReporte ) throws AforeException {
 		try {
-			return ordenPagoDAO.creaTipoReporte(tipoReporte);
+			return ordenPagoRepo.creaTipoReporte(tipoReporte);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
@@ -52,7 +52,7 @@ public class OrdenPagoServ extends ServiceBase {
 	
 	public String generaNombre(OrdenPagoFechasOut parametro ) throws AforeException{
 		try {
-			return ordenPagoDAO.generaNombre(parametro);
+			return ordenPagoRepo.generaNombre(parametro);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

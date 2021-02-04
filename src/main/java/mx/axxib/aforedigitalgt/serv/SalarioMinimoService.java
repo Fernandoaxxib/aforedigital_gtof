@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
-import mx.axxib.aforedigitalgt.dal.SalarioMinimoDAO;
+import mx.axxib.aforedigitalgt.dal.SalarioMinimoRepo;
 import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 
@@ -15,7 +15,7 @@ import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 public class SalarioMinimoService extends ServiceBase {
 	
 	@Autowired
-	private SalarioMinimoDAO dao;
+	private SalarioMinimoRepo dao;
 	
 	public SalarioMinOut getSalarioMinimo(String usuario) throws AforeException {
 		try {

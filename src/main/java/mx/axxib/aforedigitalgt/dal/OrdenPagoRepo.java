@@ -15,12 +15,12 @@ import mx.axxib.aforedigitalgt.eml.OrdenPagoFechasOut;
 import mx.axxib.aforedigitalgt.eml.TiposReportes;
 
 @Repository
-public class OrdenPagoDAO extends RepoBase{
+public class OrdenPagoRepo extends RepoBase{
 	
 private final EntityManager entityManager;
 	
 	@Autowired
-	public OrdenPagoDAO (final EntityManager entityManager) {
+	public OrdenPagoRepo (final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	

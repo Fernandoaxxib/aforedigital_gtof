@@ -18,13 +18,13 @@ import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 
 @Repository
-public class SalarioMinimoDAO extends RepoBase {
+public class SalarioMinimoRepo extends RepoBase {
 
 	
 private final EntityManager entityManager;
 	
 	@Autowired
-	public SalarioMinimoDAO (final EntityManager entityManager) {
+	public SalarioMinimoRepo (final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
