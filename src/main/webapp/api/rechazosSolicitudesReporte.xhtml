@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{rechazos.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<p:panelGrid class="no-border" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column>
+					<h:form>
+						<p:linkButton styleClass="blue"
+							outcome="/api/rechazosSolicitudes.jsf" includeViewParams="true"
+							value="Rechazo">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="green"
+							outcome="/api/rechazosSolicitudesReporte.jsf"
+							includeViewParams="true" value="Reporte">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue"
+							outcome="/api/rechazosSolicitudesCatalogo.jsf"
+							includeViewParams="true" value="Catálogo">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
+		<h:form id="form">
+
+			<p:panel id="reporte" header="Reporte de rechazos"
+				style="margin-top:20px">
+
+				<p:panelGrid id="busqueda" styleClass="ui-noborder">
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Desde: " style="font-weight: bold" />
+							<p:datePicker id="fechaInicial"
+								inputStyle="width:120px; text-align:right;"
+								value="#{rechazos.fechaInicial}" showIcon="true" locale="es"
+								pattern="dd-MM-yyyy" readonlyInput="true" required="true"
+								requiredMessage="Fecha inicial requerida" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Hasta: " style="font-weight: bold" />
+							<p:datePicker id="fechaFinal" value="#{rechazos.fechaFinal}"
+								inputStyle="width:120px; text-align:right;" showIcon="true"
+								locale="es" pattern="dd-MM-yyyy" readonlyInput="true"
+								required="true" requiredMessage="Fecha final requerida" />
+
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column colspan="2">
+							<h:outputLabel value="Archivo: " style="font-weight: bold" />
+							<p:inputText value="#{rechazos.nombreArchivo}" style="width:100px;"
+								required="true" requiredMessage="Nombre de archivo requerido"></p:inputText>
+							<h:outputLabel value="   (sin ruta ni extensión)" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:commandButton class="blue" action="#{rechazos.generarReporte}"
+								type="submit" value="Generar" ajax="false" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+
+			</p:panel>
+
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

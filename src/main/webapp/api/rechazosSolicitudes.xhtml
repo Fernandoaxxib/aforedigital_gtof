@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{rechazos.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript name="js/calendar-localization.js" />
+		
+		<p:panelGrid class="no-border" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column>
+					<h:form>
+						<p:linkButton styleClass="green"
+							outcome="/api/rechazosSolicitudes.jsf" includeViewParams="true"
+							value="Rechazo">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue"
+							outcome="/api/rechazosSolicitudesReporte.jsf" includeViewParams="true"
+							value="Reporte">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue"
+							outcome="/api/rechazosSolicitudesCatalogo.jsf" includeViewParams="true"
+							value="Catálogo">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
+		<h:form id="form">
+
+			<p:panel id="busqueda" header="Rechazo de solicitudes"
+				style="margin-top:20px">
+
+				<p:selectOneRadio id="customRadio" value="#{rechazos.opcion}"
+					required="true"
+					requiredMessage="Debe seleccionar un tipo de búsqueda"
+					layout="custom">
+					<f:selectItem itemLabel="Folio" itemValue="F" />
+					<f:selectItem itemLabel="Resolución" itemValue="R" />
+					<f:selectItem itemLabel="NSS" itemValue="N" />
+					<p:ajax event="change" update="busqueda"
+						listener="#{rechazos.cambio}" />
+				</p:selectOneRadio>
+
+				<p:panelGrid id="panel" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+						</p:column>
+						<p:column>
+							<h:outputLabel for="opt1" value="Folio" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{rechazos.folio}" style="width:100px;"
+								disabled="#{rechazos.disFolio}"></p:inputText>
+						</p:column>
+						<p:column>
+							<h:outputLabel value="" />
+						</p:column>
+						<p:column>
+							<h:outputLabel value="" />
+						</p:column>
+						<p:column>
+							<p:radioButton id="opt2" for="customRadio" itemIndex="1" />
+						</p:column>
+						<p:column>
+							<h:outputLabel for="opt2" value="Resolución" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{rechazos.resolucion}" style="width:100px"
+								disabled="#{rechazos.disResolucion}"></p:inputText>
+						</p:column>
+						<p:column>
+							<h:outputLabel value="" />
+						</p:column>
+						<p:column>
+							<h:outputLabel value="" />
+						</p:column>
+						<p:column>
+							<p:radioButton id="opt3" for="customRadio" itemIndex="2" />
+						</p:column>
+						<p:column>
+							<h:outputLabel for="opt3" value="NSS" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{rechazos.nss}" style="width:100px"
+								disabled="#{rechazos.disNss}"></p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" action="#{rechazos.buscar}"
+								type="submit" value="Buscar" ajax="false" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panelGrid styleClass="ui-noborder"
+					style="margin-top:20px; width:100%;">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.nombre}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="R. Fax:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.fax}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Tipo presentación:"
+								style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.descPrestacion}"></h:outputText>
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Tipo pensión:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.descPension}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha capturada:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.fechaInclusion}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Plaza:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.plaza}"></h:outputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Ejecutivo:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.nombreEmpleado}"></h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+
+				<p:panelGrid styleClass="ui-noborder"
+					style="margin-top:40px; width:100%;">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Causa de rechazo" style="font-weight: bold;"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Descripción de la causa"
+								style="font-weight: bold"></p:outputLabel>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.causaRechazo}"></h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.descCausa}"></h:outputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.causaRechazo2}"></h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.descCausa2}"></h:outputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.causaRechazo3}"></h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.descCausa3}"></h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

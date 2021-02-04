@@ -113,4 +113,14 @@ public class Constantes {
 	public static final String CONSULTAR_TRASPASOS_CURP_STORED = "PRC_CONSULTA_CURP";
 	public static final String CONSULTAR_TRASPASOS_NSS_STORED = "PRC_CONSULTA_NSS";
 	public static final String CONSULTAR_TRASPASOS_STORED = "PRC_CONSULTA_POR_DATO";
+	
+	// Rechazos de solicitudes FORETREC
+	public static final String RECHAZOS_SOLICITUDES_PACKAGE = "PKG_RET_FORETREC";
+	public static final String RECHAZOS_SOLICITUDES_CONSULTA_FOLIO = "PRC_CONSULTA_FOLIO";
+	public static final String RECHAZOS_SOLICITUDES_CONSULTA_RESOLUCION = "PRC_CONSULTA_RESOLUCION";
+	public static final String RECHAZOS_SOLICITUDES_CONSULTA_NSS = "PRC_CONSULTA_NSS";
+	public static final String RECHAZOS_SOLICITUDES_CATALOGO = "PRC_CAT_RECHASOS";
+	public static final String RECHAZOS_SOLICITUDES_GENERA_REPORTE = "prc_genera_reporte";
+	
+	
 }
