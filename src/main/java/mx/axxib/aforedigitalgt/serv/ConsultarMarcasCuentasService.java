@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
-import mx.axxib.aforedigitalgt.dal.ConsultarMarcasCuentasDAO;
+import mx.axxib.aforedigitalgt.dal.ConsultarMarcasCuentasRepo;
 import mx.axxib.aforedigitalgt.eml.ConsultarDatosIcefasOut;
 import mx.axxib.aforedigitalgt.eml.ConsultarNombreCuentaIcefasOut;
 import mx.axxib.aforedigitalgt.eml.ConsultarTraspasosIcefasOut;
@@ -20,7 +20,7 @@ import mx.axxib.aforedigitalgt.eml.CpDatosIcefasOut;
 public class ConsultarMarcasCuentasService extends ServiceBase {
 	
 	@Autowired
-	private ConsultarMarcasCuentasDAO consultarTraspasos;
+	private ConsultarMarcasCuentasRepo consultarTraspasos;
 
 	@SuppressWarnings("null")
 	public ConsultarTraspasosIcefasOut getConsultarTraspasos(String codCuenta,String codTipoSaldo,String claveProceso, String estado) throws AforeException {

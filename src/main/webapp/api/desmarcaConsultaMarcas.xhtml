@@ -9,7 +9,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
     <f:metadata>
-		<f:event listener="#{desmarcaCargaMasiva.iniciar}" type="preRenderView"/>		
+		<f:event listener="#{desmarcaConsultaMarcas.iniciar}" type="preRenderView"/>		
 	</f:metadata>
 	
 	<ui:define name="menu" >
@@ -59,7 +59,7 @@
 								</div>
 								<div class="ui-g-9"
 									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{desmarcaCargaMasiva.rutaCarga}" />
+									<p:outputLabel value="#{desmarcaConsultaMarcas.rutaCarga}" />
 								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">
@@ -67,12 +67,12 @@
 									<p:outputLabel value="Archivo:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{desmarcaCargaMasiva.nombreArchivoCarga}" />
+									<p:inputText value="#{desmarcaConsultaMarcas.nombreArchivoCarga}" />
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="form message" ajax="true"/>
 								</div>
 							</div>
 						</p:panel>
@@ -98,7 +98,7 @@
 							</div>
 							<div class="ui-g" style="text-align: center;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaCargaMasiva.reversaArchivo}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="form message" ajax="true"/>
 								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">
@@ -121,7 +121,7 @@
 					
 			</div>
 			<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{desmarcaCargaMasiva.proceso}"
+					value="#{desmarcaConsultaMarcas.proceso}"
 					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					style="margin-top:20px;font-size:12px">
 					<f:facet name="header">

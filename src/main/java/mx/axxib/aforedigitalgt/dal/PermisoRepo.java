@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
 
 @Repository
-public class PermisoDAO {
+public class PermisoRepo {
 
 	private final EntityManager entityManager;
 
 	@Autowired
-	public PermisoDAO(final EntityManager entityManager) {
+	public PermisoRepo(final EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}
 	
