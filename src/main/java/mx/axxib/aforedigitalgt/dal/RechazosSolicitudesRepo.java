@@ -18,7 +18,7 @@ import mx.axxib.aforedigitalgt.eml.RechazosOut;
 @Repository
 public class RechazosSolicitudesRepo extends RepoBase {
 
-	public RechazosOut getConsultaFolio(int folio) throws AforeException {
+	public RechazosOut getConsultaFolio(String folio) throws AforeException {
 //		PROCEDURE PRC_CONSULTA_FOLIO(P_FOLIO IN NUMBER,
 //        P_NOMBRE       OUT VARCHAR2,
 //        P_R_FAX        OUT VARCHAR2,
@@ -42,7 +42,7 @@ public class RechazosSolicitudesRepo extends RepoBase {
 					.concat(".").concat(Constantes.RECHAZOS_SOLICITUDES_CONSULTA_FOLIO);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("P_FOLIO", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_FOLIO", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_R_FAX", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_TIP_PRESTACION", String.class, ParameterMode.OUT);

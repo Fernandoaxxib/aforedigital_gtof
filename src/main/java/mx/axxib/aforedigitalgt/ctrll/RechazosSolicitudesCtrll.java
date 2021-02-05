@@ -29,7 +29,7 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 
 	@Getter
 	@Setter
-	private Integer folio;
+	private String folio;
 
 	@Getter
 	@Setter

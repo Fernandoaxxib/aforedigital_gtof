@@ -18,7 +18,7 @@ public class RechazosSolicitudesServ extends ServiceBase {
 	@Autowired
 	private RechazosSolicitudesRepo rechazos;
 	
-	public RechazosOut getConsultaFolio(int folio) throws AforeException {
+	public RechazosOut getConsultaFolio(String folio) throws AforeException {
 		try {
 			return rechazos.getConsultaFolio(folio);
 		} catch (Exception e) {
