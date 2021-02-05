@@ -89,6 +89,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 	}
 	
 	public void cargarArchivo() {
+		
 		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
 			addMessageFail("Ingrese el nombre del archivo.");
 		}else {
@@ -100,9 +101,16 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 			String resp =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
 			Date today2= new Date();		
 			proceso.setFechahoraFinal(format.format(today2));
-			proceso.setAbrevProceso("Generar reporte");
-			proceso.setEstadoProceso("Proceso ejecutado");		
+			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...") ) {
+			proceso.setAbrevProceso(resp);//"Generar reporte"
+			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
 			addMessageOK(resp);
+			}else {
+				proceso.setAbrevProceso(resp);//"Generar reporte"
+				proceso.setEstadoProceso("FALLIDO");
+				 addMessageFail(resp);
+			}
+			
 //			if(msg.trim().toUpperCase().equals("OK")) {
 //				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
 //				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
@@ -118,14 +126,29 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 	
 	public void reversaArchivo() {
 		try {System.out.println("REVERSA CARGA");
-			String msg =cargaMasiva.reversaArchivoCarga();
-			if(msg.trim().toUpperCase().equals("OK")) {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-			} else {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-			}
+			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+			Date today= new Date();		
+			proceso = new ProcesoOut();
+			proceso.setFechahoraInicio(format.format(today));
+			String resp =cargaMasiva.reversaArchivoCarga();
+			Date today2= new Date();		
+			proceso.setFechahoraFinal(format.format(today2));
+			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+				proceso.setAbrevProceso(resp);//"Generar reporte"
+				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
+				addMessageOK(resp);
+				}else {
+					proceso.setAbrevProceso(resp);//"Generar reporte"
+					proceso.setEstadoProceso("FALLIDO");
+					 addMessageFail(resp);
+				}
+//			if(msg.trim().toUpperCase().equals("OK")) {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+//			} else {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+//			}
 		}catch (Exception e) {
 			GenericException(e);
 		}

@@ -52,7 +52,7 @@
 			<div class="ui-g">
 				
 					<div class="ui-g-6">
-						<p:panel header="#{msg.carga_masiva_text_titulo}">
+						<p:panel header="Por Nss y/o Curp">
 							<div class="ui-g">
 								<div class="ui-g-3">
 									<p:outputLabel value="Ruta:" />
@@ -72,35 +72,41 @@
 							</div>
 							<div class="ui-g" style="text-align: right;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Consulta Marca" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="form message" ajax="true"/>
 								</div>
 							</div>
 						</p:panel>
 					</div>
 					
 					<div class="ui-g-6">
-						<p:panel header="Reversa Carga Nss">
-							<div class="ui-g">
+						<p:panel header="Por Proceso Operativo">
+							<div class="ui-g" style="margin-top: 10px;">
 								<div class="ui-g-3">
-									
+									<p:outputLabel value="Tipo Proceso:" />
 								</div>
-								<div class="ui-g-3">
-									
+								<div class="ui-g-9">
+									<p:selectOneMenu style="width:200px" required="true"
+										requiredMessage="Tipo Proceso es requerido"
+										value="#{desmarcaMasiva.selectedTipoClave}">
+										<f:selectItem itemLabel="Seleccione..."
+											itemValue="#{null}" noSelectionOption="true" />
+										<f:selectItem itemLabel="Invalidez" itemValue="I" />
+										<f:selectItem itemLabel="Incapacidad Permanente" itemValue="IP" />
+										<f:selectItem itemLabel="Viudez" itemValue="VI" />
+										<f:selectItem itemLabel="Viudez y Orfandad" itemValue="VO" />
+										<f:selectItem itemLabel="Orfandad" itemValue="O" />
+										<f:selectItem itemLabel="Ascendientes" itemValue="A" />
+										<f:selectItem itemLabel="Retiro Parcial" itemValue="RP" />
+										<f:selectItem itemLabel="Vejez" itemValue="VE" />
+										<f:selectItem itemLabel="Censatia en Edad Avanzada" itemValue="CEA" />
+										<f:selectItem itemLabel="Retiro Anticipado" itemValue="RA" />
+										<f:selectItem itemLabel="Retiro Programado" itemValue="RPO" />
+										<f:selectItem itemLabel="'N' Tipos Programados" itemValue="NTP" />
+									</p:selectOneMenu>
 								</div>
 							</div>
-							<div class="ui-g">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-3">
-									
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: center;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="form message" ajax="true"/>
-								</div>
-							</div>
+							
+							
 							<div class="ui-g" style="margin-top: 10px;">
 								<div class="ui-g-3">
 									
@@ -109,9 +115,10 @@
 									
 								</div>
 							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-								
+							<div class="ui-g" style="text-align: right;">
+								<div class="ui-g-12">
+									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Consulta Marca" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="form message" ajax="true"/>
+								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">
 								
