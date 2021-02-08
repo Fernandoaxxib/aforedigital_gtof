@@ -8,57 +8,57 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{monitorProcesos.iniciar}" type="preRenderView"/>
+		<f:event listener="#{monitorProcesos.iniciar}" type="preRenderView" />
 	</f:metadata>
-	
-	<ui:define name="menu" >
-		<ui:include src="menu.xhtml" />
-    </ui:define>
-    
-    <ui:define name="left">
 
-		<p:panel id="modulo" header="Detalle del proceso">
+
+
+	<ui:define name="left">
+
+		<ui:include src="menu.xhtml" />
+
+		<p:panel id="modulo" header="Detalle del proceso" style="margin-top:20px">
 
 			<h:form id="form2">
-			
-					<p:panelGrid id="monitorDetalle" columns="2">
-						<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
-							style="font-weight: bold" />
-						<h:outputText
-							value="#{monitorProcesos.selectedMonitor.descProceso}" />
 
-						<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}"
-							style="font-weight: bold" />
-						<h:outputText
-							value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
+				<p:panelGrid id="monitorDetalle" columns="2">
+					<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
+						style="font-weight: bold" />
+					<h:outputText
+						value="#{monitorProcesos.selectedMonitor.descProceso}" />
 
-						<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
-							style="font-weight: bold" />
-						<h:outputText
-							value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
-							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-						</h:outputText>
+					<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}"
+						style="font-weight: bold" />
+					<h:outputText
+						value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
 
-						<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
-							style="font-weight: bold" />
-						<h:outputText
-							value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
-							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-						</h:outputText>
+					<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
+						style="font-weight: bold" />
+					<h:outputText
+						value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
 
-						<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
-							style="font-weight: bold" />
-						<h:outputText
-							value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
-							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-						</h:outputText>
+					<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
+						style="font-weight: bold" />
+					<h:outputText
+						value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
 
-						<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
-							style="font-weight: bold" />
-						<h:outputText
-							value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
-					</p:panelGrid>
-				
+					<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
+						style="font-weight: bold" />
+					<h:outputText
+						value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
+						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+					</h:outputText>
+
+					<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
+						style="font-weight: bold" />
+					<h:outputText
+						value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
+				</p:panelGrid>
+
 			</h:form>
 		</p:panel>
 	</ui:define>
@@ -73,8 +73,10 @@
 				<p:autoUpdate />
 			</p:messages>
 
-			<p:panel id="monitor" header="Monitor de procesos" style="margin-top:20px">
-				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
+			<p:panel id="monitor" header="Monitor de procesos"
+				style="margin-top:20px">
+				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{monitorProcesos.monitor}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedMonitor}"
 					rowKey="#{mon.sesionId}" paginator="true"
@@ -102,11 +104,13 @@
 				</p:dataTable>
 			</p:panel>
 
-			<p:commandButton class="green" action="#{monitorProcesos.actualizar}" type="submit"
-				style="margin-top:20px" value="Actualizar" ajax="false" />
+			<p:commandButton class="green" action="#{monitorProcesos.actualizar}"
+				type="submit" style="margin-top:20px" value="Actualizar"
+				ajax="false" />
 
 			<p:panel id="jobs" header="Jobs" style="margin-top:20px">
-				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom" emptyMessage="#{msg.aprob_msj_sinDatos}"
+				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{monitorProcesos.jobs}" rows="10" selectionMode="single"
 					selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
 					paginator="true" rowsPerPageTemplate="5,10,15">
@@ -132,8 +136,8 @@
 				-->
 				</p:dataTable>
 
-				<p:commandButton class="blue" action="#{monitorProcesos.ejecutar}" type="submit"
-					value="#{msg.monitor_boton_ejecutar}" ajax="false"
+				<p:commandButton class="blue" action="#{monitorProcesos.ejecutar}"
+					type="submit" value="#{msg.monitor_boton_ejecutar}" ajax="false"
 					style="margin-top:20px" />
 			</p:panel>
 
@@ -141,7 +145,7 @@
 
 	</ui:define>
 
-	
+
 
 
 

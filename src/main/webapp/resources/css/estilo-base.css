@@ -74,6 +74,10 @@
 	border: 1px solid green !important;
 }
 
+.no-padding.ui-panelgrid .ui-panelgrid-cell {
+    padding: 0px 0px !important;;
+}
+
 /* SelectOne */
 .ui-selectonemenu-items-wrapper .ui-widget {
 	font-size: 12px !important;
