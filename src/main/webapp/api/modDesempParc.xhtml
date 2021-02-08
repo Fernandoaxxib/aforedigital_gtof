@@ -9,18 +9,54 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{modDesempParc.iniciar}" type="preRenderView"/>
+		<f:event listener="#{modDesempParc.iniciar}" type="preRenderView" />
 	</f:metadata>
-	
-    <ui:define name="left">
+
+	<ui:define name="left">
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
-	
-	<ui:define name="center">
-		
-		<ui:include src="subMenuTransacciones.xhtml" />
 
+	<ui:define name="center">
 		<h:outputStylesheet name="estilo-base.css" library="css" />
+
+		<p:panelGrid class="no-border no-padding" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column>
+					<h:form>
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/api/modDesParc.jsf" includeViewParams="true"
+							value="#{msg.modulo_desempleoParc_btnPM}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						
+						<p:linkButton styleClass="green ui-button-text"
+							outcome="/api/modDesempParc.jsf" includeViewParams="true"
+							value="Proceso individual">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/api/modDesParcReportes.jsf" includeViewParams="true"
+							value="#{msg.modulo_desempleoParc_btnReportes}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"
+							value="#{msg.modulo_desempleoParc_btnLProcesar}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+
+
+
 
 		<p:messages id="messages" showDetail="true" closable="true">
 			<p:autoUpdate />
@@ -29,16 +65,18 @@
 		<h:form id="form">
 
 
-			<p:panel id="datos" header="Desempleo parcialidades" style="margin-top:20px">
+			<p:panel id="datos" header="Desempleo parcialidades"
+				style="margin-top:20px">
 				<h:panelGrid id="solicitud" columns="6" cellpadding="10"
 					width="100%">
 					<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
 						style="font-weight: bold" />
 					<h:panelGrid columns="2">
-						<p:inputText required="true" requiredMessage="NSS es requerido" value="#{modDesempParc.nss}" style="width:90px"></p:inputText>
-						<p:commandButton class="blue" action="#{modDesempParc.consultarSolicitud}"
-							type="submit" value="#{msg.modDesParc_boton_buscarNss}"
-							ajax="false" />
+						<p:inputText required="true" requiredMessage="NSS es requerido"
+							value="#{modDesempParc.nss}" style="width:90px"></p:inputText>
+						<p:commandButton class="blue"
+							action="#{modDesempParc.consultarSolicitud}" type="submit"
+							value="#{msg.modDesParc_boton_buscarNss}" ajax="false" />
 					</h:panelGrid>
 
 					<p:outputLabel value="#{msg.modDesParc_solicitud_numSolicitud}"
@@ -110,18 +148,21 @@
 
 			<p:panel id="detalle" header="Detalle de Parcialidades"
 				style="margin-top:20px">
-				<p:dataTable id="parcialidadesTable" var="par"  scrollable="true" emptyMessage="#{msg.aprob_msj_sinDatos}" 
-					value="#{modDesempParc.parcialidades}" selectionMode="single" 
+				<p:dataTable id="parcialidadesTable" var="par" scrollable="true"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					value="#{modDesempParc.parcialidades}" selectionMode="single"
 					selection="#{modDesempParc.selectedParcialidad}"
 					rowKey="#{par.pago}">
 
 					<p:ajax event="rowSelect" update="form" />
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_pago}" style="width:50px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_pago}"
+						style="width:50px">
 						<h:outputText value="#{par.pago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_importe}" style="width:100px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_importe}"
+						style="width:100px">
 						<h:outputText value="#{par.totalPago}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
@@ -134,7 +175,8 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}" style="width:100px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}"
+						style="width:100px">
 						<h:outputText value="#{par.estatusPagDescrip}" />
 					</p:column>
 
@@ -171,11 +213,13 @@
 						<h:outputText value="#{par.autorizaImss}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}" style="width:150px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}"
+						style="width:150px">
 						<h:outputText value="#{par.tipo_pago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_clabe}" style="width:200px">
+					<p:column headerText="#{msg.modDesParc_parcialidades_clabe}"
+						style="width:200px">
 						<h:outputText value="#{par.dpCuenta}" />
 					</p:column>
 				</p:dataTable>
@@ -183,7 +227,8 @@
 
 			<p:panel id="admin" header="Datos Administrativos"
 				style="margin-top:20px">
-				<p:dataTable id="administrativoTable" var="adm" emptyMessage="#{msg.aprob_msj_sinDatos}"
+				<p:dataTable id="administrativoTable" var="adm"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{modDesempParc.administrativos}">
 
 					<p:ajax event="rowSelect" update="form" />
@@ -220,7 +265,8 @@
 			</p:panel>
 
 			<p:panel id="marcas" header="Marcas" style="margin-top:20px">
-				<p:dataTable id="marcasTable" var="mar" emptyMessage="#{msg.aprob_msj_sinDatos}"
+				<p:dataTable id="marcasTable" var="mar"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{modDesempParc.marcas}">
 
 					<p:ajax event="rowSelect" update="form" />
@@ -268,7 +314,8 @@
 					<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
 						style="float:right" />
 
-					<p:selectOneMenu required="true" id="tipoCancelacion" requiredMessage="Tipo cancelación es requerido"
+					<p:selectOneMenu required="true" id="tipoCancelacion"
+						requiredMessage="Tipo cancelación es requerido"
 						style="width:200px"
 						value="#{modDesempParc.selectedClaveCancelacion}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -277,9 +324,9 @@
 							itemLabel="#{c.descripcion}" itemValue="#{c.claveProceso}" />
 					</p:selectOneMenu>
 
-					<p:commandButton class="blue" action="#{modDesempParc.cancelarSolicitud}"
-						type="submit" value="#{msg.modDesParc_boton_cancelarSolicitud}"
-						ajax="false" />
+					<p:commandButton class="blue"
+						action="#{modDesempParc.cancelarSolicitud}" type="submit"
+						value="#{msg.modDesParc_boton_cancelarSolicitud}" ajax="false" />
 				</h:panelGrid>
 			</p:panel>
 		</h:form>
