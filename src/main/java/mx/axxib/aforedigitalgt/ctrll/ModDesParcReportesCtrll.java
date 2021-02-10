@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
-import mx.axxib.aforedigitalgt.serv.ModDesParcReportesService;
+import mx.axxib.aforedigitalgt.serv.ModDesParcReportesServ;
 
 @Scope(value = "session")
 @Component(value = "modDesParcReportes")
@@ -25,7 +25,7 @@ import mx.axxib.aforedigitalgt.serv.ModDesParcReportesService;
 public class ModDesParcReportesCtrll extends ControllerBase {
 
 	@Autowired
-	private ModDesParcReportesService service;
+	private ModDesParcReportesServ service;
 
 	@Getter
 	@Setter

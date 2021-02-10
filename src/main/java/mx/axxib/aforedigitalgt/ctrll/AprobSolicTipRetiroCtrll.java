@@ -9,6 +9,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
-import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroService;
+import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroServ;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 
 @Scope(value ="session")
@@ -26,7 +28,7 @@ import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 	@Autowired
-	private AprobSolicTipRetiroService service;
+	private AprobSolicTipRetiroServ service;
 	
 	@Autowired
 	private MonitorProcesosServ monitorService;
@@ -130,28 +132,44 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	public void aprobarSolicitud()  {	
 		
+		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {
+			try {
+				//service.aprobacion(selectedSolicitud);
+				addMessageOK("Proceso ejecutado:  "+selectedSolicitud.size());
+				}catch(Exception e) {
+					GenericException(e);
+				}
+		}else {
+			addMessageFail("Seleccione las solicitudes a aprobar");
+		}
 		
 		
 		
-		
-	  if(selectedSolicitud.size()>0 && selectedSolicitud!=null)	{
-		  addMessageOK("Proceso ejecutado!");
-          selectedSolicitud.forEach(p->{
-        	try {
-				 res=service.aprobarSolicitud(p.getNumSolicitud(), Integer.valueOf(p.getTransaccion().substring(0, 1)), p.getSubTransaccion().substring(0,1));
-				
-        	} catch (Exception e) {
-				GenericException(e);
-			}        	
-        });    
-        //recuperarProcesoEjecutado();		
-	    recuperarSolicPendientes();	   
-	   }else {
-		  addMessageFail("Seleccionar solicitud!"); 
-	   }
+		/*
+		 * if(selectedSolicitud.size()>0 && selectedSolicitud!=null) {
+		 * addMessageOK("Proceso ejecutado:  "+selectedSolicitud.size());
+		 * selectedSolicitud.forEach(p->{ try {
+		 * //res=service.aprobarSolicitud(p.getNumSolicitud(),
+		 * Integer.valueOf(p.getTransaccion().substring(0, 1)),
+		 * p.getSubTransaccion().substring(0,1));
+		 * 
+		 * } catch (Exception e) { GenericException(e); } });
+		 * //recuperarProcesoEjecutado(); //recuperarSolicPendientes(); }else {
+		 * addMessageFail("Seleccionar solicitud!"); }
+		 */
 	
 	}
-
+	
+	 public void seleccion(SelectEvent<SolicitudOut> event) {
+		 if(!selectedSolicitud.contains(event.getObject())){
+			 selectedSolicitud.add(event.getObject());			
+		 }	  
+	 } public void deseleccion(UnselectEvent<SolicitudOut> event) {		 
+		 if(selectedSolicitud.contains(event.getObject())){
+			 selectedSolicitud.remove(event.getObject());			
+		 }
+	 }
+	
 	
 	public void addMessageOK(String summary) {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exitoso", summary);

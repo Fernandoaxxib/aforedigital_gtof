@@ -17,7 +17,7 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
-import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarService;
+import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarServ;
 
 @Scope(value = "session")
 @Component(value = "modDesParcLProcesar")
@@ -25,7 +25,7 @@ import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarService;
 public class ModDesParcLProcesarCtrll extends ControllerBase {
 
 	@Autowired
-	private ModDesParcLProcesarService service;
+	private ModDesParcLProcesarServ service;
 
 	@Getter
 	@Setter

@@ -15,7 +15,7 @@ import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
  
 
 @Service
-public class ModDesParcProcesoService extends ServiceBase {
+public class ModDesParcProcesoServ extends ServiceBase {
 	@Autowired
 	private ModDesParcProcesoRepo desParcRepo;
 	

@@ -14,7 +14,7 @@ import mx.axxib.aforedigitalgt.eml.LoteOut;
 
 
 @Service
-public class ModDesParcLProcesarService extends ServiceBase {
+public class ModDesParcLProcesarServ extends ServiceBase {
 
 	@Autowired
 	private ModDesParcLProcesarRepo desParcRepo;

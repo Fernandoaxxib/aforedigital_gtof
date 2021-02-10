@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.LoteOP85Out;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
-import mx.axxib.aforedigitalgt.serv.RetParImssOP8586Service;
+import mx.axxib.aforedigitalgt.serv.RetParImssOP8586Serv;
 
 @Scope(value = "session")
 @Component(value = "retParImssOP8586")
@@ -24,7 +24,7 @@ import mx.axxib.aforedigitalgt.serv.RetParImssOP8586Service;
 public class RetParImssOP8586Ctrll extends ControllerBase {
 
 	@Autowired
-	private RetParImssOP8586Service service;
+	private RetParImssOP8586Serv service;
 	
 	@Getter
 	@Setter

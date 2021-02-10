@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 
 @Service
-public class ModPagosService extends ServiceBase{
+public class ModPagosServ extends ServiceBase{
 
 	@Autowired
 	private ModPagosRepo service;

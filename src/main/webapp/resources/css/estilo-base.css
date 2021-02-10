@@ -185,3 +185,30 @@
     border-color: #59ad40 !important;
     color:#ffffff;
 }
+
+.detalleProceso .ui-widget-header{	
+	background: #00529b !important;
+	border: 1px solid #00529b !important;
+	color: #ffffff !important;
+	font-weight: bold !important;	
+	text-align:left;
+}
+.fondoDialog .ui-dialog .ui-widget{
+	background: rgb(0, 0, 0) transparent;
+}
+
+ .modal-backdrop{
+    opacity:.7 !important;
+ } 
+ 
+ 
+ .loading.ui-dialog.ui-widget.ui-widget-content{
+       box-shadow: none !important;
+       border: 0px !important;
+       background: transparent !important;
+       width: 100%;
+       height: 100%;     
+       overflow: auto;
+       
+       opacity: .7 !important;
+ }

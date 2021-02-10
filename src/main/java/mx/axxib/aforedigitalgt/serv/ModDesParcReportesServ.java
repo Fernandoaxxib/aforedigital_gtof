@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.dal.ModDesParcReportesRepo;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 @Service
-public class ModDesParcReportesService extends ServiceBase {
+public class ModDesParcReportesServ extends ServiceBase {
 
 	@Autowired
 	private ModDesParcReportesRepo desParcRepo;
