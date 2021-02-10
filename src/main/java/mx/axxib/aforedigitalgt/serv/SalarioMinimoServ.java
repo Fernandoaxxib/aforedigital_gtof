@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 
 @Service
-public class SalarioMinimoService extends ServiceBase {
+public class SalarioMinimoServ extends ServiceBase {
 	
 	@Autowired
 	private SalarioMinimoRepo dao;

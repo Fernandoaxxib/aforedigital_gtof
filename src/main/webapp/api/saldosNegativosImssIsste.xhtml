@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/view/layaut.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:define name="center">
+
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		
+	<h:form id="form">
+		<h:outputText value="#{msg.reportes_saldos_txt_imss_carga}" />
+    	
+    	<p:panelGrid id="cargarArchivoImss"  columns="5">
+		        <h:outputText value="#{msg.carga_saldos_txt_ruta}" />
+		        <p:inputText id="rutaCargaImss" value="#{saldosImssIsste.rutaNssImss}" > </p:inputText>
+		   		<h:outputText value="#{msg.carga_saldos_txt_nombre}" />
+			   	<p:inputText id="nombreCargaImss" value="#{saldosImssIsste.nombreNssImss}" />   
+		   		
+		   		<p:commandButton action="#{saldosImssIsste.ejecutarImssCarga}"
+					type="submit" value="#{msg.carga_saldos_boton_nss}" ajax="false" />		
+				</p:panelGrid>	
+	 	<h:outputText value="#{msg.reportes_saldos_txt_imss_reporte}" />  
+	 	<p:panelGrid id="crearArchivoImss"  columns="5">
+		        <h:outputText value="#{msg.carga_saldos_txt_ruta}" />
+		        <p:inputText id="rutaReporteImss" value="#{saldosImssIsste.rutaReporteImss}" > </p:inputText>
+		   		<h:outputText value="#{msg.carga_saldos_txt_nombre}" />
+			   	<p:inputText id="nombreReporteImss" value="#{saldosImssIsste.nombreReporteImss}" />   
+		   		
+		   		<p:commandButton action="#{saldosImssIsste.ejecutarImssReporte}"
+					type="submit" value="#{msg.carga_saldos_boton_curp}" ajax="false" />		
+		</p:panelGrid>	
+	 	
+	 	<h:outputText value="#{msg.reportes_saldos_txt_isste_carga}" />
+    	<p:panelGrid id="crearArchivoIsstte"  columns="5">
+    	
+        <h:outputText value="#{msg.carga_saldos_txt_ruta}" />
+        <p:inputText id="rutaCarga" value="#{saldosImssIsste.rutaCurpIsste}" > </p:inputText>
+   		<h:outputText value="#{msg.carga_saldos_txt_nombre}" />
+	   	<p:inputText id="nombreCarga" value="#{saldosImssIsste.nombreCurpIsste}" />   
+   		
+   		<p:commandButton action="#{saldosImssIsste.ejecutarIssteCarga}"
+			type="submit" value="#{msg.carga_saldos_boton_nss}" ajax="false" />
+		
+		</p:panelGrid>	
+		<h:outputText value="#{msg.reportes_saldos_txt_isste_reporte}" />  
+	 	<p:panelGrid id="crearArchivoIsste"  columns="5">
+		        <h:outputText value="#{msg.carga_saldos_txt_ruta}" />
+		        <p:inputText id="rutaReporteIsste" value="#{saldosImssIsste.rutaReporteIsste}" > </p:inputText>
+		   		<h:outputText value="#{msg.carga_saldos_txt_nombre}" />
+			   	<p:inputText id="nombreReporteIsste" value="#{saldosImssIsste.nombreReporteIsste}" />   
+		   		
+		   		<p:commandButton action="#{saldosImssIsste.ejecutarIssteReporte}"
+					type="submit" value="#{msg.carga_saldos_boton_curp}" ajax="false" />		
+		</p:panelGrid>
+		
+		<h:outputText value="#{msg.reportes_saldos_txt_negativo_vol}" />  
+	 	<p:panelGrid id="crearArchivoNegativo"  columns="4">
+		        <h:outputText value="#{msg.carga_saldos_txt_ruta}" />
+		        <p:inputText id="rutaReporteNegativo" value="#{saldosImssIsste.rutaSaldoNegativo}" > </p:inputText>
+		   		<h:outputText value="#{msg.carga_saldos_txt_nombre}" />
+			   	<p:inputText id="nombreReporteNegativo" value="#{saldosImssIsste.nombreSaldoNegativo}" />   
+<!-- 				<h:outputText value="#{msg.carga_saldos_txt_fecha_mov}" /> -->
+					
+		</p:panelGrid>
+		<p:panelGrid id="fechaNegativa"  columns="3">
+				<p:outputLabel for="button" value="#{msg.carga_saldos_txt_fecha_mov}" />
+        		<p:datePicker id="button" value="#{saldosImssIsste.saldoFechaMovimiento}" showIcon="true" locale="es"/>
+				<p:commandButton action="#{saldosImssIsste.ejecutarReporteNegativo}"
+					type="submit" value="#{msg.reportes_saldos_boton_generar}" ajax="false" />
+		</p:panelGrid>
+		
+  </h:form>
+</ui:define>
+
+</ui:composition>

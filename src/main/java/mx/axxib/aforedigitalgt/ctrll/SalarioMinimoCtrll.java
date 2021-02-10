@@ -23,7 +23,7 @@ import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoInsertTablaOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoTablaOut;
-import mx.axxib.aforedigitalgt.serv.SalarioMinimoService;
+import mx.axxib.aforedigitalgt.serv.SalarioMinimoServ;
 
 @Scope(value = "session")
 @Component(value = "salarioMinimo")
@@ -31,7 +31,7 @@ import mx.axxib.aforedigitalgt.serv.SalarioMinimoService;
 public class SalarioMinimoCtrll extends ControllerBase {
 	
 	@Autowired
-	private SalarioMinimoService salarioMinService;
+	private SalarioMinimoServ salarioMinService;
 	
 	@Autowired
 	private AforeMessage aforeMessage;
