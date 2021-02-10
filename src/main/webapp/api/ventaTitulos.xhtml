@@ -144,15 +144,11 @@
 						</p:outputPanel>
 
 						<p:commandButton class="blue" update="pSiefore result" 
-							onstart="PF('statusDialog').show()"
-							oncomplete="PF('statusDialog').hide()"
-							actionListener="#{ventaTitulos.buscarMontos}"
+							action="#{ventaTitulos.buscarMontos}"
 							value="Buscar" />
 
 					</p:panelGrid>
 				</p:panel>
-
-
 
 				<p:panel id="pSiefore" header="Siefores" style="margin-top:20px">
 					<p:dataTable id="ventaTable" var="ven" paginatorPosition="bottom"
@@ -208,12 +204,12 @@
 					<p:commandButton class="blue" id="venta"
 						action="#{ventaTitulos.ventaTitulosMonitor}"
 						style="margin-top:20px" rendered="#{ventaTitulos.mostrarVenta}"
-						type="submit" value="Venta en monitor" ajax="false" />
+						type="submit" value="Venta en monitor" />
 
 					<p:commandButton class="blue" id="ventaCT"
 						action="#{ventaTitulos.ventaTitulosMonitorCT}"
 						style="margin-top:20px" rendered="#{ventaTitulos.mostrarVentaCT}"
-						type="submit" value="Venta en monitor corte trans" ajax="false" />
+						type="submit" value="Venta en monitor corte trans"  />
 				</p:panel>
 
 				<ui:include src="processResult.xhtml">

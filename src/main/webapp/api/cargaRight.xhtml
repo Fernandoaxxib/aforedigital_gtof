@@ -35,14 +35,14 @@
 						value="#{cargaRight.fecha}" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-					<p:commandButton class="green" action="#{cargaRight.crucePrevio}" type="submit"
-						value="Cruce previo" ajax="false" />
+					<p:commandButton class="green" action="#{cargaRight.crucePrevio}" type="submit" update="form"
+						value="Cruce previo" />
 
 					<p:outputLabel  value="Archivo" style="font-weight: bold" />
 					<p:inputText required="true" value="#{cargaRight.archivo}" requiredMessage="Nombre de archivo requerido"></p:inputText>
 
-					<p:commandButton class="blue" action="#{cargaRight.cargar}" type="submit"
-						value="Cargar" ajax="false" />
+					<p:commandButton class="blue" action="#{cargaRight.cargar}" type="submit" update="form"
+						value="Cargar"  />
 				</p:panelGrid>
 
 

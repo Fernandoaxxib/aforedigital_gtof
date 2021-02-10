@@ -114,12 +114,9 @@
 						</p:column>
 						<p:column>
 							<p:commandButton class="blue" action="#{rechazos.buscar}"
-								type="submit" value="Buscar" ajax="false" />
+								type="submit" update="form" value="Buscar" />
 								
-					<p:commandButton class="blue" update="form" global="true"
-					onstart="PF('statusDialog1').show()"
-					oncomplete="PF('statusDialog1').hide()"
-					actionListener="#{rechazos.buscar}" value="Buscar2" />
+					
 						</p:column>
 					</p:row>
 				</p:panelGrid>

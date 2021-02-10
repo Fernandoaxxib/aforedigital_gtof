@@ -19,7 +19,16 @@
 </h:head>
 
 <h:body>
-
+	<p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+	<p:dialog styleClass="loading" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false"	showHeader="false">
+		<p:graphicImage url="#{request.contextPath}/javax.faces.resource/Imagenes/3.gif.jsf" style="width: 11%;height: 17%;margin-left: 628px;" />
+		<div class="ui-g">
+			<div class="ui-g-12"
+				style="color: black; font-size: 17px; font-family: sans-serif; margin-left: 598px; margin-top: 13px;">
+				<p:outputLabel value="Espere un momento por favor..." />
+			</div>
+		</div>
+	</p:dialog>
 
 	<pe:layout>
 		<pe:layoutPane id="header" position="north" class="no-border"

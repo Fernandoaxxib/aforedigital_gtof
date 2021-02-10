@@ -74,9 +74,9 @@
 					<h:panelGrid columns="2">
 						<p:inputText required="true" requiredMessage="NSS es requerido"
 							value="#{modDesempParc.nss}" style="width:90px"></p:inputText>
-						<p:commandButton class="blue"
+						<p:commandButton class="blue" update="form formCan"
 							action="#{modDesempParc.consultarSolicitud}" type="submit"
-							value="#{msg.modDesParc_boton_buscarNss}" ajax="false" />
+							value="#{msg.modDesParc_boton_buscarNss}" />
 					</h:panelGrid>
 
 					<p:outputLabel value="#{msg.modDesParc_solicitud_numSolicitud}"
@@ -326,7 +326,7 @@
 
 					<p:commandButton class="blue"
 						action="#{modDesempParc.cancelarSolicitud}" type="submit"
-						value="#{msg.modDesParc_boton_cancelarSolicitud}" ajax="false" />
+						value="#{msg.modDesParc_boton_cancelarSolicitud}" />
 				</h:panelGrid>
 			</p:panel>
 		</h:form>
