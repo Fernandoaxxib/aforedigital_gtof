@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+</h:head>
+
+<body>
+
+	<p:panel id="result" header="Resultados del proceso aplicado:" style="margin-top:20px; margin-bottom:20px">
+		<p:dataTable var="pro" value="#{base.resultados}"  
+			emptyMessage=" ">
+
+			<p:column headerText="Identificador del proceso">
+				<h:outputText value="#{pro.descProceso}" />
+			</p:column>
+
+			<p:column headerText="Estatus">
+				<h:outputText value="#{pro.status}" />
+			</p:column>
+
+			<p:column headerText="F./H. Inicio" sortBy="#{pro.fechaInicial}" >
+				<h:outputText value="#{pro.fechaInicial}" style="float:right">
+					<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm:ss" timeZone="America/Mexico_City"/>
+				</h:outputText>
+			</p:column>
+			<p:column headerText="F./H. Término">
+				<h:outputText value="#{pro.fechaFinal}" style="float:right">
+					<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm:ss" timeZone="America/Mexico_City"/>
+				</h:outputText>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+	
+</body>
+</html>

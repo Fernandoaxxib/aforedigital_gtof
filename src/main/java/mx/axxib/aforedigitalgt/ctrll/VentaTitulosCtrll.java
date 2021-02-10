@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasosIn;
 import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasosOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerRgDevExcesIn;
@@ -33,6 +35,7 @@ import mx.axxib.aforedigitalgt.eml.ObtieneMontoTraspasosIn;
 import mx.axxib.aforedigitalgt.eml.VentaTitulosMonitorCTIn;
 import mx.axxib.aforedigitalgt.eml.VentaTitulosMonitorIn;
 import mx.axxib.aforedigitalgt.serv.VentaTitulosServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "ventaTitulos")
@@ -162,7 +165,9 @@ public class VentaTitulosCtrll extends ControllerBase {
 	}
 
 	public void buscarMontos() {
+		ProcessResult pr = new ProcessResult();
 		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
 			selectedSiefore = null;
 			mostrarVenta = false;
 			mostrarVentaCT = false;
@@ -173,6 +178,8 @@ public class VentaTitulosCtrll extends ControllerBase {
 				parametrosT.setFechaFinal(fechaFinal);
 				parametrosT.setFechaInicial(fechaInicial);
 				montos = ventaTitulosService.getObtieneMontoTotal(parametrosT);
+				pr.setDescProceso("Búsqueda por todos los módulos");
+				pr.setStatus("Exitoso");
 				break;
 			case "R":
 				ObtieneMontoRetiroIn parametrosR = new ObtieneMontoRetiroIn();
@@ -184,10 +191,15 @@ public class VentaTitulosCtrll extends ControllerBase {
 					parametrosR.setSubTipoTransaccion(selectedTipoRetiro.getSubTipoTransaccion());
 					montos = ventaTitulosService.getObtieneMontoRetiro(parametrosR);
 					mostrarVenta = true;
+					pr.setDescProceso("Búsqueda por retiros");
+					pr.setStatus("Exitoso");
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Retiros"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					pr.setDescProceso("Búsqueda por retiros");
+					pr.setStatus(msg);
 				}
+
 				break;
 			case "A":
 				ObtieneMontoTraspasosIn parametrosA = new ObtieneMontoTraspasosIn();
@@ -196,9 +208,13 @@ public class VentaTitulosCtrll extends ControllerBase {
 					parametrosA.setLoteTraspaso(selectedLoteTraspaso.getIdLote());
 					montos = ventaTitulosService.getObtieneMontoTraspasos(parametrosA);
 					mostrarVenta = true;
+					pr.setDescProceso("Búsqueda por traspasos");
+					pr.setStatus("Exitoso");
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Traspasos Afore-Afore"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					pr.setDescProceso("Búsqueda por traspasos");
+					pr.setStatus(msg);
 				}
 				break;
 			case "V":
@@ -208,9 +224,13 @@ public class VentaTitulosCtrll extends ControllerBase {
 					parametrosV.setLoteRev(selectedrgDevExces.getIdLote());
 					montos = ventaTitulosService.getObtieneMontoDev(parametrosV);
 					mostrarVenta = true;
+					pr.setDescProceso("Búsqueda por Dev pago");
+					pr.setStatus("Exitoso");
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Dev pago excs lote"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					pr.setDescProceso("Búsqueda por Dev pago");
+					pr.setStatus(msg);
 				}
 				break;
 			case "L":
@@ -220,15 +240,23 @@ public class VentaTitulosCtrll extends ControllerBase {
 					parametrosL.setLoteCorte(lote);
 					montos = ventaTitulosService.getObtieneMontoCorte(parametrosL);
 					mostrarVentaCT = true;
+					pr.setDescProceso("Búsqueda por lote");
+					pr.setStatus("Exitoso");
 				} else {
 					String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] {"Lote corte"} );
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					pr.setDescProceso("Búsqueda por lote");
+					pr.setStatus(msg);
 				}
 				break;
 			}
 
 		} catch (Exception e) {
+			pr.setStatus("Error");
 			GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 

@@ -41,42 +41,50 @@ public class NotificacionPagosRepo extends RepoBase {
 		}
 	}
 
+	
 	public String enviaFecha(Date fecha) throws AforeException {
+//		PROCEDURE PRC_NOTIFICA_INFO(P_FECHA     IN OUT   DATE,
+//                P_AVISO     OUT VARCHAR2);
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.NOTIFICACION_PAGOS_PACKAGE)
 					.concat(".").concat(Constantes.NOTIFICACION_PAGOS_ENVIA_FECHA);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("P_TXT_FECHA", Date.class, ParameterMode.INOUT);
-			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_FECHA", Date.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("P_AVISO", String.class, ParameterMode.OUT);
 			
-			query.setParameter("P_TXT_FECHA", fecha);
+			query.setParameter("P_FECHA", fecha);
 			
-			return (String)query.getOutputParameterValue("P_MENSAJE");  
+			return (String)query.getOutputParameterValue("P_AVISO");  
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 
 	public ExportarOut exportar(ExportarIn parametros) throws AforeException {
+//		 PROCEDURE PRC_EXPORTA_INFO (P_FEC_DIA IN DATE ,
+//                 P_ARCH    IN VARCHAR2 ,
+//                 P_ERROR_DATA OUT VARCHAR2,
+//                 P_MENSAJE OUT VARCHAR2,
+//                 P_ERROR_PRINCIPAL  OUT VARCHAR2);
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.NOTIFICACION_PAGOS_PACKAGE)
 					.concat(".").concat(Constantes.NOTIFICACION_PAGOS_EXPORTAR);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("P_TXT_FECHA", Date.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("P_ARCHIVO", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_FEC_DIA", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ARCH", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ERROR_DATA", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("P_ERROR_FECHA", String.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("P_ERROR", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_ERROR_PRINCIPAL", String.class, ParameterMode.OUT);
 			
-			query.setParameter("P_TXT_FECHA", parametros.getFecha());
-			query.setParameter("P_ARCHIVO", parametros.getArchivo());
+			query.setParameter("P_FEC_DIA", parametros.getFecha());
+			query.setParameter("P_ARCH", parametros.getArchivo());
 			
 			ExportarOut res = new ExportarOut();
 			res.setMensaje((String)query.getOutputParameterValue("P_MENSAJE"));
-			res.setErrorFecha((String)query.getOutputParameterValue("P_ERROR_FECHA"));
-			res.setError((String)query.getOutputParameterValue("P_ERROR"));
+			res.setErrorFecha((String)query.getOutputParameterValue("P_ERROR_DATA"));
+			res.setError((String)query.getOutputParameterValue("P_ERROR_PRINCIPAL"));
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);

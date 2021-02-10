@@ -20,6 +20,13 @@
 
 <h:body>
 
+	<p:dialog id="statusDialog" widgetVar="statusDialog"
+		appendToBody="true" modal="true" draggable="false" closable="false"
+		resizable="false" showHeader="false">
+		<div class="p-text-center">
+			<i class="pi pi-spinner loading-icon"></i>
+		</div>
+	</p:dialog>
 
 	<pe:layout>
 		<pe:layoutPane position="north" id="header"  class="no-border"

@@ -36,11 +36,12 @@
 
 			<p:panelGrid width="50%" styleClass="ui-noborder">
 				<p:row>
-					<p:column colspan="2"  style="padding:10px;">
+					<p:column colspan="2" style="padding:10px;">
 						<h:form id="form">
 							<p:outputLabel value="Buscar por: " style="font-weight: bold" />
 							<p:inputText value="#{diagCuenta.valor}" style="width:215px"
-								placeholder="NSS/CURP" required="true" requiredMessage="Debe especificar un NSS/CURP" />
+								placeholder="NSS/CURP" required="true"
+								requiredMessage="Debe especificar un NSS/CURP" />
 							<p:commandButton class="blue"
 								action="#{diagCuenta.obtieneCodCuenta}" type="submit"
 								value="Buscar" ajax="false" />
@@ -50,7 +51,7 @@
 
 
 				<p:row>
-					<p:column style="width:200px; padding:10px;" >
+					<p:column style="width:200px; padding:10px;">
 						<p:outputLabel value="Cuenta: " style="font-weight: bold" />
 						<h:outputText value="#{diagCuenta.codCuenta}" />
 					</p:column>
@@ -63,11 +64,30 @@
 
 				<h:form id="form2">
 					<p:row>
+						<p:column>
+							<p:outputLabel value="Inicio: " style="font-weight: bold" />
+							<p:datePicker id="fechaInicial"
+								inputStyle="width:120px; text-align:right;"
+								value="#{diagCuenta.fechaInicio}" showIcon="true" locale="es"
+								pattern="dd-MM-yyyy" readonlyInput="true" required="true"
+								requiredMessage="Fecha inicial requerida" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fin: " style="font-weight: bold" />
+							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFin}"
+								inputStyle="width:120px; text-align:right;" showIcon="true"
+								locale="es" pattern="dd-MM-yyyy" readonlyInput="true"
+								 />
+
+						</p:column>
+					</p:row>
+					<p:row>
 						<p:column colspan="2" style="padding:10px;">
 							<p:outputLabel value="Tipo proceso: " style="font-weight: bold" />
-						
+
 							<p:selectOneMenu required="true"
-								requiredMessage="Tipo proceso es requerido" style="width:auto; vertical-align: inherit;"
+								requiredMessage="Tipo proceso es requerido"
+								style="width:auto; vertical-align: inherit;"
 								value="#{diagCuenta.selectedTipo}">
 								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 									itemValue="" />
