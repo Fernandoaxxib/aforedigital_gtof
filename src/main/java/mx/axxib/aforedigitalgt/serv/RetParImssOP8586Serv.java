@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.dal.RetParImssOP8586Repo;
 import mx.axxib.aforedigitalgt.eml.LoteOP85Out;
 
 @Service
-public class RetParImssOP8586Service extends ServiceBase{
+public class RetParImssOP8586Serv extends ServiceBase{
 
 	@Autowired
 	private RetParImssOP8586Repo repositorio;

@@ -27,7 +27,7 @@
 				<h:outputLabel for="periodoIni" value="Periodo del:" />
 				
 				<p:selectOneMenu id="fInicio" value="#{graficasCtrll.fechaInicioCombo}" panelStyle="width:180px" effect="fade" style="width:160px">										
-					<p:ajax event="change" listener="#{graficasCtrll.reset}" update="fFin" />   
+					<p:ajax event="change" listener="#{graficasCtrll.reset}" update="fFin" global="false" />   
 					<f:selectItem itemLabel="------" itemValue="0" />
 					<f:selectItems value="#{graficasCtrll.fechasInicio}"/>                    
 				</p:selectOneMenu>

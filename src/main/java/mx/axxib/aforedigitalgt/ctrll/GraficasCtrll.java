@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
-import mx.axxib.aforedigitalgt.serv.GraficasService;
+import mx.axxib.aforedigitalgt.serv.GraficasServ;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 public class GraficasCtrll extends ControllerBase {
 
 	@Autowired
-	private GraficasService graficasService;
+	private GraficasServ graficasService;
 
 	@Getter
 	@Setter

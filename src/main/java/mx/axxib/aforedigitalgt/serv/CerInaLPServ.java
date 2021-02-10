@@ -11,7 +11,7 @@ import mx.axxib.aforedigitalgt.dal.CerInaLPRepo;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 
 @Service
-public class CerInaLPService extends ServiceBase{
+public class CerInaLPServ extends ServiceBase{
 
 	@Autowired
 	private CerInaLPRepo repo;

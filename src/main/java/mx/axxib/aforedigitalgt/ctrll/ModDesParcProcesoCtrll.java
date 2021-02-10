@@ -20,7 +20,7 @@ import mx.axxib.aforedigitalgt.eml.DiagnosticoResult;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
-import mx.axxib.aforedigitalgt.serv.ModDesParcProcesoService;
+import mx.axxib.aforedigitalgt.serv.ModDesParcProcesoServ;
 
 @Scope(value = "session")
 @Component(value = "modDesParcProceso")
@@ -28,7 +28,7 @@ import mx.axxib.aforedigitalgt.serv.ModDesParcProcesoService;
 public class ModDesParcProcesoCtrll extends ControllerBase {
 
 	@Autowired
-	private ModDesParcProcesoService service;
+	private ModDesParcProcesoServ service;
 
 	@Getter
 	@Setter

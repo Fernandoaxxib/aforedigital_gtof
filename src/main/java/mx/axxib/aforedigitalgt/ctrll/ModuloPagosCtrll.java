@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
-import mx.axxib.aforedigitalgt.serv.ModPagosService;
+import mx.axxib.aforedigitalgt.serv.ModPagosServ;
 
 @Scope(value = "session")
 @Component(value = "moduloPagos")
@@ -18,7 +18,7 @@ import mx.axxib.aforedigitalgt.serv.ModPagosService;
 public class ModuloPagosCtrll extends ControllerBase{
 
 	@Autowired
-	private ModPagosService service;
+	private ModPagosServ service;
 	
 	@Getter
 	@Setter

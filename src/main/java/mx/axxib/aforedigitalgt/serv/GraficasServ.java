@@ -11,7 +11,7 @@ import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
 
 
 @Service
-public class GraficasService extends ServiceBase {
+public class GraficasServ extends ServiceBase {
 
 	@Autowired
 	private GraficasRepo graficasRepo;

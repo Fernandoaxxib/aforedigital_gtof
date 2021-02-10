@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.eml.LoteOP84Out;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
 
 @Service
-public class RetParImssOP84Service extends ServiceBase{
+public class RetParImssOP84Serv extends ServiceBase{
 
 	@Autowired
 	private RetParImssOP84Repo repositorio;

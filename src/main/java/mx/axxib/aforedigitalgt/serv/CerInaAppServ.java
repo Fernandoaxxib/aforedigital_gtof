@@ -9,7 +9,7 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.CerInaAppRepo;
 
 @Service
-public class CerInaAppService extends ServiceBase{
+public class CerInaAppServ extends ServiceBase{
 
 	@Autowired
 	private CerInaAppRepo repo;

@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/api/layaut2.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{cerInaApp.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript library="js" name="calendar-localization.js" />
+
+
+		<p:panelGrid class="no-border" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column>
+					<h:form>
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/api/cerInaProceso.jsf" includeViewParams="true"
+							value="#{msg.certifica_inactividad_btnProceso}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/api/cerInaReportes.jsf" includeViewParams="true"
+							value="#{msg.certifica_inactividad_btnReportes}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/api/cerInaProceso.jsf" includeViewParams="true"
+							value="#{msg.certifica_inactividad_btnLayout}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="green ui-button-text"
+							outcome="/api/cerInaApp.jsf" includeViewParams="true"
+							value="#{msg.certifica_inactividad_btnApp}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+
+
+		<h:form id="form">
+			<p:growl id="message" />
+			<p:blockUI block="pnl1" trigger="fnEjecutar" />
+
+			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title4}"
+				style="margin-top:20px">
+				<p:panelGrid class="no-border" style="width: 100%">
+					<p:row>
+						<p:column>
+						    <p:outputPanel style="margin-bottom:10px;font-weight: bold;">
+							   <p:outputLabel value="#{msg.certifica_inactividad_title5}" />
+							</p:outputPanel>
+							<p:panelGrid columns="2" cellpadding="10" styleClass="ui-noborder">
+								<p:outputLabel value="#{msg.certifica_inactividad_lblRuta}" />
+
+								<p:inputText value="#{cerInaApp.ruta}" style="width:260px"/>
+
+								<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}" />
+
+								<p:inputText value="#{cerInaApp.archivo}" style="width:260px" />
+                                
+                                <p:outputPanel>
+                                   <p:commandButton id="fnEjecutar" styleClass="blue" type="submit" value="#{msg.certifica_inactividad_btnEjecutar}" action="#{cerInaApp.ejecutar}" update="form" ajax="true" />
+                                </p:outputPanel>								
+							</p:panelGrid>
+						</p:column>
+						<p:column>
+						    <p:outputPanel style="margin-bottom:10px;font-weight: bold;">
+							   <p:outputLabel value="#{msg.certifica_inactividad_title6}" />
+							</p:outputPanel>							
+							
+							<p:panelGrid columns="2" cellpadding="10"
+								styleClass="ui-noborder">
+								<p:outputLabel value="#{msg.certifica_inactividad_lblFecha}" />
+
+								<p:datePicker id="fCapturada" value="#{cerInaApp.fecha}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									yearNavigator="true" monthNavigator="true"
+									inputStyle="width:120px; text-align:right;"
+									readonlyInput="true" />
+                                <p:outputPanel style="margin-bottom:30px">
+								    <p:commandButton id="fnGenerar" styleClass="blue" type="submit"
+									value="#{msg.certifica_inactividad_btnGenerar}"
+									action="#{cerInaApp.generar}" update="form" ajax="true" />
+							    </p:outputPanel>
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+
+
+				<p:dataTable id="pnDetalleProc" var="pro"
+					styleClass="card-header b-blue" value="#{cerInaApp.proceso}"
+					emptyMessage="#{msg.aprob_msj_sinDatos}" style="margin-top:50px">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left">
+							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
+						</p:outputPanel>
+					</f:facet>
+					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
+						<h:outputText value="#{pro.abrevProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
+						<h:outputText value="#{pro.estadoProceso}" />
+					</p:column>
+
+					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}"
+						styleClass="gridCell-right">
+						<h:outputText value="#{pro.fechahoraInicio}" />
+					</p:column>
+					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}"
+						styleClass="gridCell-right">
+						<h:outputText value="#{pro.fechahoraFinal}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

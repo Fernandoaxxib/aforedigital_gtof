@@ -3,11 +3,13 @@ package mx.axxib.aforedigitalgt.serv;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.CerInaProRepo;
 
-public class CerInaProService extends ServiceBase {
+@Service
+public class CerInaProServ extends ServiceBase {
 
 	@Autowired
 	private CerInaProRepo repo;

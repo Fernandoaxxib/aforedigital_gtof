@@ -48,12 +48,12 @@ public class CerInaAppRepo extends RepoBase {
 					.concat(".").concat(Constantes.PRO_CERT_INACTIVIDAD_APPMOVIL_BTN_GENARCH);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("p_fecha", String.class, ParameterMode.IN);		
-			query.registerStoredProcedureParameter("p_message", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("p_fecha", Date.class, ParameterMode.IN);		
+			query.registerStoredProcedureParameter("p_mesage", String.class, ParameterMode.OUT);
 
 			query.setParameter("p_fecha", p_fecha);
 
-			String resp = (String) query.getOutputParameterValue("p_message");
+			String resp = (String) query.getOutputParameterValue("p_mesage");
 			return resp;
 		} catch (Exception e) {
 			throw GenericException(e);

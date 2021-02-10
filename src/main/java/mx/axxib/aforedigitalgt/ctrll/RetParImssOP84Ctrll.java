@@ -19,7 +19,7 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.LoteOP84Out;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
-import mx.axxib.aforedigitalgt.serv.RetParImssOP84Service;
+import mx.axxib.aforedigitalgt.serv.RetParImssOP84Serv;
 
 @Scope(value = "session")
 @Component(value = "retParImssOP84")
@@ -27,7 +27,7 @@ import mx.axxib.aforedigitalgt.serv.RetParImssOP84Service;
 public class RetParImssOP84Ctrll extends ControllerBase{
 
     @Autowired 
-    private RetParImssOP84Service service;
+    private RetParImssOP84Serv service;
 	
 	
 	@Getter
