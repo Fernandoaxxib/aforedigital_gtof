@@ -1,7 +1,6 @@
 package mx.axxib.aforedigitalgt.dal;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -9,8 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
@@ -27,6 +26,7 @@ import mx.axxib.aforedigitalgt.eml.RetparDetaIn;
 import mx.axxib.aforedigitalgt.eml.RetparDetaOut;
 
 @Repository
+@Transactional
 public class ModDesempParcRepo extends RepoBase {
 
     private EntityManager entityManager = null;

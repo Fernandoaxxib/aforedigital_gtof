@@ -3,6 +3,8 @@ package mx.axxib.aforedigitalgt.dal;
 import java.util.List;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
@@ -10,6 +12,7 @@ import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 
 @Repository
+@Transactional
 public class MonitorProcesosRepo extends RepoBase {
 
 	@SuppressWarnings("unchecked")

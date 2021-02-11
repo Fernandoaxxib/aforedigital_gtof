@@ -3,12 +3,15 @@ package mx.axxib.aforedigitalgt.dal;
 import java.util.Date;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
+
 import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 
 
 @Repository
+@Transactional
 public class RepParcialesRepo extends RepoBase{
 
 	public String generarReporte(Date p_fechaInicio,Date p_fechaFinal,String p_Ruta,String p_Archivo) throws AforeException {

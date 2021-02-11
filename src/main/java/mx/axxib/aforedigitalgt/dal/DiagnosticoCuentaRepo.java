@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,6 +16,7 @@ import mx.axxib.aforedigitalgt.eml.ObtieneCodCuentaOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneTipoProcesoOut;
 
 @Repository
+@Transactional
 public class DiagnosticoCuentaRepo extends RepoBase {
 
 	public ObtieneCodCuentaOut getObtieneCodCuenta(String parametro, boolean isCurp) throws AforeException {

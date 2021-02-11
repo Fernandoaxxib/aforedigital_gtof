@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 
 @Repository
+@Transactional
 public class ValorUMARepo extends RepoBase {
 
 	@SuppressWarnings("unchecked")

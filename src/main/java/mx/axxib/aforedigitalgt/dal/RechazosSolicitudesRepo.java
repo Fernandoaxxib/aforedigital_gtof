@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,7 @@ import mx.axxib.aforedigitalgt.eml.GeneraReporteOut;
 import mx.axxib.aforedigitalgt.eml.RechazosOut;
 
 @Repository
+@Transactional
 public class RechazosSolicitudesRepo extends RepoBase {
 
 	public RechazosOut getConsultaFolio(String folio) throws AforeException {
