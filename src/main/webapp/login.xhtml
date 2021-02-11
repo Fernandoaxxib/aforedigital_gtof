@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='iso-8859-1' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
@@ -55,6 +55,8 @@
 					<h:form prependId="false" class="est-form">				
 				     <p:outputLabel  class="est-msg-error" value="#{msg.login_mensaje_error}"
 								rendered="${!empty param['error']}" />
+								<p:outputLabel  class="est-msg-error" value="Tu sesión ha expirado"
+								rendered="${!empty param['expired']}" />
 						<div class="form-group">
 							<h:outputLabel value="#{msg.login_placeholder_usuario}:" />
 							<p:inputText id="username"
@@ -71,7 +73,7 @@
 							value="#{msg.login_boton_iniciar}" ajax="false" />
 					</h:form>					
 				</div>	
-				<div class="est-version">[VersiÃ³n 11.02.05]</div>		
+				<div class="est-version">[Versión 11.02.05]</div>		
 			</div>
 		</div>
 	</div>
@@ -80,7 +82,7 @@
 	
 	<div class="fixed-footer">
 		<div class="ui-g-6">
-			<span>Â© 2021. Afore XXI Banorte S.A. de C.V. Derechos	Reservados</span>
+			<span>© 2021. Afore XXI Banorte S.A. de C.V. Derechos	Reservados</span>
 		</div>
 		<div class="ui-g-6 est-foot-img">
 			<h:outputLink href="https://twitter.com/XXIBanorte" target="_blank" > <h:graphicImage library="Imagenes"

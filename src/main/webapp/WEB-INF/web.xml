@@ -15,8 +15,7 @@
 		<param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
 		<param-value>true</param-value>
 	</context-param>
-
-
+    
 	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener
 		</listener-class>
