@@ -26,7 +26,7 @@ import mx.axxib.aforedigitalgt.serv.SaldosImssIssteServ;
 @Scope(value = "session")
 @Component(value = "saldosNegativosImssIsste")
 @ELBeanName(value = "saldosNegativosImssIsste")
-public class SaldosImssIssteCtrll extends ControllerBase{
+public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	
 	@Autowired
 	SaldosImssIssteServ saldosImssIsste;
@@ -99,6 +99,7 @@ public class SaldosImssIssteCtrll extends ControllerBase{
 			rutaReporteImss="/RESPALDOS/operaciones";	
 			rutaCurpIsste="/RESPALDOS/operaciones";	
 			rutaReporteIsste="/RESPALDOS/operaciones";	
+			rutaSaldoNegativo="/RESPALDOS/operaciones";
 			today= new Date();
 			reset();
 		}
@@ -109,6 +110,7 @@ public class SaldosImssIssteCtrll extends ControllerBase{
 		nombreReporteImss=null;
 		nombreCurpIsste=null;
 		nombreReporteIsste=null;
+		nombreSaldoNegativo=null;
 	}
 	
 	public void ejecutarImssCarga() {
