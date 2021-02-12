@@ -17,7 +17,7 @@ public class SaldosImssIssteServ extends ServiceBase {
 	@Autowired
 	private SaldosImssIssteRepo SaldosImssIsste;
 	
-	public List<ConsultaSaldoImssIssteOut> ejecutarImssCarga(String ruta, String nombre) throws AforeException {
+	public ConsultaSaldoImssIssteOut ejecutarImssCarga(String ruta, String nombre) throws AforeException {
 		try {
 			return SaldosImssIsste.ejecutarImssCarga(ruta,nombre);
 		} catch (Exception e) {
@@ -25,7 +25,7 @@ public class SaldosImssIssteServ extends ServiceBase {
 		}
 	}
 	
-	public List<ConsultaSaldoImssIssteOut> ejecutarImssReporte(String ruta, String nombre) throws AforeException {
+	public ConsultaSaldoImssIssteOut ejecutarImssReporte(String ruta, String nombre) throws AforeException {
 		try {
 			return SaldosImssIsste.ejecutarImssReporte(ruta,nombre);
 		} catch (Exception e) {
@@ -33,7 +33,7 @@ public class SaldosImssIssteServ extends ServiceBase {
 		}
 	}
 	
-	public List<ConsultaSaldoImssIssteOut> ejecutarIssteCarga(String ruta, String nombre) throws AforeException {
+	public ConsultaSaldoImssIssteOut ejecutarIssteCarga(String ruta, String nombre) throws AforeException {
 		try {
 			return SaldosImssIsste.ejecutarIssteCarga(ruta,nombre);
 		} catch (Exception e) {
@@ -41,7 +41,7 @@ public class SaldosImssIssteServ extends ServiceBase {
 		}
 	}
 	
-	public List<ConsultaSaldoImssIssteOut> ejecutarIssteReporte(String ruta, String nombre) throws AforeException {
+	public ConsultaSaldoImssIssteOut ejecutarIssteReporte(String ruta, String nombre) throws AforeException {
 		try {
 			return SaldosImssIsste.ejecutarIssteReporte(ruta,nombre);
 		} catch (Exception e) {
@@ -49,7 +49,7 @@ public class SaldosImssIssteServ extends ServiceBase {
 		}
 	}
 	
-	public List<ConsultaSaldoNegativoOut> ejecutarReporteNegativo(String ruta, String nombre, Date fechaMovimiento) throws AforeException {
+	public String ejecutarReporteNegativo(String ruta, String nombre, Date fechaMovimiento) throws AforeException {
 		try {
 			return SaldosImssIsste.ejecutarReporteNegativo(ruta,nombre,fechaMovimiento);
 		} catch (Exception e) {

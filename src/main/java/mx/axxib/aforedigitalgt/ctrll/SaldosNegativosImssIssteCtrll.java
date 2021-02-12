@@ -35,10 +35,10 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	private AforeMessage aforeMessage;
 	
 	@Getter
-	List<ConsultaSaldoImssIssteOut> consultaSaldoImssIssteOut;
+	ConsultaSaldoImssIssteOut consultaSaldoImssIssteOut;
 	
 	@Getter
-	List<ConsultaSaldoNegativoOut> consultaSaldoNegativoOut;
+	ConsultaSaldoNegativoOut consultaSaldoNegativoOut;
 	
 	@Getter
 	@Setter
@@ -115,7 +115,8 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	
 	public void ejecutarImssCarga() {
 		try {System.out.println("VALOR DE rutaNssImss:"+rutaNssImss+" /nombreNssImss:"+nombreNssImss);
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);			
+		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
+		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 		}catch (Exception e) {
 			GenericException(e);
 		}
@@ -123,7 +124,8 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	
 	public void ejecutarImssReporte() {
 		try {System.out.println("VALOR DE rutaReporteImss:"+rutaReporteImss+" /nombreReporteImss:"+nombreReporteImss);
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);			
+		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
+		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 		}catch (Exception e) {
 			GenericException(e);
 		}
@@ -131,7 +133,8 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	
 	public void ejecutarIssteCarga() {
 		try {System.out.println("VALOR DE rutaCurpIsste:"+rutaCurpIsste+" /nombreCurpIsste:"+nombreCurpIsste);
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);			
+		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);	
+		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 		}catch (Exception e) {
 			GenericException(e);
 		}
@@ -139,7 +142,8 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	
 	public void ejecutarIssteReporte() {
 		try {System.out.println("VALOR DE rutaReporteIsste:"+rutaReporteIsste+" /nombreReporteIsste:"+nombreReporteIsste);
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);			
+		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
+		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);		
 		}catch (Exception e) {
 			GenericException(e);
 		}
@@ -147,7 +151,8 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	
 	public void ejecutarReporteNegativo() {
 		try {System.out.println("VALOR DE rutaSaldoNegativo:"+rutaSaldoNegativo+" /nombreSaldoNegativo:"+nombreSaldoNegativo+" /saldoFechaMovimiento:"+saldoFechaMovimiento);
-		consultaSaldoNegativoOut=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);			
+		String res=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
+		System.out.println("VALOR DE ejecutarReporteNegativo es; "+res);
 		}catch (Exception e) {
 			GenericException(e);
 		}

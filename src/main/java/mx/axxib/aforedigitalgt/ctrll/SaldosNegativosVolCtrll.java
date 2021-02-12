@@ -35,10 +35,10 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	private AforeMessage aforeMessage;
 	
 	@Getter
-	List<ConsultaSaldoImssIssteOut> consultaSaldoImssIssteOut;
+	ConsultaSaldoImssIssteOut consultaSaldoImssIssteOut;
 	
 	@Getter
-	List<ConsultaSaldoNegativoOut> consultaSaldoNegativoOut;
+	ConsultaSaldoNegativoOut consultaSaldoNegativoOut;
 	 
 	@Getter
 	@Setter
@@ -76,7 +76,8 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	
 	public void ejecutarReporteNegativo() {
 		try {System.out.println("VALOR DE rutaSaldoNegativo:"+rutaSaldoNegativo+" /nombreSaldoNegativo:"+nombreSaldoNegativo+" /saldoFechaMovimiento:"+saldoFechaMovimiento);
-		consultaSaldoNegativoOut=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);			
+		String res=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
+		System.out.println("VALOR DE ejecutarReporteNegativo:"+res);
 		}catch (Exception e) {
 			GenericException(e);
 		}
