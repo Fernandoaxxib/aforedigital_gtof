@@ -60,7 +60,7 @@
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{saldosNegativosImssIsste.nombreNssImss}" />
+									<p:inputText value="#{saldosNegativosImssIsste.nombreNssImss}" required="false" requiredMessage="Ingresar el nombre archivo imss" >  </p:inputText>
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
@@ -88,7 +88,7 @@
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{saldosNegativosImssIsste.nombreReporteImss}" />
+									<p:inputText value="#{saldosNegativosImssIsste.nombreReporteImss}" required="false" requiredMessage="Ingresar nombre reporte imss" >  </p:inputText>
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
@@ -122,7 +122,7 @@
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{saldosNegativosImssIsste.nombreCurpIsste}" />
+									<p:inputText value="#{saldosNegativosImssIsste.nombreCurpIsste}" required="false" requiredMessage="Ingresar nombre isste" >  </p:inputText>
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
@@ -152,7 +152,7 @@
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{saldosNegativosImssIsste.nombreReporteIsste}" />
+									<p:inputText value="#{saldosNegativosImssIsste.nombreReporteIsste}" required="false" requiredMessage="Ingresar nombre reporte isste" >  </p:inputText>
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
@@ -167,7 +167,7 @@
 			</div>
 			
 			<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{saldosNegativosImssIsste.proceso}"
+					value="#{saldosNegativosImssIsste.procesos}"
 					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					style="margin-top:20px;font-size:12px">
 					<f:facet name="header">

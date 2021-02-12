@@ -81,16 +81,18 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	public void ejecutarReporteNegativo() {
 		System.out.println("CONVERTIR CADENA A MINISCULA+:"+nombreSaldoNegativo.toLowerCase());
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+		Date today= new Date();		
+		Date today2= new Date();		
 		if(nombreSaldoNegativo.toLowerCase().endsWith(".xls") || nombreSaldoNegativo.toLowerCase().endsWith(".xlsx")){
 			System.out.println("SI TEMINA EN .XLS O .XLSX");
 			try {System.out.println("VALOR DE rutaSaldoNegativo:"+rutaSaldoNegativo+" /nombreSaldoNegativo:"+nombreSaldoNegativo+" /saldoFechaMovimiento:"+saldoFechaMovimiento);
 			
-			Date today= new Date();		
+			//Date today= new Date();		
 			proceso = new ProcesoOut();
 			proceso.setFechahoraInicio(format.format(today));
 			String resp=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo.toLowerCase(),saldoFechaMovimiento);
 			System.out.println("VALOR DE ejecutarReporteNegativo:"+resp);
-			Date today2= new Date();		
+			//Date today2= new Date();		
 			proceso.setFechahoraFinal(format.format(today2));
 			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")  || resp.equals("Proceso enviado a monitor...")) {
 				proceso.setAbrevProceso(resp);//"Generar reporte"
@@ -102,14 +104,19 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 					 addMessageFail(resp);
 				}
 			}catch (Exception e) {
+				System.out.println("ENTRO A CATCH HUBO ERROR");
+				proceso.setFechahoraFinal(format.format(today2));
+				proceso.setAbrevProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO SALDOS VOL");//"Generar reporte"
+				proceso.setEstadoProceso("FALLIDO");
+				addMessageFail("ERROR AL PROCESAR EL ARCHIVO");
 				GenericException(e);
 			}
 		}else {
 			addMessageFail("Ingrese el nombre del archivo correcto");
-			Date today= new Date();		
+			//Date today= new Date();		
 			proceso = new ProcesoOut();
 			proceso.setFechahoraInicio(format.format(today));
-			Date today2= new Date();		
+			//Date today2= new Date();		
 			proceso.setFechahoraFinal(format.format(today2));
 			proceso.setAbrevProceso("NOMBRE INCORRECTO");//"Generar reporte"
 			proceso.setEstadoProceso("FALLIDO ");
