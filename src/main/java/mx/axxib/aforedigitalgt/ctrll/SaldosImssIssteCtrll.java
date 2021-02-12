@@ -20,11 +20,12 @@ import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoImssIssteOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoNegativoOut;
+import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.SaldosImssIssteServ;
 
 @Scope(value = "session")
-@Component(value = "saldosImssIsste")
-@ELBeanName(value = "saldosImssIsste")
+@Component(value = "saldosNegativosImssIsste")
+@ELBeanName(value = "saldosNegativosImssIsste")
 public class SaldosImssIssteCtrll extends ControllerBase{
 	
 	@Autowired
@@ -82,6 +83,33 @@ public class SaldosImssIssteCtrll extends ControllerBase{
 	@Getter
 	@Setter
 	private Date saldoFechaMovimiento;
+	
+	@Getter
+	private Date today;
+	
+	@Getter
+	@Setter
+	private ProcesoOut proceso;
+	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+			rutaNssImss="/RESPALDOS/operaciones";		
+			rutaReporteImss="/RESPALDOS/operaciones";	
+			rutaCurpIsste="/RESPALDOS/operaciones";	
+			rutaReporteIsste="/RESPALDOS/operaciones";	
+			today= new Date();
+			reset();
+		}
+	}
+	
+	public void reset() {
+		nombreNssImss=null;
+		nombreReporteImss=null;
+		nombreCurpIsste=null;
+		nombreReporteIsste=null;
+	}
 	
 	public void ejecutarImssCarga() {
 		try {System.out.println("VALOR DE rutaNssImss:"+rutaNssImss+" /nombreNssImss:"+nombreNssImss);
