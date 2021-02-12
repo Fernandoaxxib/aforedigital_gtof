@@ -51,9 +51,9 @@
 						<p:outputLabel value="Ruta:" />					
 						<p:inputText id="rutaVol" disabled="true" 	value="#{saldosNegativosVol.rutaSaldoNegativo}" style="text-Align:left;font-size:15px;width:150px"/>
 						<p:outputLabel value="Nombre Archivo:" />
-						<p:inputText value="#{saldosNegativosVol.nombreSaldoNegativo}" />
+						<p:inputText required="true" requiredMessage="Debe ingresar nombre de archivo" value="#{saldosNegativosVol.nombreSaldoNegativo}" > </p:inputText>
 						<p:outputLabel value="Fecha Mov:" />
-						<p:datePicker id="fecha" required="true" requiredMessage="Fecha requerida"
+						<p:datePicker id="fecha" required="true" requiredMessage="Debe ingresar la fecha" 
 						inputStyle="width:120px; text-align:right;"
 						value="#{saldosNegativosVol.saldoFechaMovimiento}" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
@@ -69,7 +69,7 @@
 			
 			
 			<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{saldosNegativosImssIsste.proceso}"
+					value="#{saldosNegativosVol.proceso}"
 					emptyMessage="#{msg.aprob_msj_sinDatos}"
 					style="margin-top:20px;font-size:12px">
 					<f:facet name="header">

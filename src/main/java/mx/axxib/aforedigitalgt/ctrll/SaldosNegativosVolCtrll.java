@@ -1,8 +1,12 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -75,11 +79,40 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	
 	
 	public void ejecutarReporteNegativo() {
-		try {System.out.println("VALOR DE rutaSaldoNegativo:"+rutaSaldoNegativo+" /nombreSaldoNegativo:"+nombreSaldoNegativo+" /saldoFechaMovimiento:"+saldoFechaMovimiento);
-		String res=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
-		System.out.println("VALOR DE ejecutarReporteNegativo:"+res);
-		}catch (Exception e) {
-			GenericException(e);
+		System.out.println("CONVERTIR CADENA A MINISCULA+:"+nombreSaldoNegativo.toLowerCase());
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+		if(nombreSaldoNegativo.toLowerCase().endsWith(".xls") || nombreSaldoNegativo.toLowerCase().endsWith(".xlsx")){
+			System.out.println("SI TEMINA EN .XLS O .XLSX");
+			try {System.out.println("VALOR DE rutaSaldoNegativo:"+rutaSaldoNegativo+" /nombreSaldoNegativo:"+nombreSaldoNegativo+" /saldoFechaMovimiento:"+saldoFechaMovimiento);
+			
+			Date today= new Date();		
+			proceso = new ProcesoOut();
+			proceso.setFechahoraInicio(format.format(today));
+			String resp=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo.toLowerCase(),saldoFechaMovimiento);
+			System.out.println("VALOR DE ejecutarReporteNegativo:"+resp);
+			Date today2= new Date();		
+			proceso.setFechahoraFinal(format.format(today2));
+			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")  || resp.equals("Proceso enviado a monitor...")) {
+				proceso.setAbrevProceso(resp);//"Generar reporte"
+				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
+				addMessageOK(resp);
+				}else {
+					proceso.setAbrevProceso(resp);//"Generar reporte"
+					proceso.setEstadoProceso("FALLIDO");
+					 addMessageFail(resp);
+				}
+			}catch (Exception e) {
+				GenericException(e);
+			}
+		}else {
+			addMessageFail("Ingrese el nombre del archivo correcto");
+			Date today= new Date();		
+			proceso = new ProcesoOut();
+			proceso.setFechahoraInicio(format.format(today));
+			Date today2= new Date();		
+			proceso.setFechahoraFinal(format.format(today2));
+			proceso.setAbrevProceso("NOMBRE INCORRECTO");//"Generar reporte"
+			proceso.setEstadoProceso("FALLIDO ");
 		}
 	}
 	
@@ -93,4 +126,15 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
         PrimeFaces.current().ajax().update("form:display");
         PrimeFaces.current().executeScript("PF('dlg').show()");
     }
+    
+    public void addMessageOK(String summary) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	public void addMessageFail(String summary) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	
 }
