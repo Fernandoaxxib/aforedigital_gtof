@@ -115,15 +115,16 @@
 
 
 		<h:form id="form">
-		    <p:growl id="message" />
-			<p:blockUI block="pnlResult" trigger="fCapturada" />
+		    <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+            </p:messages>
+
 			<p:panel id="pnlResult" header="#{msg.modulo_desempleoParc_titulo1}"
 				style="font-size:12px;margin-bottom:20px; margin-top:20px">
 				<p:panelGrid style="margin-bottom:10px" cellpadding="5">
-					<p:selectOneRadio id="radSelect"
-						value="#{modDesParcProceso.radioSelected}" style="font-size:12px">
-						<p:ajax listener="#{modDesParcProceso.radioSelected}"></p:ajax>
-						<f:selectItem itemValue="1"
+					<p:selectOneRadio id="radSelect" value="#{modDesParcProceso.radioSelected}" style="font-size:12px">
+						<p:ajax listener="#{modDesParcProceso.radioSelected}"/>						
+						<f:selectItem itemValue="1" 
 							itemLabel="#{msg.modulo_desempleoParc_radBtnDiag}" />
 						<f:selectItem itemValue="2"
 							itemLabel="#{msg.modulo_desempleoParc_radBtnAprob}" />
@@ -137,7 +138,7 @@
 							locale="es"  showIcon="true" pattern="dd-MM-yyyy"
 							yearNavigator="true" monthNavigator="true"
 							inputStyle="width:120px; text-align:right;" readonlyInput="true" >
-							<p:ajax event="dateSelect" listener="#{modDesParcProceso.buscarRegXProcesar}" update=":form:lblRegXProc :form:lblSinS :form:lblRegParc :form:lblSolUnaEx :form:lblTotal :form:message" />			
+							<p:ajax event="dateSelect" listener="#{modDesParcProceso.buscarRegXProcesar}" update=":form:lblRegXProc :form:lblSinS :form:lblRegParc :form:lblSolUnaEx :form:lblTotal :form:messages" />			
 						</p:datePicker>
 					</p:outputPanel>
 				</p:panelGrid>

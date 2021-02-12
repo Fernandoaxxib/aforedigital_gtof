@@ -2,6 +2,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -9,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.PrimeFaces;
+import org.primefaces.component.datatable.DataTable;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,13 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroServ;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value ="session")
 @Component(value = "aprobSolicTipRetiro")
@@ -71,7 +75,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	public int getCount() {
 	
-		if(filtro!=null) {
+		if(filtro!=null && !filtro.isEmpty()) {
 			return filtro.size();
 		}
 		else if (listSolicitudes != null) {
@@ -83,7 +87,15 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	public void recuperarSolicPendientes() {
 		try {
+			
 			listSolicitudes = service.getListSolicitudes();	
+			filtro=new ArrayList<SolicitudOut>();
+			DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
+		    if (!dataTable.getFilterBy().isEmpty()) {
+		        dataTable.reset();
+		        PrimeFaces.current().ajax().update("form:table1");
+		        PrimeFaces.current().ajax().update("form:table1:totalRegistros");
+		    }
 			
 			//PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
 		} catch (Exception e) {
@@ -131,32 +143,51 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 	
 	public void aprobarSolicitud()  {	
-		
+	  if(listSolicitudes!=null && !listSolicitudes.isEmpty()) {
+		  
+	  
 		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {
+			ProcessResult pr = new ProcessResult();
 			try {
-				//service.aprobacion(selectedSolicitud);
-				addMessageOK("Proceso ejecutado:  "+selectedSolicitud.size());
+				pr.setFechaInicial(DateUtil.getNowDate());
+				pr.setDescProceso("Aprobación de solicitud");
+				selectedSolicitud.forEach(p -> {
+					try {
+						res = service.aprobarSolicitud(p.getNumSolicitud(),
+								Integer.valueOf(p.getTransaccion().substring(0, 1)),
+								p.getSubTransaccion().substring(0, 1));
+					} catch (Exception e) {
+						pr.setStatus("Error");
+						GenericException(e);
+					}
+				});				
+				pr.setStatus("Exitoso");				
+				listSolicitudes.removeAll(selectedSolicitud);
+				
+
+				filtro=new ArrayList<SolicitudOut>();
+				
+				
+				DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
+			    if (!dataTable.getFilterBy().isEmpty()) {
+			        dataTable.reset();
+			        PrimeFaces.current().ajax().update("table1");
+			    }
+				
+				
 				}catch(Exception e) {
+					pr.setStatus("Error");
 					GenericException(e);
+				}finally {
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
 				}
 		}else {
-			addMessageFail("Seleccione las solicitudes a aprobar");
+			addMessageFail("- No seleccionó solicitudes para aprobar");
 		}
 		
+	  }	
 		
-		
-		/*
-		 * if(selectedSolicitud.size()>0 && selectedSolicitud!=null) {
-		 * addMessageOK("Proceso ejecutado:  "+selectedSolicitud.size());
-		 * selectedSolicitud.forEach(p->{ try {
-		 * //res=service.aprobarSolicitud(p.getNumSolicitud(),
-		 * Integer.valueOf(p.getTransaccion().substring(0, 1)),
-		 * p.getSubTransaccion().substring(0,1));
-		 * 
-		 * } catch (Exception e) { GenericException(e); } });
-		 * //recuperarProcesoEjecutado(); //recuperarSolicPendientes(); }else {
-		 * addMessageFail("Seleccionar solicitud!"); }
-		 */
 	
 	}
 	

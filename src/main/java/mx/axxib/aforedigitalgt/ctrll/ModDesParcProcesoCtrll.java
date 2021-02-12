@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.CellEditEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,7 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private List<RegisSinSalarioOut> listSolicitudes;
+	
 	@Getter
 	@Setter
 	private String radioSelected;

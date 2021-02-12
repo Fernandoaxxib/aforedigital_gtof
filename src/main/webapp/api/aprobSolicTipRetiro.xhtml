@@ -11,9 +11,13 @@
 	<f:metadata>
 		<f:event listener="#{aprobSolicTipRetiro.iniciar}"
 			type="preRenderView" />
-
 	</f:metadata>
-	
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
 	<ui:define name="left">
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
@@ -23,16 +27,24 @@
 
 		<ui:include src="subMenuTransacciones.xhtml" />
 
-		<h:form>
-			
-			
+
+
+		<h:form id="form">
+			<!-- <ui:include src="loading.xhtml" /> -->
+			<p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+            </p:messages>
+
 			<p:panel header="Aprobación de solicitudes por tipo de retiro"
 				style="margin-top:20px">
+
+
 				<p:commandButton id="btnRecSolicPend"
 					styleClass="blue ui-button-text"
+					onclick="PF('listSolicitudes').clearFilters()"
 					action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
-					type="submit" update="table1"
-					oncomplete="PF('listSolicitudes').selectAllRows()"
+					type="submit" update="form:table1 form:table1:totalRegistros"
+					oncomplete="PF('listSolicitudes').selectAllRows();"
 					value="#{msg.aprob_boton_recuperarSolicitudes}" ajax="true" />
 
 
@@ -51,13 +63,22 @@
 					<p:ajax event="filter" global="false" />
 
 
+
 					<p:ajax event="rowSelectCheckbox"
-						listener="#{aprobSolicTipRetiro.seleccion}" update="table1"
-						global="false" />
+						listener="#{aprobSolicTipRetiro.seleccion}"
+						update="table1 table1:totalRegistros" global="false" />
+					<p:ajax event="rowSelect"
+						listener="#{aprobSolicTipRetiro.seleccion}"
+						update="table1 table1:totalRegistros" global="false" />
 					<p:ajax event="rowUnselectCheckbox"
-						listener="#{aprobSolicTipRetiro.deseleccion}" update="table1"
-						global="false" />
-  					
+						listener="#{aprobSolicTipRetiro.deseleccion}"
+						update="table1 table1:totalRegistros" global="false" />
+					<p:ajax event="rowUnselect"
+						listener="#{aprobSolicTipRetiro.deseleccion}"
+						update="table1 table1:totalRegistros" global="false" />
+
+
+
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left">
 							<h:outputLabel style="font-size:12px" for="flt"
@@ -66,29 +87,35 @@
 								onkeyup="PF('listSolicitudes').filter()"
 								style="width:530px;font-size:12px"
 								placeholder="#{msg.aprob_label_pholder}">
-								<p:ajax event="keyup" update="totalRegistros"
+								<p:ajax event="keyup" update="table1:totalRegistros"
 									listener="#{aprobSolicTipRetiro.getCount}" global="false" />
 							</p:inputText>
 						</p:outputPanel>
 					</f:facet>
 
 					<f:facet name="header">
-						<div class="ui-g">							
+						<div class="ui-g">
+
 							<div class="ui-g-2" style="text-align: left; width: 150px">
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
-									update="table1" onclick="PF('listSolicitudes').selectAllRows()"
+									update="table1 table1:totalRegistros"
+									onclick="PF('listSolicitudes').selectAllRows()"
 									value="#{msg.aprob_boton_marcar}" ajax="true" global="false" />
-							</div>																			
+							</div>
 							<div class="ui-g-3" style="text-align: left; width: 170px">
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
-									update="table1"	onclick="PF('listSolicitudes').unselectAllRows()"
+									update="table1 table1:totalRegistros"
+									onclick="PF('listSolicitudes').unselectAllRows()"
 									value="#{msg.aprob_boton_desmarcar}" ajax="true" global="false" />
 							</div>
 							<div class="ui-g-3" style="text-align: left; width: 210px">
 								<p:commandButton styleClass="blue ui-button-text"
 									action="#{aprobSolicTipRetiro.aprobarSolicitud}" type="submit"
-									update="table1" value="#{msg.aprob_boton_aprobar}"
-									global="true" />
+									onclick="PF('listSolicitudes').clearFilters()"
+									update="table1 totalRegistros form:result form:messages"
+									value="#{msg.aprob_boton_aprobar}" ajax="true" global="true">
+
+								</p:commandButton>
 							</div>
 							<div class="ui-g-4" style="text-align: right">
 								<h:outputLabel for="registros"
@@ -100,30 +127,25 @@
 						</div>
 
 					</f:facet>
-
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center;" />
 					<p:column headerText="#{msg.aprob_tabla_columna_noSolicitud}"
 						width="70" selectRow="#{aprobSolicTipRetiro.seleccionado}">
 						<h:outputText value="#{mon.numSolicitud}" style="float:right;" />
 					</p:column>
-
 					<p:column headerText="#{msg.aprob_tabla_columna_tran}" width="140">
 						<h:outputText value="#{mon.transaccion}" />
 					</p:column>
-
 					<p:column headerText="#{msg.aprob_tabla_columna_subTran}"
 						width="130">
 						<h:outputText value="#{mon.subTransaccion}" />
 					</p:column>
-
 					<p:column headerText="#{msg.aprob_tabla_columna_fecOpe}"
 						width="120">
 						<h:outputText value="#{mon.fechaOperacion}" style="float:right">
 							<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
-
 					<p:column headerText="#{msg.aprob_tabla_columna_cuenta}" width="70">
 						<h:outputText value="#{mon.codCuenta}" style="float:right" />
 					</p:column>
@@ -133,40 +155,13 @@
 					</p:column>
 				</p:dataTable>
 
+
+
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{aprobSolicTipRetiro}" />
+				</ui:include>
 			</p:panel>
-
-
-
-
-
-			<p:dataTable id="pnDetalleProc" var="pro"
-				value="#{aprobSolicTipRetiro.procesoEjecutado}"
-				emptyMessage="#{msg.aprob_msj_sinDatos}" styleClass="detalleProceso"
-				style="border: 1px solid #00529b !important;border-radius: .25rem;margin-top:20px;">
-
-				<f:facet name="header">
-					<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-				</f:facet>
-
-				<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
-					<h:outputText value="#{pro.abrevProceso}" />
-				</p:column>
-
-				<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
-					<h:outputText value="#{pro.estadoProceso}" />
-				</p:column>
-
-				<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}">
-					<h:outputText value="#{pro.fechahoraInicio}">
-						<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}">
-					<h:outputText value="#{pro.fechahoraFinal}">
-						<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
-				</p:column>
-			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

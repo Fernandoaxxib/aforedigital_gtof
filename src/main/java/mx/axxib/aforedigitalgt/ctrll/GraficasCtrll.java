@@ -111,7 +111,7 @@ public class GraficasCtrll extends ControllerBase {
 		// **************************
 		String fechaI="";
 		String fechaF="";
-		addMessage("Fecha inicio: " + fechaInicioCombo + " Fecha fin: " + fechaFinCombo);
+		//addMessage("Fecha inicio: " + fechaInicioCombo + " Fecha fin: " + fechaFinCombo);
 
 		if(Integer.parseInt(fechaInicioCombo)<10) {
 		   fechaI="01".concat("0"+fechaInicioCombo).concat("20");
