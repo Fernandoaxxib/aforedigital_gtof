@@ -160,5 +160,10 @@ public class Constantes {
 	public static final String SALDOS_CARGA_ISSTE_STORED = "PRC_CARGA_SALDOS_ISSS";
 	public static final String SALDOS_CONSULTAR_ISSTE_STORED="PRC_REP_SALDOS_ISSS";
 	public static final String SALDOS_VOL_NEGATIVO_STORED = "PRC_REP_SALDOS_VOL";
-
+	
+	// VER DETALLE CHEQUE FOHISMYD
+	public static final String DETALLE_CHEQUE_PACKAGE = "PKG_RET_FOHISMYD";
+	public static final String CONSULTA_VER_DETALLE_CHEQUE_STORED = "PRC_OBTIENE_CUENTA";
+	public static final String SOLICITUD_VER_DETALLE_CHEQUE_STORED = "PRC_SOL_MAT_DESEMPLE";
+	public static final String PAGOS_VER_DETALLE_CHEQUE_STORED = "PRC_PAG_EFECTUADOS";
 }
