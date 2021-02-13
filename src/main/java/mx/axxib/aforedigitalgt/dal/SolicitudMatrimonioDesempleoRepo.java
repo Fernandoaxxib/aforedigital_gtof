@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
-import mx.axxib.aforedigitalgt.eml.VerCheque;
+import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
 
@@ -27,18 +27,22 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<VerCheque> getVerCheque(String nss) throws AforeException {
+	public VerChequeOut getVerCheque(String nss) throws AforeException {
 		try {
 		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.CONSULTA_VER_DETALLE_CHEQUE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerCheque");
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerChequeOut");
 
 		query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 
 		query.setParameter("P_NSS", nss);
 
-		List<VerCheque> res=query.getResultList();
+		VerChequeOut res=new VerChequeOut();
+		res.setCuenta((String) query.getOutputParameterValue("P_CUENTA"));
+		res.setNombre((String) query.getOutputParameterValue("P_NOMBRE"));
+		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

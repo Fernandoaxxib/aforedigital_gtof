@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.eml.VerCheque;
+import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
 import mx.axxib.aforedigitalgt.serv.SolicitudMatrimonioDesempleoServ;
@@ -25,7 +25,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	@Getter
 	@Setter
-	List<VerCheque> verCheque;
+	VerChequeOut verChequeOut;
 	
 	@Getter
 	@Setter
@@ -50,7 +50,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	public void consultar() {
 		try {System.out.println("VALOR DE NNS:"+nns+"  /valor de curp:"+curp);
-			verCheque=solicitudMatrimonioDesempleoServ.getVerCheque(nns);
+			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nns);
 		}catch (Exception e) {
 			GenericException(e);
 		}

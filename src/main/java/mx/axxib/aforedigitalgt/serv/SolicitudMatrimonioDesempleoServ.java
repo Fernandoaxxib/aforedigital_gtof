@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.SolicitudMatrimonioDesempleoRepo;
-import mx.axxib.aforedigitalgt.eml.VerCheque;
+import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
 
@@ -17,7 +17,7 @@ public class SolicitudMatrimonioDesempleoServ extends ServiceBase{
 	@Autowired
 	private SolicitudMatrimonioDesempleoRepo dao;
 	
-	public List<VerCheque> getVerCheque(String nss) throws AforeException  {
+	public VerChequeOut getVerCheque(String nss) throws AforeException  {
 		
 		try {
 			return dao.getVerCheque(nss);
