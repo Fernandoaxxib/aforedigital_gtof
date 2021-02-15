@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<ui:define name="center">
+
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+		
+	<h:form id="form">
+
+    <p:panelGrid id="verNNS"  columns="2">
+      
+   		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/>
+	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" />
+   		
+   		<p:commandButton action="#{verDatosCheque.consultar}"
+			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
+	</p:panelGrid>	
+		
+	 <p:panelGrid id="verDetalle" columns="1">	
+		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verCheque}">
+		    <p:column headerText="#{msg.cheque_columna_codigo}">
+		        <h:outputText value="#{ver.cuenta}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_columna_nombre}">
+		        <h:outputText value="#{ver.nombre}" />
+		    </p:column>
+		 
+		</p:dataTable>
+	
+	
+    </p:panelGrid>
+   
+   	<p:panelGrid id="verDatosCheque"  columns="1">		
+   		<p:commandButton action="#{verDatosCheque.consultarSolicitud}"
+			type="submit" value="#{msg.cheque_ver_boton_cheque}" ajax="false" />
+	</p:panelGrid>		
+	 
+   <p:panelGrid id="verDetalleCheque" columns="1">	
+		<p:dataTable id="verTableDetalle"  var="verSolicitud" value="#{verDatosCheque.verSolicitudChequeOut}">
+		    
+		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}">
+		        <h:outputText value="#{verSolicitud.fechaOperacion}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}">
+		        <h:outputText value="#{verSolicitud.diagnosticoCuenta}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_ver_columna_prestamo}">
+		        <h:outputText value="#{verSolicitud.tipoPrestacion}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_ver_columna_NoSolicitud}">
+		        <h:outputText value="#{verSolicitud.numeroSolicitud}" />
+		    </p:column>
+		 	
+		 	<p:column headerText="#{msg.cheque_ver_columna_fechaSolicitud}">
+		        <h:outputText value="#{verSolicitud.fechaSolicitud}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_ver_columna_folioSolicitud}">
+		        <h:outputText value="#{verSolicitud.folioSolicitud}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_ver_columna_fechaPension}">
+		        <h:outputText value="#{verSolicitud.fechaPension}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_ver_columna_NoResolucion}">
+		        <h:outputText value="#{verSolicitud.numeroResolucion}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_ver_columna_fechaResolucion}">
+		        <h:outputText value="#{verSolicitud.fechaResolucion}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_ver_columna_Ejecucion}">
+		        <h:outputText value="#{verSolicitud.numeroEmpleado}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_ver_columna_RightFax}">
+		        <h:outputText value="#{verSolicitud.rightFax}" />
+		    </p:column>
+		 	
+		</p:dataTable>
+	
+	
+    </p:panelGrid>
+		
+	<p:panelGrid id="verPagosCheque"  columns="1">		
+   		<p:commandButton action="#{verDatosCheque.consultarPago}"
+			type="submit" value="#{msg.cheque_pago_boton_cheque}" ajax="false" />
+	</p:panelGrid>		
+	 
+   <p:panelGrid id="verPagoCheque" columns="1">	
+		<p:dataTable id="verTablePago"  var="verPago" value="#{verDatosCheque.verPagoChequeOut}">
+		    
+		    <p:column headerText="#{msg.cheque_pago_columna_Identificador}">
+		        <h:outputText value="#{verPago.identificarOperacion}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_pago_columna_Seguro}">
+		        <h:outputText value="#{verPago.tipoSeguro}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_pago_columna_Pension}">
+		        <h:outputText value="#{verPago.tipoPension}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_pago_columna_Prestacion}">
+		        <h:outputText value="#{verPago.tipoPrestacion}" />
+		    </p:column>
+		 	
+		 	<p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}">
+		        <h:outputText value="#{verPago.fechaOperacion}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_pago_columna_MontoPago}">
+		        <h:outputText value="#{verPago.importeAutorizado}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_pago_columna_ImporteRCV}">
+		        <h:outputText value="#{verPago.importeSubcontrato}" />
+		    </p:column>
+		 
+		    <p:column headerText="#{msg.cheque_pago_columna_Solicitud}">
+		        <h:outputText value="#{verPago.solicitud}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_pago_columna_Diag17}">
+		        <h:outputText value="#{verPago.diagonalOp}" />
+		    </p:column>
+		    
+		 	
+		</p:dataTable>
+	
+	
+    </p:panelGrid>
+		
+		
+  </h:form>
+</ui:define>
+
+</ui:composition>
