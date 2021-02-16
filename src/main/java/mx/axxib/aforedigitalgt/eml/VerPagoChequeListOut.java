@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 					@ColumnResult(name = "TIPO_SEGURO", type = String.class),
 					@ColumnResult(name = "TIPO_PENSION", type = String.class),
 					@ColumnResult(name = "TIPO_PRESTACION", type = String.class),
-					@ColumnResult(name = "FECHA_OPERACION", type = Date.class),
+					@ColumnResult(name = "FECHA_OPERACION", type = String.class),
 					@ColumnResult(name = "IMPORTE_AUTORIZADO", type = String.class),
 					@ColumnResult(name = "IMPORTE_SUBCTA_RCV", type = String.class),
 					@ColumnResult(name = "COD_CUENTA", type = Integer.class),
@@ -36,15 +36,15 @@ import lombok.NoArgsConstructor;
 })
 
 public class VerPagoChequeListOut {
-	private Integer   identificarOperacion;
+	private Integer  identificarOperacion;
 	private String 	 tipoSeguro;
 	private String   tipoPension;
 	private String   tipoPrestacion;
-	private Date     fechaOperacion;
+	private String     fechaOperacion;
 	private String   importeAutorizado;
 	private String   importeSubcontrato;
 	private Integer  codCuenta;
-	private Date     fechaRespuesta;
+	private String     fechaRespuesta;
 	private String   solicitud;
-	private String   diagonalOp;
+	private String   op17;
 }

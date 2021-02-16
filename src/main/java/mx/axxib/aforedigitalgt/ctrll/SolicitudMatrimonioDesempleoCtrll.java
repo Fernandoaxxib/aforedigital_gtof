@@ -30,11 +30,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	@Getter
 	@Setter
-	List<VerSolicitudChequeOut> verSolicitudChequeOut;
+	VerSolicitudChequeOut verSolicitudChequeOut;
 	
 	@Getter
 	@Setter
-	List<VerPagoChequeOut> verPagoChequeOut;
+	VerPagoChequeOut verPagoChequeOut;
 	
 	@Getter
 	@Setter
@@ -55,33 +55,42 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			System.out.println("VALOR DE verChequeOut: "+verChequeOut);
 			
 			
-			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
-		        int nDatos=tokens.countTokens();
-		        String [] datos=new String[nDatos];
-		        int i=0;
-		        while(tokens.hasMoreTokens()){
-		            String str=tokens.nextToken();
-		           // datos[i]=Double.valueOf(str).doubleValue();
-		            datos[i]=str;
-		            System.out.println(datos[i]);
-		            i++;
-		        }
+			consultarPago(verChequeOut.getCuenta());
+			System.out.println("VALOR DE consultarPago");
+			
+			consultarSolicitud(verChequeOut.getCuenta());
+			System.out.println("VALOR DE consultarSolicitud");
+			
+			
+//			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
+//		        int nDatos=tokens.countTokens();
+//		        String [] datos=new String[nDatos];
+//		        int i=0;
+//		        while(tokens.hasMoreTokens()){
+//		            String str=tokens.nextToken();
+//		           // datos[i]=Double.valueOf(str).doubleValue();
+//		            datos[i]=str;
+//		            System.out.println(datos[i]);
+//		            i++;
+//		        }
 		}catch (Exception e) {
 			GenericException(e);
 		}
 	}
 	
-	public void consultarSolicitud() {
+	public void consultarSolicitud(String cuenta) {
 		try {
-			verSolicitudChequeOut=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque();
+			verSolicitudChequeOut=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
+			System.out.println("VALOR DE consultarSolicitud: "+verSolicitudChequeOut.getVerSolicitudChequeListOut().size());
 		}catch (Exception e) {
 			GenericException(e);
 		}
 	}
 	
-	public void consultarPago() {
+	public void consultarPago(String cuenta) {
 		try {
-			verPagoChequeOut=solicitudMatrimonioDesempleoServ.getVerPagosCheque();
+			verPagoChequeOut=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
+			System.out.println("VALOR DE consultarPago: "+verPagoChequeOut.getVerPagoChequeListOut().size());
 		}catch (Exception e) {
 			GenericException(e);
 		}

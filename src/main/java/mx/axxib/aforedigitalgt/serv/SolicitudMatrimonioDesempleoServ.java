@@ -27,20 +27,20 @@ public class SolicitudMatrimonioDesempleoServ extends ServiceBase{
 		
 	}
 	
-	public List<VerSolicitudChequeOut> getVerSolicitudCheque() throws AforeException  {
+	public VerSolicitudChequeOut getVerSolicitudCheque(String cuenta) throws AforeException  {
 		
 		try {
-			return dao.getVerSolicitudCheque();
+			return dao.getVerSolicitudCheque(cuenta);
 		}catch (Exception e) {
 			throw GenericException(e);
 		}
 		
 	}
 	
-	public List<VerPagoChequeOut> getVerPagosCheque() throws AforeException  {
+	public VerPagoChequeOut getVerPagosCheque(String cuenta) throws AforeException  {
 		
 		try {
-			return dao.getVerPagosCheque();
+			return dao.getVerPagosCheque(cuenta);
 		}catch (Exception e) {
 			throw GenericException(e);
 		}
