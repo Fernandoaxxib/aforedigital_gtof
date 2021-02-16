@@ -113,6 +113,9 @@ public class VentaTitulosCtrll extends ControllerBase {
 
 	@Getter
 	private String mensajeTabla;
+	
+	@Getter
+	private Integer tablaCount;
 
 	@Getter
 	@Setter
@@ -123,6 +126,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 		super.iniciar();
 		if (init) {
 			// Limpiar objetos
+			tablaCount = null;
 			mensajeTabla = null;
 			opcion = null;
 			selectedTipoRetiro = null;
@@ -371,6 +375,8 @@ public class VentaTitulosCtrll extends ControllerBase {
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
+			if(montos != null)
+				tablaCount = montos.size();
 		}
 	}
 

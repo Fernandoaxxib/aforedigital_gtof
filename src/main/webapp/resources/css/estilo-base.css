@@ -57,6 +57,10 @@
 	background: #ffffff !important;
 }
 
+.ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer { /* Alinear contenido del header a la derecha para el conteo de elementos desplegados */
+    text-align: right;
+}
+
 .sinfondo.ui-datatable .ui-selection-column .ui-chkbox-all {
 	display:none;
 }
