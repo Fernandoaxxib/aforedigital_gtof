@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.eml.VerChequeOut;
+import mx.axxib.aforedigitalgt.eml.VerPagoChequeListOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
+import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeListOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
 import mx.axxib.aforedigitalgt.serv.SolicitudMatrimonioDesempleoServ;
 
@@ -29,25 +31,46 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	VerChequeOut verChequeOut;
 	
 	@Getter
-	@Setter
-	VerSolicitudChequeOut verSolicitudChequeOut;
+	private Integer totalSolicitud;	
+	
+	@Getter
+	private Integer totalPago;	
+	
+	@Getter
+	private String mensajeSolicitud;
+	
+	@Getter
+	private String mensajePago;
 	
 	@Getter
 	@Setter
-	VerPagoChequeOut verPagoChequeOut;
+	List<VerSolicitudChequeListOut> listSolicitudChequeOut;
+	
+	@Getter
+	@Setter
+	List <VerPagoChequeListOut> listPagoChequeOut;
 	
 	@Getter
 	@Setter
 	private String nns;
 	
-//	@Getter
-//	@Setter
-//	private String codCuenta;
-//	
+
 	@Getter
 	@Setter
 	private String curp;
 	
+	
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if(init) {
+		
+		nns=null;
+		verChequeOut=null;
+		totalPago=null;
+		totalSolicitud=null;
+	}
+	}
 	
 	public void consultar() {
 		try {System.out.println("VALOR DE NNS:"+nns);
@@ -80,8 +103,14 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	public void consultarSolicitud(String cuenta) {
 		try {
-			verSolicitudChequeOut=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
-			System.out.println("VALOR DE consultarSolicitud: "+verSolicitudChequeOut.getVerSolicitudChequeListOut().size());
+			VerSolicitudChequeOut res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
+			System.out.println("VALOR DE consultarSolicitud: "+res.getVerSolicitudChequeListOut().size());
+			if (res != null && res.getVerSolicitudChequeListOut() != null && res.getVerSolicitudChequeListOut().size() > 0) {
+				listSolicitudChequeOut = res.getVerSolicitudChequeListOut();
+				totalSolicitud = res.getVerSolicitudChequeListOut().size();
+				mensajeSolicitud=res.getMensaje();
+			}
+		
 		}catch (Exception e) {
 			GenericException(e);
 		}
@@ -89,8 +118,14 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	public void consultarPago(String cuenta) {
 		try {
-			verPagoChequeOut=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
-			System.out.println("VALOR DE consultarPago: "+verPagoChequeOut.getVerPagoChequeListOut().size());
+			VerPagoChequeOut res=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
+			System.out.println("VALOR DE consultarPago: "+res.getVerPagoChequeListOut().size());
+			if (res != null && res.getVerPagoChequeListOut() != null && res.getVerPagoChequeListOut().size() > 0) {
+				listPagoChequeOut = res.getVerPagoChequeListOut();
+				totalPago = res.getVerPagoChequeListOut().size();
+				mensajePago=res.getMensaje();
+			}
+		
 		}catch (Exception e) {
 			GenericException(e);
 		}
