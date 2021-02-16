@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.ConsultarTraspasosIcefasOut;
 import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
@@ -29,8 +30,8 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 	@SuppressWarnings("unchecked")
 	public VerChequeOut getVerCheque(String nss) throws AforeException {
 		try {
-		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.CONSULTA_VER_DETALLE_CHEQUE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerChequeOut");
+		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_CHEQUE_PACKAGE).concat(".").concat(Constantes.CONSULTA_VER_DETALLE_CHEQUE_STORED);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 		query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.OUT);
@@ -50,26 +51,23 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<VerSolicitudChequeOut> getVerSolicitudCheque() throws AforeException {
+	public VerSolicitudChequeOut getVerSolicitudCheque(String cuenta) throws AforeException {
 		try {
-		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.SOLICITUD_VER_DETALLE_CHEQUE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"SolicitudChequeOut");
+		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_CHEQUE_PACKAGE).concat(".").concat(Constantes.SOLICITUD_VER_DETALLE_CHEQUE_STORED);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerSolicitudChequeListOut");
 
-		query.registerStoredProcedureParameter("P_FECHA_OPERACION", Date.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_DIAGNOSTICO_CUENTA", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_TIPO_PRESTACION", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_NUMERO_SOLIC_RET", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_fecha_solic", Date.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_folio_solic", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_fecha_pension", Date.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_numero_resolucion", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_fecha_resolucion", Date.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_num_empleado", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_rigth_fax", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);	
+		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);	
 		
+		query.setParameter("P_CUENTA", cuenta);
 		
-
-		List<VerSolicitudChequeOut> res = query.getResultList();	
+		VerSolicitudChequeOut res=new VerSolicitudChequeOut();
+		Object cursor = query.getOutputParameterValue("CP_CURSOR");
+		if (cursor != null) {		
+		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+		res.setVerSolicitudChequeListOut(query.getResultList());
+		}
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -77,27 +75,29 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 
 	}
 	@SuppressWarnings("unchecked")
-	public List<VerPagoChequeOut> getVerPagosCheque() throws AforeException {
+	public VerPagoChequeOut getVerPagosCheque(String cuenta) throws AforeException {
 		try {
-		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.PAGOS_VER_DETALLE_CHEQUE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"PagoChequeOut");
+			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_CHEQUE_PACKAGE).concat(".").concat(Constantes.PAGOS_VER_DETALLE_CHEQUE_STORED);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerPagoChequeListOut");
 
-		query.registerStoredProcedureParameter("P_IDENTIFICADOR_OPERACION", Integer.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_TIPO_SEGURO", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_TIPO_PENSION", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_TIPO_PRESTACION", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_FECHA_OPERACION", Date.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_IMPORTE_AUTORIZADO", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_IMPORTE_SUBCTA_RCV", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_SOLICITUD", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("P_diag_Op17", String.class, ParameterMode.OUT);
-				
+			query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);	
+			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);	
+			
+			query.setParameter("P_CUENTA", cuenta);
+			
+			VerPagoChequeOut res=new VerPagoChequeOut();
+			Object cursor = query.getOutputParameterValue("CP_CURSOR");
+			if (cursor != null) {		
+			res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+			res.setVerPagoChequeListOut(query.getResultList());
+			}
+			return res;
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
 
-		List<VerPagoChequeOut> res = query.getResultList();	
-		return res;
-		} catch (Exception e) {
-			throw GenericException(e);
 		}
 
-	}
+	
 }

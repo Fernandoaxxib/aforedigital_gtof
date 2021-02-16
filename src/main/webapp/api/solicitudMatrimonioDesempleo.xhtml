@@ -17,16 +17,23 @@
 	<h:form id="form">
 
     <p:panelGrid id="verNNS"  columns="2">
-      
-   		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/>
-	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" />
+      	
+      	<h:outputLabel style="font-size:12px" for="flt"
+							value="#{msg.cheque_text_cheque_nss}" />
+						<p:inputText id="icefasFilter"
+							style="width:150px;font-size:12px"
+							placeholder="#{msg.cheque_text_cheque_nss}" value="#{verDatosCheque.nns}" required="true">	
+						</p:inputText>
+      	
+<!--    		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/> -->
+<!-- 	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" /> -->
    		
    		<p:commandButton action="#{verDatosCheque.consultar}"
 			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
 	</p:panelGrid>	
 		
 	 <p:panelGrid id="verDetalle" columns="1">	
-		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verCheque}">
+		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verChequeOut}">
 		    <p:column headerText="#{msg.cheque_columna_codigo}">
 		        <h:outputText value="#{ver.cuenta}" />
 		    </p:column>
@@ -113,9 +120,7 @@
 		        <h:outputText value="#{verPago.tipoSeguro}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_pago_columna_Pension}">
-		        <h:outputText value="#{verPago.tipoPension}" />
-		    </p:column>
+		   
 		 
 		    <p:column headerText="#{msg.cheque_pago_columna_Prestacion}">
 		        <h:outputText value="#{verPago.tipoPrestacion}" />
@@ -132,13 +137,21 @@
 		    <p:column headerText="#{msg.cheque_pago_columna_ImporteRCV}">
 		        <h:outputText value="#{verPago.importeSubcontrato}" />
 		    </p:column>
+		    
+		     <p:column headerText="#{msg.cheque_pago_columna_Pension}">
+		        <h:outputText value="#{verPago.codCuenta}" />
+		    </p:column>
+		    
+		    <p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}">
+		        <h:outputText value="#{verPago.fechaRespuesta}" />
+		    </p:column>
 		 
 		    <p:column headerText="#{msg.cheque_pago_columna_Solicitud}">
 		        <h:outputText value="#{verPago.solicitud}" />
 		    </p:column>
 		    
 		    <p:column headerText="#{msg.cheque_pago_columna_Diag17}">
-		        <h:outputText value="#{verPago.diagonalOp}" />
+		        <h:outputText value="#{verPago.op17}" />
 		    </p:column>
 		    
 		 	
