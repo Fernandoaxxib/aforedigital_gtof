@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
+import java.util.StringTokenizer;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,8 +50,22 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	
 	public void consultar() {
-		try {System.out.println("VALOR DE NNS:"+nns+"  /valor de curp:"+curp);
+		try {System.out.println("VALOR DE NNS:"+nns);
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nns);
+			System.out.println("VALOR DE verChequeOut: "+verChequeOut);
+			
+			
+			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
+		        int nDatos=tokens.countTokens();
+		        String [] datos=new String[nDatos];
+		        int i=0;
+		        while(tokens.hasMoreTokens()){
+		            String str=tokens.nextToken();
+		           // datos[i]=Double.valueOf(str).doubleValue();
+		            datos[i]=str;
+		            System.out.println(datos[i]);
+		            i++;
+		        }
 		}catch (Exception e) {
 			GenericException(e);
 		}

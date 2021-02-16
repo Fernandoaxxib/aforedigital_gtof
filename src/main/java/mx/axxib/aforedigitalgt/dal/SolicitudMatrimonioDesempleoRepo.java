@@ -29,8 +29,8 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 	@SuppressWarnings("unchecked")
 	public VerChequeOut getVerCheque(String nss) throws AforeException {
 		try {
-		String storedFullName =  Constantes.DETALLE_CHEQUE_PACKAGE.concat(".").concat(Constantes.CONSULTA_VER_DETALLE_CHEQUE_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"VerChequeOut");
+		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_CHEQUE_PACKAGE).concat(".").concat(Constantes.CONSULTA_VER_DETALLE_CHEQUE_STORED);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 		query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.OUT);

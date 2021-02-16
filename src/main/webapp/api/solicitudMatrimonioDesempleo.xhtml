@@ -17,16 +17,23 @@
 	<h:form id="form">
 
     <p:panelGrid id="verNNS"  columns="2">
-      
-   		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/>
-	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" />
+      	
+      	<h:outputLabel style="font-size:12px" for="flt"
+							value="#{msg.cheque_text_cheque_nss}" />
+						<p:inputText id="icefasFilter"
+							style="width:150px;font-size:12px"
+							placeholder="#{msg.cheque_text_cheque_nss}" value="#{verDatosCheque.nns}" required="true">	
+						</p:inputText>
+      	
+<!--    		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/> -->
+<!-- 	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" /> -->
    		
    		<p:commandButton action="#{verDatosCheque.consultar}"
 			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
 	</p:panelGrid>	
 		
 	 <p:panelGrid id="verDetalle" columns="1">	
-		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verCheque}">
+		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verChequeOut}">
 		    <p:column headerText="#{msg.cheque_columna_codigo}">
 		        <h:outputText value="#{ver.cuenta}" />
 		    </p:column>
