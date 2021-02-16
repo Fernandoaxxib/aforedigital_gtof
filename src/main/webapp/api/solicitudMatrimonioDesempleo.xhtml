@@ -53,7 +53,7 @@
 	</p:panelGrid>		
 	 
    <p:panelGrid id="verDetalleCheque" columns="1">	
-		<p:dataTable id="verTableDetalle"  var="verSolicitud" value="#{verDatosCheque.verSolicitudChequeOut}">
+		<p:dataTable id="verTableDetalle"  var="verSolicitud" value="#{verDatosCheque.listSolicitudChequeOut}">
 		    
 		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}">
 		        <h:outputText value="#{verSolicitud.fechaOperacion}" />
@@ -110,7 +110,7 @@
 	</p:panelGrid>		
 	 
    <p:panelGrid id="verPagoCheque" columns="1">	
-		<p:dataTable id="verTablePago"  var="verPago" value="#{verDatosCheque.verPagoChequeOut}">
+		<p:dataTable id="verTablePago"  var="verPago" value="#{verDatosCheque.listPagoChequeOut}">
 		    
 		    <p:column headerText="#{msg.cheque_pago_columna_Identificador}">
 		        <h:outputText value="#{verPago.identificarOperacion}" />
