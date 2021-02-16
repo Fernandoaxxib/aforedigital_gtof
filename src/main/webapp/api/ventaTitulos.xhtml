@@ -18,7 +18,6 @@
 	<ui:define name="center">
 		
 			<ui:include src="subMenuTransacciones.xhtml" />
-			<h:outputStylesheet name="estilo-base.css" library="css" />
 			<h:outputScript name="js/calendar-localization.js" />
 
 			<h:form id="form">
@@ -44,8 +43,8 @@
 
 						<p:outputPanel id="customPanel">
 							<p:selectOneRadio id="customRadio" value="#{ventaTitulos.opcion}"
-								required="true" requiredMessage="Debe seleccionar un módulo"
 								layout="custom">
+								<p:ajax  update="customPanel" listener="#{ventaTitulos.changeOpcion}"/>
 								<f:selectItem itemLabel="Todos" itemValue="T" />
 								<f:selectItem itemLabel="Retiros" itemValue="R" />
 								<f:selectItem itemLabel="Traspasos" itemValue="A" />
@@ -60,7 +59,7 @@
 
 								<p:radioButton id="opt2" for="customRadio" itemIndex="1" />
 								<h:outputLabel for="opt2" value="Retiros" />
-								<p:selectOneMenu style="width:200px" var="t"
+								<p:selectOneMenu id="comboRetiros" style="width:200px" var="t" disabled="#{ventaTitulos.disRetiros}"
 									converter="selectOneMenuConverter"
 									value="#{ventaTitulos.selectedTipoRetiro}">
 									<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -86,7 +85,7 @@
 
 								<p:radioButton id="opt3" for="customRadio" itemIndex="2" />
 								<h:outputLabel for="opt3" value="Traspasos Afore-Afore" />
-								<p:selectOneMenu style="width:200px" var="t"
+								<p:selectOneMenu id="comboTraspasos" style="width:200px" var="t" disabled="#{ventaTitulos.disTraspasos}"
 									converter="selectOneMenuConverter"
 									value="#{ventaTitulos.selectedLoteTraspaso}">
 									<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -112,7 +111,7 @@
 
 								<p:radioButton id="opt4" for="customRadio" itemIndex="3" />
 								<h:outputLabel for="opt4" value="Dev pago excs lote" />
-								<p:selectOneMenu style="width:200px" var="t"
+								<p:selectOneMenu id="comboDev" style="width:200px" var="t" disabled="#{ventaTitulos.disDev}"
 									converter="selectOneMenuConverter"
 									value="#{ventaTitulos.selectedrgDevExces}">
 									<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -138,12 +137,12 @@
 
 								<p:radioButton id="opt5" for="customRadio" itemIndex="4" />
 								<h:outputLabel for="opt5" value="Lote corte" />
-								<p:inputText id="lote" value="#{ventaTitulos.lote}"
+								<p:inputText id="inputLote" value="#{ventaTitulos.lote}" disabled="#{ventaTitulos.disLote}"
 									style="width:215px"></p:inputText>
 							</p:panelGrid>
 						</p:outputPanel>
 
-						<p:commandButton class="blue" update="pSiefore result" 
+						<p:commandButton class="blue" update="busqueda pSiefore result" 
 							action="#{ventaTitulos.buscarMontos}" 
 							value="Buscar" />
 
@@ -152,7 +151,7 @@
 
 				<p:panel id="pSiefore" header="Siefores" style="margin-top:20px">
 					<p:dataTable id="ventaTable" var="ven" paginatorPosition="bottom"
-						emptyMessage="#{msg.aprob_msj_sinDatos}"
+						emptyMessage="#{ventaTitulos.mensajeTabla}"
 						value="#{ventaTitulos.montos}" rows="10" paginator="true"
 						rowsPerPageTemplate="5,10,15" selectionMode="single"
 						selection="#{ventaTitulos.selectedSiefore}"

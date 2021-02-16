@@ -167,10 +167,10 @@
 	text-align: left;
 }
 
-
+/*
 .ui-inputfield.ui-state-default, .ui-selectonemenu, .ui-radiobutton-box, .ui-chkbox-box .ui-chkbox-icon {
     border: 1px solid #00529b !important;
-}
+}*/
 
 .ui-selectonemenu-trigger {
 	border: 1px solid transparent !important;

@@ -19,6 +19,7 @@
 </h:head>
 
 <h:body>
+
 	<p:ajaxStatus onstart="setTimeout(PF('statusDialog').show(), 30000);" onsuccess="PF('statusDialog').hide()" onerror="alert('No se obtuvo respuesta del servidor'); PF('statusDialog').hide()"/>
 	<p:dialog styleClass="loading" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false"	showHeader="false">
 		<p:graphicImage url="#{request.contextPath}/javax.faces.resource/Imagenes/3.gif.jsf" style="width: 11%;height: 17%;margin-left: 600px;margin-top: 200px;" />

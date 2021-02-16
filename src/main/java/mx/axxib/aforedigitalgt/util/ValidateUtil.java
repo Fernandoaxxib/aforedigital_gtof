@@ -21,4 +21,48 @@ public class ValidateUtil {
 			return true;
 		}
 	}
+	
+	/**
+	 * Valida que la cadena sea un lote, verificar que sea numérico y tenga la cantidad mínima de dígitos.
+	 * @param lote Lote a validar
+	 * @return Verdadero en caso de ser un lote válido
+	 */
+	public static boolean isValidLote(String lote) {
+		if(isInteger(lote)) {
+			return lote.length() >= 10; // TODO: confirmar el tamaño de un lote
+		}
+	    return false;
+	}
+	
+	/**
+	 * Valida si la cadena tiene sólo números
+	 * @param num Cadena a validar
+	 * @return Verdadero en caso de incluir sólo números
+	 */
+	public static boolean isInteger(String num) {
+		Pattern pattern = Pattern.compile("\\d+");
+	    if (num == null) {
+	        return false; 
+	    }
+	    return pattern.matcher(num).matches();
+	}
+	
+	/**
+	 * Valida si la cadena es numérica opcionalmente con decimales, no incluye separador de centenas
+	 * @param num Cadena a validar
+	 * @return Verdadero en caso de incluir sólo números y el punto decimal opcional
+	 */
+	public static boolean isDouble(String num) {
+		Pattern pattern = Pattern.compile("\\d+(\\.\\d+)?");
+	    if (num == null) {
+	        return false; 
+	    }
+	    return pattern.matcher(num).matches();
+	}
+	
+	
+	
+	
+	
+	
 }

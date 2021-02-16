@@ -30,13 +30,13 @@
 				<h:outputText value="#{pro.status}" />
 			</p:column>
 
-			<p:column headerText="F./H. Inicio" sortBy="#{pro.fechaInicial}">
+			<p:column headerText="H. Inicio" sortBy="#{pro.fechaInicial}">
 				<h:outputText value="#{pro.fechaInicial}" style="float:right">
 					<f:convertDateTime type="date" pattern="HH:mm:ss"
 						timeZone="America/Mexico_City" />
 				</h:outputText>
 			</p:column>
-			<p:column headerText="F./H. Término">
+			<p:column headerText="H. Término">
 				<h:outputText value="#{pro.fechaFinal}" style="float:right">
 					<f:convertDateTime type="date" pattern="HH:mm:ss"
 						timeZone="America/Mexico_City" />
