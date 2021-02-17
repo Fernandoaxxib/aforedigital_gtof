@@ -7,159 +7,161 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+	<f:metadata>
+		<f:event listener="#{verDatosCheque.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
 	<ui:define name="center">
 
+		<ui:include src="subMenuReportes.xhtml" />
 		<h:outputScript name="js/calendar-localization.js" />
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
+
 		
 	<h:form id="form">
 
-    <p:panelGrid id="verNNS"  columns="2">
-      	
-      	<h:outputLabel style="font-size:12px" for="flt"
-							value="#{msg.cheque_text_cheque_nss}" />
-						<p:inputText id="icefasFilter"
-							style="width:150px;font-size:12px"
-							placeholder="#{msg.cheque_text_cheque_nss}" value="#{verDatosCheque.nns}" required="true">	
-						</p:inputText>
-      	
-<!--    		<p:inputText id="nss" placeholder="#{msg.cheque_text_cheque_nss}"  value="#{verDatosChequenss}"/> -->
-<!-- 	     <p:inputText id="curp" placeholder="#{msg.cheque_text_cheque_curp}" /> -->
-   		
-   		<p:commandButton action="#{verDatosCheque.consultar}"
-			type="submit" value="#{msg.cheque_boton_consultar}" ajax="false" />
-	</p:panelGrid>	
+
+	<p:panel id="busqueda" header="Solicitudes de Matrimonio y Desempleo" style="margin-top:20px">
 		
-	 <p:panelGrid id="verDetalle" columns="1">	
-		<p:dataTable id="verTable"  var="ver" value="#{verDatosCheque.verChequeOut}">
-		    <p:column headerText="#{msg.cheque_columna_codigo}">
-		        <h:outputText value="#{ver.cuenta}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_columna_nombre}">
-		        <h:outputText value="#{ver.nombre}" />
-		    </p:column>
-		 
-		</p:dataTable>
-	
-	
-    </p:panelGrid>
+				
+				<p:panelGrid styleClass="ui-noborder"  style="margin-top:20px; width:100%;">
+									
+					<p:row>					
+			     	<p:column>
+							<h:outputLabel  value="NSS:" />
+						</p:column>
+						<p:column>
+							<p:inputText value="#{verDatosCheque.nns}" style="width:100px" ></p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" action="#{verDatosCheque.consultar}"
+								type="submit" update="busqueda" value="Buscar" />
+								
+					
+						</p:column>
+					</p:row>		
+								
+				</p:panelGrid>
+				
    
-   	<p:panelGrid id="verDatosCheque"  columns="1">		
-   		<p:commandButton action="#{verDatosCheque.consultarSolicitud}"
-			type="submit" value="#{msg.cheque_ver_boton_cheque}" ajax="false" />
-	</p:panelGrid>		
-	 
-   <p:panelGrid id="verDetalleCheque" columns="1">	
-		<p:dataTable id="verTableDetalle"  var="verSolicitud" value="#{verDatosCheque.listSolicitudChequeOut}">
-		    
-		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}">
-		        <h:outputText value="#{verSolicitud.fechaOperacion}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}">
-		        <h:outputText value="#{verSolicitud.diagnosticoCuenta}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_ver_columna_prestamo}">
-		        <h:outputText value="#{verSolicitud.tipoPrestacion}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_ver_columna_NoSolicitud}">
-		        <h:outputText value="#{verSolicitud.numeroSolicitud}" />
-		    </p:column>
-		 	
-		 	<p:column headerText="#{msg.cheque_ver_columna_fechaSolicitud}">
-		        <h:outputText value="#{verSolicitud.fechaSolicitud}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_ver_columna_folioSolicitud}">
-		        <h:outputText value="#{verSolicitud.folioSolicitud}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_ver_columna_fechaPension}">
-		        <h:outputText value="#{verSolicitud.fechaPension}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_ver_columna_NoResolucion}">
-		        <h:outputText value="#{verSolicitud.numeroResolucion}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_ver_columna_fechaResolucion}">
-		        <h:outputText value="#{verSolicitud.fechaResolucion}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_ver_columna_Ejecucion}">
-		        <h:outputText value="#{verSolicitud.numeroEmpleado}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_ver_columna_RightFax}">
-		        <h:outputText value="#{verSolicitud.rightFax}" />
-		    </p:column>
-		 	
-		</p:dataTable>
+				<p:panelGrid styleClass="ui-noborder"  style="margin-top:20px; width:100%;"> 
+	 					
+	 					<p:row>
+						<p:column>
+							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{verDatosCheque.nombre}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{verDatosCheque.cuenta}"></h:outputText>
+						</p:column>
+						
+						<p:column>
+							<p:commandButton class="blue" action="#{verDatosCheque.botonDatosCheque}"
+								type="submit"  value="Ver Datos Cheque" />
+								
+					
+						</p:column>
+
+					</p:row>
+								
+				</p:panelGrid> 
 	
-	
-    </p:panelGrid>
-		
-	<p:panelGrid id="verPagosCheque"  columns="1">		
-   		<p:commandButton action="#{verDatosCheque.consultarPago}"
-			type="submit" value="#{msg.cheque_pago_boton_cheque}" ajax="false" />
-	</p:panelGrid>		
-	 
-   <p:panelGrid id="verPagoCheque" columns="1">	
-		<p:dataTable id="verTablePago"  var="verPago" value="#{verDatosCheque.listPagoChequeOut}">
-		    
-		    <p:column headerText="#{msg.cheque_pago_columna_Identificador}">
-		        <h:outputText value="#{verPago.identificarOperacion}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_pago_columna_Seguro}">
-		        <h:outputText value="#{verPago.tipoSeguro}" />
-		    </p:column>
-		    
-		   
-		 
-		    <p:column headerText="#{msg.cheque_pago_columna_Prestacion}">
-		        <h:outputText value="#{verPago.tipoPrestacion}" />
-		    </p:column>
-		 	
-		 	<p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}">
-		        <h:outputText value="#{verPago.fechaOperacion}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_pago_columna_MontoPago}">
-		        <h:outputText value="#{verPago.importeAutorizado}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_pago_columna_ImporteRCV}">
-		        <h:outputText value="#{verPago.importeSubcontrato}" />
-		    </p:column>
-		    
-		     <p:column headerText="#{msg.cheque_pago_columna_Pension}">
-		        <h:outputText value="#{verPago.codCuenta}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}">
-		        <h:outputText value="#{verPago.fechaRespuesta}" />
-		    </p:column>
-		 
-		    <p:column headerText="#{msg.cheque_pago_columna_Solicitud}">
-		        <h:outputText value="#{verPago.solicitud}" />
-		    </p:column>
-		    
-		    <p:column headerText="#{msg.cheque_pago_columna_Diag17}">
-		        <h:outputText value="#{verPago.op17}" />
-		    </p:column>
-		    
-		 	
-		</p:dataTable>
-	
-	
-    </p:panelGrid>
-		
+   	
+ 	</p:panel>
+ 
+ 				<p:panel id="pSiefore" header="Siefores" style="margin-top:20px">
+				<p:dataTable id="ventaTable" var="ven" paginatorPosition="bottom"
+					emptyMessage="#{ventaTitulos.mensajeTabla}"
+					value="#{ventaTitulos.listSolicitudChequeOut}" rows="10" paginator="true"
+					rowsPerPageTemplate="5,10,15" selectionMode="single"
+					selection="#{ventaTitulos.selectedSiefore}" rowKey="#{ven.siefore}">
+
+					<p:ajax event="rowSelect" update="form:pSiefore" />
+
+					<f:facet name="header" style="float:right">
+
+						<h:outputLabel for="registros"
+							value="Registros Desplegados}"  />
+						<h:outputText id="totalRegistros"
+							value="#{ventaTitulos.totalSolicitud}" />
+
+					</f:facet>
+
+					<p:column headerText="Fec Oper">
+						<h:outputText value="#{ven.siefore}" />
+					</p:column>
+
+					<p:column headerText="Diag">
+						<h:outputText value="#{ven.totVender}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Prest">
+						<h:outputText value="#{ven.valCuota}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="N Solic">
+						<h:outputText value="#{ven.totCuotas}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Fec Solic">
+						<h:outputText value="#{ven.retiroAforeMND}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Folio Solic">
+						<h:outputText value="#{ven.retiroAforeTIT}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="F Ini Pension">
+						<h:outputText value="#{ven.totGeneralCuotas}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="N Resol">
+						<h:outputText value="#{ven.totGeneralCuotas}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="F Emi Resol">
+						<h:outputText value="#{ven.totGeneralCuotas}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Ejecutivo">
+						<h:outputText value="#{ven.totGeneralCuotas}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="R Fax">
+						<h:outputText value="#{ven.totGeneralCuotas}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+				</p:dataTable>
+ 
+  </p:panel>
 		
   </h:form>
 </ui:define>

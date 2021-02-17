@@ -16,6 +16,7 @@ import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeListOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
 import mx.axxib.aforedigitalgt.serv.SolicitudMatrimonioDesempleoServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "verDatosCheque")
@@ -28,7 +29,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	@Getter
 	@Setter
-	VerChequeOut verChequeOut;
+	private VerChequeOut verChequeOut;
 	
 	@Getter
 	private Integer totalSolicitud;	
@@ -44,11 +45,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	@Getter
 	@Setter
-	List<VerSolicitudChequeListOut> listSolicitudChequeOut;
+	private List<VerSolicitudChequeListOut> listSolicitudChequeOut;
 	
 	@Getter
 	@Setter
-	List <VerPagoChequeListOut> listPagoChequeOut;
+	private List <VerPagoChequeListOut> listPagoChequeOut;
 	
 	@Getter
 	@Setter
@@ -57,8 +58,14 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 
 	@Getter
 	@Setter
-	private String curp;
+	private String nombre;
 	
+	@Getter
+	@Setter
+	private String cuenta;
+	
+	@Getter
+	private String mensajeTabla;
 	
 	@Override
 	public void iniciar() {
@@ -66,9 +73,9 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		if(init) {
 		
 		nns=null;
-		verChequeOut=null;
-		totalPago=null;
+		mensajeTabla=null;
 		totalSolicitud=null;
+		totalPago=null;
 	}
 	}
 	
@@ -76,13 +83,13 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		try {System.out.println("VALOR DE NNS:"+nns);
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nns);
 			System.out.println("VALOR DE verChequeOut: "+verChequeOut);
-			
-			
-			consultarPago(verChequeOut.getCuenta());
-			System.out.println("VALOR DE consultarPago");
-			
-			consultarSolicitud(verChequeOut.getCuenta());
-			System.out.println("VALOR DE consultarSolicitud");
+			nombre=verChequeOut.getNombre();
+			cuenta=verChequeOut.getCuenta();
+//			consultarPago(verChequeOut.getCuenta());
+//			System.out.println("VALOR DE consultarPago");
+//			
+//			consultarSolicitud(verChequeOut.getCuenta());
+//			System.out.println("VALOR DE consultarSolicitud");
 			
 			
 //			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
@@ -101,6 +108,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		}
 	}
 	
+	public void botonDatosCheque() {
+		consultarSolicitud(cuenta);
+		consultarPago(cuenta);
+	}
+	
 	public void consultarSolicitud(String cuenta) {
 		try {
 			VerSolicitudChequeOut res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
@@ -113,7 +125,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		
 		}catch (Exception e) {
 			GenericException(e);
-		}
+		} 
 	}
 	
 	public void consultarPago(String cuenta) {
