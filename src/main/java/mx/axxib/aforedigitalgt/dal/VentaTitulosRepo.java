@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasosIn;
 import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasosOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerRgDevExcesIn;
@@ -253,7 +254,7 @@ public class VentaTitulosRepo extends RepoBase {
 		}
 	}
 
-	public void ventaTitulosMonitor(VentaTitulosMonitorIn parametros) throws AforeException {
+	public BaseOut ventaTitulosMonitor(VentaTitulosMonitorIn parametros) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.VENTA_TITULOS_PACKAGE)
 					.concat(".").concat(Constantes.VENTA_TITULOS_VENTA_TITULOS_MONITOR);
@@ -270,6 +271,8 @@ public class VentaTitulosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_SIAFORE", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_RETIRO_AFORE_MND", BigDecimal.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_VALOR_CUOTA", BigDecimal.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 
 			query.setParameter("P_SELECCION", parametros.getSeleccion());
 			query.setParameter("P_IND_CUOTA_REND", parametros.getIndCuotaRend());
@@ -284,8 +287,13 @@ public class VentaTitulosRepo extends RepoBase {
 			query.setParameter("P_RETIRO_AFORE_MND", parametros.getRetiroAforeMnd());
 			query.setParameter("P_VALOR_CUOTA", parametros.getValorCuota());
 
-			query.execute();
-
+//			query.execute();
+			
+			BaseOut res = new BaseOut();
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
+			return res;
+			
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
@@ -303,6 +311,8 @@ public class VentaTitulosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_SIAFORE", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_RETIRO_AFORE_MND", BigDecimal.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_VALOR_CUOTA", BigDecimal.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ESTATUS", BigDecimal.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_MENSAJE", BigDecimal.class, ParameterMode.OUT);
 
 			query.setParameter("P_IND_CUOTA_REND", parametros.getIndCuotaRend());
 			query.setParameter("P_LOTE_CORTE", parametros.getLoteCorte());
@@ -312,6 +322,7 @@ public class VentaTitulosRepo extends RepoBase {
 			query.setParameter("P_VALOR_CUOTA", parametros.getValorCuota());
 
 			query.execute();
+			
 
 		} catch (Exception e) {
 			throw GenericException(e);

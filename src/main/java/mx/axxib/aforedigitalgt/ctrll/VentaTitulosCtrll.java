@@ -128,7 +128,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 			// Limpiar objetos
 			tablaCount = null;
 			mensajeTabla = null;
-			opcion = null;
+			opcion = "T";
 			selectedTipoRetiro = null;
 			selectedLoteTraspaso = null;
 			selectedrgDevExces = null;
@@ -272,6 +272,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 						montos = ventaTitulosService.getObtieneMontoRetiro(parametrosR);
 						if (montos.size() > 0) {
 							mostrarVenta = true;
+							selectedSiefore = montos.get(0);
 						} else {
 							mensajeTabla = "Sin información";
 						}
@@ -296,6 +297,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 						montos = ventaTitulosService.getObtieneMontoTraspasos(parametrosA);
 						if (montos.size() > 0) {
 							mostrarVenta = true;
+							selectedSiefore = montos.get(0);
 						} else {
 							mensajeTabla = "Sin información";
 						}
@@ -320,6 +322,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 						montos = ventaTitulosService.getObtieneMontoDev(parametrosV);
 						if (montos.size() > 0) {
 							mostrarVenta = true;
+							selectedSiefore = montos.get(0);
 						} else {
 							mensajeTabla = "Sin información";
 						}
@@ -351,6 +354,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 						montos = ventaTitulosService.getObtieneMontoCorte(parametrosL);
 						if (montos.size() > 0) {
 							mostrarVentaCT = true;
+							selectedSiefore = montos.get(0);
 						} else {
 							mensajeTabla = "Sin información";
 						}
@@ -375,7 +379,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
-			if(montos != null)
+			if(montos != null) 
 				tablaCount = montos.size();
 		}
 	}
@@ -421,7 +425,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				pr.setStatus(msg);
 			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -455,7 +459,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				pr.setStatus(msg);
 			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);

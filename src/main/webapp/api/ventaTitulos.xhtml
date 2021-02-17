@@ -156,10 +156,11 @@
 				<p:dataTable id="ventaTable" var="ven" paginatorPosition="bottom"
 					emptyMessage="#{ventaTitulos.mensajeTabla}"
 					value="#{ventaTitulos.montos}" rows="10" paginator="true"
-					rowsPerPageTemplate="5,10,15" selectionMode="single"
+					rowsPerPageTemplate="5,10,15"
 					selection="#{ventaTitulos.selectedSiefore}" rowKey="#{ven.siefore}">
 
-					<p:ajax event="rowSelect" update="form:pSiefore" />
+					<p:ajax event="rowSelectRadio" update="form:pSiefore" />
+					<p:column selectionMode="single" style="width:20px;text-align:center"/>
 
 					<f:facet name="header" style="float:right">
 
