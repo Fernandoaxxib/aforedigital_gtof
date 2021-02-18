@@ -2,8 +2,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.component.UIInput;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.CancelarSolicitudIn;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesIn;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesOut;
@@ -24,6 +24,8 @@ import mx.axxib.aforedigitalgt.eml.MarcasOut;
 import mx.axxib.aforedigitalgt.eml.RetparDetaIn;
 import mx.axxib.aforedigitalgt.eml.RetparDetaOut;
 import mx.axxib.aforedigitalgt.serv.ModDesempParcServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "modDesempParc")
@@ -73,20 +75,37 @@ public class ModDesempParcCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Integer selectedClaveCancelacion;
+	
+	@Getter
+	private String mensajeTabla;
+	
+	@Getter
+	private boolean mostrarCancelacion;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
+		if (init) {
 			nss = null;
-			datosSol = new DatosSolicitudOut();
-			parcialidades = null;
-			administrativos = null;
-			marcas = null;
-			selectedParcialidad = null;
-			selectedClaveCancelacion = null;
+			limpiarPantalla();
+			try {
+				consultarCancelaciones();
+			} catch (Exception e) {
+				resultados.add(GenericException(e));
+			}
 			init = false;
 		}
+	}
+	
+	private void limpiarPantalla() {
+		mostrarCancelacion = false;
+		mensajeTabla = null;
+		datosSol = new DatosSolicitudOut();
+		parcialidades = null;
+		administrativos = null;
+		marcas = null;
+		selectedParcialidad = null;
+		selectedClaveCancelacion = null;
 	}
 
 	public void setSelectedParcialidad(CargaParcialidadesOut selected) {
@@ -94,34 +113,68 @@ public class ModDesempParcCtrll extends ControllerBase {
 		consultarAdministrativos();
 	}
 
+	public void consultarCancelaciones() throws Exception {
+		listaCancelacion = modDesempParcServ.getListaCancelacion();
+	}
+
 	public void consultarSolicitud() {
+		ProcessResult pr = new ProcessResult();
 		try {
-			listaCancelacion = modDesempParcServ.getListaCancelacion();
+			limpiarPantalla();
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Búsqueda por NSS");
+			if (nss != null && !nss.equals("") ) {
+				if (ValidateUtil.isNSS(nss)) {
+					DatosSolicitudIn parametros = new DatosSolicitudIn();
+					parametros.setNss(nss);
+					datosSol = modDesempParcServ.getDatosSolicitud(parametros);
+					noSolicitud = datosSol.getNoSolicitud();
+					codEmpresa = datosSol.getCodEmpresa();
+					codCuenta = datosSol.getCodCuenta();
+					
+					if(codEmpresa != null && codEmpresa != null) {
 
-			DatosSolicitudIn parametros = new DatosSolicitudIn();
-			parametros.setNss(nss);
-			datosSol = modDesempParcServ.getDatosSolicitud(parametros);
-			noSolicitud = datosSol.getNoSolicitud();
-			codEmpresa = datosSol.getCodEmpresa();
-			codCuenta = datosSol.getCodCuenta();
-
-			CargaParcialidadesIn parametrosPar = new CargaParcialidadesIn();
-			parametrosPar.setNoSolicitud(noSolicitud);
-			parametrosPar.setCodEmpresa(codEmpresa);
-			parcialidades = modDesempParcServ.getCargaParcialidades(parametrosPar);
-
-			if (parcialidades != null && parcialidades.size() > 0) {
-				setSelectedParcialidad(parcialidades.get(0));
+						CargaParcialidadesIn parametrosPar = new CargaParcialidadesIn();
+						parametrosPar.setNoSolicitud(noSolicitud);
+						parametrosPar.setCodEmpresa(codEmpresa);
+						parcialidades = modDesempParcServ.getCargaParcialidades(parametrosPar);
+	
+						if (parcialidades != null && parcialidades.size() > 0) {
+							setSelectedParcialidad(parcialidades.get(0));
+						} else {
+							selectedParcialidad = null;
+							administrativos = null;
+							mensajeTabla = "Sin información";
+						}
+	
+						MarcasIn parametrosMar = new MarcasIn();
+						parametrosMar.setCodCuenta(codCuenta);
+						marcas = modDesempParcServ.getMarcas(parametrosMar);
+						if (marcas == null || marcas.size() == 0) {
+							mensajeTabla = "Sin información";
+						}
+						mostrarCancelacion = true;
+						pr.setStatus("Exitosa");
+					} else {
+						datosSol.setFechaAccion(null);
+						mostrarCancelacion = false;
+						pr.setStatus("No se encontró información");
+					}
+				} else {
+					UIInput input = (UIInput) findComponent("nss");
+					input.setValid(false);
+					pr.setStatus("NSS no válido");
+				}
 			} else {
-				selectedParcialidad = null;
-				administrativos = null;
+				UIInput input = (UIInput) findComponent("nss");
+				input.setValid(false);
+				pr.setStatus("NSS es requerido");
 			}
-
-			MarcasIn parametrosMar = new MarcasIn();
-			parametrosMar.setCodCuenta(codCuenta);
-			marcas = modDesempParcServ.getMarcas(parametrosMar);
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 
@@ -132,34 +185,47 @@ public class ModDesempParcCtrll extends ControllerBase {
 				parametrosAdm.setNoPago(selectedParcialidad.getPago());
 				parametrosAdm.setNoSolicitud(noSolicitud);
 				administrativos = modDesempParcServ.getRetpar_Deta(parametrosAdm);
+				
 			}
 		} catch (Exception e) {
-			GenericException(e);
-		}
+			resultados.add(GenericException(e));
+		} 
 	}
 
 	public void cancelarSolicitud() {
+		ProcessResult pr = new ProcessResult();
 		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Cancelación individual");
 			if (selectedClaveCancelacion != null) {
 				CancelarSolicitudIn parametros = new CancelarSolicitudIn();
 				parametros.setNss(nss);
 				parametros.setNoSolicitud(noSolicitud);
 				parametros.setCveProcesoOpe(selectedClaveCancelacion);
 				System.out.println("cancelado con clave: " + selectedClaveCancelacion);
-				String msg = "OK"; // Todo: quitar para probar la cancelación
-//			String msg = modDesempParcServ.cancelarSolicitud(parametros);
+				String msg = "OK"; //TODO: quitar para probar la cancelación
+//				String msg = modDesempParcServ.cancelarSolicitud(parametros);
 				if (msg.trim().toUpperCase().equals("OK")) {
 					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+//					FacesContext.getCurrentInstance().addMessage(null,
+//							new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+					pr.setStatus(msg);
 				} else {
 					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+//					FacesContext.getCurrentInstance().addMessage(null,
+//							new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					pr.setStatus(msg);
 				}
+			} else {
+				UIInput input = (UIInput) findComponent("tipoCancelacion");
+				input.setValid(false);
+				pr.setStatus("Tipo cancelación es requerido");
 			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 

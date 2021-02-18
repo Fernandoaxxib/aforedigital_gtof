@@ -23,6 +23,18 @@ public class ValidateUtil {
 	}
 	
 	/**
+	 * Valida si la cadena es un NSS, valida que sea numérico y de 11 dígitos
+	 * @param nss
+	 * @return
+	 */
+	public static boolean isNSS(String nss) {
+		if(isInteger(nss)) {
+			return nss.length() == 11; 
+		}
+	    return false;
+	}
+	
+	/**
 	 * Valida que la cadena sea un lote, verificar que sea numérico y tenga la cantidad mínima de dígitos.
 	 * @param lote Lote a validar
 	 * @return Verdadero en caso de ser un lote válido
