@@ -16,5 +16,7 @@ public class LlenaInfoOut {
 	private List<LlenaInfo> datos;
 	private Integer totTitulos;
 	private Integer totPesos;
+	private String mensaje;
+	private Integer estatus;
 }
   

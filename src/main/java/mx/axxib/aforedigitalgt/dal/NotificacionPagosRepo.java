@@ -28,6 +28,8 @@ public class NotificacionPagosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_TOT_TITULOS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_TOT_PESOS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("CP_DATOS", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			
 			query.setParameter("P_FECHA_CONSULTA", fecha);
 			
@@ -37,6 +39,8 @@ public class NotificacionPagosRepo extends RepoBase {
 				res.setDatos(query.getResultList());
 				res.setTotTitulos((Integer)query.getOutputParameterValue("P_TOT_TITULOS"));
 				res.setTotPesos((Integer)query.getOutputParameterValue("P_TOT_PESOS"));
+				res.setMensaje((String)query.getOutputParameterValue("P_MENSAJE"));
+				res.setEstatus((Integer)query.getOutputParameterValue("P_ESTATUS"));
 			}
 			return res;
 		} catch (Exception e) {

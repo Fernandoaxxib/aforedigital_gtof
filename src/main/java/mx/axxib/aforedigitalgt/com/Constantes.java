@@ -63,7 +63,7 @@ public class Constantes {
 	public static final String NOTIFICACION_PAGOS_PACKAGE = "PKG_RET_FUSION_FONOTI16";
 	public static final String NOTIFICACION_PAGOS_LLENA_INFO = "PRC_LLENA_INFO";
 	public static final String NOTIFICACION_PAGOS_ENVIA_FECHA = "PRC_NOTIFICA_INFO";
-	public static final String NOTIFICACION_PAGOS_EXPORTAR = "PRC_EXPORTA_INFO";
+	public static final String NOTIFICACION_PAGOS_EXPORTAR = "PRC_EXPORTAR_INFO";
 
 	// Reporte de liquidación FOLIQDIS
 	public static final String REPORTE_LIQUIDACION_PACKAGE = "PKG_RET_FOLIQDIS";

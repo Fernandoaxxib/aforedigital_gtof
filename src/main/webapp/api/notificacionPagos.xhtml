@@ -8,24 +8,21 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{notificacionPagos.iniciar}" type="preRenderView"/>
+		<f:event listener="#{notificacionPagos.iniciar}" type="preRenderView" />
 	</f:metadata>
-	
-    
-    <ui:define name="left">
+
+
+	<ui:define name="left">
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="center">
 		<ui:include src="subMenuTransacciones.xhtml" />
 		<h:outputScript name="js/calendar-localization.js" />
 
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
-
 		<h:form id="form">
-			<p:panel id="busqueda" header="Notificaciones de pago" style="margin-top:20px">
+			<p:panel id="busqueda" header="Notificaciones de pago"
+				style="margin-top:20px">
 				<p:panelGrid id="fechas" columns="3" styleClass="ui-noborder">
 					<p:outputLabel value="Fecha de proceso" style="font-weight: bold" />
 					<p:datePicker id="fecha" value="#{notificacionPagos.fecha}"
@@ -33,16 +30,18 @@
 						monthNavigator="true" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-					<p:commandButton class="blue" action="#{notificacionPagos.buscarPagos}" update="form"
-						type="submit" value="Consultar"  />
-						
-	
+					<p:commandButton class="blue"
+						actionListener="#{notificacionPagos.buscarPagos}" update="pagos result"
+						value="Consultar" />
+
+
 				</p:panelGrid>
 			</p:panel>
 
 			<p:panel id="pagos" header="Pagos pendientes de notificación"
 				style="margin-top:20px">
-				<p:dataTable id="notificacionTable" var="pag" emptyMessage="#{msg.aprob_msj_sinDatos}"
+				<p:dataTable id="notificacionTable" var="pag"
+					emptyMessage="#{notificacionPagos.mensajeTabla}"
 					sortBy="#{pag.fechaAprobacion}" paginatorPosition="bottom"
 					value="#{notificacionPagos.pagos}" rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15">
@@ -51,6 +50,9 @@
 						<h:outputText value="#{pag.fechaAprobacion}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
 						</h:outputText>
+						<f:facet name="footer">
+							<h:outputLabel value="Totales:"	style="float:right;font-weight: bold"/>
+						</f:facet>
 					</p:column>
 
 					<p:column headerText="Titulos">
@@ -81,26 +83,28 @@
 						<h:outputText value="#{pag.nss}" />
 					</p:column>
 
-					<p:column headerText="Beneficiario">
+					<p:column headerText="Beneficiario" style="width:300px">
 						<h:outputText value="#{pag.beneficiario}" />
 					</p:column>
 
 
 				</p:dataTable>
+
+				<p:commandButton id="enviar" class="blue" update="pagos result" rendered="#{notificacionPagos.mostrarEnviar}"
+					actionListener="#{notificacionPagos.enviar}" value="Enviar" />
+
+				<p:commandButton id="exportar" class="blue" update="pagos result"  rendered="#{notificacionPagos.mostrarExportar}"
+					actionListener="#{notificacionPagos.exportar}" value="Exportar" />
 			</p:panel>
 
-			<p:panel id="notificacion" header="Notificación de pago"
-				style="margin-top:20px">
-				<p:commandButton class="blue" action="#{notificacionPagos.enviar}" type="submit" 
-					value="Enviar" />
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{notificacionPagos}" />
+			</ui:include>
 
-				<p:commandButton class="blue" action="#{notificacionPagos.exportar}"
-					type="submit" value="Exportar"  />
-			</p:panel>
 		</h:form>
 
 	</ui:define>
-	
+
 
 
 </ui:composition>
