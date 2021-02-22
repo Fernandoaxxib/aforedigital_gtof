@@ -166,4 +166,10 @@ public class Constantes {
 	public static final String CONSULTA_VER_DETALLE_CHEQUE_STORED = "PRC_OBTIENE_CUENTA";
 	public static final String SOLICITUD_VER_DETALLE_CHEQUE_STORED = "PRC_SOL_MAT_DESEMPLE";
 	public static final String PAGOS_VER_DETALLE_CHEQUE_STORED = "PRC_PAG_EFECTUADOS";
+	
+
+	// Consulta recaudación FOREREVU
+	public static final String CONSULTA_RECAUDACION_PACKAGE = "PKG_RET_FOREREVU";
+	public static final String CONSULTA_RECAUDACION_CONSULTA_NSS = "CONSULTA_X_NSS";
+	public static final String CONSULTA_RECAUDACION_GENERA_REPORTE = "PRC_GENERA_REPORTE";
 }
