@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 
 import javax.faces.component.UIInput;
 
+
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -24,8 +25,8 @@ import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
-@Component(value = "verDatosCheque")
-@ELBeanName(value = "verDatosCheque")
+@Component(value = "solicitudMatrimonioDesempleo")
+@ELBeanName(value = "solicitudMatrimonioDesempleo")
 public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	
@@ -99,13 +100,13 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		super.iniciar();
 		if (init) {
 			nss = null;
-			limpiarPantalla();
+			limpiar();
 			init = false;
 		}
 	
 	}
 	
-	private void limpiarPantalla() {
+	private void limpiar() {
 		mensajeTabla=null;
 		totalSolicitud=null;
 		totalPago=null;
@@ -114,15 +115,16 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	public void consultar() {
 		ProcessResult pr = new ProcessResult();
 		try {System.out.println("VALOR DE NNS:"+nss);
-		limpiarPantalla();
+		limpiar();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS");
 		if (nss != null && !nss.equals("") ) {
 			if (ValidateUtil.isNSS(nss)) {
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nss);
 			System.out.println("VALOR DE verChequeOut: "+verChequeOut);
-			//nombre=verChequeOut.getNombre();
+			nombre=verChequeOut.getNombre();
 			cuenta=verChequeOut.getCuenta();
+			pr.setStatus("Consulta Exitosa");
 //			consultarPago(verChequeOut.getCuenta());
 //			System.out.println("VALOR DE consultarPago");
 //			
@@ -130,37 +132,37 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 //			System.out.println("VALOR DE consultarSolicitud");
 			
 			
-			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
-		        int nDatos=tokens.countTokens();
-		        String [] datos=new String[nDatos];
-		        int i=0;
-		        while(tokens.hasMoreTokens()){
-		            String str=tokens.nextToken();
-		           // datos[i]=Double.valueOf(str).doubleValue();
-		            datos[i]=str;
-		            System.out.println(datos[i]);
-		            i++;
-		        }
-		        
-		        if(datos.length == 4) {
-		        String nombre1= datos[0];
-		        String nombre2= datos[1];
-		        nombre=nombre1+" "+nombre2;
-		       
-		        apellidoPaterno=datos[2];
-		        apellidoMaterno=datos[3];
-		        System.out.println("Valor concatenado:"+nombre);
-		        System.out.println("Valor concatenado:"+apellidoPaterno);
-		        System.out.println("Valor concatenado:"+apellidoMaterno);
-		        }else {
-		        	nombre= datos[0];
-			       		       
-			        apellidoPaterno=datos[1];
-			        apellidoMaterno=datos[2];
-			        System.out.println("Valor concatenado nombre1:"+nombre);
-			        System.out.println("Valor concatenado apellidoPaterno:"+apellidoPaterno);
-			        System.out.println("Valor concatenado apellidoMaterno:"+apellidoMaterno);	
-		        }
+//			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
+//		        int nDatos=tokens.countTokens();
+//		        String [] datos=new String[nDatos];
+//		        int i=0;
+//		        while(tokens.hasMoreTokens()){
+//		            String str=tokens.nextToken();
+//		           // datos[i]=Double.valueOf(str).doubleValue();
+//		            datos[i]=str;
+//		            System.out.println(datos[i]);
+//		            i++;
+//		        }
+//		        
+//		        if(datos.length == 4) {
+//		        String nombre1= datos[0];
+//		        String nombre2= datos[1];
+//		        nombre=nombre1+" "+nombre2;
+//		       
+//		        apellidoPaterno=datos[2];
+//		        apellidoMaterno=datos[3];
+//		        System.out.println("Valor concatenado:"+nombre);
+//		        System.out.println("Valor concatenado:"+apellidoPaterno);
+//		        System.out.println("Valor concatenado:"+apellidoMaterno);
+//		        }else {
+//		        	nombre= datos[0];
+//			       		       
+//			        apellidoPaterno=datos[1];
+//			        apellidoMaterno=datos[2];
+//			        System.out.println("Valor concatenado nombre1:"+nombre);
+//			        System.out.println("Valor concatenado apellidoPaterno:"+apellidoPaterno);
+//			        System.out.println("Valor concatenado apellidoMaterno:"+apellidoMaterno);	
+//		        }
 			} else {
 				UIInput input = (UIInput) findComponent("nss");
 				input.setValid(false);
@@ -170,6 +172,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			UIInput input = (UIInput) findComponent("nss");
 			input.setValid(false);
 			pr.setStatus("NSS es requerido");
+			
 		}
 		}catch (Exception e) {
 			pr = GenericException(e);
@@ -185,7 +188,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	}
 	
 	public void consultarSolicitud(String cuenta) {
+		ProcessResult pr = new ProcessResult();
 		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Búsqueda por Cuenta Solicitud Matrimonio");
+			limpiar();
 			VerSolicitudChequeOut res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
 			consultarPago(cuenta);
 			System.out.println("VALOR DE consultarSolicitud: "+res.getVerSolicitudChequeListOut().size());
@@ -195,18 +202,32 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				totalSolicitud = res.getVerSolicitudChequeListOut().size();
 				if ( res.getVerSolicitudChequeListOut().size() == 0) {
 					mensajeTabla = "Sin información";
-				}
+					pr.setStatus("No se encontraron resultados");
+				}else {
 				System.out.println("VALOR DE totalSolicitud:"+totalSolicitud);
 				mensajeSolicitud=res.getMensaje();
+				pr.setStatus(mensajeSolicitud);//"Consulta Exitosa"
+				}
+			}else {
+				
+				pr.setStatus("No se encontraron resultados");
+				mensajeTabla = "Sin información";
 			}
 		
 		}catch (Exception e) {
 			resultados.add(GenericException(e));
-		} 
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
 	}
 	
 	public void consultarPago(String cuenta) {
+		ProcessResult pr = new ProcessResult();
 		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Búsqueda por Cuenta Pagos Efectuados");
+			limpiar();
 			VerPagoChequeOut res=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
 			System.out.println("VALOR DE consultarPago: "+res.getVerPagoChequeListOut().size());
 			System.out.println("VALOR DE NNS:"+res.getVerPagoChequeListOut());
@@ -215,12 +236,21 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				totalPago = res.getVerPagoChequeListOut().size();
 				if ( res.getVerPagoChequeListOut().size() == 0) {
 					mensajeTabla = "Sin información";
-				}
+					pr.setStatus("No se encontraron resultados");
+				}else {
 				mensajePago=res.getMensaje();
+				pr.setStatus(mensajePago);//"Consulta Exitosa"
+				}
+			}else {
+				pr.setStatus("No se encontraron resultados");
+				mensajeTabla = "Sin información";
 			}
 		
 		}catch (Exception e) {
 			resultados.add(GenericException(e));
+		}finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 }
