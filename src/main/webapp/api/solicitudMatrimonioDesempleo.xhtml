@@ -2,19 +2,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<ui:composition template="layaut2.xhtml"
+<ui:composition template="layaut.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{verDatosCheque.iniciar}" type="preRenderView" />
+		<f:event listener="#{solicitudMatrimonioDesempleo.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
-	</ui:define>
+<!-- 	<ui:define name="left"> -->
+<!-- 		<ui:include src="graficas.xhtml" /> -->
+<!-- 	</ui:define> -->
 
 	<ui:define name="center">
 	<h:outputStylesheet name="estilo-base.css" library="css" />
@@ -36,69 +36,50 @@
 							<p:outputLabel  value="NSS:"  style="font-weight: bold"/>
 						</p:column>
 						<p:column>
-							<p:inputText id="nss" value="#{verDatosCheque.nss}" style="width:100px" ></p:inputText>
-							<p:commandButton class="blue"  actionListener="#{verDatosCheque.consultar}"
-								 update="form busqueda result" value="Buscar" />
+							<p:inputText id="nss" value="#{solicitudMatrimonioDesempleo.nss}" style="width:100px" ></p:inputText>
+							<p:commandButton class="blue"  actionListener="#{solicitudMatrimonioDesempleo.consultar}"
+								 update="form solicitud result busqueda pSolicitud pPago" value="Buscar" />
+						</p:column>
+						
+						<p:column>
+							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{solicitudMatrimonioDesempleo.nombre}"></h:outputText>
 						</p:column>
 						
 						<p:column>
 							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{verDatosCheque.cuenta}"></h:outputText>
+							<h:outputText value="#{solicitudMatrimonioDesempleo.cuenta}"></h:outputText>
 						</p:column>
 						
 						<p:column>
-							<p:commandButton class="blue" action="#{verDatosCheque.botonDatosCheque}"
-								type="submit"  update="busqueda pSolicitud pPago" value="Ver Datos Cheque" />
+							<p:commandButton class="blue" action="#{solicitudMatrimonioDesempleo.botonDatosCheque}" process="nss"
+								  update="form solicitud result busqueda pSolicitud pPago" value="Ver Datos Cheque" />
+								  
+							
 						</p:column>
-					</p:row>		
+					</p:row>	
+					
+						
+						
+						
 								
 				</p:panelGrid>
 				
-   
-				<p:panelGrid styleClass="ui-noborder"  style="margin-top:20px; width:100%;"> 
-	 					
-	 					<p:row>
-						<p:column>
-							<p:outputLabel value="Nombre(s):" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{verDatosCheque.nombre}"></h:outputText>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Apellido Pat:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{verDatosCheque.apellidoPaterno}"></h:outputText>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Apellido Mat:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{verDatosCheque.apellidoMaterno}"></h:outputText>
-						</p:column>
-						
-
-					</p:row>
-								
-				</p:panelGrid> 
-	
-   	
+  		
  	</p:panel>
  
  	<p:panel id="pSolicitud" header="Solicitud Matrimonio,Desempleo" style="margin-top:20px">
  		
  		<p:dataTable id="verSolicitudMatrimonio"  var="verSolicitud"
 			paginatorPosition="bottom"
-					emptyMessage="#{verDatosCheque.mensajeTabla}"
-			 value="#{verDatosCheque.listSolicitudChequeOut}"  rows="10" paginator="true"
+					emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTabla}"
+			 value="#{solicitudMatrimonioDesempleo.listSolicitudChequeOut}"  rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15"
-					selection="#{verDatosCheque.selectSolicitudChequeOut}" rowKey="#{verSolicitud.numeroSolicitud}">
-		    
-		    		
-		    		
-		    		
+					selection="#{solicitudMatrimonioDesempleo.selectSolicitudChequeOut}" rowKey="#{verSolicitud.numeroSolicitud}">
 		    
 					<f:facet name="header" style="float:right">
 
@@ -138,12 +119,9 @@
 		        <h:outputText value="#{verSolicitud.fechaPago}" />
 		    </p:column>
 		    
-		   
-		 
 		    <p:column headerText="#{msg.cheque_ver_columna_NoResolucion}">
 		        <h:outputText value="#{verSolicitud.numeroResolucion}" />
 		    </p:column>
-		    
 		    
 		    
 		    <p:column headerText="#{msg.cheque_ver_columna_fechaResolucion}">
@@ -167,13 +145,13 @@
 			
 			<p:dataTable id="verPagosEfectuados"  var="verPago" paginatorPosition="bottom"
 					emptyMessage="#{verDatosCheque.mensajeTabla}"
-			 value="#{verDatosCheque.listPagoChequeOut}"  rows="10" paginator="true"
+			 value="#{solicitudMatrimonioDesempleo.listPagoChequeOut}"  rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15" >
 		    		    
 					
 					<f:facet name="header" style="float:right">
 						<h:outputLabel for="registros"  value="#{msg.aprob_label_totalRegistros}"  />
-						<h:outputText id="totalRegistros" value="#{verDatosCheque.totalPago}" />
+						<h:outputText id="totalRegistros" value="#{solicitudMatrimonioDesempleo.totalPago}" />
 
 					</f:facet>
 					
@@ -225,14 +203,14 @@
 		
   </p:panel>
 		
-		
-
+		<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{solicitudMatrimonioDesempleo}" />
+		</ui:include>
 		
 		
   </h:form>
-  		<ui:include src="processResult.xhtml">
-			<ui:param name="base" value="#{modDesempParc}" />
-		</ui:include>
+  		
+  		
   
 </ui:define>
 
