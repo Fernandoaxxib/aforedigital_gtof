@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
+import mx.axxib.aforedigitalgt.eml.ObtieneMonitor;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroServ;
@@ -42,7 +43,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	
 	
 	@Getter
-	private List<ObtieneMonitorOut> procesoEjecutado;
+	private List<ObtieneMonitor> procesoEjecutado;
 	
 	@Getter
 	@Setter
@@ -105,7 +106,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	}
 	public void recuperarProcesoEjecutado() {
 		try {
-			procesoEjecutado = monitorService.getMonitor();
+			ObtieneMonitorOut res = monitorService.getMonitor();
+			procesoEjecutado = res.getMonitor();
 		} catch (Exception e) {
 			GenericException(e);
 		}

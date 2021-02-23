@@ -2,10 +2,6 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -13,10 +9,14 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
+import mx.axxib.aforedigitalgt.eml.ObtieneJobs;
 import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
+import mx.axxib.aforedigitalgt.eml.ObtieneMonitor;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -33,23 +33,27 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	private AforeMessage aforeMessage;
 
 	@Getter
-	private List<ObtieneMonitorOut> monitor;
+	private List<ObtieneMonitor> monitor;
 
 	@Getter
-	private List<ObtieneJobsOut> jobs;
-
-	@Getter
-	@Setter
-	private ObtieneMonitorOut selectedMonitor;
+	private List<ObtieneJobs> jobs;
 
 	@Getter
 	@Setter
-	private ObtieneJobsOut selectedJob;
+	private ObtieneMonitor selectedMonitor;
+
+	@Getter
+	@Setter
+	private ObtieneJobs selectedJob;
+	
+	@Getter
+	private Integer tablaCount;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
+			
 			actualizar();
 
 			// Cancelar inicialización sobre la misma pantalla
@@ -60,6 +64,7 @@ public class MonitorProcesosCtrll extends ControllerBase {
 	public void actualizar() {
 		ProcessResult pr = new ProcessResult();
 		try {
+			tablaCount = null;
 			pr.setFechaInicial(DateUtil.getNowDate());
 			consultarMonitor();
 			consultarJobs();
@@ -75,18 +80,34 @@ public class MonitorProcesosCtrll extends ControllerBase {
 
 	public void consultarMonitor() throws Exception {
 		selectedMonitor = null;
-		monitor = monitorService.getMonitor();
-		if (monitor != null && monitor.size() > 0) {
-			selectedMonitor = monitor.get(0);
+		ObtieneMonitorOut res = monitorService.getMonitor();
+		if(res.getEstatus() == 1) {
+			monitor = res.getMonitor();
+			if (monitor != null && monitor.size() > 0) {
+				selectedMonitor = monitor.get(0);
+				tablaCount = monitor.size();
+			}
+		} else {
+			if(res.getEstatus() == 2) {
+				AforeException e = new AforeException("101", "Error en base de datos", res.getMensaje());
+				throw e;
+			}
 		}
-
 	}
 
 	public void consultarJobs() throws Exception {
 		selectedJob = null;
-		jobs = monitorService.getJobs();
-		if (jobs != null && jobs.size() > 0) {
-			selectedJob = jobs.get(0);
+		ObtieneJobsOut res = monitorService.getJobs();
+		if(res.getEstatus() == 1) {
+			jobs = res.getJobs();
+			if (jobs != null && jobs.size() > 0) {
+				selectedJob = jobs.get(0);
+			}
+		} else {
+			if(res.getEstatus() == 2) {
+				AforeException e = new AforeException("101", "Error en base de datos", res.getMensaje());
+				throw e;
+			}
 		}
 	}
 
@@ -98,17 +119,17 @@ public class MonitorProcesosCtrll extends ControllerBase {
 
 			if (selectedJob != null) {
 				pr.setDescProceso("Ejecutar job " + selectedJob.getJob());
-				String msg = monitorService.ejecutar(selectedJob);
-				if (msg.trim().toUpperCase().equals("OK")) {
-					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+				BaseOut res = monitorService.ejecutar(selectedJob);
+				if (res.getEstatus() == 1) {
+					String msg = "Job ejecutado correctamente";
 					// FacesContext.getCurrentInstance().addMessage(null, new
 					// FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
 					pr.setStatus(msg);
 				} else {
-					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-					// FacesContext.getCurrentInstance().addMessage(null, new
-					// FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-					pr.setStatus(msg);
+					if(res.getEstatus() == 2) {
+						AforeException e = new AforeException("101", "Error en base de datos", res.getMensaje());
+						throw e;
+					}
 				}
 			} else {
 				pr.setDescProceso("Ejecutar job");

@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
-import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
-import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
+import mx.axxib.aforedigitalgt.eml.ObtieneJobs;
+import mx.axxib.aforedigitalgt.eml.ObtieneMonitor;
 import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 

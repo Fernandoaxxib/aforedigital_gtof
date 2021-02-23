@@ -17,7 +17,8 @@
 
 		<ui:include src="menu.xhtml" />
 
-		<p:panel id="modulo" header="Detalle del proceso" style="margin-top:20px">
+		<p:panel id="modulo" header="Detalle del proceso"
+			style="margin-top:20px">
 
 			<h:form id="form2">
 
@@ -68,20 +69,34 @@
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 
 		<h:form id="form">
+			<p:commandButton class="blue"
+				actionListener="#{monitorProcesos.actualizar}"
+				update="monitor jobs result form2:monitorDetalle"
+				style="margin-top:20px" value="Actualizar todo" />
 
 			<p:panel id="monitor" header="Monitor de procesos"
 				style="margin-top:20px">
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
 					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{monitorProcesos.monitor}" rows="10" 
+					value="#{monitorProcesos.monitor}" rows="10"
 					selection="#{monitorProcesos.selectedMonitor}"
 					rowKey="#{mon.sesionId}" paginator="true"
 					rowsPerPageTemplate="5,10,15">
 
-					<p:ajax event="rowSelectRadio" update="form2" /> 
-					<p:column id="radio" selectionMode="single" style="width:20px;text-align:center"/>
-					
-					
+					<f:facet name="header" style="float:right">
+
+						<h:outputLabel for="registros"
+							value="#{msg.aprob_label_totalRegistros}" />
+						<h:outputText id="totalRegistros"
+							value="#{monitorProcesos.tablaCount}" />
+
+					</f:facet>
+
+					<p:ajax event="rowSelectRadio" update="form2" />
+					<p:column id="radio" selectionMode="single"
+						style="width:20px;text-align:center" />
+
+
 					<!-- 
 				<p:column headerText="#{msg.monitor_monitor_columna_id}">
 					<h:outputText value="#{mon.sesionId}" />
@@ -91,7 +106,8 @@
 						<h:outputText value="#{mon.abrevProceso}" />
 					</p:column>
 
-					<p:column headerText="#{msg.monitor_monitor_columna_estado}" style="text-align: center;">
+					<p:column headerText="#{msg.monitor_monitor_columna_estado}"
+						style="text-align: center;">
 						<h:outputText value="#{mon.estadoProceso}" />
 					</p:column>
 
@@ -103,19 +119,18 @@
 				</p:dataTable>
 			</p:panel>
 
-			<p:commandButton class="green" actionListener="#{monitorProcesos.actualizar}" update="monitor jobs result form2:monitorDetalle"
-				 style="margin-top:20px" value="Actualizar"
-				 />
+
 
 			<p:panel id="jobs" header="Jobs" style="margin-top:20px">
 				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom"
 					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{monitorProcesos.jobs}" rows="10" 
+					value="#{monitorProcesos.jobs}" rows="10"
 					selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
 					paginator="true" rowsPerPageTemplate="5,10,15">
 
-					 
-					<p:column selectionMode="single" style="width:20px;text-align:center"/>
+
+					<p:column selectionMode="single"
+						style="width:20px;text-align:center" />
 
 					<p:column headerText="#{msg.monitor_job_columna_job}">
 						<h:outputText value="#{job.job}" />
@@ -136,15 +151,15 @@
 				-->
 				</p:dataTable>
 
-				<p:commandButton class="blue" actionListener="#{monitorProcesos.ejecutar}"
-					 update="result" value="#{msg.monitor_boton_ejecutar}" 
-					style="margin-top:20px" />
+				<p:commandButton class="blue"
+					actionListener="#{monitorProcesos.ejecutar}" update="result"
+					value="#{msg.monitor_boton_ejecutar}" style="margin-top:20px" />
 			</p:panel>
 
 			<ui:include src="processResult.xhtml">
 				<ui:param name="base" value="#{monitorProcesos}" />
 			</ui:include>
-			
+
 		</h:form>
 
 	</ui:define>

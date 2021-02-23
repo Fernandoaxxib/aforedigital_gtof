@@ -173,11 +173,14 @@ public class ModDesempParcRepo extends RepoBase {
 	}
 
 	public String cancelarSolicitud(CancelarSolicitudIn parametros) throws AforeException {
+//		  PROCEDURE PRC_CANCELAR_SOLICITUD(P_NSS IN VARCHAR2,
+//                  P_NUM_SOLICITUD IN VARCHAR2,
+//                  P_CVE_PROCESO_OPE IN NUMBER,
+//                  P_MESSAGE OUT VARCHAR2);
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_PACKAGE)
 					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_CANCELAR_SOLICITUD);
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,
-					"CancelarSolicitudOut");
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_NUM_SOLICITUD", String.class, ParameterMode.IN);
