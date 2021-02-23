@@ -39,61 +39,37 @@
 		 </p:panelGrid>
 			
 			<h:form id="form">
-			<p:growl id="message" />
+<!-- 			<p:growl id="message" /> -->
 			<p:panel id="pnlResult" header="Reporte Saldos Finales" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
 			
 							
 					
 				<p:panel header="Reporte Saldo Voluntario"  style="font-size:12px;margin-bottom:20px;margin-top:20px">
-					<p:panelGrid id="panel" columns="8" styleClass="ui-noborder" cellpadding="10" width="100%">
+					<p:panelGrid id="panel" columns="6" styleClass="ui-noborder" cellpadding="10" width="100%">
 							
 						<p:outputLabel value="Ruta:" />					
 						<p:inputText id="rutaVol" disabled="true" 	value="#{saldosNegativosVol.rutaSaldoNegativo}" style="text-Align:left;font-size:15px;width:150px"/>
 						<p:outputLabel value="Nombre Archivo:" />
-						<p:inputText required="true" requiredMessage="Debe ingresar nombre de archivo" value="#{saldosNegativosVol.nombreSaldoNegativo}" > </p:inputText>
+						<p:inputText id="nombreVol" value="#{saldosNegativosVol.nombreSaldoNegativo}" placeholder="RPT-MOVS-SLD-FIN-YYYYMMDD.xls" size="30"> </p:inputText>
 						<p:outputLabel value="Fecha Mov:" />
-						<p:datePicker id="fecha" required="true" requiredMessage="Debe ingresar la fecha" 
-						inputStyle="width:120px; text-align:right;"
+						<p:datePicker id="fechaVol" inputStyle="width:120px; text-align:right;"
 						value="#{saldosNegativosVol.saldoFechaMovimiento}" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
-						<p:commandButton styleClass="blue ui-button-text" type="submit" value="Reporte" action="#{saldosNegativosVol.ejecutarReporteNegativo}" update="form message" ajax="true"/>
+						<p:commandButton styleClass="blue ui-button-text" process="nombreVol" value="Reporte" action="#{saldosNegativosVol.ejecutarReporteNegativo}" update="form result" ajax="true"/>
 									
 								
 							
 					</p:panelGrid>	
 						
 				</p:panel>
-					
+			</p:panel>		
 												 
 			
 			
-			<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{saldosNegativosVol.proceso}"
-					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					style="margin-top:20px;font-size:12px">
-					<f:facet name="header">
-						<p:outputPanel style="text-align:left">
-							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-						</p:outputPanel>
-					</f:facet>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
-						<h:outputText value="#{pro.abrevProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
-						<h:outputText value="#{pro.estadoProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraInicio}" />
-					</p:column>
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraFinal}" />
-					</p:column>
-				</p:dataTable>
-			</p:panel>
+			<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{saldosNegativosVol}" />
+			</ui:include>
 			
 			</h:form>
 		

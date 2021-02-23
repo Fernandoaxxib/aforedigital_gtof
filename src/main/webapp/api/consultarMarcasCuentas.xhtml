@@ -20,21 +20,21 @@
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript name="js/calendar-localization.js" />
 		
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
+<!-- 		<p:messages id="messages" showDetail="true" closable="true"> -->
+<!-- 			<p:autoUpdate /> -->
+<!-- 		</p:messages> -->
 
 	<h:form id="form">
 	<p:panel id="datosSalario" header="Consulta Marcas de Cuentas" style="margin-top:20px">
 					<p:outputPanel style="text-align:left">
 						<h:outputLabel style="font-size:12px" for="flt"
 							value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" />
-						<p:inputText id="icefasFilter"
+						<p:inputText id="curpNSS"
 							style="width:150px;font-size:12px"
-							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}" required="true">	
+							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}" >	
 						</p:inputText>
 						<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"
-						type="submit"  value="Buscar" ajax="false" class="blue"  />
+						 update="form result"  value="Buscar" ajax="false" class="blue"  />
 					</p:outputPanel>
 				<p:panelGrid id="verDetalleProceso"  columns="8"> 
 	 					
@@ -52,6 +52,15 @@
 				<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpDatos}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15">
 
+									
+									<f:facet name="header" style="float:right">
+
+								<h:outputLabel for="registros"
+								value="#{msg.aprob_label_totalRegistros}"  />
+								<h:outputText id="totalRegistros"
+								value="#{consultarMarcasCuentas.totalNSSCURP}" />
+
+								</f:facet>
 									
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_clave}" style="width:50px">
 										<h:outputText value="#{pro.CLAVE_PROCESO}" />
@@ -123,7 +132,15 @@
 						</p:dataTable>	
 						 </p:outputPanel>
 						</p:dialog>
+						
+						
+						<ui:include src="processResult.xhtml">
+						<ui:param name="base" value="#{consultarMarcasCuentas}" />
+						</ui:include>
+						
 						</p:panel>	
+						
+		
   </h:form>
 </ui:define>
 

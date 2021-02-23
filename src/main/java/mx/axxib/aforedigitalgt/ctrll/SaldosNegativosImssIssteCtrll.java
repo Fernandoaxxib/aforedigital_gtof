@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -20,10 +21,12 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoImssIssteOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaSaldoNegativoOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.SaldosImssIssteServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "saldosNegativosImssIsste")
@@ -89,10 +92,14 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	@Getter
 	private Date today;
 	
-	@Getter
-	@Setter
-	private List<ProcesoOut> procesos =new ArrayList<ProcesoOut>();
 	
+	
+//	@Getter
+//	@Setter
+//	public List<ProcessResult> resultados;
+	
+	@Getter
+	private String mensajeTabla;
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -102,239 +109,481 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 			rutaCurpIsste="/RESPALDOS/operaciones";	
 			rutaReporteIsste="/RESPALDOS/operaciones";	
 			today= new Date();
-			reset();
+			limpiar();
 		}
 	}
 	
-	public void reset() {
+	public void limpiar() {
 		nombreNssImss=null;
 		nombreReporteImss=null;
 		nombreCurpIsste=null;
 		nombreReporteIsste=null;
+		mensajeTabla=null;
 		
 	}
 	
 	public void ejecutarImssCarga() {
-		//procesos=new ArrayList<ProcesoOut>();
-		ProcesoOut proceso=new ProcesoOut();
-		Date today= new Date();	
-		Date today2= new Date();	
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-		if(nombreNssImss.toLowerCase().endsWith(".txt")){
-			System.out.println("SI TEMINA EN .TXT");
-		try {System.out.println("VALOR DE rutaNssImss:"+rutaNssImss+" /nombreNssImss:"+nombreNssImss);
-		//Date today= new Date();		
-		///proceso = new ProcesoOut();
-		proceso.setFechahoraInicio(format.format(today));
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
-		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Carga Imss por NSS");
 		
-		//Date today2= new Date();		
-		proceso.setFechahoraFinal(format.format(today2));
-		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO LANZADO A MONITOR FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
-			proceso.setAbrevProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-			addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+		try {
+			System.out.println("VALOR DE nombreNssImss:" +nombreNssImss);
+			if(nombreNssImss != null && !nombreNssImss.equals("") ) {
+			//if(nombreNssImss.toLowerCase().endsWith(".txt")) {
+				if(nombreNssImss.endsWith(".txt")) {
+				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
+				System.out.println("VALOR DE NSS IMSS consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+				pr.setStatus("Proceso Exitoso");
+				}else {
+				pr.setStatus("Proceso Fallido");	
+				}
 			}else {
-				proceso.setAbrevProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-				proceso.setEstadoProceso("FALLIDO");
-				addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+				UIInput input = (UIInput) findComponent("cargaImss");
+				input.setValid(false);
+				pr.setStatus("Nombre Carga Imss formato invalido");
+				
+			}
+			}else {
+				UIInput input = (UIInput) findComponent("cargaImss");
+				input.setValid(false);
+				pr.setStatus("Nombre Carga Imss es requerido");
+				
 			}
 		}catch (Exception e) {
-			System.out.println("ENTRO A CATCH HUBO ERROR");
-			proceso.setFechahoraFinal(format.format(today2));
-			proceso.setAbrevProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO NSS IMSS");//"Generar reporte"
-			proceso.setEstadoProceso("FALLIDO");
-			GenericException(e);
-		}
-		}else {
+			pr = GenericException(e);
 			
-			//Date today= new Date();		
-			//proceso = new ProcesoOut();
-			proceso.setFechahoraInicio(format.format(today));
-			//Date today2= new Date();		
-			proceso.setFechahoraFinal(format.format(today2));
-			if(nombreNssImss==null || nombreNssImss=="" ) {
-				proceso.setAbrevProceso("NO TIENE NOMBRE PARA NSS IMSS");//"Generar reporte"	
-				addMessageFail("Ingrese el nombre del archivo");
-			}else {
-				proceso.setAbrevProceso("NOMBRE INCORRECTO NSS IMSS");//"Generar reporte"
-				addMessageFail("Ingrese el nombre del archivo correcto");
-			}
-			proceso.setEstadoProceso("FALLIDO");
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
-		procesos.add(proceso);
-	}
-	//consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);	
-	public void ejecutarImssReporte() {
-		//procesos=new ArrayList<ProcesoOut>();
-		ProcesoOut proceso=new ProcesoOut();
-		Date today= new Date();		
-		Date today2= new Date();	
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-		if(nombreReporteImss.toLowerCase().endsWith(".txt")){
-			System.out.println("SI TEMINA EN .TXT");
-		try {System.out.println("VALOR DE rutaReporteImss:"+rutaReporteImss+" /nombreReporteImss:"+nombreReporteImss);
 		
-		///proceso = new ProcesoOut();
-		proceso.setFechahoraInicio(format.format(today));
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
-		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
-			
-		proceso.setFechahoraFinal(format.format(today2));
-		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO LANZADO A MONITOR FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
-			proceso.setAbrevProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-			addMessageOK(consultaSaldoImssIssteOut.getMensaje());
-			}else {
-				proceso.setAbrevProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-				proceso.setEstadoProceso("FALLIDO");
-				addMessageFail( consultaSaldoImssIssteOut.getMensaje());
-			}
-		}catch (Exception e) {
-			System.out.println("ENTRO A CATCH HUBO ERROR");
-			proceso.setFechahoraFinal(format.format(today2));
-			proceso.setAbrevProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO REPORTE IMSS");//"Generar reporte"
-			proceso.setEstadoProceso("FALLIDO");
-			addMessageFail("ERROR AL PROCESAR EL ARCHIVO");
-			GenericException(e);
-			
-		}
-		}else {
-			
-			//Date today= new Date();		
-			//proceso = new ProcesoOut();
-			proceso.setFechahoraInicio(format.format(today));
-			//Date today2= new Date();		
-			proceso.setFechahoraFinal(format.format(today2));
-			if(nombreReporteImss==null || nombreReporteImss=="") {
-				proceso.setAbrevProceso("NO TIENE NOMBRE REPORTE IMSS");//"Generar reporte"	
-				addMessageFail("Ingrese el nombre del archivo");
-			}else {
-				proceso.setAbrevProceso("NOMBRE INCORRECTO REPORTE IMSS");//"Generar reporte"
-				addMessageFail("Ingrese el nombre del archivo correcto");
-			}
-			proceso.setEstadoProceso("FALLIDO ");
-		}
-		procesos.add(proceso);
+		
+//		
+//		if(nombreNssImss.toLowerCase().endsWith(".txt")){
+//			System.out.println("SI TEMINA EN .TXT");
+//		try {
+//		System.out.println("VALOR DE rutaNssImss:"+rutaNssImss+" /nombreNssImss:"+nombreNssImss);
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//		
+//		//Date today2= new Date();		
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO LANZADO A MONITOR FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
+//			proceso.setDescProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//			proceso.setStatus("SATISFACTORIO");		//"Proceso ejecutado"
+//			addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+//			}else {
+//				proceso.setDescProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//				proceso.setStatus("FALLIDO");
+//				addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+//			}
+//		}catch (Exception e) {
+//			System.out.println("ENTRO A CATCH HUBO ERROR");
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			proceso.setDescProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO NSS IMSS");//"Generar reporte"
+//			proceso.setStatus("FALLIDO");
+//			GenericException(e);
+//		}
+//		}else {
+//			
+//			
+//			proceso.setFechaInicial(DateUtil.getNowDate());
+//			
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			if(nombreNssImss==null || nombreNssImss=="" ) {
+//				proceso.setDescProceso("NO TIENE NOMBRE PARA NSS IMSS");//"Generar reporte"	
+//				addMessageFail("Ingrese el nombre del archivo");
+//			}else {
+//				proceso.setDescProceso("NOMBRE INCORRECTO NSS IMSS");//"Generar reporte"
+//				addMessageFail("Ingrese el nombre del archivo correcto");
+//			}
+//			proceso.setStatus("FALLIDO");
+//		}
+//		resultados.add(proceso);
 	}
 	
-	public void ejecutarIssteCarga() {
-		//procesos=new ArrayList<ProcesoOut>();
-		ProcesoOut proceso=new ProcesoOut();
-		Date today= new Date();	
-		Date today2= new Date();	
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-		if(nombreCurpIsste.toLowerCase().endsWith(".txt")){
-			System.out.println("SI TEMINA EN .TXT");
-		try {System.out.println("VALOR DE rutaCurpIsste:"+rutaCurpIsste+" /nombreCurpIsste:"+nombreCurpIsste);
-		//Date today= new Date();		
-		///proceso = new ProcesoOut();
-		proceso.setFechahoraInicio(format.format(today));
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);	
-		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
-		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//	public void ejecutarImssCarga() {
+//		//procesos=new ArrayList<ProcesoOut>();
+//		ProcessResult proceso = new ProcessResult();
+//		if(nombreNssImss.toLowerCase().endsWith(".txt")){
+//			System.out.println("SI TEMINA EN .TXT");
+//		try {System.out.println("VALOR DE rutaNssImss:"+rutaNssImss+" /nombreNssImss:"+nombreNssImss);
+//		//Date today= new Date();		
+//		///proceso = new ProcesoOut();
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//		
+//		//Date today2= new Date();		
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO LANZADO A MONITOR FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
+//			proceso.setDescProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//			proceso.setStatus("SATISFACTORIO");		//"Proceso ejecutado"
+//			addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+//			}else {
+//				proceso.setDescProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//				proceso.setStatus("FALLIDO");
+//				addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+//			}
+//		}catch (Exception e) {
+//			System.out.println("ENTRO A CATCH HUBO ERROR");
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			proceso.setDescProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO NSS IMSS");//"Generar reporte"
+//			proceso.setStatus("FALLIDO");
+//			GenericException(e);
+//		}
+//		}else {
+//			
+//			//Date today= new Date();		
+//			//proceso = new ProcesoOut();
+//			proceso.setFechaInicial(DateUtil.getNowDate());
+//			//Date today2= new Date();		
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			if(nombreNssImss==null || nombreNssImss=="" ) {
+//				proceso.setDescProceso("NO TIENE NOMBRE PARA NSS IMSS");//"Generar reporte"	
+//				addMessageFail("Ingrese el nombre del archivo");
+//			}else {
+//				proceso.setDescProceso("NOMBRE INCORRECTO NSS IMSS");//"Generar reporte"
+//				addMessageFail("Ingrese el nombre del archivo correcto");
+//			}
+//			proceso.setStatus("FALLIDO");
+//		}
+//		resultados.add(proceso);
+//	}
+	//consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);	
+	
+//	public void ejecutarImssReporte() {
+//		//procesos=new ArrayList<ProcesoOut>();
+//		ProcessResult proceso = new ProcessResult();
+//		Date today= new Date();		
+//		Date today2= new Date();	
+//		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+//		if(nombreReporteImss.toLowerCase().endsWith(".txt")){
+//			System.out.println("SI TEMINA EN .TXT");
+//		try {System.out.println("VALOR DE rutaReporteImss:"+rutaReporteImss+" /nombreReporteImss:"+nombreReporteImss);
+//		
+//		///proceso = new ProcesoOut();
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//			
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO LANZADO A MONITOR FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
+//			proceso.setDescProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//			proceso.setStatus("SATISFACTORIO");		//"Proceso ejecutado"
+//			//addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+//			}else {
+//				proceso.setDescProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//				proceso.setStatus("FALLIDO");
+//				//addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+//			}
+//		}catch (Exception e) {
+//			System.out.println("ENTRO A CATCH HUBO ERROR");
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			proceso.setDescProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO REPORTE IMSS");//"Generar reporte"
+//			proceso.setStatus("FALLIDO");
+//			//addMessageFail("ERROR AL PROCESAR EL ARCHIVO");
+//			GenericException(e);
+//			
+//		}
+//		}else {
+//			
+//			//Date today= new Date();		
+//			//proceso = new ProcesoOut();
+//			proceso.setFechaInicial(DateUtil.getNowDate());
+//			//Date today2= new Date();		
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			if(nombreReporteImss==null || nombreReporteImss=="") {
+//				proceso.setDescProceso("NO TIENE NOMBRE REPORTE IMSS");//"Generar reporte"	
+//				//addMessageFail("Ingrese el nombre del archivo");
+//			}else {
+//				proceso.setDescProceso("NOMBRE INCORRECTO REPORTE IMSS");//"Generar reporte"
+//				//addMessageFail("Ingrese el nombre del archivo correcto");
+//			}
+//			proceso.setStatus("FALLIDO ");
+//		}
+//		resultados.add(proceso);
+//	}
+	
+	public void ejecutarImssReporte() {
 		
-		//Date today2= new Date();		
-		proceso.setFechahoraFinal(format.format(today2));
-		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
-			proceso.setAbrevProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-			addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Reporte Imss por NSS");
+		try {
+			if(nombreReporteImss != null && !nombreReporteImss.equals("") ) {
+			//if(nombreReporteImss.toLowerCase().endsWith(".xls")) {
+				if(nombreReporteImss.endsWith(".xls")) {
+				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
+				System.out.println("VALOR DE REPORTE IMSS consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+					pr.setStatus("Proceso Exitoso");
+					}else {
+					pr.setStatus("Proceso Fallido");	
+					}
 			}else {
-				proceso.setAbrevProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-				proceso.setEstadoProceso("FALLIDO");
-				addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+				UIInput input = (UIInput) findComponent("reporteImss");
+				input.setValid(false);
+				pr.setStatus("Reporte Nombre Imss formato invalido");	
+			}
+			}else {
+				UIInput input = (UIInput) findComponent("reporteImss");
+				input.setValid(false);
+				pr.setStatus("Reporte Nombre Imss es requerido");
 			}
 		}catch (Exception e) {
-			proceso.setFechahoraFinal(format.format(today2));
-			proceso.setAbrevProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO CURP ISSTE");//"Generar reporte"
-			proceso.setEstadoProceso("FALLIDO");
-			addMessageFail("ERROR AL PROCESAR EL ARCHIVO");
-			GenericException(e);
+			pr = GenericException(e);
+			
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
-		}else {
-			//Date today= new Date();		
-			proceso = new ProcesoOut();
-			proceso.setFechahoraInicio(format.format(today));
-			//Date today2= new Date();		
-			proceso.setFechahoraFinal(format.format(today2));
-			if(nombreCurpIsste==null || nombreCurpIsste=="") {
-				proceso.setAbrevProceso("NO TIENE NOMBRE CURP ISSTE");//"Generar reporte"	
-				addMessageFail("Ingrese el nombre del archivo");
+		
+	}
+//			if(nombreReporteImss.toLowerCase().endsWith(".txt")){
+//			System.out.println("SI TEMINA EN .TXT");
+//		try {System.out.println("VALOR DE rutaReporteImss:"+rutaReporteImss+" /nombreReporteImss:"+nombreReporteImss);
+//		
+//		///proceso = new ProcesoOut();
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//			
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO LANZADO A MONITOR FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
+//			proceso.setDescProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//			proceso.setStatus("SATISFACTORIO");		//"Proceso ejecutado"
+//			//addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+//			}else {
+//				proceso.setDescProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//				proceso.setStatus("FALLIDO");
+//				//addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+//			}
+//		}catch (Exception e) {
+//			System.out.println("ENTRO A CATCH HUBO ERROR");
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			proceso.setDescProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO REPORTE IMSS");//"Generar reporte"
+//			proceso.setStatus("FALLIDO");
+//			//addMessageFail("ERROR AL PROCESAR EL ARCHIVO");
+//			GenericException(e);
+//			
+//		}
+//		}else {
+//			
+//			//Date today= new Date();		
+//			//proceso = new ProcesoOut();
+//			proceso.setFechaInicial(DateUtil.getNowDate());
+//			//Date today2= new Date();		
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			if(nombreReporteImss==null || nombreReporteImss=="") {
+//				proceso.setDescProceso("NO TIENE NOMBRE REPORTE IMSS");//"Generar reporte"	
+//				//addMessageFail("Ingrese el nombre del archivo");
+//			}else {
+//				proceso.setDescProceso("NOMBRE INCORRECTO REPORTE IMSS");//"Generar reporte"
+//				//addMessageFail("Ingrese el nombre del archivo correcto");
+//			}
+//			proceso.setStatus("FALLIDO ");
+//		}
+//		resultados.add(proceso);
+//	}
+	
+	
+//	public void ejecutarIssteCarga() {
+//		//procesos=new ArrayList<ProcesoOut>();
+//		ProcessResult proceso = new ProcessResult();
+//		Date today= new Date();	
+//		Date today2= new Date();	
+//		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+//		if(nombreCurpIsste.toLowerCase().endsWith(".txt")){
+//			System.out.println("SI TEMINA EN .TXT");
+//		try {System.out.println("VALOR DE rutaCurpIsste:"+rutaCurpIsste+" /nombreCurpIsste:"+nombreCurpIsste);
+//		//Date today= new Date();		
+//		///proceso = new ProcesoOut();
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);	
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+//		
+//		//Date today2= new Date();		
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
+//			proceso.setDescProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//			proceso.setStatus("SATISFACTORIO");		//"Proceso ejecutado"
+//			//addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+//			}else {
+//				proceso.setDescProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//				proceso.setStatus("FALLIDO");
+//				//addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+//			}
+//		}catch (Exception e) {
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			proceso.setDescProceso( "HUBO ERROR EL PROCESAR EL ARCHIVO CURP ISSTE");//"Generar reporte"
+//			proceso.setStatus("FALLIDO");
+//			//addMessageFail("ERROR AL PROCESAR EL ARCHIVO");
+//			GenericException(e);
+//		}
+//		}else {
+//			//Date today= new Date();		
+//			proceso = new ProcessResult();
+//			proceso.setFechaInicial(DateUtil.getNowDate());
+//			//Date today2= new Date();		
+//			proceso.setFechaFinal(DateUtil.getNowDate());
+//			if(nombreCurpIsste==null || nombreCurpIsste=="") {
+//				proceso.setDescProceso("NO TIENE NOMBRE CURP ISSTE");//"Generar reporte"	
+//				//addMessageFail("Ingrese el nombre del archivo");
+//			}else {
+//				proceso.setDescProceso("NOMBRE INCORRECTO CURP ISSTE");//"Generar reporte"
+//				//addMessageFail("Ingrese el nombre del archivo correcto");
+//			}
+//			proceso.setStatus("FALLIDO ");
+//		}
+//		resultados.add(proceso);
+//	}
+	
+	public void ejecutarIssteCarga() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Carga Isste por CURP");
+		
+		try {
+			System.out.println("VALOR DE nombreCurpIsste:" +nombreCurpIsste);
+			if(nombreCurpIsste != null && !nombreCurpIsste.equals("") ) {
+			//if(nombreCurpIsste.toLowerCase().endsWith(".txt")) {
+				if(nombreCurpIsste.endsWith(".txt")) {
+				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);
+				System.out.println("VALOR DE ISSTE CURP consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+				pr.setStatus("Proceso Exitoso");
+				}else {
+				pr.setStatus("Proceso Fallido");	
+				}
 			}else {
-				proceso.setAbrevProceso("NOMBRE INCORRECTO CURP ISSTE");//"Generar reporte"
-				addMessageFail("Ingrese el nombre del archivo correcto");
+				UIInput input = (UIInput) findComponent("cargaIsste");
+				input.setValid(false);
+				pr.setStatus("Nombre Carga Isste formato invalido");
+				
 			}
-			proceso.setEstadoProceso("FALLIDO ");
+			}else {
+				UIInput input = (UIInput) findComponent("cargaIsste");
+				input.setValid(false);
+				pr.setStatus("Nombre Carga Isste es requerido");
+				
+			}
+		}catch (Exception e) {
+			pr = GenericException(e);
+			
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
-		procesos.add(proceso);
+		
 	}
 	
 	public void ejecutarIssteReporte() {
-		//procesos=new ArrayList<ProcesoOut>();
-		ProcesoOut proceso=new ProcesoOut();
-		Date today= new Date();	
-		Date today2= new Date();	
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-		if(nombreReporteIsste.toLowerCase().endsWith(".txt")){
-			System.out.println("SI TEMINA EN .TXT");
-		try {System.out.println("VALOR DE rutaReporteIsste:"+rutaReporteIsste+" /nombreReporteIsste:"+nombreReporteIsste);
-		//Date today= new Date();		
-		///proceso = new ProcesoOut();
-		proceso.setFechahoraInicio(format.format(today));
-		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
-		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);	
-		//Date today2= new Date();		
-		proceso.setFechahoraFinal(format.format(today2));
-		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
-			proceso.setAbrevProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-			addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Reporte Isste por CURP");
+		
+		try {
+			System.out.println("VALOR DE nombreReporteIsste:" +nombreReporteIsste);
+			if(nombreReporteIsste != null && !nombreReporteIsste.equals("") ) {
+			//if(nombreReporteIsste.toLowerCase().endsWith(".xls")) {
+				if(nombreReporteIsste.endsWith(".xls")) {
+				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
+				System.out.println("VALOR DE REPORTE ISSTE CURP consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
+				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+				pr.setStatus("Proceso Exitoso");
+				}else {
+				pr.setStatus("Proceso Fallido");	
+				}
 			}else {
-				proceso.setAbrevProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
-				proceso.setEstadoProceso("FALLIDO");
-				addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+				UIInput input = (UIInput) findComponent("reporteIsste");
+				input.setValid(false);
+				pr.setStatus("Reporte Nombre Isste formato invalido");
+				
+			}
+			}else {
+				UIInput input = (UIInput) findComponent("reporteIsste");
+				input.setValid(false);
+				pr.setStatus("Reporte Nombre Isste es requerido");
+				
 			}
 		}catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+			
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
-	}else {
-		//Date today= new Date();		
-		//proceso = new ProcesoOut();
-		proceso.setFechahoraInicio(format.format(today));
-		//Date today2= new Date();		
-		proceso.setFechahoraFinal(format.format(today2));
-		if(nombreReporteIsste==null || nombreReporteIsste=="") {
-			proceso.setAbrevProceso("NO TIENE NOMBRE REPORTE ISSTE");//"Generar reporte"	
-			addMessageFail("Ingrese el nombre del archivo");
-		}else {
-			proceso.setAbrevProceso("NOMBRE INCORRECTO REPORTE ISSTE");//"Generar reporte"
-			addMessageFail("Ingrese el nombre del archivo correcto");
-		}
-		proceso.setEstadoProceso("FALLIDO ");
-	}
-		procesos.add(proceso);
 	}
 	
-	public void onDateSelect(SelectEvent<Date> event) {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
-    }
- 
-    public void click() {
-        PrimeFaces.current().ajax().update("form:display");
-        PrimeFaces.current().executeScript("PF('dlg').show()");
-    }
-    
-    public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+//	public void ejecutarIssteReporte() {
+//		//procesos=new ArrayList<ProcesoOut>();
+//		ProcessResult proceso = new ProcessResult();
+//		Date today= new Date();	
+//		Date today2= new Date();	
+//		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+//		if(nombreReporteIsste.toLowerCase().endsWith(".txt")){
+//			System.out.println("SI TEMINA EN .TXT");
+//		try {System.out.println("VALOR DE rutaReporteIsste:"+rutaReporteIsste+" /nombreReporteIsste:"+nombreReporteIsste);
+//		//Date today= new Date();		
+//		///proceso = new ProcesoOut();
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
+//		System.out.println("VALOR DE consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);	
+//		//Date today2= new Date();		
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(consultaSaldoImssIssteOut.getMensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")  || consultaSaldoImssIssteOut.getMensaje().equals("Proceso enviado a monitor...")) {
+//			proceso.setDescProceso(consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//			proceso.setStatus("SATISFACTORIO");		//"Proceso ejecutado"
+//			//addMessageOK(consultaSaldoImssIssteOut.getMensaje());
+//			}else {
+//				proceso.setDescProceso( consultaSaldoImssIssteOut.getMensaje());//"Generar reporte"
+//				proceso.setStatus("FALLIDO");
+//			//	addMessageFail( consultaSaldoImssIssteOut.getMensaje());
+//			}
+//		}catch (Exception e) {
+//			GenericException(e);
+//		}
+//	}else {
+//		//Date today= new Date();		
+//		//proceso = new ProcesoOut();
+//		proceso.setFechaInicial(DateUtil.getNowDate());
+//		//Date today2= new Date();		
+//		proceso.setFechaFinal(DateUtil.getNowDate());
+//		if(nombreReporteIsste==null || nombreReporteIsste=="") {
+//			proceso.setDescProceso("NO TIENE NOMBRE REPORTE ISSTE");//"Generar reporte"	
+//			//addMessageFail("Ingrese el nombre del archivo");
+//		}else {
+//			proceso.setDescProceso("NOMBRE INCORRECTO REPORTE ISSTE");//"Generar reporte"
+//			//addMessageFail("Ingrese el nombre del archivo correcto");
+//		}
+//		proceso.setStatus("FALLIDO ");
+//	}
+//		resultados.add(proceso);
+//	}
+	
+//	public void onDateSelect(SelectEvent<Date> event) {
+//        FacesContext facesContext = FacesContext.getCurrentInstance();
+//        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+//        facesContext.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Date Selected", format.format(event.getObject())));
+//    }
+// 
+//    public void click() {
+//        PrimeFaces.current().ajax().update("form:display");
+//        PrimeFaces.current().executeScript("PF('dlg').show()");
+//    }
+//    
+//    public void addMessageOK(String summary) {
+//		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+//		FacesContext.getCurrentInstance().addMessage(null, message);
+//	}
+//	public void addMessageFail(String summary) {
+//		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
+//		FacesContext.getCurrentInstance().addMessage(null, message);
+//	}
 	
 }
