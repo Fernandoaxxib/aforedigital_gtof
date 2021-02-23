@@ -86,14 +86,16 @@
 						<h:outputLabel for="registros"
 							value="#{msg.aprob_label_totalRegistros}"  />
 						<h:outputText id="totalRegistros"
-							value="#{verDatosCheque.totalSolicitud}" />
+							value="#{solicitudMatrimonioDesempleo.totalSolicitud}" />
 
 					</f:facet>
 		    
-		    		<p:ajax event="rowSelectCheckbox" update="form:pSolicitud" />
-		    		<p:column selectionMode="single" style="width:20px;text-align:center"/>
+<!-- 		    		<p:ajax event="rowSelectCheckbox" update="form:pSolicitud" /> -->
+<!-- 		    		<p:column selectionMode="single" style="width:20px;text-align:center"/> -->
 		    		
-					
+			 <p:column headerText="#{msg.cheque_ver_columna_RightFax}">
+		        <h:outputText value="#{verSolicitud.rightFax}" />
+		    </p:column>		
 		    
 		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}">
 		        <h:outputText value="#{verSolicitud.fechaOperacion}" />
