@@ -22,7 +22,7 @@ public class ConsultarNombreCuentaIcefasOut {
 	private String curp_o_nss;
 	private List<CpDatosIcefasOut> cpDatos;
 	private String mensaje;
-	
+	private Integer status;
 	
 
 }

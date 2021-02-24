@@ -98,10 +98,11 @@
 										</h:outputText>
 									</p:column>
 									  <p:column  style="text-align: center: width:50px">
-                       					 <p:commandButton update=":form:display" oncomplete="PF('productDialog').show()"
+                       					 <p:commandButton id="verDetalle" update=":form:display" oncomplete="PF('productDialog').show()"
                                           action="#{consultarMarcasCuentas.ejecutarConsultarTraspasos}" value="Ver Detalle" class="blue">
                            				 <f:setPropertyActionListener  value="#{pro}" ajax="false" class="blue"
                                                          target="#{consultarMarcasCuentas.cpDatos2}"/>
+<!--                                          <p:tooltip for="verDetalle" value="Ver Detalle" showEffect="clip" hideEffect="fold" /> -->
                        					 </p:commandButton>
                    					 </p:column>
 									

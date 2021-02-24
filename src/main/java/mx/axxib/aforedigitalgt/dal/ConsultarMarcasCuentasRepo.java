@@ -41,6 +41,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 		query.registerStoredProcedureParameter("P_CLAVE_PROCESO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_ESTADO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 		
 		query.setParameter("P_COD_CUENTA", codCuenta);
@@ -54,6 +55,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 		if (cursor != null) {
 			res.setCpCursor(query.getResultList());
 			res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+			res.setStatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 		}
 		return res;
 		} catch (Exception e) {
@@ -73,6 +75,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 		query.registerStoredProcedureParameter("P_nombre", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("CP_DATOS", void.class, ParameterMode.REF_CURSOR);
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 		query.setParameter("P_CURP", curp);
 		
@@ -83,6 +86,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 			res.setCuenta((Integer)query.getOutputParameterValue("P_cuenta"));
 			res.setNombre((String) query.getOutputParameterValue("P_nombre"));
 			res.setCurp_o_nss((String)query.getOutputParameterValue("P_NSS"));
+			res.setStatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 			res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		}
 		System.out.println("RES CURP: "+res);
@@ -106,6 +110,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 			query.registerStoredProcedureParameter("P_nombre", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_curp", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("CP_DATOS", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			query.setParameter("P_NSS", nss);
@@ -118,6 +123,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 				res.setNombre((String) query.getOutputParameterValue("P_nombre"));
 				res.setCurp_o_nss((String)query.getOutputParameterValue("P_curp"));
 				res.setCpDatos(query.getResultList());
+				res.setStatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 				res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 			}
 			System.out.println("res NSS"+res);

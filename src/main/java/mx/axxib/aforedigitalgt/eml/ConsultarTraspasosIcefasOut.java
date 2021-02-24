@@ -16,4 +16,5 @@ public class ConsultarTraspasosIcefasOut {
 	
 	private List<ConsultarDatosIcefasOut> cpCursor;
 	private String mensaje;
+	private Integer status;
 }
