@@ -153,7 +153,9 @@ public class ModDesempParcCtrll extends ControllerBase {
 						if (marcas == null || marcas.size() == 0) {
 							mensajeTabla = "Sin información";
 						}
-						mostrarCancelacion = true;
+						if(datosSol.getEstatusSolicitud() == null || !datosSol.getEstatusSolicitud().toUpperCase().equals("CANCELADA")) {
+							mostrarCancelacion = true;
+						}
 						pr.setStatus("Exitosa");
 					} else {
 						mensajeTabla = "Sin información";
