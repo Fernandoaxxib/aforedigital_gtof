@@ -27,18 +27,13 @@
 			</p:row>
 		</p:panelGrid>
 
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
-
 		<h:form id="form">
 			<p:panel id="busqueda" header="Reporte de liquidación"
 				style="margin-top:20px">
 				<p:panelGrid id="panel" columns="6" styleClass="ui-noborder"
 					cellpadding="10" width="100%">
 					<p:outputLabel value="Estatus" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true"
-						requiredMessage="Estatus es requerido"
+					<p:selectOneMenu id="estatus" style="width:200px" 
 						value="#{reporteLiquidacion.selectedEstatus}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -50,8 +45,7 @@
 					<h:outputText id="lote" value="#{reporteLiquidacion.lote}" />
 
 					<p:outputLabel value="Tipo" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true"
-						requiredMessage="Tipo es requerido"
+					<p:selectOneMenu id="tipo" style="width:200px" 
 						value="#{reporteLiquidacion.selectedTipo}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -60,8 +54,7 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Tipo retiro" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" required="true"
-						requiredMessage="Tipo retiro es requerido"
+					<p:selectOneMenu id="tipoRetiro" style="width:200px" 
 						value="#{reporteLiquidacion.selectedTipoRetiro}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -75,9 +68,8 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Siefore" style="font-weight: bold" />
-					<p:selectOneMenu style="width:200px" var="t"
-						converter="selectOneMenuConverter" required="true"
-						requiredMessage="Siefore es requerido"
+					<p:selectOneMenu id="siefore" style="width:200px" var="t"
+						converter="selectOneMenuConverter" 
 						value="#{reporteLiquidacion.selectedSiefore}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -100,12 +92,16 @@
 
 					<p:outputLabel value="" />
 					<p:commandButton class="blue"
-						action="#{reporteLiquidacion.ejecutarReporte}" type="submit" update="form"
+						actionListener="#{reporteLiquidacion.ejecutarReporte}" update="busqueda result"
 						value="Ejecutar el reporte"  />
 						
 
 				</p:panelGrid>
 			</p:panel>
+			
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{reporteLiquidacion}" />
+			</ui:include>
 
 		</h:form>
 

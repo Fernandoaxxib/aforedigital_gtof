@@ -208,6 +208,7 @@ public class ModDesempParcCtrll extends ControllerBase {
 				String msg = modDesempParcServ.cancelarSolicitud(parametros);
 				if (msg.trim().toUpperCase().equals("OK")) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					mostrarCancelacion = false;
 				} else {
 					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
 					pr.setStatus(msg);

@@ -118,7 +118,6 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	public void enviar() {
 		ProcessResult pr = new ProcessResult();
 		try {
-			mostrarExportar = true; //TODO: quitar
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Acción enviar");
 			BaseOut res = notificacionPagosServ.enviaFecha(fecha);

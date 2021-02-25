@@ -2,11 +2,7 @@ package mx.axxib.aforedigitalgt.eml;
 
 import java.util.Date;
 
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.SqlResultSetMapping;
-import javax.persistence.SqlResultSetMappings;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class LiqObtieneParametrosOut {
 	private String idLote;
 	private Date fecha;
+	private Integer estatus;
+	private String mensaje;
 }
 
 //P_ID_LOTE OUT VARCHAR2,
