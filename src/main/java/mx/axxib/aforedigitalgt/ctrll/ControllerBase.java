@@ -47,6 +47,11 @@ public class ControllerBase {
 		iniciar();
 	}
 	
+	public void GenerarErrorNegocio(String mensaje) throws Exception {
+		AforeException e = new AforeException("101", "Se presentó un error inesperado durante la ejecución del proceso solicitado.", mensaje);
+		throw e;
+	}
+	
 	public void iniciar() {
 		if(force) {
 			resultados = new ArrayList<ProcessResult>();

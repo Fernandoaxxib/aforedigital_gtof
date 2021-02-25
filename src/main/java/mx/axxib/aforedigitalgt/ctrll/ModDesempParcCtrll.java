@@ -156,7 +156,7 @@ public class ModDesempParcCtrll extends ControllerBase {
 						if(datosSol.getEstatusSolicitud() == null || !datosSol.getEstatusSolicitud().toUpperCase().equals("CANCELADA")) {
 							mostrarCancelacion = true;
 						}
-						pr.setStatus("Exitosa");
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 					} else {
 						mensajeTabla = "Sin información";
 						datosSol.setFechaAccion(null);
@@ -205,17 +205,11 @@ public class ModDesempParcCtrll extends ControllerBase {
 				parametros.setNss(nss);
 				parametros.setNoSolicitud(noSolicitud);
 				parametros.setCveProcesoOpe(selectedClaveCancelacion);
-				//String msg = "OK"; //TODO: quitar para probar la cancelación
 				String msg = modDesempParcServ.cancelarSolicitud(parametros);
 				if (msg.trim().toUpperCase().equals("OK")) {
-					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//					FacesContext.getCurrentInstance().addMessage(null,
-//							new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-					pr.setStatus(msg);
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//					FacesContext.getCurrentInstance().addMessage(null,
-//							new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
 					pr.setStatus(msg);
 				}
 			} else {

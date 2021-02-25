@@ -12,10 +12,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-
-
-public class ObtenerLoteTraspasosOut {
+public class ObtieneMontoOut {
 	private Integer estatus;
 	private String mensaje;
-	private List<ObtenerLoteTraspasos> traspaso;
+	private List<ObtieneMonto> monto;
 }
+	

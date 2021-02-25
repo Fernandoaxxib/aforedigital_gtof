@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
@@ -69,7 +68,7 @@ public class MonitorProcesosCtrll extends ControllerBase {
 			consultarMonitor();
 			consultarJobs();
 			pr.setDescProceso("Actualizar monitor");
-			pr.setStatus("Actualizado correctamente");
+			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		} catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -89,8 +88,7 @@ public class MonitorProcesosCtrll extends ControllerBase {
 			}
 		} else {
 			if(res.getEstatus() == 2) {
-				AforeException e = new AforeException("101", "Error en base de datos", res.getMensaje());
-				throw e;
+				GenerarErrorNegocio(res.getMensaje());
 			}
 		}
 	}
@@ -105,9 +103,8 @@ public class MonitorProcesosCtrll extends ControllerBase {
 			}
 		} else {
 			if(res.getEstatus() == 2) {
-				AforeException e = new AforeException("101", "Error en base de datos", res.getMensaje());
-				throw e;
-			}
+				GenerarErrorNegocio(res.getMensaje());
+			} 
 		}
 	}
 
@@ -121,22 +118,17 @@ public class MonitorProcesosCtrll extends ControllerBase {
 				pr.setDescProceso("Ejecutar job " + selectedJob.getJob());
 				BaseOut res = monitorService.ejecutar(selectedJob);
 				if (res.getEstatus() == 1) {
-					String msg = "Job ejecutado correctamente";
-					// FacesContext.getCurrentInstance().addMessage(null, new
-					// FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-					pr.setStatus(msg);
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if(res.getEstatus() == 2) {
-						AforeException e = new AforeException("101", "Error en base de datos", res.getMensaje());
-						throw e;
-					}
+						GenerarErrorNegocio(res.getMensaje());
+					} else if(res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					} 
 				}
 			} else {
 				pr.setDescProceso("Ejecutar job");
-				String msg = aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null);
-				// FacesContext.getCurrentInstance().addMessage(null, new
-				// FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-				pr.setStatus(msg);
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null));
 			}
 
 		} catch (Exception e) {

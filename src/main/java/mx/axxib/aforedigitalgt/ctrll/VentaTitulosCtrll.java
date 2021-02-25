@@ -18,15 +18,20 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
+import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasos;
 import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasosIn;
 import mx.axxib.aforedigitalgt.eml.ObtenerLoteTraspasosOut;
+import mx.axxib.aforedigitalgt.eml.ObtenerRgDevExces;
 import mx.axxib.aforedigitalgt.eml.ObtenerRgDevExcesIn;
 import mx.axxib.aforedigitalgt.eml.ObtenerRgDevExcesOut;
+import mx.axxib.aforedigitalgt.eml.ObtenerTipoRetiro;
 import mx.axxib.aforedigitalgt.eml.ObtenerTipoRetiroIn;
 import mx.axxib.aforedigitalgt.eml.ObtenerTipoRetiroOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonto;
 import mx.axxib.aforedigitalgt.eml.ObtieneMontoCorteIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneMontoDevIn;
+import mx.axxib.aforedigitalgt.eml.ObtieneMontoOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneMontoRetiroIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneMontoTotalIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneMontoTraspasosIn;
@@ -70,25 +75,25 @@ public class VentaTitulosCtrll extends ControllerBase {
 	private String lote;
 
 	@Getter
-	private List<ObtenerTipoRetiroOut> tipoRetiros;
+	private List<ObtenerTipoRetiro> tipoRetiros;
 
 	@Getter
 	@Setter
-	private ObtenerTipoRetiroOut selectedTipoRetiro;
+	private ObtenerTipoRetiro selectedTipoRetiro;
 
 	@Getter
-	private List<ObtenerLoteTraspasosOut> loteTraspasos;
-
-	@Getter
-	@Setter
-	private ObtenerLoteTraspasosOut selectedLoteTraspaso;
-
-	@Getter
-	private List<ObtenerRgDevExcesOut> rgDevExces;
+	private List<ObtenerLoteTraspasos> loteTraspasos;
 
 	@Getter
 	@Setter
-	private ObtenerRgDevExcesOut selectedrgDevExces;
+	private ObtenerLoteTraspasos selectedLoteTraspaso;
+
+	@Getter
+	private List<ObtenerRgDevExces> rgDevExces;
+
+	@Getter
+	@Setter
+	private ObtenerRgDevExces selectedrgDevExces;
 
 	@Getter
 	private List<ObtieneMonto> montos;
@@ -113,7 +118,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 
 	@Getter
 	private String mensajeTabla;
-	
+
 	@Getter
 	private Integer tablaCount;
 
@@ -164,19 +169,40 @@ public class VentaTitulosCtrll extends ControllerBase {
 	public void obtenerTipoRetiro() throws Exception {
 		ObtenerTipoRetiroIn parametros = new ObtenerTipoRetiroIn();
 		parametros.setFecha(fechaInicial);
-		tipoRetiros = ventaTitulosService.getObtenerTipoRetiro(parametros);
+		ObtenerTipoRetiroOut res = ventaTitulosService.getObtenerTipoRetiro(parametros);
+		if(res.getEstatus() == 1) {
+			tipoRetiros = res.getRetiro();
+		} else {
+			if(res.getEstatus() == 2) {
+				GenerarErrorNegocio(res.getMensaje());
+			}
+		}
 	}
 
 	public void obtenerLoteTraspaso() throws Exception {
 		ObtenerLoteTraspasosIn parametros = new ObtenerLoteTraspasosIn();
 		parametros.setFecha(fechaInicial);
-		loteTraspasos = ventaTitulosService.getObtenerLoteTraspasos(parametros);
+		ObtenerLoteTraspasosOut res = ventaTitulosService.getObtenerLoteTraspasos(parametros);
+		if(res.getEstatus() == 1) {
+			loteTraspasos = res.getTraspaso();
+		} else {
+			if(res.getEstatus() == 2) {
+				GenerarErrorNegocio(res.getMensaje());
+			}
+		}
 	}
 
 	public void obtenerRgDevExces() throws Exception {
 		ObtenerRgDevExcesIn parametros = new ObtenerRgDevExcesIn();
 		parametros.setFecha(fechaInicial);
-		rgDevExces = ventaTitulosService.getObtenerRgDevExces(parametros);
+		ObtenerRgDevExcesOut res = ventaTitulosService.getObtenerRgDevExces(parametros);
+		if(res.getEstatus() == 1) {
+			rgDevExces = res.getRgDevExces();
+		} else {
+			if(res.getEstatus() == 2) {
+				GenerarErrorNegocio(res.getMensaje());
+			}
+		}
 	}
 
 	public void changeOpcion() {
@@ -249,42 +275,30 @@ public class VentaTitulosCtrll extends ControllerBase {
 				mostrarVenta = false;
 				mostrarVentaCT = false;
 				montos = new ArrayList<ObtieneMonto>();
+				ObtieneMontoOut res = null;
+				
 				switch (opcion) {
 				case "T":
 					ObtieneMontoTotalIn parametrosT = new ObtieneMontoTotalIn();
 					parametrosT.setFechaFinal(fechaFinal);
 					parametrosT.setFechaInicial(fechaInicial);
-					montos = ventaTitulosService.getObtieneMontoTotal(parametrosT);
-					if (montos.size() == 0) {
-						mensajeTabla = "Sin información";
-					}
 					pr.setDescProceso("Búsqueda por todos los módulos");
-					pr.setStatus("Exitoso");
+					res = ventaTitulosService.getObtieneMontoTotal(parametrosT);
 					break;
 				case "R":
 					ObtieneMontoRetiroIn parametrosR = new ObtieneMontoRetiroIn();
 					parametrosR.setFechaFinal(fechaFinal);
 					parametrosR.setFechaInicial(fechaInicial);
+					pr.setDescProceso("Búsqueda por retiros");
 					if (selectedTipoRetiro != null) {
 						parametrosR.setTipoRetiro(selectedTipoRetiro.getDescripcion());
 						parametrosR.setTipoTransaccion(selectedTipoRetiro.getTipoTransaccion());
 						parametrosR.setSubTipoTransaccion(selectedTipoRetiro.getSubTipoTransaccion());
-						montos = ventaTitulosService.getObtieneMontoRetiro(parametrosR);
-						if (montos.size() > 0) {
-							mostrarVenta = true;
-							selectedSiefore = montos.get(0);
-						} else {
-							mensajeTabla = "Sin información";
-						}
-						pr.setDescProceso("Búsqueda por retiros");
-						pr.setStatus("Exitoso");
+						res = ventaTitulosService.getObtieneMontoRetiro(parametrosR);
 					} else {
 						UIInput fini = (UIInput) findComponent("comboRetiros");
 						fini.setValid(false);
 						String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO, new Object[] { "Retiros" });
-						// FacesContext.getCurrentInstance().addMessage(null, new
-						// FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-						pr.setDescProceso("Búsqueda por retiros");
 						pr.setStatus(msg);
 					}
 
@@ -292,56 +306,37 @@ public class VentaTitulosCtrll extends ControllerBase {
 				case "A":
 					ObtieneMontoTraspasosIn parametrosA = new ObtieneMontoTraspasosIn();
 					parametrosA.setFecha(fechaInicial);
+					pr.setDescProceso("Búsqueda por traspasos");
 					if (selectedLoteTraspaso != null) {
 						parametrosA.setLoteTraspaso(selectedLoteTraspaso.getIdLote());
-						montos = ventaTitulosService.getObtieneMontoTraspasos(parametrosA);
-						if (montos.size() > 0) {
-							mostrarVenta = true;
-							selectedSiefore = montos.get(0);
-						} else {
-							mensajeTabla = "Sin información";
-						}
-						pr.setDescProceso("Búsqueda por traspasos");
-						pr.setStatus("Exitoso");
+						res = ventaTitulosService.getObtieneMontoTraspasos(parametrosA);
 					} else {
 						UIInput fini = (UIInput) findComponent("comboTraspasos");
 						fini.setValid(false);
 						String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO,
 								new Object[] { "Traspasos Afore-Afore" });
-						// FacesContext.getCurrentInstance().addMessage(null, new
-						// FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-						pr.setDescProceso("Búsqueda por traspasos");
 						pr.setStatus(msg);
 					}
 					break;
 				case "V":
 					ObtieneMontoDevIn parametrosV = new ObtieneMontoDevIn();
 					parametrosV.setFecha(fechaInicial);
+					pr.setDescProceso("Búsqueda por dev pago");
 					if (selectedrgDevExces != null) {
 						parametrosV.setLoteRev(selectedrgDevExces.getIdLote());
-						montos = ventaTitulosService.getObtieneMontoDev(parametrosV);
-						if (montos.size() > 0) {
-							mostrarVenta = true;
-							selectedSiefore = montos.get(0);
-						} else {
-							mensajeTabla = "Sin información";
-						}
-						pr.setDescProceso("Búsqueda por Dev pago");
-						pr.setStatus("Exitoso");
+						res = ventaTitulosService.getObtieneMontoDev(parametrosV);
 					} else {
 						UIInput fini = (UIInput) findComponent("comboDev");
 						fini.setValid(false);
 						String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO,
 								new Object[] { "Dev pago excs lote" });
-						// FacesContext.getCurrentInstance().addMessage(null, new
-						// FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-						pr.setDescProceso("Búsqueda por Dev pago");
 						pr.setStatus(msg);
 					}
 					break;
 				case "L":
 					ObtieneMontoCorteIn parametrosL = new ObtieneMontoCorteIn();
 					parametrosL.setFecha(fechaInicial);
+					pr.setDescProceso("Búsqueda por lote");
 					if (lote != null) {
 						if (!ValidateUtil.isValidLote(lote)) {
 							UIInput fini = (UIInput) findComponent("inputLote");
@@ -351,35 +346,46 @@ public class VentaTitulosCtrll extends ControllerBase {
 							break;
 						}
 						parametrosL.setLoteCorte(lote);
-						montos = ventaTitulosService.getObtieneMontoCorte(parametrosL);
-						if (montos.size() > 0) {
-							mostrarVentaCT = true;
-							selectedSiefore = montos.get(0);
-						} else {
-							mensajeTabla = "Sin información";
-						}
-						pr.setDescProceso("Búsqueda por lote");
-						pr.setStatus("Exitoso");
+						res = ventaTitulosService.getObtieneMontoCorte(parametrosL);
 					} else {
 						UIInput fini = (UIInput) findComponent("inputLote");
 						fini.setValid(false);
 						String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO,
 								new Object[] { "Lote corte" });
-						// FacesContext.getCurrentInstance().addMessage(null, new
-						// FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-						pr.setDescProceso("Búsqueda por lote");
 						pr.setStatus(msg);
 					}
 					break;
 				}
-
+				
+				if(res != null) {
+					if(res.getEstatus() == 1) {
+						montos = res.getMonto();
+						if(montos.size() > 0 && !opcion.equals("T")) {
+							if(opcion.equals("L")) {
+								mostrarVentaCT = true;
+							} else {
+								mostrarVenta = true;
+							}
+							selectedSiefore = montos.get(0);
+						} else if (montos.size() == 0) {
+							mensajeTabla = "Sin información";
+						}
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					} else {
+						if(res.getEstatus() == 2) {
+							GenerarErrorNegocio(res.getMensaje());
+						} else if(res.getEstatus() == 0) {
+							pr.setStatus(res.getMensaje());
+						} 
+					}
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
-			if(montos != null) 
+			if (montos != null)
 				tablaCount = montos.size();
 		}
 	}
@@ -411,18 +417,18 @@ public class VentaTitulosCtrll extends ControllerBase {
 					parametros.setLoteRev(selectedrgDevExces.getIdLote());
 					break;
 				}
-				ventaTitulosService.ventaTitulosMonitor(parametros);
-				String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null,
-//						new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-				pr.setStatus(msg);
+				BaseOut res = ventaTitulosService.ventaTitulosMonitor(parametros);
+				if(res.getEstatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if(res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if(res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					} 
+				}
 			} else {
-				String msg = aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null);
-//				FacesContext.getCurrentInstance().addMessage(null,
-//						new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-
-				
-				pr.setStatus(msg);
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null));
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
@@ -437,7 +443,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Venta de títulos CT");
-			
+
 			if (selectedSiefore != null && opcion.equals("L")) {
 				VentaTitulosMonitorCTIn parametros = new VentaTitulosMonitorCTIn();
 				parametros.setIndCuotaRend("C"); // De acuerdo a BD se manda fijo C
@@ -447,16 +453,18 @@ public class VentaTitulosCtrll extends ControllerBase {
 				parametros.setUsuario(dataSource.getUsername());
 				parametros.setLoteCorte(lote);
 
-				ventaTitulosService.ventaTitulosMonitorCT(parametros);
-				String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null,
-//						new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-				pr.setStatus(msg);
+				BaseOut res = ventaTitulosService.ventaTitulosMonitorCT(parametros);
+				if(res.getEstatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if(res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if(res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					} 
+				}
 			} else {
-				String msg = aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null);
-//				FacesContext.getCurrentInstance().addMessage(null,
-//						new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-				pr.setStatus(msg);
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.SELECCION_REQUERIDA, null));
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
