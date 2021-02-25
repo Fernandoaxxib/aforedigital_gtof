@@ -3,6 +3,8 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.component.UIInput;
+
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -13,12 +15,13 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ExportarIn;
-import mx.axxib.aforedigitalgt.eml.ExportarOut;
 import mx.axxib.aforedigitalgt.eml.LlenaInfo;
 import mx.axxib.aforedigitalgt.eml.LlenaInfoOut;
 import mx.axxib.aforedigitalgt.serv.NotificacionPagosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "notificacionPagos")
@@ -53,6 +56,10 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	@Getter
 	private String mensajeTabla;
 
+	@Getter
+	@Setter
+	private String archivo;
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -66,6 +73,7 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	}
 
 	private void limpiar() {
+		archivo = null;
 		mensajeTabla = null;
 		mostrarEnviar = false;
 		mostrarExportar = false;
@@ -81,15 +89,23 @@ public class NotificacionPagosCtrll extends ControllerBase {
 			pr.setDescProceso("Búsqueda por fecha");
 			limpiar();
 			LlenaInfoOut res = notificacionPagosServ.llenaInfo(fecha);
-			if (res != null && res.getDatos() != null && res.getDatos().size() > 0) {
-				pagos = res.getDatos();
-				totTitulos = res.getTotTitulos();
-				totPesos = res.getTotPesos();
-				mostrarEnviar = true;
-				pr.setStatus("Exitoso");
+			if (res.getEstatus() == 1) {
+				if (res != null && res.getDatos() != null && res.getDatos().size() > 0) {
+					pagos = res.getDatos();
+					totTitulos = res.getTotTitulos();
+					totPesos = res.getTotPesos();
+					mostrarEnviar = true;
+				} else {
+					pr.setStatus("No se encontraron resultados");
+					mensajeTabla = "Sin información";
+				}
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 			} else {
-				pr.setStatus("No se encontraron resultados");
-				mensajeTabla = "Sin información";
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					pr.setStatus(res.getMensaje());
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
@@ -102,15 +118,20 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	public void enviar() {
 		ProcessResult pr = new ProcessResult();
 		try {
+			mostrarExportar = true; //TODO: quitar
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Acción enviar");
-			if (pagos != null && pagos.size() > 0) {
-				String res = notificacionPagosServ.enviaFecha(fecha);
-//				FacesContext.getCurrentInstance().addMessage(null,
-//						new FacesMessage(FacesMessage.SEVERITY_INFO, "", res));
-				pr.setStatus("Exitoso");
+			BaseOut res = notificacionPagosServ.enviaFecha(fecha);
+			if (res.getEstatus() == 1) {
 				mostrarEnviar = false;
 				mostrarExportar = true;
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					pr.setStatus(res.getMensaje());
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
@@ -125,21 +146,34 @@ public class NotificacionPagosCtrll extends ControllerBase {
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Acción exportar");
-			if (pagos != null && pagos.size() > 0) {
-				ExportarIn parametros = new ExportarIn();
-				parametros.setFecha(fecha);
-				ExportarOut res = notificacionPagosServ.exportar(parametros);
-				if (res.getMensaje() == null && res.getError() == null) {
-					mostrarExportar = false;
-//					String msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//					FacesContext.getCurrentInstance().addMessage(null,
-//							new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-					pr.setStatus("Exitoso");
+
+			if (archivo != null && !archivo.equals("")) {
+				if (ValidateUtil.isValidFileName(archivo)) {
+
+					ExportarIn parametros = new ExportarIn();
+					parametros.setFecha(fecha);
+					parametros.setArchivo(archivo);
+					BaseOut res = notificacionPagosServ.exportar(parametros);
+					if (res.getEstatus() == 1) {
+						//pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+						pr.setStatus(res.getMensaje());
+					} else {
+						if (res.getEstatus() == 2) {
+							GenerarErrorNegocio(res.getMensaje());
+						} else if (res.getEstatus() == 0) {
+							pr.setStatus(res.getMensaje());
+						}
+					}
+
 				} else {
-//					FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO,
-//							"", res.getMensaje() + " " + res.getError()));
-					pr.setStatus(res.getError());
+					UIInput input = (UIInput) findComponent("archivo");
+					input.setValid(false);
+					pr.setStatus("Nombre de archivo no válido");
 				}
+			} else {
+				UIInput input = (UIInput) findComponent("archivo");
+				input.setValid(false);
+				pr.setStatus("Nombre de archivo es requerido");
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);

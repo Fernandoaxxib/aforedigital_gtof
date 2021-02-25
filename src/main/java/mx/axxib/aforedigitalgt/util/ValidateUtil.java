@@ -72,6 +72,19 @@ public class ValidateUtil {
 	    return pattern.matcher(num).matches();
 	}
 	
+	/**
+	 * Valida el nombre de un archivo, puede incluir carácteres alfanuméricos, espacios y los signos "-" y "_" sin símbolos especiales.
+	 * @param name Nombre del archivo, no debe incluir extensión
+	 * @return Verdadero en caso de ser un nombre de archivo válido
+	 */
+	public static boolean isValidFileName(String name) {
+		Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]+");
+	    if (name == null) {
+	        return false; 
+	    }
+	    return pattern.matcher(name).matches();
+	}
+	
 	
 	
 	
