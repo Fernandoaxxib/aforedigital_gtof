@@ -70,6 +70,7 @@ public class ValorUMACtrll extends ControllerBase {
 			String usuario = "USER1"; // TODO: revisar qué usuario se debe enviar en la versión final
 			ValorUMAOut res = valorUMAService.getValorUMA(usuario);
 			if (res.getEstatus() == 1) {
+				valores = res.getValores();
 				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 			} else {
 				if (res.getEstatus() == 2) {
