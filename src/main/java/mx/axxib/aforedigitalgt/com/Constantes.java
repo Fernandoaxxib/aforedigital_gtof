@@ -172,4 +172,8 @@ public class Constantes {
 	public static final String CONSULTA_RECAUDACION_PACKAGE = "PKG_RET_FOREREVU";
 	public static final String CONSULTA_RECAUDACION_CONSULTA_NSS = "CONSULTA_X_NSS";
 	public static final String CONSULTA_RECAUDACION_GENERA_REPORTE = "PRC_GENERA_REPORTE";
+	
+	// VER DETALLE CHEQUE FOPAGOS
+	public static final String CONSULTA_FOPAGOS_PACKAGE="PKG_RET_FOPAGOS";
+	public static final String CONSULTA_FOPAGOS_NSS_STORED="PRC_LLENA_DATOS";
 }

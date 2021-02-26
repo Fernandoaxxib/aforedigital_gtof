@@ -37,6 +37,7 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_ESTATUS", String.class, ParameterMode.OUT);
 
 		query.setParameter("P_NSS", nss);
 
@@ -44,6 +45,7 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 		res.setCuenta((String) query.getOutputParameterValue("P_CUENTA"));
 		res.setNombre((String) query.getOutputParameterValue("P_NOMBRE"));
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+		res.setStatus((String) query.getOutputParameterValue("P_ESTATUS"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -59,13 +61,14 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 		query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);	
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);	
-		
+		query.registerStoredProcedureParameter("P_ESTATUS", String.class, ParameterMode.OUT);
 		query.setParameter("P_CUENTA", cuenta);
 		
 		VerSolicitudChequeOut res=new VerSolicitudChequeOut();
 		Object cursor = query.getOutputParameterValue("CP_CURSOR");
 		if (cursor != null) {		
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+		
 		res.setVerSolicitudChequeListOut(query.getResultList());
 		}
 		return res;
@@ -83,6 +86,7 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_CUENTA", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);	
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("P_ESTATUS", String.class, ParameterMode.OUT);	
 			
 			query.setParameter("P_CUENTA", cuenta);
 			
@@ -90,6 +94,7 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			Object cursor = query.getOutputParameterValue("CP_CURSOR");
 			if (cursor != null) {		
 			res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+			res.setStatus((String) query.getOutputParameterValue("P_ESTATUS"));
 			res.setVerPagoChequeListOut(query.getResultList());
 			}
 			return res;

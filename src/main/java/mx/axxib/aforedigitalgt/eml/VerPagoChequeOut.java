@@ -15,5 +15,6 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public class VerPagoChequeOut {
 	private String 	 mensaje;
+	private String 	 status;
 	private List<VerPagoChequeListOut> verPagoChequeListOut;
 }

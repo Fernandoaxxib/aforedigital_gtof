@@ -21,4 +21,5 @@ public class VerChequeOut {
 	private String nombre;
 	private String cuenta;
 	private String mensaje;
+	private String status;
 }
