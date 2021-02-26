@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 
 public class ObtieneTipoProcesoOut {
-	private List<ObtieneTipoProceso> tipos;
+	private Integer estatus;
 	private String mensaje;
+	private List<ObtieneTipoProceso> tipos;
+	
 }
 

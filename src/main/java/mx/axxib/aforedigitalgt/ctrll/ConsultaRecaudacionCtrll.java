@@ -11,7 +11,9 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaNSS;
 import mx.axxib.aforedigitalgt.eml.ConsultaNSSOut;
 import mx.axxib.aforedigitalgt.serv.ConsultaRecaudacionServ;
@@ -63,13 +65,21 @@ public class ConsultaRecaudacionCtrll extends ControllerBase {
 			if (nss != null && !nss.equals("")) {
 				if (ValidateUtil.isNSS(nss)) {
 					ConsultaNSSOut res = consultaService.getConsultaNSS(nss);
-					datos = res.getDatos();
-					if (datos != null && datos.size() > 0) {
-						pr.setStatus("Exitoso");
-						mostrarReporte = true;
+					if(res.getEstatus() == 1) {
+						datos = res.getDatos();
+						if (datos != null && datos.size() > 0) {
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							mostrarReporte = true;
+						} else {
+							mensajeTabla = "Sin información";
+							pr.setStatus("No se encontró información");
+						}
 					} else {
-						mensajeTabla = "Sin información";
-						pr.setStatus("No se encontró información");
+						if(res.getEstatus() == 2) {
+							GenerarErrorNegocio(res.getMensaje());
+						} else if(res.getEstatus() == 0) {
+							pr.setStatus(res.getMensaje());
+						} 
 					}
 				} else {
 					UIInput input = (UIInput) findComponent("nss");
@@ -97,9 +107,16 @@ public class ConsultaRecaudacionCtrll extends ControllerBase {
 					pr.setFechaInicial(DateUtil.getNowDate());
 					pr.setDescProceso("Generar reporte");
 
-					String msg = consultaService.getGeneraReporte(nss);
-
-					pr.setStatus(msg);
+					BaseOut res = consultaService.getGeneraReporte(nss);
+					if(res.getEstatus() == 1) {
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)+": "+res.getMensaje());
+					} else {
+						if(res.getEstatus() == 2) {
+							GenerarErrorNegocio(res.getMensaje());
+						} else if(res.getEstatus() == 0) {
+							pr.setStatus(res.getMensaje());
+						} 
+					}
 				} else {
 					UIInput input = (UIInput) findComponent("nss");
 					input.setValid(false);

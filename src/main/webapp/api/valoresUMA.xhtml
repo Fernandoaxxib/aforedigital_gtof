@@ -14,8 +14,6 @@
 
 	<ui:define name="center">
 
-		<h:outputStylesheet name="estilo-base.css" library="css" />
-
 		<p:panelGrid width="100%" styleClass="ui-noborder">
 			<p:row>
 				<p:column>
@@ -26,10 +24,6 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
 
 		<h:form id="form">
 			<p:panel header="Valores UMA" style="margin-top:20px">
@@ -67,7 +61,7 @@
 
 						</p:column>
 						<p:column>
-							<p:panelGrid styleClass="ui-noborder">
+							<p:panelGrid id="pGrid" styleClass="ui-noborder" >
 
 								<p:row>
 									<p:column>
@@ -76,15 +70,14 @@
 										<p:datePicker id="fechaInicial"
 											inputStyle="width:120px; text-align:right;"
 											value="#{valorUMA.fechaInicial}" showIcon="true" locale="es"
-											pattern="dd-MM-yyyy" readonlyInput="true" required="true"
-											requiredMessage="Fecha inicial requerida" />
+											pattern="dd-MM-yyyy" readonlyInput="true"  />
 									</p:column>
 									<p:column>
 										<p:outputLabel value="Fecha Fin: " style="font-weight: bold" />
 										<p:datePicker id="fechaFinal" value="#{valorUMA.fechaFinal}"
 											inputStyle="width:120px; text-align:right;" showIcon="true"
 											locale="es" pattern="dd-MM-yyyy" readonlyInput="true"
-											required="true" requiredMessage="Fecha fin requerida" />
+											 />
 
 									</p:column>
 								</p:row>
@@ -98,7 +91,7 @@
 								<p:row>
 									<p:column colspan="2">
 										<p:commandButton class="blue"
-											action="#{valorUMA.generarReporte}" type="submit" update="form"
+											actionListener="#{valorUMA.generarReporte}" update="pGrid result"
 											value="Generar reporte"  />
 									</p:column>
 								</p:row>
@@ -108,6 +101,10 @@
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
+			
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{valorUMA}" />
+			</ui:include>
 
 		</h:form>
 

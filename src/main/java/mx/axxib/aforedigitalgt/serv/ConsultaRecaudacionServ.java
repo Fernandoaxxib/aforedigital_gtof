@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ConsultaRecaudacionRepo;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaNSSOut;
 
 @Service
@@ -22,7 +23,7 @@ public class ConsultaRecaudacionServ extends ServiceBase {
 	}
 
 	
-	public String getGeneraReporte(String nss) throws AforeException {
+	public BaseOut getGeneraReporte(String nss) throws AforeException {
 		try {
 			return consultaRepo.getGeneraReporte(nss);
 		} catch (Exception e) {

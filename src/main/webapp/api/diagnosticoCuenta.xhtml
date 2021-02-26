@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{reporteLiquidacion.iniciar}" type="preRenderView" />
+		<f:event listener="#{diagCuenta.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -27,67 +27,52 @@
 			</p:row>
 		</p:panelGrid>
 
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
+		<h:form id="form">
+			<p:panel header="Diagnóstico de la Cuenta Individual"
+				style="margin-top:20px">
 
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column colspan="2" style="padding:10px;">
 
-		<p:panel header="Diagnóstico de la Cuenta Individual" style="margin-top:20px">
-
-			<p:panelGrid width="50%" styleClass="ui-noborder">
-				<p:row>
-					<p:column colspan="2" style="padding:10px;">
-						<h:form id="form">
 							<p:outputLabel value="Buscar por: " style="font-weight: bold" />
-							<p:inputText value="#{diagCuenta.valor}" style="width:215px"
-								placeholder="NSS/CURP" required="true"
-								requiredMessage="Debe especificar un NSS/CURP" />
+							<p:inputText id="nss" value="#{diagCuenta.nss}" style="width:215px"
+								placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
-								action="#{diagCuenta.obtieneCodCuenta}" type="submit"
-								value="Buscar"  />
-						</h:form>
-					</p:column>
-				</p:row>
+								actionListener="#{diagCuenta.obtieneCodCuenta}"
+								update="pGrid result" value="Buscar" />
+
+						</p:column>
+						<p:column style="width:200px; padding:10px;">
+							<p:outputLabel value="Cuenta: " style="font-weight: bold" />
+							<h:outputText value="#{diagCuenta.codCuenta}" />
+						</p:column>
+						<p:column style="width:300px; padding:10px;">
+							<p:outputLabel value="Nombre: " style="font-weight: bold" />
+							<h:outputText value="#{diagCuenta.nombre}" />
+						</p:column>
+					</p:row>
 
 
-				<p:row>
-					<p:column style="width:200px; padding:10px;">
-						<p:outputLabel value="Cuenta: " style="font-weight: bold" />
-						<h:outputText value="#{diagCuenta.codCuenta}" />
-					</p:column>
-					<p:column style="width:200px; padding:10px;">
-						<p:outputLabel value="Nombre: " style="font-weight: bold" />
-						<h:outputText value="#{diagCuenta.nombre}" />
-					</p:column>
-				</p:row>
-
-
-				<h:form id="form2">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Inicio: " style="font-weight: bold" />
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;"
-								value="#{diagCuenta.fechaInicio}" showIcon="true" locale="es"
-								pattern="dd-MM-yyyy" readonlyInput="true" required="true"
-								requiredMessage="Fecha inicial requerida" />
+								value="#{diagCuenta.fechaInicial}" showIcon="true" locale="es"
+								pattern="dd-MM-yyyy" readonlyInput="true" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Fin: " style="font-weight: bold" />
-							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFin}"
+							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
-								locale="es" pattern="dd-MM-yyyy" readonlyInput="true"
-								 />
+								locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
 
 						</p:column>
-					</p:row>
-					<p:row>
 						<p:column colspan="2" style="padding:10px;">
 							<p:outputLabel value="Tipo proceso: " style="font-weight: bold" />
 
-							<p:selectOneMenu required="true"
-								requiredMessage="Tipo proceso es requerido"
-								style="width:auto; vertical-align: inherit;"
+							<p:selectOneMenu id="tipoProceso" style="width:300px; vertical-align: inherit;"
 								value="#{diagCuenta.selectedTipo}">
 								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 									itemValue="" />
@@ -98,27 +83,31 @@
 					</p:row>
 
 					<p:row>
-						<p:column colspan="2" style="padding:10px;">
-							<p:commandButton class="blue"
-								action="#{diagCuenta.generarArchivo}" type="submit"
-								value="Generar reporte"  />
+						<p:column colspan="4" style="text-align:center;padding:10px;">
+							<p:commandButton class="blue" rendered="#{diagCuenta.mostrarBotones}"
+								actionListener="#{diagCuenta.generarArchivo}" update="pGrid result"
+								value="Generar reporte" />
 
-							<p:commandButton class="blue"
-								action="#{diagCuenta.desbloquearCuentas}" type="submit"
-								value="Desbloquea Ctas."  />
+							<p:commandButton class="blue" rendered="#{diagCuenta.mostrarBotones}"
+								actionListener="#{diagCuenta.desbloquearCuentas}"
+								update="pGrid result" value="Desbloquea Ctas." />
 
-							<p:commandButton class="blue"
-								action="#{diagCuenta.bloquearCuentas}" type="submit"
-								value="Bloquea Ctas."  />
+							<p:commandButton class="blue" rendered="#{diagCuenta.mostrarBotones}"
+								actionListener="#{diagCuenta.bloquearCuentas}" update="pGrid result"
+								value="Bloquea Ctas." />
 						</p:column>
 					</p:row>
 
-				</h:form>
-
-			</p:panelGrid>
-		</p:panel>
 
 
+				</p:panelGrid>
+			</p:panel>
+
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{diagCuenta}" />
+			</ui:include>
+
+		</h:form>
 
 	</ui:define>
 

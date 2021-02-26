@@ -43,6 +43,10 @@ public class DateUtil {
 	 * @return Devuelve verdadero en caso de ser válido
 	 */
 	public static boolean isValidDates(Date ini, Date fin) {
-		return ini.compareTo(fin) <= 0;
+		if(ini != null && fin != null) {
+			return ini.compareTo(fin) <= 0;
+		} else {
+			return false;
+		}
 	}
 }

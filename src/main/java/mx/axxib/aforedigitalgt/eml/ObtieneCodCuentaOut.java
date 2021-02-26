@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class ObtieneCodCuentaOut {
 	private String nombre;
 	private String codCuenta;
+	private Integer estatus;
 	private String mensaje;
 }
 

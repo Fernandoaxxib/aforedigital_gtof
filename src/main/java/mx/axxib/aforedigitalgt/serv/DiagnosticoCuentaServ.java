@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.DiagnosticoCuentaRepo;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.DesbloqueaCuentasIn;
 import mx.axxib.aforedigitalgt.eml.GeneraArchivoIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneCodCuentaOut;
@@ -32,7 +33,7 @@ public class DiagnosticoCuentaServ extends ServiceBase {
 		}
 	}
 	
-	public String generaArchivo(GeneraArchivoIn parametros) throws AforeException {
+	public BaseOut generaArchivo(GeneraArchivoIn parametros) throws AforeException {
 		try {
 			return diagnosticoCuentaRepo.generaArchivo(parametros);
 		} catch (Exception e) {
@@ -40,7 +41,7 @@ public class DiagnosticoCuentaServ extends ServiceBase {
 		}
 	}
 	
-	public String desbloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
+	public BaseOut desbloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
 		try {
 			return diagnosticoCuentaRepo.desbloqueaCuentas(parametros);
 		} catch (Exception e) {
@@ -48,7 +49,7 @@ public class DiagnosticoCuentaServ extends ServiceBase {
 		}
 	}
 	
-	public String bloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
+	public BaseOut bloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
 		try {
 			return diagnosticoCuentaRepo.bloqueaCuentas(parametros);
 		} catch (Exception e) {

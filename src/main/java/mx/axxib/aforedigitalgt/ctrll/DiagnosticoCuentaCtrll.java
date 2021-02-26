@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.component.UIInput;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,16 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.DesbloqueaCuentasIn;
 import mx.axxib.aforedigitalgt.eml.GeneraArchivoIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneCodCuentaOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneTipoProceso;
 import mx.axxib.aforedigitalgt.eml.ObtieneTipoProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DiagnosticoCuentaServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
@@ -31,120 +34,275 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 
 	@Autowired
 	HikariDataSource dataSource;
-	
+
 	@Autowired
 	private DiagnosticoCuentaServ diagCuentaServ;
-	
+
 	@Getter
 	@Setter
-	private String valor;
-	
+	private String nss;
+
 	@Getter
 	private String codCuenta;
-	
+
 	@Getter
 	private String nombre;
-	
+
 	@Getter
 	private List<ObtieneTipoProceso> tipos;
-	
+
 	@Getter
 	@Setter
 	private Integer selectedTipo;
-	
+
 	@Getter
 	@Setter
-	private Date fechaInicio;
-	
+	private Date fechaInicial;
+
 	@Getter
 	@Setter
-	private Date fechaFin;
+	private Date fechaFinal;
+
+	@Getter
+	private boolean mostrarBotones;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
-			valor = null;
-			codCuenta = null;
-			nombre = null;
+			nss = null;
+			limpiar();
 			tipos = new ArrayList<ObtieneTipoProceso>();
-			selectedTipo = null;
-			fechaInicio = null;
-			fechaFin = null;
-			
 			obtieneTipoProceso();
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
 		}
 	}
 
-	public void obtieneCodCuenta()  {
+	public void limpiar() {
+		mostrarBotones = false;
+		codCuenta = null;
+		nombre = null;
+		selectedTipo = null;
+		fechaInicial = null;
+		fechaFinal = null;
+	}
+
+	public boolean isNssCurpValid(ProcessResult pr) {
+		if(nss == null || nss.equals("")) {
+			UIInput fini = (UIInput) findComponent("nss");
+			fini.setValid(false);
+			// pr.setDescProceso("Debe elegir una fecha inicio");
+			pr.setStatus("NSS/CURP es requerido");
+			return false;
+		} else {
+			if(ValidateUtil.isCURP(nss)) {
+				return true;
+			}
+			
+			if(ValidateUtil.isNSS(nss)) {
+				return true;
+			}
+			
+			UIInput fini = (UIInput) findComponent("nss");
+			fini.setValid(false);
+			// pr.setDescProceso("Debe elegir una fecha inicio");
+			pr.setStatus("NSS/CURP no válido");
+			return false;
+		}
+	}
+
+	public void obtieneCodCuenta() {
+		ProcessResult pr = new ProcessResult();
 		try {
-			boolean isCurp = ValidateUtil.isCURP(valor);
-			ObtieneCodCuentaOut res = diagCuentaServ.getObtieneCodCuenta(valor, isCurp);
-			codCuenta = res.getCodCuenta();
-			nombre = res.getNombre();
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", res.getMensaje()));
+			limpiar();
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Buscar por NSS/CURP");
+			if (isNssCurpValid(pr)) {
+				boolean isCurp = ValidateUtil.isCURP(nss);
+				ObtieneCodCuentaOut res = diagCuentaServ.getObtieneCodCuenta(nss, isCurp);
+				if (res.getEstatus() == 1) {
+					codCuenta = res.getCodCuenta();
+					nombre = res.getNombre();
+					if (codCuenta != null) {
+						mostrarBotones = true;
+					}
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
+			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 
 	public void obtieneTipoProceso() {
 		try {
 			ObtieneTipoProcesoOut res = diagCuentaServ.getObtieneTipoProceso();
-			tipos = res.getTipos();
-			
+			if (res.getEstatus() == 1) {
+				tipos = res.getTipos();
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				}
+			}
 		} catch (Exception e) {
-			GenericException(e);
+			resultados.add(GenericException(e));
 		}
 	}
-	
+
+	public boolean isFormValid(ProcessResult pr) {
+		if (fechaInicial == null) {
+			UIInput fini = (UIInput) findComponent("fechaInicial");
+			fini.setValid(false);
+			// pr.setDescProceso("Debe elegir una fecha inicio");
+			pr.setStatus("Fecha inicio es requerida");
+			return false;
+		}
+
+		if (fechaFinal == null) {
+			UIInput ffin = (UIInput) findComponent("fechaFinal");
+			ffin.setValid(false);
+			// pr.setDescProceso("Debe elegir una fecha fin");
+			pr.setStatus("Fecha fin es requerida");
+			return false;
+		}
+
+		if (!DateUtil.isValidDates(fechaInicial, fechaFinal)) {
+			UIInput fini = (UIInput) findComponent("fechaInicial");
+			fini.setValid(false);
+
+			UIInput ffin = (UIInput) findComponent("fechaFinal");
+			ffin.setValid(false);
+
+			// pr.setDescProceso("La fecha final debe ser mayor o igual a la inicial");
+			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
+			return false;
+		}
+
+		if (selectedTipo == null) {
+			UIInput fini = (UIInput) findComponent("tipoProceso");
+			fini.setValid(false);
+			pr.setStatus("Tipo proceso es requerido");
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean isForm2Valid(ProcessResult pr) {
+		if (fechaInicial == null) {
+			UIInput fini = (UIInput) findComponent("fechaInicial");
+			fini.setValid(false);
+			pr.setStatus("Fecha inicio es requerida");
+			return false;
+		}
+
+		if (selectedTipo == null) {
+			UIInput fini = (UIInput) findComponent("tipoProceso");
+			fini.setValid(false);
+			pr.setStatus("Tipo proceso es requerido");
+			return false;
+		}
+		return true;
+	}
+
 	public void generarArchivo() {
+		ProcessResult pr = new ProcessResult();
 		try {
-			GeneraArchivoIn parametros = new GeneraArchivoIn();
-			parametros.setClave(selectedTipo);
-			parametros.setFechaInicio(fechaInicio);
-			parametros.setFechaFin(fechaFin);
-			String msg = diagCuentaServ.generaArchivo(parametros );
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Generar reporte");
+			if (isFormValid(pr)) {
+				GeneraArchivoIn parametros = new GeneraArchivoIn();
+				parametros.setClave(selectedTipo);
+				parametros.setFechaInicio(fechaInicial);
+				parametros.setFechaFin(fechaFinal);
+				BaseOut res = diagCuentaServ.generaArchivo(parametros);
+				if (res.getEstatus() == 1) {
+					pr.setStatus(
+							aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje());
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
+			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
-	
+
 	public void desbloquearCuentas() {
+		ProcessResult pr = new ProcessResult();
 		try {
-			DesbloqueaCuentasIn parametros = new DesbloqueaCuentasIn();
-			parametros.setClave(selectedTipo);
-			parametros.setCodCuenta(codCuenta);
-			parametros.setFechaInicio(fechaInicio);
-			parametros.setUsuario(dataSource.getUsername());
-			String msg = diagCuentaServ.desbloqueaCuentas(parametros);
-			FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Desbloquear cuentas");
+			if (isForm2Valid(pr)) {
+				DesbloqueaCuentasIn parametros = new DesbloqueaCuentasIn();
+				parametros.setClave(selectedTipo);
+				parametros.setCodCuenta(codCuenta);
+				parametros.setFechaInicio(fechaInicial);
+				parametros.setUsuario(dataSource.getUsername());
+				BaseOut res = diagCuentaServ.desbloqueaCuentas(parametros);
+				if (res.getEstatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
+			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
-	
+
 	public void bloquearCuentas() {
+		ProcessResult pr = new ProcessResult();
 		try {
-			DesbloqueaCuentasIn parametros = new DesbloqueaCuentasIn();
-			parametros.setClave(selectedTipo);
-			parametros.setCodCuenta(codCuenta);
-			parametros.setFechaInicio(fechaInicio);
-			parametros.setUsuario(dataSource.getUsername());
-			String msg = diagCuentaServ.bloqueaCuentas(parametros);
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Bloquear cuentas");
+			if (isForm2Valid(pr)) {
+				DesbloqueaCuentasIn parametros = new DesbloqueaCuentasIn();
+				parametros.setClave(selectedTipo);
+				parametros.setCodCuenta(codCuenta);
+				parametros.setFechaInicio(fechaInicial);
+				parametros.setUsuario(dataSource.getUsername());
+				BaseOut res = diagCuentaServ.bloqueaCuentas(parametros);
+				if (res.getEstatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
+			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
-	
-	
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.DesbloqueaCuentasIn;
 import mx.axxib.aforedigitalgt.eml.GeneraArchivoIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneCodCuentaOut;
@@ -24,8 +25,9 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 //                P_CURP IN VARCHAR2,
 //                P_NOMBRE OUT VARCHAR2,
 //                P_COD_CUENTA OUT VARCHAR2,
+//                P_ESTATUS  OUT  NUMBER,
 //                P_MENSAJE OUT VARCHAR2);
-//                    
+                  
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_PACKAGE)
 					.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_OBTIENE_CODCUENTA);
@@ -35,6 +37,7 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_CURP", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_COD_CUENTA", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			if(isCurp) {
@@ -48,7 +51,8 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			ObtieneCodCuentaOut res = new ObtieneCodCuentaOut();
 			res.setNombre((String)query.getOutputParameterValue("P_NOMBRE"));
 			res.setCodCuenta((String)query.getOutputParameterValue("P_COD_CUENTA"));
-			res.setMensaje((String)query.getOutputParameterValue("P_MENSAJE"));
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -58,6 +62,7 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 	@SuppressWarnings("unchecked")
 	public ObtieneTipoProcesoOut getObtieneTipoProceso() throws AforeException {
 //	    PROCEDURE PRC_OBTIENE_TIPO_PROCESO(P_CUR_TIP_PROCESO OUT SYS_REFCURSOR,
+//                P_ESTATUS OUT NUMBER,
 //                P_MENSAJE OUT VARCHAR2);
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_PACKAGE)
@@ -65,13 +70,15 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "ObtieneTipoProceso");
 
 			query.registerStoredProcedureParameter("P_CUR_TIP_PROCESO", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 
 			ObtieneTipoProcesoOut res = new ObtieneTipoProcesoOut();
 			Object cursor = query.getOutputParameterValue("P_CUR_TIP_PROCESO");
 			if (cursor != null) {
 				res.setTipos( query.getResultList());
-				res.setMensaje((String)query.getOutputParameterValue("P_MENSAJE"));
+				res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+				res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			}
 			return res;
 		} catch (Exception e) {
@@ -80,11 +87,12 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 
 	}
 	
-	public String generaArchivo(GeneraArchivoIn parametros) throws AforeException {
+	public BaseOut generaArchivo(GeneraArchivoIn parametros) throws AforeException {
 //	    PROCEDURE PRC_GENERA_ARCHIVO (P_CLAVE_PROCESO IN NUMBER,
 //                P_FECHA_INICIO IN DATE,
 //                P_FECHA_FIN   IN DATE,
-//                P_MENSAJE OUT VARCHAR2);                   
+//                P_ESTATUS  OUT NUMBER,
+//                P_MENSAJE OUT VARCHAR2);                 
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_PACKAGE)
 					.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_GENERA_ARCHIVO);
@@ -93,25 +101,29 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_CLAVE_PROCESO", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_FECHA_INICIO", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_FECHA_FIN", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			query.setParameter("P_CLAVE_PROCESO", parametros.getClave());
 			query.setParameter("P_FECHA_INICIO", parametros.getFechaInicio());
 			query.setParameter("P_FECHA_FIN", parametros.getFechaFin());
 			
-			String res = (String)query.getOutputParameterValue("P_MENSAJE");
+			BaseOut res = new BaseOut();
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public String desbloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
+	public BaseOut desbloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
 //	    PROCEDURE PRC_DESBLOQUEA_CTAS (P_COD_CUENTA  IN VARCHAR2,
 //                P_CLAVE_PROCESO IN NUMBER,
 //                P_USUARIO  IN VARCHAR2,
 //                P_FECHA_INICIO IN DATE,
-//                P_MENSAJE OUT VARCHAR2);              
+//                P_ESTATUS  OUT NUMBER,
+//                P_MENSAJE OUT VARCHAR2);         
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_PACKAGE)
 					.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_DESBLOQUEA_CUENTAS);
@@ -121,6 +133,7 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_CLAVE_PROCESO", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_FECHA_INICIO", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			query.setParameter("P_COD_CUENTA", parametros.getCodCuenta());
@@ -128,19 +141,22 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			query.setParameter("P_USUARIO", parametros.getUsuario());
 			query.setParameter("P_FECHA_INICIO", parametros.getFechaInicio());
 			
-			String res = (String)query.getOutputParameterValue("P_MENSAJE");
+			BaseOut res = new BaseOut();
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public String bloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
+	public BaseOut bloqueaCuentas(DesbloqueaCuentasIn parametros) throws AforeException {
 //	    PROCEDURE PRC_BLOQUEA_CUENTAS(P_COD_CUENTA  IN VARCHAR2,
 //                P_CLAVE_PROCESO IN NUMBER,
 //                P_USUARIO  IN VARCHAR2,
 //                P_FECHA_INICIO IN DATE,
-//                P_MENSAJE OUT VARCHAR2);           
+//                P_ESTATUS OUT NUMBER,
+//                P_MENSAJE OUT VARCHAR2);          
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_PACKAGE)
 					.concat(".").concat(Constantes.DIAGNOSTICO_CUENTA_BLOQUEA_CUENTAS);
@@ -150,6 +166,7 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_CLAVE_PROCESO", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_FECHA_INICIO", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			query.setParameter("P_COD_CUENTA", parametros.getCodCuenta());
@@ -157,7 +174,9 @@ public class DiagnosticoCuentaRepo extends RepoBase {
 			query.setParameter("P_USUARIO", parametros.getUsuario());
 			query.setParameter("P_FECHA_INICIO", parametros.getFechaInicio());
 			
-			String res = (String)query.getOutputParameterValue("P_MENSAJE");
+			BaseOut res = new BaseOut();
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);

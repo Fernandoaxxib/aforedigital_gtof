@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 
@@ -21,6 +22,7 @@ public class ValorUMARepo extends RepoBase {
 	public ValorUMAOut getValorUMA(String usuario) throws AforeException {
 //		PROCEDURE PRC_CAT_UMA (P_USUARIO IN VARCHAR2,
 //                CP_CURSOR OUT SYS_REFCURSOR,
+//                P_ESTATUS    OUT NUMBER,
 //                P_MENSAJE      OUT VARCHAR2);
 	
 		try {
@@ -30,6 +32,7 @@ public class ValorUMARepo extends RepoBase {
 
 			query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			query.setParameter("P_USUARIO", usuario);
@@ -38,7 +41,8 @@ public class ValorUMARepo extends RepoBase {
 			Object cursor = query.getOutputParameterValue("CP_CURSOR");
 			if (cursor != null) {
 				res.setValores(query.getResultList());
-				res.setMensaje((String)query.getOutputParameterValue("P_MENSAJE"));
+				res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+				res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			}
 			return res;
 		} catch (Exception e) {
@@ -46,10 +50,11 @@ public class ValorUMARepo extends RepoBase {
 		}
 	}
 
-	public String getGeneraReporte(GeneraReporteUMAIn parametros) throws AforeException {
+	public BaseOut getGeneraReporte(GeneraReporteUMAIn parametros) throws AforeException {
 //		PROCEDURE PRC_GENERA_REPORTE(P_RUTA IN VARCHAR2,
 //                P_FECHA_INI IN DATE,
 //                P_FECHA_FIN IN DATE,
+//                 P_ESTATUS  OUT NUMBER,
 //                P_MENSAJE OUT VARCHAR2
 //                );
 		try {
@@ -61,13 +66,16 @@ public class ValorUMARepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_RUTA", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_FECHA_INI", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_FECHA_FIN", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 
 			query.setParameter("P_RUTA", parametros.getRuta());
 			query.setParameter("P_FECHA_INI", parametros.getFechaInicial());
 			query.setParameter("P_FECHA_FIN", parametros.getFechaFinal());
 
-			String res = (String) query.getOutputParameterValue("P_MENSAJE");
+			BaseOut res = new BaseOut();
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);

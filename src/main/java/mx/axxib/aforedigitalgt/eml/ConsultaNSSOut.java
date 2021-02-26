@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 
 public class ConsultaNSSOut {
+	private Integer estatus;
 	private String mensaje;
 	private List<ConsultaNSS> datos;
 }

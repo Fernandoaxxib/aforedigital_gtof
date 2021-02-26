@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 
 public class ValorUMAOut {
-	private List<ValorUMA> valores;
+	private Integer estatus;
 	private String mensaje;
+	private List<ValorUMA> valores;
 }
 

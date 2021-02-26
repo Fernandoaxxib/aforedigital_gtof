@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ValorUMARepo;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 
@@ -22,7 +23,7 @@ public class ValorUMAServ extends ServiceBase {
 		}
 	}
 
-	public String getGeneraReporte(GeneraReporteUMAIn parametros) throws AforeException {
+	public BaseOut getGeneraReporte(GeneraReporteUMAIn parametros) throws AforeException {
 		try {
 			return valorUMARepo.getGeneraReporte(parametros);
 		} catch (Exception e) {
