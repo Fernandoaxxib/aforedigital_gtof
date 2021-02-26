@@ -154,8 +154,7 @@ public class NotificacionPagosCtrll extends ControllerBase {
 					parametros.setArchivo(archivo);
 					BaseOut res = notificacionPagosServ.exportar(parametros);
 					if (res.getEstatus() == 1) {
-						//pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-						pr.setStatus(res.getMensaje());
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)+": "+res.getMensaje());
 					} else {
 						if (res.getEstatus() == 2) {
 							GenerarErrorNegocio(res.getMensaje());

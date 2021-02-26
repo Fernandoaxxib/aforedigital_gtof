@@ -13,6 +13,7 @@ import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ExportarIn;
 import mx.axxib.aforedigitalgt.eml.LlenaInfoOut;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Repository
 @Transactional
@@ -58,7 +59,7 @@ public class NotificacionPagosRepo extends RepoBase {
 
 	
 	public BaseOut enviaFecha(Date fecha) throws AforeException {
-//		PROCEDURE PRC_ENVIA_FECHA(P_TXT_FECHA IN OUT DATE,
+//		PROCEDURE PRC_ENVIA_FECHA(P_TXT_FECHA IN OUT VARCHAR2,
 //                P_MENSAJE   OUT VARCHAR2,
 //                P_ESTATUS   OUT NUMBER);
 		try {
@@ -66,11 +67,11 @@ public class NotificacionPagosRepo extends RepoBase {
 					.concat(".").concat(Constantes.NOTIFICACION_PAGOS_ENVIA_FECHA);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("P_TXT_FECHA", Date.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("P_TXT_FECHA", String.class, ParameterMode.INOUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			
-			query.setParameter("P_TXT_FECHA", fecha);
+			query.setParameter("P_TXT_FECHA", DateUtil.getDateToString(fecha, "dd/MM/yyyy"));
 			
 			BaseOut res = new BaseOut();  
 			res.setMensaje((String)query.getOutputParameterValue("P_MENSAJE"));
@@ -85,7 +86,6 @@ public class NotificacionPagosRepo extends RepoBase {
 //		PROCEDURE PRC_EXPORTAR (P_TXT_FECHA IN DATE,
 //                P_ARCHIVO   IN VARCHAR2,
 //                P_MENSAJE   OUT VARCHAR2,
-//                P_ERROR     OUT VARCHAR2,
 //                P_ESTATUS    OUT NUMBER);
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.NOTIFICACION_PAGOS_PACKAGE)
@@ -94,7 +94,6 @@ public class NotificacionPagosRepo extends RepoBase {
 
 			query.registerStoredProcedureParameter("P_TXT_FECHA", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_ARCHIVO", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("P_ERROR", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			

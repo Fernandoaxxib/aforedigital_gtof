@@ -18,6 +18,17 @@ public class DateUtil {
 	}
 	
 	/**
+	 * Convierte una fecha a string en el formato definido
+	 * @param date Fecha a convertir
+	 * @param format Formato en el que será convertida la fecha
+	 * @return La cadena en el formato definido
+	 */
+	public static String getDateToString(Date date, String format) {
+		SimpleDateFormat formatter = new SimpleDateFormat(format);
+		return formatter.format(date);
+	}
+	
+	/**
 	 * Obtiene la fecha actual en zona horario de México
 	 * @return Devuelve en formato fecha
 	 */
