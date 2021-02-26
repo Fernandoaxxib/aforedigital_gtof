@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.SolicitudMatrimonioDesempleoRepo;
+import mx.axxib.aforedigitalgt.eml.FopagosListOut;
 import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
@@ -46,5 +47,14 @@ public class SolicitudMatrimonioDesempleoServ extends ServiceBase{
 		}
 		
 	}
+	
+	public FopagosListOut getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
+		try {
+			return dao.getFopagos(numSolicitud,nss,cuenta,nombre);
+		}catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+		
 	
 }

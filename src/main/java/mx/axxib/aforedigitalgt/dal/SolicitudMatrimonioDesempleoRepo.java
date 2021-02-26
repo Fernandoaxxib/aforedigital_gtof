@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ConsultarTraspasosIcefasOut;
+import mx.axxib.aforedigitalgt.eml.FopagosListOut;
 import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerSolicitudChequeOut;
@@ -103,6 +104,57 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			}
 
 		}
+	
+	@SuppressWarnings("unchecked")
+	public FopagosListOut getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
+		
+		try {
+			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTA_FOPAGOS_PACKAGE).concat(".").concat(Constantes.CONSULTA_FOPAGOS_NSS_STORED);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
+			query.registerStoredProcedureParameter("pNumero_SolicRet", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("pNss", String.class, ParameterMode.IN);	
+			query.registerStoredProcedureParameter("pCuenta", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("pNombre", String.class, ParameterMode.IN);	
+			query.registerStoredProcedureParameter("pNoPoliza_Pag", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pReferencia", String.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pFechaMov_Pag", Date.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pFecReinv_Pag", Date.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pTelefono_Pag", String.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pBenef_Re", String.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pPorcent_Re", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pEstatus_Re", String.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pPlaza_Re", String.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pMonBruto_Re", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("pMontoIsr_Re", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pMontoNeto_Re", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);	
+			
+			
+			
+			query.setParameter("pNumero_SolicRet", numSolicitud).setParameter("pNss", nss).setParameter("pCuenta", cuenta).setParameter("pNombre", nombre);	
+			
+			FopagosListOut res=new FopagosListOut();
+			res.setPNoPoliza_Pag((Integer) query.getOutputParameterValue("pNoPoliza_Pag"));
+			res.setPReferencia((String) query.getOutputParameterValue("pReferencia"));
+			res.setPFechaMov_Pag((Date) query.getOutputParameterValue("pFechaMov_Pag"));
+			res.setPFecReinv_Pag((Date) query.getOutputParameterValue("pFecReinv_Pag"));
+			res.setPTelefono_Pag((String) query.getOutputParameterValue("pTelefono_Pag"));
+			res.setPBenef_Re((String) query.getOutputParameterValue("pBenef_Re"));
+			res.setPPorcent_Re((Integer) query.getOutputParameterValue("pPorcent_Re"));
+			res.setPEstatus_Re((String) query.getOutputParameterValue("pEstatus_Re"));
+			res.setPPlaza_Re((String) query.getOutputParameterValue("pPlaza_Re"));
+			res.setPMonBruto_Re((Integer) query.getOutputParameterValue("pMonBruto_Re"));
+			res.setPMontoIsr_Re((Integer) query.getOutputParameterValue("pMontoIsr_Re"));
+			res.setPMontoNeto_Re((Integer) query.getOutputParameterValue("pMontoNeto_Re"));
+			res.setPMensaje((String) query.getOutputParameterValue("pMensaje"));
+			
+			return res;
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
+
+		
+	}
 	
 }
