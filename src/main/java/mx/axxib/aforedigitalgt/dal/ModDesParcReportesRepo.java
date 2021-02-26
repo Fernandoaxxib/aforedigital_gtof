@@ -24,7 +24,8 @@ public class ModDesParcReportesRepo extends RepoBase {
 			query.registerStoredProcedureParameter("id_FechaInicial", Date.class, ParameterMode.IN);					   	       		
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Avance", String.class, ParameterMode.OUT);		
-					
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);	
+			
 			query.setParameter("in_OpcionReporte", p_OpcionReporte);		
 			query.setParameter("id_FechaInicial", pd_fechaInicial);	
 			
@@ -32,6 +33,7 @@ public class ModDesParcReportesRepo extends RepoBase {
 			
 			result.setOcMensaje((String)query.getOutputParameterValue("oc_Mensaje"));
 			result.setOcAvance((String)query.getOutputParameterValue("oc_Avance"));
+			result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			
 			return result;		
 		  }catch(Exception e) {

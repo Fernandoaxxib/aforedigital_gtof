@@ -18,6 +18,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitor;
@@ -62,6 +63,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	@Getter
 	@Setter
 	private boolean seleccionado;		
+	@Getter
+	private Integer seleccionados;
 	
 	@Override
 	public void iniciar() {
@@ -70,7 +73,11 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			listSolicitudes=null;
 			recuperarSolicPendientes();
 			PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
-			
+			if(listSolicitudes!=null) {
+				seleccionados=listSolicitudes.size();
+			}else {
+				seleccionados=0;
+			}			
 		}
 	}
 	
@@ -87,20 +94,26 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	}
 	
 	public void recuperarSolicPendientes() {
-		try {
-			
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Recuperación de solicitudes pendientes");
+		try {			
 			listSolicitudes = service.getListSolicitudes();	
+			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+		    seleccionados=listSolicitudes.size();
+		} catch (Exception e) {
+			listSolicitudes=null;
+			seleccionados=0;
+			pr = GenericException(e);			
+		}finally {
 			filtro=new ArrayList<SolicitudOut>();
 			DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
 		    if (!dataTable.getFilterBy().isEmpty()) {
 		        dataTable.reset();
 		        PrimeFaces.current().ajax().update("form:table1");
 		        PrimeFaces.current().ajax().update("form:table1:totalRegistros");
-		    }
-			
-			//PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
-		} catch (Exception e) {
-			GenericException(e);
+		    }			
+			resultados.add(pr);
 		}
 
 	}
@@ -144,62 +157,84 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 
 	
-	public void aprobarSolicitud()  {	
-	  if(listSolicitudes!=null && !listSolicitudes.isEmpty()) {
-		  
-	  
-		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {
-			ProcessResult pr = new ProcessResult();
-			try {
-				pr.setFechaInicial(DateUtil.getNowDate());
-				pr.setDescProceso("Aprobación de solicitud");
+	public void aprobarSolicitud()  {
+	 ProcessResult pr = new ProcessResult();	
+	  if(listSolicitudes!=null && !listSolicitudes.isEmpty()) {		  	  
+		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {									
 				selectedSolicitud.forEach(p -> {
 					try {
-						res = service.aprobarSolicitud(p.getNumSolicitud(),
-								Integer.valueOf(p.getTransaccion().substring(0, 1)),
-								p.getSubTransaccion().substring(0, 1));
+						SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss",Locale.getDefault());
+						res = service.aprobarSolicitud(p.getNumSolicitud(),Integer.valueOf(p.getTransaccion().substring(0, 1)),p.getSubTransaccion().substring(0, 1));																	
+						pr.setFechaInicial(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_INICIO()));
+						pr.setFechaFinal(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_FINAL()));					    
+					    pr.setDescProceso(res.getListaProceso().get(0).getABREV_PROCESO());
+						pr.setStatus(res.getListaProceso().get(0).getESTADO_PROCESO());					
 					} catch (Exception e) {
+						pr.setFechaInicial(DateUtil.getNowDate());
+						pr.setDescProceso("Aprobacion de solicitud");
 						pr.setStatus("Error");
+						pr.setFechaFinal(DateUtil.getNowDate());
+						res=null;
 						GenericException(e);
+					}finally {					
+						resultados.add(pr);
 					}
-				});				
-				pr.setStatus("Exitoso");				
-				listSolicitudes.removeAll(selectedSolicitud);
+				});		
 				
-
-				filtro=new ArrayList<SolicitudOut>();
+				if(res!=null) {					
+					listSolicitudes.removeAll(selectedSolicitud);					
+					filtro=new ArrayList<SolicitudOut>();										
+					DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
+				    if (!dataTable.getFilterBy().isEmpty()) {
+				        dataTable.reset();
+				        PrimeFaces.current().ajax().update("table1");
+				    }
+				}else {
+					selectedSolicitud=null;
+				}												
 				
-				
-				DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
-			    if (!dataTable.getFilterBy().isEmpty()) {
-			        dataTable.reset();
-			        PrimeFaces.current().ajax().update("table1");
-			    }
-				
-				
-				}catch(Exception e) {
-					pr.setStatus("Error");
-					GenericException(e);
-				}finally {
-					pr.setFechaFinal(DateUtil.getNowDate());
-					resultados.add(pr);
-				}
-		}else {
-			addMessageFail("- No seleccionó solicitudes para aprobar");
-		}
+		}else {			  
+			  pr.setFechaInicial(DateUtil.getNowDate());
+			  pr.setDescProceso("Aprobación de solicitud");
+			  pr.setStatus("Debe seleccionar la solicitud para aprobar");
+			  pr.setFechaFinal(DateUtil.getNowDate());
+			  resultados.add(pr);
+		}		
+	  }	else {
+		  pr.setFechaInicial(DateUtil.getNowDate());
+		  pr.setDescProceso("Aprobación de solicitud");
+		  pr.setStatus("No hay solicitudes por aprobar");
+		  pr.setFechaFinal(DateUtil.getNowDate());
+		  resultados.add(pr);
+	  }
 		
-	  }	
-		
-	
+	 seleccionados=0;
 	}
 	
 	 public void seleccion(SelectEvent<SolicitudOut> event) {
 		 if(!selectedSolicitud.contains(event.getObject())){
-			 selectedSolicitud.add(event.getObject());			
+			 selectedSolicitud.add(event.getObject());			 			 
 		 }	  
+		 if(selectedSolicitud!=null) {
+			 seleccionados=selectedSolicitud.size();
+		 }
 	 } public void deseleccion(UnselectEvent<SolicitudOut> event) {		 
 		 if(selectedSolicitud.contains(event.getObject())){
-			 selectedSolicitud.remove(event.getObject());			
+			 selectedSolicitud.remove(event.getObject());				
+		 }
+		 
+		 if(selectedSolicitud!=null) {
+			 seleccionados=selectedSolicitud.size();
+		 }
+	 }
+	 public void marcarTodos() {
+		 if(selectedSolicitud!=null) {
+			 seleccionados=selectedSolicitud.size();
+		 }
+	 }
+	 public void desmarcarTodos() {
+		 if(selectedSolicitud!=null) {
+			 seleccionados=selectedSolicitud.size();
 		 }
 	 }
 	

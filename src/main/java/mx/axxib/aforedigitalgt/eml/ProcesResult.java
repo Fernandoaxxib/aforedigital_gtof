@@ -1,14 +1,13 @@
 package mx.axxib.aforedigitalgt.eml;
 
-import java.util.Date;
-
 import lombok.Data;
 
 @Data
 public class ProcesResult {
 
-	private Date pdFecha;
-	private String pcLote;
-	private String pcAvance;
-	
+	private String p_Ruta;
+	private String p_Archivo;
+	private String oc_Avance;
+	private Integer on_Estatus;
+
 }

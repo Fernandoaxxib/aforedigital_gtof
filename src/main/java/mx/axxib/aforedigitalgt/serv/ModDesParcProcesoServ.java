@@ -35,9 +35,9 @@ public class ModDesParcProcesoServ extends ServiceBase {
 		}
 	}
 	
-	public void guardarDetSal(RegisSinSalarioOut registro) throws AforeException{
+	public Integer guardarDetSal(RegisSinSalarioOut registro) throws AforeException{
 		try {
-			 desParcRepo.guardarDetSal(registro);
+			 return desParcRepo.guardarDetSal(registro);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

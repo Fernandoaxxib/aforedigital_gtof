@@ -2,21 +2,19 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-
+import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.ModDesParcReportesServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "modDesParcReportes")
@@ -42,6 +40,9 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String radioSelected;
+	
+	@Getter
+	private EjecucionResult result;
 
 	@Override
 	public void iniciar() {
@@ -52,47 +53,51 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 	}
 
 	public void radioSelected() {
+		fecha=null;
+		ruta=null;
+		archivo=null;
 	}
 
-	public void procesarReporte() {
-		if (fecha != null && radioSelected != null) {
-
-			try {
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-				Date today = new Date();
-				proceso = new ProcesoOut();
-				proceso.setFechahoraInicio(format.format(today));
-				EjecucionResult result;
-				result = service.procesarReporte(Integer.valueOf(radioSelected), fecha);
-				Date today2 = new Date();
-				proceso.setFechahoraFinal(format.format(today2));
-				proceso.setAbrevProceso(result.getOcMensaje());
-				proceso.setEstadoProceso(result.getOcAvance());
-
+	public void procesarReporte() {				
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if (isFormValid(pr)) {
+			
+			try {				
 				switch (radioSelected) {
-
 				case "1":
-					proceso.setAbrevProceso("Reporte de Diagnóstico");
+					pr.setDescProceso("Reporte de Diagnóstico");					
 					break;
 				case "2":
-					proceso.setAbrevProceso("Generación layout pagos");
+					pr.setDescProceso("Generación layout pagos");
 					break;
 				case "3":
-					proceso.setAbrevProceso("Reporte negativos subcuentas");
+					pr.setDescProceso("Reporte negativos subcuentas");
 					break;
 				case "4":
-					proceso.setAbrevProceso("Reporte movimientos aplicados");
+					pr.setDescProceso("Reporte movimientos aplicados");
 					break;
 				default:
 					proceso.setAbrevProceso("");
-
 				}
-
-			} catch (Exception e) {
-				GenericException(e);
+								
+				result = service.procesarReporte(Integer.valueOf(radioSelected), fecha);
+				if(result.getOn_Estatus()==1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				}
+				
+				if(result.getOn_Estatus()==2) {
+					pr.setStatus(result.getOcMensaje());
+				}
+			} catch (Exception e) {				
+				pr=GenericException(e);
+			}finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
 		} else {
-			addMessageFail("Seleccione una opción y la fecha");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 
@@ -140,14 +145,24 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 			}
 		}
 	}
+	
+	public boolean isFormValid(ProcessResult pr) {
+		if (radioSelected == null) {
+			UIInput radio = (UIInput) findComponent("customRadio2");
+			radio.setValid(false);
 
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+			pr.setDescProceso("Debe seleccionar una opción");
+			pr.setStatus("Selección requerida");
+			return false;
+		}
+		if (fecha == null) {
+			UIInput radio = (UIInput) findComponent("fCapturada2");
+			radio.setValid(false);
 
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
+			pr.setDescProceso("Debe seleccionar una fecha");
+			pr.setStatus("Selección requerida");
+			return false;
+		}
+		return true;
 	}
 }

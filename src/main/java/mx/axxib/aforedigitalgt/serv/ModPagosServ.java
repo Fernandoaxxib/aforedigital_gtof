@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ModPagosRepo;
-import mx.axxib.aforedigitalgt.eml.DatosIniResult;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 
@@ -17,7 +16,7 @@ public class ModPagosServ extends ServiceBase{
 	
 	
 	
-	public String refresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
+	public EjecucionResult refresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
 		try {
 			return service.getRefresh(ic_BotonContinuar,id_Fecha_Proceso,id_Fecha_Retiro);
 		} catch (Exception e) {
@@ -32,9 +31,9 @@ public class ModPagosServ extends ServiceBase{
 			throw GenericException(e);
 		}
 	}
-	public void generarPagos(Date id_FechaRetiro,String ic_ProcesoRetiro,String ic_Instituto,String ic_TiposPagos) throws AforeException {
+	public EjecucionResult generarPagos(Date id_FechaRetiro,String ic_ProcesoRetiro,String ic_Instituto,String ic_TiposPagos) throws AforeException {
 		try {
-			service.generaPagos( id_FechaRetiro, ic_ProcesoRetiro, ic_Instituto, ic_TiposPagos);
+			return service.generaPagos( id_FechaRetiro, ic_ProcesoRetiro, ic_Instituto, ic_TiposPagos);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

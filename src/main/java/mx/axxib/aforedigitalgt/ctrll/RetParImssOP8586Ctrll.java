@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.SelectEvent;
@@ -14,9 +15,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.LoteOP85Out;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP8586Serv;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "retParImssOP8586")
@@ -80,6 +83,26 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 	
 	@Getter
 	private Date today;
+	@Getter
+	@Setter
+	private String radioSelected;
+
+	@Getter
+	@Setter
+	private String radioSelected2;
+	@Getter
+	private boolean seleccion1;
+	@Getter
+	private boolean seleccion2;
+	@Getter
+	private boolean disabled1;
+	@Getter
+	private boolean disabled2;
+	@Getter
+	private boolean disabled3;
+	@Getter
+	private boolean disabled4;
+
 	
 	@Override
 	public void iniciar() {
@@ -88,9 +111,39 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			ruta="/iprod/PROCESAR/TRANSMISION/AFORE/RETIROS";
 			ruta2="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
 			ruta3="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
+			archivo="20210223.OP85";
 			today= new Date();
 			reset();
 		}
+	}
+	public void radioSelected() {
+		if (radioSelected != null) {
+			radioSelected2 = null;
+			lote = null;
+			seleccion2 = false;
+			disabled1 = false;
+			disabled2 = false;
+			disabled3 = true;
+			disabled4 = true;
+			archivo3=null;
+		}
+
+	}
+
+	public void radioSelected2() {
+
+		if (radioSelected2 != null) {
+			fecIni = null;
+			fecFin = null;
+			radioSelected = null;
+			seleccion1 = false;
+			disabled1 = true;
+			disabled2 = true;
+			disabled3 = false;
+			disabled4 = false;
+			archivo3=null;
+		}
+
 	}
 	public void onRowSelect(SelectEvent<LoteOP85Out> event) {
 		lote1 = new LoteOP85Out();
@@ -113,115 +166,164 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 
 	}
 	public void generarOP85(){
-		if(archivo==null || archivo.isEmpty()) {
-			addMessageFail("Ingrese el nombre del archivo.");
-		}else {
-			try {
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-				Date today= new Date();		
-				proceso = new ProcesoOut();
-				proceso.setFechahoraInicio(format.format(today));
+		if(archivo!=null && !archivo.isEmpty()) {
+			ProcessResult pr = new ProcessResult();
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Generación archivo OP85");
+		
+			try {			
 				String resp=service.cargarArchivoOP85(ruta, archivo);
-				Date today2= new Date();		
-				proceso.setFechahoraFinal(format.format(today2));
-				proceso.setAbrevProceso("Generar OP85");
-				proceso.setEstadoProceso("Proceso ejecutado");													
-				addMessageOK(resp);		
+				pr.setStatus(resp);				
 			}catch(Exception e) {
+				pr.setStatus("Error");
 				GenericException(e);
+			}finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
 		}
 	}
 	public void cargarOP86() {
-		if(archivo2==null || archivo2.isEmpty()) {
-			addMessageFail("Ingrese el nombre del archivo.");
-		}else {
-			try {
-				SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-				Date today= new Date();		
-				proceso = new ProcesoOut();
-				proceso.setFechahoraInicio(format.format(today));
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if(archivo2!=null && !archivo2.isEmpty()) {		
+		pr.setDescProceso("Carga archivo OP86");
+			try {				
 				String resp=service.cargarArchivoOP86(ruta2, archivo2);
-				Date today2= new Date();		
-				proceso.setFechahoraFinal(format.format(today2));
-				proceso.setAbrevProceso("Cargar OP86");
-				proceso.setEstadoProceso("Proceso ejecutado");													
-				addMessageOK(resp);		
+				pr.setStatus(resp);
 			}catch(Exception e) {
+				pr.setStatus("Error");
 				GenericException(e);
+			}finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
+		}else {
+			pr.setDescProceso("Carga archivo OP86");
+			pr.setStatus("Nombre de archivo requerido");
+			UIInput radio = (UIInput) findComponent("idArchivo2");
+			radio.setValid(false);
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 	public void generarReporte() {
-		
-		if(archivo3!=null && !archivo3.isEmpty()) {
-			if(fecIni!=null && fecFin!=null) {
-			 if(fecIni.before(fecFin)||fecIni.equals(fecFin)) {
-				 if(lote==null) {					
-						try {
-							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-							Date today= new Date();		
-							proceso = new ProcesoOut();
-							proceso.setFechahoraInicio(format.format(today));
-							String resp=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
-							Date today2= new Date();		
-							proceso.setFechahoraFinal(format.format(today2));
-							proceso.setAbrevProceso("Generar Reporte");
-							proceso.setEstadoProceso("Proceso ejecutado");													
-							addMessageOK(resp);		
-						}catch(Exception e) {
-							GenericException(e);
-						}					
-				}else {
-					addMessageFail("Seleccionar fecha o lote.");
-				}
-			 }else {
-				 addMessageFail("La fecha inicio debe ser menor o igual a la fecha fin.");
-			 }					
-			}else {
-				if(lote!=null) {
-					try {
-						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-						Date today= new Date();		
-						proceso = new ProcesoOut();
-						proceso.setFechahoraInicio(format.format(today));
-						String resp=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
-						Date today2= new Date();		
-						proceso.setFechahoraFinal(format.format(today2));
-						proceso.setAbrevProceso("Cargar OP86");
-						proceso.setEstadoProceso("Proceso ejecutado");													
-						addMessageOK(resp);		
-					}catch(Exception e) {
-						GenericException(e);
+		//-------------------------------------------------------
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Generación de reporte");
+
+		if (radioSelected != null || radioSelected2 != null) {
+			if (radioSelected != null) {
+				if (fecIni != null && fecFin != null) {
+					if (DateUtil.isValidDates(fecIni, fecFin)) {
+					  if(archivo3!=null && !archivo3.isEmpty()) {
+						  try {
+								String resp=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
+								pr.setStatus(resp);
+							} catch (Exception e) {
+								pr.setStatus("Error");
+								GenericException(e);
+							} finally {
+								pr.setFechaFinal(DateUtil.getNowDate());
+								resultados.add(pr);
+							}
+					  }else {
+						  UIInput radio = (UIInput) findComponent("idArchivo3");
+						  radio.setValid(false);
+							
+						  pr.setStatus("El nombre de archivo es requerido");
+						  pr.setFechaFinal(DateUtil.getNowDate());
+					      resultados.add(pr);	
+					  }	
+						
+					} else {
+						UIInput radio = (UIInput) findComponent("dfini");
+						radio.setValid(false);
+
+						UIInput radio2 = (UIInput) findComponent("dffin");
+						radio2.setValid(false);
+
+						pr.setStatus("La fecha inicial debe ser menor o igual a la fecha final");
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);
 					}
-				}else {
-					addMessageFail("Seleccionar fecha o lote.");
+				} else {
+					UIInput radio = (UIInput) findComponent("dfini");
+					radio.setValid(false);
+
+					UIInput radio2 = (UIInput) findComponent("dffin");
+					radio2.setValid(false);
+
+					pr.setStatus("Rango de fecha requerido");
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
 				}
 			}
-		}else {
-			addMessageFail("Ingrese el nombre del archivo.");
+			if (radioSelected2 != null) {
+				if (lote != null && !lote.isEmpty()) {
+					 if(archivo3!=null && !archivo3.isEmpty()) {
+						  try {
+								String resp=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
+								pr.setStatus(resp);
+							} catch (Exception e) {
+								pr.setStatus("Error");
+								GenericException(e);
+							} finally {
+								pr.setFechaFinal(DateUtil.getNowDate());
+								resultados.add(pr);
+							}
+					  }else {
+						  UIInput radio = (UIInput) findComponent("idArchivo3");
+						  radio.setValid(false);
+							
+						  pr.setStatus("El nombre de archivo es requerido");
+						  pr.setFechaFinal(DateUtil.getNowDate());
+					      resultados.add(pr);	
+					  }	
+				} else {
+					UIInput radio2 = (UIInput) findComponent("vLote");
+					radio2.setValid(false);
+
+					pr.setStatus("Se requiere el número de lote");
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
+				}
+			}
+		} else {
+			UIInput radio = (UIInput) findComponent("customRadio");
+			radio.setValid(false);
+			UIInput radio2 = (UIInput) findComponent("customRadio2");
+			radio2.setValid(false);
+
+			pr.setStatus("Selección requerida");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
+		
+		
+		//------------------------------------------------------
+		
 		
 	}
 	public void reset() {
 		fecIni=null;
 		fecFin=null;
 		lote=null;
-		archivo=null;
 		archivo2=null;
 		archivo3=null;
 		proceso=null;
+		radioSelected = null;
+		radioSelected2 = null;
+		seleccion1 = false;
+		seleccion2 = false;
+		disabled1 = true;
+		disabled2 = true;
+		disabled3 = true;
+		disabled4 = true;
 	}
 	public void limpiar() {
 		lote=null;
 	}
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+	
 }

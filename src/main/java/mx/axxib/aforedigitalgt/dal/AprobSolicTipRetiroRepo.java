@@ -4,7 +4,6 @@ import java.util.List;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
@@ -30,11 +29,12 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 	  }
 	}
 	
-    public AprobarSolicResult aprobarSolicitud(Integer inNoSolicitud,Integer inTipTransac,String icSubTipTransac) throws AforeException {
+    @SuppressWarnings("unchecked")
+	public AprobarSolicResult aprobarSolicitud(Integer inNoSolicitud,Integer inTipTransac,String icSubTipTransac) throws AforeException {
 	  try {	
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.APRO_SOLIC_TIPO_RETIRO_PACKAGE).concat(".")
 				.concat(Constantes.APRO_SOLIC_TIPO_RETIRO_APROBAR_SELECCIONADOS);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ProcesMonitorOut");
 
 		query.registerStoredProcedureParameter("in_NoSolicitud", Integer.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("in_TipTransac", Integer.class, ParameterMode.IN);
@@ -45,9 +45,11 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 		query.registerStoredProcedureParameter("oc_GlobalSistProc", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("oc_GlobalAbrevProc", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("oc_NombreAplicacion", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);						
-			
-				
+		query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);		
+		query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+		query.registerStoredProcedureParameter("on_estatus", Integer.class, ParameterMode.OUT);	
+		
+							
 		query.setParameter("in_NoSolicitud", inNoSolicitud).setParameter("in_TipTransac", inTipTransac).setParameter("ic_SubTipTransac", icSubTipTransac);		
 		
 		AprobarSolicResult result= new AprobarSolicResult();
@@ -59,6 +61,8 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 		result.setOcGlobalAbrevProc((String)query.getOutputParameterValue("oc_GlobalAbrevProc"));
 		result.setOcNombreAplicacion((String)query.getOutputParameterValue("oc_NombreAplicacion"));
 		result.setOcMensaje((String)query.getOutputParameterValue("oc_Mensaje"));
+		result.setOn_estatus((Integer)query.getOutputParameterValue("on_estatus"));
+		result.setListaProceso(query.getResultList());
 		return result;		
 	  }catch(Exception e) {
 			 throw GenericException(e); 

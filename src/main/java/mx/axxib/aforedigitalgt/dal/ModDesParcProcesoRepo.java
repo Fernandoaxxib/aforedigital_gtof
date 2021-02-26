@@ -25,12 +25,12 @@ public class ModDesParcProcesoRepo extends RepoBase {
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("id_dFecha", Date.class, ParameterMode.IN);
-
 			query.registerStoredProcedureParameter("on_Parcialidades", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_UnaExhibicion", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_SinSalario", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Totales", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Pendiente", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 
 			query.setParameter("id_dFecha", id_dFecha);
 
@@ -41,7 +41,7 @@ public class ModDesParcProcesoRepo extends RepoBase {
 			result.setSinSalario((Integer) query.getOutputParameterValue("on_SinSalario"));
 			result.setTotales((Integer) query.getOutputParameterValue("on_Totales"));
 			result.setPendientes((Integer) query.getOutputParameterValue("on_Pendiente"));
-
+			result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			return result;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -76,6 +76,8 @@ public class ModDesParcProcesoRepo extends RepoBase {
 			query.registerStoredProcedureParameter("in_Opciones", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Avance", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+			
 
 			query.setParameter("id_FechaCarga", id_FechaCarga);
 			query.setParameter("in_Opciones", in_Opciones);
@@ -91,7 +93,7 @@ public class ModDesParcProcesoRepo extends RepoBase {
 		}
 	}
 
-	public void guardarDetSal(RegisSinSalarioOut registro) throws AforeException {
+	public Integer guardarDetSal(RegisSinSalarioOut registro) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
 					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_GUARDAR_DET_SAL);
@@ -100,11 +102,13 @@ public class ModDesParcProcesoRepo extends RepoBase {
 			
 			query.registerStoredProcedureParameter("on_NumSolicitud", Integer.class, ParameterMode.IN);			
 			query.registerStoredProcedureParameter("on_sbc_tipo_a", Double.class, ParameterMode.IN);
-					
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);		
 			query.setParameter("on_NumSolicitud", registro.getOnNumSolicitud());			
 			query.setParameter("on_sbc_tipo_a", registro.getOnSbcTipoA());	
 			
-			query.execute();
+			Integer result= (Integer) query.getOutputParameterValue("on_Estatus");
+
+			return result;
 
 		} catch (Exception e) {
 			throw GenericException(e);

@@ -14,7 +14,7 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 @Transactional
 public class ModPagosRepo extends RepoBase {
 
-	public String getRefresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
+	public EjecucionResult getRefresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
 
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
@@ -25,12 +25,17 @@ public class ModPagosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("id_Fecha_Proceso", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("id_Fecha_Retiro", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+		
 
 			query.setParameter("ic_BotonContinuar", ic_BotonContinuar);
 			query.setParameter("id_Fecha_Proceso", id_Fecha_Proceso);
 			query.setParameter("id_Fecha_Retiro", id_Fecha_Retiro);
 
-			String result = (String) query.getOutputParameterValue("oc_Mensaje");
+			EjecucionResult result= new EjecucionResult();
+			
+		    result.setOcMensaje((String) query.getOutputParameterValue("oc_Mensaje"));
+		    result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			return result;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -50,6 +55,7 @@ public class ModPagosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("ic_Instituto", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Msg", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 
 			query.setParameter("id_FechaProceso", id_FechaProceso);
 			query.setParameter("ic_ProcesosRetiro", ic_ProcesosRetiro);
@@ -61,14 +67,14 @@ public class ModPagosRepo extends RepoBase {
 			
 			result.setOcMensaje((String) query.getOutputParameterValue("oc_Mensaje"));
 			result.setOcAvance((String) query.getOutputParameterValue("oc_Msg"));
-		
+		    result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			return result;
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 
-	public void generaPagos(Date id_FechaRetiro,String ic_ProcesoRetiro,String ic_Instituto,String ic_TiposPagos) throws AforeException {
+	public EjecucionResult generaPagos(Date id_FechaRetiro,String ic_ProcesoRetiro,String ic_Instituto,String ic_TiposPagos) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_PAGOS_PACKAGE)
 					.concat(".").concat(Constantes.MOD_PAGOS_INTERFACE_PAGOS);
@@ -78,14 +84,20 @@ public class ModPagosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("ic_ProcesoRetiro", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_Instituto", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_TiposPagos", String.class, ParameterMode.IN);
-			
+			query.registerStoredProcedureParameter("oc_Msg", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 
 			query.setParameter("id_FechaRetiro", id_FechaRetiro);
 			query.setParameter("ic_ProcesoRetiro", ic_ProcesoRetiro);
 			query.setParameter("ic_Instituto", ic_Instituto);
 			query.setParameter("ic_TiposPagos", ic_TiposPagos);
-						
 			
+            EjecucionResult result= new EjecucionResult();			
+			result.setOcMensaje((String) query.getOutputParameterValue("oc_Mensaje"));
+			result.setOcAvance((String) query.getOutputParameterValue("oc_Msg"));
+		    result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
+			return result;									
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

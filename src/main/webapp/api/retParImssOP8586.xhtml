@@ -8,212 +8,235 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-   <f:metadata>
-		<f:event listener="#{retParImssOP8586.iniciar}" type="preRenderView"/>		
+	<f:metadata>
+		<f:event listener="#{retParImssOP8586.iniciar}" type="preRenderView" />
 	</f:metadata>
-	
- 	<ui:define name="left">
+
+	<ui:define name="left">
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="center">
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:panelGrid class="no-border no-padding" style="width: 100%">
 			<p:row>
-			   <p:column>
-		             <ui:include src="subMenuTransacciones.xhtml" />
-		       </p:column>
-		       <p:column>
-		           <h:form>
-		              <p:linkButton styleClass="blue" outcome="/api/retParImssOP84.jsf" includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP84}" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-				      <p:linkButton styleClass="green" outcome="/api/retParImssOP8586.jsf" includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP8586}" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-		           </h:form>
-		       </p:column>
-		    </p:row>
-		 </p:panelGrid>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="blue" outcome="/api/retParImssOP84.jsf"
+							includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP84}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="green"
+							outcome="/api/retParImssOP8586.jsf" includeViewParams="true"
+							value="#{msg.retPar_imss_op84_btnOP8586}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
 
-        <p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
-				appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
-				 resizable="false" style="font-size:12px">
-				<p:dataTable var="registro" value="#{retParImssOP8586.listLotes}"
-					selectionMode="single" selection="#{retParImssOP8586.selectedLote}"
-					rowKey="#{registro.ID_LOTE}" style="padding-bottom:10px">
-					<p:ajax process="@this" event="rowSelect"
-						listener="#{retParImssOP8586.onRowSelect}" />
+		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
+			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
+			resizable="false" style="font-size:12px">
+			<p:dataTable var="registro" value="#{retParImssOP8586.listLotes}"
+				selectionMode="single" selection="#{retParImssOP8586.selectedLote}"
+				rowKey="#{registro.ID_LOTE}" style="padding-bottom:10px">
+				<p:ajax process="@this" event="rowSelect"
+					listener="#{retParImssOP8586.onRowSelect}" />
 
-					<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}" styleClass="gridCell-right">
-						<h:outputText value="#{registro.ID_LOTE}" />
-					</p:column>
-					<p:column headerText="Fecha lote" styleClass="gridCell-right">
-						<h:outputText value="#{registro.FECHA_LOTE}" >
-						  <f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-						</h:outputText>
-					</p:column>
-					<p:column headerText="Número de registros" styleClass="gridCell-right">
-						<h:outputText value="#{registro.TOTAL_DE_REGISTROS}" />
-					</p:column>
-				</p:dataTable>
-				<p:outputPanel style="text-align:right">
-					<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
-						styleClass="blue ui-button-text" style="margin-right:10px" />
-					<p:commandButton value="Seleccionar"
-						actionListener="#{retParImssOP8586.opcionSeleccionada2}"
-						oncomplete="PF('dlg2').hide();" update=":form:vLote"
-						styleClass="blue ui-button-text" />
-				</p:outputPanel>
-			</p:dialog>
-		<h:form id="form">
-		<p:growl id="message" />
-			<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
-				style="font-size:12px;margin-bottom:20px; margin-top:20px">
-				<div class="ui-g">
-					<div class="ui-g-6">
-						<p:panel header="#{msg.retPar_imss_op8586_titulo2}">
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{retParImssOP8586.ruta}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
-								</div>
-								<div class="ui-g-9">
-									<p:inputText value="#{retParImssOP8586.archivo}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="#{msg.retPar_imss_op8586_btnGenerar85}" action="#{retParImssOP8586.generarOP85}" update="form message" ajax="true"/>
-								</div>
-							</div>
-						</p:panel>
-					</div>
-					<div class="ui-g-6">
-						<p:panel header="#{msg.retPar_imss_op8586_titulo3}">
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{retParImssOP8586.ruta2}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
-								</div>
-								<div class="ui-g-9">
-									<p:inputText value="#{retParImssOP8586.archivo2}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-								    <p:commandButton styleClass="blue ui-button-text" type="submit" value="#{msg.retPar_imss_op8586_btnCargar86}" action="#{retParImssOP8586.cargarOP86}" update="form message" ajax="true"/>						
-								</div>
-							</div>
-						</p:panel>
-					</div>
-				</div>
+				<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
+					styleClass="gridCell-right">
+					<h:outputText value="#{registro.ID_LOTE}" />
+				</p:column>
+				<p:column headerText="Fecha lote" styleClass="gridCell-right">
+					<h:outputText value="#{registro.FECHA_LOTE}">
+						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Número de registros"
+					styleClass="gridCell-right">
+					<h:outputText value="#{registro.TOTAL_DE_REGISTROS}" />
+				</p:column>
+			</p:dataTable>
+			<p:outputPanel style="text-align:right">
+				<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
+					styleClass="blue ui-button-text" style="margin-right:10px" />
+				<p:commandButton value="Seleccionar"
+					actionListener="#{retParImssOP8586.opcionSeleccionada2}"
+					oncomplete="PF('dlg2').hide();" update=":form:vLote"
+					styleClass="blue ui-button-text" />
+			</p:outputPanel>
+		</p:dialog>
+		<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
+			style="font-size:12px;margin-bottom:20px; margin-top:20px">
+			<h:form id="form">
+				<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
+					<p:panel style="border:0px !important">
+						<p:panelGrid class="no-border no-padding">
+							<p:outputLabel value="#{msg.retPar_imss_op8586_titulo2}" />
+						</p:panelGrid>
+						<p:panelGrid class="no-border no-padding" columns="2"
+							style="margin-top:10px">
+
+							<p:outputPanel style="width:60px">
+								<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
+							</p:outputPanel>
+
+							<p:panel
+								style="background:#dddddd !important; height:20px !important;border: 0px !important;border-radius:0px !important">
+								<p:outputLabel value="#{retParImssOP8586.ruta}" />
+							</p:panel>
+						</p:panelGrid>
+						<p:panelGrid class="no-border no-padding" columns="2"
+							style="margin-top:10px">
+							<p:outputPanel style="width:60px;margin-top:10px !important">
+								<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+							</p:outputPanel>
+							<p:panel
+								style="background:#dddddd !important;width:313px; height:20px !important;border: 0px !important;border-radius:0px !important">
+								<p:outputLabel value="#{retParImssOP8586.archivo}" />
+							</p:panel>
+						</p:panelGrid>
+						<p:panelGrid columns="1" class="no-border no-padding"
+							style="margin-top:10px">
+							<p:commandButton styleClass="blue ui-button-text" type="submit"
+								value="#{msg.retPar_imss_op8586_btnGenerar85}"
+								action="#{retParImssOP8586.generarOP85}" update="form:result"
+								ajax="true" />
+						</p:panelGrid>
+					</p:panel>
+					<p:panel style="border:0px !important">
+						<p:panelGrid class="no-border no-padding">
+							<p:outputLabel value="#{msg.retPar_imss_op8586_titulo3}" />
+						</p:panelGrid>
+						<p:panelGrid class="no-border no-padding" columns="2"
+							style="margin-top:10px">
+							<p:outputPanel style="width:60px">
+								<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
+							</p:outputPanel>
+							<p:panel
+								style="background:#dddddd !important; height:20px !important;border: 0px !important;border-radius:0px !important">
+								<p:outputLabel value="#{retParImssOP8586.ruta2}" />
+							</p:panel>
+						</p:panelGrid>
+						<p:panelGrid class="no-border no-padding" columns="2"
+							style="margin-top:10px">
+							<p:outputPanel style="width:60px;margin-top:10px !important">
+								<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+							</p:outputPanel>
+							<p:outputPanel>
+								<p:inputText id="idArchivo2"
+									value="#{retParImssOP8586.archivo2}" style="width:297px" />
+							</p:outputPanel>
+						</p:panelGrid>
+						<p:panelGrid columns="1" class="no-border no-padding"
+							style="margin-top:10px">
+							<p:commandButton styleClass="blue ui-button-text" type="submit"
+								value="#{msg.retPar_imss_op8586_btnCargar86}"
+								action="#{retParImssOP8586.cargarOP86}"
+								update="form:result form:idArchivo2" ajax="true" />
+						</p:panelGrid>
+					</p:panel>
+				</p:panelGrid>
+
 				<p:panel>
-					<div class="ui-g">
-						<div class="ui-g-6">
-						  <div class="ui-g">
-						     <div class="ui-g-6">
-						       <p:outputLabel value="#{msg.retPar_imss_op8586_lblinicio}" />
-						     </div>
-						     <div class="ui-g-6">
-						        <p:datePicker id="dfini" value="#{retParImssOP8586.fecIni}" locale="es" showIcon="true" pattern="dd-MM-yyyy"  maxdate="#{retParImssOP8586.today}" yearNavigator="true" monthNavigator="true" inputStyle="width:120px; text-align:right;" readonlyInput="true" >						        									
-								<p:ajax event="dateSelect" listener="#{retParImssOP8586.limpiar}" update="vLote" />	
-								</p:datePicker>	
-						     </div>
-						 </div>
-						 <div class="ui-g">
-						     <div class="ui-g-6">
-						       <p:outputLabel value="#{msg.retPar_imss_op8586_lblfin}" />
-						     </div>
-						     <div class="ui-g-6">
-						        <p:datePicker id="dffin" value="#{retParImssOP8586.fecFin}" locale="es" showIcon="true" pattern="dd-MM-yyyy"  maxdate="#{retParImssOP8586.today}" yearNavigator="true" monthNavigator="true" inputStyle="width:120px; text-align:right;" readonlyInput="true"	 />						        	
-						     </div>
-						 </div>   
-						 <div class="ui-g">
-						     <div class="ui-g-5">
-						       <p:outputLabel value="#{msg.retPar_imss_op8586_lblLote}" />
-						     </div>
-						     <div class="ui-g-4" style="background: #dddddd; border-radius: 5px; font-size: 9px; width: 120px; height: 25px; text-align: left;">
-						        <p:outputLabel id="vLote" value="#{retParImssOP8586.lote}"/>	
-						     </div>
-						     <div class="ui-g-3">
-						        <p:commandButton styleClass="blue ui-button-text" value="..." action="#{retParImssOP8586.getLotes}"
+					<p:panelGrid class="no-border no-padding" columns="2"
+						style="margin-top:10px">
+						<p:panel style="border:0px !important">
+							<p:panel style="border:0px !important;">
+								<p:selectOneRadio id="customRadio" value="#{retParImssOP8586.radioSelected}" unselectable="#{retParImssOP8586.seleccion1}"  layout="pageDirection">
+									<p:ajax listener="#{retParImssOP8586.radioSelected}" update="form:customRadio2 form:dfini form:dffin form:vLote form:btnC form:idArchivo3"	global="false" />
+									<f:selectItem itemLabel="Fecha" itemValue="1" />
+								</p:selectOneRadio>
+							</p:panel>
+							<p:panelGrid class="no-border no-padding">
+								<p:row>
+									<p:column style="width:40px">
+										<p:outputLabel value="#{msg.retPar_imss_op8586_lblinicio}" />
+									</p:column>
+									<p:column style="padding-right:20px !important">
+										<p:datePicker id="dfini" value="#{retParImssOP8586.fecIni}"
+											locale="es" showIcon="true" pattern="dd-MM-yyyy"
+											maxdate="#{retParImssOP8586.today}" yearNavigator="true"
+											monthNavigator="true"
+											inputStyle="width:120px; text-align:right;"
+											readonlyInput="true" disabled="#{retParImssOP8586.disabled1}">
+											<p:ajax event="dateSelect"
+												listener="#{retParImssOP8586.limpiar}" update="vLote" />
+										</p:datePicker>
+									</p:column>
+									<p:column style="width:40px">
+										<p:outputLabel value="#{msg.retPar_imss_op8586_lblfin}" />
+									</p:column>
+									<p:column>
+										<p:datePicker id="dffin" value="#{retParImssOP8586.fecFin}"
+											locale="es" showIcon="true" pattern="dd-MM-yyyy"
+											maxdate="#{retParImssOP8586.today}" yearNavigator="true"
+											monthNavigator="true"
+											inputStyle="width:120px; text-align:right;"
+											readonlyInput="true" disabled="#{retParImssOP8586.disabled2}"/>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+							<p:panel style="border:0px !important;">
+								<p:selectOneRadio id="customRadio2" value="#{retParImssOP8586.radioSelected2}"	unselectable="#{retParImssOP8586.seleccion2}" layout="pageDirection">
+									<p:ajax listener="#{retParImssOP8586.radioSelected2}" update="form:customRadio form:dfini form:dffin form:vLote form:btnC form:idArchivo3" 	global="false" />
+									<f:selectItem itemLabel="Lote" itemValue="1" />
+								</p:selectOneRadio>
+							</p:panel>
+							<p:panelGrid class="no-border no-padding" columns="2">
+								<p:inputText id="vLote" value="#{retParImssOP8586.lote}"
+									placeholder="Indique lote"
+									style="text-align:right;width:350px;margin-left:25px !important"
+									disabled="#{retParImssOP8586.disabled3}" />
+
+								<p:commandButton id="btnC" styleClass="blue ui-button-text" value="..." disabled="#{retParImssOP8586.disabled4}"
+									action="#{retParImssOP8586.getLotes}"
 									update="dlg1  dfini dffin" oncomplete="PF('dlg2').show();" />
-						     </div>
-						 </div> 
-						    					    
-						</div>
-						<div class="ui-g-6">
-						   <div class="ui-g">
-								<div class="ui-g-3">
+							</p:panelGrid>
+						</p:panel>
+
+						<p:panel style="border:0px !important">
+							<p:panelGrid class="no-border no-padding" columns="2"  style="margin-top:-25px">
+								<p:outputPanel style="width:60px;margin-top:10px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+								</p:outputPanel>
+								<p:panel style="background:#dddddd !important;width:313px; height:20px !important;border: 0px !important;border-radius:0px !important">
 									<p:outputLabel value="#{retParImssOP8586.ruta3}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
-								</div>
-								<div class="ui-g-9">
-									<p:inputText value="#{retParImssOP8586.archivo3}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align:right;margin-top: 10px;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Generar reporte" action="#{retParImssOP8586.generarReporte}" update="form message" ajax="true"/>
-								</div>
-							</div>														 
-						</div>
-					</div>
+								</p:panel>								
+							</p:panelGrid>
+							<p:panelGrid class="no-border no-padding" columns="2"  style="margin-top:10px">								
+								<p:outputPanel style="width:60px;margin-top:10px !important">
+								  <p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+								</p:outputPanel>
+								
+								<p:outputPanel>
+								   <p:inputText id="idArchivo3" value="#{retParImssOP8586.archivo3}" style="width:308px" />
+								</p:outputPanel>
+							</p:panelGrid>
+							
+							
+							<p:panelGrid columns="1" class="no-border no-padding"	style="margin-top:10px">
+							  <p:commandButton styleClass="blue ui-button-text" type="submit" value="Generar reporte" action="#{retParImssOP8586.generarReporte}" update="form:result form:vLote form:dfini form:dffin form:customRadio form:customRadio2 form:idArchivo3" ajax="true"/>
+						    </p:panelGrid>
+						</p:panel>
+					</p:panelGrid>
+					
+
+				</p:panel>
+				<p:panel style="border:0px !important">
+					<ui:include src="processResult.xhtml">
+						<ui:param name="base" value="#{retParImssOP8586}" />
+					</ui:include>
 				</p:panel>
 
-				<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{retParImssOP8586.proceso}"
-					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					style="margin-top:20px;font-size:12px">
-					<f:facet name="header">
-						<p:outputPanel style="text-align:left">
-							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-						</p:outputPanel>
-					</f:facet>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
-						<h:outputText value="#{pro.abrevProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
-						<h:outputText value="#{pro.estadoProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraInicio}" />
-					</p:column>
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraFinal}" />
-					</p:column>
-				</p:dataTable>
-			</p:panel>
-		</h:form>
+			</h:form>
+		</p:panel>
 	</ui:define>
 </ui:composition>

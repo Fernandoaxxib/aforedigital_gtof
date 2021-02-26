@@ -1,25 +1,27 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.Date;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.serv.ModPagosServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "moduloPagos")
 @ELBeanName(value = "moduloPagos")
-public class ModuloPagosCtrll extends ControllerBase{
+public class ModuloPagosCtrll extends ControllerBase {
 
 	@Autowired
 	private ModPagosServ service;
-	
+
 	@Getter
 	@Setter
 	private String tiposPagos;
@@ -38,67 +40,101 @@ public class ModuloPagosCtrll extends ControllerBase{
 	@Getter
 	@Setter
 	private Date fechaProcesoPagos;
-	
-	
+	@Getter
+	private String msj;
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
-			fechaProceso= new Date();
-			fechaProcesoPagos= new Date();
+		if (init) {
+			fechaProceso = DateUtil.getNowDate();
+			fechaProcesoPagos = DateUtil.getNowDate();
+			refresh();
 		}
 	}
-	public void fechaProceso() {}
-	
-	public void refresh() {
-		try {
-			if(fechaProceso!=null && fechaProcesoPagos!=null ) {
-				String resp=service.refresh("SI", fechaProceso, fechaProcesoPagos);
-				addMessageOK(resp);
-			}else {
-				addMessageFail("Seleccione la fecha de proceso y la fecha de retiro");
-			}
-			
-		} catch (Exception e) {
-			GenericException(e);
-		}
 
+	public void fechaProceso() {
 	}
-	
+
+	public void refresh() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Proceso inicial");
+		try {
+			if (fechaProceso != null && fechaProcesoPagos != null) {
+				EjecucionResult res = service.refresh("OK", fechaProceso, fechaProcesoPagos);
+				if (res.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(res.getOcMensaje());
+					} else if (res.getOn_Estatus() == 0) {
+						pr.setStatus(res.getOcMensaje());
+					}
+				}
+			}
+		} catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+
 	public void generarFondos() {
-		
-		if(fechaProceso!=null && pagosAfiliados!=null ) {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Genera interface fondos");
+		if (fechaProceso != null && pagosAfiliados != null) {
 			try {
-				EjecucionResult res=service.generarFondos(fechaProceso, procesosRetiros, tiposPagos, pagosAfiliados, institucion);
-				addMessageOK(res.getOcMensaje());
+				EjecucionResult res = service.generarFondos(fechaProceso, procesosRetiros, tiposPagos, pagosAfiliados,
+						institucion);
+				if (res.getOn_Estatus() == 1) {
+					msj=res.getOcMensaje();
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(res.getOcMensaje());
+					} else if (res.getOn_Estatus() == 0) {
+						msj=res.getOcMensaje();
+						pr.setStatus(res.getOcMensaje());
+					}
+				}
+				PrimeFaces.current().executeScript("PF('dlg2').show()");
 			} catch (Exception e) {
-				GenericException(e);
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
-		}else {
-			addMessageFail("Seleccione el tipo de fondo y la fecha de proceso.");
 		}
 	}
-	
+
 	public void generarPagos() {
-		if(procesosRetiros!=null && tiposPagos!=null && institucion!=null && fechaProcesoPagos!=null ) {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Genera interface pagos");
+		if (procesosRetiros != null && tiposPagos != null && institucion != null && fechaProcesoPagos != null) {
 			try {
-				service.generarPagos(fechaProcesoPagos, procesosRetiros, institucion, tiposPagos);
-				addMessageOK("null");
+				EjecucionResult res = service.generarPagos(fechaProcesoPagos, procesosRetiros, institucion, tiposPagos);
+				if (res.getOn_Estatus() == 1) {
+					msj=res.getOcMensaje();
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(res.getOcMensaje());
+					} else if (res.getOn_Estatus() == 0) {
+						msj=res.getOcMensaje();
+						pr.setStatus(res.getOcMensaje());
+					}
+				}
+				PrimeFaces.current().executeScript("PF('dlg2').show()");
 			} catch (Exception e) {
-				GenericException(e);
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
-		}else {
-			addMessageFail("Seleccione el proceso de retiro, institución, tipo de pago y fecha de retiro.");
 		}
 	}
-	public void addMessageOK(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-	public void addMessageFail(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-	
-	
 }

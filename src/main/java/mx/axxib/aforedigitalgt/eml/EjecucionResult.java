@@ -7,4 +7,5 @@ public class EjecucionResult {
     
     private String ocMensaje;
     private String ocAvance;
+    private Integer on_Estatus;
 }

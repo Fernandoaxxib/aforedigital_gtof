@@ -12,8 +12,10 @@
 		<f:event listener="#{moduloPagos.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	
+
 	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript library="js" name="calendar-localization.js"></h:outputScript>
 		<p:panelGrid width="100%" styleClass="ui-noborder">
 			<p:row>
 				<p:column>
@@ -24,17 +26,10 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		
 
-		<h:outputScript library="js" name="calendar-localization.js"></h:outputScript>
 		<h:form>
-			<p:growl id="msj" life="2000" />
-
-
-
-			<p:panel header="Liquidación fondos y tipos de pago." style="margin-top:20px">
-				
-
+			<p:panel header="Liquidación fondos y tipos de pago."
+				style="margin-top:20px">
 				<p:panel id="pFondos" header="#{msg.modulo_pagos_titulo2}"
 					style="margin-top:10px;margin-bottom:10px;">
 					<p:panelGrid styleClass="ui-noborder" columns="5" cellpadding="10">
@@ -51,23 +46,26 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel for="fProceso"
-							value="#{msg.modulo_pagos_label_fechaProceso}" />									
-						<p:datePicker id="fProceso" value="#{moduloPagos.fechaProceso}" locale="es" showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true" inputStyle="width:120px; text-align:right;" readonlyInput="true">
-							
+							value="#{msg.modulo_pagos_label_fechaProceso}" />
+						<p:datePicker id="fProceso" value="#{moduloPagos.fechaProceso}"
+							locale="es" showIcon="true" pattern="dd-MM-yyyy"
+							yearNavigator="true" monthNavigator="true"
+							inputStyle="width:120px; text-align:right;" readonlyInput="true">
+
 						</p:datePicker>
-						<p:commandButton styleClass="blue ui-button-text"  type="submit"
-							value="#{msg.modulo_pagos_btn_generaFondos}"
-							action="#{moduloPagos.generarFondos}" update="msj" />
+						<p:commandButton styleClass="blue ui-button-text" type="submit"
+							value="#{msg.modulo_pagos_btn_generaFondos}" update="dlg1"
+							action="#{moduloPagos.generarFondos}">
+							<p:confirm header="Mensaje"
+								message="¿Está seguro de que desea correr este proceso?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
 					</p:panelGrid>
 				</p:panel>
 
 				<p:panel id="pRetiros" header="#{msg.modulo_pagos_titulo3}"
 					style="margin-bottom:20px;">
-					
-									
-					
-					
-					<p:panelGrid styleClass="ui-noborder" columns="8" cellpadding="10">					
+					<p:panelGrid styleClass="ui-noborder" columns="8" cellpadding="10">
 						<p:outputLabel for="slRetiros"
 							value="#{msg.modulo_pagos_label_procesRetiros}" />
 						<p:selectOneMenu id="slRetiros"
@@ -114,17 +112,43 @@
 
 						<p:outputLabel for="fProcesoP"
 							value="#{msg.modulo_pagos_label_fechaProceso}" />
-						<p:datePicker id="fProcesoP"  value="#{moduloPagos.fechaProcesoPagos}" locale="es" showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true" inputStyle="width:120px; text-align:right;" readonlyInput="true" />											
+						<p:datePicker id="fProcesoP"
+							value="#{moduloPagos.fechaProcesoPagos}" locale="es"
+							showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+							monthNavigator="true" inputStyle="width:120px; text-align:right;"
+							readonlyInput="true" />
 					</p:panelGrid>
 					<div class="ui-g">
-						  <div class="ui-g-12" style="text-align:right">
-						    <p:commandButton styleClass="blue ui-button-text"  type="submit"
-							value="#{msg.modulo_pagos_btn_generaPagos}"
-							action="#{moduloPagos.generarPagos}" update="msj" />
-						  </div>
-					</div>	
+						<div class="ui-g-12" style="text-align: right">
+							<p:commandButton styleClass="blue ui-button-text" type="submit"
+								value="#{msg.modulo_pagos_btn_generaPagos}" update="dlg1"
+								action="#{moduloPagos.generarPagos}" global="false">
+
+								<p:confirm header="Mensaje"
+									message="¿Está seguro de que desea correr este proceso?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+						</div>
+					</div>
 				</p:panel>
 			</p:panel>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="300">
+				<p:commandButton value="No" type="button"
+					styleClass="blue ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Si" type="button" update="dlg1"
+					styleClass="blue ui-confirmdialog-yes" />
+			</p:confirmDialog>
+			<p:dialog id="dlg1" appendTo="@(body)" header="Mensaje"
+				widgetVar="dlg2" height="100" width="300" resizable="false"
+				showEffect="fade" modal="true">
+				<p:panelGrid columns="1" class="no-border no-padding">
+					<p:outputPanel>
+						<p:outputLabel value="#{moduloPagos.msj}" />
+					</p:outputPanel>					
+				</p:panelGrid>
+			</p:dialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -1,11 +1,12 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+
+import javax.faces.component.UIInput;
+import javax.faces.component.UIOutput;
+
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -14,10 +15,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "modDesParcLProcesar")
@@ -27,9 +30,7 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Autowired
 	private ModDesParcLProcesarServ service;
 
-	@Getter
-	@Setter
-	private ProcesoOut proceso;
+	
 	@Getter
 	@Setter
 	private Date fecha;
@@ -66,6 +67,9 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Setter
 	private String display3;
 	
+	@Getter
+	private String border;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -79,14 +83,17 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		if(radioSelected.equals("1")) {
 			display="none";
 			display2="none";
-			
+			lote=null;
 		}
 		if(radioSelected.equals("2")) {
+			fecha=null;
 			display="inline";
 			display2="inline";
 			
 		}
 		if(radioSelected.equals("3")) {
+			fecha=null;
+			lote=null;
 			display="none";
 			display2="inline";
 			
@@ -110,52 +117,31 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		}
 	}
 
-	public void generarAccion() {		
-		if(radioSelected!=null) {
-			String idProceso=null;
-			
-			if (radioSelected.equals("1")) {
-				if(fecha!=null) {
-					idProceso="Generación Lote";
-					generar(idProceso);
-				}else {
-					addMessageFail("Seleccione la fecha");
-				}
-			}
-				
-		    if (radioSelected.equals("2")) {
-					if(lote!=null) {
-						idProceso="Generación archivo ProceSAR";
-						generar(idProceso);
-					}else {
-						addMessageFail("Seleccione un lote");
-					}
-		    }
-		    
-		    if (radioSelected.equals("3")) {				
-					idProceso="Carga archivo respuesta ProceSAR";
-					generar(idProceso);				
-	        }
-			
+	public void generarAccion() {	
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		
+		if(isFormValid(pr)) {			
+			try {	
+				pr.setDescProceso(radioSelected.equals("1")?"Generación de lote":(radioSelected.equals("2")?"Generación de archivo con Layout para ProceSAR":"Cargar de archivo con respuesta de ProceSAR"));
+				ProcesResult result=	service.generarLayout(Integer.valueOf(radioSelected), fecha, lote, ruta, archivo, ruta, archivo, null);		    
+			    pr.setStatus("Exitoso");		  
+			} catch (Exception e) {
+				pr.setStatus("Error");
+				GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}	
 			
 		}else {
-			addMessageFail("Seleccione una opción");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
-	public void generar(String idProceso) {
-		try {		
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-			Date today= new Date();	
-			proceso= new ProcesoOut();	
-			proceso.setFechahoraInicio(format.format(today));
-			ProcesResult result=	service.generarLayout(Integer.valueOf(radioSelected));
-			Date today2= new Date();	
-			proceso.setFechahoraFinal(format.format(today2));					
-			proceso.setAbrevProceso(idProceso);
-			proceso.setEstadoProceso(result.getPcAvance());																	
-		} catch (Exception e) {
-			GenericException(e);
-		} 
+	public void generar() {
+		
+		
 	}
 	public void getLotes() {
 		try {
@@ -167,30 +153,55 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		}
 
 	}
+	public boolean isFormValid(ProcessResult pr) {
+	  if(radioSelected!=null) {	
+		if(radioSelected.equals("1")) {
+			if(fecha==null) {
+				UIInput radio = (UIInput) findComponent("fCapturada3");
+				radio.setValid(false);
+				pr.setDescProceso("Debe seleccionar una fecha");
+				pr.setStatus("Selección requerida");					
+				return false;
+			}
+		}
+		
+		if(radioSelected.equals("2")) {
+			if(lote==null) {
+				border="2px solid #ff0028 !important;";
+				pr.setDescProceso("Debe seleccionar un lote");
+				pr.setStatus("Selección requerida");					
+				return false;
+			}else {
+				border="";
+			}
+		}		
+		
+	  }else {
+		    UIInput radio = (UIInput) findComponent("radioSelect");
+			radio.setValid(false);
+			pr.setDescProceso("Debe seleccionar una opción");
+			pr.setStatus("Selección requerida");					
+			return false;		  
+	  }
+	  return true;
+	}
 
 	public void reset() {
 		fecha=null;
 		
 		radioSelected=null;
 		
-		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";
-		ruta = "/RESPALDOS/operaciones/pruebas";	
+		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";		           
+		ruta = "/RESPALDOS/operaciones/pruebas";
 		display="none";
 		display2="none";
 		display3="none";
 		
-		proceso=null;
+	
 		lote=null;
 		Lote1=null;
 		selectedLote=null;
 		listLotes=null;
 	}
-	public void addMessageOK(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-	public void addMessageFail(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+	
 }

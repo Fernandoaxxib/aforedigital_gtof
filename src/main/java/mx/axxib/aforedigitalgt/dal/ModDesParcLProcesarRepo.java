@@ -2,15 +2,10 @@ package mx.axxib.aforedigitalgt.dal;
 
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
@@ -35,26 +30,33 @@ public class ModDesParcLProcesarRepo extends RepoBase {
 		}
 	}
 
-	public ProcesResult generarLayout(Integer pn_Opciones) throws AforeException {
+	public ProcesResult generarLayout(Integer in_Opciones,Date p_Fecha,String p_Lote,String p_Ruta3,String p_Archivo3,String p_Ruta,String p_Archivo,String oc_Avance) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
 					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_LAYOUT_BTN_GENERAR);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("in_Opciones", Integer.class, ParameterMode.IN);
-
-			query.registerStoredProcedureParameter("od_Fecha", Date.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("oc_Lote", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("p_Fecha", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("p_Lote", String.class, ParameterMode.IN);			
+			query.registerStoredProcedureParameter("p_Ruta", String.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("p_Archivo", String.class, ParameterMode.INOUT);
 			query.registerStoredProcedureParameter("oc_Avance", String.class, ParameterMode.OUT);
-
-			query.setParameter("in_Opciones", pn_Opciones);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+			
+			query.setParameter("in_Opciones", in_Opciones);
+			query.setParameter("p_Fecha", p_Fecha);
+			query.setParameter("p_Lote", p_Lote);
+			query.setParameter("p_Ruta", p_Ruta);
+			query.setParameter("p_Archivo", p_Archivo);
+			
 
 			ProcesResult result = new ProcesResult();
 
-			result.setPdFecha((Date) query.getOutputParameterValue("od_Fecha"));
-			result.setPcLote((String) query.getOutputParameterValue("oc_Lote"));
-			result.setPcAvance((String) query.getOutputParameterValue("oc_Avance"));
-
+			result.setP_Ruta((String) query.getOutputParameterValue("p_Ruta"));
+			result.setOc_Avance((String) query.getOutputParameterValue("p_Archivo"));
+			result.setOc_Avance((String) query.getOutputParameterValue("oc_Avance"));
+            result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			return result;
 		} catch (Exception e) {
 			throw GenericException(e);
