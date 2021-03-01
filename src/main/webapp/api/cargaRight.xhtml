@@ -31,32 +31,21 @@
 						value="#{cargaRight.fecha}" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-					<p:commandButton class="green" actionListener="#{cargaRight.crucePrevio}" update="busqueda result resultado"
+					<p:commandButton class="green" actionListener="#{cargaRight.crucePrevio}" update="busqueda result"
 						value="Cruce previo" />
 
-					<p:outputLabel  value="Archivo" style="font-weight: bold" />
-					<p:inputText value="#{cargaRight.archivo}"></p:inputText>
-
-					<p:commandButton class="blue" actionListener="#{cargaRight.cargar}" update="busqueda result resultado"
-						value="Cargar"  />
-				</p:panelGrid>
-
-
-			</p:panel>
-
-			<p:panel id="resultado" header="Resultado" style="margin-top:20px">
-				<p:panelGrid id="panel2" columns="4" styleClass="ui-noborder"
-					cellpadding="10" width="100%">
-					<p:outputLabel value="Mensaje" style="font-weight: bold" />
-					<h:outputText value="#{cargaRight.mensaje}" />
 					
-					<p:outputLabel value="Linea" style="font-weight: bold" />
-					<h:outputText value="#{cargaRight.linea}" />
-				</p:panelGrid>
+					<p:outputLabel  value="Nombre del archivo (sin extensión): " style="font-weight: bold" />
+					<p:inputText id="archivo" value="#{cargaRight.archivo}" ></p:inputText>
 
+					<p:commandButton class="blue" actionListener="#{cargaRight.cargar}" update="busqueda result" rendered="#{cargaRight.mostrarCarga}"
+						value="Cargar"  />
+						
+				</p:panelGrid>
+				<p:outputLabel value="El archivo deberá estar en: /RESPALDOS/openserv y con extensión .csv" style="color:blue;margin-left:10px;margin-top:10px;" />
 
 			</p:panel>
-
+			
 			<ui:include src="processResult.xhtml">
 				<ui:param name="base" value="#{cargaRight}" />
 			</ui:include>
