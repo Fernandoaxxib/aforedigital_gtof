@@ -31,6 +31,8 @@ public class DatosSolicitudOut {
 	private String fondoDescripcion;
 	private String pagoDescripcion;
 	private BigDecimal remanente;
+	private Integer estatus;
+	private String mensaje;
 	
 }
 

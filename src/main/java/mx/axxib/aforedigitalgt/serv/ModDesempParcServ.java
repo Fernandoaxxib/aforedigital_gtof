@@ -1,12 +1,11 @@
 package mx.axxib.aforedigitalgt.serv;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ModDesempParcRepo;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.CancelarSolicitudIn;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesIn;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesOut;
@@ -32,7 +31,7 @@ public class ModDesempParcServ extends ServiceBase {
 		}
 	}
 	
-	public List<CargaParcialidadesOut> getCargaParcialidades(CargaParcialidadesIn parametros) throws AforeException {
+	public CargaParcialidadesOut getCargaParcialidades(CargaParcialidadesIn parametros) throws AforeException {
 		try {
 			return modDesempParcRepo.getCargaParcialidades(parametros);
 		} catch (Exception e) {
@@ -40,7 +39,7 @@ public class ModDesempParcServ extends ServiceBase {
 		}
 	}
 	
-	public List<RetparDetaOut> getRetpar_Deta(RetparDetaIn parametros) throws AforeException {
+	public RetparDetaOut getRetpar_Deta(RetparDetaIn parametros) throws AforeException {
 		try {
 			return modDesempParcRepo.getRetpar_Deta(parametros);
 		} catch (Exception e) {
@@ -48,7 +47,7 @@ public class ModDesempParcServ extends ServiceBase {
 		}
 	}
 	
-	public List<MarcasOut> getMarcas(MarcasIn parametros) throws AforeException {
+	public MarcasOut getMarcas(MarcasIn parametros) throws AforeException {
 		try {
 			return modDesempParcRepo.getMarcas(parametros);
 		} catch (Exception e) {
@@ -56,7 +55,7 @@ public class ModDesempParcServ extends ServiceBase {
 		}
 	}
 	
-	public List<ListaCancelacionOut> getListaCancelacion() throws AforeException {
+	public ListaCancelacionOut getListaCancelacion() throws AforeException {
 		try {
 			return modDesempParcRepo.getListaCancelacion();
 		} catch (Exception e) {
@@ -64,7 +63,7 @@ public class ModDesempParcServ extends ServiceBase {
 		}
 	}
 	
-	public String cancelarSolicitud(CancelarSolicitudIn parametros) throws AforeException {
+	public BaseOut cancelarSolicitud(CancelarSolicitudIn parametros) throws AforeException {
 		try {
 			return modDesempParcRepo.cancelarSolicitud(parametros);
 		} catch (Exception e) {

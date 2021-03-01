@@ -1,10 +1,8 @@
 package mx.axxib.aforedigitalgt.eml;
 
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
+import java.util.List;
+
 import javax.persistence.MappedSuperclass;
-import javax.persistence.SqlResultSetMapping;
-import javax.persistence.SqlResultSetMappings;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,19 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-@SqlResultSetMappings({
-		@SqlResultSetMapping(name = "ListaCancelacionOut", 
-				classes = { @ConstructorResult(targetClass = ListaCancelacionOut.class, 
-					columns = {
-						@ColumnResult(name = "CLAVE_PROCESO", type = Integer.class),
-						@ColumnResult(name = "DESCRIPCION", type = String.class)
-					})
-				})
-})
+
 
 public class ListaCancelacionOut {
-	private Integer claveProceso;
-	private String descripcion;
+	private Integer estatus;
+	private String mensaje;
+	private List<ListaCancelacion> datos;
 }
 //CLAVE_PROCESO	NUMBER
 //DESCRIPCION	VARCHAR2

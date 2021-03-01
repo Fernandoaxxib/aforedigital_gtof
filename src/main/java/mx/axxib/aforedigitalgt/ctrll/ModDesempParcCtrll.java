@@ -13,14 +13,19 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.CancelarSolicitudIn;
+import mx.axxib.aforedigitalgt.eml.CargaParcialidades;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesIn;
 import mx.axxib.aforedigitalgt.eml.CargaParcialidadesOut;
 import mx.axxib.aforedigitalgt.eml.DatosSolicitudIn;
 import mx.axxib.aforedigitalgt.eml.DatosSolicitudOut;
+import mx.axxib.aforedigitalgt.eml.ListaCancelacion;
 import mx.axxib.aforedigitalgt.eml.ListaCancelacionOut;
+import mx.axxib.aforedigitalgt.eml.Marcas;
 import mx.axxib.aforedigitalgt.eml.MarcasIn;
 import mx.axxib.aforedigitalgt.eml.MarcasOut;
+import mx.axxib.aforedigitalgt.eml.RetparDeta;
 import mx.axxib.aforedigitalgt.eml.RetparDetaIn;
 import mx.axxib.aforedigitalgt.eml.RetparDetaOut;
 import mx.axxib.aforedigitalgt.serv.ModDesempParcServ;
@@ -58,19 +63,19 @@ public class ModDesempParcCtrll extends ControllerBase {
 	private DatosSolicitudOut datosSol;
 
 	@Getter
-	private List<CargaParcialidadesOut> parcialidades;
+	private List<CargaParcialidades> parcialidades;
 
 	@Getter
-	private List<RetparDetaOut> administrativos;
+	private List<RetparDeta> administrativos;
 
 	@Getter
-	private List<MarcasOut> marcas;
+	private List<Marcas> marcas;
 
 	@Getter
-	private List<ListaCancelacionOut> listaCancelacion;
+	private List<ListaCancelacion> listaCancelacion;
 
 	@Getter
-	private CargaParcialidadesOut selectedParcialidad;
+	private CargaParcialidades selectedParcialidad;
 
 	@Getter
 	@Setter
@@ -108,13 +113,20 @@ public class ModDesempParcCtrll extends ControllerBase {
 		selectedClaveCancelacion = null;
 	}
 
-	public void setSelectedParcialidad(CargaParcialidadesOut selected) {
+	public void setSelectedParcialidad(CargaParcialidades selected) {
 		selectedParcialidad = selected;
 		consultarAdministrativos();
 	}
 
 	public void consultarCancelaciones() throws Exception {
-		listaCancelacion = modDesempParcServ.getListaCancelacion();
+		ListaCancelacionOut res = modDesempParcServ.getListaCancelacion();
+		if(res.getEstatus() == 1) {
+			listaCancelacion = res.getDatos();
+		} else {
+			if(res.getEstatus() == 2) {
+				GenerarErrorNegocio(res.getMensaje());
+			}
+		}
 	}
 
 	public void consultarSolicitud() {
@@ -133,30 +145,53 @@ public class ModDesempParcCtrll extends ControllerBase {
 					codCuenta = datosSol.getCodCuenta();
 					
 					if(codEmpresa != null && codEmpresa != null) {
+						
+						if(datosSol.getEstatusSolicitud() == null || !datosSol.getEstatusSolicitud().toUpperCase().equals("CANCELADA")) {
+							mostrarCancelacion = true;
+						}
 
 						CargaParcialidadesIn parametrosPar = new CargaParcialidadesIn();
 						parametrosPar.setNoSolicitud(noSolicitud);
 						parametrosPar.setCodEmpresa(codEmpresa);
-						parcialidades = modDesempParcServ.getCargaParcialidades(parametrosPar);
-	
-						if (parcialidades != null && parcialidades.size() > 0) {
-							setSelectedParcialidad(parcialidades.get(0));
+						CargaParcialidadesOut res = modDesempParcServ.getCargaParcialidades(parametrosPar);
+						if(res.getEstatus() == 1) {
+							parcialidades = res.getParcialidades();
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							
+							if (parcialidades != null && parcialidades.size() > 0) {
+								setSelectedParcialidad(parcialidades.get(0));
+							} else {
+								selectedParcialidad = null;
+								administrativos = null;
+								mensajeTabla = "Sin información";
+							}
 						} else {
-							selectedParcialidad = null;
-							administrativos = null;
-							mensajeTabla = "Sin información";
+							if(res.getEstatus() == 2) {
+								GenerarErrorNegocio(res.getMensaje());
+							} else if(res.getEstatus() == 0) {
+								pr.setStatus(res.getMensaje());
+								return;
+							} 
 						}
-	
+						
 						MarcasIn parametrosMar = new MarcasIn();
 						parametrosMar.setCodCuenta(codCuenta);
-						marcas = modDesempParcServ.getMarcas(parametrosMar);
-						if (marcas == null || marcas.size() == 0) {
-							mensajeTabla = "Sin información";
+						MarcasOut resM = modDesempParcServ.getMarcas(parametrosMar);
+						if(resM.getEstatus() == 1) {
+							marcas = resM.getDatos();
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							if (marcas == null || marcas.size() == 0) {
+								mensajeTabla = "Sin información";
+							}
+						} else {
+							if(resM.getEstatus() == 2) {
+								GenerarErrorNegocio(resM.getMensaje());
+							} else if(resM.getEstatus() == 0) {
+								pr.setStatus(resM.getMensaje());
+								return;
+							} 
 						}
-						if(datosSol.getEstatusSolicitud() == null || !datosSol.getEstatusSolicitud().toUpperCase().equals("CANCELADA")) {
-							mostrarCancelacion = true;
-						}
-						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+						
 					} else {
 						mensajeTabla = "Sin información";
 						datosSol.setFechaAccion(null);
@@ -187,8 +222,14 @@ public class ModDesempParcCtrll extends ControllerBase {
 				RetparDetaIn parametrosAdm = new RetparDetaIn();
 				parametrosAdm.setNoPago(selectedParcialidad.getPago());
 				parametrosAdm.setNoSolicitud(noSolicitud);
-				administrativos = modDesempParcServ.getRetpar_Deta(parametrosAdm);
-				
+				RetparDetaOut res = modDesempParcServ.getRetpar_Deta(parametrosAdm);
+				if(res.getEstatus() == 1) {
+					administrativos = res.getAdministrativos();
+				} else {
+					if(res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					}
+				}
 			}
 		} catch (Exception e) {
 			resultados.add(GenericException(e));
@@ -205,13 +246,16 @@ public class ModDesempParcCtrll extends ControllerBase {
 				parametros.setNss(nss);
 				parametros.setNoSolicitud(noSolicitud);
 				parametros.setCveProcesoOpe(selectedClaveCancelacion);
-				String msg = modDesempParcServ.cancelarSolicitud(parametros);
-				if (msg.trim().toUpperCase().equals("OK")) {
-					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				BaseOut res = modDesempParcServ.cancelarSolicitud(parametros);
+				if(res.getEstatus() == 1) {
 					mostrarCancelacion = false;
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
-					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-					pr.setStatus(msg);
+					if(res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if(res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					} 
 				}
 			} else {
 				UIInput input = (UIInput) findComponent("tipoCancelacion");
