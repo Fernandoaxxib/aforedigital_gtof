@@ -21,27 +21,23 @@
 		
 		<ui:include src="subMenuTransacciones.xhtml" />
 
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
-
 		<h:form id="form">
 			<p:panel id="busqueda" header="Cargas masiva right fax" style="margin-top:20px">
 				<p:panelGrid id="panel" columns="3" styleClass="ui-noborder"
 					cellpadding="10" width="100%">
 					<p:outputLabel value="Fecha de Right Fax" style="font-weight: bold" />
-					<p:datePicker id="fecha" required="true" requiredMessage="Fecha requerida"
+					<p:datePicker id="fecha" 
 						inputStyle="width:120px; text-align:right;"
 						value="#{cargaRight.fecha}" showIcon="true" locale="es"
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
-					<p:commandButton class="green" action="#{cargaRight.crucePrevio}" type="submit" update="form"
+					<p:commandButton class="green" actionListener="#{cargaRight.crucePrevio}" update="busqueda result resultado"
 						value="Cruce previo" />
 
 					<p:outputLabel  value="Archivo" style="font-weight: bold" />
-					<p:inputText required="true" value="#{cargaRight.archivo}" requiredMessage="Nombre de archivo requerido"></p:inputText>
+					<p:inputText value="#{cargaRight.archivo}"></p:inputText>
 
-					<p:commandButton class="blue" action="#{cargaRight.cargar}" type="submit" update="form"
+					<p:commandButton class="blue" actionListener="#{cargaRight.cargar}" update="busqueda result resultado"
 						value="Cargar"  />
 				</p:panelGrid>
 
@@ -61,7 +57,10 @@
 
 			</p:panel>
 
-
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{cargaRight}" />
+			</ui:include>
+			
 		</h:form>
 
 	</ui:define>

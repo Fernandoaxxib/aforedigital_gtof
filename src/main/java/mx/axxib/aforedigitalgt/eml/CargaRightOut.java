@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 
 public class CargaRightOut {
-	private String linea;
+	private Integer estatus;
 	private String mensaje;
+	private String linea;
 }
 
