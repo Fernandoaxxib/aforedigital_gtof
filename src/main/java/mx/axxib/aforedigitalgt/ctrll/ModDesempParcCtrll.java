@@ -86,6 +86,13 @@ public class ModDesempParcCtrll extends ControllerBase {
 	
 	@Getter
 	private boolean mostrarCancelacion;
+	
+	@Getter
+	@Setter
+	private String archivo;
+	
+	private String path = "/RESPALDOS/operaciones/pruebas";
+	private String ext = ".txt";
 
 	@Override
 	public void iniciar() {
@@ -103,6 +110,7 @@ public class ModDesempParcCtrll extends ControllerBase {
 	}
 	
 	private void limpiarPantalla() {
+		archivo = null;
 		mostrarCancelacion = false;
 		mensajeTabla = null;
 		datosSol = new DatosSolicitudOut();
@@ -261,6 +269,41 @@ public class ModDesempParcCtrll extends ControllerBase {
 				UIInput input = (UIInput) findComponent("tipoCancelacion");
 				input.setValid(false);
 				pr.setStatus("Tipo cancelación es requerido");
+			}
+		} catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+	
+	public void cancelarMasiva() {
+		ProcessResult pr = new ProcessResult();
+		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Cancelación masiva");
+			if (archivo != null && !archivo.equals("")) {
+				if (!ValidateUtil.isValidFileName(archivo)) {
+					UIInput input = (UIInput) findComponent("archivo");
+					input.setValid(false);
+					pr.setStatus("Nombre de archivo no válido");
+				} else {
+					BaseOut res = modDesempParcServ.cancelacionMasiva(path, archivo + ext);
+					if (res.getEstatus() == 1) {
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje());
+					} else {
+						if (res.getEstatus() == 2) {
+							GenerarErrorNegocio(res.getMensaje());
+						} else if (res.getEstatus() == 0) {
+							pr.setStatus(res.getMensaje());
+						}
+					}
+				}
+			} else {
+				UIInput input = (UIInput) findComponent("archivo");
+				input.setValid(false);
+				pr.setStatus("Nombre de archivo es requerido");
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);

@@ -45,6 +45,7 @@ public class Constantes {
 	public static final String MOD_DESEMPLEO_PARC_MARCAS = "PRC_MARCAS";
 	public static final String MOD_DESEMPLEO_PARC_LISTA_CANCELACION = "PRC_LISTA_CANCELACION";
 	public static final String MOD_DESEMPLEO_PARC_CANCELAR_SOLICITUD = "PRC_CANCELAR_SOLICITUD";
+	public static final String MOD_DESEMPLEO_PARC_CANCELACION_MASIVA = "PRC_FOCNCPRC_P_CANCEL_SOLIC";
 
 	// Venta de titulos por sector de inversión FOVENTIT
 	public static final String VENTA_TITULOS_PACKAGE = "PKG_RET_FOVENTIT";

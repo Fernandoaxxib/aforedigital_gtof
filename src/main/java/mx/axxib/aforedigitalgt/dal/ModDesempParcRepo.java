@@ -277,4 +277,31 @@ public class ModDesempParcRepo extends RepoBase {
 			throw GenericException(e);
 		}
 	}
+	
+	public BaseOut cancelacionMasiva(String ruta, String archivo) throws AforeException {
+//		PROCEDURE PRC_FOCNCPRC_P_CANCEL_SOLIC( P_RUTA IN VARCHAR2,
+//                P_ARCHIVO IN VARCHAR2,
+//                P_Mensaje OUT VARCHAR2,
+//                P_ESTATUS  OUT VARCHAR2);
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat("PKG_RET_FOCNCPRC")
+					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARC_CANCELACION_MASIVA);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+
+			query.registerStoredProcedureParameter("P_RUTA", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_ARCHIVO", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("P_Mensaje", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_ESTATUS", String.class, ParameterMode.OUT);
+
+			query.setParameter("P_RUTA", ruta);
+			query.setParameter("P_ARCHIVO", archivo);
+
+			BaseOut res = new BaseOut();
+			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+			res.setMensaje( (String) query.getOutputParameterValue("P_Mensaje") );
+			return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
 }

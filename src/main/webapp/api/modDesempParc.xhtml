@@ -57,7 +57,8 @@
 		<h:form id="form">
 
 
-			<p:panel id="datos" header="Desempleo parcialidades (proceso individual)"
+			<p:panel id="datos"
+				header="Desempleo parcialidades (proceso individual)"
 				style="margin-top:20px">
 				<p:panelGrid id="solicitud" styleClass="ui-noborder"
 					style="width:100%;padding:10px;">
@@ -373,11 +374,10 @@
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel 
-								value="#{msg.modDesParc_combo_tipoCancelacion}"
+							<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
 								rendered="#{modDesempParc.mostrarCancelacion}" />
 						</p:column>
-						<p:column >
+						<p:column>
 
 							<p:selectOneMenu id="tipoCancelacion" style="width:200px"
 								rendered="#{modDesempParc.mostrarCancelacion}"
@@ -391,17 +391,27 @@
 
 						<p:column>
 							<p:commandButton class="blue"
-								rendered="#{modDesempParc.mostrarCancelacion}" update="result acciones"
+								rendered="#{modDesempParc.mostrarCancelacion}"
+								update="result acciones"
 								actionListener="#{modDesempParc.cancelarSolicitud}"
 								value="#{msg.modDesParc_boton_cancelarSolicitud}" />
 						</p:column>
-
+					</p:row>
+					<p:row>
 						<p:column>
-							<p:commandButton class="blue" update="result"
-								value="Cancelación masiva" />
+							<p:outputLabel value="Nombre del archivo (sin extensión): "
+								style="font-weight: bold" />
+						</p:column>
+						<p:column>
+							<p:inputText id="archivo" value="#{modDesempParc.archivo}"></p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" update="result acciones"
+								value="Cancelación masiva" actionListener="#{modDesempParc.cancelarMasiva}"/>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+				<p:outputLabel value="El archivo deberá estar en: /RESPALDOS/operaciones/pruebas y con extensión txt" style="color:blue;margin-left:10px;margin-top:10px;" />
 			</p:panel>
 
 

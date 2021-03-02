@@ -71,4 +71,12 @@ public class ModDesempParcServ extends ServiceBase {
 		}
 	}
 	
+	public BaseOut cancelacionMasiva(String ruta, String archivo) throws AforeException {
+		try {
+			return modDesempParcRepo.cancelacionMasiva(ruta, archivo);
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
 }
