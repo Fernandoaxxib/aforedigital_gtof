@@ -131,7 +131,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 			System.out.println("VALOR DE nombreNssImss:" +nombreNssImss);
 			if(nombreNssImss != null && !nombreNssImss.equals("") ) {
 			//if(nombreNssImss.toLowerCase().endsWith(".txt")) {
-				if(nombreNssImss.endsWith(".txt")) {
+				if(nombreNssImss.endsWith(".txt") && nombreNssImss.contains("NSS-CARGA-REP-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
 				System.out.println("VALOR DE NSS IMSS consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getEstatus()==1) {
@@ -316,7 +316,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		try {
 			if(nombreReporteImss != null && !nombreReporteImss.equals("") ) {
 			//if(nombreReporteImss.toLowerCase().endsWith(".xls")) {
-				if(nombreReporteImss.endsWith(".xls")) {
+				if(nombreReporteImss.endsWith(".xls") && nombreReporteImss.contains("RPT-SLD-IMSS-FIN-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
 				System.out.println("VALOR DE REPORTE IMSS consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getEstatus()==1) {
@@ -452,7 +452,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 			System.out.println("VALOR DE nombreCurpIsste:" +nombreCurpIsste);
 			if(nombreCurpIsste != null && !nombreCurpIsste.equals("") ) {
 			//if(nombreCurpIsste.toLowerCase().endsWith(".txt")) {
-				if(nombreCurpIsste.endsWith(".txt")) {
+				if(nombreCurpIsste.endsWith(".txt") && nombreCurpIsste.contains("CURP-CARGA-REP-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);
 				System.out.println("VALOR DE ISSTE CURP consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getEstatus()==1) {
@@ -491,7 +491,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 			System.out.println("VALOR DE nombreReporteIsste:" +nombreReporteIsste);
 			if(nombreReporteIsste != null && !nombreReporteIsste.equals("") ) {
 			//if(nombreReporteIsste.toLowerCase().endsWith(".xls")) {
-				if(nombreReporteIsste.endsWith(".xls")) {
+				if(nombreReporteIsste.endsWith(".xls") && nombreReporteIsste.contains("RPT-SLD-ISSS-FIN-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
 				System.out.println("VALOR DE REPORTE ISSTE CURP consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getEstatus()==1) {

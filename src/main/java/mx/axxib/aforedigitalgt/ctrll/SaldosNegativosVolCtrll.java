@@ -90,7 +90,7 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 			System.out.println("VALOR DE nombreSaldoNegativo:" +nombreSaldoNegativo);
 			if(nombreSaldoNegativo != null && !nombreSaldoNegativo.equals("") ) {
 				//if(nombreSaldoNegativo.toLowerCase().endsWith(".xls")) {
-					if(nombreSaldoNegativo.endsWith(".xls")) {
+					if(nombreSaldoNegativo.endsWith(".xls") && nombreSaldoNegativo.contains("RPT-MOVS-SLD-FIN-")) {
 					System.out.println("VALOR DE nombreSaldoNegativo:" +nombreSaldoNegativo+"-----saldoFechaMovimiento:"+saldoFechaMovimiento);
 					String resp=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
 					System.out.println("VALOR DE ejecutarReporteNegativo:"+resp);
