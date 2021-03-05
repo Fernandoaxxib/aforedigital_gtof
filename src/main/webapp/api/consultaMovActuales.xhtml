@@ -54,13 +54,13 @@
 							<p:outputLabel value="Nombre: " style="font-weight: bold" />
 							<h:outputText value="#{conActuales.cuenta.nombre}" />
 						</p:column>
-						<p:column style="width:200px; padding:10px;">
+						<p:column style="width:150px; padding:10px;">
 							<p:outputLabel value="Fec. apertura: " style="font-weight: bold" />
 							<h:outputText value="#{conActuales.cuenta.fechaCert}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column style="width:200px; padding:10px;">
+						<p:column style="width:150px; padding:10px;">
 							<p:outputLabel value="Cliente: " style="font-weight: bold" />
 							<h:outputText value="#{conActuales.cuenta.tipoSolic}" />
 						</p:column>
@@ -123,13 +123,13 @@
 						<h:outputText value="#{mon.noMov}" />
 					</p:column>
 
-					<p:column headerText="Fecha">
+					<p:column headerText="Fecha" style="width:100px;">
 						<h:outputText value="#{mon.fechaMov}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Monto">
+					<p:column headerText="Monto" style="width:100px;">
 						<h:outputText value="#{mon.montoMov}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
