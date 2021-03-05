@@ -163,12 +163,13 @@
 	text-align:right;
 }
 
-.outputlabel-shadow{
-	background: #dddddd;
-	border-radius: 5px;
-	height:25px;
-	width:350px;
-	text-align: left;
+.outputlabel-shadow{		
+	background:#f3f3f3 !important;
+	color:#848484 !important;
+	border:1px #d9d9d9 solid !important; 
+	height:25px !important;
+	padding-left: 10px !important;
+	text-align: left !important;
 }
 
 /*
@@ -217,3 +218,13 @@
        opacity: .7 !important;
        z-index:1051;
  }
+.ui-widget-overlay {
+    background: rgb(37 37 37) !important;
+    opacity: .7 !important;
+}
+.dialogStyle.ui-dialog.ui-widget.ui-widget-content.ui-widget-header {
+	border: 0px !important;
+	background: #ffffff !important;
+	color: #ffffff !important;
+	font-weight: bold !important;
+}

@@ -15,13 +15,15 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 public class ModDesParcReportesRepo extends RepoBase {
 
 
-	public EjecucionResult procesarReporte(Integer p_OpcionReporte, Date pd_fechaInicial) throws AforeException {
+	public EjecucionResult procesarReporte(Integer p_OpcionReporte, Date pd_fechaInicial,String oc_Ruta,String oc_NomArchivo) throws AforeException {
 		  try {	
 			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE).concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PROCESAR_REPORTES);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("in_OpcionReporte", Integer.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("id_FechaInicial", Date.class, ParameterMode.IN);					   	       		
+			query.registerStoredProcedureParameter("id_FechaInicial", Date.class, ParameterMode.IN);				
+			query.registerStoredProcedureParameter("oc_Ruta", String.class, ParameterMode.IN);	
+			query.registerStoredProcedureParameter("oc_NomArchivo", String.class, ParameterMode.IN);				
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Avance", String.class, ParameterMode.OUT);		
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);	

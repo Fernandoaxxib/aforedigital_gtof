@@ -1,21 +1,21 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
-import java.util.Locale;
-
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.eml.ProcesoOut;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.serv.CerInaAppServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "cerInaApp")
@@ -34,10 +34,6 @@ public class CerInaAppCtrll extends ControllerBase {
 	@Setter
 	private Date fecha;
 
-	@Getter
-	@Setter
-	private ProcesoOut proceso;
-
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -49,55 +45,71 @@ public class CerInaAppCtrll extends ControllerBase {
 	public void reset() {
 		ruta = "/RESPALDOS/operaciones";
 		archivo = "PRTFT.DP.A01530.S180221.NOTFOLIO.C001";
-		proceso=null;
-		fecha= new Date();
+		fecha = new Date();
 	}
 
 	public void ejecutar() {
-       if((ruta!=null&&!ruta.isEmpty()) && (archivo!=null&&!archivo.isEmpty())) {
-    	  try { 
-    		    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-				Date today= new Date();	
-				proceso= new ProcesoOut();	
-				proceso.setFechahoraInicio(format.format(today));
-				String resp=  service.ejecutar(ruta, archivo);
-				Date today2= new Date();	
-				proceso.setFechahoraFinal(format.format(today2));	
-				proceso.setAbrevProceso("Generación de archivo liquidación AppMovil");    				
-				proceso.setEstadoProceso(resp);	   		      	 
-    	  }catch(Exception e) {
-    		  GenericException(e);
-    	  }
-       }else {
-    	  addMessageFail("Ingrese la ruta y el archivo");  
-       }
+		if ((ruta != null && !ruta.isEmpty()) && (archivo != null && !archivo.isEmpty())) {
+			ProcessResult pr = new ProcessResult();
+			pr.setFechaInicial(DateUtil.getNowDate());
+			try {
+                pr.setDescProceso("Carga respuesta de AppMovil");
+				ProcesResult resp = service.ejecutar(ruta, archivo);
+				if (resp.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (resp.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(resp.getP_Message());
+					} else if (resp.getOn_Estatus() == 0) {
+						pr.setStatus(resp.getP_Message());
+					}
+				}
+			} catch (Exception e) {
+				pr=GenericException(e);
+			}finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		}
 	}
 
 	public void generar() {
-         if(fecha!=null) {
-        	 try {
-        	    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-				Date today= new Date();	
-				proceso= new ProcesoOut();	
-				proceso.setFechahoraInicio(format.format(today));
-				String resp=  service.generarArchivo(fecha);
-				Date today2= new Date();	
-				proceso.setFechahoraFinal(format.format(today2));	
-				proceso.setAbrevProceso("Carga de respuesta de AppMovil");    				
-				proceso.setEstadoProceso(resp);	 
-        	 }catch(Exception e) {
-        		 GenericException(e);
-        	 }
-         }else {
-        	 addMessageFail("Debe ingresar la fecha");
-         }
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if (fecha != null) {
+			try {
+				pr.setDescProceso("Generación de archivo liquidaciones AppMovil");
+				ProcesResult resp = service.generarArchivo(fecha);
+				if (resp.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (resp.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(resp.getP_Message());
+					} else if (resp.getOn_Estatus() == 0) {
+						pr.setStatus(resp.getP_Message());
+					}
+				}
+			} catch (Exception e) {
+				pr=GenericException(e);
+			}finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		} else {
+			UIInput radio = (UIInput) findComponent("fCapturada");
+			radio.setValid(false);
+			pr.setDescProceso("Debe seleccionar una fecha");
+			pr.setStatus("Selección requerida");
+		}
 	}
+
 	public void addMessageOK(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
 	public void addMessageFail(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
 }

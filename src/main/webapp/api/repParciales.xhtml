@@ -30,8 +30,8 @@
 
 		<p:dialog header="Mensaje" id="dlg1" appendTo="@(body)" widgetVar="dlg3" minHeight="140" width="350" showEffect="fade" resizable="false" modal="true">			
 			<p:panel style="border:0px !important;text-align:center">
-			   <p:outputPanel style="margin-top:10px;margin-bottom:10px">
-			     <p:outputLabel value="#{repParcialesConsar.respuesta}"/>
+			   <p:outputPanel style="margin-top:10px;margin-bottom:10px">			     
+			     <p:outputLabel value="#{repParcialesConsar.respuesta}" style="font-size:14px !important; color: #59ad40 !important;"/>
 			   </p:outputPanel>
 			   <p:commandButton type="button" value="CERRAR" styleClass="blue" onclick="PF('dlg3').hide();"/>
 			</p:panel>											

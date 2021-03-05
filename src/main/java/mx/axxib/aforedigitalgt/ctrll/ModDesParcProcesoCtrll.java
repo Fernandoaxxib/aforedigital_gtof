@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DiagnosticoResult;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
@@ -69,66 +70,75 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 		}
 	}
 
-	public void radioSelected() {		
-			fecha=null;		 
+	public void radioSelected() {
+		fecha = null;
 	}
 
 	public void buscarRegXProcesar() {
 		ProcessResult pr = new ProcessResult();
-			pr.setFechaInicial(DateUtil.getNowDate());
-			if (isFormValid(pr)) {
-				if (radioSelected.equals("1")) {
-					try {
-						DiagnosticoResult res = service.getRegistrosXProcesar(fecha);
+		pr.setDescProceso("Búsqueda de registros por procesar");
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if (isFormValid(pr)) {
+			if (radioSelected.equals("1")) {
+				try {
+					DiagnosticoResult res = service.getRegistrosXProcesar(fecha);					
+					if(res.getOn_Estatus()==1) {
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));	
 						parcialidades = res.getParcialidades();
 						unaExhibicion = res.getUnaExhibicion();
 						sinSalario = res.getSinSalario();
 						totales = res.getTotales();
 						pendientes = res.getPendientes();
 						display3 = (sinSalario > 0) ? "inline" : "none";
-						pr.setDescProceso("Búsqueda de registros por procesar");
-						pr.setStatus("Exitoso");
+					}else {
+						if(res.getOn_Estatus()== 2) {
+							GenerarErrorNegocio("Error en base de datos");
+						} else if(res.getOn_Estatus()== 0) {
+							pr.setStatus("Error al guardar");
+						} 
+					}		
+				} catch (Exception e) {
+					pr=GenericException(e);
+				} finally {
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
+				}
+			}
+		} else {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+
+	public void guardar() {				
+			if (radioSelected != null && fecha != null) {								
+				listSolicitudes.forEach(p -> {
+					ProcessResult pr = new ProcessResult();		
+					pr.setFechaInicial(DateUtil.getNowDate());
+					pr.setDescProceso("Actualización de registros sin salario");
+					try {
+						Integer res=service.guardarDetSal(p);
+						if(res==1) {
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));				    						    
+						}else {
+							if(res== 2) {
+								GenerarErrorNegocio("Error en base de datos");
+							} else if(res== 0) {
+								pr.setStatus("Error al guardar");
+							} 
+						}
 					} catch (Exception e) {
-						pr.setDescProceso("Búsqueda de registros por procesar");
-						pr.setStatus("Error");
-						GenericException(e);
+						pr=GenericException(e);
 					}finally {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
 					}
-				}
-			}else {
-				pr.setFechaFinal(DateUtil.getNowDate());
-				resultados.add(pr);
-			}
-	}
-
-	public void guardar() {
-		ProcessResult pr = new ProcessResult();
-		try {
-			if (radioSelected != null && fecha != null) {
-				pr.setFechaInicial(DateUtil.getNowDate());
-				pr.setDescProceso("Actualización de registros sin salario");
-				listSolicitudes.forEach(p -> {
-					try {
-						service.guardarDetSal(p);
-
-					} catch (Exception e) {
-						GenericException(e);
-					}
-
 				});
-				pr.setStatus("Exitoso");
+				
 			}
 			// buscarRegXProcesar();
 			reset();
-		} catch (Exception e) {
-			proceso.setEstadoProceso("Error");
-			GenericException(e);
-		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
+		
 	}
 
 	public void mostrarRegistros() {
@@ -161,18 +171,25 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 	public void ejecutarAccion() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		if(isFormValid2(pr)) {
+		if (isFormValid2(pr)) {
 			if (radioSelected.equals("1")) {
-			  if(sinSalario<=0) {
-				  if (pendientes > 0) {					
-						try {							
+				if (sinSalario <= 0) {
+					if (pendientes > 0) {
+						try {
 							pr.setDescProceso("Diagnóstico de Solicitudes");
-							EjecucionResult result = service.ejecutar(fecha, Integer.valueOf(radioSelected));
-							pr.setStatus("Exitoso");
-							buscarRegXProcesar();
+							EjecucionResult res = service.ejecutar(fecha, Integer.valueOf(radioSelected));
+							if (res.getOn_Estatus() == 1) {
+								pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+								buscarRegXProcesar();
+							} else {
+								if (res.getOn_Estatus() == 2) {
+									GenerarErrorNegocio(res.getOcMensaje());
+								} else if (res.getOn_Estatus() == 0) {
+									pr.setStatus(res.getOcMensaje());
+								}
+							}
 						} catch (Exception e) {
-							pr.setStatus("Error");
-							GenericException(e);
+							pr = GenericException(e);
 						} finally {
 							pr.setFechaFinal(DateUtil.getNowDate());
 							resultados.add(pr);
@@ -182,31 +199,35 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 						pr.setStatus("El proceso no se ejecutará, no existen solicitudes por procesar");
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
-					}				  
-			  }	else {
-				    pr.setDescProceso("Diagnóstico de solicitudes");
+					}
+				} else {
+					pr.setDescProceso("Diagnóstico de solicitudes");
 					pr.setStatus("El proceso no se ejecutará, existen registros sin salarios");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
-			  }
-				
+				}
 			} else {
-				try {							
+				try {
 					pr.setDescProceso("Aprobación de Solicitudes");
-					EjecucionResult result = service.ejecutar(fecha, Integer.valueOf(radioSelected));
-					pr.setStatus("Exitoso");
+					EjecucionResult res = service.ejecutar(fecha, Integer.valueOf(radioSelected));
+					if (res.getOn_Estatus() == 1) {
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					} else {
+						if (res.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(res.getOcMensaje());
+						} else if (res.getOn_Estatus() == 0) {
+							pr.setStatus(res.getOcMensaje());
+						}
+					}
 					reset();
 				} catch (Exception e) {
-					pr.setStatus("Error");
-					GenericException(e);
+					pr = GenericException(e);
 				} finally {
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
 				}
-									
 			}
-		
-		}else {
+		} else {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
@@ -223,10 +244,11 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 		}
 		return true;
 	}
+
 	public boolean isFormValid2(ProcessResult pr) {
-		if(!isFormValid(pr))
+		if (!isFormValid(pr))
 			return false;
-		
+
 		if (fecha == null) {
 			UIInput radio = (UIInput) findComponent("fCapturada");
 			radio.setValid(false);
@@ -251,13 +273,4 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 		display3 = "none";
 	}
 
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exitoso", summary);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", summary);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
 }

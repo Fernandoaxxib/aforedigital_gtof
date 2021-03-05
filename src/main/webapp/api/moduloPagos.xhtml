@@ -53,102 +53,139 @@
 							inputStyle="width:120px; text-align:right;" readonlyInput="true">
 
 						</p:datePicker>
-						<p:commandButton styleClass="blue ui-button-text" type="submit"
-							value="#{msg.modulo_pagos_btn_generaFondos}" update="dlg1"
-							action="#{moduloPagos.generarFondos}">
-							<p:confirm header="Mensaje"
-								message="¿Está seguro de que desea correr este proceso?"
-								icon="pi pi-exclamation-triangle" />
-						</p:commandButton>
+						<p:commandButton styleClass="blue" type="button"
+							value="#{msg.modulo_pagos_btn_generaFondos}"
+							onclick="PF('dlg3_2').show();" />
 					</p:panelGrid>
 				</p:panel>
 
 				<p:panel id="pRetiros" header="#{msg.modulo_pagos_titulo3}"
 					style="margin-bottom:20px;">
-					<p:panelGrid styleClass="ui-noborder" columns="8" cellpadding="10">
-						<p:outputLabel for="slRetiros"
-							value="#{msg.modulo_pagos_label_procesRetiros}" />
-						<p:selectOneMenu id="slRetiros"
-							value="#{moduloPagos.procesosRetiros}" style="width:160px">
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_dispos}"
-								itemValue="#{msg.modulo_pagos_item_disposv}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_parciales}"
-								itemValue="#{msg.modulo_pagos_item_parcV}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_retVolun}"
-								itemValue="#{msg.modulo_pagos_item_volunV}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_penMinGar}"
-								itemValue="#{msg.modulo_pagos_item_pmgV}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"
-								itemValue="#{msg.modulo_pagos_item_todV}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="slInstitucion"
-							value="#{msg.modulo_pagos_label_institucion}" />
-						<p:selectOneMenu id="slInstitucion"
-							value="#{moduloPagos.institucion}" style="width:160px">
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_issste}"
-								itemValue="#{msg.modulo_pagos_item_isssteV}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_imss}"
-								itemValue="#{msg.modulo_pagos_item_imssV}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"
-								itemValue="#{msg.modulo_pagos_item_todIns}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="sltiposPagos"
-							value="#{msg.modulo_pagos_label_tiposPagos}" />
-						<p:selectOneMenu id="sltiposPagos"
-							value="#{moduloPagos.tiposPagos}" style="width:160px">
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_tranInter}"
-								itemValue="#{msg.modulo_pagos_item_ti}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_ordPagos}"
-								itemValue="#{msg.modulo_pagos_item_op}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_cheques}"
-								itemValue="#{msg.modulo_pagos_item_ch}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_tdp}"
-								itemValue="#{msg.modulo_pagos_item_tdpv}" />
-							<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"
-								itemValue="#{msg.modulo_pagos_item_todPag}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="fProcesoP"
-							value="#{msg.modulo_pagos_label_fechaProceso}" />
-						<p:datePicker id="fProcesoP"
-							value="#{moduloPagos.fechaProcesoPagos}" locale="es"
-							showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
-							monthNavigator="true" inputStyle="width:120px; text-align:right;"
-							readonlyInput="true" />
+					<p:panelGrid styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel for="slRetiros"
+									value="#{msg.modulo_pagos_label_procesRetiros}" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="slRetiros"
+									value="#{moduloPagos.procesosRetiros}" style="width:160px;margin-right:15px">
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_dispos}"
+										itemValue="#{msg.modulo_pagos_item_disposv}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_parciales}"
+										itemValue="#{msg.modulo_pagos_item_parcV}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_retVolun}"
+										itemValue="#{msg.modulo_pagos_item_volunV}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_penMinGar}"
+										itemValue="#{msg.modulo_pagos_item_pmgV}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"
+										itemValue="#{msg.modulo_pagos_item_todV}" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column>
+								<p:outputLabel for="slInstitucion"
+									value="#{msg.modulo_pagos_label_institucion}" />
+							</p:column>
+							<p:column style="margin-right:15px">
+								<p:selectOneMenu id="slInstitucion"
+									value="#{moduloPagos.institucion}" style="width:160px;margin-right:15px">
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_issste}"
+										itemValue="#{msg.modulo_pagos_item_isssteV}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_imss}"
+										itemValue="#{msg.modulo_pagos_item_imssV}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"
+										itemValue="#{msg.modulo_pagos_item_todIns}" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column>
+								<p:outputLabel for="sltiposPagos"
+									value="#{msg.modulo_pagos_label_tiposPagos}" />
+							</p:column>
+							<p:column style="margin-right:15px">
+								<p:selectOneMenu id="sltiposPagos"
+									value="#{moduloPagos.tiposPagos}" style="width:160px;margin-right:15px">
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_tranInter}"
+										itemValue="#{msg.modulo_pagos_item_ti}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_ordPagos}"
+										itemValue="#{msg.modulo_pagos_item_op}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_cheques}"
+										itemValue="#{msg.modulo_pagos_item_ch}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_tdp}"
+										itemValue="#{msg.modulo_pagos_item_tdpv}" />
+									<f:selectItem itemLabel="#{msg.modulo_pagos_item_todos}"
+										itemValue="#{msg.modulo_pagos_item_todPag}" />
+								</p:selectOneMenu>
+							</p:column>
+							<p:column>
+								<p:outputLabel for="fProcesoP"
+									value="#{msg.modulo_pagos_label_fechaProceso}" />
+							</p:column>
+							<p:column>
+								<p:datePicker id="fProcesoP"
+									value="#{moduloPagos.fechaProcesoPagos}" locale="es"
+									showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+									monthNavigator="true"
+									inputStyle="width:120px; text-align:right;"
+									readonlyInput="true" />
+							</p:column>
+						</p:row>
 					</p:panelGrid>
-					<div class="ui-g">
-						<div class="ui-g-12" style="text-align: right">
-							<p:commandButton styleClass="blue ui-button-text" type="submit"
-								value="#{msg.modulo_pagos_btn_generaPagos}" update="dlg1"
-								action="#{moduloPagos.generarPagos}" global="false">
-
-								<p:confirm header="Mensaje"
-									message="¿Está seguro de que desea correr este proceso?"
-									icon="pi pi-exclamation-triangle" />
-							</p:commandButton>
+					<div class="ui-g" style="margin-top:20px">
+						<div class="ui-g-12" style="text-align:right">
+							<p:commandButton styleClass="blue" type="button"
+								value="#{msg.modulo_pagos_btn_generaPagos}"
+								onclick="PF('dlg2_2').show();" />
 						</div>
 					</div>
 				</p:panel>
-			</p:panel>
 
-			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-				responsive="true" width="300">
-				<p:commandButton value="No" type="button"
-					styleClass="blue ui-confirmdialog-no ui-button-flat" />
-				<p:commandButton value="Si" type="button" update="dlg1"
-					styleClass="blue ui-confirmdialog-yes" />
-			</p:confirmDialog>
-			<p:dialog id="dlg1" appendTo="@(body)" header="Mensaje"
-				widgetVar="dlg2" height="100" width="300" resizable="false"
-				showEffect="fade" modal="true">
-				<p:panelGrid columns="1" class="no-border no-padding">
-					<p:outputPanel>
-						<p:outputLabel value="#{moduloPagos.msj}" />
-					</p:outputPanel>					
-				</p:panelGrid>
-			</p:dialog>
+				<p:dialog id="dlg1_1" appendTo="@(body)" header="Mensaje"
+					widgetVar="dlg1_2" height="auto" width="480" resizable="false"
+					showEffect="fade" modal="true">
+					<p:panel style="border:0px !important;text-align:center">
+						<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+							<p:outputLabel value="#{moduloPagos.msj}"
+								style="font-size:14px !important; color: #59ad40 !important;" />
+						</p:outputPanel>
+						<p:commandButton type="button" value="CERRAR" styleClass="blue"
+							onclick="PF('dlg1_2').hide();" />
+					</p:panel>
+				</p:dialog>
+				<p:dialog id="dlg2_1" appendTo="@(body)" header="Mensaje"
+					widgetVar="dlg2_2" height="auto" width="480" resizable="false"
+					showEffect="fade" modal="true">
+					<p:panel style="border:0px !important;text-align:center">
+						<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+							<p:outputLabel
+								value="¿Está seguro de que desea correr este proceso?"
+								style="font-size:14px !important; color: #59ad40 !important;" />
+						</p:outputPanel>
+						<p:commandButton type="button" value="CANCELAR" styleClass="blue"
+							style="width:90px;margin-right:10px"
+							onclick="PF('dlg2_2').hide();" />
+						<p:commandButton type="submit" value="SI" styleClass="blue"
+							style="width:90px" onclick="PF('dlg2_2').hide();"
+							action="#{moduloPagos.generarPagos}" update="dlg1_1" />
+					</p:panel>
+				</p:dialog>
+				<p:dialog id="dlg3_1" appendTo="@(body)" header="Mensaje"
+					widgetVar="dlg3_2" height="auto" width="480" resizable="false"
+					showEffect="fade" modal="true">
+					<p:panel style="border:0px !important;text-align:center">
+						<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+							<p:outputLabel
+								value="¿Está seguro de que desea correr este proceso?"
+								style="font-size:14px !important; color: #59ad40 !important;" />
+						</p:outputPanel>
+						<p:commandButton type="button" value="CANCELAR" styleClass="blue"
+							style="width:90px;margin-right:10px"
+							onclick="PF('dlg3_2').hide();" />
+						<p:commandButton type="submit" value="SI" styleClass="blue"
+							style="width:90px" onclick="PF('dlg3_2').hide();"
+							action="#{moduloPagos.generarFondos}" update="dlg1_1" />
+					</p:panel>
+				</p:dialog>
+			</p:panel>
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.CerInaProRepo;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 @Service
 public class CerInaProServ extends ServiceBase {
@@ -14,7 +15,7 @@ public class CerInaProServ extends ServiceBase {
 	@Autowired
 	private CerInaProRepo repo;
 	
-	public String ejecutarProceso(Integer pOpciones,Date pFechaInicial)throws AforeException {
+	public EjecucionResult ejecutarProceso(Integer pOpciones,Date pFechaInicial)throws AforeException {
 		try {
 			return repo.ejecutarProceso(pOpciones, pFechaInicial);
 		}catch(Exception e) {

@@ -100,7 +100,7 @@ public class ModuloPagosCtrll extends ControllerBase {
 						pr.setStatus(res.getOcMensaje());
 					}
 				}
-				PrimeFaces.current().executeScript("PF('dlg2').show()");
+				PrimeFaces.current().executeScript("PF('dlg1_2').show()");
 			} catch (Exception e) {
 				pr = GenericException(e);
 			} finally {
@@ -128,7 +128,7 @@ public class ModuloPagosCtrll extends ControllerBase {
 						pr.setStatus(res.getOcMensaje());
 					}
 				}
-				PrimeFaces.current().executeScript("PF('dlg2').show()");
+				PrimeFaces.current().executeScript("PF('dlg1_2').show()");
 			} catch (Exception e) {
 				pr = GenericException(e);
 			} finally {

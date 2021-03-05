@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
 @Repository
 @Transactional
@@ -24,7 +25,7 @@ public class CerInaProRepo extends RepoBase{
 		this.entityManager = entityManager;
 	}
 	
-	public String ejecutarProceso(Integer pOpciones,Date pFechaInicial)throws AforeException {
+	public EjecucionResult ejecutarProceso(Integer pOpciones,Date pFechaInicial)throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.PRO_CERT_INACTIVIDAD_PACKAGE)
 					.concat(".").concat(Constantes.PRO_CERT_INACTIVIDAD_PROCESO_BTN_EJECUTAR);
@@ -33,11 +34,17 @@ public class CerInaProRepo extends RepoBase{
 			query.registerStoredProcedureParameter("pOpciones", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("pFechaInicial", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("pAvance", String.class, ParameterMode.OUT);
-
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+			
+			
 			query.setParameter("pOpciones", pOpciones);
 			query.setParameter("pFechaInicial", pFechaInicial);
 
-			String resp = (String) query.getOutputParameterValue("pAvance");
+			EjecucionResult resp= new EjecucionResult();			
+			resp.setOcAvance((String)query.getOutputParameterValue("pAvance"));
+			resp.setOcMensaje((String)query.getOutputParameterValue("oc_Mensaje"));
+			resp.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			return resp;
 		} catch (Exception e) {
 			throw GenericException(e);

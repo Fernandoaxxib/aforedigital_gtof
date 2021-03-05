@@ -86,7 +86,7 @@ public class ModDesParcProcesoRepo extends RepoBase {
 
 			result.setOcMensaje((String) query.getOutputParameterValue("oc_Mensaje"));
 			result.setOcAvance((String) query.getOutputParameterValue("oc_Avance"));
-
+            result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
 			return result;
 		} catch (Exception e) {
 			throw GenericException(e);

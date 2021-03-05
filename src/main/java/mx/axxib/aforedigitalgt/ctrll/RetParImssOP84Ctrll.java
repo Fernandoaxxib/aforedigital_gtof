@@ -1,10 +1,9 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+
 import java.util.Date;
 import java.util.List;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.LoteOP84Out;
+import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP84Serv;
@@ -131,13 +132,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 
 	}
 
-	public void getListaRegistros() {
-		try {
-			registros = service.getConsultaOP84(fecIni, fecFin, lote);
-		} catch (Exception e) {
-			GenericException(e);
-		}
-	}
+	/*
+	 * public void getListaRegistros() { try { registros =
+	 * service.getConsultaOP84(fecIni, fecFin, lote); } catch (Exception e) {
+	 * GenericException(e); } }
+	 */
 
 	public void onRowSelect(SelectEvent<LoteOP84Out> event) {
 		lote1 = new LoteOP84Out();
@@ -167,25 +166,44 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Generación de reporte");
-		if (archivo != null && !archivo.isEmpty()) {
-			try {
-				String resp = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin, "QUERY");
-				pr.setStatus("Exitoso");				
-			} catch (Exception e) {
-				pr.setStatus("Error");
-				GenericException(e);
-			}finally {
+		if (registros != null && !registros.isEmpty()) {
+			if (archivo != null && !archivo.isEmpty()) {
+				try {			
+					ProcesResult res=service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
+					if (res.getOn_Estatus() == 1) {
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+					} else {
+						if (res.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(res.getP_Message());
+						} else if (res.getOn_Estatus() == 0) {
+							pr.setStatus(res.getP_Message());
+						}
+					}
+				} catch (Exception e) {
+					pr=	GenericException(e);
+				} finally {
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
+				}
+			} else {
+				pr.setDescProceso("Generación de reporte");
+				pr.setStatus("Nombre de archivo requerido");
+				UIInput radio = (UIInput) findComponent("vArchivo");
+				radio.setValid(false);
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 			}
-		} else {
-			pr.setDescProceso("Generación de reporte");
-			pr.setStatus("Nombre de archivo requerido");
-			UIInput radio = (UIInput) findComponent("vArchivo");
+		}else {
+			UIInput radio = (UIInput) findComponent("customRadio");
 			radio.setValid(false);
+			UIInput radio2 = (UIInput) findComponent("customRadio2");
+			radio2.setValid(false);
+
+			pr.setStatus("No existen datos o no se ha realizado la consulta");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
+
 	}
 
 	public void consultarOP84() {
@@ -198,11 +216,19 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				if (fecIni != null && fecFin != null) {
 					if (DateUtil.isValidDates(fecIni, fecFin)) {
 						try {
-							registros = service.getConsultaOP84(fecIni, fecFin, lote);
-							pr.setStatus("Exitoso");
+							ProcesResult res=service.getConsultaOP84(fecIni, fecFin, lote);
+							if (res.getOn_Estatus() == 1) {
+								pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+								registros=res.getRegistros();
+							} else {
+								if (res.getOn_Estatus() == 2) {
+									GenerarErrorNegocio(res.getP_Message());
+								} else if (res.getOn_Estatus() == 0) {
+									pr.setStatus(res.getP_Message());
+								}
+							}					        									
 						} catch (Exception e) {
-							pr.setStatus("Error");
-							GenericException(e);
+							pr=	GenericException(e);
 						} finally {
 							pr.setFechaFinal(DateUtil.getNowDate());
 							resultados.add(pr);
@@ -232,12 +258,20 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			}
 			if (radioSelected2 != null) {
 				if (lote != null && !lote.isEmpty()) {
-					try {
-						registros = service.getConsultaOP84(fecIni, fecFin, lote);
-						pr.setStatus("Exitoso");
+					try {					
+						ProcesResult res=service.getConsultaOP84(fecIni, fecFin, lote);
+						if (res.getOn_Estatus() == 1) {
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							registros=res.getRegistros();
+						} else {
+							if (res.getOn_Estatus() == 2) {
+								GenerarErrorNegocio(res.getP_Message());
+							} else if (res.getOn_Estatus() == 0) {
+								pr.setStatus(res.getP_Message());
+							}
+						}														
 					} catch (Exception e) {
-						pr.setStatus("Error");
-						GenericException(e);
+						pr=GenericException(e);
 					} finally {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
@@ -275,34 +309,31 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			resultados.add(pr);
 		} else {
 			try {
-				String resp = service.cargarArchivoOP84(ruta, nombreArchivo);
-				pr.setStatus(resp);
+				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo);
+				if (resp.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (resp.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(resp.getP_Message());
+					} else if (resp.getOn_Estatus() == 0) {
+						pr.setStatus(resp.getP_Message());
+					}
+				}
 			} catch (Exception e) {
-				pr.setStatus("Error");
-				GenericException(e);
+				pr=	GenericException(e);
 			} finally {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 			}
 		}
-	}
-
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+	}	
 
 	public void limpiar() {
 		lote = null;
 	}
 
 	public void reset() {
-		registros=null;
+		registros = null;
 		nombreArchivo = null;
 		lote = null;
 		fecIni = null;

@@ -1,82 +1,96 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
-import java.util.Locale;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.eml.ProcesoOut;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.serv.CerInaProServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "cerInaProceso")
 @ELBeanName(value = "cerInaProceso")
 public class CerInaProcesoCtrll extends ControllerBase {
 
-    @Autowired
+	@Autowired
 	private CerInaProServ service;
-    
-    @Getter
+
+	@Getter
 	@Setter
 	private String radioSelected;
-    
-    @Getter
-	@Setter
-	private ProcesoOut proceso;
-    
-    @Getter
+
+	@Getter
 	@Setter
 	private Date fecha;
-    
-    @Override
+
+	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
+		if (init) {
 			reset();
 		}
 	}
-    
-    public void reset() {
-    	fecha=null;
-    	proceso=null;
-    	radioSelected=null;
-    }
-    public void ejecutar() {
-    	if(radioSelected !=null) {
-    		if(fecha!=null) {
-    			  try {
-    				    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-    					Date today= new Date();	
-    					proceso= new ProcesoOut();	
-    					proceso.setFechahoraInicio(format.format(today));
-    					String resp= service.ejecutarProceso(Integer.valueOf(radioSelected), fecha);
-    					Date today2= new Date();	
-    					proceso.setFechahoraFinal(format.format(today2));	
-    					proceso.setAbrevProceso(radioSelected.equals("1")?"Diagnóstico de parcialidades":"Aprobación de movimientos");    				
-    					proceso.setEstadoProceso(resp);	   				 
-    			  }catch(Exception e) {
-    				  GenericException(e);
-    			  }
-    		}else {
-    			addMessageFail("Seleccione la fecha.");
-    		}
-    	}else {
-    		addMessageFail("Seleccione una opción.");
-    	}
-    }
-    public void addMessageOK(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-	public void addMessageFail(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-	
+	public void radioSelected() {
+		fecha = null;
+	}
+	public void reset() {
+		fecha = null;		
+		radioSelected = null;
+	}
+
+	public void ejecutar() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if (isFormValid(pr)) {
+			try {
+				pr.setDescProceso(radioSelected.equals("1") ? "Diagnóstico de parcialidades" : "Aprobación de movimientos");
+				EjecucionResult resp = service.ejecutarProceso(Integer.valueOf(radioSelected), fecha);
+				if(resp.getOn_Estatus()==1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+				}else {
+					if(resp.getOn_Estatus()== 2) {
+						GenerarErrorNegocio(resp.getOcMensaje());
+					} else if(resp.getOn_Estatus()== 0) {
+						pr.setStatus(resp.getOcMensaje());
+					} 
+				}		
+			} catch (Exception e) {
+				pr=GenericException(e);
+			}finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		}else {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+
+	public boolean isFormValid(ProcessResult pr) {
+		if (radioSelected == null) {
+			UIInput radio = (UIInput) findComponent("radSelect");
+			radio.setValid(false);
+
+			pr.setDescProceso("Debe seleccionar una opción");
+			pr.setStatus("Selección requerida");
+			return false;
+		}
+		if (fecha == null) {
+			UIInput radio = (UIInput) findComponent("fCapturada");
+			radio.setValid(false);
+
+			pr.setDescProceso("Debe seleccionar una fecha");
+			pr.setStatus("Selección requerida");
+			return false;
+		}
+		return true;
+	}
 }

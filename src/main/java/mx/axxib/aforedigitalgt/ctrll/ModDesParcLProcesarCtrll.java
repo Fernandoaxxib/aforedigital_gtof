@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.component.UIInput;
-import javax.faces.component.UIOutput;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
@@ -15,10 +13,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
-import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
@@ -124,25 +122,28 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		if(isFormValid(pr)) {			
 			try {	
 				pr.setDescProceso(radioSelected.equals("1")?"Generación de lote":(radioSelected.equals("2")?"Generación de archivo con Layout para ProceSAR":"Cargar de archivo con respuesta de ProceSAR"));
-				ProcesResult result=	service.generarLayout(Integer.valueOf(radioSelected), fecha, lote, ruta, archivo, ruta, archivo, null);		    
-			    pr.setStatus("Exitoso");		  
+				ProcesResult result=	service.generarLayout(Integer.valueOf(radioSelected), fecha, lote, ruta, archivo);		    
+				if (result.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (result.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(result.getOc_Avance());
+					} else if (result.getOn_Estatus() == 0) {
+						pr.setStatus(result.getOc_Avance());
+					}
+				}		  
 			} catch (Exception e) {
-				pr.setStatus("Error");
-				GenericException(e);
+				pr=GenericException(e);
 			} finally {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
-			}	
-			
+			}				
 		}else {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
 	}
-	public void generar() {
-		
-		
-	}
+	
 	public void getLotes() {
 		try {
 			if (listLotes == null) {

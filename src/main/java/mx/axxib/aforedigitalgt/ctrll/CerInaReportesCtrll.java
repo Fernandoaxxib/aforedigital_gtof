@@ -2,18 +2,18 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
+import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.eml.ProcesoOut;
-import mx.axxib.aforedigitalgt.eml.ResultOut;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.ReporteOut;
 import mx.axxib.aforedigitalgt.serv.CerInaRepServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "cerInaReportes")
@@ -32,10 +32,6 @@ public class CerInaReportesCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String archivo;
-
-	@Getter
-	@Setter
-	private ProcesoOut proceso;
 
 	@Getter
 	@Setter
@@ -58,83 +54,110 @@ public class CerInaReportesCtrll extends ControllerBase {
 	}
 
 	public void ejecutar() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
 		if (radioSelected != null) {
-			if (radioSelected.equals("1") || radioSelected.equals("2") || radioSelected.equals("3")
-					|| radioSelected.equals("4")) {
+			if (radioSelected.equals("1") || radioSelected.equals("2") || radioSelected.equals("3")	|| radioSelected.equals("4")) {
 				if (fechaInicio != null) {
-					try {
-						SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-						Date today = new Date();
-						proceso = new ProcesoOut();
-						proceso.setFechahoraInicio(format.format(today));
-						ResultOut result = service.procesarReporte(fechaInicio, fechaFin, radioSelected);
-						Date today2 = new Date();
-						proceso.setFechahoraFinal(format.format(today2));			
-						proceso.setEstadoProceso(result.getP_Avance());
-						switch (radioSelected) {
-
-						case "1":
-							proceso.setAbrevProceso("Reporte de mensualidades");
-							break;
-						case "2":
-							proceso.setAbrevProceso("Reporte cuentas no afectadas");
-							break;
-						case "3":
-							proceso.setAbrevProceso("Reporte inactividad IMSS");
-							break;
-						case "4":
-							proceso.setAbrevProceso("Generación layout pagos");
-							break;
-						default:
-							proceso.setAbrevProceso("");
-
-						}
+					switch (radioSelected) {
+					case "1":
+						pr.setDescProceso("Reporte de mensualidades");
+						break;
+					case "2":
+						pr.setDescProceso("Reporte cuentas no afectadas");
+						break;
+					case "3":
+						pr.setDescProceso("Reporte inactividad IMSS");
+						break;
+					case "4":
+						pr.setDescProceso("Generación layout pagos");
+						break;					
+					}
+					
+					try {						
+						ReporteOut resp = service.procesarReporte(fechaInicio, fechaFin, radioSelected);
+						if(resp.getOn_Estatus()==1) {							
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+						}else {
+							if(resp.getOn_Estatus()== 2) {
+								GenerarErrorNegocio(resp.getOc_Mensaje());
+							} else if(resp.getOn_Estatus()== 0) {
+								pr.setStatus(resp.getOc_Mensaje());
+							} 
+						}							
 					} catch (Exception e) {
-						GenericException(e);
+						pr=GenericException(e);
+					}finally {
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);
 					}
 				} else {
-					addMessageFail("Seleccione la fecha");
+					UIInput radio = (UIInput) findComponent("fIni");
+					radio.setValid(false);
+					pr.setDescProceso("Debe seleccionar una fecha");
+					pr.setStatus("Selección requerida");
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
 				}
 			} else {
 				if (radioSelected.equals("5") || radioSelected.equals("6")) {
 					if (fechaInicio != null && fechaFin != null) {
-						if (fechaInicio.before(fechaFin) || fechaInicio.equals(fechaFin)) {
-							try {
-								SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-								Date today = new Date();
-								proceso = new ProcesoOut();
-								proceso.setFechahoraInicio(format.format(today));
-								ResultOut result = service.procesarReporte(fechaInicio, fechaFin, radioSelected);
-								Date today2 = new Date();
-								proceso.setFechahoraFinal(format.format(today2));						
-								proceso.setEstadoProceso(result.getP_Avance());
-								
-								switch (radioSelected) {
-
-								case "5":
-									proceso.setAbrevProceso("Reporte de negativas");
-									break;
-								case "6":
-									proceso.setAbrevProceso("Reporte desglose de pagos");
-									break;
-								
-								default:
-									proceso.setAbrevProceso("");
-
-								}
-							} catch (Exception e) {
-								GenericException(e);
+						if (DateUtil.isValidDates(fechaInicio, fechaFin)) {
+							switch (radioSelected) {
+							case "5":
+								pr.setDescProceso("Reporte de negativas");
+								break;
+							case "6":
+								pr.setDescProceso("Reporte desglose de pagos");
+								break;
 							}
-						}else {
-						   addMessageFail("La fecha inicio debe ser menor o igual a la fecha fin");	
+							
+							try {								
+								ReporteOut resp = service.procesarReporte(fechaInicio, fechaFin, radioSelected);
+								if(resp.getOn_Estatus()==1) {							
+									pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+								}else {
+									if(resp.getOn_Estatus()== 2) {
+										GenerarErrorNegocio(resp.getOc_Mensaje());
+									} else if(resp.getOn_Estatus()== 0) {
+										pr.setStatus(resp.getOc_Mensaje());
+									} 
+								}								
+							} catch (Exception e) {
+								pr=GenericException(e);
+							}finally {
+								pr.setFechaFinal(DateUtil.getNowDate());
+								resultados.add(pr);	
+							}
+						} else {
+							UIInput fechaI = (UIInput) findComponent("fIni");
+							fechaI.setValid(false);
+							UIInput fechaF = (UIInput) findComponent("fFin");
+							fechaF.setValid(false);						
+							pr.setDescProceso("Fecha inicio debe ser menor o igual a fecha fin");
+							pr.setStatus("Selección requerida");
+							pr.setFechaFinal(DateUtil.getNowDate());
+							resultados.add(pr);	
 						}
 					} else {
-						addMessageFail("Seleccione fecha inicio y fecha fin");
+						UIInput fechaI = (UIInput) findComponent("fIni");
+						fechaI.setValid(false);
+						UIInput fechaF = (UIInput) findComponent("fFin");
+						fechaF.setValid(false);						
+						pr.setDescProceso("Debe seleccionar fecha inicio y fecha fin");
+						pr.setStatus("Selección requerida");
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);												
 					}
 				}
 			}
 		} else {
-			addMessageFail("Seleccione una opción");
+			UIInput radio = (UIInput) findComponent("radSelect");
+			radio.setValid(false);
+			pr.setDescProceso("Debe seleccionar una opción");
+			pr.setStatus("Selección requerida");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 
@@ -144,7 +167,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 		case "1":
 			this.disabled = "true";
 			this.fechaInicio = null;
-			this.fechaFin = null;
+			this.fechaFin = null;			
 			break;
 
 		case "2":
@@ -182,11 +205,12 @@ public class CerInaReportesCtrll extends ControllerBase {
 			break;
 
 		}
+		this.archivo=null;
 	}
 
 	public void opcionSeleccionada() {
 
-		if(radioSelected!=null) {
+		if (radioSelected != null) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 			String f = format.format(fechaInicio);
 
@@ -221,11 +245,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 				this.ruta = "";
 				break;
 			}
-		}else {
-			addMessageFail("Debe seleccionar una opción");
 		}
-		
-
 	}
 
 	public void reset() {
@@ -233,18 +253,8 @@ public class CerInaReportesCtrll extends ControllerBase {
 		ruta = "/RESPALDOS/operaciones";
 		fechaInicio = null;
 		fechaFin = null;
-		archivo = null;
-		proceso=null;
-		radioSelected=null;
+		archivo = null;		
+		radioSelected = null;
 	}
 
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
 }

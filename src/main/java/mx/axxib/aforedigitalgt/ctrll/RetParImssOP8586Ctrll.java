@@ -1,13 +1,9 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +11,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.LoteOP85Out;
+import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP8586Serv;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -166,21 +164,33 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 
 	}
 	public void generarOP85(){
-		if(archivo!=null && !archivo.isEmpty()) {
-			ProcessResult pr = new ProcessResult();
-			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Generación archivo OP85");
-		
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Generación archivo OP85");
+		if(archivo!=null && !archivo.isEmpty()) {					
 			try {			
-				String resp=service.cargarArchivoOP85(ruta, archivo);
-				pr.setStatus(resp);				
+				ProcesResult res=service.cargarArchivoOP85(ruta, archivo);
+				if (res.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+				} else {
+					if (res.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(res.getP_Message());
+					} else if (res.getOn_Estatus() == 0) {
+						pr.setStatus(res.getP_Message());
+					}
+				}								
 			}catch(Exception e) {
-				pr.setStatus("Error");
-				GenericException(e);
+				pr=GenericException(e);
 			}finally {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 			}
+		}else {		
+			pr.setStatus("Nombre de archivo requerido");
+			UIInput radio = (UIInput) findComponent("vArchivo1");
+			radio.setValid(false);
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 	public void cargarOP86() {
@@ -189,11 +199,18 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		if(archivo2!=null && !archivo2.isEmpty()) {		
 		pr.setDescProceso("Carga archivo OP86");
 			try {				
-				String resp=service.cargarArchivoOP86(ruta2, archivo2);
-				pr.setStatus(resp);
+				ProcesResult res=service.cargarArchivoOP86(ruta2, archivo2);
+				if (res.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+				} else {
+					if (res.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(res.getP_Message());
+					} else if (res.getOn_Estatus() == 0) {
+						pr.setStatus(res.getP_Message());
+					}
+				}	
 			}catch(Exception e) {
-				pr.setStatus("Error");
-				GenericException(e);
+				pr=GenericException(e);
 			}finally {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
@@ -219,11 +236,18 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 					if (DateUtil.isValidDates(fecIni, fecFin)) {
 					  if(archivo3!=null && !archivo3.isEmpty()) {
 						  try {
-								String resp=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
-								pr.setStatus(resp);
+							  ProcesResult res=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
+							  if (res.getOn_Estatus() == 1) {
+									pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+								} else {
+									if (res.getOn_Estatus() == 2) {
+										GenerarErrorNegocio(res.getP_Message());
+									} else if (res.getOn_Estatus() == 0) {
+										pr.setStatus(res.getP_Message());
+									}
+								}	
 							} catch (Exception e) {
-								pr.setStatus("Error");
-								GenericException(e);
+								pr=GenericException(e);
 							} finally {
 								pr.setFechaFinal(DateUtil.getNowDate());
 								resultados.add(pr);
@@ -264,11 +288,18 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 				if (lote != null && !lote.isEmpty()) {
 					 if(archivo3!=null && !archivo3.isEmpty()) {
 						  try {
-								String resp=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
-								pr.setStatus(resp);
+								ProcesResult res=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
+								if (res.getOn_Estatus() == 1) {
+									pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
+								} else {
+									if (res.getOn_Estatus() == 2) {
+										GenerarErrorNegocio(res.getP_Message());
+									} else if (res.getOn_Estatus() == 0) {
+										pr.setStatus(res.getP_Message());
+									}
+								}	
 							} catch (Exception e) {
-								pr.setStatus("Error");
-								GenericException(e);
+								pr=GenericException(e);
 							} finally {
 								pr.setFechaFinal(DateUtil.getNowDate());
 								resultados.add(pr);

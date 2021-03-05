@@ -21,115 +21,128 @@
 	</ui:define>
 
 	<ui:define name="center">
-		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript library="js" name="calendar-localization.js" />
 
-        
+
 		<p:panelGrid class="no-border" style="width: 100%">
 			<p:row>
 				<p:column>
 					<ui:include src="subMenuTransacciones.xhtml" />
 				</p:column>
-				<p:column>
+				<p:column style="text-align:right">
 					<h:form>
-						<p:linkButton styleClass="blue ui-button-text"
-							outcome="/api/cerInaProceso.jsf" includeViewParams="true"
+						<p:linkButton styleClass="blue" outcome="/api/cerInaProceso.jsf"
+							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnProceso}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-                        <p:linkButton styleClass="green ui-button-text"
-							outcome="/api/cerInaReportes.jsf" includeViewParams="true"
+						<p:linkButton styleClass="green" outcome="/api/cerInaReportes.jsf"
+							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnReportes}">
 							<f:param name="init" value="true" />
-						</p:linkButton>  
-						<p:linkButton styleClass="blue ui-button-text"
-							outcome="/api/cerInaProceso.jsf" includeViewParams="true"
+						</p:linkButton>
+						<p:linkButton styleClass="blue" outcome="/api/cerInaLProcesar.jsf"
+							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnLayout}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue ui-button-text"
-							outcome="/api/cerInaApp.jsf" includeViewParams="true"
+						<p:linkButton styleClass="blue" outcome="/api/cerInaApp.jsf"
+							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnApp}">
 							<f:param name="init" value="true" />
-						</p:linkButton>						
-					</h:form> 
+						</p:linkButton>
+					</h:form>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-
-
-
 		<h:form id="form">
-		    <p:growl id="message" />
-			<p:blockUI block="pnl1" trigger="fnEjecutar" />
-			
-			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title2}" style="font-size:12px;margin-bottom:20px">
-				   <p:panelGrid columns="1" styleClass="ui-noborder" style="margin-bottom:10px" cellpadding="5" >
-					<p:selectOneRadio  id="radSelect" layout="pageDirection" value="#{cerInaReportes.radioSelected}" style="font-size:12px">						
-						<f:selectItem itemValue="1" itemLabel="#{msg.certifica_inactividad_rdbMenAliq}" />
-						<f:selectItem itemValue="2" itemLabel="#{msg.certifica_inactividad_rdbCuentNo}" />
-						<f:selectItem itemValue="3" itemLabel="#{msg.certifica_inactividad_rdbInactiv}" />
-						<f:selectItem itemValue="4" itemLabel="#{msg.certifica_inactividad_rdbLayPPar}" />
-						<f:selectItem itemValue="5" itemLabel="#{msg.certifica_inactividad_rdbRepNeg}" />
-						<f:selectItem itemValue="6" itemLabel="#{msg.certifica_inactividad_rdbRepDes}" />	
-						<p:ajax event="click" listener="#{cerInaReportes.radioSelected}" update="fIni fFin"></p:ajax>					
+			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title2}"
+				style="font-size:12px;margin-bottom:20px">
+				<p:panelGrid columns="1" styleClass="ui-noborder"
+					style="margin-bottom:10px" cellpadding="5">
+					<p:selectOneRadio id="radSelect" layout="pageDirection"
+						value="#{cerInaReportes.radioSelected}" style="font-size:12px">
+						<f:selectItem itemValue="1"
+							itemLabel="#{msg.certifica_inactividad_rdbMenAliq}" />
+						<f:selectItem itemValue="2"
+							itemLabel="#{msg.certifica_inactividad_rdbCuentNo}" />
+						<f:selectItem itemValue="3"
+							itemLabel="#{msg.certifica_inactividad_rdbInactiv}" />
+						<f:selectItem itemValue="4"
+							itemLabel="#{msg.certifica_inactividad_rdbLayPPar}" />
+						<f:selectItem itemValue="5"
+							itemLabel="#{msg.certifica_inactividad_rdbRepNeg}" />
+						<f:selectItem itemValue="6"
+							itemLabel="#{msg.certifica_inactividad_rdbRepDes}" />
+						<p:ajax event="click" listener="#{cerInaReportes.radioSelected}"
+							update="form:fIni form:fFin form:archivo" global="false"></p:ajax>
 					</p:selectOneRadio>
-                   </p:panelGrid>
-                    <p:panelGrid class="no-border"  columns="4">
-                        <p:outputLabel for="fIni" value="#{msg.certifica_inactividad_lblFecIni}"  style="font-size:12px" /> 
-                    
-                        <p:datePicker id="fIni" value="#{cerInaReportes.fechaInicio}" locale="es"  showIcon="true" pattern="dd-MM-yyyy" 	yearNavigator="true" monthNavigator="true" 	inputStyle="width:120px; text-align:right;" readonlyInput="true" >
-                           <p:ajax event="dateSelect" listener="#{cerInaReportes.opcionSeleccionada}" update="archivo message" />
-                        </p:datePicker>
-							
-					    <p:outputLabel for="fFin" value="#{msg.certifica_inactividad_lblFecFin}"  style="font-size:12px" /> 
-                    
-                        <p:datePicker id="fFin" value="#{cerInaReportes.fechaFin}" locale="es"  showIcon="true" pattern="dd-MM-yyyy" 	yearNavigator="true" monthNavigator="true" 	inputStyle="width:120px; text-align:right;" disabled="#{cerInaReportes.disabled}" readonlyInput="true" />
-													    									
-                    </p:panelGrid>   
-                    
-                    <p:panelGrid class="no-border" columns="2">
-                         <p:outputPanel style="width:66px">
-                            <p:outputLabel  value="#{msg.certifica_inactividad_lblRuta}"/>
-                         </p:outputPanel>
-                         
-                         <p:outputPanel style="background: #dddddd; border-radius: 5px; height: 25px; width: 300px; text-align: left;">
-                            <p:outputLabel  value="#{cerInaReportes.ruta}" />
-                         </p:outputPanel>
-                    </p:panelGrid>             
-                    
-                    <p:panelGrid class="no-border" columns="3">
-                         <p:outputPanel style="width:66px">
-                           <p:outputLabel  value="#{msg.certifica_inactividad_lblArchivo}" />
-                         </p:outputPanel>
-                         
-                         <p:outputPanel id="archivo" style="background: #dddddd; border-radius: 5px; height: 25px; width: 300px; text-align: left;">
-                            <p:outputLabel  value="#{cerInaReportes.archivo}" />
-                         </p:outputPanel>
-                         <p:commandButton id="fnEjecutar" styleClass="blue" type="submit" value="#{msg.certifica_inactividad_btnEjecutar}"  action="#{cerInaReportes.ejecutar}" update="form" ajax="true"/>
-                    </p:panelGrid>                          
-                                                        
-				<p:dataTable id="pnDetalleProc" var="pro" styleClass="card-header b-blue" 	value="#{cerInaReportes.proceso}" emptyMessage="#{msg.aprob_msj_sinDatos}"  style="margin-top:50px">
-					<f:facet name="header">
-						<p:outputPanel style="text-align:left">
-							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-						</p:outputPanel>
-					</f:facet>
-					<p:column headerText="#{msg.aprob_tabla_columna_identificador}" >
-						<h:outputText value="#{pro.abrevProceso}" />
-					</p:column>
+				</p:panelGrid>
+				<p:panelGrid class="no-border no-padding">
+					<p:row>
+						<p:column>
+							<p:outputLabel for="fIni"
+								value="#{msg.certifica_inactividad_lblFecIni}"
+								style="margin-right:10px" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fIni" value="#{cerInaReportes.fechaInicio}"
+								locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								yearNavigator="true" monthNavigator="true"
+								style="margin-right:10px"
+								inputStyle="width:120px; text-align:right;" readonlyInput="true">
+								<p:ajax event="dateSelect"
+									listener="#{cerInaReportes.opcionSeleccionada}"
+									update="archivo" />
+							</p:datePicker>
+						</p:column>
+						<p:column>
+							<p:outputLabel for="fFin"
+								value="#{msg.certifica_inactividad_lblFecFin}"
+								style="margin-right:10px" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fFin" value="#{cerInaReportes.fechaFin}"
+								locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								yearNavigator="true" monthNavigator="true"
+								inputStyle="width:120px; text-align:right;"
+								disabled="#{cerInaReportes.disabled}" readonlyInput="true" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid class="no-border no-padding" style="margin-top:10px">
+					<p:row>
+						<p:column style="width:78px">
+							<p:outputLabel value="#{msg.certifica_inactividad_lblRuta}" />
+						</p:column>
+						<p:column class="outputlabel-shadow"
+							style="width:384px;padding-left: 10px !important;">
+							<p:outputLabel value="#{cerInaReportes.ruta}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid class="no-border no-padding" style="margin-top:10px">
+					<p:row>
+						<p:column style="width:78px">
+							<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}" />
+						</p:column>
+						<p:column class="outputlabel-shadow"
+							style="width:384px;padding-left: 10px !important;">
+							<p:outputLabel id="archivo" value="#{cerInaReportes.archivo}" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="fnEjecutar" styleClass="blue" type="submit"
+								value="#{msg.certifica_inactividad_btnEjecutar}"
+								action="#{cerInaReportes.ejecutar}" style="margin-left:10px"
+								update="form:fIni form:fFin form:radSelect form:result"
+								ajax="true" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 
-					<p:column headerText="#{msg.aprob_tabla_columna_estatus}" >
-						<h:outputText value="#{pro.estadoProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraInicio}" />
-					</p:column>
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}" styleClass="gridCell-right" >
-						<h:outputText value="#{pro.fechahoraFinal}" />
-					</p:column>
-				</p:dataTable>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{cerInaReportes}" />
+				</ui:include>
 			</p:panel>
 		</h:form>
 	</ui:define>

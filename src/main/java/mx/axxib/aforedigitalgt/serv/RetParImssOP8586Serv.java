@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.RetParImssOP8586Repo;
 import mx.axxib.aforedigitalgt.eml.LoteOP85Out;
+import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
 @Service
 public class RetParImssOP8586Serv extends ServiceBase{
@@ -17,7 +18,7 @@ public class RetParImssOP8586Serv extends ServiceBase{
 	
 	
 	
-	public String cargarArchivoOP85(String p_Path, String p_Nombre_Archivo) throws AforeException {
+	public ProcesResult cargarArchivoOP85(String p_Path, String p_Nombre_Archivo) throws AforeException {
 		try {
 			return repositorio.cargarArchivoOP85(p_Path, p_Nombre_Archivo);
 		}catch(Exception e) {
@@ -25,7 +26,7 @@ public class RetParImssOP8586Serv extends ServiceBase{
 		}
 	}
 	
-	public String cargarArchivoOP86(String p_Path, String p_Nombre_Archivo) throws AforeException {
+	public ProcesResult cargarArchivoOP86(String p_Path, String p_Nombre_Archivo) throws AforeException {
 		try {
 			return repositorio.cargarArchivoOP86(p_Path, p_Nombre_Archivo);
 		}catch(Exception e) {
@@ -41,7 +42,7 @@ public class RetParImssOP8586Serv extends ServiceBase{
 		}		
 	}
 	
-	public String generarReporteOP86(String p_Path,String p_Nombre_Archivo,String p_Lote,Date p_Fecha_Inicial,Date p_Fecha_Final) throws AforeException {
+	public ProcesResult generarReporteOP86(String p_Path,String p_Nombre_Archivo,String p_Lote,Date p_Fecha_Inicial,Date p_Fecha_Final) throws AforeException {
 		try {
 			return repositorio.generarReporteOP86(p_Path, p_Nombre_Archivo, p_Lote, p_Fecha_Inicial, p_Fecha_Final);
 		}catch(Exception e) {

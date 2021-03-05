@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.PrimeFaces;
@@ -160,39 +159,43 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	public void aprobarSolicitud()  {
 	 ProcessResult pr = new ProcessResult();	
 	  if(listSolicitudes!=null && !listSolicitudes.isEmpty()) {		  	  
-		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {									
-				selectedSolicitud.forEach(p -> {
-					try {
+		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {				    
+				selectedSolicitud.forEach(p -> {	
+					ProcessResult pr2 = new ProcessResult();
+					try {						
 						SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss",Locale.getDefault());
 						res = service.aprobarSolicitud(p.getNumSolicitud(),Integer.valueOf(p.getTransaccion().substring(0, 1)),p.getSubTransaccion().substring(0, 1));																	
-						pr.setFechaInicial(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_INICIO()));
-						pr.setFechaFinal(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_FINAL()));					    
-					    pr.setDescProceso(res.getListaProceso().get(0).getABREV_PROCESO());
-						pr.setStatus(res.getListaProceso().get(0).getESTADO_PROCESO());					
-					} catch (Exception e) {
-						pr.setFechaInicial(DateUtil.getNowDate());
-						pr.setDescProceso("Aprobacion de solicitud");
-						pr.setStatus("Error");
-						pr.setFechaFinal(DateUtil.getNowDate());
-						res=null;
-						GenericException(e);
+						if(res.getOn_estatus()==1) {
+							pr2.setFechaInicial(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_INICIO()));
+							pr2.setFechaFinal(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_FINAL()));					    
+						    pr2.setDescProceso(res.getListaProceso().get(0).getABREV_PROCESO());
+							pr2.setStatus(res.getListaProceso().get(0).getESTADO_PROCESO());	
+						}else {
+							if(res.getOn_estatus() == 2) {
+								GenerarErrorNegocio(res.getOcMensaje());
+							} else if(res.getOn_estatus() == 0) {
+								pr2.setStatus(res.getOcMensaje());
+							} 
+						}
+										
+					} catch (Exception e) {						
+						pr2=GenericException(e);
+						res=null;						
 					}finally {					
-						resultados.add(pr);
+						resultados.add(pr2);
 					}
 				});		
 				
-				if(res!=null) {					
-					listSolicitudes.removeAll(selectedSolicitud);					
-					filtro=new ArrayList<SolicitudOut>();										
-					DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
-				    if (!dataTable.getFilterBy().isEmpty()) {
-				        dataTable.reset();
-				        PrimeFaces.current().ajax().update("table1");
-				    }
-				}else {
-					selectedSolicitud=null;
-				}												
-				
+				/*
+				 * if(res!=null) { listSolicitudes.removeAll(selectedSolicitud); filtro=new
+				 * ArrayList<SolicitudOut>(); DataTable dataTable = (DataTable)
+				 * FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
+				 * if (!dataTable.getFilterBy().isEmpty()) { dataTable.reset();
+				 * PrimeFaces.current().ajax().update("table1"); } }else {
+				 * selectedSolicitud=null; }
+				 */
+				selectedSolicitud=null;
+				recuperarSolicPendientes();
 		}else {			  
 			  pr.setFechaInicial(DateUtil.getNowDate());
 			  pr.setDescProceso("Aprobación de solicitud");
@@ -237,14 +240,5 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			 seleccionados=selectedSolicitud.size();
 		 }
 	 }
-	
-	
-	public void addMessageOK(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Exitoso", summary);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-	public void addMessageFail(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", summary);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
+
 }

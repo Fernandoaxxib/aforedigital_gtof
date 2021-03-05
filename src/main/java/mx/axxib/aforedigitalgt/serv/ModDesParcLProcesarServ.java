@@ -28,9 +28,9 @@ public class ModDesParcLProcesarServ extends ServiceBase {
 		}
 	}
 	
-	public ProcesResult generarLayout(Integer in_Opciones,Date p_Fecha,String p_Lote,String p_Ruta3,String p_Archivo3,String p_Ruta,String p_Archivo,String oc_Avance) throws AforeException {
+	public ProcesResult generarLayout(Integer in_Opciones,Date p_Fecha,String p_Lote,String p_Ruta,String p_Archivo) throws AforeException {
 		try {
-			return desParcRepo.generarLayout(in_Opciones, p_Fecha, p_Lote, p_Ruta3, p_Archivo3, p_Ruta, p_Archivo, oc_Avance);
+			return desParcRepo.generarLayout(in_Opciones, p_Fecha, p_Lote, p_Ruta, p_Archivo);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

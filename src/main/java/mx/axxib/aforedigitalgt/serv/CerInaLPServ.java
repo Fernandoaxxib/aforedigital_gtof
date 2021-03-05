@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.CerInaLPRepo;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
+import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
 @Service
 public class CerInaLPServ extends ServiceBase{
@@ -16,19 +17,18 @@ public class CerInaLPServ extends ServiceBase{
 	@Autowired
 	private CerInaLPRepo repo;
 	
-	public List<LoteOut> getLotes() throws AforeException {
+	public List<LoteOut> getLotes() throws AforeException {		
 		try {
 			return repo.getLotes();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public String generarLayoutProcesar(Date pFechaEntrada,String pLotes,Integer p_opciones)throws AforeException {
+	public ProcesResult generarLayout(Date pFechaEntrada,String pLotes,Integer p_opciones,String p_Ruta,String p_Archivo) throws AforeException {
 		try {
-			
-			return repo.generarLayoutProcesar(pFechaEntrada, pLotes, p_opciones);
-		}catch(Exception e) {
+			return repo.generarLayout(pFechaEntrada,pLotes,p_opciones,p_Ruta, p_Archivo);
+		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}

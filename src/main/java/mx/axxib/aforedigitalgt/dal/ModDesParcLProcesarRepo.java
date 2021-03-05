@@ -30,7 +30,7 @@ public class ModDesParcLProcesarRepo extends RepoBase {
 		}
 	}
 
-	public ProcesResult generarLayout(Integer in_Opciones,Date p_Fecha,String p_Lote,String p_Ruta3,String p_Archivo3,String p_Ruta,String p_Archivo,String oc_Avance) throws AforeException {
+	public ProcesResult generarLayout(Integer in_Opciones,Date p_Fecha,String p_Lote,String p_Ruta,String p_Archivo) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_PACKAGE)
 					.concat(".").concat(Constantes.MOD_DESEMPLEO_PARCF_LAYOUT_BTN_GENERAR);

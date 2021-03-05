@@ -40,9 +40,7 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String radioSelected;
-	
-	@Getter
-	private EjecucionResult result;
+
 
 	@Override
 	public void iniciar() {
@@ -81,13 +79,15 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 					proceso.setAbrevProceso("");
 				}
 								
-				result = service.procesarReporte(Integer.valueOf(radioSelected), fecha);
-				if(result.getOn_Estatus()==1) {
+				EjecucionResult result = service.procesarReporte(Integer.valueOf(radioSelected), fecha,ruta,archivo);
+				if (result.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-				}
-				
-				if(result.getOn_Estatus()==2) {
-					pr.setStatus(result.getOcMensaje());
+				} else {
+					if (result.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(result.getOcMensaje());
+					} else if (result.getOn_Estatus() == 0) {
+						pr.setStatus(result.getOcMensaje());
+					}
 				}
 			} catch (Exception e) {				
 				pr=GenericException(e);
