@@ -18,6 +18,7 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -45,6 +46,10 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String selectedTipoClave;
+	
+	@Getter
+	@Setter
+	private DesmarcaCargaConsultaMasivaOut desmarcaCargaConsultaMasivaOut;
 	
 //	@Getter
 //	@Setter
@@ -113,10 +118,11 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();
 //			proceso.setFechahoraInicio(format.format(today));
-			String resp =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
+			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
-			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
 //				addMessageOK(resp);
@@ -125,7 +131,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //					proceso.setAbrevProceso(resp);//"Generar reporte"
 //					proceso.setEstadoProceso("FALLIDO");
 //					 addMessageFail(resp);
-					pr.setStatus("Error al ejecutar por Nss y Curp");
+					pr.setStatus("Error al ejecutar Desmarca Masiva por Nss y Curp");
 				}
 //			if(msg.trim().toUpperCase().equals("OK")) {
 //				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
@@ -161,11 +167,12 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			 pr.setStatus("Ingresar Tipo Proceso ");
 			
 		}else {
-			String resp =cargaMasiva.consultaMarcas(selectedTipoClave,selectedTipoClave);
+			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(selectedTipoClave,selectedTipoClave);
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
 			
-			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
 //				addMessageOK(resp);
@@ -192,20 +199,20 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		}
 	}
 	
-	public void desmarcaMasiva() {
-		try {System.out.println("REVERSA CARGA");
-			String msg =cargaMasiva.desmarcaMasivaCuenta();
-			if(msg.trim().toUpperCase().equals("OK")) {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-			} else {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-			}
-		}catch (Exception e) {
-			GenericException(e);
-		}
-	}
+//	public void desmarcaMasiva() {
+//		try {System.out.println("REVERSA CARGA");
+//		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
+//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().trim().toUpperCase().equals("OK")) {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+//			} else {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+//			}
+//		}catch (Exception e) {
+//			GenericException(e);
+//		}
+//	}
 	
 //	public void desmarcaIndividualCuenta() {
 //		try {System.out.println("VALOR DE desmarcaNSS:"+desmarcaNSS+" /desmarcaCURP:"+desmarcaCURP+" /desmarcaCLAVE:"+desmarcaCLAVE);

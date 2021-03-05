@@ -46,7 +46,9 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	
 	@Getter
 	ConsultaSaldoNegativoOut consultaSaldoNegativoOut;
-	 
+	
+	
+	
 	@Getter
 	@Setter
 	private String rutaSaldoNegativo;
@@ -92,12 +94,13 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 				//if(nombreSaldoNegativo.toLowerCase().endsWith(".xls")) {
 					if(nombreSaldoNegativo.endsWith(".xls") && nombreSaldoNegativo.contains("RPT-MOVS-SLD-FIN-")) {
 					System.out.println("VALOR DE nombreSaldoNegativo:" +nombreSaldoNegativo+"-----saldoFechaMovimiento:"+saldoFechaMovimiento);
-					String resp=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
-					System.out.println("VALOR DE ejecutarReporteNegativo:"+resp);
-					if(resp != null) {
+					consultaSaldoImssIssteOut=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
+					System.out.println("VALOR DE ejecutarReporteNegativo:"+consultaSaldoImssIssteOut);
+					if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 						pr.setStatus("Proceso Exitoso");
 						}else {
 						pr.setStatus("Proceso Fallido");	
+						//pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
 						}
 				}else {
 					UIInput input = (UIInput) findComponent("nombreVol");

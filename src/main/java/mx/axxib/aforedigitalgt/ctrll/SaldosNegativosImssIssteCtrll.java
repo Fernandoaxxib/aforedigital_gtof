@@ -129,12 +129,13 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		
 		try {
 			System.out.println("VALOR DE nombreNssImss:" +nombreNssImss);
-			if(nombreNssImss != null && !nombreNssImss.equals("") ) {
+			if(nombreNssImss != null && !nombreNssImss.isEmpty() ) {
 			//if(nombreNssImss.toLowerCase().endsWith(".txt")) {
 				if(nombreNssImss.endsWith(".txt") && nombreNssImss.contains("NSS-CARGA-REP-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
+				System.out.println("-----------------------------");
 				System.out.println("VALOR DE NSS IMSS consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
-				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 				pr.setStatus("Proceso Exitoso");
 				}else {
 				pr.setStatus("Proceso Fallido");	
@@ -314,7 +315,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Reporte Imss por NSS");
 		try {
-			if(nombreReporteImss != null && !nombreReporteImss.equals("") ) {
+			if(nombreReporteImss != null && !nombreReporteImss.isEmpty() ) {
 			//if(nombreReporteImss.toLowerCase().endsWith(".xls")) {
 				if(nombreReporteImss.endsWith(".xls") && nombreReporteImss.contains("RPT-SLD-IMSS-FIN-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
@@ -450,12 +451,12 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		
 		try {
 			System.out.println("VALOR DE nombreCurpIsste:" +nombreCurpIsste);
-			if(nombreCurpIsste != null && !nombreCurpIsste.equals("") ) {
+			if(nombreCurpIsste != null && !nombreCurpIsste.isEmpty()) {
 			//if(nombreCurpIsste.toLowerCase().endsWith(".txt")) {
 				if(nombreCurpIsste.endsWith(".txt") && nombreCurpIsste.contains("CURP-CARGA-REP-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);
 				System.out.println("VALOR DE ISSTE CURP consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
-				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 				pr.setStatus("Proceso Exitoso");
 				}else {
 				pr.setStatus("Proceso Fallido");	
@@ -489,12 +490,12 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		
 		try {
 			System.out.println("VALOR DE nombreReporteIsste:" +nombreReporteIsste);
-			if(nombreReporteIsste != null && !nombreReporteIsste.equals("") ) {
+			if(nombreReporteIsste != null && !nombreReporteIsste.isEmpty() ) {
 			//if(nombreReporteIsste.toLowerCase().endsWith(".xls")) {
 				if(nombreReporteIsste.endsWith(".xls") && nombreReporteIsste.contains("RPT-SLD-ISSS-FIN-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
 				System.out.println("VALOR DE REPORTE ISSTE CURP consultaSaldoImssIssteOut es; "+consultaSaldoImssIssteOut);
-				if(consultaSaldoImssIssteOut.getEstatus()==1) {
+				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 				pr.setStatus("Proceso Exitoso");
 				}else {
 				pr.setStatus("Proceso Fallido");	

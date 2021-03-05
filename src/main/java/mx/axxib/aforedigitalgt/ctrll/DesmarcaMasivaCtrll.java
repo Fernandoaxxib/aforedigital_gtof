@@ -19,6 +19,7 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -54,6 +55,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String selectedTipoClave;
+	
+	@Getter
+	@Setter
+	private DesmarcaCargaConsultaMasivaOut desmarcaCargaConsultaMasivaOut;
 //	
 //	@Getter
 //	@Setter
@@ -146,10 +151,11 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();
 //			proceso.setFechahoraInicio(format.format(today));
-			String resp =cargaMasiva.desmarcaMasivaCuenta();
+		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
-			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+		if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
 //				addMessageOK(resp);
@@ -258,10 +264,11 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //					Date today= new Date();		
 //					proceso = new ProcesoOut();
 //					proceso.setFechahoraInicio(format.format(today));
-					String resp =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,selectedTipoClave);
+				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,selectedTipoClave);
 //					Date today2= new Date();		
 //					proceso.setFechahoraFinal(format.format(today2));
-					if(resp.contains("OCURRIO UN ERROR")) {
+				 if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()!=1 ) {
+//					if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().contains("OCURRIO UN ERROR")) {
 						pr.setStatus("Error al ejecutar la desmarca masiva");
 //						proceso.setAbrevProceso("ERROR: <DECLARACION SENCILLA DEL FALLO PRESENTADO DURANTE EL PROCESO>");//"Generar reporte"
 //						proceso.setEstadoProceso("FALLIDO");

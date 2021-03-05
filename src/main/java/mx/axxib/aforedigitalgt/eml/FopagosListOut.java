@@ -55,4 +55,5 @@ public class FopagosListOut {
     private Integer pMontoIsr_Re;// OUT NUMBER,
     private Integer pMontoNeto_Re;// OUT NUMBER,
     private String pMensaje;// OUT VARCHAR2)
+    private Integer on_Estatus;//OUT INTEGER
 }

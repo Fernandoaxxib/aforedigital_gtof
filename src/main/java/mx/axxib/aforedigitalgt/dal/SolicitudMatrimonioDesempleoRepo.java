@@ -129,7 +129,7 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			query.registerStoredProcedureParameter("pMontoIsr_Re", Integer.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pMontoNeto_Re", Integer.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);	
-			
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			
 			
 			query.setParameter("pNumero_SolicRet", numSolicitud).setParameter("pNss", nss).setParameter("pCuenta", cuenta).setParameter("pNombre", nombre);	
@@ -148,6 +148,7 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			res.setPMontoIsr_Re((Integer) query.getOutputParameterValue("pMontoIsr_Re"));
 			res.setPMontoNeto_Re((Integer) query.getOutputParameterValue("pMontoNeto_Re"));
 			res.setPMensaje((String) query.getOutputParameterValue("pMensaje"));
+			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 			
 			return res;
 			} catch (Exception e) {

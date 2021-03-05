@@ -279,10 +279,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			pr.setDescProceso("Búsqueda por fecha");
 			limpiar();
 			
-			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
-			System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
-			System.out.println("VALOR DE FOPAGOS:"+fopagos);
 			
+			//System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
+			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(12, nss, cuenta, nombre);
+			System.out.println("VALOR DE FOPAGOS On_Estatus:"+fopagos.getOn_Estatus());
+			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
 				if (fopagos != null ) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 					totalPago = 1;

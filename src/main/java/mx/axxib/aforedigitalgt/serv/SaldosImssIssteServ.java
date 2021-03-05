@@ -49,7 +49,7 @@ public class SaldosImssIssteServ extends ServiceBase {
 		}
 	}
 	
-	public String ejecutarReporteNegativo(String ruta, String nombre, Date fechaMovimiento) throws AforeException {
+	public ConsultaSaldoImssIssteOut ejecutarReporteNegativo(String ruta, String nombre, Date fechaMovimiento) throws AforeException {
 		try {
 			return SaldosImssIsste.ejecutarReporteNegativo(ruta,nombre,fechaMovimiento);
 		} catch (Exception e) {

@@ -39,6 +39,7 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("p_Estatus", Integer.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_vMensaje", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("p_RutaCrgNss", ruta);
 		query.setParameter("p_ArchCrgNss", nombre);
@@ -46,8 +47,9 @@ private final EntityManager entityManager;
 	
 		ConsultaSaldoImssIssteOut res= new ConsultaSaldoImssIssteOut();
 		res.setEstatus((Integer) query.getOutputParameterValue("p_Estatus"));
-		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );
 		res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );		
+		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -63,10 +65,10 @@ private final EntityManager entityManager;
 
 		query.registerStoredProcedureParameter("p_RutaRepSldImss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchRepSldImss", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Estatus", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("p_Estatus", Integer.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_vMensaje", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);
-		
+		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 		query.setParameter("p_RutaRepSldImss", ruta);
 		query.setParameter("p_ArchRepSldImss", nombre);
 		
@@ -74,6 +76,7 @@ private final EntityManager entityManager;
 		res.setEstatus((Integer) query.getOutputParameterValue("p_Estatus"));
 		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );
 		res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
+		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -89,10 +92,10 @@ private final EntityManager entityManager;
 
 		query.registerStoredProcedureParameter("p_RutaCrgCURPIss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchCrgCURPIss", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Estatus", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("p_Estatus", Integer.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_vMensaje", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);
-		
+		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 		query.setParameter("p_RutaCrgCURPIss", ruta);
 		query.setParameter("p_ArchCrgCURPIss", nombre);
 		
@@ -100,6 +103,7 @@ private final EntityManager entityManager;
 		res.setEstatus((Integer) query.getOutputParameterValue("p_Estatus"));
 		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );
 		res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
+		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -115,9 +119,10 @@ private final EntityManager entityManager;
 
 		query.registerStoredProcedureParameter("p_RutaRepSldIss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchRepSldIss", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Estatus", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("p_Estatus", Integer.class, ParameterMode.OUT);
 		//query.registerStoredProcedureParameter("p_vMensaje", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("p_RutaRepSldIss", ruta);
 		query.setParameter("p_ArchRepSldIss", nombre);
@@ -126,6 +131,8 @@ private final EntityManager entityManager;
 		res.setEstatus((Integer) query.getOutputParameterValue("p_Estatus"));
 		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );
 		//res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
+		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -134,7 +141,7 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String ejecutarReporteNegativo(String ruta, String nombre,Date fechaMovimiento) throws AforeException {
+	public ConsultaSaldoImssIssteOut ejecutarReporteNegativo(String ruta, String nombre,Date fechaMovimiento) throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALDOS_CONSULTAR_IMSS_ISSTE_PACKAGE).concat(".").concat(Constantes.SALDOS_VOL_NEGATIVO_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
@@ -143,12 +150,17 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("p_ArchVol", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_FecMov", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);
-		
+		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 		query.setParameter("p_RutaVol", ruta);
 		query.setParameter("p_ArchVol", nombre);
 		query.setParameter("p_FecMov", fechaMovimiento);
 		
-		String res = (String) query.getOutputParameterValue("p_Mensaje");
+		ConsultaSaldoImssIssteOut res= new ConsultaSaldoImssIssteOut();
+		//res.setEstatus((Integer) query.getOutputParameterValue("p_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );
+		//res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
+		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

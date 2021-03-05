@@ -18,6 +18,7 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -42,6 +43,10 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 	@Setter
 	private String nombreArchivoCarga;
 	
+	
+	@Getter
+	@Setter
+	private DesmarcaCargaConsultaMasivaOut desmarcaCargaConsultaMasivaOut;
 //	@Getter
 //	@Setter
 //	private String desmarcaNSS;
@@ -103,8 +108,9 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 			pr.setStatus("Ingrese nombre para la carga de Archivo");
 		}else {
 		
-			String resp =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
-			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...") ) {
+			desmarcaCargaConsultaMasivaOut =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
+			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...") ) {
+			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 			pr.setStatus("Proceso ejecutado Correctamente");
 //			proceso.setAbrevProceso(resp);//"Generar reporte"
 //			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
@@ -141,10 +147,11 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();
 //			proceso.setFechahoraInicio(format.format(today));
-			String resp =cargaMasiva.reversaArchivoCarga();
+		desmarcaCargaConsultaMasivaOut =cargaMasiva.reversaArchivoCarga();
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
-			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+		if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
 //				addMessageOK(resp);
@@ -170,20 +177,20 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		}
 	}
 	
-	public void desmarcaMasiva() {
-		try {System.out.println("REVERSA CARGA");
-			String msg =cargaMasiva.desmarcaMasivaCuenta();
-			if(msg.trim().toUpperCase().equals("OK")) {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-			} else {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-			}
-		}catch (Exception e) {
-			GenericException(e);
-		}
-	}
+//	public void desmarcaMasiva() {
+//		try {System.out.println("REVERSA CARGA");
+//			String msg =cargaMasiva.desmarcaMasivaCuenta();
+//			if(msg.trim().toUpperCase().equals("OK")) {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+//			} else {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+//			}
+//		}catch (Exception e) {
+//			GenericException(e);
+//		}
+//	}
 	
 //	public void desmarcaIndividualCuenta() {
 //		try {System.out.println("VALOR DE desmarcaNSS:"+desmarcaNSS+" /desmarcaCURP:"+desmarcaCURP+" /desmarcaCLAVE:"+desmarcaCLAVE);

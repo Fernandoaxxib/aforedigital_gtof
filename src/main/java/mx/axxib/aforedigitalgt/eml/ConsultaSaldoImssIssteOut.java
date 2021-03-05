@@ -24,4 +24,5 @@ public class ConsultaSaldoImssIssteOut {
 	private Integer estatus;
 	private String vMensaje;
 	private String mensaje;
+	private Integer on_Estatus;
 }
