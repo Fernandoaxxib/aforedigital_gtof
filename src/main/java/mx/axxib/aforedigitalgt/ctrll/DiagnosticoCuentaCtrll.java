@@ -92,7 +92,6 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 		if(nss == null || nss.equals("")) {
 			UIInput fini = (UIInput) findComponent("nss");
 			fini.setValid(false);
-			// pr.setDescProceso("Debe elegir una fecha inicio");
 			pr.setStatus("NSS/CURP es requerido");
 			return false;
 		} else {
@@ -106,7 +105,6 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 			
 			UIInput fini = (UIInput) findComponent("nss");
 			fini.setValid(false);
-			// pr.setDescProceso("Debe elegir una fecha inicio");
 			pr.setStatus("NSS/CURP no válido");
 			return false;
 		}

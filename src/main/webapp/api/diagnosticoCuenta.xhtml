@@ -36,8 +36,8 @@
 						<p:column colspan="2" style="padding:10px;">
 
 							<p:outputLabel value="Buscar por: " style="font-weight: bold" />
-							<p:inputText id="nss" value="#{diagCuenta.nss}" style="width:215px"
-								placeholder="NSS/CURP" />
+							<p:inputText id="nss" value="#{diagCuenta.nss}"
+								style="width:215px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
 								actionListener="#{diagCuenta.obtieneCodCuenta}"
 								update="pGrid result" value="Buscar" />
@@ -58,21 +58,24 @@
 						<p:column>
 							<p:outputLabel value="Inicio: " style="font-weight: bold" />
 							<p:datePicker id="fechaInicial"
-								inputStyle="width:120px; text-align:right;"
-								value="#{diagCuenta.fechaInicial}" showIcon="true" locale="es"
-								pattern="dd-MM-yyyy" readonlyInput="true" />
+								inputStyle="width:120px; text-align:right;" yearNavigator="true"
+								monthNavigator="true" value="#{diagCuenta.fechaInicial}"
+								showIcon="true" locale="es" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Fin: " style="font-weight: bold" />
 							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
-								locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
+								yearNavigator="true" monthNavigator="true" locale="es"
+								pattern="dd-MM-yyyy" readonlyInput="true" />
 
 						</p:column>
 						<p:column colspan="2" style="padding:10px;">
 							<p:outputLabel value="Tipo proceso: " style="font-weight: bold" />
 
-							<p:selectOneMenu id="tipoProceso" style="width:300px; vertical-align: inherit;"
+							<p:selectOneMenu id="tipoProceso"
+								style="width:300px; vertical-align: inherit;"
 								value="#{diagCuenta.selectedTipo}">
 								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 									itemValue="" />
@@ -84,17 +87,20 @@
 
 					<p:row>
 						<p:column colspan="4" style="text-align:center;padding:10px;">
-							<p:commandButton class="blue" rendered="#{diagCuenta.mostrarBotones}"
-								actionListener="#{diagCuenta.generarArchivo}" update="pGrid result"
-								value="Generar reporte" />
+							<p:commandButton class="blue"
+								rendered="#{diagCuenta.mostrarBotones}"
+								actionListener="#{diagCuenta.generarArchivo}"
+								update="pGrid result" value="Generar reporte" />
 
-							<p:commandButton class="blue" rendered="#{diagCuenta.mostrarBotones}"
+							<p:commandButton class="blue"
+								rendered="#{diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.desbloquearCuentas}"
 								update="pGrid result" value="Desbloquea Ctas." />
 
-							<p:commandButton class="blue" rendered="#{diagCuenta.mostrarBotones}"
-								actionListener="#{diagCuenta.bloquearCuentas}" update="pGrid result"
-								value="Bloquea Ctas." />
+							<p:commandButton class="blue"
+								rendered="#{diagCuenta.mostrarBotones}"
+								actionListener="#{diagCuenta.bloquearCuentas}"
+								update="pGrid result" value="Bloquea Ctas." />
 						</p:column>
 					</p:row>
 

@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -17,8 +18,10 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "desmarcaMasiva")
@@ -71,9 +74,9 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	@Getter
 	private Date today;
 	
-	@Getter
-	@Setter
-	private ProcesoOut proceso;
+//	@Getter
+//	@Setter
+//	private ProcesoOut proceso;
 	
 	@Override
 	public void iniciar() {
@@ -88,6 +91,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	public void reset() {
 		desmarcaNSS=null;
 		desmarcaCURP=null;
+		selectedTipoClave=null;
 	}
 	
 //	public void cargarArchivo() {
@@ -134,22 +138,27 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //	}
 	
 	public void reversaDesmarcaMasiva() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Cargar Archivo");
 		try {System.out.println("DESMARCA MASIVA REVERSA");
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-			Date today= new Date();		
-			proceso = new ProcesoOut();
-			proceso.setFechahoraInicio(format.format(today));
+//			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+//			Date today= new Date();		
+//			proceso = new ProcesoOut();
+//			proceso.setFechahoraInicio(format.format(today));
 			String resp =cargaMasiva.desmarcaMasivaCuenta();
-			Date today2= new Date();		
-			proceso.setFechahoraFinal(format.format(today2));
+//			Date today2= new Date();		
+//			proceso.setFechahoraFinal(format.format(today2));
 			if(resp.equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
-				proceso.setAbrevProceso(resp);//"Generar reporte"
-				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-				addMessageOK(resp);
+//				proceso.setAbrevProceso(resp);//"Generar reporte"
+//				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
+//				addMessageOK(resp);
+				pr.setStatus("Proceso ejecutado Correctamente");
 				}else {
-					proceso.setAbrevProceso(resp);//"Generar reporte"
-					proceso.setEstadoProceso("FALLIDO");
-					 addMessageFail(resp);
+//					proceso.setAbrevProceso(resp);//"Generar reporte"
+//					proceso.setEstadoProceso("FALLIDO");
+//					 addMessageFail(resp);
+					pr.setStatus("Error al ejecutar la carga de Archivo");
 				}
 //			if(msg.trim().toUpperCase().equals("OK")) {
 //				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
@@ -159,37 +168,138 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
 //			}
 		}catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 	
 	public void desmarcaIndividualCuenta() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Desmarca Masiva");
 		try {System.out.println("VALOR DE desmarcaNSS:"+desmarcaNSS+" /desmarcaCURP:"+desmarcaCURP+" /selectedTipoClave:"+selectedTipoClave);
-		 if (validarCURP(desmarcaCURP)) {
-			 //if (isNumeric(desmarcaNSS) ) {
-			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-			Date today= new Date();		
-			proceso = new ProcesoOut();
-			proceso.setFechahoraInicio(format.format(today));
-			String resp =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,selectedTipoClave);
-			Date today2= new Date();		
-			proceso.setFechahoraFinal(format.format(today2));
-			if(resp.contains("OCURRIO UN ERROR")) {
-				proceso.setAbrevProceso("ERROR: <DECLARACION SENCILLA DEL FALLO PRESENTADO DURANTE EL PROCESO>");//"Generar reporte"
-				proceso.setEstadoProceso("FALLIDO");
-				addMessageFail("ERROR: <DECLARACION SENCILLA DEL FALLO PRESENTADO DURANTE EL PROCESO>");
-				}else {
-					
-					 proceso.setAbrevProceso(resp);//"Generar reporte"
-						proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-						addMessageOK(resp);
-				}
-//			 }else{
-//				 addMessageFail("Ingresar solo  digitos");
-//			 }
+		
+		
+			if(desmarcaCURP == null || desmarcaCURP.isEmpty() || desmarcaNSS == null || desmarcaNSS.isEmpty() || selectedTipoClave==null || selectedTipoClave.isEmpty()) {
+				boolean bandera=false;
+				// addMessageFail("Ingresar CURP VALIDO");
+				 if((desmarcaCURP == null || desmarcaCURP.isEmpty()) && (desmarcaNSS == null || desmarcaNSS.isEmpty()) && (selectedTipoClave==null || selectedTipoClave.isEmpty())) {
+				 UIInput inputCurp = (UIInput) findComponent("curp");
+				 inputCurp.setValid(false);
+				 UIInput inputNss = (UIInput) findComponent("nss");
+				 inputNss.setValid(false);
+				 UIInput inputTipo = (UIInput) findComponent("tipoProceso");
+				 inputTipo.setValid(false);				
+				 pr.setStatus("Ingresar Curp,Nss y Tipo Proceso ");
+				 bandera=true;
+				 }
+				 if((desmarcaCURP == null || desmarcaCURP.isEmpty()) && (desmarcaNSS == null || desmarcaNSS.isEmpty()) ) {
+					 UIInput inputCurp = (UIInput) findComponent("curp");
+					 inputCurp.setValid(false);
+					 UIInput inputNss = (UIInput) findComponent("nss");
+					 inputNss.setValid(false);
+					 pr.setStatus("Ingresar Curp y Nss ");
+					 bandera=true;
+					 }
+				 if((selectedTipoClave==null || selectedTipoClave.isEmpty()) && (desmarcaNSS == null || desmarcaNSS.isEmpty()) ) {
+					 UIInput inputTipo = (UIInput) findComponent("tipoProceso");
+					 inputTipo.setValid(false);				
+					 UIInput inputNss = (UIInput) findComponent("nss");
+					 inputNss.setValid(false);
+					 pr.setStatus("Ingresar Tipo Proceso y Nss ");
+					 bandera=true;
+					 }
+				 if((selectedTipoClave==null || selectedTipoClave.isEmpty()) && (desmarcaCURP == null || desmarcaCURP.isEmpty()) ) {
+					 UIInput inputCurp = (UIInput) findComponent("curp");
+					 inputCurp.setValid(false);
+					 UIInput inputTipo = (UIInput) findComponent("tipoProceso");
+					 inputTipo.setValid(false);				
+					 pr.setStatus("Ingresar Tipo Proceso y Curp ");
+					 bandera=true;
+				 }
+				if((selectedTipoClave==null || selectedTipoClave.isEmpty()) && bandera==false) {
+					 UIInput inputTipo = (UIInput) findComponent("tipoProceso");
+					 inputTipo.setValid(false);				
+					 pr.setStatus("Ingresar Tipo Proceso");
+				 }
+				 if((desmarcaCURP == null || desmarcaCURP.isEmpty()) && bandera==false) {
+					 UIInput inputCurp = (UIInput) findComponent("curp");
+					 inputCurp.setValid(false);
+					 pr.setStatus("Ingresar Curp ");
+				 }
+				 if((desmarcaNSS == null || desmarcaNSS.isEmpty()) && bandera==false) {
+					 UIInput inputCurp = (UIInput) findComponent("nss");
+					 inputCurp.setValid(false);
+					 pr.setStatus("Ingresar Nss");
+				 }
+//				 if(desmarcaNSS == null || desmarcaNSS.isEmpty()) {
+//					 UIInput input = (UIInput) findComponent("nss");
+//						input.setValid(false);
+//						 pr.setStatus("Ingresar Curp,Nss, Tipo Proceso ");
+//				 }	
+//		
+//			if(desmarcaNSS == null || desmarcaNSS.isEmpty()) {
+			
+			
+			
+//		}else {
+//			UIInput input = (UIInput) findComponent("nss");
+//			input.setValid(false);
+//			pr.setStatus("Ingresar Nss ");
+//		}
+	 
 		 }else {
-			 addMessageFail("Ingresar CURP VALIDO");
+			 if (validarCURP(desmarcaCURP) && isNumeric(desmarcaNSS)) {
+				 
+					
+//					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+//					Date today= new Date();		
+//					proceso = new ProcesoOut();
+//					proceso.setFechahoraInicio(format.format(today));
+					String resp =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,selectedTipoClave);
+//					Date today2= new Date();		
+//					proceso.setFechahoraFinal(format.format(today2));
+					if(resp.contains("OCURRIO UN ERROR")) {
+						pr.setStatus("Error al ejecutar la desmarca masiva");
+//						proceso.setAbrevProceso("ERROR: <DECLARACION SENCILLA DEL FALLO PRESENTADO DURANTE EL PROCESO>");//"Generar reporte"
+//						proceso.setEstadoProceso("FALLIDO");
+//						addMessageFail("ERROR: <DECLARACION SENCILLA DEL FALLO PRESENTADO DURANTE EL PROCESO>");
+						}else {
+								pr.setStatus("Proceso ejecutado Correctamente");
+//							 	proceso.setAbrevProceso(resp);//"Generar reporte"
+//								proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
+//								addMessageOK(resp);
+						}
+					
+					
+				 	}else{
+						 //addMessageFail("Ingresar solo  digitos");
+				 		boolean bandera=false;
+				 		System.out.println("");
+				 		 if ((validarCURP(desmarcaCURP)==false) && (isNumeric(desmarcaNSS)==false)) {
+				 		 UIInput inputNss = (UIInput) findComponent("nss");
+				 		 inputNss.setValid(false);
+						 UIInput inputCurp = (UIInput) findComponent("curp");
+						 inputCurp.setValid(false);
+						 pr.setStatus("Ingresar Curp y Nss Valido ");
+						 bandera=true;
+				 		 }
+				 		 if ((validarCURP(desmarcaCURP)==false) && bandera==false) {
+					 		 UIInput inputCurp = (UIInput) findComponent("curp");
+							 inputCurp.setValid(false);
+							 pr.setStatus("Ingresar Curp Valido ");
+						 }
+				 		if ((isNumeric(desmarcaNSS)==false) && bandera==false) {
+				 			UIInput inputNss = (UIInput) findComponent("nss");
+					 		 inputNss.setValid(false);
+							 pr.setStatus("Ingresar Nss Valido ");
+						 }
+				 	}
 		 }
+		
+		
 //			if(msg.trim().toUpperCase().equals("OK")) {
 //				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
 //				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
@@ -198,7 +308,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
 //			}
 		}catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 	
@@ -251,12 +364,14 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 
 	  Pattern patron = Pattern.compile(regex);
 	  if(!patron.matcher(curp).matches())
-	  { return false;
+	  { 
+		  return false;
 	  }else
-	  { return true;
+	  { 
+		  return true;
 	  }
 	}
-	private static boolean isNumeric(String cadena){
+	private boolean isNumeric(String cadena){
         try {
                 Integer.parseInt(cadena);
                 return true;

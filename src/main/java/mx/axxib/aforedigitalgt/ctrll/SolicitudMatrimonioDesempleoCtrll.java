@@ -13,8 +13,11 @@ import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DatosSolicitudOut;
+import mx.axxib.aforedigitalgt.eml.FopagosListOut;
+import mx.axxib.aforedigitalgt.eml.LlenaInfoOut;
 import mx.axxib.aforedigitalgt.eml.VerChequeOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeListOut;
 import mx.axxib.aforedigitalgt.eml.VerPagoChequeOut;
@@ -65,6 +68,10 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	@Getter
 	@Setter
+	private VerPagoChequeListOut pagoChequeOut;
+	
+	@Getter
+	@Setter
 	private VerPagoChequeListOut selectPagoChequeOut;
 	
 	@Getter
@@ -91,10 +98,16 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	@Getter
 	private String mensajeTabla;
 	
-//	@Getter
-//	@Setter
-//	public List<ProcessResult> resultados;
-//	
+	@Getter
+	private boolean verDatoCheque;
+
+	@Getter
+	private boolean mostrarFopagos;
+	
+	@Getter
+	@Setter
+	private FopagosListOut fopagos;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -110,6 +123,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		mensajeTabla=null;
 		totalSolicitud=null;
 		totalPago=null;
+		verDatoCheque=false;
+		mostrarFopagos=false;
 	}
 	
 	public void consultar() {
@@ -125,6 +140,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			nombre=verChequeOut.getNombre();
 			cuenta=verChequeOut.getCuenta();
 			pr.setStatus("Consulta Exitosa");
+			verDatoCheque=true;
 //			consultarPago(verChequeOut.getCuenta());
 //			System.out.println("VALOR DE consultarPago");
 //			
@@ -200,6 +216,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			if (res != null && res.getVerSolicitudChequeListOut() != null && res.getVerSolicitudChequeListOut().size() > 0) {
 				listSolicitudChequeOut = res.getVerSolicitudChequeListOut();
 				totalSolicitud = res.getVerSolicitudChequeListOut().size();
+				
 				if ( res.getVerSolicitudChequeListOut().size() == 0) {
 					mensajeTabla = "Sin información";
 					pr.setStatus("No se encontraron resultados");
@@ -234,6 +251,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			if (res != null && res.getVerPagoChequeListOut() != null && res.getVerPagoChequeListOut().size() > 0) {
 				listPagoChequeOut = res.getVerPagoChequeListOut();
 				totalPago = res.getVerPagoChequeListOut().size();
+				mostrarFopagos=true;
 				if ( res.getVerPagoChequeListOut().size() == 0) {
 					mensajeTabla = "Sin información";
 					pr.setStatus("No se encontraron resultados");
@@ -252,5 +270,35 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
+	}
+	
+	public void consultarFopagos() {
+		ProcessResult pr = new ProcessResult();
+		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Búsqueda por fecha");
+			limpiar();
+			
+			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
+			System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
+			System.out.println("VALOR DE FOPAGOS:"+fopagos);
+			
+				if (fopagos != null ) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					totalPago = 1;
+				} else {
+					pr.setStatus("No se encontraron resultados");
+					mensajeTabla = "Sin información";
+				}
+				
+			 
+			
+		} catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+		
 	}
 }

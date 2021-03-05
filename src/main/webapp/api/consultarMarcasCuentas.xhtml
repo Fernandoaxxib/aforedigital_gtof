@@ -34,7 +34,7 @@
 							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}" >	
 						</p:inputText>
 						<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"
-						 update="form result"  value="Buscar" ajax="false" class="blue"  />
+						 update="form:datosSalario result"  value="Buscar" ajax="true" class="blue"  />
 					</p:outputPanel>
 				<p:panelGrid id="verDetalleProceso"  columns="8"> 
 	 					

@@ -56,8 +56,8 @@
 						</p:column>
 						
 						<p:column>
-							<p:commandButton class="blue" action="#{solicitudMatrimonioDesempleo.botonDatosCheque}" process="nss"
-								  update="form solicitud result busqueda pSolicitud pPago" value="Ver Datos Cheque" />
+							<p:commandButton class="blue" actionListener="#{solicitudMatrimonioDesempleo.botonDatosCheque}" rendered="#{solicitudMatrimonioDesempleo.verDatoCheque}" process="nss"
+								  update="result busqueda pSolicitud pPago" value="Ver Datos Cheque" />
 								  
 							
 						</p:column>
@@ -200,10 +200,77 @@
 		    <p:column headerText="#{msg.cheque_pago_columna_Diag17}">
 		        <h:outputText value="#{verPago.op17}" />
 		    </p:column>
+			
+			<p:column  align="center" style="width:20px;">
+                       					 <p:commandButton id="verFopago" update=":form:display :form:result" oncomplete="PF('productDialog').show()"
+                                          action="#{solicitudMatrimonioDesempleo.consultarFopagos}" icon="ui-icon-search" class="blue">
+                           				 <f:setPropertyActionListener  value="#{pro}" ajax="false" class="blue"
+                                                         target="#{solicitudMatrimonioDesempleo.pagoChequeOut}"/>
+                                         <p:tooltip for="verFopago" value="Ver Fopago" showEffect="clip" hideEffect="fold" />
+                       					 </p:commandButton>
+             </p:column>
+		
+		
 		</p:dataTable>
 		
 		
+		
+		
+		  
+		
+						
+							
   </p:panel>
+		
+				<p:dialog header="Consulta de Pagos" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="100%" modal="true" style="font-size:12px">
+						 <p:outputPanel id="display">
+						<p:dataTable var="pro" value="#{solicitudMatrimonioDesempleo.fopagos}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  rows="5" paginator="true" rowsPerPageTemplate="5,10,15" >
+									
+									<p:column headerText="Poliza" style="width:20px">
+										<h:outputText value="#{pro.pNoPoliza_Pag}" />
+									</p:column>
+									<p:column headerText="No. Referencia" style="width:50px">
+										<h:outputText value="#{pro.pReferencia}" />
+									</p:column>
+									<p:column headerText="Fecha Cheque" style="width:20px">
+										<h:outputText value="#{pro.pFecReinv_Pag}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Fecha Reinversion" style="width:20px">
+										<h:outputText value="#{pro.pFechaMov_Pag}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Beneficiario" style="width:20px">
+										<h:outputText value="#{pro.pBenef_Re}"/>
+									</p:column>
+									<p:column headerText="Porc." style="width:20px">
+										<h:outputText value="#{pro.pPorcent_Re}" />
+									</p:column>
+									<p:column headerText="Estatus" style="width:20px">
+										<h:outputText value="#{pro.pEstatus_Re}"/>
+									</p:column>
+									<p:column headerText="Plaza" style="width:20px">
+										<h:outputText value="#{pro.pPlaza_Re}"/>
+									</p:column>
+									<p:column headerText="Monto Retiro." style="width:20px">
+										<h:outputText value="#{pro.pMonBruto_Re}" />
+									</p:column>
+									<p:column headerText="Monto Isr" style="width:20px">
+										<h:outputText value="#{pro.pMontoIsr_Re}"/>
+									</p:column>
+									<p:column headerText="Neto" style="width:20px">
+										<h:outputText value="#{pro.pMontoNeto_Re}" />
+									</p:column>
+									<p:column headerText="Telefono Contacto" style="width:20px">
+										<h:outputText value="#{pro.pTelefono_Pag}"/>
+									</p:column>
+						
+						</p:dataTable>	
+						 </p:outputPanel>
+						</p:dialog>
 		
 		<ui:include src="processResult.xhtml">
 			<ui:param name="base" value="#{solicitudMatrimonioDesempleo}" />

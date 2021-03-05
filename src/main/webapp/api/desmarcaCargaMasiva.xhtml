@@ -42,7 +42,7 @@
 		 </p:panelGrid>
 			
 			<h:form id="form">
-			<p:growl id="message" />
+<!-- 			<p:growl id="message" /> -->
 			<p:panel id="pnlResult" header="Desmarca Masiva de Cuentas" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
 			<div class="ui-g">
@@ -63,12 +63,12 @@
 									<p:outputLabel value="Archivo:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{desmarcaCargaMasiva.nombreArchivoCarga}" />
+									<p:inputText id="nombreCarga" value="#{desmarcaCargaMasiva.nombreArchivoCarga}" />
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update=":form:pnlResult result" ajax="true"/>
 								</div>
 							</div>
 						</p:panel>
@@ -94,7 +94,7 @@
 							</div>
 							<div class="ui-g" style="text-align: center;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update=":form:pnlResult result" ajax="true"/>
 								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">
@@ -116,32 +116,14 @@
 					</div>
 					
 			</div>
-			<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{desmarcaCargaMasiva.proceso}"
-					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					style="margin-top:20px;font-size:12px">
-					<f:facet name="header">
-						<p:outputPanel style="text-align:left">
-							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-						</p:outputPanel>
-					</f:facet>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
-						<h:outputText value="#{pro.abrevProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
-						<h:outputText value="#{pro.estadoProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraInicio}" />
-					</p:column>
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraFinal}" />
-					</p:column>
-				</p:dataTable>
+				
+				<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{desmarcaCargaMasiva}" />
+				</ui:include>
+			
 			</p:panel>
+
+			
 			
 			</h:form>
 		

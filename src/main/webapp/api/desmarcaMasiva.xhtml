@@ -42,7 +42,7 @@
 		 </p:panelGrid>
 			
 			<h:form id="form">
-			<p:growl id="message" />
+<!-- 			<p:growl id="message" /> -->
 			<p:panel id="pnlResult" header="Desmarca Masiva de Cuentas" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
 			<div class="ui-g">
@@ -54,7 +54,7 @@
 									<p:outputLabel value="Tipo Proceso:" />
 								</div>
 								<div class="ui-g-9">
-									<p:selectOneMenu style="width:200px" required="true"
+									<p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
 										requiredMessage="Tipo Proceso es requerido"
 										value="#{desmarcaMasiva.selectedTipoClave}">
 										<f:selectItem itemLabel="Seleccione..."
@@ -79,7 +79,7 @@
 									<p:outputLabel value="Nss:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{desmarcaMasiva.desmarcaNSS}" required="true"/>
+									<p:inputText id="nss" value="#{desmarcaMasiva.desmarcaNSS}" required="false"/>
 								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">
@@ -87,12 +87,12 @@
 									<p:outputLabel value="Curp:" />
 								</div>
 								<div class="ui-g-9">
-									<p:inputText value="#{desmarcaMasiva.desmarcaCURP}" required="true"/>
+									<p:inputText id="curp" value="#{desmarcaMasiva.desmarcaCURP}" required="false"/>
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Cargar" action="#{desmarcaMasiva.desmarcaIndividualCuenta}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Cargar" action="#{desmarcaMasiva.desmarcaIndividualCuenta}" update=":form:pnlResult result" ajax="true"/>
 								</div>
 							</div>
 						</p:panel>
@@ -131,7 +131,7 @@
 							</div>
 							<div class="ui-g" style="text-align: center;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Desmarca Masiva" action="#{desmarcaMasiva.reversaDesmarcaMasiva}" update="form message" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva" action="#{desmarcaMasiva.reversaDesmarcaMasiva}" update=":form:pnlResult result" ajax="true"/>
 								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">
@@ -167,32 +167,12 @@
 					</div>
 					
 			</div>
-			<p:dataTable id="pnDetalleProc" var="pro"
-					value="#{desmarcaMasiva.proceso}"
-					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					style="margin-top:20px;font-size:12px">
-					<f:facet name="header">
-						<p:outputPanel style="text-align:left">
-							<p:outputLabel value="#{msg.aprob_tabla_titResProc}" />
-						</p:outputPanel>
-					</f:facet>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_identificador}">
-						<h:outputText value="#{pro.abrevProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_estatus}">
-						<h:outputText value="#{pro.estadoProceso}" />
-					</p:column>
-
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaInicio}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraInicio}" />
-					</p:column>
-					<p:column headerText="#{msg.aprob_tabla_columna_fechaFin}" styleClass="gridCell-right">
-						<h:outputText value="#{pro.fechahoraFinal}" />
-					</p:column>
-				</p:dataTable>
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{desmarcaMasiva}" />
+			</ui:include>
 			</p:panel>
+			
+			
 			
 			</h:form>
 		

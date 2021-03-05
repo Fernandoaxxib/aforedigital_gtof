@@ -31,8 +31,8 @@
 						pattern="dd-MM-yyyy" readonlyInput="true" />
 
 					<p:commandButton class="blue"
-						actionListener="#{notificacionPagos.buscarPagos}" update="pagos result"
-						value="Consultar" />
+						actionListener="#{notificacionPagos.buscarPagos}"
+						update="pagos result" value="Consultar" />
 
 
 				</p:panelGrid>
@@ -91,7 +91,8 @@
 
 				</p:dataTable>
 
-				<p:panelGrid id="acciones" columns="4" styleClass="ui-noborder" style="margin-top:20px">
+				<p:panelGrid id="acciones" columns="4" styleClass="ui-noborder"
+					style="margin-top:20px">
 
 					<p:outputLabel value="Definir nombre de archivo (sin extensión): "
 						rendered="#{notificacionPagos.mostrarExportar}"

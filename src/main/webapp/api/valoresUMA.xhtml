@@ -32,8 +32,7 @@
 						<p:column style="width:50%">
 							<p:dataTable id="tabla" var="val"
 								emptyMessage="#{msg.aprob_msj_sinDatos}"
-								value="#{valorUMA.valores}"
-								>
+								value="#{valorUMA.valores}">
 
 
 								<p:column headerText="Valor UMA">
@@ -61,7 +60,7 @@
 
 						</p:column>
 						<p:column>
-							<p:panelGrid id="pGrid" styleClass="ui-noborder" >
+							<p:panelGrid id="pGrid" styleClass="ui-noborder">
 
 								<p:row>
 									<p:column>
@@ -69,15 +68,16 @@
 											style="font-weight: bold" />
 										<p:datePicker id="fechaInicial"
 											inputStyle="width:120px; text-align:right;"
+											yearNavigator="true" monthNavigator="true"
 											value="#{valorUMA.fechaInicial}" showIcon="true" locale="es"
-											pattern="dd-MM-yyyy" readonlyInput="true"  />
+											pattern="dd-MM-yyyy" readonlyInput="true" />
 									</p:column>
 									<p:column>
 										<p:outputLabel value="Fecha Fin: " style="font-weight: bold" />
 										<p:datePicker id="fechaFinal" value="#{valorUMA.fechaFinal}"
+											yearNavigator="true" monthNavigator="true"
 											inputStyle="width:120px; text-align:right;" showIcon="true"
-											locale="es" pattern="dd-MM-yyyy" readonlyInput="true"
-											 />
+											locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
 
 									</p:column>
 								</p:row>
@@ -91,8 +91,8 @@
 								<p:row>
 									<p:column colspan="2">
 										<p:commandButton class="blue"
-											actionListener="#{valorUMA.generarReporte}" update="pGrid result"
-											value="Generar reporte"  />
+											actionListener="#{valorUMA.generarReporte}"
+											update="pGrid result" value="Generar reporte" />
 									</p:column>
 								</p:row>
 
@@ -101,7 +101,7 @@
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
-			
+
 			<ui:include src="processResult.xhtml">
 				<ui:param name="base" value="#{valorUMA}" />
 			</ui:include>
