@@ -1,7 +1,9 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -21,6 +23,7 @@ import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
+import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
@@ -59,6 +62,11 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private DesmarcaCargaConsultaMasivaOut desmarcaCargaConsultaMasivaOut;
+	
+	@Getter
+	@Setter
+	private List<TipoProcesoOut> listaTipoProceso;
+	
 //	
 //	@Getter
 //	@Setter
@@ -87,7 +95,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
-			
+			consultarTodo();
 			today= new Date();
 			reset();
 		}
@@ -97,6 +105,22 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		desmarcaNSS=null;
 		desmarcaCURP=null;
 		selectedTipoClave=null;
+	}
+	
+	public List<TipoProcesoOut> consultarTodo(){
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Cargar Archivo");
+		try {
+			listaTipoProceso=cargaMasiva.consultarTodo();
+			System.out.println("VALOR DE  LISTA TIPO PROCESO "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
+		}catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+		return listaTipoProceso;
 	}
 	
 //	public void cargarArchivo() {
@@ -152,6 +176,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //			proceso = new ProcesoOut();
 //			proceso.setFechahoraInicio(format.format(today));
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
+		
+		//Ordenas Empleados con Lambda Expresion
+       // Collections.sort(listaTipoProceso, (x, y) -> x.getCLAVE_PROCESO().compareToIgnoreCase(y.getCLAVE_PROCESO()));
+      //  System.out.println("VALOR DE  LISTA TIPO PROCESO ORDENADA "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
 //			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
@@ -264,7 +292,12 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //					Date today= new Date();		
 //					proceso = new ProcesoOut();
 //					proceso.setFechahoraInicio(format.format(today));
-				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,selectedTipoClave);
+				
+				 String[] parts = selectedTipoClave.split("-");
+				 String part1 = parts[0]; // 123
+				 String part2 = parts[1]; // 654321
+				 System.out.println("Valor clave parte uno es: "+part1+" Valor descripcion parte2 es: "+part2);
+				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,part1);
 //					Date today2= new Date();		
 //					proceso.setFechahoraFinal(format.format(today2));
 				 if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()!=1 ) {

@@ -2,6 +2,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
@@ -20,6 +21,7 @@ import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
+import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
@@ -50,6 +52,10 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private DesmarcaCargaConsultaMasivaOut desmarcaCargaConsultaMasivaOut;
+	
+	@Getter
+	@Setter
+	private List<TipoProcesoOut> listaTipoProceso;
 	
 //	@Getter
 //	@Setter
@@ -92,6 +98,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		if(init) {
 			rutaCarga="/RESPALDOS/operaciones/pruebas";		
 			today= new Date();
+			consultarTodo();
 			reset();
 		}
 	}
@@ -99,6 +106,23 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 	public void reset() {
 		nombreArchivoCarga=null;
 		selectedTipoClave=null;
+	}
+	
+	
+	public List<TipoProcesoOut> consultarTodo(){
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Cargar Archivo");
+		try {
+			listaTipoProceso=cargaMasiva.consultarTodo();
+			System.out.println("VALOR DE  LISTA TIPO PROCESO "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
+		}catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+		return listaTipoProceso;
 	}
 	
 	public void cargarArchivo() {
@@ -167,7 +191,12 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			 pr.setStatus("Ingresar Tipo Proceso ");
 			
 		}else {
-			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(selectedTipoClave,selectedTipoClave);
+			
+			 String[] parts = selectedTipoClave.split("-");
+			 String part1 = parts[0]; // 123
+			 String part2 = parts[1]; // 654321
+			 System.out.println("Valor clave parte uno es: "+part1+" Valor descripcion parte2 es: "+part2);
+			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(part1,part2);
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
 			

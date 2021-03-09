@@ -1,5 +1,7 @@
 package mx.axxib.aforedigitalgt.serv;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +9,7 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.DesmarcaCargaConsultaMasivaRepo;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaMasivaClaveOut;
+import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 
 @Service
 public class DesmarcaCargaConsultaMasivaService extends ServiceBase {
@@ -70,6 +73,13 @@ public class DesmarcaCargaConsultaMasivaService extends ServiceBase {
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
+	}
+	public List<TipoProcesoOut> consultarTodo () throws AforeException{
+		try {
+			return desmarcaCargaConsultaMasivaRepo.consultarTodo();
+		} catch (Exception e) {
+			throw GenericException(e);
+		}	
 	}
 	
 }

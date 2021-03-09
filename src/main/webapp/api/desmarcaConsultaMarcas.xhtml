@@ -84,20 +84,7 @@
 									<p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
 										requiredMessage="Tipo Proceso es requerido"
 										value="#{desmarcaConsultaMarcas.selectedTipoClave}">
-										<f:selectItem itemLabel="Seleccione..."
-											itemValue="#{null}" noSelectionOption="true" />
-										<f:selectItem itemLabel="Invalidez" itemValue="I" />
-										<f:selectItem itemLabel="Incapacidad Permanente" itemValue="IP" />
-										<f:selectItem itemLabel="Viudez" itemValue="VI" />
-										<f:selectItem itemLabel="Viudez y Orfandad" itemValue="VO" />
-										<f:selectItem itemLabel="Orfandad" itemValue="O" />
-										<f:selectItem itemLabel="Ascendientes" itemValue="A" />
-										<f:selectItem itemLabel="Retiro Parcial" itemValue="RP" />
-										<f:selectItem itemLabel="Vejez" itemValue="VE" />
-										<f:selectItem itemLabel="Censatia en Edad Avanzada" itemValue="CEA" />
-										<f:selectItem itemLabel="Retiro Anticipado" itemValue="RA" />
-										<f:selectItem itemLabel="Retiro Programado" itemValue="RPO" />
-										<f:selectItem itemLabel="'N' Tipos Programados" itemValue="NTP" />
+										<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}"/>
 									</p:selectOneMenu>
 								</div>
 							</div>

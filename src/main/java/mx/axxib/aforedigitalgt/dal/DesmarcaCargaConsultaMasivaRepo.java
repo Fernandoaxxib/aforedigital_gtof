@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.dal;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -14,6 +15,8 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaMasivaClaveOut;
+import mx.axxib.aforedigitalgt.eml.LoteOut;
+import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 
 @Repository
 @Transactional
@@ -198,5 +201,21 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 			throw GenericException(e);
 		}
 		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<TipoProcesoOut> consultarTodo () throws AforeException{
+		try {
+		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_DESMARCA_CARGA_MASIVA_PACKAGE).concat(".").concat(Constantes.DETALLE_DESMARCA_MASIVA_OBTENER_PROCESO_STORED);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+
+		query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+		List<TipoProcesoOut> res = query.getResultList();
+		return res;
+	} catch (Exception e) {
+		throw GenericException(e);
+	}
+	
+
 	}
 }
