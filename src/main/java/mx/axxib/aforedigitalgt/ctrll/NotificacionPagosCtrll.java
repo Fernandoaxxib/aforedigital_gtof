@@ -59,6 +59,10 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String archivo;
+	
+
+	@Getter
+	private Integer tablaCount;
 
 	@Override
 	public void iniciar() {
@@ -73,6 +77,7 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	}
 
 	private void limpiar() {
+		tablaCount = null;
 		archivo = null;
 		mensajeTabla = null;
 		mostrarEnviar = false;
@@ -95,6 +100,7 @@ public class NotificacionPagosCtrll extends ControllerBase {
 					totTitulos = res.getTotTitulos();
 					totPesos = res.getTotPesos();
 					mostrarEnviar = true;
+					tablaCount = res.getDatos().size();
 				} else {
 					pr.setStatus("No se encontraron resultados");
 					mensajeTabla = "Sin información";

@@ -45,6 +45,15 @@
 					sortBy="#{pag.fechaAprobacion}" paginatorPosition="bottom"
 					value="#{notificacionPagos.pagos}" rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15">
+					
+					<f:facet name="header" style="float:right">
+
+						<h:outputLabel for="registros"
+							value="#{msg.aprob_label_totalRegistros}" />
+						<h:outputText id="totalRegistros"
+							value="#{notificacionPagos.tablaCount}" />
+
+					</f:facet>
 
 					<p:column headerText="Fecha">
 						<h:outputText value="#{pag.fechaAprobacion}" style="float:right">

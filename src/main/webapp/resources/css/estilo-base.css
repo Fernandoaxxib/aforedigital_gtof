@@ -12,11 +12,16 @@
     color: white;
     font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
+	padding: 2px;
 }
 
 /* DataTable */
 .ui-datatable { /* Borde azul en tabla */
     border: 1px solid #00529b;
+}
+
+.ui-datatable .ui-widget-header {
+	font-weight: normal !important;
 }
 
 .ui-paginator {

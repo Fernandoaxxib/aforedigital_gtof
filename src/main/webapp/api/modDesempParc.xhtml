@@ -368,7 +368,9 @@
 		</h:form>
 
 		<h:form id="formCan">
-			<p:panel id="acciones" header="Acciones" style="margin-top:20px">
+			<p:panel id="acciones"
+				header="Cancelación solicitudes individual/masiva"
+				style="margin-top:20px">
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
@@ -376,7 +378,6 @@
 								rendered="#{modDesempParc.mostrarCancelacion}" />
 						</p:column>
 						<p:column>
-
 							<p:selectOneMenu id="tipoCancelacion" style="width:200px"
 								rendered="#{modDesempParc.mostrarCancelacion}"
 								value="#{modDesempParc.selectedClaveCancelacion}">
@@ -388,28 +389,41 @@
 						</p:column>
 
 						<p:column>
-							<p:commandButton class="blue"
-								rendered="#{modDesempParc.mostrarCancelacion}"
-								update="result acciones"
-								actionListener="#{modDesempParc.cancelarSolicitud}"
-								value="#{msg.modDesParc_boton_cancelarSolicitud}" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
 							<p:outputLabel value="Nombre del archivo (sin extensión): "
 								style="font-weight: bold" />
 						</p:column>
 						<p:column>
 							<p:inputText id="archivo" value="#{modDesempParc.archivo}"></p:inputText>
 						</p:column>
-						<p:column>
-							<p:commandButton class="blue" update="result acciones"
-								value="Cancelación masiva" actionListener="#{modDesempParc.cancelarMasiva}"/>
+
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<p:commandButton class="blue"
+								rendered="#{modDesempParc.mostrarCancelacion}"
+								update="result acciones"
+								actionListener="#{modDesempParc.cancelarSolicitud}"
+								value="#{msg.modDesParc_boton_cancelarSolicitud}" />
+						</p:column>
+						<p:column colspan="2">
+							<p:outputLabel
+								value="El archivo deberá estar en: /RESPALDOS/operaciones/pruebas y con extensión txt"
+								style="color:blue;margin-top:10px;" />
 						</p:column>
 					</p:row>
+
+					<p:row>
+						<p:column colspan="2">
+						</p:column>
+						<p:column colspan="2">
+							<p:commandButton class="blue" update="result acciones"
+								value="Cancelación masiva"
+								actionListener="#{modDesempParc.cancelarMasiva}" />
+						</p:column>
+
+					</p:row>
 				</p:panelGrid>
-				<p:outputLabel value="El archivo deberá estar en: /RESPALDOS/operaciones/pruebas y con extensión txt" style="color:blue;margin-left:10px;margin-top:10px;" />
+
 			</p:panel>
 
 
