@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition  template="layaut2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<f:metadata>
+		<f:event listener="#{consultaResolucionDataMart.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+		<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+	
+	<ui:define name="center">
+		<ui:include src="subMenuTransacciones.xhtml" />
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript name="js/calendar-localization.js" />
+		
+				
+	<h:form id="form">
+
+   <p:panel id="busqueda" header="Consulta de Resoluciones Datamart" style="margin-top:20px">
+   
+	 <p:panelGrid id="verNombre" styleClass="ui-noborder" 	style="margin-top:20px; width:100%;">
+	 
+					 <p:row>					
+			     		<p:column>
+							<p:outputLabel  value="NSS:"  style="font-weight: bold"/>
+							<p:inputText id="nss" value="#{consultaResolucionDataMart.nss}" style="width:100px" ></p:inputText>
+							<p:commandButton class="blue"  actionListener="#{consultaResolucionDataMart.getCuentaNombre}" update="form busqueda pSolicitud result" value="Buscar" />
+						</p:column>
+					</p:row>	
+					 <p:row>
+						<p:column>
+							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE}"></h:outputText>
+						</p:column>
+						
+						<p:column>
+							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CUENTA}"></h:outputText>
+						</p:column>
+										
+					</p:row>
+						
+					<p:row>
+						<p:column>
+							<p:outputLabel value="NSS DataMart:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NSS_TRABAJADOR}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Curp:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CURP}"></h:outputText>
+						</p:column>
+					</p:row>
+	 				
+	 				<p:row>
+						
+						<p:column>
+							<p:outputLabel value="Nombre DataMart:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_DATAMART}"></h:outputText>
+						</p:column>
+					
+						<p:column>
+							<p:outputLabel value="Nombre Afore:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_AFORE}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Paterno Afore:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_PATERNO_AFORE}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Materno Afore:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_MATERNO_AFORE}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Derecho:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_derecho}"></h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Descripcion Derecho:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_desc_derecho}"></h:outputText>
+						</p:column>
+					</p:row>
+		
+		
+					
+	 				
+  	</p:panelGrid>	
+  	
+  		
+  		
+  		
+	</p:panel>	
+	
+	
+	<p:panel id="pSolicitud" header="Consulta" style="margin-top:20px">
+ 		
+ 		
+		    <p:dataTable id="verConsultaDataMart"  var="verPago" paginatorPosition="bottom"
+					emptyMessage="#{consultaResolucionDataMart.mensajeTabla}"
+					 value="#{consultaResolucionDataMart.listaCurp}"  rows="10" paginator="true"
+					rowsPerPageTemplate="5,10,15" >
+					
+					<f:facet name="header" style="float:right">
+
+						<h:outputLabel for="registros"
+							value="#{msg.aprob_label_totalRegistros}"  />
+						<h:outputText id="totalRegistros"
+							value="#{consultaResolucionDataMart.totalSolicitud}" />
+
+					</f:facet>
+		    
+<!-- 		    		<p:ajax event="rowSelectCheckbox" update="form:pSolicitud" /> -->
+<!-- 		    		<p:column selectionMode="single" style="width:20px;text-align:center"/> -->
+		    		
+			 
+			 	<p:column headerText="SEC">
+		        <h:outputText value="#{verPago.secPension}" />
+		    	</p:column>		
+		    	<p:column headerText="MOV">
+		       
+		    	</p:column>	
+		   		<p:column headerText="REG">
+		        
+		    	</p:column>	
+		 		<p:column headerText="TR">
+		        
+		    	</p:column>	
+		    	<p:column headerText="TS">
+		        
+		    	</p:column>	
+		    	<p:column headerText="TP">
+		       
+		    	</p:column>	
+		    	<p:column headerText="ART N">
+		        
+		    	</p:column>		
+		    	<p:column headerText="FRAC N">
+		       
+		    	</p:column>	
+		   		<p:column headerText="NO COM">
+		        
+		    	</p:column>	
+		 		<p:column headerText="FEC INI">
+		        
+		    	</p:column>	
+		    	<p:column headerText="FEC EMI">
+		        
+		    	</p:column>	
+		    	<p:column headerText="PORC">
+		       
+		    	</p:column>	
+		    	<p:column headerText="SEM COT">
+		       
+		    	</p:column>	
+		    	<p:column headerText="NUM RES">
+		       
+		    	</p:column>	
+		    	<p:column headerText="AP CS">
+		       
+		    	</p:column>	
+		    	<p:column headerText="SBC A">
+		       
+		    	</p:column>	
+		    	<p:column headerText="SBC B">
+		       
+		    	</p:column>	
+		    	<p:column headerText="PAG COM">
+		       
+		    	</p:column>	
+		    	<p:column headerText="MONT RET">
+		       
+		    	</p:column>
+		    	<p:column headerText="SALD ANT">
+		       
+		    	</p:column>
+		</p:dataTable>
+ 		
+ 		</p:panel>
+  	
+	
+	<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{consultaResolucionDataMart}" />
+		</ui:include>
+  </h:form>
+</ui:define>
+
+</ui:composition>
