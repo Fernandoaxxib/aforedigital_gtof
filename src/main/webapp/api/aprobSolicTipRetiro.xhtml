@@ -23,7 +23,6 @@
 	</ui:define>
 
 	<ui:define name="center">
-		<h:outputStylesheet name="estilo-base.css" library="css" />
 
 		<ui:include src="subMenuTransacciones.xhtml" />
 
@@ -88,10 +87,10 @@
 					</f:facet>
 					<f:facet name="header">
 						<p:panelGrid class="no-border no-padding"
-							style="margin-top:10px;background: #59ad40;">
+							style="margin-top:10px;">
 							<p:row>
 								<p:column
-									style="text-align: left !important;width: 25px !important;background:#59ad40">
+									style="text-align: left !important;width: 25px !important;">
 									<p:commandButton styleClass="blue ui-button-text" type="submit"
 										update="table1 table1:totalRegistros form:table1:count"
 										action="#{aprobSolicTipRetiro.marcarTodos}"
@@ -99,7 +98,7 @@
 										value="#{msg.aprob_boton_marcar}" ajax="true" global="false" />
 								</p:column>
 								<p:column
-									style="text-align: left !important;width: 30px !important;background:#59ad40">
+									style="text-align: left !important;width: 30px !important;">
 									<p:commandButton styleClass="blue ui-button-text" type="submit"
 										update="table1 table1:totalRegistros form:table1:count"
 										action="#{aprobSolicTipRetiro.desmarcarTodos}"
@@ -108,7 +107,7 @@
 										global="false" />
 								</p:column>
 								<p:column
-									style="text-align: left !important;width: 65px !important;background:#59ad40">
+									style="text-align: left !important;width: 65px !important;">
 									<p:commandButton styleClass="blue ui-button-text"
 										action="#{aprobSolicTipRetiro.aprobarSolicitud}" type="submit"
 										onclick="PF('listSolicitudes').clearFilters()"
@@ -116,7 +115,7 @@
 										value="#{msg.aprob_boton_aprobar}" ajax="true" global="true" />
 								</p:column>
 								<p:column
-									style="text-align: right !important;width: 100px !important; background: #59ad40;color: white;">
+									style="text-align: right !important;width: 100px !important;">
 									<p:outputPanel>
 										<h:outputLabel for="registros"
 											value="#{msg.aprob_label_totalRegistros}"

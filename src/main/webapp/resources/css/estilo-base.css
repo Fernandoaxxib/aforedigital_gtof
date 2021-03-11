@@ -4,6 +4,7 @@
     color: white;
     font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
+	padding: 2px;
 }
 
 .green.ui-button .ui-button-text {
@@ -14,6 +15,10 @@
 }
 
 /* DataTable */
+.ui-datatable { /* Borde azul en tabla */
+    border: 1px solid #00529b;
+}
+
 .ui-paginator {
 	text-align: right !important;
 	background: white !important;
@@ -25,8 +30,13 @@
 }
 
 .ui-paginator.ui-widget-header .ui-state-active {
-    background: lightblue !important;
+    background: #e4e4e4 !important;
     color: #ffffff !important;
+}
+
+.ui-datatable-header.ui-widget-header{
+	  background: #ffffff !important;
+    color: #000000 !important;
 }
 
 .ui-paginator.ui-state-default, .ui-paginator.ui-widget-content .ui-state-default, .ui-paginator.ui-widget-header .ui-state-default {
@@ -37,7 +47,7 @@
 }
 
 .ui-datatable-tablewrapper .ui-state-default, .ui-datatable-scrollable-header .ui-state-default {
-	background: white !important;
+	background: #ffffff !important;
 	color: #00529b !important;
 	font-weight: bold;
 	font-size: 12px;
@@ -64,6 +74,8 @@
 .sinfondo.ui-datatable .ui-selection-column .ui-chkbox-all {
 	display:none;
 }
+
+
 /* PanelGrid */
 .ui-panel .ui-panel-titlebar {
 	background: #59ad40;
@@ -151,8 +163,8 @@
 }
 .ui-widget-header {
 	border: 1px solid #59ad40 !important;
-	background: #59ad40 !important;
-	color: #ffffff !important;
+	background: #59ad40;
+	color: #ffffff;
 	font-weight: bold !important;
 }
 .ui-widget-header a {
