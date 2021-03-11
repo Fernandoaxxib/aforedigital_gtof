@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.eml;
 
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.ColumnResult;
@@ -32,16 +33,16 @@ import lombok.NoArgsConstructor;
 				@ColumnResult(name ="NUM_CONSIDERANDO", type = String.class),
 				@ColumnResult(name ="FEC_INI_PENSION", type = Date.class),
 				@ColumnResult(name ="FEC_EMI_RESOLUCION", type = Date.class),
-				@ColumnResult(name ="PORCENTAJE_VALUACION", type = Integer.class),
+				@ColumnResult(name ="PORCENTAJE_VALUACION", type = BigDecimal.class),
 				@ColumnResult(name ="SEMANAS_COTIZADAS", type = Integer.class),
 				@ColumnResult(name ="DIAG_REGISTRO", type = String.class),
 				@ColumnResult(name ="NUM_RESOLUCION", type = String.class),
 				@ColumnResult(name ="TIPO_AP_CS", type = String.class),
-				@ColumnResult(name ="SBC_TIPO_A", type = Integer.class),
-				@ColumnResult(name ="SBC_TIPO_B", type = Integer.class),
+				@ColumnResult(name ="SBC_TIPO_A", type = BigDecimal.class),
+				@ColumnResult(name ="SBC_TIPO_B", type = BigDecimal.class),
 				@ColumnResult(name ="PAGO_COMP", type = String.class),
-				@ColumnResult(name ="MONTO_RETIRO_ORG", type = Integer.class),
-				@ColumnResult(name ="SALDO_ANT", type = Integer.class)
+				@ColumnResult(name ="MONTO_RETIRO_ORG", type = BigDecimal.class),
+				@ColumnResult(name ="SALDO_ANT", type = BigDecimal.class)
 		})
 		})
 })
@@ -60,16 +61,16 @@ public class ConsultaResolucionDataMartOut {
 	private String  numCONSIDERANDO;	  
 	private Date    fecINI_PENSION;	
 	private Date    fecEMI_RESOLUCION;	
-	private Integer  porcentajeVALUACION;	  
+	private BigDecimal  porcentajeVALUACION;	  
 	private Integer semanasCOTIZADAS;	
 	private String  diagREGISTRO;	  
 	private String  numRESOLUCION;	  
 	private String  tipoAP_CS;	
-	private Integer  sbcTIPO_A;	  
-	private Integer  sbcTIPO_B;	  
+	private BigDecimal  sbcTIPO_A;	  
+	private BigDecimal  sbcTIPO_B;	  
 	private String  pagoCOMP;	  
-	private Integer  montoRETIRO_ORG;	  
-	private Integer  saldoANT;	  
+	private BigDecimal  montoRETIRO_ORG;	  
+	private BigDecimal  saldoANT;	  
 	  
 }
 

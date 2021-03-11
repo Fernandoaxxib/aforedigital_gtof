@@ -22,7 +22,7 @@ public class ConsultaResolucionDataMartRepo extends RepoBase {
 	public ConsultaResolucionesNombreOut getCuentaNombre(Integer nss) throws AforeException {
 		try {
 		String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTA_RESOLUCION_DATA_MART_PACKAGE).concat(".").concat(Constantes.CONSULTA_RESOLUCION_DATA_NSS_STORED);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "ConsultaResolucionDataMartOut");
 
 		query.registerStoredProcedureParameter("P_NSS", Integer.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_CUENTA", Integer.class, ParameterMode.OUT);
@@ -41,14 +41,7 @@ public class ConsultaResolucionDataMartRepo extends RepoBase {
 		
 		query.setParameter("P_NSS",nss);
 		
-//		VerSolicitudChequeOut res=new VerSolicitudChequeOut();
-//		Object cursor = query.getOutputParameterValue("CP_CURSOR");
-//		if (cursor != null) {		
-//		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
-//		
-//		res.setVerSolicitudChequeListOut(query.getResultList());
-//		}
-		
+
 		ConsultaResolucionesNombreOut res= new ConsultaResolucionesNombreOut ();
 		Object cursor = query.getOutputParameterValue("CP_CURP_DATO");
 		if (cursor != null) {

@@ -55,8 +55,7 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 	@Getter
 	private String mensajeSolicitud;
 	
-	@Getter
-	private String pension;
+	
 	
 	@Override
 	public void iniciar() {
@@ -88,11 +87,16 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 				listaCurp=consultaResolucionesNombreOut.getCursor();
 				System.out.println("VALOR DE LISTA CURP: "+listaCurp);
 				totalSolicitud=consultaResolucionesNombreOut.getCursor().size();	
-				pension=listaCurp.get(0).getSecPension();
-				System.out.println("valor pension: "+pension);
+				
 //				 for (ConsultaResolucionDataMartOut model : listaCurp) {
 //			            System.out.println(model.getRegimen());
 //			        }
+				
+				Iterator<ConsultaResolucionDataMartOut> nombreIterator = listaCurp.iterator();
+				while(nombreIterator.hasNext()){
+					ConsultaResolucionDataMartOut elemento = nombreIterator.next();
+					System.out.print(elemento+" / ");
+				}
 				if ( consultaResolucionesNombreOut.getCursor().size() == 0) {
 					mensajeTabla = "Sin información";
 					pr.setStatus("No se encontraron resultados");

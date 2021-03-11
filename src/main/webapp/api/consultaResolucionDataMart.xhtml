@@ -122,7 +122,7 @@
 	</p:panel>	
 	
 	
-	<p:panel id="pSolicitud" header="Consulta" style="margin-top:20px">
+	<p:panel id="pSolicitud" header="Consulta por NSS" style="margin-top:20px">
  		
  		
 		    <p:dataTable id="verConsultaDataMart"  var="verPago" paginatorPosition="bottom"
@@ -147,61 +147,64 @@
 		        <h:outputText value="#{verPago.secPension}" />
 		    	</p:column>		
 		    	<p:column headerText="MOV">
-		       
+		       <h:outputText value="#{verPago.tipoMovimto}" />
 		    	</p:column>	
 		   		<p:column headerText="REG">
-		        
+		        <h:outputText value="#{verPago.regimen}" />
 		    	</p:column>	
 		 		<p:column headerText="TR">
-		        
+		        <h:outputText value="#{verPago.tipoRETIRO}" />
 		    	</p:column>	
 		    	<p:column headerText="TS">
-		        
+		        <h:outputText value="#{verPago.tipoSEGURO}" />
 		    	</p:column>	
 		    	<p:column headerText="TP">
-		       
+		        <h:outputText value="#{verPago.tipoPENSION}" />
 		    	</p:column>	
 		    	<p:column headerText="ART N">
-		        
+		        <h:outputText value="#{verPago.tipoPRESTACION}" />
 		    	</p:column>		
 		    	<p:column headerText="FRAC N">
-		       
+		        <h:outputText value="#{verPago.artNEGATIVA}" />
 		    	</p:column>	
 		   		<p:column headerText="NO COM">
-		        
+		        <h:outputText value="#{verPago.numCONSIDERANDO}" />
 		    	</p:column>	
 		 		<p:column headerText="FEC INI">
-		        
+		        <h:outputText value="#{verPago.fecINI_PENSION}" />
 		    	</p:column>	
 		    	<p:column headerText="FEC EMI">
-		        
+		        <h:outputText value="#{verPago.fecEMI_RESOLUCION}" />
 		    	</p:column>	
 		    	<p:column headerText="PORC">
-		       
+		        <h:outputText value="#{verPago.porcentajeVALUACION}" />
 		    	</p:column>	
 		    	<p:column headerText="SEM COT">
-		       
+		        <h:outputText value="#{verPago.semanasCOTIZADAS}" />
+		    	</p:column>	
+		    	<p:column headerText="DIALG REG">
+		        <h:outputText value="#{verPago.diagREGISTRO}" />
 		    	</p:column>	
 		    	<p:column headerText="NUM RES">
-		       
+		        <h:outputText value="#{verPago.numRESOLUCION}" />
 		    	</p:column>	
 		    	<p:column headerText="AP CS">
-		       
+		        <h:outputText value="#{verPago.tipoAP_CS}" />
 		    	</p:column>	
 		    	<p:column headerText="SBC A">
-		       
+		        <h:outputText value="#{verPago.sbcTIPO_A}" />
 		    	</p:column>	
 		    	<p:column headerText="SBC B">
-		       
+		        <h:outputText value="#{verPago.sbcTIPO_B}" />
 		    	</p:column>	
 		    	<p:column headerText="PAG COM">
-		       
+		        <h:outputText value="#{verPago.pagoCOMP}" />
 		    	</p:column>	
 		    	<p:column headerText="MONT RET">
-		       
+		        <h:outputText value="#{verPago.montoRETIRO_ORG}" />
 		    	</p:column>
 		    	<p:column headerText="SALD ANT">
-		       
+		        <h:outputText value="#{verPago.saldoANT}" />
 		    	</p:column>
 		</p:dataTable>
  		
