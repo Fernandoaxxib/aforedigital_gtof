@@ -194,11 +194,6 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				resultados.add(pr);
 			}
 		}else {
-			UIInput radio = (UIInput) findComponent("customRadio");
-			radio.setValid(false);
-			UIInput radio2 = (UIInput) findComponent("customRadio2");
-			radio2.setValid(false);
-
 			pr.setStatus("No existen datos o no se ha realizado la consulta");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -228,7 +223,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 								}
 							}					        									
 						} catch (Exception e) {
-							pr=	GenericException(e);
+							pr=GenericException(e);
 						} finally {
 							pr.setFechaFinal(DateUtil.getNowDate());
 							resultados.add(pr);
@@ -297,7 +292,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		}
 	}
 
-	public void cargarArchivo() {
+	public void cargarArchivo(){
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Carga de archivo");
@@ -320,7 +315,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 					}
 				}
 			} catch (Exception e) {
-				pr=	GenericException(e);
+				pr=	GenericException(e);				
 			} finally {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);

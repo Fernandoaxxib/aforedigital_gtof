@@ -58,7 +58,7 @@
 		<h:form id="form">
 			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title2}"
 				style="font-size:12px;margin-bottom:20px">
-				<p:panelGrid columns="1" styleClass="ui-noborder"
+				<p:panelGrid columns="1" class="ui-noborder"
 					style="margin-bottom:10px" cellpadding="5">
 					<p:selectOneRadio id="radSelect" layout="pageDirection"
 						value="#{cerInaReportes.radioSelected}" style="font-size:12px">
@@ -78,7 +78,7 @@
 							update="form:fIni form:fFin form:archivo" global="false"></p:ajax>
 					</p:selectOneRadio>
 				</p:panelGrid>
-				<p:panelGrid class="no-border no-padding">
+				<p:panelGrid class="ui-noborder">
 					<p:row>
 						<p:column>
 							<p:outputLabel for="fIni"
@@ -110,35 +110,33 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:panelGrid class="no-border no-padding" style="margin-top:10px">
+				<p:panelGrid class="ui-noborder" style="margin-top:10px">
 					<p:row>
-						<p:column style="width:78px">
+						<p:column style="width:88px">
 							<p:outputLabel value="#{msg.certifica_inactividad_lblRuta}" />
 						</p:column>
 						<p:column class="outputlabel-shadow"
-							style="width:384px;padding-left: 10px !important;">
+							style="width:410px;height: 17px !important;">
 							<p:outputLabel value="#{cerInaReportes.ruta}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:panelGrid class="no-border no-padding" style="margin-top:10px">
-					<p:row>
-						<p:column style="width:78px">
-							<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}" />
-						</p:column>
-						<p:column class="outputlabel-shadow"
-							style="width:384px;padding-left: 10px !important;">
-							<p:outputLabel id="archivo" value="#{cerInaReportes.archivo}" />
-						</p:column>
-						<p:column>
-							<p:commandButton id="fnEjecutar" styleClass="blue" type="submit"
+
+				<div class="ui-g" style="margin-top:10px">
+					<div class="ui-g-2" style="width: 108px;padding-left:10px">
+						<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}" />
+					</div>
+					<div class="ui-g-5 outputlabel-shadow" style="width: 432px; height: 26px !important">
+					    <p:outputLabel id="archivo" value="#{cerInaReportes.archivo}" />
+					</div>
+					<div class="ui-g-5" style="width: 100px;margin-top: -5px;">
+						<p:commandButton id="fnEjecutar" styleClass="blue" type="submit"
 								value="#{msg.certifica_inactividad_btnEjecutar}"
-								action="#{cerInaReportes.ejecutar}" style="margin-left:10px"
+								action="#{cerInaReportes.ejecutar}"
 								update="form:fIni form:fFin form:radSelect form:result"
 								ajax="true" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+					</div>
+				</div>
 
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{cerInaReportes}" />

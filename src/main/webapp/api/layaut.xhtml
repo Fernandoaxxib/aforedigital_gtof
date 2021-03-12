@@ -20,8 +20,14 @@
 		rel="stylesheet" type="text/css"></link>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat"
 		rel="stylesheet" type="text/css"></link>
-</h:head>
 
+	<script type="text/javascript">
+		function showDialog() {
+			PF('statusDialog').show();
+		}
+	</script>
+
+</h:head>
 <h:body>
 
 	<p:ajaxStatus onstart="setTimeout(PF('statusDialog').show(), 30000);"

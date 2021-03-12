@@ -57,7 +57,7 @@
 
 		<h:form id="form">		    
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo2}"
-				style="margin-bottom:20px;font-size:12px;margin-top:20px">
+				style="margin-bottom:20px;margin-top:18px">
 				<p:selectOneRadio id="customRadio2" layout="pageDirection"
 					value="#{modDesParcReportes.radioSelected}" style="font-size:12px">
 					<p:ajax listener="#{modDesParcReportes.radioSelected}"
@@ -73,11 +73,10 @@
 				</p:selectOneRadio>
 
 
-				<div class="ui-g">
-					<div class="ui-g-2">
+				<div class="ui-g" style="margin-top:10px">
+					<div class="ui-g-2" style="width:110px">
 						<p:outputLabel for="fCapturada2"
-							value="#{msg.modulo_desempleoParc_lblfecha}"
-							style="font-size:12px;font-weight:bold" />
+							value="#{msg.modulo_desempleoParc_lblfecha}" />
 					</div>
 					<div class="ui-g-4" style="padding-left:0px;width:270px">
 						<p:datePicker id="fCapturada2" value="#{modDesParcReportes.fecha}"
@@ -97,26 +96,20 @@
 					</div>
 				</div>
 				<div class="ui-g">
-					<div class="ui-g-2">
-						<p:outputLabel value="#{msg.modulo_desempleoParc_lblRuta}"
-							style="font-size:12px;font-weight:bold" />
+					<div class="ui-g-2" style="margin-top:10px;width:110px">
+						<p:outputLabel value="#{msg.modulo_desempleoParc_lblRuta}" />
 					</div>
-					<div class="ui-g-10"
-						style="background: #dddddd; border-radius: 5px; height: 25px; width: 350px; text-align: left;">
-						<p:outputLabel id="ruta" value="#{modDesParcReportes.ruta}"
-							style="text-align:left;font-size:12px;width:350px" />
+					<div class="ui-g-10 outputlabel-shadow" style="width:348px;margin-top:10px">
+						<p:outputLabel id="ruta" value="#{modDesParcReportes.ruta}"/>
 					</div>
 				</div>
-				<div class="ui-g" style="margin-top: 10px;">
-					<div class="ui-g-2">
-						<p:outputLabel value="#{msg.modulo_desempleoParc_lblArchivo}"
-							style="font-size:12px;font-weight:bold" />
+				<div class="ui-g" style="margin-top: 10px">
+					<div class="ui-g-2" style="width:110px">
+						<p:outputLabel value="#{msg.modulo_desempleoParc_lblArchivo}" />
 					</div>
-					<div class="ui-g-10"
-						style="background: #dddddd; border-radius: 5px; height: 25px; width: 350px; text-align: left;">
-						<p:outputLabel id="archivo" value="#{modDesParcReportes.archivo}"
-							style="text-align:left;font-size:12px;width:350px" />
-					</div>
+					<div class="ui-g-10 outputlabel-shadow" style="width:348px">
+						<p:outputLabel id="archivo" value="#{modDesParcReportes.archivo}" />
+					</div> 
 				</div>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{modDesParcReportes}" />

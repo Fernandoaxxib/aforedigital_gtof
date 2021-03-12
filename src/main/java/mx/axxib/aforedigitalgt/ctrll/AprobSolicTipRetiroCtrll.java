@@ -111,7 +111,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		        dataTable.reset();
 		        PrimeFaces.current().ajax().update("form:table1");
 		        PrimeFaces.current().ajax().update("form:table1:totalRegistros");
-		    }			
+		    }		
+		    pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
 

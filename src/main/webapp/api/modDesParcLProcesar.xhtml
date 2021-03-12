@@ -28,26 +28,26 @@
 				</p:column>
 				<p:column style="text-align:right">
 					<h:form>
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue"
 							outcome="/api/modDesParc.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnPM}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue"
 							outcome="/api/modDesempParc.jsf" includeViewParams="true"
 							value="Proceso individual">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue"
 							outcome="/api/modDesParcReportes.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnReportes}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="green ui-button-text"
+						<p:linkButton styleClass="green"
 							outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnLProcesar}">
 							<f:param name="init" value="true" />
@@ -87,17 +87,17 @@
 				</p:dataTable>
 				<p:outputPanel style="text-align:right">
 					<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
-						styleClass="blue ui-button-text" style="margin-right:10px" />
+						styleClass="blue" style="margin-right:10px" />
 					<p:commandButton value="Seleccionar"
 						actionListener="#{modDesParcLProcesar.opcionSeleccionada2}"
 						oncomplete="PF('dlg2').hide();" update="pnl2 pnl3 pnl4"
-						styleClass="blue ui-button-text" />
+						styleClass="blue" />
 				</p:outputPanel>
 
 			</p:dialog>
 
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo3}"
-				style="margin-bottom:20px;font-size:12px;margin-top:20px;">
+				style="margin-bottom:20px;margin-top:18px">
 				<p:selectOneRadio id="radioSelect" layout="pageDirection"
 					value="#{modDesParcLProcesar.radioSelected}" style="font-size:12px">
 					<p:ajax listener="#{modDesParcLProcesar.radioSelected}"
@@ -110,74 +110,68 @@
 						itemValue="3" />
 				</p:selectOneRadio>
 				<p:outputPanel id="pnl2">
-					<div class="ui-g">
-						<div class="ui-g-2">
+					<div class="ui-g" style="margin-top:10px">
+						<div class="ui-g-2" style="width:110px">
 							<p:outputLabel for="fCapturada3"
-								value="#{msg.modulo_desempleoParc_column_fecha}"
-								style="font-size:12px;font-weight:bold"
+								value="#{msg.modulo_desempleoParc_column_fecha}"								
 								rendered="#{modDesParcLProcesar.radioSelected eq 1}" />
 						</div>
-						<div class="ui-g-4" style="width:272px">
+						<div class="ui-g-4" style="width: 274px">
 							<p:datePicker id="fCapturada3"
 								value="#{modDesParcLProcesar.fecha}" locale="es" showIcon="true"
 								pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
 								rendered="#{modDesParcLProcesar.radioSelected eq 1}"
 								inputStyle="width:120px; text-align:right;" readonlyInput="true" />
 						</div>
-						<div class="ui-g-6" style="text-align: left">
-							<p:commandButton styleClass="blue ui-button-text" type="submit"
+						<div class="ui-g-6">
+							<p:commandButton styleClass="blue" type="submit"
 								value="#{msg.modulo_desempleoParc_btnGenerar}" ajax="true"
 								action="#{modDesParcLProcesar.generarAccion}" global="true"
 								update="form3:radioSelect form3:fCapturada3 form3:pnl3 form3:result" />
 						</div>
-					</div>
+					</div>					
 				</p:outputPanel>
-				<p:outputLabel id="pnl3">
-					<div class="ui-g" style="display:#{modDesParcLProcesar.display}">
-						<div class="ui-g-2">
+				<p:outputPanel id="pnl3">
+					<div class="ui-g" style="display:#{modDesParcLProcesar.display};margin-top:10px">
+						<div class="ui-g-2" style="width:110px">
 							<p:outputLabel value="#{msg.modulo_desempleoParc_lblLote}"
-								rendered="#{modDesParcLProcesar.radioSelected eq 2}"
-								style="font-size:12px;font-weight:bold" />
+								rendered="#{modDesParcLProcesar.radioSelected eq 2}" />
 						</div>
-						<div class="ui-g-5"
-							style="border:#{modDesParcLProcesar.border};background: #dddddd; border-radius: 5px; height: 25px; width: 130px; text-align: left;">
+						<div class="ui-g-5 outputlabel-shadow"
+							style="border:#{modDesParcLProcesar.border};width:308px">
 							<p:outputLabel id="idLote" value="#{modDesParcLProcesar.lote}"
-								rendered="#{modDesParcLProcesar.radioSelected eq 2}"
-								style="text-Align:left;font-size:12px;width:350px" />
+								rendered="#{modDesParcLProcesar.radioSelected eq 2}" />
 						</div>
 						<div class="ui-g-5" style="margin-top: -5px">
-							<p:commandButton  styleClass="blue ui-button-text" type="submit"
+							<p:commandButton styleClass="blue" style="width:35px" type="submit"
 								value="..." action="#{modDesParcLProcesar.getLotes}"
 								rendered="#{modDesParcLProcesar.radioSelected eq 2}"
 								update="dlg1" oncomplete="PF('dlg2').show();" />
 						</div>
 					</div>
-				</p:outputLabel>
-				<p:outputLabel id="pnl4">
-					<div class="ui-g" style="display:#{modDesParcLProcesar.display2}">
-						<div class="ui-g-2">
+				</p:outputPanel>
+				<p:outputPanel id="pnl4">
+					<div class="ui-g" style="display:#{modDesParcLProcesar.display2};margin-top:10px">
+						<div class="ui-g-2" style="margin-top:10px;width:110px">
 							<p:outputLabel value="#{msg.modulo_desempleoParc_lblRuta}"
-								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}"
-								style="font-size:12px;font-weight:bold" />
+								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}"	/>
 						</div>
-						<div class="ui-g-10 outputlabel-shadow">
+						<div class="ui-g-10 outputlabel-shadow" style="margin-top:10px;width:348px">
 							<p:outputLabel value="#{modDesParcLProcesar.ruta}"
-								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}"
-								style="text-align:left;font-size:12px;width:350px" />
+								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}" />
 						</div>
 					</div>
-					<div class="ui-g" style="display:#{modDesParcLProcesar.display2}">
-						<div class="ui-g-2" style="margin-top: 10px;">
+					<div class="ui-g" style="display:#{modDesParcLProcesar.display2};margin-top:10px">
+						<div class="ui-g-2" style="margin-top: 10px;width:110px">
 							<p:outputLabel value="#{msg.modulo_desempleoParc_lblArchivo}"
-								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}"
-								style="font-size:12px;font-weight:bold" />
+								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}" />
 						</div>
-						<div class="ui-g-10 outputlabel-shadow" style="margin-top: 10px;">
+						<div class="ui-g-10 outputlabel-shadow" style="margin-top:10px;width:348px">
 							<p:outputLabel value="#{modDesParcLProcesar.archivo}"
 								rendered="#{modDesParcLProcesar.radioSelected eq 2 or modDesParcLProcesar.radioSelected eq 3}" />
 						</div>
 					</div>
-				</p:outputLabel>
+				</p:outputPanel>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{modDesParcLProcesar}" />
 				</ui:include>

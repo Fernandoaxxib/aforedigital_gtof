@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.faces.component.UIInput;
@@ -109,7 +110,10 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			ruta="/iprod/PROCESAR/TRANSMISION/AFORE/RETIROS";
 			ruta2="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
 			ruta3="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
-			archivo="20210223.OP85";
+			archivo="";
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			archivo = format.format(DateUtil.getNowDate());
+			archivo=archivo+".OP85";
 			today= new Date();
 			reset();
 		}

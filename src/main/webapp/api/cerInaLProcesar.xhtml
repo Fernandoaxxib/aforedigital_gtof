@@ -105,12 +105,12 @@
 				</p:selectOneRadio>
 				<p:outputPanel id="pnl2" style="margin-top:20px">
 					<div class="ui-g">
-						<div class="ui-g-2">
+						<div class="ui-g-2" style="width:78px">
 							<p:outputLabel for="fCapturada3"
 								value="#{msg.modulo_desempleoParc_column_fecha}"								
 								rendered="#{cerInaLProcesar.radioSelected eq 1}" />
 						</div>
-						<div class="ui-g-4" style="width: 272px">
+						<div class="ui-g-4" style="width: 276px">
 							<p:datePicker id="fCapturada3" value="#{cerInaLProcesar.fecha}"
 								locale="es" showIcon="true" pattern="dd-MM-yyyy"
 								yearNavigator="true" monthNavigator="true"
@@ -125,9 +125,9 @@
 						</div>
 					</div>
 				</p:outputPanel>
-				<p:outputLabel id="pnl3">
+				<p:outputPanel id="pnl3">
 					<div class="ui-g" style="display:#{cerInaLProcesar.display}">
-						<div class="ui-g-2">
+						<div class="ui-g-2" style="width:78px">
 							<p:outputLabel value="#{msg.modulo_desempleoParc_lblLote}"
 								rendered="#{cerInaLProcesar.radioSelected eq 2}" />
 						</div>
@@ -137,26 +137,26 @@
 								rendered="#{cerInaLProcesar.radioSelected eq 2}" />
 						</div>
 						<div class="ui-g-5" style="margin-top: -5px">
-							<p:commandButton styleClass="blue ui-button-text" type="submit"
+							<p:commandButton styleClass="blue ui-button-text" style="width:35px" type="submit"
 								value="..." action="#{cerInaLProcesar.getLotes}"
 								rendered="#{cerInaLProcesar.radioSelected eq 2}" update="dlg1"
 								oncomplete="PF('dlg2').show();" />
 						</div>
 					</div>
-				</p:outputLabel>
-				<p:outputLabel id="pnl4">
+				</p:outputPanel>
+				<p:outputPanel id="pnl4">
 					<div class="ui-g" style="display:#{cerInaLProcesar.display2}">
-						<div class="ui-g-2">
+						<div class="ui-g-2" style="margin-top:8px;width:78px">
 							<p:outputLabel value="#{msg.modulo_desempleoParc_lblRuta}"
 								rendered="#{cerInaLProcesar.radioSelected eq 2 or cerInaLProcesar.radioSelected eq 3}" />
 						</div>
-						<div class="ui-g-10 outputlabel-shadow" style="width:350px">
+						<div class="ui-g-10 outputlabel-shadow" style="width:350px;margin-top:8px">
 							<p:outputLabel value="#{cerInaLProcesar.ruta}"
 								rendered="#{cerInaLProcesar.radioSelected eq 2 or cerInaLProcesar.radioSelected eq 3}" />
 						</div>
 					</div>
 					<div class="ui-g" style="display:#{cerInaLProcesar.display2}">
-						<div class="ui-g-2" style="margin-top: 10px;">
+						<div class="ui-g-2" style="margin-top: 10px;width:78px">
 							<p:outputLabel value="#{msg.modulo_desempleoParc_lblArchivo}"
 								rendered="#{cerInaLProcesar.radioSelected eq 2 or cerInaLProcesar.radioSelected eq 3}" />
 						</div>
@@ -165,7 +165,7 @@
 								rendered="#{cerInaLProcesar.radioSelected eq 2 or cerInaLProcesar.radioSelected eq 3}" />
 						</div>
 					</div>
-				</p:outputLabel>
+				</p:outputPanel>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{cerInaLProcesar}" />
 				</ui:include>

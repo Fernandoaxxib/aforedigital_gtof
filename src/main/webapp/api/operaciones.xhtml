@@ -10,8 +10,7 @@
 
 
 	<ui:define name="center" id="img-fondo-oper">
-		<h:outputStylesheet name="estilo-operaciones.css" library="css" />
-
+		<h:outputStylesheet name="estilo-operaciones.css" library="css" />        
 		<h:form>
 			<p:panelGrid columns="1" class="no-border tb"
 				style="width: 100%; height: 100%">
@@ -30,28 +29,31 @@
 				<p:panelGrid class="no-border tb"
 					style="margin-top:70px; width: 100%; text-align:center;">
 					<p:row>
-						<p:column style="width:400px; text-align: right;">
+						<p:column style="width:400px; text-align: right;">							
 							<p:commandButton ajax="false" styleClass="tran corn"
 								value="TRANSACCIONES Y DISPOSICIONES"
+								onclick="showDialog(); return true"
 								actionListener="#{menu.transacciones}">
-
 							</p:commandButton>
 						</p:column>
 						<p:column style="width:150px; text-align: center;">
 							<p:commandButton ajax="false" styleClass="proc corn"
 								value="SEGUIMIENTO DE PROCESOS"
+								onclick="showDialog(); return true"
 								actionListener="#{menu.monitor}">
 							</p:commandButton>
 						</p:column>
 						<p:column style="width:150px; text-align: center;">
 							<p:commandButton ajax="false" styleClass="reca corn"
 								value="RECAUDACIONES"
+								onclick="showDialog(); return true"
 								actionListener="#{menu.recaudaciones}">
 							</p:commandButton>
 						</p:column>
 						<p:column style="width:350px; text-align: left;">
 							<p:commandButton ajax="false" styleClass="repo corn"
 								value="REPORTES GENERALES"
+								onclick="showDialog(); return true"
 								actionListener="#{menu.reportes}">
 							</p:commandButton>
 						</p:column>

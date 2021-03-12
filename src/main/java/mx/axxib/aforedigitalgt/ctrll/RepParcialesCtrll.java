@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.ReporteOut;
 import mx.axxib.aforedigitalgt.serv.RepParcialesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
@@ -37,7 +40,7 @@ public class RepParcialesCtrll extends ControllerBase {
     private String archivo;
     @Getter
     private String respuesta;
-    
+       
     @Override
 	public void iniciar() {
 		super.iniciar();
@@ -53,16 +56,33 @@ public class RepParcialesCtrll extends ControllerBase {
     	fechaFin=null;
     }
     
-    public void generarReporte() {
+    public void generarReporte() throws Exception {
+    	ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Generación de reporte");
+		
     	if(fechaInicio!=null & fechaFin!=null) {
     		if(DateUtil.isValidDates(fechaInicio, fechaFin)) {
     			if(archivo!=null && !archivo.isEmpty()) {
     				try {    		
-        				respuesta=service.generarReporte(fechaInicio, fechaFin, ruta, archivo);  
-        				reset();
+    					ReporteOut	res=service.generarReporte(fechaInicio, fechaFin, ruta, archivo); 
+    					if (res.getOn_Estatus() == 1) { 
+    						respuesta="Reporte "+archivo+".xls generado en "+ruta;
+    						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));	
+    						reset();
+    					} else {
+    						if (res.getOn_Estatus() == 2) {
+    							GenerarErrorNegocio(res.getOc_Mensaje());
+    						} else if (res.getOn_Estatus() == 0) {
+    							pr.setStatus(res.getOc_Mensaje());
+    							respuesta=res.getOc_Mensaje();
+    						}
+    					}        				
         			} catch (AforeException e) {
-        				respuesta="Error";
-        				GenericException(e);
+        				pr=	GenericException(e);
+        			}finally{
+        				pr.setFechaFinal(DateUtil.getNowDate());
+        				resultados.add(pr);
         			}
     			}else {
     				respuesta="Se requiere nombre de archivo";

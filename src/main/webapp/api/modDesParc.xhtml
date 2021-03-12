@@ -16,7 +16,7 @@
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
 
-	<ui:define name="center">
+	<ui:define name="center">		
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:panelGrid class="no-border no-padding" style="width: 100%">
@@ -113,7 +113,7 @@
 
 
 		<h:form id="form">          
-			<p:panel id="pnlResult" header="#{msg.modulo_desempleoParc_titulo1}" style="font-size:12px;margin-bottom:20px; margin-top:20px">
+			<p:panel id="pnlResult" header="#{msg.modulo_desempleoParc_titulo1}" style="margin-bottom:20px; margin-top:18px">
 				<p:panelGrid id="pnlSelection" class="no-border no-padding" style="margin-bottom:10px">
 					<p:row>
 						<p:column>
@@ -129,9 +129,8 @@
 					<p:row>
 						<p:column>
 							<p:outputPanel style="margin-top:10px">
-								<p:outputLabel for="fCapturada"
-									value="#{msg.modulo_desempleoParc_lblfecCap}"
-									style="font-size:12px" />
+								<p:outputLabel for="fCapturada" style="margin-right:20px !important"
+									value="#{msg.modulo_desempleoParc_lblfecCap}"/>
 								<p:datePicker id="fCapturada" value="#{modDesParcProceso.fecha}" 
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									yearNavigator="true" monthNavigator="true"
@@ -146,25 +145,15 @@
 					</p:row>
 				</p:panelGrid>
 
-
-				<p:panelGrid class="no-border no-padding" cellpadding="3"
-					style="margin-bottom:10px">
-
-
-
-
-				</p:panelGrid>
-
 				<div class="ui-g" style="margin-top: 20px;">
 					<div class="ui-g-6">
 						<div class="ui-g" style="margin-bottom: 10px">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblRegXProc"
-									value="#{msg.modulo_desempleoParc_lblRegXProc}"
-									style="font-size:12px;font-weight:bold" />
+									value="#{msg.modulo_desempleoParc_lblRegXProc}" />
 							</div>
-							<div class="ui-g-6"
-								style="background: #dddddd; border-radius: 5px; height: 25px; width: 140px; text-align: right;">
+							<div class="ui-g-6 outputlabel-shadow"
+								style="width: 140px; text-align: right !important">
 								<p:outputLabel id="lblRegXProc"
 									value="#{modDesParcProceso.pendientes}" />
 							</div>
@@ -172,11 +161,10 @@
 						<div class="ui-g">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblSinS"
-									value="#{msg.modulo_desempleoParc_lblSinS}"
-									style="font-size:12px;font-weight:bold" />
+									value="#{msg.modulo_desempleoParc_lblSinS}" />
 							</div>
-							<div class="ui-g-3"
-								style="background: #dddddd; border-radius: 5px; height: 25px; width: 140px; text-align: right;">
+							<div class="ui-g-3 outputlabel-shadow"
+								style="width: 140px; text-align: right !important">
 								<p:outputLabel id="lblSinS"
 									value="#{modDesParcProceso.sinSalario}" />
 							</div>
@@ -184,7 +172,7 @@
 								<p:commandButton styleClass="blue" type="submit" value="..." id="btnDlg"
 									action="#{modDesParcProceso.mostrarRegistros}" update="dlg1"
 									oncomplete="PF('dlg2').show();"
-									style="display:#{modDesParcProceso.display3};font-size:12px" />
+									style="display:#{modDesParcProceso.display3}" />
 							</div>
 						</div>
 					</div>
@@ -192,11 +180,10 @@
 						<div class="ui-g" style="margin-bottom: 10px">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblRegParc"
-									value="#{msg.modulo_desempleoParc_lblRegParc}"
-									style="font-size:12px;font-weight:bold" />
+									value="#{msg.modulo_desempleoParc_lblRegParc}" />
 							</div>
-							<div class="ui-g-6"
-								style="background: #dddddd; border-radius: 5px; height: 25px; width: 140px; text-align: right;">
+							<div class="ui-g-6 outputlabel-shadow"
+								style="width: 140px; text-align: right !important">
 								<p:outputLabel id="lblRegParc"
 									value="#{modDesParcProceso.parcialidades}" />
 							</div>
@@ -204,11 +191,10 @@
 						<div class="ui-g" style="margin-bottom: 10px">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblSolUnaEx"
-									value="#{msg.modulo_desempleoParc_lblSolUnaEx}"
-									style="font-size:12px;font-weight:bold" />
+									value="#{msg.modulo_desempleoParc_lblSolUnaEx}" />
 							</div>
-							<div class="ui-g-6"
-								style="background: #dddddd; border-radius: 5px; height: 25px; width: 140px; text-align: right;">
+							<div class="ui-g-6 outputlabel-shadow"
+								style="width: 140px; text-align: right !important">
 								<p:outputLabel id="lblSolUnaEx"
 									value="#{modDesParcProceso.unaExhibicion}" />
 							</div>
@@ -216,11 +202,10 @@
 						<div class="ui-g">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblTotal"
-									value="#{msg.modulo_desempleoParc_lblTotal}"
-									style="font-size:12px;font-weight:bold" />
+									value="#{msg.modulo_desempleoParc_lblTotal}" />
 							</div>
-							<div class="ui-g-6"
-								style="background: #dddddd; border-radius: 5px; height: 25px; width: 140px; text-align: right;">
+							<div class="ui-g-6 outputlabel-shadow"
+								style="width: 140px; text-align: right !important">
 								<p:outputLabel id="lblTotal"
 									value="#{modDesParcProceso.totales}" />
 							</div>

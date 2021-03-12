@@ -11,9 +11,7 @@
 	<f:metadata>
 		<f:event listener="#{repParcialesConsar.iniciar}" type="preRenderView" />
 	</f:metadata>
-
-
-	<ui:define name="center">
+	<ui:define name="center">		
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:panelGrid width="100%" styleClass="ui-noborder">
@@ -26,67 +24,69 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-
-		<p:dialog header="Mensaje" id="dlg1" appendTo="@(body)" widgetVar="dlg3" minHeight="140" width="350" showEffect="fade" resizable="false" modal="true">			
+		<p:dialog header="Mensaje" id="dlg1" appendTo="@(body)"
+			widgetVar="dlg3" minHeight="140" width="350" showEffect="fade"
+			resizable="false" modal="true">
 			<p:panel style="border:0px !important;text-align:center">
-			   <p:outputPanel style="margin-top:10px;margin-bottom:10px">			     
-			     <p:outputLabel value="#{repParcialesConsar.respuesta}" style="font-size:14px !important; color: #59ad40 !important;"/>
-			   </p:outputPanel>
-			   <p:commandButton type="button" value="CERRAR" styleClass="blue" onclick="PF('dlg3').hide();"/>
-			</p:panel>											
+				<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+					<p:outputLabel value="#{repParcialesConsar.respuesta}"
+						style="font-size:14px !important; color: #59ad40 !important;" />
+				</p:outputPanel>
+				<p:commandButton type="button" value="CERRAR" styleClass="blue"
+					onclick="PF('dlg3').hide();" />
+			</p:panel>
 		</p:dialog>
-
-		<p:panel header="REPORTE DE PARCIALES CONSAR" style="height:90% !important">
-			<h:form id="form">
-				<div class="ui-g" style="text-align: right; margin-top: 10px;">
+		<h:form id="form">
+			<p:panel header="REPORTE DE PARCIALES CONSAR"
+				style="height:90% !important">
+				<div class="ui-g" style="margin-top: 10px;">
 					<div class="ui-g-3"
-						style="text-align: left; width: 130px; padding-top: 13px">
-						<p:outputLabel for="dini" value="FECHA INICIO: " />
+						style="text-align: left; width: 110px; padding-top: 13px">
+						<p:outputLabel for="dini" value="Fecha Inicio: " />
 					</div>
-					<div class="ui-g-3" style="text-align: left; width: 200px;">
+					<div class="ui-g-3" style="width: 180px;">
 						<p:datePicker id="dini" value="#{repParcialesConsar.fechaInicio}"
 							locale="es" showIcon="true" pattern="dd-MM-yyyy"
 							yearNavigator="true" monthNavigator="true"
-							inputStyle="width:120px; text-align:right;" readonlyInput="true" />
+							inputStyle="width:110px; text-align:right;" readonlyInput="true" />
 					</div>
-					<div class="ui-g-3"
-						style="text-align: left; padding-top: 13px; width: 130px;">
-						<p:outputLabel for="dffin" value="FECHA FIN: " />
+					<div class="ui-g-3" style="padding-top: 13px; width: 110px;">
+						<p:outputLabel for="dffin" value="Fecha Fin: " />
 					</div>
-					<div class="ui-g-3" style="text-align: left;">
+					<div class="ui-g-3">
 						<p:datePicker id="dffin" value="#{repParcialesConsar.fechaFin}"
 							locale="es" showIcon="true" pattern="dd-MM-yyyy"
 							yearNavigator="true" monthNavigator="true"
-							inputStyle="width:120px; text-align:right;" readonlyInput="true" />
+							inputStyle="width:110px; text-align:right;" readonlyInput="true" />
 					</div>
 				</div>
 				<div class="ui-g" style="margin-top: 10px;">
-					<div class="ui-g-6" style="text-align: left; width: 135px">
+					<div class="ui-g-6" style="text-align: left; width: 115px">
 						<p:outputLabel value="Ruta:" />
 					</div>
-					<div class="ui-g-6"
-						style="width: 490px; background: #dddddd; text-align: left;">
+					<div class="ui-g-6 outputlabel-shadow" style="width: 440px">
 						<p:outputLabel value="#{repParcialesConsar.ruta}" />
 					</div>
 				</div>
 				<div class="ui-g" style="margin-top: 10px;">
 					<div class="ui-g-6"
-						style="text-align: left; width: 128px; padding-top: 13px !important">
+						style="width: 109px; padding-top: 13px !important">
 						<p:outputLabel value="Nombre archivo:" />
 					</div>
 					<div class="ui-g-6" style="text-align: left;">
 						<p:inputText id="archivo" value="#{repParcialesConsar.archivo}"
-							style=" width: 480px;" />
+							style=" width: 430px;" />
 					</div>
 				</div>
-				<div class="ui-g" style="margin-top: 10px;">
-					<div class="ui-g-6" style="text-align: right; width: 625px">
+				<div class="ui-g">
+					<div class="ui-g-6" style="text-align: right; width: 561px">
 						<p:commandButton styleClass="blue" type="submit"
-							value="GENERAR REPORTE" update="dlg1 form:dini form:dffin form:archivo"
+							value="GENERAR REPORTE"
+							update="dlg1 form:dini form:dffin form:archivo"
 							action="#{repParcialesConsar.generarReporte}" />
 					</div>
 				</div>
-			</h:form>
-		</p:panel>
+			</p:panel>
+		</h:form>
 	</ui:define>
 </ui:composition>
