@@ -41,14 +41,12 @@
 						<p:column>
 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE}"></h:outputText>
 						</p:column>
-						
 						<p:column>
 							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CUENTA}"></h:outputText>
 						</p:column>
-										
 					</p:row>
 						
 					<p:row>
@@ -111,9 +109,6 @@
 						</p:column>
 					</p:row>
 		
-		
-					
-	 				
   	</p:panelGrid>	
   	
   		
@@ -171,10 +166,14 @@
 		        <h:outputText value="#{verPago.numCONSIDERANDO}" />
 		    	</p:column>	
 		 		<p:column headerText="FEC INI">
-		        <h:outputText value="#{verPago.fecINI_PENSION}" />
+		        <h:outputText value="#{verPago.fecINI_PENSION}" >
+		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:outputText>
 		    	</p:column>	
 		    	<p:column headerText="FEC EMI">
-		        <h:outputText value="#{verPago.fecEMI_RESOLUCION}" />
+		        <h:outputText value="#{verPago.fecEMI_RESOLUCION}" >
+		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:outputText>
 		    	</p:column>	
 		    	<p:column headerText="PORC">
 		        <h:outputText value="#{verPago.porcentajeVALUACION}" />

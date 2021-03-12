@@ -98,7 +98,9 @@
 		    </p:column>		
 		    
 		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}">
-		        <h:outputText value="#{verSolicitud.fechaOperacion}" />
+		        <h:outputText value="#{verSolicitud.fechaOperacion}" >
+		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+				</h:outputText>
 		    </p:column>
 		 
 		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}">
@@ -222,51 +224,84 @@
 							
   </p:panel>
 		
-				<p:dialog header="Consulta de Pagos" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="100%" modal="true" style="font-size:12px">
+				<p:dialog header="Consulta de Pagos" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="80%" modal="true" style="font-size:12px">
 						 <p:outputPanel id="display">
+					
+					 <p:panelGrid id="verNombre" styleClass="ui-noborder" 	style="margin-top:20px; width:100%;">	
+						
+						<p:row>					
+			     		<p:column  style="width:20px">
+							<p:outputLabel  value="Poliza"  style="font-weight: bold"/>
+						</p:column>
+						<p:column  style="width:20px">
+						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}"></h:outputText>
+						</p:column>
+						<p:column  style="width:20px">
+							<p:outputLabel  value="No. Referencia"  style="font-weight: bold"/>
+						</p:column>
+						<p:column  style="width:20px">
+						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}"></h:outputText>
+						</p:column>
+						</p:row>	
+						<p:row>					
+			     		<p:column  style="width:20px">
+							<p:outputLabel  value="Fecha Cheque"  style="font-weight: bold"/>
+						</p:column>
+						<p:column  style="width:20px">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column  style="width:20px">
+							<p:outputLabel  value="Fecha Reinversion"  style="font-weight: bold"/>
+						</p:column>
+						<p:column  style="width:20px">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}">
+							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column  style="width:20px">
+							<p:outputLabel  value="Telefono Contacto"  style="font-weight: bold"/>
+						</p:column>
+						<p:column  style="width:20px">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}"/>
+						</p:column>
+						</p:row>	
+					</p:panelGrid>		
+						
 						<p:dataTable var="pro" value="#{solicitudMatrimonioDesempleo.fopagos}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  rows="5" paginator="true" rowsPerPageTemplate="5,10,15" >
 									
-									<p:column headerText="Poliza" style="width:20px">
-										<h:outputText value="#{pro.pNoPoliza_Pag}" />
-									</p:column>
-									<p:column headerText="No. Referencia" style="width:50px">
-										<h:outputText value="#{pro.pReferencia}" />
-									</p:column>
-									<p:column headerText="Fecha Cheque" style="width:20px">
-										<h:outputText value="#{pro.pFecReinv_Pag}">
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-										</h:outputText>
-									</p:column>
-									<p:column headerText="Fecha Reinversion" style="width:20px">
-										<h:outputText value="#{pro.pFechaMov_Pag}">
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
-										</h:outputText>
-									</p:column>
 									<p:column headerText="Beneficiario" style="width:20px">
-										<h:outputText value="#{pro.pBenef_Re}"/>
+										<h:outputText value="#{pro.on_Estatus}"/>
 									</p:column>
 									<p:column headerText="Porc." style="width:20px">
-										<h:outputText value="#{pro.pPorcent_Re}" />
+										<h:outputText value="#{pro.on_Estatus}" />
 									</p:column>
 									<p:column headerText="Estatus" style="width:20px">
-										<h:outputText value="#{pro.pEstatus_Re}"/>
+										<h:outputText value="#{pro.on_Estatus}"/>
 									</p:column>
 									<p:column headerText="Plaza" style="width:20px">
-										<h:outputText value="#{pro.pPlaza_Re}"/>
+										<h:outputText value="#{pro.on_Estatus}"/>
 									</p:column>
 									<p:column headerText="Monto Retiro." style="width:20px">
-										<h:outputText value="#{pro.pMonBruto_Re}" />
+										<h:outputText value="#{pro.on_Estatus}" />
 									</p:column>
 									<p:column headerText="Monto Isr" style="width:20px">
-										<h:outputText value="#{pro.pMontoIsr_Re}"/>
+										<h:outputText value="#{pro.on_Estatus}"/>
 									</p:column>
 									<p:column headerText="Neto" style="width:20px">
-										<h:outputText value="#{pro.pMontoNeto_Re}" />
+										<h:outputText value="#{pro.on_Estatus}" />
 									</p:column>
-									<p:column headerText="Telefono Contacto" style="width:20px">
-										<h:outputText value="#{pro.pTelefono_Pag}"/>
-									</p:column>
+									
+									<p:columnGroup type="footer">
+						                <p:row>
+						                    <p:column colspan="4" style="text-align:right" footerText="Totales:"/>
+						                    <p:column style="text-align:left" footerText="$#{pro.on_Estatus}"/>
+						                    <p:column style="text-align:left" footerText="$#{pro.on_Estatus}"/>
+						                    <p:column style="text-align:left" footerText="$#{pro.on_Estatus}"/>
+						                </p:row>
+						            </p:columnGroup>
 						
 						</p:dataTable>	
 						 </p:outputPanel>

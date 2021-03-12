@@ -105,8 +105,16 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	private boolean mostrarFopagos;
 	
 	@Getter
-	@Setter
-	private FopagosListOut fopagos;
+	private List<FopagosListOut> fopagos;
+	
+	@Getter
+	private Integer totalMontoRetiro;
+	
+	@Getter
+	private Integer totalMontoIsr;
+	
+	@Getter
+	private Integer totalNeto;
 	
 	@Override
 	public void iniciar() {
@@ -282,7 +290,10 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			
 			//System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
 			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(12, nss, cuenta, nombre);
-			System.out.println("VALOR DE FOPAGOS On_Estatus:"+fopagos.getOn_Estatus());
+//			for(FopagosListOut iterar:fopagos) {
+//			totalMontoRetiro  += iterar.getPMontoNeto_Re();
+//			}
+			System.out.println("VALOR DE FOPAGOS On_Estatus:"+fopagos);
 			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
 				if (fopagos != null ) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
