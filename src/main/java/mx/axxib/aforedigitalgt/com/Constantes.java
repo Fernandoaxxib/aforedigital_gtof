@@ -117,6 +117,7 @@ public class Constantes {
 
 	// Rechazos de solicitudes FORETREC
 	public static final String RECHAZOS_SOLICITUDES_PACKAGE = "PKG_RET_FORETREC";
+	public static final String RECHAZOS_SOLICITUDES_CONSULTA_RECHAZOS = "prc_rechazos";
 	public static final String RECHAZOS_SOLICITUDES_CONSULTA_FOLIO = "PRC_CONSULTA_FOLIO";
 	public static final String RECHAZOS_SOLICITUDES_CONSULTA_RESOLUCION = "PRC_CONSULTA_RESOLUCION";
 	public static final String RECHAZOS_SOLICITUDES_CONSULTA_NSS = "PRC_CONSULTA_NSS";

@@ -47,10 +47,6 @@
 			</p:row>
 		</p:panelGrid>
 
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
-
 		<h:form id="form">
 
 			<p:panel id="reporte" header="Reporte de rechazos"
@@ -60,37 +56,38 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Desde: " style="font-weight: bold" />
+							<p:outputLabel value="Fecha inicio: " style="font-weight: bold" />
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;"
 								value="#{rechazos.fechaInicial}" showIcon="true" locale="es"
-								pattern="dd-MM-yyyy" readonlyInput="true" required="true"
-								requiredMessage="Fecha inicial requerida" />
+								yearNavigator="true" monthNavigator="true"
+								pattern="dd-MM-yyyy" readonlyInput="true"  />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Hasta: " style="font-weight: bold" />
+							<p:outputLabel value="Fecha fin: " style="font-weight: bold" />
 							<p:datePicker id="fechaFinal" value="#{rechazos.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
+								yearNavigator="true" monthNavigator="true"
 								locale="es" pattern="dd-MM-yyyy" readonlyInput="true"
-								required="true" requiredMessage="Fecha final requerida" />
+								 />
 
 						</p:column>
 					</p:row>
 
 
 					<p:row>
-						<p:column colspan="2">
-							<h:outputLabel value="Archivo: " style="font-weight: bold" />
-							<p:inputText value="#{rechazos.nombreArchivo}" style="width:100px;"
-								required="true" requiredMessage="Nombre de archivo requerido"></p:inputText>
-							<h:outputLabel value="   (sin ruta ni extensión)" />
+						<p:column colspan="2" style="padding:10px">
+							<h:outputLabel value="Nombre de Archivo (sin extensión):" style="font-weight: bold" />
+							<p:inputText id="archivo" value="#{rechazos.nombreArchivo}" style="width:150px;"
+								></p:inputText>
+							
 						</p:column>
 					</p:row>
 
 					<p:row>
 						<p:column>
-							<p:commandButton class="blue" action="#{rechazos.generarReporte}"
-								type="submit" value="Generar" update="form" />
+							<p:commandButton class="blue" actionListener="#{rechazos.generarReporte}"
+								 value="Generar reporte" update="busqueda result" />
 						</p:column>
 					</p:row>
 
@@ -99,7 +96,9 @@
 
 			</p:panel>
 
-
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{rechazos}" />
+			</ui:include>
 
 
 		</h:form>

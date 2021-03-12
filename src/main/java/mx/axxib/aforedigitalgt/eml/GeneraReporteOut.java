@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 public class GeneraReporteOut {
 	private String seguimiento;
 	private String mensaje;
+	private Integer estatus;
 
 }
 	

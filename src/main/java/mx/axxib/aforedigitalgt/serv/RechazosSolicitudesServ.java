@@ -1,7 +1,5 @@
 package mx.axxib.aforedigitalgt.serv;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,31 +16,39 @@ public class RechazosSolicitudesServ extends ServiceBase {
 	@Autowired
 	private RechazosSolicitudesRepo rechazos;
 	
-	public RechazosOut getConsultaFolio(String folio) throws AforeException {
+	public RechazosOut getConsultaRechazos(String parametro, Integer tipo) throws AforeException {
 		try {
-			return rechazos.getConsultaFolio(folio);
-		} catch (Exception e) {
-			throw GenericException(e);
-		}
-	}
-
-	public RechazosOut getConsultaResolucion(String resolucion) throws AforeException {
-		try {
-			return rechazos.getConsultaResolucion(resolucion);
+			return rechazos.getConsultaRechazos(parametro, tipo);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public RechazosOut getConsultaNSS(String nss) throws AforeException {
-		try {
-			return rechazos.getConsultaNSS(nss);
-		} catch (Exception e) {
-			throw GenericException(e);
-		}
-	}
+//	public RechazosOut getConsultaFolio(String folio) throws AforeException {
+//		try {
+//			return rechazos.getConsultaFolio(folio);
+//		} catch (Exception e) {
+//			throw GenericException(e);
+//		}
+//	}
+//
+//	public RechazosOut getConsultaResolucion(String resolucion) throws AforeException {
+//		try {
+//			return rechazos.getConsultaResolucion(resolucion);
+//		} catch (Exception e) {
+//			throw GenericException(e);
+//		}
+//	}
+//	
+//	public RechazosOut getConsultaNSS(String nss) throws AforeException {
+//		try {
+//			return rechazos.getConsultaNSS(nss);
+//		} catch (Exception e) {
+//			throw GenericException(e);
+//		}
+//	}
 	
-	public List<CatRechazosOut> getCatalogo() throws AforeException {
+	public CatRechazosOut getCatalogo() throws AforeException {
 		try {
 			return rechazos.getCatalogo();
 		} catch (Exception e) {

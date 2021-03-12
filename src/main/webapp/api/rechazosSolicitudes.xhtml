@@ -17,7 +17,7 @@
 
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
-		
+
 		<p:panelGrid class="no-border no-padding" style="width: 100%">
 			<p:row>
 				<p:column>
@@ -32,14 +32,14 @@
 						</p:linkButton>
 
 						<p:linkButton styleClass="blue"
-							outcome="/api/rechazosSolicitudesReporte.jsf" includeViewParams="true"
-							value="Reporte">
+							outcome="/api/rechazosSolicitudesReporte.jsf"
+							includeViewParams="true" value="Reporte">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
 						<p:linkButton styleClass="blue"
-							outcome="/api/rechazosSolicitudesCatalogo.jsf" includeViewParams="true"
-							value="Catálogo">
+							outcome="/api/rechazosSolicitudesCatalogo.jsf"
+							includeViewParams="true" value="Catálogo">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 					</h:form>
@@ -112,16 +112,16 @@
 								disabled="#{rechazos.disNss}"></p:inputText>
 						</p:column>
 						<p:column>
-							<p:commandButton class="blue" action="#{rechazos.buscar}"
-								type="submit" update="form" value="Buscar" />
-								
-					
+							<p:commandButton class="blue" actionListener="#{rechazos.buscar}"
+								update="pGrid pGrid2 result" value="Buscar" />
+
+
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 
-				<p:panelGrid styleClass="ui-noborder"
-					style="margin-top:20px; width:100%;">
+				<p:panelGrid id="pGrid" styleClass="ui-noborder"
+					style="margin-top:20px;">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
@@ -129,12 +129,8 @@
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.nombre}"></h:outputText>
 						</p:column>
-						<p:column>
-							<p:outputLabel value="R. Fax:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.fax}"></h:outputText>
-						</p:column>
+					</p:row>
+					<p:row>
 						<p:column>
 							<p:outputLabel value="Tipo presentación:"
 								style="font-weight: bold"></p:outputLabel>
@@ -142,7 +138,6 @@
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.descPrestacion}"></h:outputText>
 						</p:column>
-
 					</p:row>
 					<p:row>
 						<p:column>
@@ -151,22 +146,7 @@
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.descPension}"></h:outputText>
 						</p:column>
-						<p:column>
-							<p:outputLabel value="Fecha capturada:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.fechaInclusion}">
-								<f:convertDateTime pattern="dd-MM-yyyy" />
-							</h:outputText>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Plaza:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.plaza}"></h:outputText>
-						</p:column>
 					</p:row>
-
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Ejecutivo:" style="font-weight: bold"></p:outputLabel>
@@ -175,14 +155,43 @@
 							<h:outputText value="#{rechazos.rechazo.nombreEmpleado}"></h:outputText>
 						</p:column>
 					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="R. Fax:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.fax}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Plaza:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.plaza}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha capturada:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.fechaInclusion}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+
+					</p:row>
+
 				</p:panelGrid>
 
 
-				<p:panelGrid styleClass="ui-noborder"
-					style="margin-top:40px; width:100%;">
+				<p:panelGrid id="pGrid2" styleClass="ui-noborder"
+					style="margin-top:30px;">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Causa de rechazo" style="font-weight: bold;"></p:outputLabel>
+							<p:outputLabel value="Causa de rechazo"
+								style="font-weight: bold;"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Descripción de la causa"
@@ -219,7 +228,9 @@
 				</p:panelGrid>
 			</p:panel>
 
-
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{rechazos}" />
+			</ui:include>
 
 
 		</h:form>

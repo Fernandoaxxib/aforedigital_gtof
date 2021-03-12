@@ -30,5 +30,6 @@ public class RechazosOut {
 	private String descCausa2;
 	private String descCausa3;
 	private String mensaje;
+	private Integer estatus;
 }
   

@@ -11,13 +11,13 @@
 		<f:event listener="#{rechazos.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-    <ui:define name="left">
+	<ui:define name="left">
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
 
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
-		
+
 		<p:panelGrid class="no-border no-padding" style="width: 100%">
 			<p:row>
 				<p:column>
@@ -32,14 +32,14 @@
 						</p:linkButton>
 
 						<p:linkButton styleClass="blue"
-							outcome="/api/rechazosSolicitudesReporte.jsf" includeViewParams="true"
-							value="Reporte">
+							outcome="/api/rechazosSolicitudesReporte.jsf"
+							includeViewParams="true" value="Reporte">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
 						<p:linkButton styleClass="green"
-							outcome="/api/rechazosSolicitudesCatalogo.jsf" includeViewParams="true"
-							value="Catálogo">
+							outcome="/api/rechazosSolicitudesCatalogo.jsf"
+							includeViewParams="true" value="Catálogo">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 					</h:form>
@@ -56,12 +56,14 @@
 			<p:panel id="busqueda" header="Catálogo de rechazo de solicitudes"
 				style="margin-top:20px;">
 
-				<p:dataTable id="table" var="cat"  emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{rechazos.catRechazos}"  style="width:60%; padding-left:200px;">
+				<p:dataTable id="table" var="cat"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					value="#{rechazos.catRechazos}" style="width:60%;">
 
 
-					<p:column headerText="Clave" style="width: 30px; text-align: center">
-						<h:outputText value="#{cat.clave}"/>
+					<p:column headerText="Clave"
+						style="width: 30px; text-align: center">
+						<h:outputText value="#{cat.clave}" />
 					</p:column>
 
 					<p:column headerText="Descripción">
