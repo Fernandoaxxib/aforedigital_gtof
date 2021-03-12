@@ -290,8 +290,8 @@ public class ModDesempParcRepo extends RepoBase {
 
 			query.registerStoredProcedureParameter("P_RUTA", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("P_ARCHIVO", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("P_Mensaje", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("P_ESTATUS", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 
 			query.setParameter("P_RUTA", ruta);
 			query.setParameter("P_ARCHIVO", archivo);
