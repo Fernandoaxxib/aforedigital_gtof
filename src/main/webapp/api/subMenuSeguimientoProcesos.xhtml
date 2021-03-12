@@ -24,7 +24,7 @@
 				itemValue="/api/monitorProcesos.jsf" />
 			<f:selectItem itemLabel="Liquidación de Fondos y Tipos de Pagos"
 				itemValue="/api/moduloPagos.js" />
-			<p:ajax event="change" listener="#{menu.navigateSub}" />
+			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
 	</h:form>
 
