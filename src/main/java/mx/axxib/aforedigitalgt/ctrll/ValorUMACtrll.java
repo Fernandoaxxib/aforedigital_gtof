@@ -92,7 +92,6 @@ public class ValorUMACtrll extends ControllerBase {
 		if(fechaInicial == null) {
 			UIInput fini = (UIInput) findComponent("fechaInicial");
 			fini.setValid(false);
-			pr.setDescProceso("Debe elegir una fecha inicio");
 			pr.setStatus("Fecha inicio es requerida");
 			return false;
 		}
@@ -100,7 +99,6 @@ public class ValorUMACtrll extends ControllerBase {
 		if(fechaFinal == null) {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
-			pr.setDescProceso("Debe elegir una fecha fin");
 			pr.setStatus("Fecha fin es requerida");
 			return false;
 		}
@@ -112,8 +110,7 @@ public class ValorUMACtrll extends ControllerBase {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
 
-			pr.setDescProceso("La fecha final debe ser mayor o igual a la inicial");
-			pr.setStatus("Error en las fechas");
+			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
 			return false;
 		}
 

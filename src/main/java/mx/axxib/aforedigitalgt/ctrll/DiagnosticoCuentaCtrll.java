@@ -161,7 +161,6 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 		if (fechaInicial == null) {
 			UIInput fini = (UIInput) findComponent("fechaInicial");
 			fini.setValid(false);
-			// pr.setDescProceso("Debe elegir una fecha inicio");
 			pr.setStatus("Fecha inicio es requerida");
 			return false;
 		}
@@ -169,7 +168,6 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 		if (fechaFinal == null) {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
-			// pr.setDescProceso("Debe elegir una fecha fin");
 			pr.setStatus("Fecha fin es requerida");
 			return false;
 		}
@@ -181,7 +179,6 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
 
-			// pr.setDescProceso("La fecha final debe ser mayor o igual a la inicial");
 			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
 			return false;
 		}

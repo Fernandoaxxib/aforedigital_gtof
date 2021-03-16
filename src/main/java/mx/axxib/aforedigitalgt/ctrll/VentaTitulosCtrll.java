@@ -248,8 +248,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
 
-			pr.setDescProceso("La fecha final debe ser mayor o igual a la inicial");
-			pr.setStatus("Error en las fechas");
+			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
 			return false;
 		}
 
@@ -257,7 +256,6 @@ public class VentaTitulosCtrll extends ControllerBase {
 			UIInput radio = (UIInput) findComponent("customRadio");
 			radio.setValid(false);
 
-			pr.setDescProceso("Debe elegir un módulo");
 			pr.setStatus("Selección requerida");
 			return false;
 		}

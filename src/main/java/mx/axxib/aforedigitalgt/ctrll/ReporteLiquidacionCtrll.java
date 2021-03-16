@@ -106,7 +106,6 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 	public boolean isValidForm(ProcessResult pr) {
 		if (selectedEstatus == null) {
 			UIInput ffin = (UIInput) findComponent("estatus");
-			pr.setDescProceso("Debe elegir un estatus");
 			pr.setStatus("Selección requerida");
 			ffin.setValid(false);
 			return false;
@@ -114,7 +113,6 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 		
 		if (selectedTipo == null) {
 			UIInput ffin = (UIInput) findComponent("tipo");
-			pr.setDescProceso("Debe elegir un tipo");
 			pr.setStatus("Selección requerida");
 			ffin.setValid(false);
 			return false;
@@ -122,7 +120,6 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 		
 		if (selectedTipoRetiro == null) {
 			UIInput ffin = (UIInput) findComponent("tipoRetiro");
-			pr.setDescProceso("Debe elegir un tipo de retiro");
 			pr.setStatus("Selección requerida");
 			ffin.setValid(false);
 			return false;
@@ -130,7 +127,6 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 		
 		if (selectedSiefore == null) {
 			UIInput ffin = (UIInput) findComponent("siefore");
-			pr.setDescProceso("Debe elegir una siefore");
 			pr.setStatus("Selección requerida");
 			ffin.setValid(false);
 			return false;

@@ -139,7 +139,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 		if (selectedTransaccion == null) {
 			UIInput fini = (UIInput) findComponent("transaccion");
 			fini.setValid(false);
-			pr.setDescProceso("Debe elegir un tipo de retiro");
 			pr.setStatus("Tipo de retiro es requerido");
 			return false;
 		}
@@ -147,7 +146,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 		if (selectedSubtransaccion == null) {
 			UIInput fini = (UIInput) findComponent("subtransaccion");
 			fini.setValid(false);
-			pr.setDescProceso("Debe elegir un tipo de prestación");
 			pr.setStatus("Tipo de prestación es requerido");
 			return false;
 		}
@@ -155,7 +153,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 		if (estado == null) {
 			UIInput fini = (UIInput) findComponent("estatus");
 			fini.setValid(false);
-			pr.setDescProceso("Debe elegir un estado");
 			pr.setStatus("Estado es requerido");
 			return false;
 		}
@@ -163,7 +160,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 		if (fechaInicial == null) {
 			UIInput fini = (UIInput) findComponent("fechaInicial");
 			fini.setValid(false);
-			pr.setDescProceso("Debe elegir una fecha inicio");
 			pr.setStatus("Fecha inicio es requerida");
 			return false;
 		}
@@ -171,7 +167,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 		if (fechaFinal == null) {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
-			pr.setDescProceso("Debe elegir una fecha fin");
 			pr.setStatus("Fecha fin es requerida");
 			return false;
 		}
@@ -183,8 +178,7 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
 
-			pr.setDescProceso("La fecha final debe ser mayor o igual a la inicial");
-			pr.setStatus("Error en las fechas");
+			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
 			return false;
 		}
 
@@ -192,7 +186,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 			UIInput fini = (UIInput) findComponent("noSolicInicial");
 			fini.setValid(false);
 
-			pr.setDescProceso("Solicitud inicial no válido");
 			pr.setStatus("Solicitud inicial debe ser numérico");
 			return false;
 		}
@@ -201,7 +194,6 @@ public class ReporteSolicRetiroCtrll extends ControllerBase {
 			UIInput fini = (UIInput) findComponent("noSolicFinal");
 			fini.setValid(false);
 
-			pr.setDescProceso("Solicitud final no válido");
 			pr.setStatus("Solicitud final debe ser numérico");
 			return false;
 		}
