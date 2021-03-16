@@ -30,7 +30,7 @@
             <f:selectItem itemLabel="Reportes Parciales CONSAR" itemValue="/api/repParciales.jsf" />
             <f:selectItem itemLabel="Consulta de Movimientos Actuales" itemValue="/api/consultaMovActuales.jsf" />
             <f:selectItem itemLabel="Reporte de Solicitudes de Retiro" itemValue="/api/reporteSolicRetiro.jsf" />
-			<p:ajax event="change" listener="#{menu.navigateSub}" />
+			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
 	</h:form>
 

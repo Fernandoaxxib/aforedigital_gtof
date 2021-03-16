@@ -106,11 +106,11 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 		}
 	
 	@SuppressWarnings("unchecked")
-	public FopagosListOut getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
+	public List<FopagosListOut> getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
 		
 		try {
 			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTA_FOPAGOS_PACKAGE).concat(".").concat(Constantes.CONSULTA_FOPAGOS_NSS_STORED);
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"FopagosListOut");
 
 			query.registerStoredProcedureParameter("pNumero_SolicRet", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("pNss", String.class, ParameterMode.IN);	
@@ -134,21 +134,22 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			
 			query.setParameter("pNumero_SolicRet", numSolicitud).setParameter("pNss", nss).setParameter("pCuenta", cuenta).setParameter("pNombre", nombre);	
 			
-			FopagosListOut res=new FopagosListOut();
-			res.setPNoPoliza_Pag((Integer) query.getOutputParameterValue("pNoPoliza_Pag"));
-			res.setPReferencia((String) query.getOutputParameterValue("pReferencia"));
-			res.setPFechaMov_Pag((Date) query.getOutputParameterValue("pFechaMov_Pag"));
-			res.setPFecReinv_Pag((Date) query.getOutputParameterValue("pFecReinv_Pag"));
-			res.setPTelefono_Pag((String) query.getOutputParameterValue("pTelefono_Pag"));
-			res.setPBenef_Re((String) query.getOutputParameterValue("pBenef_Re"));
-			res.setPPorcent_Re((Integer) query.getOutputParameterValue("pPorcent_Re"));
-			res.setPEstatus_Re((String) query.getOutputParameterValue("pEstatus_Re"));
-			res.setPPlaza_Re((String) query.getOutputParameterValue("pPlaza_Re"));
-			res.setPMonBruto_Re((Integer) query.getOutputParameterValue("pMonBruto_Re"));
-			res.setPMontoIsr_Re((Integer) query.getOutputParameterValue("pMontoIsr_Re"));
-			res.setPMontoNeto_Re((Integer) query.getOutputParameterValue("pMontoNeto_Re"));
-			res.setPMensaje((String) query.getOutputParameterValue("pMensaje"));
-			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+			List <FopagosListOut> res=query.getResultList();
+//			FopagosListOut res=new FopagosListOut();
+//			res.setPNoPoliza_Pag((Integer) query.getOutputParameterValue("pNoPoliza_Pag"));
+//			res.setPReferencia((String) query.getOutputParameterValue("pReferencia"));
+//			res.setPFechaMov_Pag((Date) query.getOutputParameterValue("pFechaMov_Pag"));
+//			res.setPFecReinv_Pag((Date) query.getOutputParameterValue("pFecReinv_Pag"));
+//			res.setPTelefono_Pag((String) query.getOutputParameterValue("pTelefono_Pag"));
+//			res.setPBenef_Re((String) query.getOutputParameterValue("pBenef_Re"));
+//			res.setPPorcent_Re((Integer) query.getOutputParameterValue("pPorcent_Re"));
+//			res.setPEstatus_Re((String) query.getOutputParameterValue("pEstatus_Re"));
+//			res.setPPlaza_Re((String) query.getOutputParameterValue("pPlaza_Re"));
+//			res.setPMonBruto_Re((Integer) query.getOutputParameterValue("pMonBruto_Re"));
+//			res.setPMontoIsr_Re((Integer) query.getOutputParameterValue("pMontoIsr_Re"));
+//			res.setPMontoNeto_Re((Integer) query.getOutputParameterValue("pMontoNeto_Re"));
+//			res.setPMensaje((String) query.getOutputParameterValue("pMensaje"));
+//			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 			
 			return res;
 			} catch (Exception e) {
