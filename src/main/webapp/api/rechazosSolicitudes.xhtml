@@ -56,66 +56,25 @@
 			<p:panel id="busqueda" header="Rechazo de solicitudes"
 				style="margin-top:20px">
 
-				<p:selectOneRadio id="customRadio" value="#{rechazos.opcion}"
-					required="true"
-					requiredMessage="Debe seleccionar un tipo de búsqueda"
-					layout="custom">
-					<f:selectItem itemLabel="Folio" itemValue="F" />
-					<f:selectItem itemLabel="Resolución" itemValue="R" />
-					<f:selectItem itemLabel="NSS" itemValue="N" />
-					<p:ajax event="change" update="busqueda"
-						listener="#{rechazos.cambio}" />
-				</p:selectOneRadio>
-
 				<p:panelGrid id="panel" styleClass="ui-noborder">
 					<p:row>
-						<p:column>
-							<p:radioButton id="opt1" for="customRadio" itemIndex="0" />
+						<p:column colspan="2">
+							<p:selectOneRadio id="opcion" value="#{rechazos.opcion}"
+								unselectable="false">
+								<f:selectItem itemLabel="Folio" itemValue="1" />
+								<f:selectItem itemLabel="Resolución" itemValue="2" />
+								<f:selectItem itemLabel="NSS" itemValue="3" />
+							</p:selectOneRadio>
 						</p:column>
+					</p:row>
+					<p:row>
 						<p:column>
-							<h:outputLabel for="opt1" value="Folio" />
-						</p:column>
-						<p:column>
-							<p:inputText value="#{rechazos.folio}" style="width:100px;"
-								disabled="#{rechazos.disFolio}"></p:inputText>
-						</p:column>
-						<p:column>
-							<h:outputLabel value="" />
-						</p:column>
-						<p:column>
-							<h:outputLabel value="" />
-						</p:column>
-						<p:column>
-							<p:radioButton id="opt2" for="customRadio" itemIndex="1" />
-						</p:column>
-						<p:column>
-							<h:outputLabel for="opt2" value="Resolución" />
-						</p:column>
-						<p:column>
-							<p:inputText value="#{rechazos.resolucion}" style="width:100px"
-								disabled="#{rechazos.disResolucion}"></p:inputText>
-						</p:column>
-						<p:column>
-							<h:outputLabel value="" />
-						</p:column>
-						<p:column>
-							<h:outputLabel value="" />
-						</p:column>
-						<p:column>
-							<p:radioButton id="opt3" for="customRadio" itemIndex="2" />
-						</p:column>
-						<p:column>
-							<h:outputLabel for="opt3" value="NSS" />
-						</p:column>
-						<p:column>
-							<p:inputText value="#{rechazos.nss}" style="width:100px"
-								disabled="#{rechazos.disNss}"></p:inputText>
+							<p:inputText id="valor" value="#{rechazos.valor}" style="width:150px"
+								></p:inputText>
 						</p:column>
 						<p:column>
 							<p:commandButton class="blue" actionListener="#{rechazos.buscar}"
-								update="pGrid pGrid2 result" value="Buscar" />
-
-
+								update="panel pGrid pGrid2 result" value="Buscar" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

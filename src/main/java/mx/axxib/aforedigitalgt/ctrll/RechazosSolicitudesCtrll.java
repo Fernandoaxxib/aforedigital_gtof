@@ -3,9 +3,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.util.Date;
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +33,7 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 
 	@Getter
 	@Setter
-	private String folio;
-
-	@Getter
-	@Setter
-	private String resolucion;
-
-	@Getter
-	@Setter
-	private String nss;
+	private String valor;
 
 	@Getter
 	@Setter
@@ -65,27 +55,14 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 
 	@Getter
 	@Setter
-	private String opcion;
-
-	@Getter
-	@Setter
-	private boolean disFolio;
-
-	@Getter
-	@Setter
-	private boolean disResolucion;
-
-	@Getter
-	@Setter
-	private boolean disNss;
+	private Integer opcion;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
-			folio = null;
-			resolucion = null;
-			nss = null;
+			opcion = 1;
+			valor = null;
 
 			fechaInicial = null;
 			fechaFinal = null;
@@ -94,38 +71,45 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 			rechazo = null;
 			catRechazos = null;
 
-			opcion = "F";
-			disFolio = false;
-			disResolucion = true;
-			disNss = true;
-			
 			obtenerCatalogo();
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
 		}
 	}
-
-	public void cambio() {
-		switch (opcion) {
-		case "F":
-			disFolio = false;
-			disResolucion = true;
-			disNss = true;
-			break;
-		case "R":
-			disFolio = true;
-			disResolucion = false;
-			disNss = true;
-			break;
-		case "N":
-			disFolio = true;
-			disResolucion = true;
-			disNss = false;
-			break;
-		}
-	}
-
 	
+	public boolean isFormValid(ProcessResult pr) {
+		if (valor == null || valor.equals("")) {
+			UIInput fini = (UIInput) findComponent("valor");
+			fini.setValid(false);
+			pr.setStatus("Valor es requerido");
+			return false;
+		} else {
+			if(opcion == 1) {
+				if(!ValidateUtil.isInteger(valor) || valor.length()<6) {
+					UIInput fini = (UIInput) findComponent("valor");
+					fini.setValid(false);
+					pr.setStatus("Folio no válido");
+					return false;
+				}
+			} else if(opcion == 2) {
+				if(!ValidateUtil.isInteger(valor) || valor.length()<6) {
+					UIInput fini = (UIInput) findComponent("valor");
+					fini.setValid(false);
+					pr.setStatus("Resolución no válido");
+					return false;
+				}
+			} else if(opcion == 3) {
+				if(!ValidateUtil.isNSS(valor)) {
+					UIInput fini = (UIInput) findComponent("valor");
+					fini.setValid(false);
+					pr.setStatus("NSS no válido");
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
 
 	public void buscar() {
 		ProcessResult pr = new ProcessResult();
@@ -133,16 +117,18 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Buscar");
 			rechazo = null;
-			RechazosOut res = rechazosService.getConsultaRechazos(folio, 1);
-			if(res.getEstatus() == 1) {
-				rechazo = res;
-				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-			} else {
-				if(res.getEstatus() == 2) {
-					GenerarErrorNegocio(res.getMensaje());
-				} else if(res.getEstatus() == 0) {
-					pr.setStatus(res.getMensaje());
-				} 
+			if (isFormValid(pr)) {
+				RechazosOut res = rechazosService.getConsultaRechazos(valor, opcion);
+				if (res.getEstatus() == 1) {
+					rechazo = res;
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
@@ -160,24 +146,22 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 			GenericException(e);
 		}
 	}
-	
+
 	public boolean isFormValidR(ProcessResult pr) {
-		if(fechaInicial == null) {
+		if (fechaInicial == null) {
 			UIInput fini = (UIInput) findComponent("fechaInicial");
 			fini.setValid(false);
-			pr.setDescProceso("Debe elegir una fecha inicio");
 			pr.setStatus("Fecha inicio es requerida");
 			return false;
 		}
-		
-		if(fechaFinal == null) {
+
+		if (fechaFinal == null) {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
-			pr.setDescProceso("Debe elegir una fecha fin");
 			pr.setStatus("Fecha fin es requerida");
 			return false;
 		}
-		
+
 		if (!DateUtil.isValidDates(fechaInicial, fechaFinal)) {
 			UIInput fini = (UIInput) findComponent("fechaInicial");
 			fini.setValid(false);
@@ -185,8 +169,7 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 			UIInput ffin = (UIInput) findComponent("fechaFinal");
 			ffin.setValid(false);
 
-			pr.setDescProceso("La fecha final debe ser mayor o igual a la inicial");
-			pr.setStatus("Error en las fechas");
+			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
 			return false;
 		}
 
@@ -212,21 +195,22 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Generar reporte");
-			if(isFormValidR(pr)) {
+			if (isFormValidR(pr)) {
 				GeneraReporteIn parametros = new GeneraReporteIn();
 				parametros.setFechaInicial(fechaInicial);
 				parametros.setFechaFinal(fechaFinal);
 				parametros.setNombreArchivo(nombreArchivo);
 				GeneraReporteOut res = rechazosService.generaReporte(parametros);
-	
-				if(res.getEstatus() == 1) {
-					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)+": "+res.getMensaje());
+
+				if (res.getEstatus() == 1) {
+					pr.setStatus(
+							aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje());
 				} else {
-					if(res.getEstatus() == 2) {
+					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
-					} else if(res.getEstatus() == 0) {
+					} else if (res.getEstatus() == 0) {
 						pr.setStatus(res.getMensaje());
-					} 
+					}
 				}
 			}
 		} catch (Exception e) {
@@ -236,8 +220,5 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 			resultados.add(pr);
 		}
 	}
-	
-	
-	
 
 }
