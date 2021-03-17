@@ -19,7 +19,7 @@ public class LiqEjecutaReporteIn {
 	private String estado;
 	private String usuario;
 	private String descripcion;
-	private String fecha;
+	private Date fecha;
 }
 
 //P_TIPO_REPORTE IN VARCHAR2,

@@ -144,8 +144,8 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 				LiqEjecutaReporteIn parametros = new LiqEjecutaReporteIn();
 				parametros.setDescripcion(selectedSiefore.getDescripcion());
 				parametros.setEstado(selectedEstatus);
-				parametros.setFecha(parametros.getFecha());
-				parametros.setIdLote(parametros.getIdLote());
+				parametros.setFecha(DateUtil.getNowDate());
+				parametros.setIdLote(lote);
 				parametros.setSiefore(selectedSiefore.getSiefore());
 				parametros.setTipoReporte(selectedTipo);
 				parametros.setTipoRetiro(selectedTipoRetiro);
