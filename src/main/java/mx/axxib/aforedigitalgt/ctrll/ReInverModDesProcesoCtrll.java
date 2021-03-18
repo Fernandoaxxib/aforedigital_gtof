@@ -1,0 +1,259 @@
+package mx.axxib.aforedigitalgt.ctrll;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.faces.component.UIInput;
+
+import org.ocpsoft.rewrite.el.ELBeanName;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import lombok.Getter;
+import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.AforeException;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.EjecucionResult;
+import mx.axxib.aforedigitalgt.serv.ReInverModDesProcesoServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
+
+@Scope(value = "session")
+@Component(value = "reinversionModDesProceso")
+@ELBeanName(value = "reinversionModDesProceso")
+public class ReInverModDesProcesoCtrll extends ControllerBase {
+
+	@Autowired
+	private ReInverModDesProcesoServ service;
+	@Getter
+	@Setter
+	private Date fecha;
+
+	@Getter
+	@Setter
+	private Date fechaI;
+	@Getter
+	@Setter
+	private Date fechaF;
+
+	@Getter
+	@Setter
+	private String radioSelected;
+
+	@Getter
+	@Setter
+	private Integer cuentasPendientes;
+
+	@Getter
+	private String ruta;
+
+	@Getter
+	private String archivo;
+
+	@Getter
+	private String display;
+	@Getter
+	private String display1;
+	@Getter
+	private String display2;
+	@Getter
+	private String display3;
+	@Getter
+	private String display4;
+	@Getter
+	private String display5;
+
+	@Override
+	public void iniciar() {
+		super.iniciar();
+		if (init) {
+			reset();
+		}
+	}
+
+	public void reset() {
+		ruta = "/RESPALDOS/operaciones";
+		fecha = DateUtil.getNowDate();
+		fechaI = DateUtil.getNowDate();
+		fechaF = DateUtil.getNowDate();
+		display = "none";
+		display1 = "none";
+		display2 = "none";
+		display3 = "none";
+		display4 = "none";
+		display5 = "none";
+		archivo = null;
+		radioSelected = null;
+	}
+
+	public void radioSelected() {
+		ProcessResult pr = new ProcessResult();
+		pr.setDescProceso("Consulta de cuentas pendientes");
+		pr.setFechaInicial(DateUtil.getNowDate());
+
+		if (radioSelected.equals("1")) {
+			try {
+				cuentasPendientes = service.getValorCuentas().intValue();
+				display = "inline";
+				display1 = "none";
+				display2 = "inline";
+				display3 = "none";
+				display4 = "none";
+				if (cuentasPendientes > 0) {
+					display5 = "inline";
+				} else {
+					display5 = "none";
+				}
+				archivo = null;
+			} catch (AforeException e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		}
+		if (radioSelected.equals("2")) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
+			String f = format.format(fecha);
+			archivo = "REPORTE_REINVERSION_" + f;
+			cuentasPendientes = null;
+			display = "none";
+			display1 = "none";
+			display2 = "inline";
+			display3 = "inline";
+			display4 = "inline";
+			display5 = "inline";
+		}
+		if (radioSelected.equals("3")) {
+			cuentasPendientes = null;
+			display = "none";
+			display1 = "none";
+			display2 = "inline";
+			display3 = "none";
+			display4 = "none";
+			display5 = "inline";
+			archivo = null;
+		}
+		if (radioSelected.equals("4")) {
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+			String fI = format.format(fechaI);
+			String fF = format.format(fechaF);
+			cuentasPendientes = null;
+			display = "none";
+			display1 = "inline";
+			display2 = "none";
+			display3 = "inline";
+			display4 = "inline";
+			display5 = "inline";
+			archivo = "REPORTE_CANCELADAS_" + fI + "_" + fF + ".xls";
+		}
+	}
+
+	public void ejecutar() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if (isFormValid(pr)) {
+			try {
+				EjecucionResult result = service.procesoEjecutar(Integer.valueOf(radioSelected),fechaI,
+						fechaF, null);
+				if (result.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (result.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(result.getOcMensaje());
+					} else if (result.getOn_Estatus() == 0) {
+						pr.setStatus(result.getOcMensaje());
+					}
+				}
+			} catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		} else {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+
+	}
+
+	public boolean isFormValid(ProcessResult pr) {
+		boolean resp = false;
+		if (radioSelected == null) {
+			UIInput radio = (UIInput) findComponent("radSelect");
+			radio.setValid(false);
+
+			pr.setDescProceso("Debe seleccionar una opción");
+			pr.setStatus("Selección requerida");
+			return false;
+		} else {
+			switch (radioSelected) {
+
+			case "1": {
+				if (fecha != null) {
+					resp = true;
+					break;
+				} else {
+					UIInput radio = (UIInput) findComponent("fCapturada");
+					radio.setValid(false);
+					pr.setDescProceso("Debe seleccionar una fecha");
+					pr.setStatus("Selección requerida");
+				}
+			}
+			case "2": {
+				if (fecha != null) {
+					resp = true;
+					break;
+				} else {
+					UIInput radio = (UIInput) findComponent("fCapturada");
+					radio.setValid(false);
+					pr.setDescProceso("Debe seleccionar una fecha");
+					pr.setStatus("Selección requerida");
+				}
+			}
+			case "3": {
+				if (fecha != null) {
+					resp = true;
+					break;
+				} else {
+					UIInput radio = (UIInput) findComponent("fCapturada");
+					radio.setValid(false);
+					pr.setDescProceso("Debe seleccionar una fecha");
+					pr.setStatus("Selección requerida");
+				}
+			}
+			case "4": {
+				if (fechaI != null && fechaF != null) {
+					if (DateUtil.isValidDates(fechaI, fechaF)) {
+						resp = true;
+						break;
+					} else {
+						UIInput fI = (UIInput) findComponent("fechaI");
+						fI.setValid(false);
+						UIInput fF = (UIInput) findComponent("fechaF");
+						fF.setValid(false);
+						pr.setDescProceso("La fecha inicial debe ser menor o igual a la fecha final");
+						pr.setStatus("Selección requerida");
+						resp = false;
+						break;
+					}
+				} else {
+					UIInput fI = (UIInput) findComponent("fechaI");
+					fI.setValid(false);
+					UIInput fF = (UIInput) findComponent("fechaF");
+					fF.setValid(false);
+					pr.setDescProceso("Debe seleccionar fecha inicio y fecha fin");
+					pr.setStatus("Selección requerida");
+					resp = false;
+					break;
+				}
+			}
+			}
+
+		}
+
+		return resp;
+	}
+}

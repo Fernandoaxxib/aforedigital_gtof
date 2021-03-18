@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/api/layaut2.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{reinversionModDesCompras.iniciar}"
+			type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript library="js" name="calendar-localization.js" />
+
+
+		<p:panelGrid class="no-border" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="blue"
+							outcome="/api/reInverModDesProceso.jsf" includeViewParams="true"
+							value="Proceso">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="green"
+							outcome="/api/reInverModDesCompras.jsf" includeViewParams="true"
+							value="Compras">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="blue"
+							outcome="/api/reInverModDesVentas.jsf" includeViewParams="true"
+							value="Ventas">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
+			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
+			resizable="false" style="font-size:12px">
+			<p:dataTable var="registro" value="#{reinversionModDesCompras.listLotes}"
+				selectionMode="single" selection="#{reinversionModDesCompras.selectedLote}"
+				rowKey="#{registro.id_lote}" style="padding-bottom:10px">
+				<p:ajax process="@this" event="rowSelect"
+					listener="#{reinversionModDesCompras.onRowSelect}" />
+
+				<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
+					styleClass="gridCell-right">
+					<h:outputText value="#{registro.id_lote}" />
+				</p:column>
+				<p:column headerText="Descripción"
+					styleClass="gridCell-right">
+					<h:outputText value="#{registro.descripcion}" />
+				</p:column>
+				<p:column headerText="Fecha Movimiento" styleClass="gridCell-right">
+					<h:outputText value="#{registro.FEC_MOVIMTO}">
+						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+					</h:outputText>
+				</p:column>
+				
+			</p:dataTable>
+			<p:outputPanel style="text-align:right">
+				<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
+					styleClass="blue ui-button-text" style="margin-right:10px" />
+				<p:commandButton value="Seleccionar"
+					actionListener="#{reinversionModDesCompras.opcionSeleccionada2}"
+					oncomplete="PF('dlg2').hide();" update=":form:pnl2"
+					styleClass="blue ui-button-text" />
+			</p:outputPanel>
+		</p:dialog>
+
+
+		<h:form id="form">
+			<p:panel id="pnl1" header="Compras" style="margin-bottom:20px">
+				<p:panelGrid styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha: " />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fecha"
+								value="#{reinversionModDesCompras.fecha}" locale="es"
+								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+								monthNavigator="true"
+								inputStyle="width:100px; text-align:right;" readonlyInput="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Lote: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="vLote" value="#{reinversionModDesCompras.lote}"
+								placeholder="Indique lote"
+								style="text-align:right;width:150px;margin-left:10px !important" />
+							<p:commandButton styleClass="blue" style="width:35px" value="..."
+								action="#{reinversionModDesCompras.getLotes}" update=""
+								oncomplete="" />
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue" value="Generar Reporte"
+								action="#{reinversionModDesCompras.generarReporte}" update=""
+								oncomplete="" />
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue" value="Comprar"
+								action="#{reinversionModDesCompras.comprar}" update=""
+								oncomplete="" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{reinversionModDesCompras}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

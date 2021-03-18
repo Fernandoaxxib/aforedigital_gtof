@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/api/layaut2.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{reinversionModDesVentas.iniciar}"
+			type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputStylesheet name="estilo-base.css" library="css" />
+		<h:outputScript library="js" name="calendar-localization.js" />
+
+
+		<p:panelGrid class="no-border" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="blue" outcome="/api/reInverModDesProceso.jsf"
+							includeViewParams="true"
+							value="Proceso">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="blue" outcome="/api/reInverModDesCompras.jsf"
+							includeViewParams="true"
+							value="Compras">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="green" outcome="/api/reInverModDesVentas.jsf"
+							includeViewParams="true"
+							value="Ventas">
+							<f:param name="init" value="true" />
+						</p:linkButton>						
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<h:form id="form">
+			<p:panel id="pnl1" header="Ventas" style="margin-bottom:20px">
+				
+			
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{reinversionModDesVentas}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
