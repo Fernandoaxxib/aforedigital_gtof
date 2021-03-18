@@ -160,14 +160,17 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		}
 	}
 		
-    public void onRowEdit(RowEditEvent<SalarioMinimoTablaOut> event) {
-    	ProcessResult pr = new ProcessResult();
+    public void onRowEdit(RowEditEvent<SalarioMinimoOut> event) { 
+	//@SuppressWarnings("rawtypes")
+	//public void onRowEdit(RowEditEvent event) {
+		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Editar columna Usuario");
 		
-    	 System.out.println("entrando al onRowEdit");
-    	 SalarioMinimoTablaOut salarioMinimoTabla= (SalarioMinimoTablaOut) event.getObject();
-    	
+    	 System.out.println("entrando al onRowEdit:  "+event);
+    	 System.out.println("VALOR DE GET ZONA:  "+event.getObject().getCdZona()+"----"+event.getObject().getMontoDiario());
+    	 //SalarioMinimoTablaOut salarioMinimoTabla=  (SalarioMinimoTablaOut) event.getObject();
+    	 SalarioMinimoOut salarioMinimoTabla=  (SalarioMinimoOut) event.getObject();
     	 System.out.println("VISTA ");
         System.out.println("Datos de La Vista Usuario: "+salarioMinimoTabla.getUserId());
         System.out.println("Datos de La Vista Zona: "+salarioMinimoTabla.getCdZona());
@@ -206,6 +209,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cancelar columna Usuario");
+		System.out.println("VALOR DE CANCEL");
         try {
     	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
         FacesContext.getCurrentInstance().addMessage(null, msg);
