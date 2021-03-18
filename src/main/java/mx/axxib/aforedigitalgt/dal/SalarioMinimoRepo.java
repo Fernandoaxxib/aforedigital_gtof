@@ -47,9 +47,13 @@ private final EntityManager entityManager;
 		
 		
 		SalarioMinOut res = new SalarioMinOut(); 
+		Object cursor = query.getOutputParameterValue("CP_CURSOR");
+		System.out.println("Cursor Id Usuario"+cursor);
+		if (cursor != null) {
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		res.setListSalarioMin(query.getResultList());
 		res.setEstatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
+		}
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

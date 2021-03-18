@@ -33,14 +33,22 @@
 		
 <!-- 		 <p:growl id="msgs" showDetail="true"/> -->
  
-    <p:dataTable id="tableSalario" widgetVar="salario1" var="salario" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
+    <p:dataTable id="tableSalario"  widgetVar="salario1" var="salario" emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
 <!--         <f:facet name="header" style="text-align: left;"> -->
 <!--             Salario Minimo (diario) -->
 <!--         </f:facet> -->
- 
+ 		
+ 								<f:facet name="header" style="float:right">
+
+								<h:outputLabel for="registros"
+								value="#{msg.aprob_label_totalRegistros}"  />
+								<h:outputText id="totalRegistros"
+								value="#{salarioMinimo.totalIdUsuario}" />
+
+								</f:facet>
  		
  
-        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario" />
+        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario :form:result" />
         <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:tableSalario :form:result" />
  
         <p:column headerText="CdZona">
