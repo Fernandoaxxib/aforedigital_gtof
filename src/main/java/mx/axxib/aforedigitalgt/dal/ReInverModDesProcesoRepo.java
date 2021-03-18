@@ -82,17 +82,15 @@ public class ReInverModDesProcesoRepo extends RepoBase {
 		}
 	}
 	
-	public List<LoteCOut> getLotes()throws AforeException {
-		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
-					.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_VALOR_CUENTAS);
-		
-			BigDecimal value = (BigDecimal)entityManager
-                    .createNativeQuery("SELECT "+storedFullName+" FROM DUAL")
-                    .getResultList();		
-			return value;
-		} catch (Exception e) {
-			throw GenericException(e);
-		}
-	}
+	/*
+	 * public List<LoteCOut> getLotes()throws AforeException { try { String
+	 * storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.
+	 * REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
+	 * .concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_VALOR_CUENTAS
+	 * );
+	 * 
+	 * BigDecimal value = (BigDecimal)entityManager
+	 * .createNativeQuery("SELECT "+storedFullName+" FROM DUAL") .getResultList();
+	 * return value; } catch (Exception e) { throw GenericException(e); } }
+	 */
 }
