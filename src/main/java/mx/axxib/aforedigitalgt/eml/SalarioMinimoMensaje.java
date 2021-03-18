@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @MappedSuperclass
-public class SalarioMinOut {
+public class SalarioMinimoMensaje {
 	private String mensaje;
-	private List<SalarioMinimoOut> listSalarioMin;
 	private Integer estatus;
+	
+
 }

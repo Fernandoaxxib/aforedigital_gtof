@@ -21,29 +21,27 @@
 
 		<h:outputScript name="js/calendar-localization.js" />
 		
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
+		
 		
 	<h:form id="form">
 		<p:panel id="datosSalario" header="Salario Minimo" style="margin-top:20px">
 		
 		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
         <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
-		<p:commandButton class="blue"  action="#{salarioMinimo.botonGenerarTabla}"
-							type="submit" value="#{msg.salario_minimo_boton_salario}" ajax="false" />
+		<p:commandButton class="blue"  action="#{salarioMinimo.botonGenerarTabla}" update="form result"
+							type="submit" value="#{msg.salario_minimo_boton_salario}" />
 		
-		 <p:growl id="msgs" showDetail="true"/>
+<!-- 		 <p:growl id="msgs" showDetail="true"/> -->
  
     <p:dataTable id="tableSalario" widgetVar="salario1" var="salario" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
-        <f:facet name="header" style="text-align: left;">
-            Salario Minimo (diario)
-        </f:facet>
+<!--         <f:facet name="header" style="text-align: left;"> -->
+<!--             Salario Minimo (diario) -->
+<!--         </f:facet> -->
  
  		
  
-        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:msgs :form:tableSalario" />
-        <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:msgs" />
+        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario" />
+        <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:tableSalario :form:result" />
  
         <p:column headerText="CdZona">
             <p:cellEditor>
@@ -127,6 +125,10 @@
 			
 		</p:dialog>
 		</p:panel>	
+		
+		<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{salarioMinimo}" />
+		</ui:include>
   </h:form>
 </ui:define>
 

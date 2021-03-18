@@ -285,7 +285,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 //		}
 	 
 		 }else {
-			 if (validarCURP(desmarcaCURP) && isNumeric(desmarcaNSS)) {
+			 if (validarCURP(desmarcaCURP) ) {//&& isNumeric(desmarcaNSS)
 				 
 					
 //					SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
@@ -300,6 +300,8 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,part1);
 //					Date today2= new Date();		
 //					proceso.setFechahoraFinal(format.format(today2));
+				 System.out.println("VALOR DE MENSAJE DE ESTATUS:"+desmarcaCargaConsultaMasivaOut.getOn_Estatus());
+				 System.out.println("VALOR DE MENSAJE DE PRUEBA:"+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
 				 if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()!=1 ) {
 //					if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().contains("OCURRIO UN ERROR")) {
 						pr.setStatus("Error al ejecutar la desmarca masiva");
@@ -318,7 +320,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 						 //addMessageFail("Ingresar solo  digitos");
 				 		boolean bandera=false;
 				 		System.out.println("");
-				 		 if ((validarCURP(desmarcaCURP)==false) && (isNumeric(desmarcaNSS)==false)) {
+				 		 if ((validarCURP(desmarcaCURP)==false)) { // && (isNumeric(desmarcaNSS)==false)
 				 		 UIInput inputNss = (UIInput) findComponent("nss");
 				 		 inputNss.setValid(false);
 						 UIInput inputCurp = (UIInput) findComponent("curp");

@@ -146,6 +146,8 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
 			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+			System.out.println("VALOR DE ESTATUS ------:"+desmarcaCargaConsultaMasivaOut.getOn_Estatus());
+			System.out.println("VALOR DE MENSAJE ------:"+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
 			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
@@ -155,7 +157,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //					proceso.setAbrevProceso(resp);//"Generar reporte"
 //					proceso.setEstadoProceso("FALLIDO");
 //					 addMessageFail(resp);
-					pr.setStatus("Error al ejecutar Desmarca Masiva por Nss y Curp");
+					pr.setStatus("Error al ejecutar Desmarca Masiva");
 				}
 //			if(msg.trim().toUpperCase().equals("OK")) {
 //				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);

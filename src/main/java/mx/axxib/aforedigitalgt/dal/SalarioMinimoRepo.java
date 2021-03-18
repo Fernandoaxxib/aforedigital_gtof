@@ -16,6 +16,7 @@ import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ObtieneJobs;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitor;
 import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
+import mx.axxib.aforedigitalgt.eml.SalarioMinimoMensaje;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
 
 @Repository
@@ -40,6 +41,7 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("CP_CURSOR", void.class, ParameterMode.REF_CURSOR);	
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);	
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("P_USUARIO", usuario);
 		
@@ -47,6 +49,7 @@ private final EntityManager entityManager;
 		SalarioMinOut res = new SalarioMinOut(); 
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		res.setListSalarioMin(query.getResultList());
+		res.setEstatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -74,7 +77,7 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String save(String usuario , Date calendario, Double monto) throws AforeException {
+	public SalarioMinimoMensaje save(String usuario , Date calendario, Double monto) throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALARIO_MINIMO_PACKAGE).concat(".").concat(Constantes.SALARIO_MINIMO_INSERT_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
@@ -82,13 +85,16 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_FCH_CALENDARIO", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MONTO_DIARIO", Double.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);		
+		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("P_USUARIO", usuario);
 		query.setParameter("P_FCH_CALENDARIO", calendario);
 		query.setParameter("P_MONTO_DIARIO", monto);
 		
-		String res = (String) query.getOutputParameterValue("P_MENSAJE");
+		SalarioMinimoMensaje res=new SalarioMinimoMensaje();
+		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+		res.setEstatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -96,7 +102,7 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String update(String usuario, String cdZona , Date calendario, Double monto) throws AforeException {
+	public SalarioMinimoMensaje update(String usuario, String cdZona , Date calendario, Double monto) throws AforeException {
 		try {
 			 System.out.println("DAO ");
 			System.out.println("Datos del dao Usuario: "+usuario);
@@ -112,13 +118,16 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_FCH_CALENDARIO", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MONTO_DIARIO", Double.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);		
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("P_USUARIO", usuario);
 		query.setParameter("P_CDG_ZONA", cdZona);
 		query.setParameter("P_FCH_CALENDARIO", calendario);
 		query.setParameter("P_MONTO_DIARIO", monto);
 		
-		String res = (String) query.getOutputParameterValue("P_MENSAJE");
+		SalarioMinimoMensaje res=new SalarioMinimoMensaje();
+		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+		res.setEstatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

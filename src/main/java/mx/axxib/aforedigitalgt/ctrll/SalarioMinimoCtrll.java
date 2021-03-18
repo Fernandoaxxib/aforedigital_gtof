@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -20,10 +21,13 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoInsertTablaOut;
+import mx.axxib.aforedigitalgt.eml.SalarioMinimoMensaje;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoTablaOut;
 import mx.axxib.aforedigitalgt.serv.SalarioMinimoServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "salarioMinimo")
@@ -70,6 +74,10 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	@Setter
 	private SalarioMinimoInsertTablaOut salarioMinimoInsertTablaOut;
 	
+	@Getter
+	@Setter
+	private SalarioMinimoMensaje salarioMinimoMensaje;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -86,8 +94,9 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	
 	
 	public void botonGenerarTabla() {
+		ProcessResult pr = new ProcessResult();
 		try {
-			
+			if (idUsuario != null && !idUsuario.equals("") ){
 			SalarioMinOut salarioMinOut =new SalarioMinOut();
 			salarioMinOut = salarioMinService.getSalarioMinimo(idUsuario);	 
 			//salarioMinimoOut = salarioMinService.getSalarioMinimo2("JGALICIA");
@@ -106,9 +115,16 @@ public class SalarioMinimoCtrll extends ControllerBase {
 			 salarioMinimoTablaOut=salarioMinimoOut;
 			 System.out.println("Tamaño de salarioMinimoTablaOut:" +salarioMinimoOut.size());
 			 System.out.println("IMPRIMIR LISTA VISTA:" +salarioMinimoTablaOut);
-			
+			}else {
+				UIInput input = (UIInput) findComponent("usuario");
+				input.setValid(false);
+				pr.setStatus("Usuario es requerido");
+			}
 		} catch (Exception e) {
-			GenericException(e);
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 		
@@ -124,15 +140,15 @@ public class SalarioMinimoCtrll extends ControllerBase {
         System.out.println("Datos de La Vista  Monto: "+salarioMinimoTabla.getMontoDiario());
         //salarioMinimoTablaOut
         try {
-			String msg=salarioMinService.update(salarioMinimoTabla.getUserId(), salarioMinimoTabla.getCdZona(), salarioMinimoTabla.getFechaCalendario(), salarioMinimoTabla.getMontoDiario());
-			System.out.println("VALOR DE STORED UPDATE: "+msg);
-			if(msg.trim().toUpperCase().equals("SE ACTUALIZO CORECTAMENTE")) {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-			} else {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-			}
+        	salarioMinimoMensaje=salarioMinService.update(salarioMinimoTabla.getUserId(), salarioMinimoTabla.getCdZona(), salarioMinimoTabla.getFechaCalendario(), salarioMinimoTabla.getMontoDiario());
+			System.out.println("VALOR DE STORED UPDATE: "+salarioMinimoMensaje);
+//			if(msg.trim().toUpperCase().equals("SE ACTUALIZO CORECTAMENTE")) {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
+//			} else {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
+//			}
         }  catch (Exception e) {
 			GenericException(e);
 		}
@@ -140,8 +156,18 @@ public class SalarioMinimoCtrll extends ControllerBase {
     }
      
     public void onRowCancel(RowEditEvent<SalarioMinimoTablaOut> event) {
-        FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
+    	
+    	ProcessResult pr = new ProcessResult();
+        try {
+    	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        pr.setStatus("Se cancelo la columna");
+        }catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
     }
    
     public void onAddNew() {
@@ -155,15 +181,15 @@ public class SalarioMinimoCtrll extends ControllerBase {
         System.out.println("Datos de La Vista  Monto: "+montoDiario);
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
-			String msg=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
-			System.out.println("Valor de msg: "+msg);
-			if(msg.equals("se insertaron  correctamente los datos")) { 
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-			} else {
-				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-			}
+    		salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
+			System.out.println("Valor de msg: "+salarioMinimoMensaje);
+//			if(msg.equals("se insertaron  correctamente los datos")) { 
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+//			} else {
+//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
+//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+//			}
 			
 		}  catch (Exception e) {
 			GenericException(e);
