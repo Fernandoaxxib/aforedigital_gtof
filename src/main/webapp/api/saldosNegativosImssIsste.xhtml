@@ -27,10 +27,10 @@
 		       </p:column>
 		       <p:column>
 		           <h:form>
-		              <p:linkButton styleClass="green" outcome="/api/saldosNegativosImssIsste.jsf" includeViewParams="true" value="Saldos Imss/Isste" >			         
+		              <p:linkButton styleClass="green ui-button-text" outcome="/api/saldosNegativosImssIsste.jsf" includeViewParams="true" value="Saldos Imss/Isste" >			         
 					    <f:param name="init" value="true" />
 				      </p:linkButton>
-				      <p:linkButton styleClass="blue" outcome="/api/saldosNegativosVol.jsf" includeViewParams="true" value="Saldos Vol" >			         
+				      <p:linkButton styleClass="blue ui-button-text" outcome="/api/saldosNegativosVol.jsf" includeViewParams="true" value="Saldos Vol" >			         
 					    <f:param name="init" value="true" />
 				      </p:linkButton>
 		           </h:form>
@@ -59,13 +59,14 @@
 								<div class="ui-g-3">
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
-								<div class="ui-g-9"  >
-									<p:inputText id="cargaImss" value="#{saldosNegativosImssIsste.nombreNssImss}" placeholder="NSS-CARGA-REP-YYYYMMDD.txt" size="45"   >  </p:inputText>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+										<p:outputLabel value="#{saldosNegativosImssIsste.nombreNssImss}" />
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Carga" action="#{saldosNegativosImssIsste.ejecutarImssCarga}" process="cargaImss" update="form result" />
+									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Carga" action="#{saldosNegativosImssIsste.ejecutarImssCarga}" update="form result" />
 								</div>
 							</div>
 						</p:panel>
@@ -87,8 +88,9 @@
 								<div class="ui-g-3">
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
-								<div class="ui-g-9">
-									<p:inputText id="reporteImss" value="#{saldosNegativosImssIsste.nombreReporteImss}" placeholder="RPT-SLD-IMSS-FIN-YYYYMMDD.xls" size="45"  >  </p:inputText>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+									<p:outputLabel value="#{saldosNegativosImssIsste.nombreReporteImss}" />
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
@@ -121,8 +123,9 @@
 								<div class="ui-g-3">
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
-								<div class="ui-g-9">
-									<p:inputText id="cargaIsste" value="#{saldosNegativosImssIsste.nombreCurpIsste}" placeholder="CURP-CARGA-REP-YYYYMMDD.txt" size="45"  required="false" >  </p:inputText>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+									<p:outputLabel value="#{saldosNegativosImssIsste.nombreCurpIsste}" />
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">
@@ -151,8 +154,9 @@
 								<div class="ui-g-3">
 									<p:outputLabel value="Nombre Archivo:" />
 								</div>
-								<div class="ui-g-9">
-									<p:inputText id="reporteIsste" value="#{saldosNegativosImssIsste.nombreReporteIsste}" placeholder="RPT-SLD-ISSS-FIN-YYYYMMDD.xls" size="45"  required="false" >  </p:inputText>
+								<div class="ui-g-9"
+									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
+									<p:outputLabel value="#{saldosNegativosImssIsste.nombreReporteIsste}" />
 								</div>
 							</div>
 							<div class="ui-g" style="text-align: right;">

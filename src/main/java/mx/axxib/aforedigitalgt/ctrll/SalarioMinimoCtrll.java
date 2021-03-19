@@ -204,15 +204,16 @@ public class SalarioMinimoCtrll extends ControllerBase {
         
     }
      
-    public void onRowCancel(RowEditEvent<SalarioMinimoTablaOut> event) {
+    public void onRowCancel(RowEditEvent<SalarioMinimoOut> event) {
     	
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cancelar columna Usuario");
 		System.out.println("VALOR DE CANCEL");
         try {
-    	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+//    	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
+//        FacesContext.getCurrentInstance().addMessage(null, msg);
+        event.getObject().getUserId();
         pr.setStatus("Se cancelo la columna");
         }catch (Exception e) {
 			pr = GenericException(e);

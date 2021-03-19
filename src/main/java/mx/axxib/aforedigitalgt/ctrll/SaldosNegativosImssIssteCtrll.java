@@ -103,21 +103,28 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	@Override
 	public void iniciar() {
 		super.iniciar();
+		Date myDate = new Date();
+		System.out.println(myDate);
+		System.out.println(new SimpleDateFormat("yyyyMMdd").format(myDate));
 		if(init) {
-			rutaNssImss="/RESPALDOS/operaciones";		
+			rutaNssImss="/RESPALDOS/operaciones";
+			nombreNssImss="NSS-CARGA-REP-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".txt";
 			rutaReporteImss="/RESPALDOS/operaciones";	
+			nombreReporteImss="RPT-SLD-IMSS-FIN-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".xls";
 			rutaCurpIsste="/RESPALDOS/operaciones";	
+			nombreCurpIsste="CURP-CARGA-REP-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".txt";
 			rutaReporteIsste="/RESPALDOS/operaciones";	
+			nombreReporteIsste="RPT-SLD-ISSS-FIN-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".xls";;
 			today= new Date();
 			limpiar();
 		}
 	}
 	
 	public void limpiar() {
-		nombreNssImss=null;
-		nombreReporteImss=null;
-		nombreCurpIsste=null;
-		nombreReporteIsste=null;
+		//nombreNssImss=null;
+		//nombreReporteImss=null;
+		//nombreCurpIsste=null;
+		//nombreReporteIsste=null;
 		mensajeTabla=null;
 		
 	}
@@ -141,15 +148,15 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 				pr.setStatus("Proceso Fallido");	
 				}
 			}else {
-				UIInput input = (UIInput) findComponent("cargaImss");
-				input.setValid(false);
-				pr.setStatus("Nombre Carga Imss formato invalido");
+//				UIInput input = (UIInput) findComponent("cargaImss");
+//				input.setValid(false);
+//				pr.setStatus("Nombre Carga Imss formato invalido");
 				
 			}
 			}else {
-				UIInput input = (UIInput) findComponent("cargaImss");
-				input.setValid(false);
-				pr.setStatus("Nombre Carga Imss es requerido");
+//				UIInput input = (UIInput) findComponent("cargaImss");
+//				input.setValid(false);
+//				pr.setStatus("Nombre Carga Imss es requerido");
 				
 			}
 		}catch (Exception e) {
@@ -326,14 +333,14 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 					pr.setStatus("Proceso Fallido");	
 					}
 			}else {
-				UIInput input = (UIInput) findComponent("reporteImss");
-				input.setValid(false);
-				pr.setStatus("Reporte Nombre Imss formato invalido");	
+//				UIInput input = (UIInput) findComponent("reporteImss");
+//				input.setValid(false);
+//				pr.setStatus("Reporte Nombre Imss formato invalido");	
 			}
 			}else {
-				UIInput input = (UIInput) findComponent("reporteImss");
-				input.setValid(false);
-				pr.setStatus("Reporte Nombre Imss es requerido");
+//				UIInput input = (UIInput) findComponent("reporteImss");
+//				input.setValid(false);
+//				pr.setStatus("Reporte Nombre Imss es requerido");
 			}
 		}catch (Exception e) {
 			pr = GenericException(e);
@@ -462,15 +469,15 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 				pr.setStatus("Proceso Fallido");	
 				}
 			}else {
-				UIInput input = (UIInput) findComponent("cargaIsste");
-				input.setValid(false);
-				pr.setStatus("Nombre Carga Isste formato invalido");
+//				UIInput input = (UIInput) findComponent("cargaIsste");
+//				input.setValid(false);
+//				pr.setStatus("Nombre Carga Isste formato invalido");
 				
 			}
 			}else {
-				UIInput input = (UIInput) findComponent("cargaIsste");
-				input.setValid(false);
-				pr.setStatus("Nombre Carga Isste es requerido");
+//				UIInput input = (UIInput) findComponent("cargaIsste");
+//				input.setValid(false);
+//				pr.setStatus("Nombre Carga Isste es requerido");
 				
 			}
 		}catch (Exception e) {
@@ -501,15 +508,15 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 				pr.setStatus("Proceso Fallido");	
 				}
 			}else {
-				UIInput input = (UIInput) findComponent("reporteIsste");
-				input.setValid(false);
-				pr.setStatus("Reporte Nombre Isste formato invalido");
+//				UIInput input = (UIInput) findComponent("reporteIsste");
+//				input.setValid(false);
+//				pr.setStatus("Reporte Nombre Isste formato invalido");
 				
 			}
 			}else {
-				UIInput input = (UIInput) findComponent("reporteIsste");
-				input.setValid(false);
-				pr.setStatus("Reporte Nombre Isste es requerido");
+//				UIInput input = (UIInput) findComponent("reporteIsste");
+//				input.setValid(false);
+//				pr.setStatus("Reporte Nombre Isste es requerido");
 				
 			}
 		}catch (Exception e) {
