@@ -1,5 +1,11 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.faces.context.FacesContext;
+
 import org.ocpsoft.rewrite.annotation.Join;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +16,7 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
 import mx.axxib.aforedigitalgt.serv.PermisoService;
 
@@ -35,29 +42,21 @@ public class HomeCtrll extends ControllerBase {
 	@Setter
 	private PermisoResult permisos;
 
-	public void listAllPersons() {
-		try {
-			//listPersons = personService.list();
-		} catch (Exception e) {
-			GenericException(e);
-		}
+	@Override
+	public void iniciar() {
+		Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		if(params.size() == 1) {
+			String param = params.get("redirect");
+			if(param != null) {
+				if(param.equals("true")) {
+					try {
+						FacesContext.getCurrentInstance().getExternalContext().redirect("/home");
+					} catch (IOException e) {
+						
+					}
+				}
 
-	}
-
-	public void listAllPersonsSP() {
-		try {
-			//listPersons = personService.listSP();
-		} catch (Exception e) {
-			GenericException(e);
-		}
-	}
-
-	public void getPersonFullNameById() {
-		try {
-			permisos = personService.getPermisosUsuario(usuario);
-			count = permisos.getDatos().size();
-		} catch (Exception e) {
-			GenericException(e);
+			}
 		}
 	}
 
