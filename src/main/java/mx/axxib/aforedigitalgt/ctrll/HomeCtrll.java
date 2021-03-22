@@ -1,7 +1,6 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 import javax.faces.context.FacesContext;
@@ -13,10 +12,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
-import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
 import mx.axxib.aforedigitalgt.serv.PermisoService;
 
@@ -50,7 +49,7 @@ public class HomeCtrll extends ControllerBase {
 			if(param != null) {
 				if(param.equals("true")) {
 					try {
-						FacesContext.getCurrentInstance().getExternalContext().redirect("/home");
+						FacesContext.getCurrentInstance().getExternalContext().redirect("home");
 					} catch (IOException e) {
 						
 					}
