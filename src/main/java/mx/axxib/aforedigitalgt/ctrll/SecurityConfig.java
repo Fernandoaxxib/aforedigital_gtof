@@ -21,7 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		     	.authorizeRequests()
 			     	.antMatchers("/javax.faces.resource/**", "/login*", "api/*","resources/**","css/**").permitAll()
 			     	.anyRequest().authenticated()
-		     	.and().exceptionHandling().accessDeniedPage("/error")
+		     	
 		     	.and().formLogin()
 		     		.loginPage("/login.jsf")
 		     		.defaultSuccessUrl("/home")

@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @SpringBootApplication(scanBasePackages={"mx.axxib.aforedigitalgt.*"})
-
 public class AforedigitalgtApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
