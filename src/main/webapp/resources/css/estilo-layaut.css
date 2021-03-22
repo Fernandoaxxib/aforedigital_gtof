@@ -190,24 +190,35 @@
 }
 
 div[id$="mod_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
-	font-size: 14px !important;
+	font-size: 12px !important;
 	font-weight: bold !important;
 	color: #00529b !important;
 	font-family: 'Montserrat', sans-serif !important;
+	border: 0px solid white !important;
+}
+
+div[id$="mod_panel"] .menu.ui-state-default, .menu.ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default
+	{
+	background: #00529b !important;
+}
+
+div[id$="mod_panel"] .ui-selectonemenu-item{
+	font-weight: bold !important;
 }
 
 .menu.ui-selectonemenu .ui-selectonemenu-label {
-	font-size: 14px !important;
+	font-size: 12px !important;
 	font-weight: bold !important;
 	font-family: 'Montserrat', sans-serif !important;
-	color: #00529b !important;
+	color: #ffffff !important;
 	box-shadow: none !important;
+	background-color: #00529b !important;
 }
 
 .menu.ui-state-default, .menu.ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default
 	{
 	border: 0px !important;
-	background: transparent !important;
+	background: transparent;
 }
 
 /* Combo submenu */
@@ -216,10 +227,11 @@ div[id$="mod_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
 }
 
 div[id$="sub_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
-	font-size: 14px !important;
+	font-size: 12px !important;
 	font-weight: bold !important;
 	color: #00529b !important;
 	font-family: 'Montserrat', sans-serif !important;
+	border: 0px solid white !important;
 }
 
 div[id$="sub_panel"] .ui-selectonemenu-items-wrapper {
@@ -227,7 +239,7 @@ div[id$="sub_panel"] .ui-selectonemenu-items-wrapper {
 }
 
 .submenu.ui-selectonemenu .ui-selectonemenu-label {
-	font-size: 14px !important;
+	font-size: 12px !important;
 	font-weight: bold !important;
 	font-family: 'Montserrat', sans-serif !important;
 	color: #00529b !important;

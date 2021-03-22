@@ -55,7 +55,7 @@
 	background: #ffffff !important;
 	color: #00529b !important;
 	font-weight: bold;
-	font-size: 12px;
+	font-size: 11px !important;
 	font-family: 'Montserrat', sans-serif;
 	/*border: white !important;*/	
 }
@@ -120,8 +120,7 @@
 .ui-selectonemenu-items-wrapper .ui-widget-content .ui-state-default{ /* encabezado de tablas dentro de un selecOneMenu */
 	background: white !important;
 	color: #00529b !important;
-	font-weight: bold;
-	font-size: 12px;
+	font-size: 11px;
 	font-family: 'Montserrat', sans-serif;
 	border: white !important;	
 }
@@ -215,6 +214,7 @@
 	font-weight: bold !important;	
 	text-align:left;
 	border-radius: .25rem;
+	font-size: 14px !important;
 }
 .fondoDialog .ui-dialog .ui-widget{
 	background: rgb(0, 0, 0) transparent;
