@@ -89,6 +89,7 @@ public class Constantes {
 	public static final String ORDEN_PAGO_REPORTE_ANTERIOR_STORED = "PRC_GENERA_REPORTE_ANT";
 	public static final String ORDEN_PAGO_CREA_REPORTE_STORED = "PRC_REPORTE";
 	public static final String ORDEN_PAGO_GENERA_REPORTE_STORED = "PRC_GENERA_REPORTE";
+	public static final String ORDEN_PAGO_REPORTE_BACK_STORED = "PRC_GENERA_REPORTE_BACK";
 
 	// Retiros parciales IMSS OP84 FOCARG84
 	public static final String RET_PARIMSS_OP84_PACKAGE = "PKG_RET_FOCARG84";
