@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.OrdenPagoRepo;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.OrdenPagoFechasOut;
 import mx.axxib.aforedigitalgt.eml.TiposReportes;
 
@@ -26,7 +27,7 @@ public class OrdenPagoServ extends ServiceBase {
 		
 	}
 	
-	public String enviarImpresora(OrdenPagoFechasOut parametro, Integer boxImpresora) throws AforeException {
+	public BaseOut enviarImpresora(OrdenPagoFechasOut parametro, Integer boxImpresora) throws AforeException {
 		try {
 			return ordenPagoRepo.impresoraReporte(parametro,boxImpresora);
 		} catch (Exception e) {
@@ -34,7 +35,7 @@ public class OrdenPagoServ extends ServiceBase {
 		}
 	}
 	
-	public String generarArchivo(OrdenPagoFechasOut parametro, Integer boxGenerar) throws AforeException {
+	public BaseOut generarArchivo(OrdenPagoFechasOut parametro, Integer boxGenerar) throws AforeException {
 		try {
 			return ordenPagoRepo.impresoraReporte(parametro,boxGenerar);
 		} catch (Exception e) {

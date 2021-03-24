@@ -19,10 +19,7 @@
 		<ui:include src="subMenuTransacciones.xhtml" />
 		<h:outputScript name="js/calendar-localization.js" />
 		
-		<p:messages id="messages" showDetail="true" closable="true">
-			<p:autoUpdate />
-		</p:messages>
-		
+
 		
 	<h:form id="form">
 				<p:panel id="datos" header="Orden Pago" style="margin-top:20px">
@@ -45,7 +42,7 @@
 				  				 
    				
    				<p:outputLabel for="listSelect" value="#{msg.orden_pago_txt_tipo_reporte}:" />
-   				<p:selectOneMenu id="listSelect"  required="true" requiredMessage="Por favor seleccione una Opcion!"  value="#{ordenPago.seleccionarA}" >
+   				<p:selectOneMenu id="listSelect"    value="#{ordenPago.seleccionarA}" >
 	            <f:selectItem itemLabel="Seleccionar ..." itemValue="#{null}" noSelectionOption="true" />
 	            <f:selectItems value="#{ordenPago.tipoReporte}"/>
 	           	</p:selectOneMenu>
@@ -60,8 +57,8 @@
         
     </p:panelGrid>
    				  
-   				  <p:commandButton class="blue" action="#{ordenPago.botonGenerarReporte}"
-							type="submit" value="#{msg.orden_pago_boton_genera_reporte}" ajax="false" />
+   				  <p:commandButton class="blue" action="#{ordenPago.botonGenerarReporte}"  update="form result"
+							 value="#{msg.orden_pago_boton_genera_reporte}" ajax="true" />
   						<p:panelGrid id="verEjecutarProceso"  columns="2"> 
 	 					
  							<p:outputLabel for="nombre" value="#{msg.orden_pago_txt_nombre}" />
@@ -69,8 +66,12 @@
 										
 						</p:panelGrid> 
 					
+	 		<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{ordenPago}" />
+			</ui:include>		
 	 					 
- 		</p:panel>			
+ 		</p:panel>	
+ 		
   	</h:form>
 </ui:define>
 

@@ -48,7 +48,8 @@ public class SolicitudMatrimonioDesempleoServ extends ServiceBase{
 		
 	}
 	
-	public List<FopagosListOut> getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
+	//public List<FopagosListOut> getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
+	public FopagosListOut getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
 		try {
 			return dao.getFopagos(numSolicitud,nss,cuenta,nombre);
 		}catch (Exception e) {

@@ -82,7 +82,7 @@
  
  	<p:panel id="pSolicitud" header="Solicitud Matrimonio,Desempleo" style="margin-top:20px">
  		
- 		<p:dataTable id="verSolicitudMatrimonio"  var="verSolicitud"
+ 		<p:dataTable id="verSolicitudMatrimonio"  var="verSolicitud" scrollable="true" scrollHeight="250"
 			paginatorPosition="bottom"
 					emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTabla}"
 			 value="#{solicitudMatrimonioDesempleo.listSolicitudChequeOut}"  rows="10" paginator="true"
@@ -153,9 +153,9 @@
 		</p:dataTable>
  		
  	</p:panel>
- 	<p:panel id="pPago" header="Solicitud Matrimonio,Pagos" style="margin-top:20px">
+ 	<p:panel id="pPago" header="Pagos Efectuados" style="margin-top:20px">
 			
-			<p:dataTable id="verPagosEfectuados"  var="verPago" paginatorPosition="bottom"
+			<p:dataTable id="verPagosEfectuados"  var="verPago"  scrollable="true" scrollHeight="250" paginatorPosition="bottom"
 					emptyMessage="#{verDatosCheque.mensajeTabla}"
 			 value="#{solicitudMatrimonioDesempleo.listPagoChequeOut}"  rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15" >
@@ -214,7 +214,7 @@
 			<p:column  align="center" style="width:20px;">
                        					 <p:commandButton id="verFopago" update=":form:display :form:result" oncomplete="PF('productDialog').show()"
                                           action="#{solicitudMatrimonioDesempleo.consultarFopagos}" icon="ui-icon-search" class="blue">
-                           				 <f:setPropertyActionListener  value="#{pro}" ajax="false" class="blue"
+                           				 <f:setPropertyActionListener  value="#{verPago}" ajax="false" class="blue"
                                                          target="#{solicitudMatrimonioDesempleo.pagoChequeOut}"/>
                                          <p:tooltip for="verFopago" value="Ver Fopago" showEffect="clip" hideEffect="fold" />
                        					 </p:commandButton>
@@ -242,13 +242,13 @@
 							<p:outputLabel  value="Poliza"  style="font-weight: bold"/>
 						</p:column>
 						<p:column  style="width:20px">
-						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}"></h:outputText>
+						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PNoPoliza_Pag}"></h:outputText>
 						</p:column>
 						<p:column  style="width:20px">
 							<p:outputLabel  value="No. Referencia"  style="font-weight: bold"/>
 						</p:column>
 						<p:column  style="width:20px">
-						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}"></h:outputText>
+						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PReferencia}"></h:outputText>
 						</p:column>
 						</p:row>	
 						<p:row>					
@@ -256,7 +256,7 @@
 							<p:outputLabel  value="Fecha Cheque"  style="font-weight: bold"/>
 						</p:column>
 						<p:column  style="width:20px">
-							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PFechaMov_Pag}">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
@@ -264,7 +264,7 @@
 							<p:outputLabel  value="Fecha Reinversion"  style="font-weight: bold"/>
 						</p:column>
 						<p:column  style="width:20px">
-							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PFecReinv_Pag}">
 							<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 							</h:outputText>
 						</p:column>
@@ -272,42 +272,42 @@
 							<p:outputLabel  value="Telefono Contacto"  style="font-weight: bold"/>
 						</p:column>
 						<p:column  style="width:20px">
-							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.on_Estatus}"/>
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PTelefono_Pag}"/>
 						</p:column>
 						</p:row>	
 					</p:panelGrid>		
 						
-						<p:dataTable var="pro" value="#{solicitudMatrimonioDesempleo.fopagos}"
-						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  rows="5" paginator="true" rowsPerPageTemplate="5,10,15" >
+						<p:dataTable var="verPago" value="#{solicitudMatrimonioDesempleo.fopagos}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"  >
 									
 									<p:column headerText="Beneficiario" style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}"/>
+										<h:outputText value="#{verPago.PBenef_Re}"/>
 									</p:column>
 									<p:column headerText="Porc." style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}" />
+										<h:outputText value="#{verPago.PPorcent_Re}" />
 									</p:column>
 									<p:column headerText="Estatus" style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}"/>
+										<h:outputText value="#{verPago.PEstatus_Re}"/>
 									</p:column>
 									<p:column headerText="Plaza" style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}"/>
+										<h:outputText value="#{verPago.PPlaza_Re}"/>
 									</p:column>
 									<p:column headerText="Monto Retiro." style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}" />
+										<h:outputText value="#{verPago.PMonBruto_Re}" />
 									</p:column>
 									<p:column headerText="Monto Isr" style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}"/>
+										<h:outputText value="#{verPago.PMontoIsr_Re}"/>
 									</p:column>
 									<p:column headerText="Neto" style="width:20px">
-										<h:outputText value="#{pro.on_Estatus}" />
+										<h:outputText value="#{verPago.PMontoNeto_Re}" />
 									</p:column>
 									
-									<p:columnGroup type="footer">
+									<p:columnGroup style="width:20px" type="footer">
 						                <p:row>
 						                    <p:column colspan="4" style="text-align:right" footerText="Totales:"/>
-						                    <p:column style="text-align:left" footerText="$#{pro.on_Estatus}"/>
-						                    <p:column style="text-align:left" footerText="$#{pro.on_Estatus}"/>
-						                    <p:column style="text-align:left" footerText="$#{pro.on_Estatus}"/>
+						                    <p:column style="text-align:left" footerText="$#{verPago.PMonBruto_Re}"/>
+						                    <p:column style="text-align:left" footerText="$#{verPago.PMontoIsr_Re}"/>
+						                    <p:column style="text-align:left" footerText="$#{verPago.PMontoNeto_Re}"/>
 						                </p:row>
 						            </p:columnGroup>
 						
