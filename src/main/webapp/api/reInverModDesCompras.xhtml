@@ -54,11 +54,15 @@
 		</p:panelGrid>
 
 		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
-			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
-			resizable="false" style="font-size:12px">
-			<p:dataTable var="registro" value="#{reinversionModDesCompras.listLotes}"
-				selectionMode="single" selection="#{reinversionModDesCompras.selectedLote}"
-				rowKey="#{registro.id_lote}" style="padding-bottom:10px">
+			appendTo="@(body)" widgetVar="dlg2" modal="true" width="46%"
+			resizable="false" style="margin-top:20px">
+
+			<p:dataTable var="registro"
+				value="#{reinversionModDesCompras.listLotes}" scrollable="true"
+				scrollHeight="250" selectionMode="single"
+				selection="#{reinversionModDesCompras.selectedLote}"
+				rowKey="#{registro.id_lote}" styleClass="gridCell-green"
+				style="padding-bottom:10px">
 				<p:ajax process="@this" event="rowSelect"
 					listener="#{reinversionModDesCompras.onRowSelect}" />
 
@@ -66,8 +70,7 @@
 					styleClass="gridCell-right">
 					<h:outputText value="#{registro.id_lote}" />
 				</p:column>
-				<p:column headerText="Descripción"
-					styleClass="gridCell-right">
+				<p:column headerText="Descripción" styleClass="gridCell-right">
 					<h:outputText value="#{registro.descripcion}" />
 				</p:column>
 				<p:column headerText="Fecha Movimiento" styleClass="gridCell-right">
@@ -75,21 +78,22 @@
 						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 					</h:outputText>
 				</p:column>
-				
+
 			</p:dataTable>
 			<p:outputPanel style="text-align:right">
 				<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
 					styleClass="blue ui-button-text" style="margin-right:10px" />
 				<p:commandButton value="Seleccionar"
 					actionListener="#{reinversionModDesCompras.opcionSeleccionada2}"
-					oncomplete="PF('dlg2').hide();" update=":form:pnl2"
+					oncomplete="PF('dlg2').hide();"
+					update="form:vLote form:fecha form:detalleLotes"
 					styleClass="blue ui-button-text" />
 			</p:outputPanel>
 		</p:dialog>
 
 
 		<h:form id="form">
-			<p:panel id="pnl1" header="Compras" style="margin-bottom:20px">
+			<p:panel id="pnl1" header="Compras" style="margin-top:10px">
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
@@ -100,7 +104,11 @@
 								value="#{reinversionModDesCompras.fecha}" locale="es"
 								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
 								monthNavigator="true"
-								inputStyle="width:100px; text-align:right;" readonlyInput="true" />
+								inputStyle="width:100px; text-align:right;" readonlyInput="true">
+								<p:ajax event="dateSelect"
+									listener="#{reinversionModDesCompras.selectLote}"
+									update="form:vLote form:detalleLotes form:detalleLotes:idMonto form:detalleLotes:idAcciones" />
+							</p:datePicker>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Lote: " />
@@ -110,22 +118,69 @@
 								placeholder="Indique lote"
 								style="text-align:right;width:150px;margin-left:10px !important" />
 							<p:commandButton styleClass="blue" style="width:35px" value="..."
-								action="#{reinversionModDesCompras.getLotes}" update=""
-								oncomplete="" />
+								action="#{reinversionModDesCompras.getLotes}"
+								update="dlg1 form:vLote form:fecha"
+								oncomplete="PF('dlg2').show();" />
 						</p:column>
 						<p:column>
 							<p:commandButton styleClass="blue" value="Generar Reporte"
-								action="#{reinversionModDesCompras.generarReporte}" update=""
+								action="#{reinversionModDesCompras.generarReporte}" update="form:vLote form:fecha form:result"
 								oncomplete="" />
 						</p:column>
 						<p:column>
-							<p:commandButton styleClass="blue" value="Comprar"
-								action="#{reinversionModDesCompras.comprar}" update=""
+							<p:commandButton styleClass="blue" value="Compra"
+								action="#{reinversionModDesCompras.comprar}" update="form:vLote form:fecha form:result"
 								oncomplete="" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 
+
+				<p:dataTable id="detalleLotes" var="registro"
+					emptyMessage="Sin información" sortBy="#{pag.fechaAprobacion}"
+					paginatorPosition="bottom"
+					value="#{reinversionModDesCompras.detalleCompra}">
+
+
+					<p:column headerText="Lote">
+						<h:outputText value="#{registro.ID_LOTE}" style="float:left" />
+					</p:column>
+
+					<p:column headerText="Subcuenta">
+						<h:outputText value="#{registro.SUBCUENTA}" style="float:left" />
+					</p:column>
+
+					<p:column headerText="SIEFORE">
+						<h:outputText value="#{registro.SIEFORE}" style="float:left" />
+						<f:facet name="footer">
+							<h:outputText value="Totales" style="float:right" />
+						</f:facet>
+					</p:column>
+
+					<p:column headerText="Monto">
+						<h:outputText value="#{registro.MONTO}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+						<f:facet name="footer">
+							<h:outputText id="idMonto" value="#{reinversionModDesCompras.montoTotal}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</f:facet>
+					</p:column>
+
+					<p:column headerText="Acciones">
+						<h:outputText value="#{registro.ACCIONES}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+						<f:facet name="footer">
+							<h:outputText id="idAcciones" value="#{reinversionModDesCompras.accionesTotal}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</f:facet>
+					</p:column>
+				</p:dataTable>
 
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{reinversionModDesCompras}" />

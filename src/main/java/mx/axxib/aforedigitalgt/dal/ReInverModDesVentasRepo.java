@@ -2,7 +2,6 @@ package mx.axxib.aforedigitalgt.dal;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
@@ -11,11 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.DetCompraOut;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
+import mx.axxib.aforedigitalgt.eml.LoteCOut;
 import mx.axxib.aforedigitalgt.eml.TotalesOut;
 
-
-	
 	@Repository
 	@Transactional
 	public class ReInverModDesVentasRepo extends RepoBase{
@@ -88,6 +87,39 @@ import mx.axxib.aforedigitalgt.eml.TotalesOut;
 				query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 				
 				List<TotalesOut> res = query.getResultList();
+				return res;
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
+		}
+		
+		@SuppressWarnings("unchecked")
+		public List<LoteCOut> getLotes(String pLote) throws AforeException {
+			try {
+				String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
+						.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_LOTES);
+				StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteCOut");
+
+				query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+				
+				List<LoteCOut> res = query.getResultList();
+				return res;
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
+		}
+		
+		@SuppressWarnings("unchecked")
+		public List<DetCompraOut> getDetalleVenta(String p_Lote) throws AforeException {
+			try {
+				String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
+						.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_DETALLE_VENTA);
+				
+				StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "DetCompraOut");
+				query.registerStoredProcedureParameter("p_Lote", String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+				
+				List<DetCompraOut> res = query.getResultList();
 				return res;
 			} catch (Exception e) {
 				throw GenericException(e);
