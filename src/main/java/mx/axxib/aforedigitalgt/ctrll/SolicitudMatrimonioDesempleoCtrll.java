@@ -140,17 +140,22 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	public void consultar() {
 		ProcessResult pr = new ProcessResult();
-		try {System.out.println("VALOR DE NNS:"+nss);
+		try {
 		limpiar();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS");
 		if (nss != null && !nss.equals("") ) {
-			if (ValidateUtil.isNSS(nss)) {
+			//if (ValidateUtil.isNSS(nss)) {
+				if (nss.matches("[0-9]*")) {
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nss);
-			System.out.println("VALOR DE verChequeOut: "+verChequeOut);
+			
 			nombre=verChequeOut.getNombre();
 			cuenta=verChequeOut.getCuenta();
+			if(verChequeOut.getNombre()!=null) {
 			pr.setStatus("Consulta Exitosa");
+			}else {
+				pr.setStatus("No  se encontro informacion");	
+			}
 			verDatoCheque=true;
 //			consultarPago(verChequeOut.getCuenta());
 //			System.out.println("VALOR DE consultarPago");
@@ -221,27 +226,28 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			pr.setDescProceso("Búsqueda por Cuenta Solicitud Matrimonio");
 			limpiar();
 			VerSolicitudChequeOut res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
-			consultarPago(cuenta);
-			System.out.println("VALOR DE consultarSolicitud: "+res.getVerSolicitudChequeListOut().size());
-			System.out.println("VALOR DE NNS:"+res.getVerSolicitudChequeListOut());
+			
+			
+			
 			if (res != null && res.getVerSolicitudChequeListOut() != null && res.getVerSolicitudChequeListOut().size() > 0) {
 				listSolicitudChequeOut = res.getVerSolicitudChequeListOut();
 				totalSolicitud = res.getVerSolicitudChequeListOut().size();
 				
-				if ( res.getVerSolicitudChequeListOut().size() == 0) {
+				if ( res.getVerSolicitudChequeListOut().size() > 0) {
+					
+					mensajeSolicitud=res.getMensaje();
+					pr.setStatus("Consulta Exitosa");//"Consulta Exitosa"
+				}else {
 					mensajeTabla = "Sin información";
 					pr.setStatus("No se encontraron resultados");
-				}else {
-				System.out.println("VALOR DE totalSolicitud:"+totalSolicitud);
-				mensajeSolicitud=res.getMensaje();
-				pr.setStatus(mensajeSolicitud);//"Consulta Exitosa"
+				
 				}
 			}else {
 				
 				pr.setStatus("No se encontraron resultados");
 				mensajeTabla = "Sin información";
 			}
-		
+			consultarPago(cuenta);
 		}catch (Exception e) {
 			resultados.add(GenericException(e));
 		} finally {
@@ -257,8 +263,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			pr.setDescProceso("Búsqueda por Cuenta Pagos Efectuados");
 			limpiar();
 			VerPagoChequeOut res=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
-			System.out.println("VALOR DE consultarPago: "+res.getVerPagoChequeListOut().size());
-			System.out.println("VALOR DE NNS:"+res.getVerPagoChequeListOut());
+			
+			
 			if (res != null && res.getVerPagoChequeListOut() != null && res.getVerPagoChequeListOut().size() > 0) {
 				listPagoChequeOut = res.getVerPagoChequeListOut();
 				totalPago = res.getVerPagoChequeListOut().size();
@@ -291,12 +297,12 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			limpiar();
 			
 			
-			System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
+			
 			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
 //			for(FopagosListOut iterar:fopagos) {
 //			totalMontoRetiro  += iterar.getPMontoNeto_Re();
 //			}
-			System.out.println("VALOR DE FOPAGOS On_Estatus:"+fopagos);
+			
 			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
 			if(fopagos != null) {
 				if (fopagos.getOn_Estatus() == 1 ) {

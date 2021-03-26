@@ -116,13 +116,13 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 	}
 	public void validarNssRfc() {
 		ProcessResult pr = new ProcessResult();
-		try {System.out.println("VALOR DE curp_NNS:"+curp_o_nssIn);
+		try {
 		limpiar();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS o CURP");
 			if (curp_o_nssIn != null && !curp_o_nssIn.equals("") ) {
 					if (ValidateUtil.isCURP(curp_o_nssIn)) {
-						System.out.println("***************Es Curp");
+						
 						int valorCurp=ejecutarConsultaCurp(curp_o_nssIn);
 						if(valorCurp ==1) {
 							pr.setStatus("Consulta Exitosa CURP");//"Consulta Exitosa"
@@ -132,7 +132,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 						}
 						
 				    } else {
-				    	System.out.println("***************NO ES Curp");
+				    	
 				    	int valorNss= ejecutarConsultaNss(curp_o_nssIn);
 				    	if(valorNss ==1) {
 							pr.setStatus("Consulta Exitosa NSS");//"Consulta Exitosa"
@@ -160,7 +160,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		int bandera=0;
 		try {
 			ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarNss(nssIn);	
-			System.out.println("DATOS POR NSS: "+res);
+			
 			if (res != null && res.getCpDatos() != null && res.getCpDatos().size() > 0) {
 				totalNSSCURP=res.getCpDatos().size();
 				cpDatos=res.getCpDatos();
@@ -182,7 +182,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 			int bandera=0;
 			try {
 				ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarCurp(curpIn);	
-				System.out.println("DATOS POR CURP: "+res);
+				
 				if (res != null && res.getCpDatos() != null && res.getCpDatos().size() > 0) {
 					totalNSSCURP=res.getCpDatos().size();
 					cpDatos=res.getCpDatos();
@@ -203,7 +203,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 	public void ejecutarConsultarTraspasos() {
 	
 		try {
-			System.out.println("*****************VALOR DE VISTA cuenta:"+cuenta+" "+ cpDatos2);
+			
 			//ConsultarTraspasosIcefasOut res=consultarMarcasCuentasServices.getConsultarTraspasos(codCuenta, codTipoSaldo, claveProceso, estado);
 			
 			ConsultarTraspasosIcefasOut res=consultarMarcasCuentasServices.getConsultarTraspasos(Integer.toString(cuenta), cpDatos2.getCOD_TIPSALDO(), Integer.toString(cpDatos2.getCLAVE_PROCESO()), cpDatos2.getESTADO());			

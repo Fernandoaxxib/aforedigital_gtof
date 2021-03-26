@@ -201,7 +201,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cancelar Actualizacion de Usuario");
+		pr.setDescProceso("Actualizacion de Usuario Cancelada");
 		
         try {
 //    	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
@@ -229,7 +229,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
     		salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
-			System.out.println("Valor de msg: "+salarioMinimoMensaje);
+			
 			if (salarioMinimoMensaje.getEstatus() == 1) {
 				
 		    	pr.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"

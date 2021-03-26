@@ -115,7 +115,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		pr.setDescProceso("Cargar Archivo");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			System.out.println("VALOR DE  LISTA TIPO PROCESO "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
+			
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -130,7 +130,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta Marca por Nss y/o Curp");
-		try {System.out.println("VALOR DE rutaCarga:"+rutaCarga+" /nombreArchivoCarga:"+nombreArchivoCarga);
+		try {
 		
 		if(nombreArchivoCarga== null || nombreArchivoCarga.isEmpty()) {
 			UIInput input = (UIInput) findComponent("nombreCarga");
@@ -146,8 +146,8 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
 			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
-			System.out.println("VALOR DE ESTATUS ------:"+desmarcaCargaConsultaMasivaOut.getOn_Estatus());
-			System.out.println("VALOR DE MENSAJE ------:"+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+			
+			
 			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
@@ -181,7 +181,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta Marca por Proceso Operativo");
 		
-		try {System.out.println("REVERSA CARGA valor de selectedTipoClave:"+selectedTipoClave);
+		try {
 //			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();
@@ -197,7 +197,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			 String[] parts = selectedTipoClave.split("-");
 			 String part1 = parts[0]; // 123
 			 String part2 = parts[1]; // 654321
-			 System.out.println("Valor clave parte uno es: "+part1+" Valor descripcion parte2 es: "+part2);
+			 
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(part1,part2);
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));

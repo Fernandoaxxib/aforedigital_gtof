@@ -296,12 +296,12 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 String[] parts = selectedTipoClave.split("-");
 				 String part1 = parts[0]; // 123
 				 String part2 = parts[1]; // 654321
-				 System.out.println("Valor clave parte uno es: "+part1+" Valor descripcion parte2 es: "+part2);
+				 
 				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,part1);
 //					Date today2= new Date();		
 //					proceso.setFechahoraFinal(format.format(today2));
-				 System.out.println("VALOR DE MENSAJE DE ESTATUS:"+desmarcaCargaConsultaMasivaOut.getOn_Estatus());
-				 System.out.println("VALOR DE MENSAJE DE PRUEBA:"+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+				 
+				 
 				 if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()!=1 ) {
 //					if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().contains("OCURRIO UN ERROR")) {
 						pr.setStatus("Error al ejecutar la desmarca masiva");
@@ -319,7 +319,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 	}else{
 						 //addMessageFail("Ingresar solo  digitos");
 				 		boolean bandera=false;
-				 		System.out.println("");
+				 		
 				 		 if ((validarCURP(desmarcaCURP)==false)) { // && (isNumeric(desmarcaNSS)==false)
 				 		 UIInput inputNss = (UIInput) findComponent("nss");
 				 		 inputNss.setValid(false);

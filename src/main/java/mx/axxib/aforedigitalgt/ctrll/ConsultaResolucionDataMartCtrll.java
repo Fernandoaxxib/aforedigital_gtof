@@ -72,20 +72,21 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 	public void getCuentaNombre()  {
 		ProcessResult pr = new ProcessResult();
 		try {
-		System.out.println("VALOR DE NNS:"+nss);
+		
 		
 		iniciar();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS");
 		if (nss != null && !nss.equals("") ) {
 			
-			if (ValidateUtil.isInteger(nss)) {
-			System.out.println("Valor de nss es: "+nss);
+			//if (ValidateUtil.isInteger(nss) ) {
+			if (nss.matches("[0-9]*")) {
+			
 			consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Integer.parseInt(nss));
-			System.out.println("Valor de consultaResolucionesNombreOut es: "+consultaResolucionesNombreOut);
+			
 			if(consultaResolucionesNombreOut  != null && consultaResolucionesNombreOut.getCursor() != null && consultaResolucionesNombreOut.getCursor().size()>0) {
 				listaCurp=consultaResolucionesNombreOut.getCursor();
-				System.out.println("VALOR DE LISTA CURP: "+listaCurp);
+				
 				totalSolicitud=consultaResolucionesNombreOut.getCursor().size();	
 				
 //				 for (ConsultaResolucionDataMartOut model : listaCurp) {
@@ -95,13 +96,13 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 				Iterator<ConsultaResolucionDataMartOut> nombreIterator = listaCurp.iterator();
 				while(nombreIterator.hasNext()){
 					ConsultaResolucionDataMartOut elemento = nombreIterator.next();
-					System.out.print(elemento+" / ");
+					
 				}
 				if ( consultaResolucionesNombreOut.getCursor().size() == 0) {
 					mensajeTabla = "Sin información";
 					pr.setStatus("No se encontraron resultados");
 				}else {
-				System.out.println("VALOR DE totalSolicitud:"+totalSolicitud+"  VALOR DE ESTATUS: "+consultaResolucionesNombreOut.getP_ESTATUS());
+				
 				//mensajeSolicitud=consultaResolucionesNombreOut.getP_MENSAJE();
 				pr.setStatus("Consulta Exitosa");//"Consulta Exitosa"
 				//System.out.println(" VALOR SEC PENSION: "+listaCurp.get(0).getRegimen());
@@ -114,13 +115,13 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 		} else {
 			UIInput input = (UIInput) findComponent("nss");
 			input.setValid(false);
-			pr.setStatus("NSS no válido");
+			pr.setStatus("NSS no válido ingrese digitos");
 		}
 			
 		}else {
 				UIInput input = (UIInput) findComponent("nss");
 				input.setValid(false);
-				pr.setStatus("NSS es requerido");
+				pr.setStatus("Ingrese el NSS");
 				
 			}
 			}catch (Exception e) {
@@ -131,7 +132,5 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 			}
 	
 	}
-	
-	
 	
 	}

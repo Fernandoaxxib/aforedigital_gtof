@@ -42,7 +42,7 @@ private final EntityManager entityManager;
 		OrdenPagoFechasOut res= new OrdenPagoFechasOut ();
 		res.setFechaInicio((Date) query.getOutputParameterValue("P_FECHA_INICIO"));
 		res.setFechaFin((Date) query.getOutputParameterValue("P_FECHA_FINAL"));
-		System.out.println("IMPRIMIR EL VALOR DE res: "+res);
+		
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

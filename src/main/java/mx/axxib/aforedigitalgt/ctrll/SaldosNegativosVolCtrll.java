@@ -89,13 +89,13 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Carga por Saldos Vol.");
 		try {
-			System.out.println("VALOR DE nombreSaldoNegativo:" +nombreSaldoNegativo);
+			
 			if(nombreSaldoNegativo != null && !nombreSaldoNegativo.equals("") ) {
 				//if(nombreSaldoNegativo.toLowerCase().endsWith(".xls")) {
 					if(nombreSaldoNegativo.endsWith(".xls") && nombreSaldoNegativo.contains("RPT-MOVS-SLD-FIN-")) {
-					System.out.println("VALOR DE nombreSaldoNegativo:" +nombreSaldoNegativo+"-----saldoFechaMovimiento:"+saldoFechaMovimiento);
+					
 					consultaSaldoImssIssteOut=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
-					System.out.println("VALOR DE ejecutarReporteNegativo:"+consultaSaldoImssIssteOut);
+					
 					if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 						pr.setStatus("Proceso Exitoso");
 						}else {

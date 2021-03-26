@@ -48,7 +48,7 @@ private final EntityManager entityManager;
 		
 		SalarioMinOut res = new SalarioMinOut(); 
 		Object cursor = query.getOutputParameterValue("CP_CURSOR");
-		System.out.println("Cursor Id Usuario"+cursor);
+		
 		if (cursor != null) {
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		res.setListSalarioMin(query.getResultList());
@@ -108,11 +108,7 @@ private final EntityManager entityManager;
 	@SuppressWarnings("unchecked")
 	public SalarioMinimoMensaje update(String usuario, String cdZona , Date calendario, Double monto) throws AforeException {
 		try {
-			 System.out.println("DAO ");
-			System.out.println("Datos del dao Usuario: "+usuario);
-	        System.out.println("Datos del dao Zona: "+cdZona);
-	        System.out.println("Datos del dao  Fecha Calendario: "+calendario);
-	        System.out.println("Datos del dao  Monto: "+monto);
+			
 	        
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALARIO_MINIMO_PACKAGE).concat(".").concat(Constantes.SALARIO_MINIMO_UPDATE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);

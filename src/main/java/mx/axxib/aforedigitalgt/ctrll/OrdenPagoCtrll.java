@@ -88,7 +88,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 		cargaFechas();
 		inicializarA();
-		nombre=null;
+		//nombre=null;
 		
 		}
 	}
@@ -104,7 +104,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 	public void inicializarA() {
 		try {
-			System.out.println("Valor de boxUno es: "+boxUno);//seleccionarA
+			
 			tipoReporte=ordenPagoServ.inicializarA();
 		}catch (Exception e) {
 			GenericException(e);
@@ -173,15 +173,15 @@ public class OrdenPagoCtrll extends ControllerBase {
 	public void botonGenerarReporte() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Obtener Nombre");
+		pr.setDescProceso("Obtener Nombre Archivo");
 		try {
 			
-				if(seleccionarA!=null) {
+				if(seleccionarA !=null) {
 					
-					if(boxUno == 1){	
+					if(boxUno != null){	
 						impresoraReporte();
 						}
-						if(boxDos==2){	
+						if(boxDos!= null){	
 						generarArchivo();
 						}
 					

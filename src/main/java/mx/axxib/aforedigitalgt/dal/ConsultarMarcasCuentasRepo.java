@@ -31,7 +31,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 	@SuppressWarnings("unchecked")
 	public ConsultarTraspasosIcefasOut getConsultarTraspasos(String codCuenta,String codTipoSaldo,String claveProceso, String estado) throws AforeException {
 		try {
-		System.out.println("Parametros codCuenta,codTipoSaldo,claveProceso,estado+: "+codCuenta+"|"+codTipoSaldo+"|"+claveProceso+"|"+estado);
+		
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_PACKAGE).concat(".").concat(Constantes.CONSULTAR_TRASPASOS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"ConsultarDatosIcefasOut");
 
@@ -81,7 +81,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 		
 		ConsultarNombreCuentaIcefasOut res= new ConsultarNombreCuentaIcefasOut ();
 		Object cursor = query.getOutputParameterValue("CP_DATOS");
-		System.out.println("Cursor CURP: "+cursor);
+		
 		if (cursor != null) {
 			res.setCuenta((Integer)query.getOutputParameterValue("P_cuenta"));
 			res.setNombre((String) query.getOutputParameterValue("P_nombre"));
@@ -89,7 +89,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 			res.setStatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 			res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 		}
-		System.out.println("RES CURP: "+res);
+		
 		res.setCpDatos(query.getResultList());
 		return res;
 		} catch (Exception e) {
@@ -101,7 +101,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 	@SuppressWarnings("unchecked")
 	public ConsultarNombreCuentaIcefasOut getConsultarNss(String nss) throws AforeException {
 		try {
-			System.out.println("PARAMETRO NSS: "+nss);
+			
 			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTAR_TRASPASOS_PACKAGE).concat(".").concat(Constantes.CONSULTAR_TRASPASOS_NSS_STORED);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"CpDatosIcefasOut");
 
@@ -117,7 +117,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 			
 			ConsultarNombreCuentaIcefasOut res= new ConsultarNombreCuentaIcefasOut ();
 			Object cursor = query.getOutputParameterValue("CP_DATOS");
-			System.out.println("Cursor NSS"+cursor);
+			
 			if (cursor != null) {
 				res.setCuenta((Integer)query.getOutputParameterValue("P_cuenta"));
 				res.setNombre((String) query.getOutputParameterValue("P_nombre"));
@@ -126,7 +126,7 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 				res.setStatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 				res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
 			}
-			System.out.println("res NSS"+res);
+			
 			
 			return res;
 			} catch (Exception e) {
