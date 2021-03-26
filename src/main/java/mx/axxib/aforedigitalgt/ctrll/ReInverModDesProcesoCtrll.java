@@ -2,14 +2,11 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.faces.component.UIInput;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
@@ -94,7 +91,8 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 
 		if (radioSelected.equals("1")) {
 			try {
-				cuentasPendientes = service.getValorCuentas().intValue();
+				cuentasPendientes = service.getValorCuentas().intValue();				
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));				
 				display = "inline";
 				display1 = "none";
 				display2 = "inline";
@@ -155,8 +153,26 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		if (isFormValid(pr)) {
 			try {
-				EjecucionResult result = service.procesoEjecutar(Integer.valueOf(radioSelected),fechaI,
-						fechaF, null);
+				switch (radioSelected) {
+
+				case "1": {
+					pr.setDescProceso("Obtener Saldos Actuales Cuentas a Reinvertir");
+					break;
+				}
+				case "2": {
+					pr.setDescProceso("Reporte de Cuentas a Reinvertir");
+					break;
+				}
+				case "3": {
+					pr.setDescProceso("Generación de Movimientos");
+					break;
+				}
+				case "4": {
+					pr.setDescProceso("Reporte de Cuentas Canceladas");
+					break;
+				}
+				}
+				EjecucionResult result = service.procesoEjecutar(Integer.valueOf(radioSelected), fechaI, fechaF, null);
 				if (result.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {

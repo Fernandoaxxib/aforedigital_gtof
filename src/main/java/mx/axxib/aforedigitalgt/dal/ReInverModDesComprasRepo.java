@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.DetCompraOut;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
+import mx.axxib.aforedigitalgt.eml.LoteCOut;
 import mx.axxib.aforedigitalgt.eml.TotalesOut;
 
 @Repository
@@ -51,13 +53,13 @@ public class ReInverModDesComprasRepo extends RepoBase{
 	public EjecucionResult generarReporte(String pLote,String pTot_Monto,String pFecLote) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
-					.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_BTN_COMPRA);
+					.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_BTN_GENERA_REP_COMPRA);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);	
 			
 			query.registerStoredProcedureParameter("pLote", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("pTot_Monto", String.class, ParameterMode.IN); 
 			query.registerStoredProcedureParameter("pFecLote", String.class, ParameterMode.IN); 
-			query.registerStoredProcedureParameter("p_Message", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 						
 			query.setParameter("pLote", pLote);
@@ -66,7 +68,7 @@ public class ReInverModDesComprasRepo extends RepoBase{
 						
 			EjecucionResult result = new EjecucionResult();
 		   
-			result.setOcMensaje((String)query.getOutputParameterValue("p_Message"));			
+			result.setOcMensaje((String)query.getOutputParameterValue("pMensaje"));			
             result.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));                       
 			return result;
 		} catch (Exception e) {
@@ -90,4 +92,40 @@ public class ReInverModDesComprasRepo extends RepoBase{
 			throw GenericException(e);
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<LoteCOut> getLotes() throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
+					.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_LOTES);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteCOut");
+
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+			
+			List<LoteCOut> res = query.getResultList();
+			return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<DetCompraOut> getDetalleCompra(String p_Lote) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_PACKAGE)
+					.concat(".").concat(Constantes.REINVER_BASICAS_MODULO_DESEMPLEO_DETALLE_COMPRA);
+			
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "DetCompraOut");
+			query.registerStoredProcedureParameter("p_Lote", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+			
+			query.setParameter("p_Lote", p_Lote);
+			
+			List<DetCompraOut> res = query.getResultList();
+			return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
 }

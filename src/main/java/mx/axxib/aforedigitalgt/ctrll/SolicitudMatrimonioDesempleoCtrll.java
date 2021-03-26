@@ -104,8 +104,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	@Getter
 	private boolean mostrarFopagos;
 	
+//	@Getter
+//	private List<FopagosListOut> fopagos;
+	
 	@Getter
-	private List<FopagosListOut> fopagos;
+	private FopagosListOut fopagos;
 	
 	@Getter
 	private Integer totalMontoRetiro;
@@ -284,21 +287,26 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		ProcessResult pr = new ProcessResult();
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Búsqueda por fecha");
+			pr.setDescProceso("Búsqueda por Fopagos");
 			limpiar();
 			
 			
-			//System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
-			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(12, nss, cuenta, nombre);
+			System.out.println("PARAMETROS DE FOPAGOS:"+pagoChequeOut.getIdentificarOperacion()+"---"+ nss+"---"+ cuenta+"---"+ nombre);
+			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
 //			for(FopagosListOut iterar:fopagos) {
 //			totalMontoRetiro  += iterar.getPMontoNeto_Re();
 //			}
 			System.out.println("VALOR DE FOPAGOS On_Estatus:"+fopagos);
 			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
-				if (fopagos != null ) {
-					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-					totalPago = 1;
-				} else {
+			if(fopagos != null) {
+				if (fopagos.getOn_Estatus() == 1 ) {
+					pr.setStatus("Consulta Exitosa");
+					
+				}else {
+					pr.setStatus("No se encontraron resultados");
+					mensajeTabla = "Sin información";	
+				}
+			}else {
 					pr.setStatus("No se encontraron resultados");
 					mensajeTabla = "Sin información";
 				}

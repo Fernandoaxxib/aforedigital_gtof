@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.OrdenPagoFechasOut;
 import mx.axxib.aforedigitalgt.eml.TiposReportes;
 
@@ -50,20 +51,22 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public String impresoraReporte(OrdenPagoFechasOut parametro, Integer registroReporte) throws AforeException {
+	public BaseOut impresoraReporte(OrdenPagoFechasOut parametro, Integer registroReporte) throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.ORDEN_PAGO_PACKAGE).concat(".").concat(Constantes.ORDEN_PAGO_REPORTE_ANTERIOR_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 		
 		query.registerStoredProcedureParameter("P_FECHA_INICIO", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_REG_REPORTE", Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 		query.setParameter("P_FECHA_INICIO", parametro.getFechaInicio());
 		query.setParameter("P_REG_REPORTE", registroReporte);
+		BaseOut res = new BaseOut();
+		res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+		res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 		
-		String res = (String) query.getOutputParameterValue("P_MENSAJE");
-		System.out.println("VALOR DE PRC_GENERA_REPORTE_ANT"+res);
 		return res;
 	} catch (Exception e) {
 		throw GenericException(e);
@@ -79,6 +82,7 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_TIPO_REPORTE", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_NOMBRE_ARCHIVO", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
 				
 		query.setParameter("P_TIPO_REPORTE", tipoReporte);
@@ -87,8 +91,9 @@ private final EntityManager entityManager;
 		TiposReportes res= new TiposReportes ();
 		res.setP_NOMBRE_ARCHIVO((String) query.getOutputParameterValue("P_NOMBRE_ARCHIVO"));
 		res.setP_MENSAJE((String) query.getOutputParameterValue("P_MENSAJE"));
-		System.out.println("IMPRIMIR PAQUETE PRC_REPORTE TiposReportes EL VALOR DE res: "+res);
+		res.setP_ESTATUS((Integer) query.getOutputParameterValue("P_ESTATUS"));
 		return res;
+		
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

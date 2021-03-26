@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
@@ -16,10 +17,12 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.OrdenPagoFechasOut;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
 import mx.axxib.aforedigitalgt.eml.TiposReportes;
 import mx.axxib.aforedigitalgt.serv.OrdenPagoServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 @Scope(value = "session")
 @Component(value = "ordenPago")
@@ -107,14 +110,26 @@ public class OrdenPagoCtrll extends ControllerBase {
 		}
 	
 	public void impresoraReporte() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Búsqueda por NSS");
 		try {
 			System.out.println("Valor de boxUno es: "+boxUno);
 			if(boxUno!=null) {
 			ordenPagoServ.enviarImpresora(ordenPagoFechasOut, boxUno);
 			}
+		 else {
+			UIInput input = (UIInput) findComponent("listSelect");
+			input.setValid(false);
+			pr.setStatus("Tipo Reporte es requerido");
+			
+		}
 		}catch (Exception e) {
-			GenericException(e);
-		}		
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}	
 		
 	}
 	

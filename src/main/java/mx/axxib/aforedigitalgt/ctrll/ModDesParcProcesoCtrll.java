@@ -122,9 +122,9 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));				    						    
 						}else {
 							if(res== 2) {
-								GenerarErrorNegocio("Error en base de datos");
+								GenerarErrorNegocio("Se presentó un error inesperado");
 							} else if(res== 0) {
-								pr.setStatus("Error al guardar");
+								pr.setStatus("Se presentó un error inesperado");
 							} 
 						}
 					} catch (Exception e) {

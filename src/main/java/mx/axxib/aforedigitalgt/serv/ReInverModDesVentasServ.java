@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ReInverModDesVentasRepo;
+import mx.axxib.aforedigitalgt.eml.DetCompraOut;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
+import mx.axxib.aforedigitalgt.eml.LoteCOut;
 import mx.axxib.aforedigitalgt.eml.TotalesOut;
 
 @Service
@@ -36,6 +38,22 @@ public class ReInverModDesVentasServ extends ServiceBase {
 	public List<TotalesOut> getTotalVenta(String pLoteV) throws AforeException {
 		try {
 			return repo.getTotalVenta(pLoteV);
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public List<LoteCOut> getLotes(String pLote) throws AforeException {
+		try {
+			return repo.getLotes(pLote);
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public List<DetCompraOut> getDetalleVenta(String p_Lote) throws AforeException {
+		try {
+			return repo.getDetalleVenta(p_Lote);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
