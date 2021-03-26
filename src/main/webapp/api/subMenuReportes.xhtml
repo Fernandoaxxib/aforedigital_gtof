@@ -23,13 +23,13 @@
 			<f:selectItem itemLabel="Reporte de Liquidación"
 				itemValue="/api/reporteLiquidacion.jsf" />
 
-			<f:selectItem itemLabel="Valores UMA" itemValue="/api/valoresUMA.jsf" />
-			<f:selectItem itemLabel="Solicitudes de Matrimonio y Desempleo" itemValue="/api/solicitudMatrimonioDesempleo.jsf" />
-			<f:selectItem itemLabel="Diagnóstico de la Cuenta Individual" itemValue="/api/diagnosticoCuenta.jsf" />
+			<f:selectItem itemLabel="Consulta de Movimientos Actuales" itemValue="/api/consultaMovActuales.jsf" />
+			<f:selectItem itemLabel="Diagnóstico de la Cuenta Individual" itemValue="/api/diagnosticoCuenta.jsf" />	
 			<f:selectItem itemLabel="Recaudación Ventanilla Única" itemValue="/api/consultaRecaudacion.jsf" />
-            <f:selectItem itemLabel="Reportes Parciales CONSAR" itemValue="/api/repParciales.jsf" />
-            <f:selectItem itemLabel="Consulta de Movimientos Actuales" itemValue="/api/consultaMovActuales.jsf" />
-            <f:selectItem itemLabel="Consulta de Movimientos Históricos" itemValue="/api/consultaMovHistoricos.jsf" />
+			<f:selectItem itemLabel="Reportes Parciales CONSAR" itemValue="/api/repParciales.jsf" />
+			<f:selectItem itemLabel="Solicitudes de Matrimonio y Desempleo" itemValue="/api/solicitudMatrimonioDesempleo.jsf" />
+			<f:selectItem itemLabel="Consulta de Movimientos Históricos" itemValue="/api/consultaMovHistoricos.jsf" />
+			<f:selectItem itemLabel="Valores UMA" itemValue="/api/valoresUMA.jsf" />
             
 			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
