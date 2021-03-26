@@ -112,8 +112,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 			if (idUsuario != null && !idUsuario.equals("") ){
 			//SalarioMinOut salarioMinOut =new SalarioMinOut();
 		    SalarioMinOut salarioMinOut = salarioMinService.getSalarioMinimo(idUsuario);
-		    System.out.println("DATOS POR Id Usuario: "+salarioMinOut);
-		    System.out.println("DATOS POR Id Usuario Mensaje y Estaus: "+salarioMinOut.getMensaje() +"  --Estatues es: "+salarioMinOut.getEstatus());
+		   
 		    if (salarioMinOut.getEstatus() == 1 && salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
 				totalIdUsuario=salarioMinOut.getListSalarioMin().size();
 				salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();
@@ -167,20 +166,14 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Editar columna Usuario");
 		
-    	 System.out.println("entrando al onRowEdit:  "+event);
-    	 System.out.println("VALOR DE GET ZONA:  "+event.getObject().getCdZona()+"----"+event.getObject().getMontoDiario());
+    	 
     	 //SalarioMinimoTablaOut salarioMinimoTabla=  (SalarioMinimoTablaOut) event.getObject();
     	 SalarioMinimoOut salarioMinimoTabla=  (SalarioMinimoOut) event.getObject();
-    	 System.out.println("VISTA ");
-        System.out.println("Datos de La Vista Usuario: "+salarioMinimoTabla.getUserId());
-        System.out.println("Datos de La Vista Zona: "+salarioMinimoTabla.getCdZona());
-        System.out.println("Datos de La Vista  Fecha Calendario: "+salarioMinimoTabla.getFechaCalendario());
-        System.out.println("Datos de La Vista  Fecha Inicio: "+salarioMinimoTabla.getFechaUltimo());
-        System.out.println("Datos de La Vista  Monto: "+salarioMinimoTabla.getMontoDiario());
+    	
         //salarioMinimoTablaOut
         try {
         	salarioMinimoMensaje=salarioMinService.update(salarioMinimoTabla.getUserId(), salarioMinimoTabla.getCdZona(), salarioMinimoTabla.getFechaCalendario(), salarioMinimoTabla.getMontoDiario());
-			System.out.println("VALOR DE STORED UPDATE: "+salarioMinimoMensaje);
+			
 			if (salarioMinimoMensaje.getEstatus() == 1) {
 				
 		    	pr.setStatus("Se edito columna Usuario");//"Consulta Exitosa"
@@ -208,8 +201,8 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cancelar columna Usuario");
-		System.out.println("VALOR DE CANCEL");
+		pr.setDescProceso("Cancelar Actualizacion de Usuario");
+		
         try {
 //    	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
 //        FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -232,9 +225,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 //        cars1.add(car2Add);
     	//se insertaron  correctamente los datos
     									//String usuario, Date calendario, Double monto
-    	System.out.println("Datos de La Vista Usuario: "+insertUsuario);
-        System.out.println("Datos de La Vista  Calendario: "+fechaCalendario);
-        System.out.println("Datos de La Vista  Monto: "+montoDiario);
+    	
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
     		salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);

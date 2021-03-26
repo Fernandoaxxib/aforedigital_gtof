@@ -63,6 +63,7 @@ private final EntityManager entityManager;
 			
 		query.setParameter("P_FECHA_INICIO", parametro.getFechaInicio());
 		query.setParameter("P_REG_REPORTE", registroReporte);
+		
 		BaseOut res = new BaseOut();
 		res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
 		res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
@@ -113,6 +114,29 @@ private final EntityManager entityManager;
 		query.setParameter("P_FECHA_FINAL",parametro.getFechaFin());
 		
 		String res = (String) query.getOutputParameterValue("P_NOMBRE_ARCHIVO");
+		return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	@SuppressWarnings("unchecked")
+	public BaseOut generaNombreBack(OrdenPagoFechasOut parametro ) throws AforeException {
+		try {
+		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.ORDEN_PAGO_PACKAGE).concat(".").concat(Constantes.ORDEN_PAGO_GENERA_REPORTE_STORED);
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+		
+		query.registerStoredProcedureParameter("P_FECHA_INICIO", Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_FECHA_FINAL", Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
+		
+		query.setParameter("P_FECHA_INICIO", parametro.getFechaInicio());
+		query.setParameter("P_FECHA_FINAL",parametro.getFechaFin());
+		
+		BaseOut res = new BaseOut();
+		res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+		res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

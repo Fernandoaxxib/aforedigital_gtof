@@ -100,7 +100,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cargar Archivo");
-		try {System.out.println("VALOR DE rutaCarga:"+rutaCarga+" /nombreArchivoCarga:"+nombreArchivoCarga);
+		try {
 		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
 			//addMessageFail("Ingrese el nombre del archivo.");
 			UIInput input = (UIInput) findComponent("nombreCarga");
@@ -109,6 +109,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		}else {
 		
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
+			
 			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...") ) {
 			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
 			pr.setStatus("Proceso ejecutado Correctamente");
@@ -142,7 +143,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cargar Archivo");
-		try {System.out.println("REVERSA CARGA");
+		try {
 //			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();

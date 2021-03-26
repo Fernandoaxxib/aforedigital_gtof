@@ -59,6 +59,13 @@ public class OrdenPagoServ extends ServiceBase {
 		}
 	}
 	
+	public BaseOut generaNombreBack(OrdenPagoFechasOut parametro ) throws AforeException{
+		try {
+			return ordenPagoRepo.generaNombreBack(parametro);
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
 	public List<String> inicializarA() throws AforeException{
 		try {
 
@@ -66,9 +73,9 @@ public class OrdenPagoServ extends ServiceBase {
 			 List<String> listaTipoReporte = new ArrayList<String>();
 			 listaTipoReporte.add("A");
 			 listaTipoReporte.add("B");
-			 listaTipoReporte.add("C");
-			 listaTipoReporte.add("D");
-			 listaTipoReporte.add("E");
+//			 listaTipoReporte.add("C");
+//			 listaTipoReporte.add("D");
+//			 listaTipoReporte.add("E");
 			return listaTipoReporte;
 		} catch (Exception e) {
 			throw GenericException(e);

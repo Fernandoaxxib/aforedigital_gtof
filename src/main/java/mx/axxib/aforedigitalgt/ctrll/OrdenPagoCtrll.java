@@ -18,6 +18,7 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.OrdenPagoFechasOut;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
 import mx.axxib.aforedigitalgt.eml.TiposReportes;
@@ -87,7 +88,8 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 		cargaFechas();
 		inicializarA();
-		//obtenerNombre();
+		nombre=null;
+		
 		}
 	}
 	
@@ -102,6 +104,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 	public void inicializarA() {
 		try {
+			System.out.println("Valor de boxUno es: "+boxUno);//seleccionarA
 			tipoReporte=ordenPagoServ.inicializarA();
 		}catch (Exception e) {
 			GenericException(e);
@@ -111,19 +114,24 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 	public void impresoraReporte() {
 		ProcessResult pr = new ProcessResult();
-		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Búsqueda por NSS");
 		try {
-			System.out.println("Valor de boxUno es: "+boxUno);
-			if(boxUno!=null) {
-			ordenPagoServ.enviarImpresora(ordenPagoFechasOut, boxUno);
-			}
-		 else {
-			UIInput input = (UIInput) findComponent("listSelect");
-			input.setValid(false);
-			pr.setStatus("Tipo Reporte es requerido");
 			
-		}
+			if(boxUno==1) {
+				
+				pr.setFechaInicial(DateUtil.getNowDate());
+				pr.setDescProceso("Mandar a Imprimir");
+				BaseOut res =ordenPagoServ.enviarImpresora(ordenPagoFechasOut, boxUno);
+				if (res.getEstatus() == 1) {
+					pr.setStatus("Ejecución con exito");
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
+			}
+		 
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -134,58 +142,72 @@ public class OrdenPagoCtrll extends ControllerBase {
 	}
 	
 	public void generarArchivo() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Generar Reporte");	
 		try {
-			System.out.println("Valor de boxDos es: "+boxDos);
-			if(boxDos!=null){
-			ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
+		
+			if(boxDos ==2){				
+			
+				BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
+				if (res.getEstatus() == 1) {
+					pr.setStatus("Ejecución con exito");
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
 			}
-		}catch (Exception e) {
-			GenericException(e);
-		}		
+			}catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}	
 		
 	}
 	
-	public void creaTipoReporte() {
-		try {
-			System.out.println("Valor de tipoReporte es A: "+tipoReporte);
-			tiposReportes=ordenPagoServ.creaTipoReporte("A");
-		}catch (Exception e) {
-			GenericException(e);
-		}	
-	}
-	
-	public void obtenerNombre () {
-		try {
-			System.out.println("VALOR DE ORDEN PAGO "+ordenPagoFechasOut.getFechaInicio());
-			nombre=ordenPagoServ.generaNombre(ordenPagoFechasOut);//ordenPagoFechasOut
-			nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
-		}catch (Exception e) {
-			GenericException(e);
-		}	
-	}
-	
+
 	public void botonGenerarReporte() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Obtener Nombre");
 		try {
 			
-			impresoraReporte();
-			generarArchivo();
 				if(seleccionarA!=null) {
-				System.out.println("Valor de tipoReporte es A: "+seleccionarA);
+					
+					if(boxUno == 1){	
+						impresoraReporte();
+						}
+						if(boxDos==2){	
+						generarArchivo();
+						}
+					
+				
 				tiposReportes=ordenPagoServ.creaTipoReporte(seleccionarA);
-				System.out.println("Valor tiposReportes;"+tiposReportes); 
+				
 				nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
-				if(tiposReportes.getP_MENSAJE().equals("SE GENERO CORRECTAMENTE EL REPORTE A") || tiposReportes.getP_MENSAJE().equals("SE GENERO CORRECTAMENTE EL REPORTE")) {
-					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
+				
+				if (nombre != null) {
+					pr.setStatus("Ejecución con exito");
 				} else {
-					msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
+					pr.setStatus("Se presento un error inesperado");
 				}
+				}else {
+					UIInput input = (UIInput) findComponent("listSelect");
+					input.setValid(false);
+					pr.setStatus("Seleccionar Tipo Reporte");
+					 
 				}
 		
 		}catch (Exception e) {
-			GenericException(e);
-		}
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}	
 		
 			
 	}
