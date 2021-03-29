@@ -241,10 +241,12 @@
 						<h:outputText value="#{mon.descSubtransaccion}" />
 					</p:column>
 
-					<p:column headerText="Valor título" style="width:100px">
-						<h:outputText value="#{mon.valorCuota}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
-						</h:outputText>
+					<p:column headerText="No. asiento" style="width:100px">
+						<h:outputText value="#{mon.noAsiento}" />
+					</p:column>
+					
+					<p:column headerText="No. documento" style="width:100px">
+						<h:outputText value="#{mon.noDocumento}" />
 					</p:column>
 				</p:dataTable>
 

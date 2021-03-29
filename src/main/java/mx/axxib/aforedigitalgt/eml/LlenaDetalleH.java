@@ -51,24 +51,24 @@ public class LlenaDetalleH {
 	private String noMovDetalle;
 	private Date fechaMovDetalle;
 	private String descripcion; //Agregado
-	private BigDecimal montoMov;
-	private String estado;
+	private BigDecimal montoMov; //
+	private String estado; //
 	private String codTipoSaldo;
 	private String codInversion;
 	private Integer tipoTransaccion;
 	private String subtipoTransaccion;
-	private BigDecimal totalCuota;
-	private Date fechaAplicado;
+	private BigDecimal totalCuota; //
+	private Date fechaAplicado; //
 	private String noAsiento; //Agregado
 	private String noDocumento; //Agregado
-	private String incluidoPor;
-	private String modificadoPor;
-	private Date fechaInclusion;
-	private Date fechaModificacion;
-	private String descTipoSaldo;
-	private String descInversion;
-	private String descTransaccion;
-	private String descSubtransaccion;
+	private String incluidoPor; //
+	private String modificadoPor; //
+	private Date fechaInclusion; //
+	private Date fechaModificacion; //
+	private String descTipoSaldo; //
+	private String descInversion; //
+	private String descTransaccion; //
+	private String descSubtransaccion; //
 	
 }
 
