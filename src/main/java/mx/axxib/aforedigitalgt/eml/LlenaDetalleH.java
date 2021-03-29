@@ -59,8 +59,8 @@ public class LlenaDetalleH {
 	private String subtipoTransaccion;
 	private BigDecimal totalCuota; //
 	private Date fechaAplicado; //
-	private String noAsiento; //Agregado
-	private String noDocumento; //Agregado
+	private Integer noAsiento; //Agregado
+	private Integer noDocumento; //Agregado
 	private String incluidoPor; //
 	private String modificadoPor; //
 	private Date fechaInclusion; //

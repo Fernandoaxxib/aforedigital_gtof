@@ -144,8 +144,8 @@ public class ConsultaMovHistoricosRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
 			query.setParameter("P_COD_CUENTA", codCuenta);
-			query.setParameter("P_FEC_MOVIMTO", fecMov);
-			query.setParameter("P_NUM_MIVIMTO", noMov);
+			query.setParameter("P_FEC_MOVIMIENTO", fecMov);
+			query.setParameter("P_NUM_MOVIMIENTO", noMov);
 
 			LlenaDetalleHOut res = new LlenaDetalleHOut();
 			Object cursor = query.getOutputParameterValue("CP_HIST_DET");
