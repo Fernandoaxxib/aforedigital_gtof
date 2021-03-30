@@ -37,3 +37,4 @@ hs_err_pid*
 .factorypath
 .settings/org.eclipse.jdt.apt.core.prefs
 .settings/org.springframework.ide.eclipse.prefs
+.metadata/src/main/webapp/WEB-INF/faces-config.pageflow
