@@ -266,6 +266,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 	public void buscarMontos() {
 		ProcessResult pr = new ProcessResult();
 		try {
+			pr.setDescProceso("Buscar");
 			pr.setFechaInicial(DateUtil.getNowDate());
 			if (isFormValid(pr)) {
 
