@@ -54,7 +54,7 @@
 				itemValue="/api/saldosNegativosImssIsste.jsf" />
 			<f:selectItem itemLabel="Consulta Resoluciones DataMart"
 				itemValue="/api/consultaResolucionDataMart.jsf" />
-			<p:ajax event="change" actionListener="#{menu.navigateSub}"
+			<p:ajax event="change" listener="#{menu.navigateSub}"
 				oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
 

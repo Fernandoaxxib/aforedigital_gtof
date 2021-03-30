@@ -18,7 +18,7 @@
             <f:selectItem itemLabel="SEGUIMIENTO DE PROCESOS" itemValue="/api/monitorProcesos.jsf" />
             <f:selectItem itemLabel="RECAUDACIONES" itemValue="" itemDisabled="true"/>
             <f:selectItem itemLabel="REPORTES GENERALES" itemValue="/api/reporteLiquidacion.jsf" />
-            <p:ajax event="change" actionListener="#{menu.navigateMenu}" oncomplete="PF('statusDialog').show();"/>
+            <p:ajax event="change" listener="#{menu.navigateMenu}" oncomplete="PF('statusDialog').show();"/>
         </p:selectOneMenu>
 	</h:form>
 </h:body>

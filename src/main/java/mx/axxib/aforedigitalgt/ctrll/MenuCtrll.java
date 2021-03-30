@@ -1,8 +1,5 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.io.IOException;
-
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
