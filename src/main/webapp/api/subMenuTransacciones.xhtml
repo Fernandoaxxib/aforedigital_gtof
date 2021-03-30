@@ -39,8 +39,7 @@
 				itemValue="/api/cerInaProceso.jsf" />
 			<f:selectItem itemLabel="Rechazo de Solicitudes"
 				itemValue="/api/rechazosSolicitudes.jsf" />
-			<f:selectItem itemLabel="Salario Mínimo"
-				itemValue="/api/salarioMinimo.jsf" />
+			
 			<f:selectItem itemLabel="Órden Pago" itemValue="/api/ordenPago.jsf" />
 			<f:selectItem itemLabel="Consultas Marcas Cuentas"
 				itemValue="/api/consultarMarcasCuentas.jsf" />
@@ -49,11 +48,8 @@
 				itemValue="/api/reInverModDesProceso.jsf" />
 			<f:selectItem itemLabel="Desmarca Masiva de Cuentas (Carga Batch)"
 				itemValue="/api/desmarcaCargaMasiva.jsf" />
-			<f:selectItem
-				itemLabel="Reporte de Saldos Finales (Saldos Negativos)"
-				itemValue="/api/saldosNegativosImssIsste.jsf" />
-			<f:selectItem itemLabel="Consulta Resoluciones DataMart"
-				itemValue="/api/consultaResolucionDataMart.jsf" />
+			
+			
 			<p:ajax event="change" listener="#{menu.navigateSub}"
 				oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
