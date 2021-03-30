@@ -3,6 +3,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.io.IOException;
 import java.util.Map;
 
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.annotation.Join;
@@ -17,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.eml.PermisoResult;
-import mx.axxib.aforedigitalgt.serv.PermisoService;
+
 
 @Scope(value = "session")
 @Component(value = "home")
@@ -25,8 +26,7 @@ import mx.axxib.aforedigitalgt.serv.PermisoService;
 @Join(path = "/home", to = "/api/introduccion.jsf")
 public class HomeCtrll extends ControllerBase {
 
-	@Autowired
-	private PermisoService personService;
+
 
 	@Autowired
 	private AforeMessage aforeMessage;
@@ -48,11 +48,8 @@ public class HomeCtrll extends ControllerBase {
 			String param = params.get("redirect");
 			if(param != null) {
 				if(param.equals("true")) {
-					try {
-						FacesContext.getCurrentInstance().getExternalContext().redirect("home");
-					} catch (IOException e) {
-						
-					}
+					FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/api/introduccion.jsf");
+					//FacesContext.getCurrentInstance().getExternalContext().redirect("/home");
 				}
 
 			}

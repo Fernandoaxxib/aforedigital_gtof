@@ -1,5 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.io.IOException;
+
 import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
@@ -25,22 +27,14 @@ public class MenuCtrll extends ControllerBase {
 	
 	public void navigateMenu() {
 		if(menu != null) {
-		    FacesContext context = FacesContext.getCurrentInstance();
-		    NavigationHandler navigationHandler = context.getApplication()
-		            .getNavigationHandler();
 		    submenu = menu;
-		    navigationHandler.handleNavigation(context, null, menu
-		            + "?init=true&faces-redirect=true");
+		    FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, menu + "?init=true&faces-redirect=true");
 		}
 	}
 	
 	public void navigateSub() {
 		if(submenu != null) {
-		    FacesContext context = FacesContext.getCurrentInstance();
-		    NavigationHandler navigationHandler = context.getApplication()
-		            .getNavigationHandler();
-		    navigationHandler.handleNavigation(context, null, submenu
-		            + "?init=true&faces-redirect=true");
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, submenu + "?init=true&faces-redirect=true");
 		}
 	}
 	

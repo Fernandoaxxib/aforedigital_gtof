@@ -21,10 +21,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		     	.authorizeRequests()
 			     	.antMatchers("/javax.faces.resource/**", "/login*", "api/*","resources/**","css/**").permitAll()
 			     	.anyRequest().authenticated()
-		     	
+		            
 		     	.and().formLogin()
 		     		.loginPage("/login.jsf")
-		     		.defaultSuccessUrl("/home")
+		     		.defaultSuccessUrl("/api/introduccion.jsf")
 		     		.failureUrl("/login.jsf?error=true")
 				.and().logout()
 					.logoutSuccessUrl("/login.jsf")
