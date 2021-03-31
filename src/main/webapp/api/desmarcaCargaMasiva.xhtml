@@ -12,6 +12,10 @@
 		<f:event listener="#{desmarcaCargaMasiva.iniciar}" type="preRenderView"/>		
 	</f:metadata>
 	
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+	
 	<ui:define name="left">
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
