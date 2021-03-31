@@ -58,7 +58,7 @@ public class RetParImssOP8586Repo extends RepoBase {
 			query.registerStoredProcedureParameter("p_Nombre_Archivo", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);
+			
 			
 			query.setParameter("p_Path", p_Path);
 			query.setParameter("p_Nombre_Archivo", p_Nombre_Archivo);
@@ -66,7 +66,7 @@ public class RetParImssOP8586Repo extends RepoBase {
 			ProcesResult resp =  new ProcesResult();
 		    resp.setP_Message((String) query.getOutputParameterValue("oc_Mensaje"));			
 		    resp.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
-		    resp.setOc_Avance((String) query.getOutputParameterValue("pMensaje"));
+		    
 			return resp;
 		} catch (Exception e) {
 			throw GenericException(e);
