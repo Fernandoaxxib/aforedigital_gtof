@@ -74,7 +74,7 @@
 								value="#{msg.modDesParc_boton_buscarNss}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_numSolicitud}"
+							<p:outputLabel value="Número solicitud"
 								style="font-weight: bold" />
 						</p:column>
 						<p:column style="width:20%">
@@ -149,7 +149,7 @@
 						</p:column>
 						<p:column>
 
-							<p:outputLabel value="#{msg.modDesParc_solicitud_numResolucion}"
+							<p:outputLabel value="Número resolución"
 								style="font-weight: bold" />
 						</p:column>
 						<p:column>
@@ -226,7 +226,7 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_fecha}"
+					<p:column headerText="Fecha envío"
 						style="width:100px">
 						<h:outputText value="#{par.fecha}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
@@ -238,7 +238,7 @@
 						<h:outputText value="#{par.estatusPagDescrip}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_trabFechaAut}"
+					<p:column headerText="Fecha trabajador"
 						style="width:100px">
 						<h:outputText value="#{par.fechaManifiestoTrab}"
 							style="float:right">
@@ -246,12 +246,12 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_trabajador}"
+					<p:column headerText="Autoriza trabajador"
 						style="text-align: center; width:50px">
 						<h:outputText value="#{par.autorizaTrabajador}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaEnv}"
+					<p:column headerText="Fecha envío IMSS"
 						style="width:100px">
 						<h:outputText value="#{par.fechaEnvAutorizaImss}"
 							style="float:right">
@@ -259,14 +259,14 @@
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_imssFechaAut}"
+					<p:column headerText="Fecha IMSS"
 						style="width:100px">
 						<h:outputText value="#{par.fechaAutorizaImss}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_imss}"
+					<p:column headerText="Autoriza IMSS"
 						style="text-align: center; width:50px">
 						<h:outputText value="#{par.autorizaImss}" />
 					</p:column>
@@ -276,7 +276,7 @@
 						<h:outputText value="#{par.tipo_pago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_clabe}"
+					<p:column headerText="Clabe"
 						style="width:200px">
 						<h:outputText value="#{par.dpCuenta}" />
 					</p:column>
@@ -342,7 +342,7 @@
 						<h:outputText value="#{mar.descripcion}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_marcas_incluidoPor}">
+					<p:column headerText="Incluído por">
 						<h:outputText value="#{mar.incluidoPor}" />
 					</p:column>
 

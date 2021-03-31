@@ -320,7 +320,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				case "V":
 					ObtieneMontoDevIn parametrosV = new ObtieneMontoDevIn();
 					parametrosV.setFecha(fechaInicial);
-					pr.setDescProceso("Búsqueda por dev pago");
+					pr.setDescProceso("Búsqueda por dev. pago");
 					if (selectedrgDevExces != null) {
 						parametrosV.setLoteRev(selectedrgDevExces.getIdLote());
 						res = ventaTitulosService.getObtieneMontoDev(parametrosV);
@@ -328,7 +328,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 						UIInput fini = (UIInput) findComponent("comboDev");
 						fini.setValid(false);
 						String msg = aforeMessage.getMessage(ConstantesMsg.CAMPO_REQUERIDO,
-								new Object[] { "Dev pago excs lote" });
+								new Object[] { "Dev. pago exceso lote" });
 						pr.setStatus(msg);
 					}
 					break;
