@@ -95,7 +95,7 @@
 								<p:outputLabel value="Archivo:" />
 							</p:column>
 							<p:column>
-								<p:inputText id="nombreArchivo"
+								<p:inputText id="nombreArchivo" maxlength="50"
 									value="#{retParImssOP84.nombreArchivo}" style="width:303px" />
 							</p:column>
 							<p:column>
@@ -164,9 +164,9 @@
 								</p:column>
 								<p:column>
 									<p:inputText id="vLote" value="#{retParImssOP84.lote}"
-										placeholder="Indique lote"
+										placeholder="Seleccione lote"
 										style="text-align:right;width:310px;margin-left:25px !important"
-										disabled="#{retParImssOP84.disabled3}" />
+										disabled="true" />
 									<p:commandButton id="btnC" styleClass="blue" style="width:35px"
 										value="..." action="#{retParImssOP84.getLotes}"
 										disabled="#{retParImssOP84.disabled4}"

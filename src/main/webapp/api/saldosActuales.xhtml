@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/api/layaut.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{saldosActuales.iniciar}" type="preRenderView" />
+	</f:metadata>
+	<ui:define name="center">
+		<h:outputScript library="js" name="calendar-localization.js" />
+
+		<p:panelGrid width="100%" styleClass="ui-noborder">
+			<p:row>
+				<p:column>
+					<ui:include src="menu.xhtml" />
+				</p:column>
+				<p:column style="margin-left:50px">
+					<ui:include src="subMenuReportes.xhtml" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		<p:dialog id="dlg1" header="Consulta Saldos Fecha Corte"
+			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
+			resizable="false">
+			<h:form>
+				<p:panelGrid class="ui-noborder">
+					<p:row>
+						<p:column style="width:90px">
+							<p:outputLabel value="Nombre:" />
+						</p:column>
+						<p:column style="width:250px">
+							<h:outputText value="#{saldosActuales.selectedNombre.nombre}" />
+						</p:column>
+						<p:column style="width:90px">
+							<p:outputLabel value="NSS:" />
+						</p:column>
+						<p:column style="width:100px">
+							<h:outputText
+								value="#{saldosActuales.selectedNombre.NUM_SEGURO_SOCIAL}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid class="ui-noborder" style="margin-top:20px">
+					<p:row>
+						<p:column style="width:90px">
+							<p:outputLabel value="Cod. Cuenta:" />
+						</p:column>
+						<p:column style="width:250px">
+							<h:outputText value="#{saldosActuales.selectedNombre.COD_CUENTA}" />
+						</p:column>
+						<p:column style="width:90px">
+							<p:outputLabel value="Fecha Corte:" />
+						</p:column>
+						<p:column style="width:100px">
+							<h:outputText value="#{saldosActuales.fechaCorte}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid class="ui-noborder" style="margin-top:20px">
+					<p:row>
+						<p:column>
+							<p:focus for="radSelect" />
+							<p:selectOneRadio id="radSelect"
+								value="#{saldosActuales.radioSelected}">
+								<p:ajax listener="#{saldosActuales.radioSelected}"
+									update="tblSaldos" />
+								<f:selectItem itemLabel="Fecha Filtro (Vivienda)" itemValue="0" />
+								<f:selectItem itemLabel="Vivienda (Separación)" itemValue="1" />
+							</p:selectOneRadio>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:dataTable id="tblSaldos" var="saldo"
+					value="#{saldosActuales.listaSaldos}" emptyMessage=""
+					scrollable="true" scrollHeight="100" style="margin-top:10px">
+
+					<p:column headerText="Sector Inversión" width="90">
+						<h:outputText value="#{saldo.desc_siefore}" style="float:left;" />
+					</p:column>
+
+					<p:column headerText="Subcuenta" width="90">
+						<h:outputText value="#{saldo.descripcion}" style="float:left;" />
+					</p:column>
+
+					<p:column headerText="Títulos" width="90">
+						<h:outputText value="#{saldo.cuotas}" style="float:left;" />
+					</p:column>
+
+					<p:column headerText="Pesos" width="90">
+						<h:outputText value="#{saldo.saldos}" style="float:left;" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</p:dialog>
+
+		<h:form id="form">
+			<p:panel header="Saldos Actuales del Cliente"
+				style="height:90% !important">
+				<p:panelGrid styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Buscar por:" />
+						</p:column>
+						<p:column>
+							<p:inputText id="valorEntrada"
+								value="#{saldosActuales.valorEntrada}" style="width:150px" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{saldosActuales.buscar}"
+								update="form:table1 form:pnlResult form:pnlResult2 form:tblCargaSaldos"
+								value="Buscar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panelGrid styleClass="ui-noborder" style="margin-top:20px;">
+					<p:row>
+						<p:column>
+							<p:dataTable id="table1" var="mon"
+								value="#{saldosActuales.listaNombres}" selectionMode="single"
+								selection="#{saldosActuales.selectedNombre}"
+								rowKey="#{mon.NUM_SEGURO_SOCIAL}" emptyMessage=""
+								scrollable="true" scrollHeight="100" style="margin-top:10px">
+
+								<p:ajax event="rowSelect"
+									listener="#{saldosActuales.cargaSaldos}"
+									update="form:pnlResult form:pnlResult2 form:tblCargaSaldos" />
+
+								<p:column headerText="Nombre" width="90">
+									<h:outputText value="#{mon.nombre}" style="float:left;" />
+								</p:column>
+								<p:column headerText="Cuenta" width="90">
+									<h:outputText value="#{mon.COD_CUENTA}" style="float:left;" />
+								</p:column>
+								<p:column headerText="Producto" width="90">
+									<h:outputText value="#{mon.descripcion}" style="float:left;" />
+								</p:column>
+								<p:column headerText="Estado" width="90">
+									<h:outputText value="#{mon.EST_CUENTA}" style="float:left;" />
+								</p:column>
+							</p:dataTable>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnlResult" styleClass="ui-noborder"
+					style="margin-top:20px;width:100%">
+					<p:row>
+						<p:column style="width:70px">
+							<p:outputLabel value="Nombre: " />
+						</p:column>
+						<p:column style="width:200px">
+							<p:outputLabel value="#{saldosActuales.selectedNombre.nombre}" />
+						</p:column>
+						<p:column style="width:25px">
+							<p:outputLabel value="NSS:" />
+						</p:column>
+						<p:column style="width:130px">
+							<p:outputLabel
+								value="#{saldosActuales.selectedNombre.NUM_SEGURO_SOCIAL}" />
+						</p:column>
+						<p:column style="width:55px">
+							<p:outputLabel value="Num. Cuenta:" />
+						</p:column>
+						<p:column style="width:100px">
+							<p:outputLabel
+								value="#{saldosActuales.selectedNombre.COD_CUENTA}" />
+						</p:column>
+						<p:column style="width:55px">
+							<p:outputLabel value="Días Acum.:" />
+						</p:column>
+						<p:column style="width:100px">
+							<p:outputLabel
+								value="#{saldosActuales.selectedNombre.DIAS_ACUMULADOS}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnlResult2" styleClass="ui-noborder"
+					style="margin-top:20px;width:100%">
+					<p:row>
+						<p:column style="width:60px">
+							<p:outputLabel value="Fecha Emisión:" />
+						</p:column>
+						<p:column style="width:177px">
+							<h:outputText
+								value="#{saldosActuales.selectedNombre.FEC_EMISION}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column style="width:73px">
+							<p:outputLabel value="Días Pagados:" />
+						</p:column>
+						<p:column style="width:100px">
+							<p:outputLabel
+								value="#{saldosActuales.selectedNombre.DIAS_PAGADOS}" />
+						</p:column>
+						<p:column style="width:39%;text-align:right;padding-right:30px">
+							<p:commandButton class="blue" type="submit"
+								action="#{saldosActuales.pruebita}"
+								oncomplete="PF('dlg2').show();" update="dlg1"
+								value="Saldo Fecha Corte" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panelGrid columns="1" styleClass="ui-noborder"
+					style="margin-top:20px;width:70%">
+					<p:dataTable id="tblCargaSaldos" var="registro"
+						value="#{saldosActuales.saldos}" selectionMode="single"
+						selection="#{saldosActuales.selectedSaldo}"
+						rowKey="#{registro.cod_subproduct}">
+
+						<p:column headerText="Agrupación">
+							<h:outputText value="#{registro.descripcion}" />
+						</p:column>
+
+						<p:column headerText="Saldo">
+							<h:outputText value="#{registro.saldo_subproduct}"
+								style="float:right" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" update="form:tblCargaSaldos"
+								value="btn1" actionListener="#{saldosActuales.cargaSaldos}"
+								title="View">								
+							</p:commandButton>
+							<p:commandButton class="blue" update="form:tblCargaSaldos"
+								value="btn2" actionListener="#{saldosActuales.cargaNuevoNivel}"
+								title="View2">								
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

@@ -15,11 +15,29 @@
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
     
-	<ui:define name="center">
-		<ui:include src="subMenuTransacciones.xhtml" />
+	<ui:define name="center">		
 		<h:outputScript name="js/calendar-localization.js" />
 		
-
+        <p:panelGrid class="no-border no-padding" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="blue"
+							outcome="/api/aprobSolicTipRetiro.jsf" includeViewParams="true"
+							value="Aprobaciones">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="green" outcome="/api/ordenPago.jsf"
+							includeViewParams="true" value="Reporte de alertas">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
 		
 	<h:form id="form">
 				<p:panel id="datos" header="Orden Pago" style="margin-top:20px">

@@ -18,5 +18,6 @@ public class ResultadoSaldosOut {
 	private String P_TOTALES_SALDOS;
 	private List<DetalleSaldoOut> listSaldos;
 	private List<DatosClienteOut> datosCliente;
+	private List<DatosClienteNSSOut> datosClienteNSS;
 	private List<SaldoOut> saldos;
 }

@@ -24,15 +24,32 @@
 
 	<ui:define name="center">
 
-		<ui:include src="subMenuTransacciones.xhtml" />
-
-
+		<p:panelGrid class="no-border no-padding" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="green"
+							outcome="/api/aprobSolicTipRetiro.jsf" includeViewParams="true"
+							value="Aprobaciones">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="blue" outcome="/api/ordenPago.jsf"
+							includeViewParams="true" value="Reporte de alertas">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel header="Aprobación de solicitudes por tipo de retiro"
+			<p:panel header="Aprobaciones"
 				style="margin-top:20px">
 				<p:commandButton id="btnRecSolicPend"
-					styleClass="blue ui-button-text"
+					styleClass="blue ui-button-text" style="margin-right:30px"
 					onclick="PF('listSolicitudes').clearFilters()"
 					action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
 					type="submit"
@@ -40,6 +57,12 @@
 					oncomplete="PF('listSolicitudes').selectAllRows();"
 					value="#{msg.aprob_boton_recuperarSolicitudes}" ajax="true" />
 
+
+				<p:linkButton styleClass="blue ui-button-text"
+					outcome="/api/ordenPago.jsf" includeViewParams="true"
+					value="Generar reporte de alertas">
+					<f:param name="init" value="true" />
+				</p:linkButton>
 
 				<p:dataTable id="table1" var="mon" class="sinfondo"
 					value="#{aprobSolicTipRetiro.listSolicitudes}"
@@ -86,8 +109,7 @@
 						</p:outputPanel>
 					</f:facet>
 					<f:facet name="header">
-						<p:panelGrid class="no-border no-padding"
-							style="margin-top:10px;">
+						<p:panelGrid class="no-border no-padding" style="margin-top:10px;">
 							<p:row>
 								<p:column
 									style="text-align: left !important;width: 25px !important;">

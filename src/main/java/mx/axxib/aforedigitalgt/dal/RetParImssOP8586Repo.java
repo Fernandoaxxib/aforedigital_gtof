@@ -30,7 +30,7 @@ public class RetParImssOP8586Repo extends RepoBase {
 	public ProcesResult cargarArchivoOP85(String p_Path, String p_Nombre_Archivo) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE)
-					.concat(".").concat(Constantes.RET_PARIMSS_OP84_CARGA_ARCH_OP85);
+					.concat(".").concat(Constantes.RET_PARIMSS_OP84_GENERA_ARCH_OP85);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("p_Path", String.class, ParameterMode.IN);
@@ -58,12 +58,15 @@ public class RetParImssOP8586Repo extends RepoBase {
 			query.registerStoredProcedureParameter("p_Nombre_Archivo", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);
+			
 			query.setParameter("p_Path", p_Path);
 			query.setParameter("p_Nombre_Archivo", p_Nombre_Archivo);
 
 			ProcesResult resp =  new ProcesResult();
 		    resp.setP_Message((String) query.getOutputParameterValue("oc_Mensaje"));			
 		    resp.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		    resp.setOc_Avance((String) query.getOutputParameterValue("pMensaje"));
 			return resp;
 		} catch (Exception e) {
 			throw GenericException(e);

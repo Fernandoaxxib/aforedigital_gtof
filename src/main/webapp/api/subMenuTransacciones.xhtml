@@ -39,17 +39,14 @@
 				itemValue="/api/cerInaProceso.jsf" />
 			<f:selectItem itemLabel="Rechazo de Solicitudes"
 				itemValue="/api/rechazosSolicitudes.jsf" />
-			
-			<f:selectItem itemLabel="Órden Pago" itemValue="/api/ordenPago.jsf" />
+			<f:selectItem itemLabel="Reinversiones a Básicas Parcialidades (Desempleo)"
+				itemValue="/api/reInverModDesProceso.jsf" />
 			<f:selectItem itemLabel="Consultas Marcas Cuentas"
 				itemValue="/api/consultarMarcasCuentas.jsf" />
-			<f:selectItem
-				itemLabel="Reinversiones a Básicas Parcialidades (Desempleo)"
-				itemValue="/api/reInverModDesProceso.jsf" />
 			<f:selectItem itemLabel="Desmarca Masiva de Cuentas (Carga Batch)"
 				itemValue="/api/desmarcaCargaMasiva.jsf" />
-			
-			
+
+
 			<p:ajax event="change" listener="#{menu.navigateSub}"
 				oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>

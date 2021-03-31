@@ -19,6 +19,7 @@ import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP8586Serv;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "retParImssOP8586")
@@ -228,17 +229,16 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			resultados.add(pr);
 		}
 	}
-	public void generarReporte() {
-		//-------------------------------------------------------
+	public void generarReporte() {	
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Generación de reporte");
 
 		if (radioSelected != null || radioSelected2 != null) {
+			if(isNombreValid(pr)) {
 			if (radioSelected != null) {
 				if (fecIni != null && fecFin != null) {
-					if (DateUtil.isValidDates(fecIni, fecFin)) {
-					  if(archivo3!=null && !archivo3.isEmpty()) {
+					if (DateUtil.isValidDates(fecIni, fecFin)) {					  
 						  try {
 							  ProcesResult res=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
 							  if (res.getOn_Estatus() == 1) {
@@ -255,16 +255,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 							} finally {
 								pr.setFechaFinal(DateUtil.getNowDate());
 								resultados.add(pr);
-							}
-					  }else {
-						  UIInput radio = (UIInput) findComponent("idArchivo3");
-						  radio.setValid(false);
-							
-						  pr.setStatus("El nombre de archivo es requerido");
-						  pr.setFechaFinal(DateUtil.getNowDate());
-					      resultados.add(pr);	
-					  }	
-						
+							}					  
 					} else {
 						UIInput radio = (UIInput) findComponent("dfini");
 						radio.setValid(false);
@@ -289,8 +280,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 				}
 			}
 			if (radioSelected2 != null) {
-				if (lote != null && !lote.isEmpty()) {
-					 if(archivo3!=null && !archivo3.isEmpty()) {
+				if (lote != null && !lote.isEmpty()) {					
 						  try {
 								ProcesResult res=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
 								if (res.getOn_Estatus() == 1) {
@@ -307,15 +297,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 							} finally {
 								pr.setFechaFinal(DateUtil.getNowDate());
 								resultados.add(pr);
-							}
-					  }else {
-						  UIInput radio = (UIInput) findComponent("idArchivo3");
-						  radio.setValid(false);
-							
-						  pr.setStatus("El nombre de archivo es requerido");
-						  pr.setFechaFinal(DateUtil.getNowDate());
-					      resultados.add(pr);	
-					  }	
+							}					  
 				} else {
 					UIInput radio2 = (UIInput) findComponent("vLote");
 					radio2.setValid(false);
@@ -325,6 +307,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 					resultados.add(pr);
 				}
 			}
+		}
 		} else {
 			UIInput radio = (UIInput) findComponent("customRadio");
 			radio.setValid(false);
@@ -334,12 +317,29 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			pr.setStatus("Selección requerida");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
-		}
-		
-		
-		//------------------------------------------------------
-		
-		
+		}		
+	}
+	
+	public boolean isNombreValid(ProcessResult pr) {
+		 if(archivo3!=null && !archivo3.isEmpty()) {
+			 if(ValidateUtil.isValidFileName(archivo3)) {
+				 return true;
+			 }else {
+				  UIInput radio = (UIInput) findComponent("idArchivo3");
+				  radio.setValid(false);					
+				  pr.setStatus("Nombre de archivo no válido");
+				  pr.setFechaFinal(DateUtil.getNowDate());
+			      resultados.add(pr);
+			      return false;
+			 }
+		 }else {
+			  UIInput radio = (UIInput) findComponent("idArchivo3");
+			  radio.setValid(false);				
+			  pr.setStatus("El nombre de archivo es requerido");
+			  pr.setFechaFinal(DateUtil.getNowDate());
+		      resultados.add(pr);	
+		      return false;
+		 }
 	}
 	public void reset() {
 		fecIni=null;

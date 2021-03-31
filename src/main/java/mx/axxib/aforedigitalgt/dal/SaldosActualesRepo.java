@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.DatosClienteNSSOut;
 import mx.axxib.aforedigitalgt.eml.DatosClienteOut;
 import mx.axxib.aforedigitalgt.eml.DetalleSaldoOut;
 import mx.axxib.aforedigitalgt.eml.ResultadoSaldosOut;
@@ -47,6 +48,8 @@ public class SaldosActualesRepo extends RepoBase{
 		query.setParameter("P_COD_EMPRESA", P_COD_EMPRESA);
 		query.setParameter("P_FECHA", P_FECHA);
 		query.setParameter("P_FECHA_FILTRO", P_FECHA_FILTRO);
+		query.setParameter("P_SELEC_VIVIENDA", P_SELEC_VIVIENDA);
+		
 		
 		ResultadoSaldosOut res= new ResultadoSaldosOut();
 		List<DetalleSaldoOut> lista = query.getResultList();
@@ -89,7 +92,7 @@ public class SaldosActualesRepo extends RepoBase{
 	public ResultadoSaldosOut getDatosXNSS(String P_NSS) throws AforeException {
 	  try {	
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALDOS_ACTUALES_CLIENTE_PACKAGE).concat(".").concat(Constantes.SALDOS_ACTUALES_CLIENTE_OBTIENEDATOS_NSS);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "DatosClienteOut");		
+		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "DatosClienteNSSOut");		
 
 		query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("CP_DATOS", void.class, ParameterMode.REF_CURSOR);
@@ -99,8 +102,8 @@ public class SaldosActualesRepo extends RepoBase{
 		query.setParameter("P_NSS", P_NSS);		
 		
 		ResultadoSaldosOut res= new ResultadoSaldosOut();
-		List<DatosClienteOut> lista = query.getResultList();
-		res.setDatosCliente(lista);
+		List<DatosClienteNSSOut> lista = query.getResultList();
+		res.setDatosClienteNSS(lista);
 		res.setP_MENSAJE((String)query.getOutputParameterValue("P_MENSAJE"));
 		res.setP_ESTATUS((Integer)query.getOutputParameterValue("P_ESTATUS"));
 		

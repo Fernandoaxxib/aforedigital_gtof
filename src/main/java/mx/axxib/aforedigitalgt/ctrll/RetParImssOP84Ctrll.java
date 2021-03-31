@@ -1,6 +1,5 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-
 import java.util.Date;
 import java.util.List;
 import javax.faces.component.UIInput;
@@ -19,6 +18,7 @@ import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP84Serv;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "retParImssOP84")
@@ -132,12 +132,6 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 
 	}
 
-	/*
-	 * public void getListaRegistros() { try { registros =
-	 * service.getConsultaOP84(fecIni, fecFin, lote); } catch (Exception e) {
-	 * GenericException(e); } }
-	 */
-
 	public void onRowSelect(SelectEvent<LoteOP84Out> event) {
 		lote1 = new LoteOP84Out();
 		lote1.setID_LOTE(event.getObject().getID_LOTE());
@@ -168,20 +162,29 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		pr.setDescProceso("Generación de reporte");
 		if (registros != null && !registros.isEmpty()) {
 			if (archivo != null && !archivo.isEmpty()) {
-				try {			
-					ProcesResult res=service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
-					if (res.getOn_Estatus() == 1) {
-						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
-					} else {
-						if (res.getOn_Estatus() == 2) {
-							GenerarErrorNegocio(res.getP_Message());
-						} else if (res.getOn_Estatus() == 0) {
-							pr.setStatus(res.getP_Message());
+				if (ValidateUtil.isValidFileName(archivo)) {
+					try {
+						ProcesResult res = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
+						if (res.getOn_Estatus() == 1) {
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+						} else {
+							if (res.getOn_Estatus() == 2) {
+								GenerarErrorNegocio(res.getP_Message());
+							} else if (res.getOn_Estatus() == 0) {
+								pr.setStatus(res.getP_Message());
+							}
 						}
+					} catch (Exception e) {
+						pr = GenericException(e);
+					} finally {
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);
 					}
-				} catch (Exception e) {
-					pr=	GenericException(e);
-				} finally {
+				}else {
+					pr.setDescProceso("Generación de reporte");
+					pr.setStatus("Nombre de archivo no válido");
+					UIInput radio = (UIInput) findComponent("vArchivo");
+					radio.setValid(false);
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
 				}
@@ -193,7 +196,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 			}
-		}else {
+		} else {
 			pr.setStatus("No existen datos o no se ha realizado la consulta");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -211,19 +214,19 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				if (fecIni != null && fecFin != null) {
 					if (DateUtil.isValidDates(fecIni, fecFin)) {
 						try {
-							ProcesResult res=service.getConsultaOP84(fecIni, fecFin, lote);
+							ProcesResult res = service.getConsultaOP84(fecIni, fecFin, lote);
 							if (res.getOn_Estatus() == 1) {
 								pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-								registros=res.getRegistros();
+								registros = res.getRegistros();
 							} else {
 								if (res.getOn_Estatus() == 2) {
 									GenerarErrorNegocio(res.getP_Message());
 								} else if (res.getOn_Estatus() == 0) {
 									pr.setStatus(res.getP_Message());
 								}
-							}					        									
+							}
 						} catch (Exception e) {
-							pr=GenericException(e);
+							pr = GenericException(e);
 						} finally {
 							pr.setFechaFinal(DateUtil.getNowDate());
 							resultados.add(pr);
@@ -253,20 +256,20 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			}
 			if (radioSelected2 != null) {
 				if (lote != null && !lote.isEmpty()) {
-					try {					
-						ProcesResult res=service.getConsultaOP84(fecIni, fecFin, lote);
+					try {
+						ProcesResult res = service.getConsultaOP84(fecIni, fecFin, lote);
 						if (res.getOn_Estatus() == 1) {
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-							registros=res.getRegistros();
+							registros = res.getRegistros();
 						} else {
 							if (res.getOn_Estatus() == 2) {
 								GenerarErrorNegocio(res.getP_Message());
 							} else if (res.getOn_Estatus() == 0) {
 								pr.setStatus(res.getP_Message());
 							}
-						}														
+						}
 					} catch (Exception e) {
-						pr=GenericException(e);
+						pr = GenericException(e);
 					} finally {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
@@ -292,17 +295,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		}
 	}
 
-	public void cargarArchivo(){
+	public void cargarArchivo() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Carga de archivo");
-		if (nombreArchivo == null || nombreArchivo.isEmpty()) {
-			UIInput radio = (UIInput) findComponent("nombreArchivo");
-			radio.setValid(false);
-			pr.setStatus("Nombre de archivo requerido");
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		} else {
+		if (isNombreValid(pr)) {
 			try {
 				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo);
 				if (resp.getOn_Estatus() == 1) {
@@ -315,13 +312,35 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 					}
 				}
 			} catch (Exception e) {
-				pr=	GenericException(e);				
+				pr = GenericException(e);
 			} finally {
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 			}
 		}
-	}	
+	}
+
+	public boolean isNombreValid(ProcessResult pr) {
+		if (nombreArchivo == null || nombreArchivo.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreArchivo");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			if (!ValidateUtil.isValidFileName(nombreArchivo)) {
+				UIInput radio = (UIInput) findComponent("nombreArchivo");
+				radio.setValid(false);
+				pr.setStatus("Nombre de archivo no válido");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+		}
+
+		return true;
+	}
 
 	public void limpiar() {
 		lote = null;

@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-@SqlResultSetMappings({ @SqlResultSetMapping(name = "DatosClienteOut", classes = {
-		@ConstructorResult(targetClass = DatosClienteOut.class, columns = {					
-				@ColumnResult(name = "NUM_SEGURO_SOCIAL", type = String.class),
+@SqlResultSetMappings({ @SqlResultSetMapping(name = "DatosClienteNSSOut", classes = {
+		@ConstructorResult(targetClass = DatosClienteNSSOut.class, columns = {				
 				@ColumnResult(name = "COD_ESTADO", type = String.class),
 				@ColumnResult(name = "cod_cliente", type = String.class),
 				@ColumnResult(name = "COD_CUENTA", type = String.class),
@@ -28,8 +27,7 @@ import lombok.NoArgsConstructor;
 				@ColumnResult(name = "descripcion", type = String.class),
 				@ColumnResult(name = "nombre", type = String.class),
 		}) }) })
-public class DatosClienteOut {	
-	private String NUM_SEGURO_SOCIAL;
+public class DatosClienteNSSOut {	
 	private String COD_ESTADO;
 	private String cod_cliente;
 	private String COD_CUENTA;
