@@ -157,44 +157,9 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				pr.setStatus("No  se encontro informacion");	
 			}
 			verDatoCheque=true;
-//			consultarPago(verChequeOut.getCuenta());
-//			System.out.println("VALOR DE consultarPago");
-//			
-//			consultarSolicitud(verChequeOut.getCuenta());
-//			System.out.println("VALOR DE consultarSolicitud");
+	
 			
-			
-//			StringTokenizer tokens=new StringTokenizer(verChequeOut.getNombre()," ");
-//		        int nDatos=tokens.countTokens();
-//		        String [] datos=new String[nDatos];
-//		        int i=0;
-//		        while(tokens.hasMoreTokens()){
-//		            String str=tokens.nextToken();
-//		           // datos[i]=Double.valueOf(str).doubleValue();
-//		            datos[i]=str;
-//		            System.out.println(datos[i]);
-//		            i++;
-//		        }
-//		        
-//		        if(datos.length == 4) {
-//		        String nombre1= datos[0];
-//		        String nombre2= datos[1];
-//		        nombre=nombre1+" "+nombre2;
-//		       
-//		        apellidoPaterno=datos[2];
-//		        apellidoMaterno=datos[3];
-//		        System.out.println("Valor concatenado:"+nombre);
-//		        System.out.println("Valor concatenado:"+apellidoPaterno);
-//		        System.out.println("Valor concatenado:"+apellidoMaterno);
-//		        }else {
-//		        	nombre= datos[0];
-//			       		       
-//			        apellidoPaterno=datos[1];
-//			        apellidoMaterno=datos[2];
-//			        System.out.println("Valor concatenado nombre1:"+nombre);
-//			        System.out.println("Valor concatenado apellidoPaterno:"+apellidoPaterno);
-//			        System.out.println("Valor concatenado apellidoMaterno:"+apellidoMaterno);	
-//		        }
+
 			} else {
 				UIInput input = (UIInput) findComponent("nss");
 				input.setValid(false);
@@ -299,10 +264,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			
 			
 			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
-//			for(FopagosListOut iterar:fopagos) {
-//			totalMontoRetiro  += iterar.getPMontoNeto_Re();
-//			}
-			
+
 			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
 			if(fopagos != null) {
 				if (fopagos.getOn_Estatus() == 1 ) {

@@ -116,36 +116,12 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		    if (salarioMinOut.getEstatus() == 1 && salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
 				totalIdUsuario=salarioMinOut.getListSalarioMin().size();
 				salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();
-//				cpDatos=res.getCpDatos();
-//				nombre=res.getNombre();
-//				cuenta=res.getCuenta();
-//				curp=res.getCurp_o_nss();
-//				mensaje=res.getMensaje();
-//				nss=nssIn;
-//				valor="1";
-//				bandera=1;
 		    	pr.setStatus("Consulta Exitosa Id Usuario");//"Consulta Exitosa"
 			}else {
 				pr.setStatus("No se encontraron resultados por Id Usuario");
 				mensajeTabla = "Sin información por Id Usuario";
 			}
-		    
-			// salarioMinimoOut = salarioMinService.getSalarioMinimo2("JGALICIA");
-//			System.out.println("Tamaño de salarioMinOut:" +salarioMinOut.getListSalarioMin().size());
-//			System.out.println("IMPRIMIR LISTA BASE:" +salarioMinOut.getListSalarioMin());
-//			List<SalarioMinimoTablaOut> salarioMinimoOut= new ArrayList<SalarioMinimoTablaOut> ();
-//			 for (int i = 0; i < salarioMinOut.getListSalarioMin().size(); i++) {
-//				 SalarioMinimoTablaOut tabla= new SalarioMinimoTablaOut();
-//				 tabla.setCdZona(salarioMinOut.getListSalarioMin().get(i).getCdZona());
-//				 tabla.setFechaCalendario(salarioMinOut.getListSalarioMin().get(i).getFechaCalendario());
-//				 tabla.setFechaUltimo(salarioMinOut.getListSalarioMin().get(i).getFechaUltimo());
-//				 tabla.setMontoDiario(salarioMinOut.getListSalarioMin().get(i).getMontoDiario());
-//				 tabla.setUserId(salarioMinOut.getListSalarioMin().get(i).getUserId());
-//				 salarioMinimoOut.add(tabla);
-//			    }
-//			 salarioMinimoTablaOut=salarioMinimoOut;
-//			 System.out.println("Tamaño de salarioMinimoTablaOut:" +salarioMinimoOut.size());
-//			 System.out.println("IMPRIMIR LISTA VISTA:" +salarioMinimoTablaOut);
+		    			
 			}else {
 				UIInput input = (UIInput) findComponent("usuario");
 				input.setValid(false);
@@ -181,13 +157,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 				pr.setStatus("Error al  editar columna Usuario");
 				
 			}
-//			if(msg.trim().toUpperCase().equals("SE ACTUALIZO CORECTAMENTE")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
+
         }  catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -204,10 +174,8 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		pr.setDescProceso("Actualizacion de Usuario Cancelada");
 		
         try {
-//    	FacesMessage msg = new FacesMessage("Update Cancelado", event.getObject().getUserId());
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
         event.getObject().getUserId();
-        pr.setStatus("Se cancelo la columna");
+        pr.setStatus("Se cancelo el update columna");
         }catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -220,10 +188,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Guardar Nuevo Usuario");
-        // Add one new car to the table:
-//        Car car2Add = service.createCars(1).get(0);
-//        cars1.add(car2Add);
-    	//se insertaron  correctamente los datos
+        //se insertaron  correctamente los datos
     									//String usuario, Date calendario, Double monto
     	
     	try {
@@ -237,14 +202,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 				pr.setStatus("Error al guardar nuevo Usuario");
 				
 			}
-//			if(msg.equals("se insertaron  correctamente los datos")) { 
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "", msg));
-//			}
-			
+
 		} catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
