@@ -135,7 +135,7 @@
 			<artifactId>primefaces</artifactId>
 			<version>8.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.primefaces.extensions</groupId>
 			<artifactId>primefaces-extensions</artifactId>
@@ -147,7 +147,11 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.8</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>5.12.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

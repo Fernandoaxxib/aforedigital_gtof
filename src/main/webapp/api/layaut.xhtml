@@ -25,6 +25,11 @@
 		function showDialog() {
 			PF('statusDialog').show();
 		}
+		function hideDialog() {			 			 
+			 $("#dialogo1").css("visibility", "hidden");
+			 $("#dialogo1_modal").css("display", "none");
+			 $("#dialogo1").css("background", "transparent !important;");
+		}
 	</script>
 
 </h:head>
@@ -32,8 +37,8 @@
 
 	<p:ajaxStatus onstart="setTimeout(PF('statusDialog').show(), 30000);"
 		onsuccess="PF('statusDialog').hide()"
-		onerror="alert('No se obtuvo respuesta del servidor'); PF('statusDialog').hide()" />
-	<p:dialog styleClass="loading" widgetVar="statusDialog" modal="true"
+		onerror="alert('No se obtuvo respuesta del servidor'); hideDialog();" />
+	<p:dialog id="dialogo1" styleClass="loading" widgetVar="statusDialog" modal="true"
 		draggable="false" closable="false" resizable="false"
 		showHeader="false">
 		<p:graphicImage

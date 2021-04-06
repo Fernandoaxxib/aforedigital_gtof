@@ -13,6 +13,10 @@
 	</f:metadata>
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
+		<h:outputStylesheet library="webjars"
+			name="font-awesome/5.12.0/css/all.min-jsf.css" />
+		<h:outputStylesheet library="webjars"
+			name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
 
 		<p:panelGrid width="100%" styleClass="ui-noborder">
 			<p:row>
@@ -226,13 +230,13 @@
 								style="float:right" />
 						</p:column>
 						<p:column>
-							<p:commandButton class="blue" update="form:tblCargaSaldos"
-								value="btn1" actionListener="#{saldosActuales.cargaSaldos}"
-								title="View">								
+							<p:commandButton icon="fa fa-fw fa-arrow-up flechaArribaAbajo" class="blue"
+								update="form:tblCargaSaldos" type="submit"
+								actionListener="#{saldosActuales.cargaSaldos}" >
 							</p:commandButton>
-							<p:commandButton class="blue" update="form:tblCargaSaldos"
-								value="btn2" actionListener="#{saldosActuales.cargaNuevoNivel}"
-								title="View2">								
+							<p:commandButton icon="fa fa-fw fa-arrow-down flechaArribaAbajo" class="blue" update="form:tblCargaSaldos"
+								 actionListener="#{saldosActuales.cargaNuevoNivel}"
+								type="submit">
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>

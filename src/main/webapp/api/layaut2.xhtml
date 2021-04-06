@@ -20,15 +20,25 @@
 		rel="stylesheet" type="text/css"></link>
 	<link href="http://fonts.googleapis.com/css?family=Montserrat"
 		rel="stylesheet" type="text/css"></link>
+
+	<script type="text/javascript">
+		function showDialog() {
+			PF('statusDialog').show();
+		}
+		function hideDialog() {			
+			 $("#dialogo1").css("visibility", "hidden");
+			 $("#dialogo1_modal").css("display", "none");
+			 $("#dialogo1").css("background", "transparent !important;");
+		}
+	</script>
 </h:head>
 
 <h:body>
-
 	<p:ajaxStatus onstart="setTimeout(PF('statusDialog').show(), 30000);"
 		onsuccess="PF('statusDialog').hide()"
-		onerror="alert('No se obtuvo respuesta del servidor'); PF('statusDialog').hide()" />
-	<p:dialog styleClass="loading" widgetVar="statusDialog" modal="true"
-		draggable="false" closable="false" resizable="false"
+		onerror="alert('No se obtuvo respuesta del servidor'); hideDialog();" />
+	<p:dialog id="dialogo1" styleClass="loading" widgetVar="statusDialog"
+		modal="true" draggable="false" closable="false" resizable="false"
 		showHeader="false">
 		<p:graphicImage
 			url="#{request.contextPath}/javax.faces.resource/Imagenes/3.gif.jsf"
