@@ -54,7 +54,7 @@ public class MenuCtrll extends ControllerBase {
 	}
 	
 	public void reportes() {
-		menu = "/api/reporteLiquidacion.jsf";
+		menu = "/api/consultarMarcasCuentas.jsf";
 		submenu = menu;
 		navigateMenu();
 	}
