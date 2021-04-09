@@ -82,7 +82,7 @@
 					emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTabla}"
 			 value="#{solicitudMatrimonioDesempleo.listSolicitudChequeOut}"  rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15"
-					selection="#{solicitudMatrimonioDesempleo.selectSolicitudChequeOut}" rowKey="#{verSolicitud.numeroSolicitud}">
+					>
 		    
 					<f:facet name="header" style="float:right">
 
@@ -146,7 +146,7 @@
 		   <p:column  align="center" style="width:20px;">
                        					 <p:commandButton id="verFopago" update=":form:display :form:result" oncomplete="PF('productDialog').show()"
                                           action="#{solicitudMatrimonioDesempleo.consultarFopagos}" icon="ui-icon-search" class="blue">
-                           				 <f:setPropertyActionListener  value="#{verPago}" ajax="false" class="blue"
+                           				 <f:setPropertyActionListener  value="#{verSolicitud}" ajax="false" class="blue"
                                                          target="#{solicitudMatrimonioDesempleo.solicitudChequeOut}"/>
                                          <p:tooltip for="verFopago" value="Ver Fopago" showEffect="clip" hideEffect="fold" />
                        					 </p:commandButton>
@@ -199,7 +199,7 @@
 						</p:row>	
 					</p:panelGrid>		
 						
-						<p:dataTable var="verPago" value="#{solicitudMatrimonioDesempleo.fopagos}"
+						<p:dataTable var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"  >
 									
 									<p:column headerText="Beneficiario" style="width:20px">
