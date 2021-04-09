@@ -148,7 +148,14 @@
 		        <h:outputText value="#{verSolicitud.numeroEmpleado}" />
 		    </p:column>
 		 
-		   
+		   <p:column  align="center" style="width:20px;">
+                       					 <p:commandButton id="verFopago" update=":form:display :form:result" oncomplete="PF('productDialog').show()"
+                                          action="#{solicitudMatrimonioDesempleo.consultarFopagos}" icon="ui-icon-search" class="blue">
+                           				 <f:setPropertyActionListener  value="#{verPago}" ajax="false" class="blue"
+                                                         target="#{solicitudMatrimonioDesempleo.pagoChequeOut}"/>
+                                         <p:tooltip for="verFopago" value="Ver Fopago" showEffect="clip" hideEffect="fold" />
+                       					 </p:commandButton>
+             </p:column>
 		 	
 		</p:dataTable>
  		
@@ -211,14 +218,7 @@
 		        <h:outputText value="#{verPago.op17}" />
 		    </p:column>
 			
-			<p:column  align="center" style="width:20px;">
-                       					 <p:commandButton id="verFopago" update=":form:display :form:result" oncomplete="PF('productDialog').show()"
-                                          action="#{solicitudMatrimonioDesempleo.consultarFopagos}" icon="ui-icon-search" class="blue">
-                           				 <f:setPropertyActionListener  value="#{verPago}" ajax="false" class="blue"
-                                                         target="#{solicitudMatrimonioDesempleo.pagoChequeOut}"/>
-                                         <p:tooltip for="verFopago" value="Ver Fopago" showEffect="clip" hideEffect="fold" />
-                       					 </p:commandButton>
-             </p:column>
+			
 		
 		
 		</p:dataTable>
