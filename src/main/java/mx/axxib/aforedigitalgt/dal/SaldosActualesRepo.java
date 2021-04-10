@@ -122,7 +122,6 @@ public class SaldosActualesRepo extends RepoBase{
 		query.registerStoredProcedureParameter("P_COD_PRODUCTO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_COD_CUENTA", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("CP_DATOS", void.class, ParameterMode.REF_CURSOR);
-		query.registerStoredProcedureParameter("P_TOTALES_SALDOS", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 				
@@ -133,8 +132,7 @@ public class SaldosActualesRepo extends RepoBase{
 		List<SaldoOut> lista = query.getResultList();
 		res.setSaldos(lista);
 		res.setP_MENSAJE((String)query.getOutputParameterValue("P_MENSAJE"));
-		res.setP_ESTATUS((Integer)query.getOutputParameterValue("P_ESTATUS"));
-		res.setP_TOTALES_SALDOS((String)query.getOutputParameterValue("P_TOTALES_SALDOS"));		
+		res.setP_ESTATUS((Integer)query.getOutputParameterValue("P_ESTATUS"));			
 		
 		return res;
 	  }catch(Exception e) {

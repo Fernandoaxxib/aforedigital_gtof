@@ -35,13 +35,13 @@
 				<p:panelGrid class="ui-noborder">
 					<p:row>
 						<p:column style="width:90px">
-							<p:outputLabel value="Nombre:" />
+							<p:outputLabel value="Nombre:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:250px">
 							<h:outputText value="#{saldosActuales.selectedNombre.nombre}" />
 						</p:column>
 						<p:column style="width:90px">
-							<p:outputLabel value="NSS:" />
+							<p:outputLabel value="NSS:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:100px">
 							<h:outputText
@@ -52,13 +52,13 @@
 				<p:panelGrid class="ui-noborder" style="margin-top:20px">
 					<p:row>
 						<p:column style="width:90px">
-							<p:outputLabel value="Cod. Cuenta:" />
+							<p:outputLabel value="Cod. Cuenta:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:250px">
 							<h:outputText value="#{saldosActuales.selectedNombre.COD_CUENTA}" />
 						</p:column>
 						<p:column style="width:90px">
-							<p:outputLabel value="Fecha Corte:" />
+							<p:outputLabel value="Fecha Corte:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:100px">
 							<h:outputText value="#{saldosActuales.fechaCorte}">
@@ -72,7 +72,7 @@
 						<p:column>
 							<p:focus for="radSelect" />
 							<p:selectOneRadio id="radSelect"
-								value="#{saldosActuales.radioSelected}">
+								value="#{saldosActuales.radioSelected}" style="font-weight:bold">
 								<p:ajax listener="#{saldosActuales.radioSelected}"
 									update="tblSaldos" />
 								<f:selectItem itemLabel="Fecha Filtro (Vivienda)" itemValue="0" />
@@ -94,11 +94,15 @@
 					</p:column>
 
 					<p:column headerText="Títulos" width="90">
-						<h:outputText value="#{saldo.cuotas}" style="float:left;" />
+						<h:outputText value="#{saldo.cuotas}" style="float:left;">
+							<f:convertNumber pattern="#0.00" />
+						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Pesos" width="90">
-						<h:outputText value="#{saldo.saldos}" style="float:left;" />
+						<h:outputText value="#{saldo.saldos}" style="float:left;">
+							<f:convertNumber pattern="#0.00" />
+						</h:outputText>
 					</p:column>
 				</p:dataTable>
 			</h:form>
@@ -106,15 +110,15 @@
 
 		<h:form id="form">
 			<p:panel header="Saldos Actuales del Cliente"
-				style="height:90% !important">
-				<p:panelGrid styleClass="ui-noborder">
+				style="height:90% !important;margin-top:20px">
+				<p:panelGrid styleClass="ui-noborder" style="margin-top:20px">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Buscar por:" />
+							<p:outputLabel value="Buscar por:" style="font-weight:bold" />
 						</p:column>
 						<p:column>
 							<p:inputText id="valorEntrada"
-								value="#{saldosActuales.valorEntrada}" style="width:150px" />
+								value="#{saldosActuales.valorEntrada}" style="width:300px" />
 						</p:column>
 						<p:column>
 							<p:commandButton class="blue"
@@ -158,27 +162,27 @@
 					style="margin-top:20px;width:100%">
 					<p:row>
 						<p:column style="width:70px">
-							<p:outputLabel value="Nombre: " />
+							<p:outputLabel value="Nombre: " style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:200px">
 							<p:outputLabel value="#{saldosActuales.selectedNombre.nombre}" />
 						</p:column>
 						<p:column style="width:25px">
-							<p:outputLabel value="NSS:" />
+							<p:outputLabel value="NSS:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:130px">
 							<p:outputLabel
 								value="#{saldosActuales.selectedNombre.NUM_SEGURO_SOCIAL}" />
 						</p:column>
 						<p:column style="width:55px">
-							<p:outputLabel value="Num. Cuenta:" />
+							<p:outputLabel value="Num. Cuenta:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:100px">
 							<p:outputLabel
 								value="#{saldosActuales.selectedNombre.COD_CUENTA}" />
 						</p:column>
 						<p:column style="width:55px">
-							<p:outputLabel value="Días Acum.:" />
+							<p:outputLabel value="Días Acum.:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:100px">
 							<p:outputLabel
@@ -190,7 +194,7 @@
 					style="margin-top:20px;width:100%">
 					<p:row>
 						<p:column style="width:60px">
-							<p:outputLabel value="Fecha Emisión:" />
+							<p:outputLabel value="Fecha Emisión:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:177px">
 							<h:outputText
@@ -199,7 +203,7 @@
 							</h:outputText>
 						</p:column>
 						<p:column style="width:73px">
-							<p:outputLabel value="Días Pagados:" />
+							<p:outputLabel value="Días Pagados:" style="font-weight:bold" />
 						</p:column>
 						<p:column style="width:100px">
 							<p:outputLabel
@@ -218,7 +222,7 @@
 					style="margin-top:20px;width:70%">
 					<p:dataTable id="tblCargaSaldos" var="registro"
 						value="#{saldosActuales.saldos}" selectionMode="single"
-						selection="#{saldosActuales.selectedSaldo}"
+						selection="#{saldosActuales.selectedSaldo}" emptyMessage=""
 						rowKey="#{registro.cod_subproduct}">
 
 						<p:column headerText="Agrupación">
@@ -227,16 +231,18 @@
 
 						<p:column headerText="Saldo">
 							<h:outputText value="#{registro.saldo_subproduct}"
-								style="float:right" />
+								style="float:right">
+								<f:convertNumber pattern="#0.00" />
+							</h:outputText>
 						</p:column>
 						<p:column>
-							<p:commandButton icon="fa fa-fw fa-arrow-up flechaArribaAbajo" class="blue"
-								update="form:tblCargaSaldos" type="submit"
-								actionListener="#{saldosActuales.cargaSaldos}" >
+							<p:commandButton icon="fa fa-fw fa-arrow-up flechaArribaAbajo"
+								class="blue" update="form:tblCargaSaldos" type="submit"
+								actionListener="#{saldosActuales.cargaSaldos}">
 							</p:commandButton>
-							<p:commandButton icon="fa fa-fw fa-arrow-down flechaArribaAbajo" class="blue" update="form:tblCargaSaldos"
-								 actionListener="#{saldosActuales.cargaNuevoNivel}"
-								type="submit">
+							<p:commandButton icon="fa fa-fw fa-arrow-down flechaArribaAbajo"
+								class="blue" update="form:tblCargaSaldos"
+								actionListener="#{saldosActuales.cargaNuevoNivel}" type="submit">
 							</p:commandButton>
 						</p:column>
 					</p:dataTable>

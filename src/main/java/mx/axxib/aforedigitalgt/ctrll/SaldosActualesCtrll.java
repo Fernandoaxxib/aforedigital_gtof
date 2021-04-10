@@ -69,6 +69,7 @@ public class SaldosActualesCtrll extends ControllerBase {
 			selectedNombre = null;
 			fechaCorte = DateUtil.getNowDate();
 			radioSelected = null;
+			saldos=null;
 		}
 	}
 
@@ -80,13 +81,13 @@ public class SaldosActualesCtrll extends ControllerBase {
 			try {
 				ResultadoSaldosOut res = service.getSaldosBloque(selectedNombre.getCOD_CUENTA(), "1", fechaCorte, "1",
 						"0");
-				if (res.getP_ESTATUS() == 0) {
+				if (res.getP_ESTATUS() == 1) {
 					listaSaldos = res.getListSaldos();
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getP_ESTATUS() == 2) {
 						GenerarErrorNegocio(res.getP_MENSAJE());
-					} else if (res.getP_ESTATUS() == 1) {
+					} else if (res.getP_ESTATUS() == 0) {
 						pr.setStatus(res.getP_MENSAJE());
 					}
 				}
@@ -101,13 +102,13 @@ public class SaldosActualesCtrll extends ControllerBase {
 				try {
 					ResultadoSaldosOut res = service.getSaldosBloque(selectedNombre.getCOD_CUENTA(), "1", fechaCorte,
 							"0", "1");
-					if (res.getP_ESTATUS() == 0) {
+					if (res.getP_ESTATUS() == 1) {
 						listaSaldos = res.getListSaldos();
 						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 					} else {
 						if (res.getP_ESTATUS() == 2) {
 							GenerarErrorNegocio(res.getP_MENSAJE());
-						} else if (res.getP_ESTATUS() == 1) {
+						} else if (res.getP_ESTATUS() == 0) {
 							pr.setStatus(res.getP_MENSAJE());
 						}
 					}
@@ -144,6 +145,7 @@ public class SaldosActualesCtrll extends ControllerBase {
 
 	public void buscar() {
 		this.selectedNombre = null;
+		this.saldos=null;
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 
@@ -168,7 +170,7 @@ public class SaldosActualesCtrll extends ControllerBase {
 							dato.setNUM_SEGURO_SOCIAL(valorEntrada);
 							listaNombres.add(dato);
 						});
-						
+
 					} else {
 						if (res.getP_ESTATUS() == 2) {
 							GenerarErrorNegocio(res.getP_MENSAJE());
@@ -211,55 +213,60 @@ public class SaldosActualesCtrll extends ControllerBase {
 	}
 
 	public void pruebita() {
-		radioSelected=null;
-		listaSaldos=null;
-	}
-	
-	public void cargaSaldos() {
-		ProcessResult pr = new ProcessResult();
-		try {			
-			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Carga de saldos");
-			ResultadoSaldosOut res=service.getCargaSaldos(this.selectedNombre.getCOD_PRODUCTO(), this.selectedNombre.getCOD_CUENTA());
-			if(res.getP_ESTATUS()==0) {
-				saldos=res.getSaldos();
-			}else {
-				if (res.getP_ESTATUS() == 2) {
-					GenerarErrorNegocio(res.getP_MENSAJE());
-				} else if (res.getP_ESTATUS() == 1) {
-					pr.setStatus(res.getP_MENSAJE());
-				}
-			}
-		} catch (Exception e) {
-			pr=GenericException(e);
-		}finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
-	}
-	
-	
-	public void cargaNuevoNivel() {
-		ProcessResult pr = new ProcessResult();
-		try {
-			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Carga nuevo nivel");
-			ResultadoSaldosOut res=service.getCargaNuevoNivel(this.selectedSaldo.getCod_subproduct(), this.selectedNombre.getCOD_CUENTA());
-			if(res.getP_ESTATUS()==1) {
-				saldos=res.getSaldos();				
-			}else {
-				if (res.getP_ESTATUS() == 2) {
-					GenerarErrorNegocio(res.getP_MENSAJE());
-				} else if (res.getP_ESTATUS() == 0) {
-					pr.setStatus(res.getP_MENSAJE());
-				}
-			}			
-		} catch (Exception e) {
-			pr=GenericException(e);
-		}finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
+		radioSelected = null;
+		listaSaldos = null;
 	}
 
+	public void cargaSaldos() {
+		if (selectedNombre != null) {
+			ProcessResult pr = new ProcessResult();
+			try {
+				pr.setFechaInicial(DateUtil.getNowDate());
+				pr.setDescProceso("Carga de saldos");
+				ResultadoSaldosOut res = service.getCargaSaldos(this.selectedNombre.getCOD_PRODUCTO(),
+						this.selectedNombre.getCOD_CUENTA());
+				if (res.getP_ESTATUS() == 1) {
+					saldos = res.getSaldos();
+				} else {
+					if (res.getP_ESTATUS() == 2) {
+						GenerarErrorNegocio(res.getP_MENSAJE());
+					} else if (res.getP_ESTATUS() == 0) {
+						pr.setStatus(res.getP_MENSAJE());
+					}
+				}
+			} catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		}
+
+	}
+
+	public void cargaNuevoNivel() {
+		if (selectedSaldo != null) {
+			ProcessResult pr = new ProcessResult();
+			try {
+				pr.setFechaInicial(DateUtil.getNowDate());
+				pr.setDescProceso("Carga nuevo nivel");
+				ResultadoSaldosOut res = service.getCargaNuevoNivel(this.selectedSaldo.getCod_subproduct(),
+						this.selectedNombre.getCOD_CUENTA());
+				if (res.getP_ESTATUS() == 1) {
+					saldos = res.getSaldos();
+				} else {
+					if (res.getP_ESTATUS() == 2) {
+						GenerarErrorNegocio(res.getP_MENSAJE());
+					} else if (res.getP_ESTATUS() == 0) {
+						pr.setStatus(res.getP_MENSAJE());
+					}
+				}
+			} catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		}
+	}
 }
