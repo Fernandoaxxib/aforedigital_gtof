@@ -10,6 +10,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Configuration;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase que facilita la obtención de mensajes del archivo messages de acuerdo al idioma configurado
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Configuration
 public class AforeMessage {
 

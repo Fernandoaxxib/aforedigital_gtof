@@ -23,6 +23,12 @@ import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.util.AforeLogger;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase base para la capa controlador (Ctrll) todos los controladores deben heredarla
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 public class ControllerBase {
 
 	@Getter

@@ -12,6 +12,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Entidad de retorno del monitor de procesos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

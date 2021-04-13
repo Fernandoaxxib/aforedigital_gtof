@@ -5,6 +5,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Utilerías de fechas
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 public class DateUtil {
 
 	/**

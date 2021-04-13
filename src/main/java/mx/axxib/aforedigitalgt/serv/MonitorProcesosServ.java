@@ -10,6 +10,12 @@ import mx.axxib.aforedigitalgt.eml.ObtieneJobs;
 import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio del monitor de procesos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Service
 public class MonitorProcesosServ extends ServiceBase {
 

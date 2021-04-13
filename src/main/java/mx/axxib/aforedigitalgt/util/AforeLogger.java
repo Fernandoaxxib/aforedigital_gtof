@@ -16,6 +16,12 @@ import com.google.gson.JsonObject;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Se encarga de persistir a un archivo json las excepciones
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Configuration
 public class AforeLogger {
 	

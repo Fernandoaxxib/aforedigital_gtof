@@ -5,6 +5,12 @@ import javax.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Entidad de retorno base para las respuestas que sólo incluyen estatus y mensaje
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Data
 @NoArgsConstructor
 @MappedSuperclass

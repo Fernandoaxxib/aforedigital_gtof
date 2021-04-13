@@ -2,6 +2,12 @@ package mx.axxib.aforedigitalgt.util;
 
 import java.util.regex.Pattern;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Utilerías de validación de datos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 public class ValidateUtil {
 
 	/**

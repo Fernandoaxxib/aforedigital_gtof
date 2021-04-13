@@ -13,6 +13,12 @@ import mx.axxib.aforedigitalgt.eml.ObtieneJobs;
 import mx.axxib.aforedigitalgt.eml.ObtieneJobsOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio del monitor de procesos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class MonitorProcesosRepo extends RepoBase {

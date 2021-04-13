@@ -1,5 +1,11 @@
 package mx.axxib.aforedigitalgt.com;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Constantes de la aplicación en su mayoría nombres de paquetes y storeds procedures
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 public class Constantes {
 
 	public static final String USUARIO_PENSION = "ADIGITAL";

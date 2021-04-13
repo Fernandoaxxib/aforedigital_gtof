@@ -9,6 +9,12 @@ import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase base para la capa de acceso a datos (DAL) todos los Repository deben heredarla
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Repository
 public class RepoBase {
 

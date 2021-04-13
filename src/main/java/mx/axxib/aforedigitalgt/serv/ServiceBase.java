@@ -7,6 +7,12 @@ import org.springframework.transaction.UnexpectedRollbackException;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase base para la capa de servicios (Serv) todos los servicios deben heredarla
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Service
 public class ServiceBase {
 

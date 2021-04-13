@@ -17,6 +17,12 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase principal de spring boot
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @SpringBootApplication(scanBasePackages={"mx.axxib.aforedigitalgt.*"})
 public class AforedigitalgtApplication extends SpringBootServletInitializer{
 

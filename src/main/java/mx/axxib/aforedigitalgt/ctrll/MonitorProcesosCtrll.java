@@ -20,6 +20,12 @@ import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador del monitor de procesos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "monitorProcesos")
 @ELBeanName(value = "monitorProcesos")

@@ -8,7 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase para redireccionar al login cuando ha cadudado la sesión web
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 public class JsfRedirectStrategy implements InvalidSessionStrategy {
 
     private static final String FACES_REQUEST_HEADER = "faces-request";
