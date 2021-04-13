@@ -21,5 +21,7 @@
 		</listener-class>
 	</listener>
 
-
+	<error-page>
+	    <location>/api/introduccion.jsf</location>
+	</error-page>
 </web-app>

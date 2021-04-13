@@ -11,6 +11,12 @@ import org.springframework.security.web.session.InvalidSessionStrategy;
 
 import mx.axxib.aforedigitalgt.com.JsfRedirectStrategy;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase que controla la seguridad del sitio, las rutas protegidas y redireccionamientos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 19/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
@@ -21,10 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		     	.authorizeRequests()
 			     	.antMatchers("/javax.faces.resource/**", "/login*", "api/*","resources/**","css/**").permitAll()
 			     	.anyRequest().authenticated()
-		            
+
 		     	.and().formLogin()
 		     		.loginPage("/login.jsf")
-		     		.defaultSuccessUrl("/api/introduccion.jsf")
+		     		.defaultSuccessUrl("/api/introduccion.jsf", true)
 		     		.failureUrl("/login.jsf?error=true")
 				.and().logout()
 					.logoutSuccessUrl("/login.jsf")
