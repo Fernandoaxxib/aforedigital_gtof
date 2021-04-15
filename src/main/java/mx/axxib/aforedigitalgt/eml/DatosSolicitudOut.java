@@ -8,6 +8,13 @@ import javax.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Entidad de desempleo parcialidades
+//** Interventor Principal: JSAS
+//** Fecha Creación: 30/Nov/2020
+//** Última Modificación:
+//***********************************************//
+
 @Data
 @NoArgsConstructor
 @MappedSuperclass

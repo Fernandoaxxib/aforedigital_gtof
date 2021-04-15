@@ -32,6 +32,13 @@ import mx.axxib.aforedigitalgt.serv.ModDesempParcServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de desempleo parcialidades
+//** Interventor Principal: JSAS
+//** Fecha Creación: 30/Nov/2020
+//** Última Modificación:
+//***********************************************//
+
 @Scope(value = "session")
 @Component(value = "modDesempParc")
 @ELBeanName(value = "modDesempParc")

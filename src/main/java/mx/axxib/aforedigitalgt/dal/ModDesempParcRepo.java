@@ -25,6 +25,13 @@ import mx.axxib.aforedigitalgt.eml.MarcasOut;
 import mx.axxib.aforedigitalgt.eml.RetparDetaIn;
 import mx.axxib.aforedigitalgt.eml.RetparDetaOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de desempleo parcialidades
+//** Interventor Principal: JSAS
+//** Fecha Creación: 30/Nov/2020
+//** Última Modificación:
+//***********************************************//
+
 @Repository
 @Transactional
 public class ModDesempParcRepo extends RepoBase {

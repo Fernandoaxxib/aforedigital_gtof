@@ -17,6 +17,12 @@ import mx.axxib.aforedigitalgt.eml.MarcasOut;
 import mx.axxib.aforedigitalgt.eml.RetparDetaIn;
 import mx.axxib.aforedigitalgt.eml.RetparDetaOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de desempleo parcialidades
+//** Interventor Principal: JSAS
+//** Fecha Creación: 30/Nov/2020
+//** Última Modificación:
+//***********************************************//
 @Service
 public class ModDesempParcServ extends ServiceBase {
 
