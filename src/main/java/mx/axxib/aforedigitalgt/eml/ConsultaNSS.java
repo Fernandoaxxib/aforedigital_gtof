@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 		@SqlResultSetMapping(name = "ConsultaNSS", 
 				classes = { @ConstructorResult(targetClass = ConsultaNSS.class, 
 					columns = {
-						@ColumnResult(name = "PERIODO_DE_PAGO", type = String.class),
+						@ColumnResult(name = "PERIODO_PAGO", type = String.class),
 						@ColumnResult(name = "ULTIMO_SDI_PERIODO", type = BigDecimal.class),
 						@ColumnResult(name = "REGISTRO_PATRONAL_IMSS", type = String.class),
 						@ColumnResult(name = "FEC_APLICADO", type = Date.class),

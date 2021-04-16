@@ -56,6 +56,8 @@ public class ConsultaRecaudacionRepo extends RepoBase {
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
+			query.setParameter("P_Nss", nss);
+			
 			BaseOut res = new BaseOut();
 			res.setEstatus( (Integer) query.getOutputParameterValue("P_ESTATUS") );
 			res.setMensaje( (String) query.getOutputParameterValue("P_MENSAJE") );
