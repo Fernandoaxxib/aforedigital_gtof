@@ -14,7 +14,7 @@ public class ConsultaResolucionDataMartServ extends ServiceBase {
 	@Autowired
 	private ConsultaResolucionDataMartRepo consultaResolucionDataMartRepo;
 	
-	public ConsultaResolucionesNombreOut getCuentaNombre(Integer nss) throws AforeException {
+	public ConsultaResolucionesNombreOut getCuentaNombre(Long nss) throws AforeException {
 		try {
 		return consultaResolucionDataMartRepo.getCuentaNombre(nss);
 		} catch (Exception e) {

@@ -111,8 +111,8 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		cuenta=null;
 		cpDatos=null;
 		cpCursor=null;
-		totalSolicitud=null;
-		totalNSSCURP=null;
+		totalSolicitud=0;
+		totalNSSCURP=0;
 	}
 	public void validarNssRfc() {
 		ProcessResult pr = new ProcessResult();

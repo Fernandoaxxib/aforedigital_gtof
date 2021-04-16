@@ -63,10 +63,11 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 		if (init) {
 			nss = null;
 			listaCurp=null;
+			totalSolicitud=0;
 			init = false;
 			
 		}
-	
+		
 	}
 	
 	public void getCuentaNombre()  {
@@ -75,6 +76,8 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 		
 		
 		iniciar();
+		listaCurp=null;
+		totalSolicitud=0;
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS");
 		if (nss != null && !nss.equals("") ) {
@@ -82,8 +85,8 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 			//if (ValidateUtil.isInteger(nss) ) {
 			if (nss.matches("[0-9]*")) {
 			
-			consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Integer.parseInt(nss));
-			
+			//consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Integer.parseInt(nss));Long.valueOf(String s).longValue();
+				consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Long.valueOf(nss).longValue());
 			if(consultaResolucionesNombreOut  != null && consultaResolucionesNombreOut.getCursor() != null && consultaResolucionesNombreOut.getCursor().size()>0) {
 				listaCurp=consultaResolucionesNombreOut.getCursor();
 				

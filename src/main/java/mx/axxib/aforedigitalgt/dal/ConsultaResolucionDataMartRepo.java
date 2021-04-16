@@ -19,13 +19,14 @@ public class ConsultaResolucionDataMartRepo extends RepoBase {
 	
 	
 	@SuppressWarnings("unchecked")
-	public ConsultaResolucionesNombreOut getCuentaNombre(Integer nss) throws AforeException {
+	public ConsultaResolucionesNombreOut getCuentaNombre(Long nss) throws AforeException {
 		try {
+	
 		String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTA_RESOLUCION_DATA_MART_PACKAGE).concat(".").concat(Constantes.CONSULTA_RESOLUCION_DATA_NSS_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "ConsultaResolucionDataMartOut");
 
-		query.registerStoredProcedureParameter("P_NSS", Integer.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("P_CUENTA", Integer.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("P_NSS", Long.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_CUENTA", Long.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_NSS_TRABAJADOR", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_CURP", String.class, ParameterMode.OUT);
@@ -45,7 +46,7 @@ public class ConsultaResolucionDataMartRepo extends RepoBase {
 		ConsultaResolucionesNombreOut res= new ConsultaResolucionesNombreOut ();
 		Object cursor = query.getOutputParameterValue("CP_CURP_DATO");
 		if (cursor != null) {
-		res.setP_CUENTA((Integer) query.getOutputParameterValue("P_CUENTA"));
+		res.setP_CUENTA((Long) query.getOutputParameterValue("P_CUENTA"));
 		res.setP_NSS_TRABAJADOR((String) query.getOutputParameterValue("p_NSS_TRABAJADOR"));
 		res.setP_NOMBRE((String) query.getOutputParameterValue("P_NOMBRE"));
 		res.setP_CURP((String) query.getOutputParameterValue("p_CURP"));		

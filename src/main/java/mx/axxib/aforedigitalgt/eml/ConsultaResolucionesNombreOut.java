@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @MappedSuperclass
 public class ConsultaResolucionesNombreOut {
-	private Integer p_CUENTA;
+	private Long p_CUENTA;
 	private String p_NSS_TRABAJADOR;
     private String p_NOMBRE;
     private String p_CURP;
