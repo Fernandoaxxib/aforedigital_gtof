@@ -63,12 +63,6 @@
 							<h:outputText value="#{solicitudMatrimonioDesempleo.cuenta}"></h:outputText>
 						</p:column>
 						
-						<p:column>
-							<p:commandButton class="blue" actionListener="#{solicitudMatrimonioDesempleo.botonDatosCheque}" rendered="#{solicitudMatrimonioDesempleo.verDatoCheque}" process="nss"
-								  update="result busqueda pSolicitud pPago" value="Ver Datos Cheque" />
-								  
-							
-						</p:column>
 						
 					</p:row>	
 					
@@ -85,17 +79,15 @@
  		
  		<p:dataTable id="verSolicitudMatrimonio"  var="verSolicitud" scrollable="true" scrollHeight="250"
 			paginatorPosition="bottom"
-					emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTabla}"
+					emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTablaSolicitud}"
 			 value="#{solicitudMatrimonioDesempleo.listSolicitudChequeOut}"  rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15"
 					>
 		    
 					<f:facet name="header" style="float:right">
 
-						<h:outputLabel for="registros"
-							value="#{msg.aprob_label_totalRegistros}"  />
-						<h:outputText id="totalRegistros"
-							value="#{solicitudMatrimonioDesempleo.totalSolicitud}" />
+						<h:outputLabel for="registrosss" value="#{msg.aprob_label_totalRegistros}"  />
+						<h:outputText id="totalSolicitud" value="#{solicitudMatrimonioDesempleo.totalSolicitud}" />
 
 					</f:facet>
 		    
@@ -149,7 +141,14 @@
 		        <h:outputText value="#{verSolicitud.numeroEmpleado}" />
 		    </p:column>
 		 
-		   
+		   <p:column  align="center" style="width:20px;">
+                       					 <p:commandButton id="verFopago" update=":form:display :form:result" oncomplete="PF('productDialog').show()"
+                                          action="#{solicitudMatrimonioDesempleo.consultarFopagos}" icon="ui-icon-search" class="blue">
+                           				 <f:setPropertyActionListener  value="#{verSolicitud}" ajax="false" class="blue"
+                                                         target="#{solicitudMatrimonioDesempleo.solicitudChequeOut}"/>
+                                         <p:tooltip for="verFopago" value="Ver Fopago" showEffect="clip" hideEffect="fold" />
+                       					 </p:commandButton>
+             </p:column>
 		 	
 		</p:dataTable>
 		
@@ -199,7 +198,7 @@
 					</p:panelGrid>		
 						
 						<p:dataTable var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}"
-						emptyMessage="#{msg.aprob_msj_sinDatos}"  >
+						emptyMessage="#{verDatosCheque.mensajeTablaFopagos}"  >
 									
 									<p:column headerText="Beneficiario" style="width:20px">
 										<h:outputText value="#{verPago.PBenef_Re}"/>
@@ -240,14 +239,14 @@
  	<p:panel id="pPago" header="Pagos Efectuados" style="margin-top:20px">
 			
 			<p:dataTable id="verPagosEfectuados"  var="verPago"  scrollable="true" scrollHeight="250" paginatorPosition="bottom"
-					emptyMessage="#{verDatosCheque.mensajeTabla}"
+					emptyMessage="#{verDatosCheque.mensajeTablaPago}"
 			 value="#{solicitudMatrimonioDesempleo.listPagoChequeOut}"  rows="10" paginator="true"
 					rowsPerPageTemplate="5,10,15" >
 		    		    
 					
 					<f:facet name="header" style="float:right">
-						<h:outputLabel for="registros"  value="#{msg.aprob_label_totalRegistros}"  />
-						<h:outputText id="totalRegistros" value="#{solicitudMatrimonioDesempleo.totalPago}" />
+						<h:outputLabel for="registross"  value="#{msg.aprob_label_totalRegistros}"  />
+						<h:outputText id="totalPago" value="#{solicitudMatrimonioDesempleo.totalPago}" />
 
 					</f:facet>
 					

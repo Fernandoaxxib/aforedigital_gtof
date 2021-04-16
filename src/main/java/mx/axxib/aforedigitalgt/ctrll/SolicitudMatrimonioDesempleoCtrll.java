@@ -100,7 +100,13 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	private String cuenta;
 	
 	@Getter
-	private String mensajeTabla;
+	private String mensajeTablaPago;
+	
+	@Getter
+	private String mensajeTablaSolicitud;
+	
+	@Getter
+	private String mensajeTablaFopagos;
 	
 	@Getter
 	private boolean verDatoCheque;
@@ -143,11 +149,13 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	}
 	
 	private void limpiar() {
-		mensajeTabla=null;
-		totalSolicitud=null;
-		totalPago=null;
+		mensajeTablaSolicitud=null;
+		totalSolicitud=0;
+		totalPago=0;
 		//verDatoCheque=false;
 		mostrarFopagos=false;
+		listSolicitudChequeOut=null;
+		listPagoChequeOut=null;
 	}
 	
 	public void consultar() {
@@ -164,7 +172,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			nombre=verChequeOut.getNombre();
 			cuenta=verChequeOut.getCuenta();
 			if(verChequeOut.getNombre()!=null) {
-			pr.setStatus("Consulta Exitosa");
+			pr.setStatus("Consulta Exitosa Nss");
 			verDatoCheque=true;
 			consultarSolicitud(cuenta);
 			}else {
@@ -203,7 +211,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Búsqueda por Cuenta Solicitud Matrimonio");
-			limpiar();
+			//limpiar();
+			//totalSolicitud=0;
 			res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
 			
 			
@@ -211,20 +220,20 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			if (res != null && res.getVerSolicitudChequeListOut() != null && res.getVerSolicitudChequeListOut().size() > 0) {
 				listSolicitudChequeOut = res.getVerSolicitudChequeListOut();
 				totalSolicitud = res.getVerSolicitudChequeListOut().size();
-				
+				System.out.println("TOTAL SOLICITUD"+totalSolicitud);
 				if ( res.getVerSolicitudChequeListOut().size() > 0) {
 					
 					mensajeSolicitud=res.getMensaje();
-					pr.setStatus("Consulta Exitosa");//"Consulta Exitosa"
+					pr.setStatus("Consulta Exitosa Solicitud");//"Consulta Exitosa"
 				}else {
-					mensajeTabla = "Sin información";
+					mensajeTablaSolicitud = "Sin información";
 					pr.setStatus("No se encontraron resultados");
 				
 				}
 			}else {
 				
 				pr.setStatus("No se encontraron resultados");
-				mensajeTabla = "Sin información";
+				mensajeTablaSolicitud = "Sin información";
 			}
 			consultarPago(cuenta);
 		}catch (Exception e) {
@@ -240,7 +249,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Búsqueda por Cuenta Pagos Efectuados");
-			limpiar();
+			//limpiar();
+			//totalPago=0;
 			verPagoChequeOut=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
 			
 			
@@ -249,15 +259,15 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				totalPago = verPagoChequeOut.getVerPagoChequeListOut().size();
 				mostrarFopagos=true;
 				if ( verPagoChequeOut.getVerPagoChequeListOut().size() == 0) {
-					mensajeTabla = "Sin información";
+					mensajeTablaPago = "Sin información";
 					pr.setStatus("No se encontraron resultados");
 				}else {
 				mensajePago=verPagoChequeOut.getMensaje();
-				pr.setStatus(mensajePago);//"Consulta Exitosa"
+				pr.setStatus("Consulta Exitosa Pago");//"Consulta Exitosa"
 				}
 			}else {
 				pr.setStatus("No se encontraron resultados");
-				mensajeTabla = "Sin información";
+				mensajeTablaPago = "Sin información";
 			}
 		
 		}catch (Exception e) {
@@ -273,7 +283,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Búsqueda por Fopagos");
-			limpiar();
+			//limpiar();
 			
 			
 			
@@ -289,11 +299,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 					
 				}else {
 					pr.setStatus("No se encontraron resultados");
-					mensajeTabla = "Sin información";	
+					mensajeTablaFopagos = "Sin información";	
 				}
 			}else {
 					pr.setStatus("No se encontraron resultados");
-					mensajeTabla = "Sin información";
+					mensajeTablaFopagos = "Sin información";
 				}
 				
 			 
