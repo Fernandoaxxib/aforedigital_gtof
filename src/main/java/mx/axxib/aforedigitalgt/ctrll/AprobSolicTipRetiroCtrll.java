@@ -185,16 +185,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 					}finally {					
 						resultados.add(pr2);
 					}
-				});		
-				
-				/*
-				 * if(res!=null) { listSolicitudes.removeAll(selectedSolicitud); filtro=new
-				 * ArrayList<SolicitudOut>(); DataTable dataTable = (DataTable)
-				 * FacesContext.getCurrentInstance().getViewRoot().findComponent("form:table1");
-				 * if (!dataTable.getFilterBy().isEmpty()) { dataTable.reset();
-				 * PrimeFaces.current().ajax().update("table1"); } }else {
-				 * selectedSolicitud=null; }
-				 */
+				});										
 				selectedSolicitud=null;
 				recuperarSolicPendientes();
 		}else {			  
