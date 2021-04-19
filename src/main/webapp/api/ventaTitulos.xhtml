@@ -80,7 +80,7 @@
 										<h:outputText value="Monto" />
 									</f:facet>
 									<h:outputText value="#{t.montoMovimiento}">
-										<f:convertNumber type="currency" currencySymbol="$" />
+										<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 									</h:outputText>
 								</p:column>
 							</p:selectOneMenu>
@@ -107,7 +107,7 @@
 										<h:outputText value="Monto" />
 									</f:facet>
 									<h:outputText value="#{t.montoMovimiento}">
-										<f:convertNumber type="currency" currencySymbol="$" />
+										<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 									</h:outputText>
 								</p:column>
 							</p:selectOneMenu>
@@ -134,7 +134,7 @@
 										<h:outputText value="Monto" />
 									</f:facet>
 									<h:outputText value="#{t.montoMovimiento}">
-										<f:convertNumber type="currency" currencySymbol="$" />
+										<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 									</h:outputText>
 								</p:column>
 							</p:selectOneMenu>
@@ -177,37 +177,37 @@
 
 					<p:column headerText="Monto total">
 						<h:outputText value="#{ven.totVender}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
+							<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Valor cuota">
 						<h:outputText value="#{ven.valCuota}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
+							<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Total cuotas">
 						<h:outputText value="#{ven.totCuotas}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
+							<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Pesos fracción afore">
 						<h:outputText value="#{ven.retiroAforeMND}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
+							<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Fracción afore">
 						<h:outputText value="#{ven.retiroAforeTIT}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
+							<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Total cuotas vender">
 						<h:outputText value="#{ven.totGeneralCuotas}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
+							<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 						</h:outputText>
 					</p:column>
 				</p:dataTable>

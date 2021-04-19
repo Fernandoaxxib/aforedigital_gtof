@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -42,10 +43,10 @@ public class NotificacionPagosCtrll extends ControllerBase {
 	private List<LlenaInfo> pagos;
 
 	@Getter
-	private Integer totTitulos;
+	private BigDecimal totTitulos;
 
 	@Getter
-	private Integer totPesos;
+	private BigDecimal totPesos;
 
 	@Getter
 	private boolean mostrarEnviar;

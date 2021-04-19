@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.eml;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.MappedSuperclass;
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 @MappedSuperclass
 public class LlenaInfoOut {
 	private List<LlenaInfo> datos;
-	private Integer totTitulos;
-	private Integer totPesos;
+	private BigDecimal totTitulos;
+	private BigDecimal totPesos;
 	private String mensaje;
 	private Integer estatus;
 }

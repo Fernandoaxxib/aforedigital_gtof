@@ -22,6 +22,7 @@ import mx.axxib.aforedigitalgt.eml.LiqObtieneSiefore;
 import mx.axxib.aforedigitalgt.eml.LiqObtieneSieforeOut;
 import mx.axxib.aforedigitalgt.serv.ReporteLiquidacionServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "reporteLiquidacion")
@@ -57,6 +58,7 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 	private String selectedTipo;
 
 	@Getter
+	@Setter
 	private String lote;
 
 	@Override
@@ -106,31 +108,40 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 	public boolean isValidForm(ProcessResult pr) {
 		if (selectedEstatus == null) {
 			UIInput ffin = (UIInput) findComponent("estatus");
-			pr.setStatus("Selección requerida");
+			pr.setStatus("Estatus es requerido");
 			ffin.setValid(false);
+			return false;
+		}
+		
+		if (!ValidateUtil.isValidLote(lote)) {
+			UIInput fini = (UIInput) findComponent("lote");
+			pr.setStatus("Lote no válido");
+			fini.setValid(false);
 			return false;
 		}
 		
 		if (selectedTipo == null) {
 			UIInput ffin = (UIInput) findComponent("tipo");
-			pr.setStatus("Selección requerida");
+			pr.setStatus("Tipo es requerido");
 			ffin.setValid(false);
 			return false;
 		}
 		
 		if (selectedTipoRetiro == null) {
 			UIInput ffin = (UIInput) findComponent("tipoRetiro");
-			pr.setStatus("Selección requerida");
+			pr.setStatus("Tipo retiro es requerido");
 			ffin.setValid(false);
 			return false;
 		}
 		
 		if (selectedSiefore == null) {
 			UIInput ffin = (UIInput) findComponent("siefore");
-			pr.setStatus("Selección requerida");
+			pr.setStatus("Siefore es requerido");
 			ffin.setValid(false);
 			return false;
 		}
+		
+
 
 		return true;
 	}
