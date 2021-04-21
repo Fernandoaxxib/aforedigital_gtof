@@ -1,10 +1,19 @@
 /* Buttons */
+.blue.ui-state-hover .ui-button-text {
+    background: #59ad40 !important;;
+}
+
 .blue.ui-button .ui-button-text {
     background: #00529b;
     color: white;
     font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
 	padding: 2px;
+}
+
+.blue.ui-button .ui-button-hover {
+    background: #59ad40;
+
 }
 
 .green.ui-button .ui-button-text {
@@ -55,7 +64,7 @@
 .ui-datatable-tablewrapper .ui-state-default, .ui-datatable-scrollable-header .ui-state-default {
 	background: #ffffff !important;
 	color: #00529b !important;
-	font-weight: bold;
+	font-weight: 500 !important;
 	font-size: 11px !important;
 	font-family: 'Montserrat', sans-serif;
 	/*border: white !important;*/	
@@ -85,7 +94,7 @@
 /* PanelGrid */
 .ui-panel .ui-panel-titlebar {
 	background: #59ad40;
-	font-weight: bold;
+	font-weight: 500;
 	color: #ffffff;
 	font-size: 14px;
 	font-family: 'Montserrat', sans-serif;
@@ -139,7 +148,7 @@
 /* Texto general toda la app */
 .ui-widget {
 	font-family: Montserrat, sans-serif !important;
-	font-size: 12px !important;
+	font-size: 14px !important;
 }
 
 .ui-widget-content {
@@ -170,7 +179,7 @@
 	border: 1px solid #59ad40 !important;
 	background: #59ad40;
 	color: #ffffff;
-	font-weight: bold !important;
+	font-weight: 500 !important;
 }
 .ui-widget-header a {
 	color: #ffffff;
@@ -212,7 +221,7 @@
 	background: #00529b !important;
 	border: 1px solid #00529b !important;
 	color: #ffffff !important;
-	font-weight: bold !important;	
+	font-weight: 500 !important;	
 	text-align:left;
 	border-radius: .25rem;
 	font-size: 14px !important;
@@ -244,7 +253,7 @@
 	border: 0px !important;
 	background: #ffffff !important;
 	color: #ffffff !important;
-	font-weight: bold !important;
+	font-weight: 500 !important;
 }
 
 .flechaArribaAbajo{

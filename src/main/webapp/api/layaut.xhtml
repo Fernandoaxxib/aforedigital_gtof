@@ -18,17 +18,17 @@
 		href="#{request.contextPath}/resources/css/estilo-base.css"></link>
 	<link href="http://fonts.googleapis.com/css?family=Roboto"
 		rel="stylesheet" type="text/css"></link>
-	<link href="http://fonts.googleapis.com/css?family=Montserrat"
-		rel="stylesheet" type="text/css"></link>
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resources/css/font-montserrat.css"></link>
 
 	<script type="text/javascript">
 		function showDialog() {
 			PF('statusDialog').show();
 		}
-		function hideDialog() {			 			 
-			 $("#dialogo1").css("visibility", "hidden");
-			 $("#dialogo1_modal").css("display", "none");
-			 $("#dialogo1").css("background", "transparent !important;");
+		function hideDialog() {
+			$("#dialogo1").css("visibility", "hidden");
+			$("#dialogo1_modal").css("display", "none");
+			$("#dialogo1").css("background", "transparent !important;");
 		}
 	</script>
 
@@ -38,8 +38,8 @@
 	<p:ajaxStatus onstart="setTimeout(PF('statusDialog').show(), 30000);"
 		onsuccess="PF('statusDialog').hide()"
 		onerror="alert('No se obtuvo respuesta del servidor'); hideDialog();" />
-	<p:dialog id="dialogo1" styleClass="loading" widgetVar="statusDialog" modal="true"
-		draggable="false" closable="false" resizable="false"
+	<p:dialog id="dialogo1" styleClass="loading" widgetVar="statusDialog"
+		modal="true" draggable="false" closable="false" resizable="false"
 		showHeader="false">
 		<p:graphicImage
 			url="#{request.contextPath}/javax.faces.resource/Imagenes/3.gif.jsf"
@@ -83,7 +83,7 @@
 
 		</pe:layoutPane>
 
-		<pe:layoutPane id="centro" class="content" position="center"
+		<pe:layoutPane id="centro" class="content" position="center" 
 			resizable="false" closable="false">
 			<ui:insert name="center" />
 		</pe:layoutPane>
