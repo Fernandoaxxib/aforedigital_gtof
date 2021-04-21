@@ -47,6 +47,43 @@
 			<p:panel id="pnlResult" header="Desmarca Masiva de Cuentas" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
 			<div class="ui-g">
+			
+			
+					<div class="ui-g-6">
+						<p:panel header="Por Proceso Operativo">
+							<div class="ui-g" style="margin-top: 10px;">
+								<div class="ui-g-3">
+									<p:outputLabel value="Clave Proceso:" />
+								</div>
+								<div class="ui-g-9">
+									<p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
+										requiredMessage="Tipo Proceso es requerido"
+										value="#{desmarcaConsultaMarcas.selectedTipoClave}">
+										<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}"/>
+									</p:selectOneMenu>
+								</div>
+							</div>
+							
+							
+							<div class="ui-g" style="margin-top: 10px;">
+								<div class="ui-g-3">
+									
+								</div>
+								<div class="ui-g-9">
+									
+								</div>
+							</div>
+							<div class="ui-g" style="text-align: right;">
+								<div class="ui-g-12">
+									<p:commandButton styleClass="blue ui-button-text"  value="Consultar Marcas" action="#{desmarcaConsultaMarcas.reversaArchivo}" update=":form:pnlResult result" ajax="true"/>
+								</div>
+							</div>
+							<div class="ui-g" style="margin-top: 10px;">
+								
+							</div>
+						</p:panel>
+					</div>
+					
 				
 					<div class="ui-g-6">
 						<p:panel header="Por Nss y/o Curp">
@@ -69,46 +106,13 @@
 							</div>
 							<div class="ui-g" style="text-align: right;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" value="Consulta Marca" action="#{desmarcaConsultaMarcas.cargarArchivo}" update=":form:pnlResult result" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Consultar Marcas" action="#{desmarcaConsultaMarcas.cargarArchivo}" update=":form:pnlResult result" ajax="true"/>
 								</div>
 							</div>
 						</p:panel>
 					</div>
 					
-					<div class="ui-g-6">
-						<p:panel header="Por Proceso Operativo">
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Tipo Proceso:" />
-								</div>
-								<div class="ui-g-9">
-									<p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
-										requiredMessage="Tipo Proceso es requerido"
-										value="#{desmarcaConsultaMarcas.selectedTipoClave}">
-										<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}"/>
-									</p:selectOneMenu>
-								</div>
-							</div>
-							
-							
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-9">
-									
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text"  value="Consulta Marca" action="#{desmarcaConsultaMarcas.reversaArchivo}" update=":form:pnlResult result" ajax="true"/>
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-							</div>
-						</p:panel>
-					</div>
+					
 					
 			</div>
 			

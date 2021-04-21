@@ -107,13 +107,13 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 	
 	@SuppressWarnings("unchecked")
 	//public List<FopagosListOut> getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {
-	public FopagosListOut getFopagos(Integer numSolicitud,String nss,String cuenta,String nombre) throws AforeException {	
+	public FopagosListOut getFopagos(Long numSolicitud,String nss,String cuenta,String nombre) throws AforeException {	
 		try {
 			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.CONSULTA_FOPAGOS_PACKAGE).concat(".").concat(Constantes.CONSULTA_FOPAGOS_NSS_STORED);
 			//StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"FopagosListOut");
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
-			query.registerStoredProcedureParameter("pNumero_SolicRet", Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("pNumero_SolicRet", Long.class, ParameterMode.IN);
 			//query.registerStoredProcedureParameter("pNss", String.class, ParameterMode.IN);	
 			query.registerStoredProcedureParameter("pCuenta", String.class, ParameterMode.INOUT);
 			query.registerStoredProcedureParameter("pNombre", String.class, ParameterMode.INOUT);

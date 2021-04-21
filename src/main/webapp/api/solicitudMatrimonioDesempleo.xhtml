@@ -94,50 +94,50 @@
 <!-- 		    		<p:ajax event="rowSelectCheckbox" update="form:pSolicitud" /> -->
 <!-- 		    		<p:column selectionMode="single" style="width:20px;text-align:center"/> -->
 		    		
-			 <p:column headerText="#{msg.cheque_ver_columna_RightFax}">
+			 <p:column headerText="#{msg.cheque_ver_columna_RightFax}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.rightFax}" />
 		    </p:column>		
 		    
-		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}">
+		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.fechaOperacion}" >
 		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</h:outputText>
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}">
+		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.diagnosticoCuenta}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_ver_columna_prestamo}">
+		    <p:column headerText="#{msg.cheque_ver_columna_prestamo}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.tipoPrestacion}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_ver_columna_NoSolicitud}">
+		    <p:column headerText="#{msg.cheque_ver_columna_NoSolicitud}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.numeroSolicitud}" />
 		    </p:column>
 		 	
-		 	<p:column headerText="#{msg.cheque_ver_columna_fechaSolicitud}">
+		 	<p:column headerText="#{msg.cheque_ver_columna_fechaSolicitud}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.fechaTraspaso}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_ver_columna_folioSolicitud}">
+		    <p:column headerText="#{msg.cheque_ver_columna_folioSolicitud}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.fechaPago}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_ver_columna_NoResolucion}">
+		    <p:column headerText="#{msg.cheque_ver_columna_NoResolucion}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.numeroResolucion}" />
 		    </p:column>
 		    
 		    
-		    <p:column headerText="#{msg.cheque_ver_columna_fechaResolucion}">
+		    <p:column headerText="#{msg.cheque_ver_columna_fechaResolucion}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.fechaSolicitud}" />
 		    </p:column>
 		    
-		     <p:column headerText="#{msg.cheque_ver_columna_fechaPension}">
+		     <p:column headerText="#{msg.cheque_ver_columna_fechaPension}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.consecutivo}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_ver_columna_Ejecucion}">
+		    <p:column headerText="#{msg.cheque_ver_columna_Ejecucion}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verSolicitud.numeroEmpleado}" />
 		    </p:column>
 		 
@@ -250,47 +250,47 @@
 
 					</f:facet>
 					
-				<p:column headerText="#{msg.cheque_pago_columna_Identificador}">
+				<p:column headerText="#{msg.cheque_pago_columna_Identificador}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.identificarOperacion}" />
 		        </p:column>
 		        
-		        <p:column headerText="#{msg.cheque_pago_columna_Seguro}">
+		        <p:column headerText="#{msg.cheque_pago_columna_Seguro}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoSeguro}" />
 		    </p:column>
 		    
-		   <p:column headerText="Pension">
+		   <p:column headerText="Pension" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoPension}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_pago_columna_Prestacion}">
+		    <p:column headerText="#{msg.cheque_pago_columna_Prestacion}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoPrestacion}" />
 		    </p:column>
 		 	
-		 	<p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}">
+		 	<p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.fechaOperacion}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_pago_columna_MontoPago}">
+		    <p:column headerText="#{msg.cheque_pago_columna_MontoPago}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.importeAutorizado}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_pago_columna_ImporteRCV}">
+		    <p:column headerText="#{msg.cheque_pago_columna_ImporteRCV}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.importeSubcontrato}" />
 		    </p:column>
 		    
-		     <p:column headerText="#{msg.cheque_pago_columna_Pension}">
+		     <p:column headerText="#{msg.cheque_pago_columna_Pension}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.codCuenta}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}">
+		    <p:column headerText="#{msg.cheque_pago_columna_FechaOperacion}" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.fechaRespuesta}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_pago_columna_Solicitud}">
+		    <p:column headerText="#{msg.cheque_pago_columna_Solicitud}" style="width:70px;text-align: center;">
 		        <h:outputText value="#{verPago.solicitud}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_pago_columna_Diag17}">
+		    <p:column headerText="#{msg.cheque_pago_columna_Diag17}" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.op17}" />
 		    </p:column>
 			

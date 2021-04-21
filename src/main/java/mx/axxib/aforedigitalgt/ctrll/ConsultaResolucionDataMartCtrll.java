@@ -64,6 +64,7 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 			nss = null;
 			listaCurp=null;
 			totalSolicitud=0;
+			consultaResolucionesNombreOut=null;
 			init = false;
 			
 		}
@@ -77,6 +78,7 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 		
 		iniciar();
 		listaCurp=null;
+		consultaResolucionesNombreOut=null;
 		totalSolicitud=0;
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS");

@@ -72,7 +72,7 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
-			rutaSaldoNegativo="/RESPALDOS/operaciones";
+			rutaSaldoNegativo="/RESPALDOS/operaciones/pruebas";
 			today= new Date();
 			saldoFechaMovimiento=today;
 			reset();
