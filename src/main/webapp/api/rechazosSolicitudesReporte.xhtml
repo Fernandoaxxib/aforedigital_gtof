@@ -56,7 +56,7 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Fecha inicio: " style="font-weight: bold" />
+							<p:outputLabel value="Fecha inicio: " style="font-weight: normal" />
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;"
 								value="#{rechazos.fechaInicial}" showIcon="true" locale="es"
@@ -64,7 +64,7 @@
 								pattern="dd-MM-yyyy" readonlyInput="true"  />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fecha fin: " style="font-weight: bold" />
+							<p:outputLabel value="Fecha fin: " style="font-weight: normal" />
 							<p:datePicker id="fechaFinal" value="#{rechazos.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true"
@@ -77,7 +77,7 @@
 
 					<p:row>
 						<p:column colspan="2" style="padding:10px">
-							<h:outputLabel value="Nombre de Archivo (sin extensión):" style="font-weight: bold" />
+							<h:outputLabel value="Nombre de Archivo (sin extensión):" style="font-weight: normal" />
 							<p:inputText id="archivo" value="#{rechazos.nombreArchivo}" style="width:150px;"
 								></p:inputText>
 							

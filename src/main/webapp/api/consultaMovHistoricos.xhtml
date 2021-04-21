@@ -35,7 +35,7 @@
 					<p:row>
 						<p:column colspan="5" style="padding:10px;">
 
-							<p:outputLabel value="Buscar por: " style="font-weight: bold" />
+							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
 							<p:inputText id="nss" value="#{conHistoricos.nssCurp}"
 								style="width:150px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
@@ -46,25 +46,25 @@
 					</p:row>
 					<p:row>
 						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Cuenta: " style="font-weight: bold" />
+							<p:outputLabel value="Cuenta: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.cuenta.codCuenta}" />
 						</p:column>
 						<p:column style="width:300px; padding:10px;">
-							<p:outputLabel value="Nombre: " style="font-weight: bold" />
+							<p:outputLabel value="Nombre: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.cuenta.nombre}" />
 						</p:column>
 						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Fecha apertura: " style="font-weight: bold" />
+							<p:outputLabel value="Fecha apertura: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.cuenta.fechaCert}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:outputText>
 						</p:column>
 						<p:column style="width:150px; padding:10px;">
-							<p:outputLabel value="Cliente: " style="font-weight: bold" />
+							<p:outputLabel value="Cliente: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.cuenta.tipoSolic}" />
 						</p:column>
 						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Estatus: " style="font-weight: bold" />
+							<p:outputLabel value="Estatus: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.cuenta.codEstado}" />
 						</p:column>
 					</p:row>
@@ -72,7 +72,7 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Inicio: " style="font-weight: bold" />
+							<p:outputLabel value="Inicio: " style="font-weight: normal" />
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;"
 								value="#{conHistoricos.fechaInicial}" showIcon="true" locale="es"
@@ -80,7 +80,7 @@
 								readonlyInput="true" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fin: " style="font-weight: bold" />
+							<p:outputLabel value="Fin: " style="font-weight: normal" />
 							<p:datePicker id="fechaFinal" value="#{conHistoricos.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true" locale="es"
@@ -254,24 +254,24 @@
 				<p:panelGrid id="pDetalle" width="100%" styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Tipo de saldo: " style="font-weight: bold" />
+							<p:outputLabel value="Tipo de saldo: " style="font-weight: normal" />
 							<h:outputText
 								value="#{conHistoricos.selectedDetalle.descTipoSaldo}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Títulos: " style="font-weight: bold" />
+							<p:outputLabel value="Títulos: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.selectedDetalle.totalCuota}">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Inversión: " style="font-weight: bold" />
+							<p:outputLabel value="Inversión: " style="font-weight: normal" />
 							<h:outputText
 								value="#{conHistoricos.selectedDetalle.descInversion}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Fecha aplicación: "
-								style="width:60px;font-weight: bold" />
+								style="width:60px;font-weight: normal" />
 							<h:outputText
 								value="#{conHistoricos.selectedDetalle.fechaAplicado}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
@@ -280,17 +280,17 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Transacción " style="font-weight: bold" />
+							<p:outputLabel value="Transacción " style="font-weight: normal" />
 							<h:outputText
 								value="#{conHistoricos.selectedDetalle.descTransaccion}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Motivo: " style="font-weight: bold" />
+							<p:outputLabel value="Motivo: " style="font-weight: normal" />
 							<h:outputText
 								value="#{conHistoricos.selectedDetalle.descSubtransaccion}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Valor título: " style="font-weight: bold" />
+							<p:outputLabel value="Valor título: " style="font-weight: normal" />
 							<h:outputText value="#{conHistoricos.selectedDetalle.valorCuota}">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>

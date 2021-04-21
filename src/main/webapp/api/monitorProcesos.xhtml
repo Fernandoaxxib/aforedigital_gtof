@@ -24,38 +24,38 @@
 
 				<p:panelGrid id="monitorDetalle" columns="2">
 					<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<h:outputText
 						value="#{monitorProcesos.selectedMonitor.descProceso}" />
 
 					<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<h:outputText
 						value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
 
 					<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<h:outputText
 						value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
 						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 					</h:outputText>
 
 					<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<h:outputText
 						value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
 						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 					</h:outputText>
 
 					<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<h:outputText
 						value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
 						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 					</h:outputText>
 
 					<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<h:outputText
 						value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
 				</p:panelGrid>

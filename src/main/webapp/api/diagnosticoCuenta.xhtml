@@ -33,7 +33,7 @@
 					<p:row>
 						<p:column colspan="2" style="padding:10px;">
 
-							<p:outputLabel value="Buscar por: " style="font-weight: bold" />
+							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
 							<p:inputText id="nss" value="#{diagCuenta.nss}"
 								style="width:215px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
@@ -42,11 +42,11 @@
 
 						</p:column>
 						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Cuenta: " style="font-weight: bold" />
+							<p:outputLabel value="Cuenta: " style="font-weight: normal" />
 							<h:outputText value="#{diagCuenta.codCuenta}" />
 						</p:column>
 						<p:column style="width:300px; padding:10px;">
-							<p:outputLabel value="Nombre: " style="font-weight: bold" />
+							<p:outputLabel value="Nombre: " style="font-weight: normal" />
 							<h:outputText value="#{diagCuenta.nombre}" />
 						</p:column>
 					</p:row>
@@ -54,7 +54,7 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Inicio: " style="font-weight: bold" />
+							<p:outputLabel value="Inicio: " style="font-weight: normal" />
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;" yearNavigator="true"
 								monthNavigator="true" value="#{diagCuenta.fechaInicial}"
@@ -62,7 +62,7 @@
 								readonlyInput="true" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fin: " style="font-weight: bold" />
+							<p:outputLabel value="Fin: " style="font-weight: normal" />
 							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true" locale="es"
@@ -70,7 +70,7 @@
 
 						</p:column>
 						<p:column colspan="2" style="padding:10px;">
-							<p:outputLabel value="Tipo proceso: " style="font-weight: bold" />
+							<p:outputLabel value="Tipo proceso: " style="font-weight: normal" />
 
 							<p:selectOneMenu id="tipoProceso"
 								style="width:300px; vertical-align: inherit;"

@@ -24,7 +24,7 @@
 			<p:panel id="busqueda" header="Notificaciones de pago"
 				style="margin-top:20px">
 				<p:panelGrid id="fechas" columns="3" styleClass="ui-noborder">
-					<p:outputLabel value="Fecha de proceso" style="font-weight: bold" />
+					<p:outputLabel value="Fecha de proceso" style="font-weight: normal" />
 					<p:datePicker id="fecha" value="#{notificacionPagos.fecha}"
 						inputStyle="width:120px; text-align:right;" yearNavigator="true"
 						monthNavigator="true" showIcon="true" locale="es"
@@ -61,7 +61,7 @@
 						</h:outputText>
 						<f:facet name="footer">
 							<h:outputLabel value="Totales:"
-								style="float:right;font-weight: bold" />
+								style="float:right;font-weight: normal" />
 						</f:facet>
 					</p:column>
 
@@ -105,7 +105,7 @@
 
 					<p:outputLabel value="Definir nombre de archivo (sin extensión): "
 						rendered="#{notificacionPagos.mostrarExportar}"
-						style="font-weight: bold" />
+						style="font-weight: normal" />
 					<p:inputText id="archivo" value="#{notificacionPagos.archivo}"
 						rendered="#{notificacionPagos.mostrarExportar}"
 						style="width:150px"></p:inputText>
