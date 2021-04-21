@@ -15,14 +15,14 @@
 
 	
 		<p:dataTable var="pro" value="#{base.resultados}" id="result"
-		style="margin-top:20px; margin-bottom:20px"
+		style="margin-top:20px; margin-bottom:20px" rows="#{base.noElementos}" paginator="true"
 			styleClass="detalleProceso" emptyMessage=" ">
 
 			<f:facet name="header">
 				<p:outputLabel value="RESULTADOS DEL PROCESO APLICADO:" />
 			</f:facet>
 
-			<p:column headerText="IDENTIFICADOR DEL PROCESO">
+			<p:column headerText="IDENTIFICADOR DEL PROCESO" style="width:200px">
 				<h:outputText value="#{pro.descProceso}" />
 			</p:column>
 
@@ -30,14 +30,14 @@
 				<h:outputText value="#{pro.status}" />
 			</p:column>
 
-			<p:column headerText="H. INICIO" sortBy="#{pro.fechaInicial}">
-				<h:outputText value="#{pro.fechaInicial}" style="float:right">
+			<p:column headerText="H. INICIO" style="width:100px;">
+				<h:outputText value="#{pro.fechaInicial}" style="float:right;">
 					<f:convertDateTime type="date" pattern="HH:mm:ss"
 						timeZone="America/Mexico_City" />
 				</h:outputText>
 			</p:column>
-			<p:column headerText="H. TÉRMINO">
-				<h:outputText value="#{pro.fechaFinal}" style="float:right">
+			<p:column headerText="H. TÉRMINO" style="width:100px;">
+				<h:outputText value="#{pro.fechaFinal}" style="float:right;">
 					<f:convertDateTime type="date" pattern="HH:mm:ss"
 						timeZone="America/Mexico_City" />
 				</h:outputText>

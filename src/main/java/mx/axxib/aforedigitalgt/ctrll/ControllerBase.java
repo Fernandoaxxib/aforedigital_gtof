@@ -1,7 +1,8 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -14,6 +15,7 @@ import javax.faces.context.FacesContext;
 
 import org.apache.myfaces.component.visit.FullVisitContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -31,13 +33,20 @@ import mx.axxib.aforedigitalgt.util.DateUtil;
 //***********************************************//
 public class ControllerBase {
 
+	@Value("${resultados.noElementos}")
+	@Getter
+	@Setter
+	public int noElementos;
+	
+	@Value("${resultados.maximoElementos}")
+	private int maxElementos;
 	@Getter
 	@Setter
 	public boolean init;
 	
 	@Getter
 	@Setter
-	public List<ProcessResult> resultados;
+	public ArrayList<ProcessResult> resultados;
 	
 	private boolean force;
 
@@ -71,7 +80,15 @@ public class ControllerBase {
 			if(param != null) {
 				init = param.equals("true");
 				resultados = new ArrayList<ProcessResult>();
+				
 				return;
+			}
+		}
+		
+		Collections.sort(resultados, Comparator.comparing(ProcessResult::getFechaInicial).reversed());
+		if(resultados.size() > maxElementos) {
+			for(int i=resultados.size()-1; i >= maxElementos; i--) {
+				resultados.remove(i);
 			}
 		}
 		init = false;
