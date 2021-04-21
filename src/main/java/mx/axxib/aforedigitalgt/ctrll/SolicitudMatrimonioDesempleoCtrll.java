@@ -121,13 +121,16 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	private FopagosListOut fopagos;
 	
 	@Getter
-	private Integer totalMontoRetiro;
+	@Setter
+	private Double totalMontoRetiro;
 	
 	@Getter
-	private Integer totalMontoIsr;
+	@Setter
+	private Double totalMontoIsr;
 	
 	@Getter
-	private Integer totalNeto;
+	@Setter
+	private Double totalNeto;
 	
 	@Getter
 	@Setter
@@ -156,6 +159,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		mostrarFopagos=false;
 		listSolicitudChequeOut=null;
 		listPagoChequeOut=null;
+		nombre=null;
+		cuenta=null;
 	}
 	
 	public void consultar() {
@@ -290,6 +295,13 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			if(solicitudChequeOut.getNumeroSolicitud() != null) {
 			System.out.println("valor de Solicitud"+solicitudChequeOut.getNumeroSolicitud());
 			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(Long.valueOf(solicitudChequeOut.getNumeroSolicitud()), nss, cuenta, nombre);
+			System.out.println("VALORES DE FOPAGO:"+fopagos);
+			System.out.println("MONTO BRUTO:"+fopagos.getPMonBruto_Re());
+			System.out.println("MONTO ISR:"+fopagos.getPMontoIsr_Re());
+			System.out.println("MONTO NETO:"+fopagos.getPMontoNeto_Re());
+			totalMontoRetiro=fopagos.getPMonBruto_Re();
+			totalMontoIsr=fopagos.getPMontoIsr_Re();
+			totalNeto=fopagos.getPMontoNeto_Re();
 			}
 			//fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
 			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());

@@ -117,18 +117,18 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			//query.registerStoredProcedureParameter("pNss", String.class, ParameterMode.IN);	
 			query.registerStoredProcedureParameter("pCuenta", String.class, ParameterMode.INOUT);
 			query.registerStoredProcedureParameter("pNombre", String.class, ParameterMode.INOUT);
-			query.registerStoredProcedureParameter("pNoPoliza_Pag", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pNoPoliza_Pag", Long.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pReferencia", String.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pFechaMov_Pag", Date.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pFecReinv_Pag", Date.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pTelefono_Pag", String.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pBenef_Re", String.class, ParameterMode.OUT);	
-			query.registerStoredProcedureParameter("pPorcent_Re", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pPorcent_Re", Double.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pEstatus_Re", String.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pPlaza_Re", String.class, ParameterMode.OUT);	
-			query.registerStoredProcedureParameter("pMonBruto_Re", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("pMontoIsr_Re", Integer.class, ParameterMode.OUT);	
-			query.registerStoredProcedureParameter("pMontoNeto_Re", Integer.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pMonBruto_Re", Double.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("pMontoIsr_Re", Double.class, ParameterMode.OUT);	
+			query.registerStoredProcedureParameter("pMontoNeto_Re", Double.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("pMensaje", String.class, ParameterMode.OUT);	
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			
@@ -139,18 +139,18 @@ public class SolicitudMatrimonioDesempleoRepo extends RepoBase {
 			FopagosListOut res=new FopagosListOut();
 			res.setPNombre((String) query.getOutputParameterValue("pNombre"));
 			res.setPCuenta((String) query.getOutputParameterValue("pCuenta"));
-			res.setPNoPoliza_Pag((Integer) query.getOutputParameterValue("pNoPoliza_Pag"));
+			res.setPNoPoliza_Pag((Long) query.getOutputParameterValue("pNoPoliza_Pag"));
 			res.setPReferencia((String) query.getOutputParameterValue("pReferencia"));
 			res.setPFechaMov_Pag((Date) query.getOutputParameterValue("pFechaMov_Pag"));
 			res.setPFecReinv_Pag((Date) query.getOutputParameterValue("pFecReinv_Pag"));
 			res.setPTelefono_Pag((String) query.getOutputParameterValue("pTelefono_Pag"));
 			res.setPBenef_Re((String) query.getOutputParameterValue("pBenef_Re"));
-			res.setPPorcent_Re((Integer) query.getOutputParameterValue("pPorcent_Re"));
+			res.setPPorcent_Re((Double) query.getOutputParameterValue("pPorcent_Re"));
 			res.setPEstatus_Re((String) query.getOutputParameterValue("pEstatus_Re"));
 			res.setPPlaza_Re((String) query.getOutputParameterValue("pPlaza_Re"));
-			res.setPMonBruto_Re((Integer) query.getOutputParameterValue("pMonBruto_Re"));
-			res.setPMontoIsr_Re((Integer) query.getOutputParameterValue("pMontoIsr_Re"));
-			res.setPMontoNeto_Re((Integer) query.getOutputParameterValue("pMontoNeto_Re"));
+			res.setPMonBruto_Re((Double) query.getOutputParameterValue("pMonBruto_Re"));
+			res.setPMontoIsr_Re((Double) query.getOutputParameterValue("pMontoIsr_Re"));
+			res.setPMontoNeto_Re((Double) query.getOutputParameterValue("pMontoNeto_Re"));
 			res.setPMensaje((String) query.getOutputParameterValue("pMensaje"));
 			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 			
