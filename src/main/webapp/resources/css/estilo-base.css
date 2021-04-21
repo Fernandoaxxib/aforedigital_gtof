@@ -232,6 +232,13 @@
 	border-radius: .25rem;
 	font-size: 14px !important;
 }
+
+.detalleProceso .ui-paginator{	
+	background: #ffffff !important;
+	border: 1px solid #ffffff !important;
+}
+
+
 .fondoDialog .ui-dialog .ui-widget{
 	background: rgb(0, 0, 0) transparent;
 }

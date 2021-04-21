@@ -196,6 +196,7 @@ div[id$="mod_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
 	color: #00529b !important;
 	font-family: 'Montserrat', sans-serif !important;
 	border: 0px solid white !important;
+	padding: 6px 5px !important;
 }
 
 div[id$="mod_panel"] .menu.ui-state-default, .menu.ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default
@@ -229,7 +230,7 @@ div[id$="mod_panel"] .ui-selectonemenu-item{
 
 div[id$="sub_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
 	padding: 6px 5px !important;
-	font-size: 14px !important;
+	font-size: 12px !important;
 	font-weight: bold !important;
 	color: #00529b !important;
 	font-family: 'Montserrat', sans-serif !important;

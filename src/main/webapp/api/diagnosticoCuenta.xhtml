@@ -26,7 +26,7 @@
 		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel header="Diagnóstico de la Cuenta Individual"
+			<p:panel header="DIAGNÓSTICO DE LA CUENTA INDIVIDUAL"
 				style="margin-top:20px">
 
 				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
@@ -38,7 +38,7 @@
 								style="width:215px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
 								actionListener="#{diagCuenta.obtieneCodCuenta}"
-								update="pGrid result" value="Buscar" />
+								update="pGrid result" value="BUSCAR" />
 
 						</p:column>
 						<p:column style="width:200px; padding:10px;">
@@ -88,17 +88,17 @@
 							<p:commandButton class="blue"
 								rendered="#{diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.generarArchivo}"
-								update="pGrid result" value="Generar reporte" />
+								update="pGrid result" value="GENERAR REPORTE" />
 
 							<p:commandButton class="blue"
 								rendered="#{diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.desbloquearCuentas}"
-								update="pGrid result" value="Desbloquea Ctas." />
+								update="pGrid result" value="DESBLOQUEA CUENTAS" />
 
 							<p:commandButton class="blue"
 								rendered="#{diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.bloquearCuentas}"
-								update="pGrid result" value="Bloquea Ctas." />
+								update="pGrid result" value="BLOQUEA CUENTAS" />
 						</p:column>
 					</p:row>
 

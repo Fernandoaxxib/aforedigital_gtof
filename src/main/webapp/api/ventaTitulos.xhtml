@@ -24,7 +24,7 @@
 
 
 
-			<p:panel id="busqueda" header="Venta de títulos"
+			<p:panel id="busqueda" header="VENTA DE TÍTULO POR SECTOR DE INVERSIÓN"
 				style="margin-top:20px">
 				<p:panelGrid id="pBusqueda" columns="1" styleClass="ui-noborder">
 					<p:panelGrid id="fechas" columns="3">
@@ -147,7 +147,7 @@
 					</p:outputPanel>
 
 					<p:commandButton class="blue" update="busqueda pSiefore result"
-						action="#{ventaTitulos.buscarMontos}" value="Buscar" />
+						action="#{ventaTitulos.buscarMontos}" value="BUSCAR" />
 
 				</p:panelGrid>
 			</p:panel>
@@ -215,12 +215,12 @@
 				<p:commandButton class="blue" id="venta" update="result"
 					action="#{ventaTitulos.ventaTitulosMonitor}"
 					style="margin-top:20px" rendered="#{ventaTitulos.mostrarVenta}"
-					type="submit" value="Venta en monitor" />
+					type="submit" value="VENTA EN MONITOR" />
 
 				<p:commandButton class="blue" id="ventaCT" update="result"
 					action="#{ventaTitulos.ventaTitulosMonitorCT}"
 					style="margin-top:20px" rendered="#{ventaTitulos.mostrarVentaCT}"
-					type="submit" value="Venta en monitor corte trans" />
+					type="submit" value="VENTA EN MONITOR CORTE TRANS" />
 			</p:panel>
 
 			<ui:include src="processResult.xhtml">

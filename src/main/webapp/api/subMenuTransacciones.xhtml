@@ -23,28 +23,26 @@
 		<p:selectOneMenu id="sub" class="submenu img" style="width:auto;"
 			value="#{menu.submenu}" dir="rtl">
 			<f:selectItem
-				itemLabel="Aprobación de Solicitudes por Tipo de Retiro"
+				itemLabel="APROBACIÓN DE SOLICITUDES POR TIPO DE RETIRO"
 				itemValue="/api/aprobSolicTipRetiro.jsf" />
-			<f:selectItem itemLabel="Desempleo Parcialidades"
+			<f:selectItem itemLabel="DESEMPLEO PARCIALIDADES"
 				itemValue="/api/modDesParc.jsf" />
-			<f:selectItem itemLabel="Venta de Títulos"
+			<f:selectItem itemLabel="VENTA DE TÍTULOS"
 				itemValue="/api/ventaTitulos.jsf" />
-			<f:selectItem itemLabel="Carga OP84 y OP85"
+			<f:selectItem itemLabel="CARGA OP84 Y OP85"
 				itemValue="/api/retParImssOP84.jsf" />
-			<f:selectItem itemLabel="Notificaciones de Pago"
+			<f:selectItem itemLabel="NOTIFICACIONES DE PAGO"
 				itemValue="/api/notificacionPagos.jsf" />
-			<f:selectItem itemLabel="Carga Masiva Right Fax"
+			<f:selectItem itemLabel="CARGA MASIVA RIGHT FAX"
 				itemValue="/api/cargaRight.jsf" />
-			<f:selectItem itemLabel="Certificación de Inactividad"
+			<f:selectItem itemLabel="CERTIFICACIÓN DE INACTIVIDAD"
 				itemValue="/api/cerInaProceso.jsf" />
-			<f:selectItem itemLabel="Rechazo de Solicitudes"
+			<f:selectItem itemLabel="RECHAZO DE SOLICITUDES"
 				itemValue="/api/rechazosSolicitudes.jsf" />
-			<f:selectItem itemLabel="Reinversiones a Básicas Parcialidades (Desempleo)"
+			<f:selectItem itemLabel="REINVERSIONES A BÁSICAS PARCIALIDADES (DESEMPLEO)"
 				itemValue="/api/reInverModDesProceso.jsf" />
-			
-			<f:selectItem itemLabel="Desmarca Masiva de Cuentas (Carga Batch)"
+			<f:selectItem itemLabel="DESMARCA MASIVA DE CUENTAS (CARGA BATCH)"
 				itemValue="/api/desmarcaCargaMasiva.jsf" />
-
 
 			<p:ajax event="change" listener="#{menu.navigateSub}"
 				oncomplete="PF('statusDialog').show();" />

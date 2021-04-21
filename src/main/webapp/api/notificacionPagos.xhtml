@@ -21,7 +21,7 @@
 		<h:outputScript name="js/calendar-localization.js" />
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="Notificaciones de pago"
+			<p:panel id="busqueda" header="NOTIFICACIONES DE PAGO"
 				style="margin-top:20px">
 				<p:panelGrid id="fechas" columns="3" styleClass="ui-noborder">
 					<p:outputLabel value="Fecha de proceso" style="font-weight: normal" />
@@ -32,7 +32,7 @@
 
 					<p:commandButton class="blue"
 						actionListener="#{notificacionPagos.buscarPagos}"
-						update="pagos result" value="Consultar" />
+						update="pagos result" value="CONSULTAR" />
 
 
 				</p:panelGrid>
@@ -112,11 +112,11 @@
 
 					<p:commandButton id="enviar" class="blue" update="pagos result"
 						rendered="#{notificacionPagos.mostrarEnviar}"
-						actionListener="#{notificacionPagos.enviar}" value="Enviar" />
+						actionListener="#{notificacionPagos.enviar}" value="ENVIAR" />
 
 					<p:commandButton id="exportar" class="blue" update="pagos result"
 						rendered="#{notificacionPagos.mostrarExportar}"
-						actionListener="#{notificacionPagos.exportar}" value="Exportar" />
+						actionListener="#{notificacionPagos.exportar}" value="EXPORTAR" />
 				</p:panelGrid>
 			</p:panel>
 

@@ -27,7 +27,7 @@
 		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel id="pDatos" header="Recaudación ventanilla única"
+			<p:panel id="pDatos" header="RECAUDACIÓN VENTANILLA ÚNICA"
 				style="margin-top:20px">
 				<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
 					style="font-weight: normal" />
@@ -37,12 +37,12 @@
 				<p:commandButton class="blue"
 					actionListener="#{consultaRecaudacion.consultarNSS}"
 					update="pDatos pMontos pCuotas result" style="margin-top:20px"
-					value="Consultar" />
+					value="CONSULTAR" />
 
 				<p:commandButton class="blue"
 					actionListener="#{consultaRecaudacion.generarReporte}"
 					rendered="#{consultaRecaudacion.mostrarReporte}" update="result"
-					style="margin-top:20px" value="Generar reporte" />
+					style="margin-top:20px" value="GENERAR REPORTE" />
 
 				<p:dataTable id="datos" var="dat" style="margin-top:20px"
 					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
@@ -90,7 +90,7 @@
 
 			</p:panel>
 
-			<p:panel id="pMontos" header="Montos" style="margin-top:20px">
+			<p:panel id="pMontos" header="MONTOS" style="margin-top:20px">
 				<p:dataTable id="monto" var="mon"
 					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
 					value="#{consultaRecaudacion.datos}">
@@ -136,7 +136,7 @@
 				</p:dataTable>
 			</p:panel>
 
-			<p:panel id="pCuotas" header="Cuotas" style="margin-top:20px">
+			<p:panel id="pCuotas" header="CUOTAS" style="margin-top:20px">
 				<p:dataTable id="cuota" var="cuo"
 					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
 					value="#{consultaRecaudacion.datos}">

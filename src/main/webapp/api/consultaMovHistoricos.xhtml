@@ -28,7 +28,7 @@
 		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel header="Consulta de movimientos históricos"
+			<p:panel header="CONSULTA DE MOVIMIENTOS HISTÓRICOS"
 				style="margin-top:20px">
 
 				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
@@ -40,7 +40,7 @@
 								style="width:150px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
 								actionListener="#{conHistoricos.consultarCuenta}"
-								update="pGrid form:movimientos form:detalle result" value="Buscar" />
+								update="pGrid form:movimientos form:detalle result" value="BUSCAR" />
 
 						</p:column>
 					</p:row>
@@ -91,13 +91,13 @@
 						<p:column colspan="3" style="text-align:left;padding:10px;">
 							<p:commandButton class="blue"
 								actionListener="#{conHistoricos.consultarMovimientos}"
-								update="pGrid pMov form:detalle result" value="Buscar movimientos" />
+								update="pGrid pMov form:detalle result" value="BUSCAR MOVIMIENTOS" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
 			</p:panel>
 
-			<p:panel id="pMov" header="Movimientos" style="margin-top:20px">
+			<p:panel id="pMov" header="MOVIMIENTOS" style="margin-top:20px">
 				<p:dataTable id="movimientos" var="mon" paginatorPosition="bottom"
 					emptyMessage="#{conHistoricos.mensajeTabla}"
 					value="#{conHistoricos.movimientos}" rows="10"
@@ -153,7 +153,7 @@
 			</p:panel>
 
 
-			<p:panel header="Detalle de movimientos" style="margin-top:20px">
+			<p:panel header="DETALLE DE MOVIMIENTOS" style="margin-top:20px">
 				<p:dataTable id="detalle" var="mon" paginatorPosition="bottom"
 					emptyMessage="#{conHistoricos.mensajeTabla}"
 					value="#{conHistoricos.detalle}" rows="10" scrollable="true"

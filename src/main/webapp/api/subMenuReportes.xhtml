@@ -20,21 +20,20 @@
 	<h:form>
 		<p:selectOneMenu id="sub" class="submenu img" style="width:auto"
 			value="#{menu.submenu}" dir="rtl">
-			<f:selectItem itemLabel="Consultas Marcas Cuentas" itemValue="/api/consultarMarcasCuentas.jsf" />
-			<f:selectItem itemLabel="Reporte de Liquidación" itemValue="/api/reporteLiquidacion.jsf" />
-						
-			<f:selectItem itemLabel="Consulta de Movimientos Actuales" itemValue="/api/consultaMovActuales.jsf" />
-			<f:selectItem itemLabel="Diagnóstico de la Cuenta Individual" itemValue="/api/diagnosticoCuenta.jsf" />	
-			<f:selectItem itemLabel="Recaudación Ventanilla Única" itemValue="/api/consultaRecaudacion.jsf" />
-			<f:selectItem itemLabel="Reportes Parciales CONSAR" itemValue="/api/repParciales.jsf" />
-			<f:selectItem itemLabel="Consulta Resoluciones DATAMART 31-5" itemValue="/api/consultaResolucionDataMart.jsf" />
-			<f:selectItem itemLabel="Saldos Actuales del Cliente" itemValue="/api/saldosActuales.jsf" />
-			<f:selectItem itemLabel="Solicitudes de Matrimonio y Desempleo" itemValue="/api/solicitudMatrimonioDesempleo.jsf" />
-			<f:selectItem itemLabel="Consulta de Movimientos Históricos" itemValue="/api/consultaMovHistoricos.jsf" />
-			<f:selectItem itemLabel="Reporte de Solicitudes de Retiro" itemValue="/api/reporteSolicRetiro.jsf" />
-			<f:selectItem itemLabel="Reporte de Saldos Finales (Saldos Negativos)" itemValue="/api/saldosNegativosImssIsste.jsf" />
-			<f:selectItem itemLabel="Salario Mínimo" itemValue="/api/salarioMinimo.jsf" />
-			<f:selectItem itemLabel="Valores UMA" itemValue="/api/valoresUMA.jsf" />
+			<f:selectItem itemLabel="CONSULTAS MARCAS CUENTAS" itemValue="/api/consultarMarcasCuentas.jsf" />
+			<f:selectItem itemLabel="CONSULTA DE MOVIMIENTOS ACTUALES" itemValue="/api/consultaMovActuales.jsf" />
+			<f:selectItem itemLabel="DIAGNÓSTICO DE LA CUENTA INDIVIDUAL" itemValue="/api/diagnosticoCuenta.jsf" />	
+			<f:selectItem itemLabel="RECAUDACIÓN VENTANILLA ÚNICA" itemValue="/api/consultaRecaudacion.jsf" />
+			<f:selectItem itemLabel="REPORTES PARCIALES CONSAR" itemValue="/api/repParciales.jsf" />
+			<f:selectItem itemLabel="CONSULTA RESOLUCIONES DATAMART 31-5" itemValue="/api/consultaResolucionDataMart.jsf" />
+			<f:selectItem itemLabel="SALDOS ACTUALES DEL CLIENTE" itemValue="/api/saldosActuales.jsf" />
+			<f:selectItem itemLabel="SOLICITUDES DE MATRIMONIO Y DESEMPLEO" itemValue="/api/solicitudMatrimonioDesempleo.jsf" />
+			<f:selectItem itemLabel="REPORTE LIQUIDACIÓN DE RETIROS POR DISPOSICIÓN" itemValue="/api/reporteLiquidacion.jsf" />
+			<f:selectItem itemLabel="CONSULTA DE MOVIMIENTOS HISTÓRICOS" itemValue="/api/consultaMovHistoricos.jsf" />
+			<f:selectItem itemLabel="REPORTE DE SOLICITUDES DE RETIRO" itemValue="/api/reporteSolicRetiro.jsf" />
+			<f:selectItem itemLabel="REPORTE DE SALDOS FINALES (SALDOS NEGATIVOS)" itemValue="/api/saldosNegativosImssIsste.jsf" />
+			<f:selectItem itemLabel="SALARIO MÍNIMO" itemValue="/api/salarioMinimo.jsf" />
+			<f:selectItem itemLabel="VALORES UMA" itemValue="/api/valoresUMA.jsf" />
             
 			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>

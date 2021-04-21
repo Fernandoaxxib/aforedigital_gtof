@@ -17,7 +17,7 @@
 
 		<ui:include src="menu.xhtml" />
 
-		<p:panel id="modulo" header="Detalle del proceso"
+		<p:panel id="modulo" header="DETALLE DEL PROCESO"
 			style="margin-top:20px">
 
 			<h:form id="form2">
@@ -72,9 +72,9 @@
 			<p:commandButton class="blue"
 				actionListener="#{monitorProcesos.actualizar}"
 				update="monitor jobs result form2:monitorDetalle"
-				style="margin-top:20px" value="Actualizar todo" />
+				style="margin-top:20px" value="ACTUALIZAR TODO" />
 
-			<p:panel id="monitor" header="Monitor de procesos"
+			<p:panel id="monitor" header="MONITOR DE PROCESOS"
 				style="margin-top:20px">
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
 					emptyMessage="#{msg.aprob_msj_sinDatos}"
@@ -153,7 +153,7 @@
 
 				<p:commandButton class="blue"
 					actionListener="#{monitorProcesos.ejecutar}" update="result"
-					value="#{msg.monitor_boton_ejecutar}" style="margin-top:20px" />
+					value="EJECUTAR" style="margin-top:20px" />
 			</p:panel>
 
 			<ui:include src="processResult.xhtml">

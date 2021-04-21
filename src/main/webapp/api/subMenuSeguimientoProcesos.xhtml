@@ -20,9 +20,9 @@
 	<h:form>
 		<p:selectOneMenu id="sub" class="submenu img" style="width:auto" value="#{menu.submenu}" dir="rtl">
 			<f:selectItem
-				itemLabel="Monitor de Procesos"
+				itemLabel="MONITOR DE PROCESOS"
 				itemValue="/api/monitorProcesos.jsf" />
-			<f:selectItem itemLabel="Liquidación de Fondos y Tipos de Pagos"
+			<f:selectItem itemLabel="LIQUIDACIÓN DE FONDOS Y TIPOS DE PAGOS"
 				itemValue="/api/moduloPagos.js" />
 			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
