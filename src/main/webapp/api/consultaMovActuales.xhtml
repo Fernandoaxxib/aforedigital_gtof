@@ -37,7 +37,7 @@
 
 							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
 							<p:inputText id="nss" value="#{conActuales.nssCurp}"
-								style="width:150px" placeholder="NSS/CURP" />
+								style="width:150px" placeholder="NSS/CURP" maxlength="18"/>
 							<p:commandButton class="blue"
 								actionListener="#{conActuales.consultarCuenta}"
 								update="pGrid form:movimientos form:detalle result" value="Buscar" />

@@ -145,6 +145,12 @@
 	background: transparent !important;
 }
 
+.ui-icon-calendar {
+	background-image: url("../Imagenes/calendar.png") !important;
+	background-position: center center !important;
+	background-size: 16px;
+}
+
 /* Texto general toda la app */
 .ui-widget {
 	font-family: Montserrat, sans-serif !important;

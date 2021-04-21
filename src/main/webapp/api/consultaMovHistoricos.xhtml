@@ -36,7 +36,7 @@
 						<p:column colspan="5" style="padding:10px;">
 
 							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
-							<p:inputText id="nss" value="#{conHistoricos.nssCurp}"
+							<p:inputText id="nss" value="#{conHistoricos.nssCurp}" maxlength="18"
 								style="width:150px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
 								actionListener="#{conHistoricos.consultarCuenta}"

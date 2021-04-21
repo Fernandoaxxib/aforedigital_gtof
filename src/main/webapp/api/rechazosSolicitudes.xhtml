@@ -58,7 +58,7 @@
 
 				<p:panelGrid id="panel" styleClass="ui-noborder">
 					<p:row>
-						<p:column colspan="2">
+						<p:column >
 							<p:selectOneRadio id="opcion" value="#{rechazos.opcion}"
 								unselectable="false">
 								<f:selectItem itemLabel="Folio" itemValue="1" />
@@ -68,12 +68,11 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column>
-							<p:inputText id="valor" value="#{rechazos.valor}" style="width:150px"
+						<p:column >
+							<p:inputText id="valor" value="#{rechazos.valor}" style="width:150px" maxlength="11"
 								></p:inputText>
-						</p:column>
-						<p:column>
-							<p:commandButton class="blue" actionListener="#{rechazos.buscar}"
+						
+							<p:commandButton class="blue" actionListener="#{rechazos.buscar}" 
 								update="panel pGrid pGrid2 result" value="Buscar" />
 						</p:column>
 					</p:row>
