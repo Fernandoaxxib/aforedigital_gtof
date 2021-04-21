@@ -176,7 +176,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			verDatoCheque=true;
 			consultarSolicitud(cuenta);
 			}else {
-				pr.setStatus("No  se encontro informacion");	
+				pr.setStatus("No se encontraron resultados");	
 			}
 			
 	
@@ -289,13 +289,13 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			
 			if(solicitudChequeOut.getNumeroSolicitud() != null) {
 			System.out.println("valor de Solicitud"+solicitudChequeOut.getNumeroSolicitud());
-			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(Integer.parseInt(solicitudChequeOut.getNumeroSolicitud()), nss, cuenta, nombre);
+			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(Long.valueOf(solicitudChequeOut.getNumeroSolicitud()), nss, cuenta, nombre);
 			}
 			//fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
 			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
 			if(fopagos != null) {
 				if (fopagos.getOn_Estatus() == 1 ) {
-					pr.setStatus("Consulta Exitosa");
+					pr.setStatus("Consulta Exitosa Fopagos");
 					
 				}else {
 					pr.setStatus("No se encontraron resultados");

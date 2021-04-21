@@ -1,11 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition  template="layaut.xhtml"
+<ui:composition template="/api/layaut.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 	
 	<f:metadata>
 		<f:event listener="#{consultaResolucionDataMart.iniciar}" type="preRenderView" />
@@ -133,10 +134,10 @@
  		
 		    <p:dataTable id="verConsultaDataMart"  var="verPago" paginatorPosition="bottom"
 					emptyMessage="#{consultaResolucionDataMart.mensajeTabla}"
-					 value="#{consultaResolucionDataMart.listaCurp}"  rows="10" paginator="true"
-					rowsPerPageTemplate="5,10,15" >
+					 value="#{consultaResolucionDataMart.listaCurp}"  rows="10" scrollable="true" scrollWidth="96%" 
+					 paginator="true"  rowsPerPageTemplate="5,10,15" >
 					
-					<f:facet name="header" style="float:right">
+					<f:facet name="header" style="float:right"> 
 
 						<h:outputLabel for="registros"
 							value="#{msg.aprob_label_totalRegistros}"  />
@@ -149,71 +150,71 @@
 <!-- 		    		<p:column selectionMode="single" style="width:20px;text-align:center"/> -->
 		    		
 			 
-			 	<p:column headerText="SEC">
+			 	<p:column headerText="SEC" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.secPension}" />
 		    	</p:column>		
-		    	<p:column headerText="MOV">
+		    	<p:column headerText="MOV" style="width:50px;text-align: center;">
 		       <h:outputText value="#{verPago.tipoMovimto}" />
 		    	</p:column>	
-		   		<p:column headerText="REG">
+		   		<p:column headerText="REG" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.regimen}" />
 		    	</p:column>	
-		 		<p:column headerText="TR">
+		 		<p:column headerText="TR" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoRETIRO}" />
 		    	</p:column>	
-		    	<p:column headerText="TS">
+		    	<p:column headerText="TS" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoSEGURO}" />
 		    	</p:column>	
-		    	<p:column headerText="TP">
+		    	<p:column headerText="TP" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoPENSION}" />
 		    	</p:column>	
-		    	<p:column headerText="ART N">
+		    	<p:column headerText="ART N" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoPRESTACION}" />
 		    	</p:column>		
-		    	<p:column headerText="FRAC N">
+		    	<p:column headerText="FRAC N" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.artNEGATIVA}" />
 		    	</p:column>	
-		   		<p:column headerText="NO COM">
+		   		<p:column headerText="NO COM" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.numCONSIDERANDO}" />
 		    	</p:column>	
-		 		<p:column headerText="FEC INI">
+		 		<p:column headerText="FEC INI" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.fecINI_PENSION}" >
 		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</h:outputText>
 		    	</p:column>	
-		    	<p:column headerText="FEC EMI">
+		    	<p:column headerText="FEC EMI" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.fecEMI_RESOLUCION}" >
 		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</h:outputText>
 		    	</p:column>	
-		    	<p:column headerText="PORC">
+		    	<p:column headerText="PORC" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.porcentajeVALUACION}" />
 		    	</p:column>	
-		    	<p:column headerText="SEM COT">
+		    	<p:column headerText="SEM COT" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.semanasCOTIZADAS}" />
 		    	</p:column>	
-		    	<p:column headerText="DIALG REG">
+		    	<p:column headerText="DIALG REG" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.diagREGISTRO}" />
 		    	</p:column>	
-		    	<p:column headerText="NUM RES">
+		    	<p:column headerText="NUM RES" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.numRESOLUCION}" />
 		    	</p:column>	
-		    	<p:column headerText="AP CS">
+		    	<p:column headerText="AP CS" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.tipoAP_CS}" />
 		    	</p:column>	
-		    	<p:column headerText="SBC A">
+		    	<p:column headerText="SBC A" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.sbcTIPO_A}" />
 		    	</p:column>	
-		    	<p:column headerText="SBC B">
+		    	<p:column headerText="SBC B" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.sbcTIPO_B}" />
 		    	</p:column>	
-		    	<p:column headerText="PAG COM">
+		    	<p:column headerText="PAG COM" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.pagoCOMP}" />
 		    	</p:column>	
-		    	<p:column headerText="MONT RET">
+		    	<p:column headerText="MONT RET" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.montoRETIRO_ORG}" />
 		    	</p:column>
-		    	<p:column headerText="SALD ANT">
+		    	<p:column headerText="SALD ANT" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.saldoANT}" />
 		    	</p:column>
 		</p:dataTable>
