@@ -112,10 +112,10 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 	public List<TipoProcesoOut> consultarTodo(){
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cargar Archivo");
+		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			
+			 pr.setStatus("Proceso ejecutado Correctamente");
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
