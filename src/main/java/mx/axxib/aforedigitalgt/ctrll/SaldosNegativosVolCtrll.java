@@ -71,8 +71,12 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	@Override
 	public void iniciar() {
 		super.iniciar();
+		Date myDate = new Date();
+		//RTP-MOVS-SLD-FIN-20210221.xls
+		new SimpleDateFormat("yyyyMMdd").format(myDate);
 		if(init) {
 			rutaSaldoNegativo="/RESPALDOS/operaciones/pruebas";
+			nombreSaldoNegativo="RPT-MOVS-SLD-FIN-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".xls";
 			today= new Date();
 			saldoFechaMovimiento=today;
 			reset();
@@ -80,7 +84,7 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	}
 	
 	public void reset() {
-		nombreSaldoNegativo=null;
+		
 		
 	}
 	
