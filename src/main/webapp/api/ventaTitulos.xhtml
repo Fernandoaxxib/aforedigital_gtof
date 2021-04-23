@@ -147,7 +147,7 @@
 					</p:outputPanel>
 
 					<p:commandButton class="blue" update="busqueda pSiefore result"
-						action="#{ventaTitulos.buscarMontos}" value="BUSCAR" />
+						action="#{ventaTitulos.buscarMontos}" value="Buscar" />
 
 				</p:panelGrid>
 			</p:panel>
@@ -215,12 +215,12 @@
 				<p:commandButton class="blue" id="venta" update="result"
 					action="#{ventaTitulos.ventaTitulosMonitor}"
 					style="margin-top:20px" rendered="#{ventaTitulos.mostrarVenta}"
-					type="submit" value="VENTA EN MONITOR" />
+					type="submit" value="Venta en monitor" />
 
 				<p:commandButton class="blue" id="ventaCT" update="result"
 					action="#{ventaTitulos.ventaTitulosMonitorCT}"
 					style="margin-top:20px" rendered="#{ventaTitulos.mostrarVentaCT}"
-					type="submit" value="VENTA EN MONITOR CORTE TRANS" />
+					type="submit" value="Venta en monitor corte trans." />
 			</p:panel>
 
 			<ui:include src="processResult.xhtml">

@@ -4,7 +4,7 @@
 
 /* Buttons */
 .blue.ui-state-hover .ui-button-text {
-    background: #59ad40 !important;;
+    background: #59ad40 !important;
 }
 
 .blue.ui-button .ui-button-text {
@@ -13,6 +13,7 @@
     font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
 	padding: 2px;
+	text-transform: capitalize;
 }
 
 .blue.ui-button .ui-button-hover {
@@ -26,6 +27,7 @@
     font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
 	padding: 2px;
+	text-transform: capitalize;
 }
 
 /* DataTable */

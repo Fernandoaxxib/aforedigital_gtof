@@ -37,12 +37,12 @@
 				<p:commandButton class="blue"
 					actionListener="#{consultaRecaudacion.consultarNSS}"
 					update="pDatos pMontos pCuotas result" style="margin-top:20px"
-					value="CONSULTAR" />
+					value="Consultar" />
 
 				<p:commandButton class="blue"
 					actionListener="#{consultaRecaudacion.generarReporte}"
 					rendered="#{consultaRecaudacion.mostrarReporte}" update="result"
-					style="margin-top:20px" value="GENERAR REPORTE" />
+					style="margin-top:20px" value="Generar reporte" />
 
 				<p:dataTable id="datos" var="dat" style="margin-top:20px"
 					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
