@@ -74,6 +74,10 @@ public class ConsultaMovActualesCtrll extends ControllerBase {
 	@Getter
 	private String mensajeTabla;
 
+	@Getter
+	@Setter
+	private boolean mostrar;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -86,6 +90,7 @@ public class ConsultaMovActualesCtrll extends ControllerBase {
 	}
 	
 	public void limpiar() {
+		mostrar = false;
 		mensajeTabla = null;
 		selectedDetalle = null;
 		detalle = null;
@@ -134,6 +139,7 @@ public class ConsultaMovActualesCtrll extends ControllerBase {
 				if (cuenta.getEstatus() == 1) {
 					codCuenta = cuenta.getCodCuenta();
 					codEmpresa = cuenta.getCodEmpresa();
+					mostrar = true;
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (cuenta.getEstatus() == 2) {

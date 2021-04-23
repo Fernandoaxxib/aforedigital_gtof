@@ -55,16 +55,18 @@
 		<h:form id="form">
 
 
-			<p:panel id="datos"
-				header="PRIMER PAGO - INDIVIDUAL"
+			<p:panel id="datos" header="PRIMER PAGO - INDIVIDUAL"
 				style="margin-top:20px">
 				<p:panelGrid id="solicitud" styleClass="ui-noborder"
 					style="width:100%;padding:10px;">
-
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel value="DATOS SOLICITUD" style="font-weight: normal" />
+						</p:column>
+					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
-								style="font-weight: normal" />
+							<p:outputLabel value="NSS:" style="font-weight: normal" />
 						</p:column>
 						<p:column style="width:25%">
 							<p:inputText id="nss" value="#{modDesempParc.nss}" maxlength="11"
@@ -74,15 +76,14 @@
 								value="BUSCAR" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Número solicitud"
+							<p:outputLabel value="NÚMERO SOLICITUD:"
 								style="font-weight: normal" />
 						</p:column>
 						<p:column style="width:20%">
 							<p:outputLabel value="#{modDesempParc.datosSol.noSolicitud}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_curp}"
-								style="font-weight: normal" />
+							<p:outputLabel value="CURP:" style="font-weight: normal" />
 						</p:column>
 						<p:column style="width:20%">
 							<p:outputLabel value="#{modDesempParc.datosSol.curp}" />
@@ -91,21 +92,20 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_rfc}"
-								style="font-weight: normal" />
+							<p:outputLabel value="RFC:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.rfc}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_aPaterno}"
+							<p:outputLabel value="APELLIDO PATERNO:"
 								style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.primerApellido}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_aMaterno}"
+							<p:outputLabel value="APELLIDO MATERNO:"
 								style="font-weight: normal" />
 						</p:column>
 						<p:column>
@@ -115,23 +115,20 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_nombres}"
-								style="font-weight: normal" />
+							<p:outputLabel value="NOMBRE:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.nombre}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_tipoPago}"
-								style="font-weight: normal" />
+							<p:outputLabel value="TIPO PAGO:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel
 								value="#{modDesempParc.datosSol.clasificacionPago}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel
-								value="#{msg.modDesParc_solicitud_estatusSolicitud}"
+							<p:outputLabel value="ESTADO SOLICITUD:"
 								style="font-weight: normal" />
 						</p:column>
 						<p:column>
@@ -141,23 +138,21 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_fondo}"
-								style="font-weight: normal" />
+							<p:outputLabel value="FONDO:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.fondo}" />
 						</p:column>
 						<p:column>
 
-							<p:outputLabel value="Número resolución"
+							<p:outputLabel value="NÚMERO RESOLUCIÓN:"
 								style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.numResolucion}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel
-								value="#{msg.modDesParc_solicitud_totalPrestacion}"
+							<p:outputLabel value="NÚMERO RESOLUCIÓN:"
 								style="font-weight: normal" />
 						</p:column>
 						<p:column>
@@ -171,8 +166,7 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_remanente}"
-								style="font-weight: normal" />
+							<p:outputLabel value="REMANENTE:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.remanente}">
@@ -181,15 +175,13 @@
 							</p:outputLabel>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_sbcA}"
-								style="font-weight: normal" />
+							<p:outputLabel value="SBC A:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.sbcTipoA}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_solicitud_fechaAccion}"
-								style="font-weight: normal" />
+							<p:outputLabel value="FECHA ACCIÓN:" style="font-weight: normal" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="#{modDesempParc.datosSol.fechaAccion}">
@@ -214,70 +206,65 @@
 					<p:column selectionMode="single"
 						style="width:20px;text-align:center" />
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_pago}"
+					<p:column headerText="PAGO"
 						style="width:50px;text-align:center;">
 						<h:outputText value="#{par.pago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_importe}"
+					<p:column headerText="IMPORTE"
 						style="width:100px">
 						<h:outputText value="#{par.totalPago}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Fecha envío"
-						style="width:100px">
+					<p:column headerText="FECHA ENVÍO" style="width:120px">
 						<h:outputText value="#{par.fecha}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}"
+					<p:column headerText="ESTATUS DE PAGO"
 						style="width:100px">
 						<h:outputText value="#{par.estatusPagDescrip}" />
 					</p:column>
 
-					<p:column headerText="Fecha trabajador"
-						style="width:100px">
+					<p:column headerText="FECHA TRABAJADOR" style="width:120px">
 						<h:outputText value="#{par.fechaManifiestoTrab}"
 							style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Autoriza trabajador"
-						style="text-align: center; width:50px">
+					<p:column headerText="AUTORIZA TRABAJADOR"
+						style="text-align: center; width:100px">
 						<h:outputText value="#{par.autorizaTrabajador}" />
 					</p:column>
 
-					<p:column headerText="Fecha envío IMSS"
-						style="width:100px">
+					<p:column headerText="FECHA ENVÍO IMSS" style="width:120px">
 						<h:outputText value="#{par.fechaEnvAutorizaImss}"
 							style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Fecha IMSS"
-						style="width:100px">
+					<p:column headerText="FECHA IMSS" style="width:120px">
 						<h:outputText value="#{par.fechaAutorizaImss}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Autoriza IMSS"
-						style="text-align: center; width:50px">
+					<p:column headerText="AUTORIZA IMSS"
+						style="text-align: center; width:100px">
 						<h:outputText value="#{par.autorizaImss}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}"
+					<p:column headerText="TIPO DE PAGO"
 						style="width:150px">
 						<h:outputText value="#{par.tipo_pago}" />
 					</p:column>
 
-					<p:column headerText="Clabe"
-						style="width:200px">
+					<p:column headerText="CLABE" style="width:200px">
 						<h:outputText value="#{par.dpCuenta}" />
 					</p:column>
 				</p:dataTable>
@@ -291,22 +278,22 @@
 
 					<p:ajax event="rowSelect" update="form" />
 
-					<p:column headerText="#{msg.modDesParc_administrativos_pago}">
+					<p:column headerText="PAGO">
 						<h:outputText value="#{adm.descripcionPago}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_administrativos_subcuenta}">
+					<p:column headerText="SUBCUENTA">
 						<h:outputText value="#{adm.subcuenta}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_administrativos_acciones}">
+					<p:column headerText="ACCIONES">
 						<h:outputText value="#{adm.montoAccion}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$"
 								maxFractionDigits="2" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_administrativos_importe}">
+					<p:column headerText="IMPORTE">
 						<h:outputText value="#{adm.montoPesos}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$"
 								maxFractionDigits="2" />
@@ -314,7 +301,7 @@
 					</p:column>
 
 					<p:column
-						headerText="#{msg.modDesParc_administrativos_estatusPago}"
+						headerText="ESTATUS DE PAGO"
 						style="text-align: center">
 						<h:outputText value="#{adm.estatusPago}" />
 					</p:column>
@@ -329,36 +316,38 @@
 
 					<p:ajax event="rowSelect" update="form" />
 
-					<p:column headerText="#{msg.modDesParc_marcas_cuenta}">
+					<p:column headerText="CUENTA">
 						<h:outputText value="#{mar.codCuenta}" />
 					</p:column>
 
-					<p:column headerText="Clave" style="width:50px;text-align:center;">
+					<p:column headerText="CLAVE" style="width:50px;text-align:center;">
 						<h:outputText value="#{mar.claveProceso}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_marcas_proceso}"
+					<p:column headerText="PROCESO"
 						style="width:200px;">
 						<h:outputText value="#{mar.descripcion}" />
 					</p:column>
 
-					<p:column headerText="Incluído por">
+					<p:column headerText="INCLUÍDO POR">
 						<h:outputText value="#{mar.incluidoPor}" />
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_marcas_fInicio}" style="width:110px">
+					<p:column headerText="FECHA INICIO"
+						style="width:110px">
 						<h:outputText value="#{mar.fechaInicio}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_marcas_fFin}" style="width:110px">
+					<p:column headerText="FECHA FIN"
+						style="width:110px">
 						<h:outputText value="#{mar.fechaFin}" style="float:right">
 							<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="#{msg.modDesParc_marcas_estado}">
+					<p:column headerText="ESTADO">
 						<h:outputText value="#{mar.estado}" />
 					</p:column>
 
@@ -374,7 +363,7 @@
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
+							<p:outputLabel value="TIPO CANCELACIÓN:"
 								rendered="#{modDesempParc.mostrarCancelacion}" />
 						</p:column>
 						<p:column>
@@ -389,7 +378,7 @@
 						</p:column>
 
 						<p:column>
-							<p:outputLabel value="Nombre del archivo (sin extensión): "
+							<p:outputLabel value="NOMBRE DEL ARCHIVO (SIN EXTENSIÓN): "
 								style="font-weight: normal" />
 						</p:column>
 						<p:column>
@@ -407,7 +396,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<p:outputLabel
-								value="El archivo deberá estar en: /RESPALDOS/operaciones/pruebas y con extensión txt"
+								value="EL ARCHIVO DEBERÁ ESTAR EN: /RESPALDOS/operaciones/pruebas CON EXTENSIÓN TXT"
 								style="color:blue;margin-top:10px;" />
 						</p:column>
 					</p:row>
@@ -417,8 +406,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<p:commandButton class="blue" update="result acciones"
-								value="Cancelación masiva"
-								actionListener="CANCELACIÓN MASIVA" />
+								value="CANCELACIÓN MASIVA" actionListener="#{modDesempParc.cancelarMasiva}" />
 						</p:column>
 
 					</p:row>

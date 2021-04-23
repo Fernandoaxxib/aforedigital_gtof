@@ -1,3 +1,7 @@
+.capitalized {
+    text-transform: uppercase;
+}
+
 /* Buttons */
 .blue.ui-state-hover .ui-button-text {
     background: #59ad40 !important;;
@@ -99,6 +103,7 @@
 	font-size: 14px !important;
 	font-family: 'Montserrat', sans-serif;
 	text-align: left;
+	text-transform: uppercase;
 }
 
 .ui-panel.ui-widget-content {
@@ -155,6 +160,7 @@
 .ui-widget {
 	font-family: Montserrat, sans-serif !important;
 	font-size: 12px;
+	font-weight: 500 !important;
 }
 
 .ui-widget-content {

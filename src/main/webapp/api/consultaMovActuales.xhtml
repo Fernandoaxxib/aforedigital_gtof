@@ -44,7 +44,7 @@
 
 						</p:column>
 					</p:row>
-					<p:row>
+					<p:row rendered="#{conActuales.mostrar}">
 						<p:column style="width:200px; padding:10px;">
 							<p:outputLabel value="Cuenta: " style="font-weight: normal" />
 							<h:outputText value="#{conActuales.cuenta.codCuenta}" />
@@ -70,7 +70,7 @@
 					</p:row>
 
 
-					<p:row>
+					<p:row rendered="#{conActuales.mostrar}">
 						<p:column>
 							<p:outputLabel value="Inicio: " style="font-weight: normal" />
 							<p:datePicker id="fechaInicial"

@@ -13,6 +13,7 @@
 
 
 	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
 
 		<p:panelGrid width="100%" styleClass="ui-noborder">
 			<p:row>
@@ -34,25 +35,25 @@
 						<p:column colspan="2" style="padding:10px;">
 
 							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
-							<p:inputText id="nss" value="#{diagCuenta.nss}"
+							<p:inputText id="nss" value="#{diagCuenta.nss}" maxlength="18"
 								style="width:215px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
 								actionListener="#{diagCuenta.obtieneCodCuenta}"
 								update="pGrid result" value="BUSCAR" />
 
 						</p:column>
-						<p:column style="width:200px; padding:10px;">
+						<p:column style="width:200px; padding:10px;" rendered="#{diagCuenta.mostrarBotones}">
 							<p:outputLabel value="Cuenta: " style="font-weight: normal" />
 							<h:outputText value="#{diagCuenta.codCuenta}" />
 						</p:column>
-						<p:column style="width:300px; padding:10px;">
+						<p:column style="width:300px; padding:10px;" rendered="#{diagCuenta.mostrarBotones}">
 							<p:outputLabel value="Nombre: " style="font-weight: normal" />
 							<h:outputText value="#{diagCuenta.nombre}" />
 						</p:column>
 					</p:row>
 
 
-					<p:row>
+					<p:row rendered="#{diagCuenta.mostrarBotones}">
 						<p:column>
 							<p:outputLabel value="Inicio: " style="font-weight: normal" />
 							<p:datePicker id="fechaInicial"
@@ -83,10 +84,10 @@
 						</p:column>
 					</p:row>
 
-					<p:row>
+					<p:row rendered="#{diagCuenta.mostrarBotones}">
 						<p:column colspan="4" style="text-align:center;padding:10px;">
 							<p:commandButton class="blue"
-								rendered="#{diagCuenta.mostrarBotones}"
+								
 								actionListener="#{diagCuenta.generarArchivo}"
 								update="pGrid result" value="GENERAR REPORTE" />
 

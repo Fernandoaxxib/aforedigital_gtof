@@ -23,21 +23,21 @@
 			</f:facet>
 
 			<p:column headerText="IDENTIFICADOR DEL PROCESO" style="width:200px">
-				<h:outputText value="#{pro.descProceso}" />
+				<h:outputText value="#{pro.descProceso}" styleClass="capitalized" />
 			</p:column>
 
 			<p:column headerText="ESTADO">
-				<h:outputText value="#{pro.status}" />
+				<h:outputText value="#{pro.status}" styleClass="capitalized" />
 			</p:column>
 
-			<p:column headerText="H. INICIO" style="width:100px;">
-				<h:outputText value="#{pro.fechaInicial}" style="float:right;">
+			<p:column headerText="HORA INICIO" style="width:100px;">
+				<h:outputText value="#{pro.fechaInicial}" style="float:right;" styleClass="capitalized" >
 					<f:convertDateTime type="date" pattern="HH:mm:ss"
 						timeZone="America/Mexico_City" />
 				</h:outputText>
 			</p:column>
-			<p:column headerText="H. TÉRMINO" style="width:100px;">
-				<h:outputText value="#{pro.fechaFinal}" style="float:right;">
+			<p:column headerText="HORA TÉRMINO" style="width:100px;">
+				<h:outputText value="#{pro.fechaFinal}" style="float:right;" styleClass="capitalized" >
 					<f:convertDateTime type="date" pattern="HH:mm:ss"
 						timeZone="America/Mexico_City" />
 				</h:outputText>
