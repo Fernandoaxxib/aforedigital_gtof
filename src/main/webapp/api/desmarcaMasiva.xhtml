@@ -50,7 +50,16 @@
 				
 					<div class="ui-g-6">
 						<p:panel header="#{msg.carga_masiva_text_titulo}">
+						
+								<div class="ui-g" style="text-align: center;">
+								<div class="ui-g-12">
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta" action="#{desmarcaMasiva.desmarcaMasivaCuenta}" update=":form:pnlResult result" ajax="true"/>
+								</div>
+								</div>
 							<div class="ui-g" style="margin-top: 10px;">
+							
+								
+								
 								<div class="ui-g-3">
 									<p:outputLabel value="Clave Proceso:" />
 								</div>
@@ -119,7 +128,7 @@
 							</div>
 							<div class="ui-g" style="text-align: center;">
 								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva" action="#{desmarcaMasiva.reversaDesmarcaMasiva}" update=":form:pnlResult result" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.reversaDesmarcaMasiva}" update=":form:pnlResult result" ajax="true"/>
 								</div>
 							</div>
 							<div class="ui-g" style="margin-top: 10px;">

@@ -110,9 +110,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	public List<TipoProcesoOut> consultarTodo(){
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cargar Archivo");
+		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
+			pr.setStatus("Proceso ejecutado Correctamente");
 			System.out.println("VALOR DE  LISTA TIPO PROCESO "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
 		}catch (Exception e) {
 			pr = GenericException(e);
@@ -123,6 +124,21 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		return listaTipoProceso;
 	}
 	
+	
+	public void desmarcaMasivaCuenta() {
+		ProcessResult pr = new ProcessResult();
+		pr.setFechaInicial(DateUtil.getNowDate());
+		pr.setDescProceso("Desmarca Masiva Cuentas");
+	try {
+		 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
+		 pr.setStatus("Proceso ejecutado Correctamente");
+	}catch (Exception e) {
+		pr = GenericException(e);
+	} finally {
+		pr.setFechaFinal(DateUtil.getNowDate());
+		resultados.add(pr);
+	}
+}
 //	public void cargarArchivo() {
 //		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
 //			addMessageFail("Ingrese el nombre del archivo.");
@@ -169,7 +185,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	public void reversaDesmarcaMasiva() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cargar Archivo");
+		pr.setDescProceso("Reversa Carga Archivo");
 		try {System.out.println("DESMARCA MASIVA REVERSA");
 //			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
 //			Date today= new Date();		
@@ -212,7 +228,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	public void desmarcaIndividualCuenta() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Desmarca Masiva");
+		pr.setDescProceso("Desmarca Individual Cuenta");
 		try {System.out.println("VALOR DE desmarcaNSS:"+desmarcaNSS+" /desmarcaCURP:"+desmarcaCURP+" /selectedTipoClave:"+selectedTipoClave);
 		
 		
