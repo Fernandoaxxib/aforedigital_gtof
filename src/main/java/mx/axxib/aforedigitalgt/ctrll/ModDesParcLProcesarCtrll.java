@@ -19,7 +19,6 @@ import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
-import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "modDesParcLProcesar")
@@ -29,7 +28,6 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Autowired
 	private ModDesParcLProcesarServ service;
 
-	
 	@Getter
 	@Setter
 	private Date fecha;
@@ -60,11 +58,15 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Getter
 	private String border;
 	
+	@Getter
+	private Date fecActual;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 	
@@ -179,14 +181,6 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 				pr.setDescProceso("Debe introducir nombre del archivo");
 				pr.setStatus("Información requerida");					
 				return false;
-			}else {
-				if(!ValidateUtil.isValidFileName(archivo2)) {
-					UIInput radio = (UIInput) findComponent("idArchivo2");
-					radio.setValid(false);
-					pr.setDescProceso("Nombre de archivo no válido");
-					pr.setStatus("Información requerida");	
-					return false;
-				}
 			}
 		}
 		
@@ -211,6 +205,5 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		selectedLote=null;
 		listLotes=null;
 		border="";
-	}
-	
+	}	
 }

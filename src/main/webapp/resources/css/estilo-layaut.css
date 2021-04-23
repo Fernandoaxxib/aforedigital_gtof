@@ -273,3 +273,7 @@ div[id$="sub_panel"] .ui-selectonemenu-items-wrapper {
 	background-image: url("../Imagenes/menu.png");
 	background-position: center;
 }
+span.ui-chkbox-icon.ui-icon.ui-icon-check.ui-c{
+	background-color: #59ad40;
+	background-image: url(/aforedigitalgt/javax.faces.resource/images/ui-icons_ffffff_256x240.png.jsf?ln=primefaces-omega);	
+}

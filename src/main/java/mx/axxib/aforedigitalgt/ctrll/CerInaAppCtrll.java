@@ -33,12 +33,16 @@ public class CerInaAppCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Date fecha;
+	
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 

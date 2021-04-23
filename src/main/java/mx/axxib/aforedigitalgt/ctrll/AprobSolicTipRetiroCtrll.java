@@ -65,6 +65,12 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 	@Getter
 	private Integer seleccionados;
 	
+	@Getter
+	private String disabled;
+	
+	@Getter
+	private String disabled2;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -74,8 +80,12 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
 			if(listSolicitudes!=null) {
 				seleccionados=listSolicitudes.size();
+				disabled="false";
+				disabled2="false";
 			}else {
 				seleccionados=0;
+				disabled="true";
+				disabled2="true";
 			}			
 		}
 	}
@@ -97,12 +107,25 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Recuperación de solicitudes pendientes");
 		try {			
-			listSolicitudes = service.getListSolicitudes();	
+			listSolicitudes = service.getListSolicitudes();			
 			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		    seleccionados=listSolicitudes.size();
+		    if(listSolicitudes!=null) {
+				disabled="false";
+				if(seleccionados>0) {
+					 disabled2="false";
+				 }else {
+					 disabled2="true";
+				 }
+			}else {				
+				disabled="true";
+				disabled2="true";
+			}	
 		} catch (Exception e) {
 			listSolicitudes=null;
 			seleccionados=0;
+			disabled="true";
+			disabled2="true";
 			pr = GenericException(e);			
 		}finally {
 			filtro=new ArrayList<SolicitudOut>();
@@ -158,6 +181,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 	
 	public void aprobarSolicitud()  {
+     List<ProcessResult> results= new ArrayList<>();	
 	 ProcessResult pr = new ProcessResult();	
 	  if(listSolicitudes!=null && !listSolicitudes.isEmpty()) {		  	  
 		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {				    
@@ -183,11 +207,14 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 						pr2=GenericException(e);
 						res=null;						
 					}finally {					
-						resultados.add(pr2);
+						results.add(pr2);
 					}
-				});										
+				});		
+					filtrarResultados(results);							
+				
 				selectedSolicitud=null;
 				recuperarSolicPendientes();
+				disabled2="true";
 		}else {			  
 			  pr.setFechaInicial(DateUtil.getNowDate());
 			  pr.setDescProceso("Aprobación de solicitud");
@@ -212,6 +239,11 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		 }	  
 		 if(selectedSolicitud!=null) {
 			 seleccionados=selectedSolicitud.size();
+			 if(seleccionados>0) {
+				 disabled2="false";
+			 }else {
+				 disabled2="true";
+			 }
 		 }
 	 } public void deseleccion(UnselectEvent<SolicitudOut> event) {		 
 		 if(selectedSolicitud.contains(event.getObject())){
@@ -220,17 +252,46 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		 
 		 if(selectedSolicitud!=null) {
 			 seleccionados=selectedSolicitud.size();
+			 if(seleccionados>0) {
+				 disabled2="false";
+			 }else {
+				 disabled2="true";
+			 }
 		 }
 	 }
 	 public void marcarTodos() {
 		 if(selectedSolicitud!=null) {
 			 seleccionados=selectedSolicitud.size();
+			 if(seleccionados>0) {
+				 disabled2="false";
+			 }else {
+				 disabled2="true";
+			 }
 		 }
 	 }
 	 public void desmarcarTodos() {
 		 if(selectedSolicitud!=null) {
 			 seleccionados=selectedSolicitud.size();
+			 if(seleccionados>0) {
+				 disabled2="false";
+			 }else {
+				 disabled2="true";
+			 }
 		 }
+	 }
+	 public void filtrarResultados(List<ProcessResult> results) {
+		 long cont=results.stream().filter(t->t.getDescProceso().equals("GEN_MOVS_RETPAR")).count();
+		 if(cont>0) {
+			 ProcessResult p= new ProcessResult();
+			 p.setDescProceso("GEN_MOVS_RETPAR");
+			 p.setFechaInicial(DateUtil.getNowDate());
+			 p.setFechaFinal(DateUtil.getNowDate());
+			 p.setStatus("TERMINADO - "+cont+" Registros");
+			 results.removeIf(x -> x.getDescProceso().equals("GEN_MOVS_RETPAR"));		 
+			 results.add(p);
+			 resultados.addAll(results);
+		 }
+		 
 	 }
 
 }

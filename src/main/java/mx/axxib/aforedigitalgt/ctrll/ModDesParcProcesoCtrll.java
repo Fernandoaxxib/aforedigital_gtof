@@ -60,6 +60,12 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 
 	@Getter
 	private String display3;
+	
+	@Getter
+	private String disabled;
+	
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
@@ -67,11 +73,13 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			proceso = null;
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 
 	public void radioSelected() {
 		fecha = null;
+		disabled="false";
 	}
 
 	public void buscarRegXProcesar() {
@@ -79,7 +87,7 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 		pr.setDescProceso("Búsqueda de registros por procesar");
 		pr.setFechaInicial(DateUtil.getNowDate());
 		if (isFormValid(pr)) {
-			if (radioSelected.equals("1")) {
+			
 				try {
 					DiagnosticoResult res = service.getRegistrosXProcesar(fecha);					
 					if(res.getOn_Estatus()==1) {
@@ -103,7 +111,7 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
 				}
-			}
+			
 		} else {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -135,8 +143,7 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 					}
 				});
 				
-			}
-			// buscarRegXProcesar();
+			}		
 			reset();
 		
 	}
@@ -206,26 +213,40 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
 				}
-			} else {
-				try {
-					pr.setDescProceso("Aprobación de Solicitudes");
-					EjecucionResult res = service.ejecutar(fecha, Integer.valueOf(radioSelected));
-					if (res.getOn_Estatus() == 1) {
-						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-					} else {
-						if (res.getOn_Estatus() == 2) {
-							GenerarErrorNegocio(res.getOcMensaje());
-						} else if (res.getOn_Estatus() == 0) {
-							pr.setStatus(res.getOcMensaje());
+			} else {				
+				if(sinSalario<=0) {
+					if(pendientes<=0) {
+						try {
+							pr.setDescProceso("Aprobación de Solicitudes");
+							EjecucionResult res = service.ejecutar(fecha, Integer.valueOf(radioSelected));
+							if (res.getOn_Estatus() == 1) {
+								pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							} else {
+								if (res.getOn_Estatus() == 2) {
+									GenerarErrorNegocio(res.getOcMensaje());
+								} else if (res.getOn_Estatus() == 0) {
+									pr.setStatus(res.getOcMensaje());
+								}
+							}
+							reset();
+						} catch (Exception e) {
+							pr = GenericException(e);
+						} finally {
+							pr.setFechaFinal(DateUtil.getNowDate());
+							resultados.add(pr);
 						}
+					}else {
+						pr.setDescProceso("Aprobación de solicitudes");
+						pr.setStatus("El proceso no se ejecutará, existen registros por procesar");
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);
 					}
-					reset();
-				} catch (Exception e) {
-					pr = GenericException(e);
-				} finally {
+				}else {
+					pr.setDescProceso("Aprobación de solicitudes");
+					pr.setStatus("El proceso no se ejecutará, existen solicitudes con salario cero");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
-				}
+				}								
 			}
 		} else {
 			pr.setFechaFinal(DateUtil.getNowDate());
@@ -262,6 +283,7 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 	}
 
 	public void reset() {
+		disabled="true";
 		fecha = null;
 		listSolicitudes = null;
 		radioSelected = null;

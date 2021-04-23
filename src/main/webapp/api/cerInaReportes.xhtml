@@ -90,10 +90,12 @@
 								locale="es" showIcon="true" pattern="dd-MM-yyyy"
 								yearNavigator="true" monthNavigator="true"
 								style="margin-right:10px"
-								inputStyle="width:120px; text-align:right;" readonlyInput="true">
+								inputStyle="width:120px; text-align:right;" 
+								maxdate="#{cerInaReportes.fecActual}"
+								readonlyInput="true">
 								<p:ajax event="dateSelect"
 									listener="#{cerInaReportes.opcionSeleccionada}"
-									update="archivo" />
+									update="archivo" global="false"/>
 							</p:datePicker>
 						</p:column>
 						<p:column>
@@ -106,7 +108,9 @@
 								locale="es" showIcon="true" pattern="dd-MM-yyyy"
 								yearNavigator="true" monthNavigator="true"
 								inputStyle="width:120px; text-align:right;"
-								disabled="#{cerInaReportes.disabled}" readonlyInput="true" />
+								disabled="#{cerInaReportes.disabled}" 
+								maxdate="#{cerInaReportes.fecActual}"
+								readonlyInput="true" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

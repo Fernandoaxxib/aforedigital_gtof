@@ -33,11 +33,11 @@
 					<h:form>
 						<p:linkButton styleClass="green"
 							outcome="/api/aprobSolicTipRetiro.jsf" includeViewParams="true"
-							value="Aprobaciones">
+							value="APROBACIONES">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 						<p:linkButton styleClass="blue" outcome="/api/ordenPago.jsf"
-							includeViewParams="true" value="Reporte de alertas">
+							includeViewParams="true" value="REPORTE DE ALERTAS">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 					</h:form>
@@ -46,21 +46,20 @@
 		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel header="Aprobaciones"
-				style="margin-top:20px">
+			<p:panel header="APROBACIONES" style="margin-top:20px">
 				<p:commandButton id="btnRecSolicPend"
 					styleClass="blue ui-button-text" style="margin-right:30px"
 					onclick="PF('listSolicitudes').clearFilters()"
 					action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
 					type="submit"
-					update="form:table1 form:table1:totalRegistros form:result"
+					update="form:table1 form:table1:totalRegistros form:result form:table1:btnMarcar form:table1:btnDesmarcar form:table1:btnAprobar"
 					oncomplete="PF('listSolicitudes').selectAllRows();"
-					value="#{msg.aprob_boton_recuperarSolicitudes}" ajax="true" />
+					value="RECUPERAR SOLICITUDES PENDIENTES" ajax="true" />
 
 
 				<p:linkButton styleClass="blue ui-button-text"
 					outcome="/api/ordenPago.jsf" includeViewParams="true"
-					value="Generar reporte de alertas">
+					value="GENERAR REPORTE DE ALERTAS">
 					<f:param name="init" value="true" />
 				</p:linkButton>
 
@@ -97,10 +96,11 @@
 
 					<f:facet name="header">
 						<p:outputPanel style="text-align:left;margin-bottom:20px;">
-							<h:outputLabel style="margin-right:20px;font-weight:bold;" for="flt"
-								value="#{msg.aprob_label_filtro}" />
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								for="flt" value="#{msg.aprob_label_filtro}" />
 							<p:inputText id="globalFilter"
 								onkeyup="PF('listSolicitudes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
 								style="width:530px;font-size:12px"
 								placeholder="#{msg.aprob_label_pholder}">
 								<p:ajax event="keyup" update="table1:totalRegistros"
@@ -112,29 +112,37 @@
 						<p:panelGrid class="no-border no-padding" style="margin-top:10px;">
 							<p:row>
 								<p:column
-									style="text-align: left !important;width: 25px !important;">
-									<p:commandButton styleClass="blue ui-button-text" type="submit"
+									style="text-align: left !important;width: 35px !important;">
+									<p:commandButton id="btnMarcar"
+										styleClass="blue ui-button-text" type="submit"
 										update="table1 table1:totalRegistros form:table1:count"
 										action="#{aprobSolicTipRetiro.marcarTodos}"
 										onclick="PF('listSolicitudes').selectAllRows()"
-										value="#{msg.aprob_boton_marcar}" ajax="true" global="false" />
+										value="MARCAR TODOS"
+										disabled="#{aprobSolicTipRetiro.disabled}" ajax="true"
+										global="false" />
 								</p:column>
 								<p:column
-									style="text-align: left !important;width: 30px !important;">
-									<p:commandButton styleClass="blue ui-button-text" type="submit"
+									style="text-align: left !important;width: 40px !important;">
+									<p:commandButton id="btnDesmarcar"
+										styleClass="blue ui-button-text" type="submit"
 										update="table1 table1:totalRegistros form:table1:count"
 										action="#{aprobSolicTipRetiro.desmarcarTodos}"
 										onclick="PF('listSolicitudes').unselectAllRows()"
-										value="#{msg.aprob_boton_desmarcar}" ajax="true"
+										value="DESMARCAR TODOS"
+										disabled="#{aprobSolicTipRetiro.disabled}" ajax="true"
 										global="false" />
 								</p:column>
 								<p:column
 									style="text-align: left !important;width: 65px !important;">
-									<p:commandButton styleClass="blue ui-button-text"
+									<p:commandButton id="btnAprobar"
+										styleClass="blue ui-button-text"
 										action="#{aprobSolicTipRetiro.aprobarSolicitud}" type="submit"
 										onclick="PF('listSolicitudes').clearFilters()"
-										update="table1 totalRegistros form:result form:table1:count"
-										value="#{msg.aprob_boton_aprobar}" ajax="true" global="true" />
+										update="form:result form:table1:count form:table1:btnMarcar form:table1:btnDesmarcar form:table1:btnAprobar"
+										value="APROBAR SELECCIONADOS"
+										disabled="#{aprobSolicTipRetiro.disabled2}" ajax="true"
+										global="true" />
 								</p:column>
 								<p:column
 									style="text-align: right !important;width: 100px !important;">
@@ -143,7 +151,7 @@
 											value="#{msg.aprob_label_totalRegistros}"
 											style="font-size:12px" />
 										<h:outputText id="totalRegistros"
-											value="#{aprobSolicTipRetiro.count}" style="font-size:12px" />
+											value="#{aprobSolicTipRetiro.count}" />
 									</p:outputPanel>
 								</p:column>
 							</p:row>

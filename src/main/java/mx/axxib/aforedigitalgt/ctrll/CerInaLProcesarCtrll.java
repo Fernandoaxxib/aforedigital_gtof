@@ -27,7 +27,6 @@ import mx.axxib.aforedigitalgt.util.DateUtil;
 public class CerInaLProcesarCtrll extends ControllerBase {
 	@Autowired
 	private CerInaLPServ service;
-
 	
 	@Getter
 	@Setter
@@ -38,6 +37,9 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String archivo;
+	@Getter
+	@Setter
+	private String archivo2;
 	@Getter
 	@Setter
 	private String ruta;
@@ -54,47 +56,40 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 	private List<LoteOut> listLotes;
 	
 	@Getter
-	@Setter
-	private String display;
-
-	@Getter
-	@Setter
-	private String display2;
-	
-	@Getter
-	@Setter
-	private String display3;
-	
-	@Getter
 	private String border;
+	
+	@Getter
+	private Date fecActual;
 	
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 	
 	public void radioSelected() {
+		UIInput fec = (UIInput) findComponent("fCapturada3");
+		UIInput arc2 = (UIInput) findComponent("idArchivo2");
+		fec.setValid(true);			
+		arc2.setValid(true);
 		
-		if(radioSelected.equals("1")) {
-			display="none";
-			display2="none";
+		if(radioSelected.equals("1")) {			
 			lote=null;
+			archivo2=null;
+			border="";									
 		}
 		if(radioSelected.equals("2")) {
-			fecha=null;
-			display="inline";
-			display2="inline";
-			
+			fecha=null;			
+			archivo = "PRTFT.DP.A01530.CINACTIV.GDG";	
+			archivo2=null;			
 		}
 		if(radioSelected.equals("3")) {
 			fecha=null;
 			lote=null;
-			display="none";
-			display2="inline";
-			
+			border="";
 		}
 		
 	}
@@ -121,8 +116,11 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 		
 		if(isFormValid(pr)) {			
 			try {	
-				pr.setDescProceso(radioSelected.equals("1")?"Generación de lote":(radioSelected.equals("2")?"Generación de archivo con Layout para ProceSAR":"Cargar de archivo con respuesta de ProceSAR"));
-				ProcesResult result=	service.generarLayout(fecha, lote,Integer.valueOf(radioSelected),  ruta, archivo);		    
+				if(radioSelected.equals("3")) {
+					archivo=archivo2;
+				}
+				pr.setDescProceso(radioSelected.equals("1")?"Generación de lote":(radioSelected.equals("2")?"Generación de archivo con Layout para ProceSAR":"Carga de archivo con respuesta de ProceSAR"));					
+				ProcesResult result=	service.generarLayout(fecha, lote,Integer.valueOf(radioSelected),  ruta, archivo);	
 				if (result.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -175,7 +173,16 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 			}else {
 				border="";
 			}
-		}		
+		}	
+		if(radioSelected.equals("3")) {
+			if(archivo2==null || archivo2.isEmpty()) {	
+				UIInput radio = (UIInput) findComponent("idArchivo2");
+				radio.setValid(false);
+				pr.setDescProceso("Debe introducir nombre del archivo");
+				pr.setStatus("Información requerida");					
+				return false;
+			}
+		}
 		
 	  }else {
 		    UIInput radio = (UIInput) findComponent("radioSelect");
@@ -188,21 +195,15 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 	}
 
 	public void reset() {
-		fecha=null;
-		
-		radioSelected=null;
-		
-		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";		           
+		fecha=null;		
+		radioSelected=null;		
+		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";	
+		archivo2=null;
 		ruta = "/RESPALDOS/operaciones/pruebas";
-		display="none";
-		display2="none";
-		display3="none";
-		
-	
 		lote=null;
 		Lote1=null;
 		selectedLote=null;
 		listLotes=null;
-	}
-	
+		border="";
+	}	
 }

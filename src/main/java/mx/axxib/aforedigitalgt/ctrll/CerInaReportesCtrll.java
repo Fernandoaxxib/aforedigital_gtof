@@ -44,12 +44,16 @@ public class CerInaReportesCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String disabled;
+	
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 
