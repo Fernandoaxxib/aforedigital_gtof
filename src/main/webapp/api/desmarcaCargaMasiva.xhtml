@@ -74,7 +74,7 @@
 						</p:panelGrid>
 						<div class="ui-g">
 							<div class="ui-g-12" style="text-align: right; width: 95%">
-								<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update=":form:pnlResult result" ajax="true"/>
+								<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="result" ajax="true"/>
 							</div>
 						</div>
 					</p:panel>
@@ -105,7 +105,7 @@
 						
 						<div class="ui-g">
 							<div class="ui-g-12" style="text-align: center; width: 95%">
-								<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update=":form:pnlResult result" ajax="true"/>
+								<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update="result" ajax="true"/>
 							</div>
 						</div>
 					</p:panel>
