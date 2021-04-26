@@ -46,45 +46,50 @@
 			
 			<h:form id="form">
 
-			<p:panel id="pnlResult" header="Desmarca Masiva de Cuentas" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
+			<p:panel id="pnlResult" header="CARGA MASIVA NSS-CURP-DESMARCA MASIVA PROCESOS" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
 			<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
 				
-					<p:panel header="#{msg.carga_masiva_text_titulo}"
-						style="width:98%">
+					<p:panel header="CARGA NSS-CURP"  style="width:98%">
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:78px">
+								<p:column  style="text-align: left !important;width: 120px !important;">
 									<p:outputLabel value="Ruta:"/>
 								</p:column>
-								<p:column class="outputlabel-shadow" style="width:310px;padding-left: 10px !important;">
+								<p:column class="outputlabel-shadow" style="width:312px;padding-left: 10px !important;">
 									<p:outputLabel value="#{desmarcaCargaMasiva.rutaCarga}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:78px">
+								<p:column  style="text-align: left !important;width: 120px !important;">
 									<p:outputLabel value="Archivo:"/>
 								</p:column>
-								<p:column style="width:310px;padding-left: 0px !important;">
-									<p:inputText id="nombreCarga" value="#{desmarcaCargaMasiva.nombreArchivoCarga}" />
+								<p:column style="text-Align:left;font-size:15px;width:308px">
+									<p:inputText id="nombreCarga" value="#{desmarcaCargaMasiva.nombreArchivoCarga}"  style="text-Align:left;font-size:15px;width:308px"/>
+								</p:column>
+							</p:row>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							</p:panelGrid>
+							<p:row>
+								<p:column style="text-align: left !important;width: 120px !important;">
+<!-- 									<div class="ui-g"> -->
+<!-- 									<div class="ui-g-12" > -->
+									<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="result  nombreCarga" ajax="true"/>
+<!-- 									</div> -->
+<!-- 									</div> -->
 								</p:column>
 							</p:row>
 						</p:panelGrid>
-						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: right; width: 95%">
-								<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="result" ajax="true"/>
-							</div>
-						</div>
+						
 					</p:panel>
 					
 					
-					<p:panel header="Reversa Carga Nss"
-						style="width:98%">
+					<p:panel header="REVERSA CARGA NSS-CURP"  style="width:98%">
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:78px">
+								<p:column >
 									
 								</p:column>
 								<p:column  >
@@ -92,22 +97,65 @@
 								</p:column>
 							</p:row>
 						</p:panelGrid>
-						<p:panelGrid  style="margin-top:10px">
+						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:78px">
-									
+								<p:column >
 								</p:column>
-								<p:column style="width:310px;padding-left: 0px !important;">
+								<p:column >
 									
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 						
-						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: center; width: 95%">
-								<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update="result" ajax="true"/>
-							</div>
-						</div>
+						<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column >
+									
+								</p:column>
+								<p:column  >
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column >
+									
+								</p:column>
+								<p:column >
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<div class="ui-g">
+									<div class="ui-g-12" style="text-align: center; width: 95%">
+									<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update="result" ajax="true"/>
+									</div>
+								</div>
+						</p:row>
+						</p:panelGrid>
+						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column >
+									
+								</p:column>
+								<p:column >
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						
+						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column >
+								</p:column>
+								<p:column >
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
 					</p:panel>
 					
 					

@@ -44,77 +44,102 @@
 			
 			<h:form id="form">
 
-			<p:panel id="pnlResult" header="Desmarca Masiva de Cuentas" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
-			
-			<div class="ui-g">
+			<p:panel id="pnlResult" header="CONSULTA MARCAS POR PROCESO OPERATIVO" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
 			
-					<div class="ui-g-6">
-						<p:panel header="Por Proceso Operativo">
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Clave Proceso:" />
-								</div>
-								<div class="ui-g-9">
-									<p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
-										requiredMessage="Tipo Proceso es requerido"
-										value="#{desmarcaConsultaMarcas.selectedTipoClave}">
-										<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}"/>
-									</p:selectOneMenu>
-								</div>
-							</div>
-							
-							
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-9">
-									
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text"  value="Consultar Marcas" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="result" ajax="true"/>
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-							</div>
-						</p:panel>
-					</div>
-					
+			<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
+			
+				<p:panel  header="POR PROCESO OPERATIVO" style="width:98%">
 				
-					<div class="ui-g-6">
-						<p:panel header="Por Nss y/o Curp">
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="Ruta:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{desmarcaConsultaMarcas.rutaCarga}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Archivo:" />
-								</div>
-								<div class="ui-g-9">
-									<p:inputText  id="nombreCarga" value="#{desmarcaConsultaMarcas.nombreArchivoCarga}" required="false"/>
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" value="Consultar Marcas" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="result" ajax="true"/>
-								</div>
-							</div>
-						</p:panel>
-					</div>
-					
-					
-					
-			</div>
+							<p:panelGrid class="ui-noborder" style="margin-top:20px">
+							
+							
+							</p:panelGrid>		
+				
+							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							
+									<p:row>
+									
+										   <p:column style="text-align: left !important;width: 120px !important;">
+											
+											<p:outputLabel value="Clave Proceso:" />
+											
+											</p:column>						 
+											
+											<p:column style="text-align: left !important;width: 150px !important;">			 
+											    <p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
+												requiredMessage="Tipo Proceso es requerido"
+												value="#{desmarcaConsultaMarcas.selectedTipoClave}">
+												<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}" style="text-Align:left;font-size:15px;width:210px"/>
+												</p:selectOneMenu>
+											</p:column>
+									
+									
+									</p:row>
+							
+							</p:panelGrid>
+							
+							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							
+									<p:row>
+									
+										   <p:column style="text-align: left !important;width: 300px !important;">
+											<p:commandButton styleClass="blue ui-button-text"  value="Consultar Marcas" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="result" ajax="true"/>
+											</p:column>				 
+									
+									</p:row>
+							
+							</p:panelGrid>
+							<p:panelGrid class="ui-noborder" style="margin-top:18px">
+							
+							
+							</p:panelGrid>	
+				
+				</p:panel>
+				
+				<p:panel  header="POR NSS Y/O CURP" style="width:98%">
+				
+							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							
+									<p:row>
+									
+										   <p:column  style="text-align: left !important;width: 120px !important;">
+											<p:outputLabel value="Ruta:"/>
+											</p:column>
+											<p:column class="outputlabel-shadow" style="width:312px;padding-left: 10px !important;">
+											<p:outputLabel value="#{desmarcaConsultaMarcas.rutaCarga}" />
+											</p:column>
+									
+									
+									</p:row>
+							
+							</p:panelGrid>
+							
+							
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									<p:outputLabel value="Archivo:"/>
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:308px">
+									<p:inputText id="nombreCarga" value="#{desmarcaConsultaMarcas.nombreArchivoCarga}"  style="text-Align:left;font-size:15px;width:308px"/>
+								</p:column>
+							</p:row>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							</p:panelGrid>
+							<p:row>
+								<p:column style="text-align: right !important;width: 120px !important;">
+
+									<p:commandButton styleClass="blue ui-button-text" value="Consultar Marcas" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="result nombreCarga" ajax="true"/>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+							
+				</p:panel>
+			
+			</p:panelGrid>
+			
+
 			
 			<ui:include src="processResult.xhtml">
 				<ui:param name="base" value="#{desmarcaConsultaMarcas}" />
