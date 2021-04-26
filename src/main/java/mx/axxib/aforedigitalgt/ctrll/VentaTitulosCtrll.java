@@ -206,6 +206,14 @@ public class VentaTitulosCtrll extends ControllerBase {
 	}
 
 	public void changeOpcion() {
+		UIInput cr = (UIInput) findComponent("comboRetiros");
+		UIInput cd = (UIInput) findComponent("comboDev");
+		UIInput ct = (UIInput) findComponent("comboTraspasos");
+		UIInput il = (UIInput) findComponent("inputLote");
+		cr.setValid(true);
+		cd.setValid(true);
+		ct.setValid(true);
+		il.setValid(true);
 		switch (opcion) {
 		case "T":
 			disRetiros = true;
