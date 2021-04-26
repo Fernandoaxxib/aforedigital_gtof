@@ -205,6 +205,7 @@ div[id$="mod_panel"] .menu.ui-state-default, .menu.ui-selectonemenu .ui-selecton
 }
 
 div[id$="mod_panel"] .ui-selectonemenu-item{
+	padding: 5px 5px !important;
 	font-weight: bold !important;
 }
 
@@ -229,7 +230,7 @@ div[id$="mod_panel"] .ui-selectonemenu-item{
 }
 
 div[id$="sub_panel"] .ui-selectonemenu-items-wrapper .ui-widget {
-	padding: 6px 5px !important;
+	padding: 9px 5px !important;
 	font-size: 12px !important;
 	font-weight: bold !important;
 	color: #00529b !important;

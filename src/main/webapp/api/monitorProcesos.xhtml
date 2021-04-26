@@ -18,46 +18,78 @@
 		<ui:include src="menu.xhtml" />
 
 		<p:panel id="modulo" header="DETALLE DEL PROCESO"
-			style="margin-top:20px">
+			style="margin-top:18px">
 
 			<h:form id="form2">
 
-				<p:panelGrid id="monitorDetalle" columns="2">
-					<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
-						style="font-weight: normal" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.descProceso}" />
-
-					<h:outputText value="#{msg.monitor_detalle_columna_avanceProceso}"
-						style="font-weight: normal" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
-
-					<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
-						style="font-weight: normal" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
-						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
-
-					<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
-						style="font-weight: normal" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
-						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
-
-					<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
-						style="font-weight: normal" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
-						<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
-					</h:outputText>
-
-					<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
-						style="font-weight: normal" />
-					<h:outputText
-						value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
+				<p:panelGrid id="monitorDetalle" styleClass="ui-noborder">
+					<p:row>
+						<p:column style="width:80px;">
+							<h:outputText value="#{msg.monitor_detalle_columna_descripcion}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{monitorProcesos.selectedMonitor.descProceso}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText
+								value="#{msg.monitor_detalle_columna_avanceProceso}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{monitorProcesos.selectedMonitor.avanceProceso}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{msg.monitor_detalle_columna_fechaInicio}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{monitorProcesos.selectedMonitor.fechahoraInicio}">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{msg.monitor_detalle_columna_fechaAvance}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{monitorProcesos.selectedMonitor.fechahoraAvance}">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{msg.monitor_detalle_columna_fechaFinal}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{monitorProcesos.selectedMonitor.fechahoraFinal}">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{msg.monitor_detalle_columna_incluidoPor}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{monitorProcesos.selectedMonitor.incluidoPor}" />
+						</p:column>
+					</p:row>
 				</p:panelGrid>
 
 			</h:form>
@@ -69,16 +101,19 @@
 		<h:outputStylesheet name="estilo-base.css" library="css" />
 
 		<h:form id="form">
-			<p:commandButton class="blue"
-				actionListener="#{monitorProcesos.actualizar}"
-				update="monitor jobs result form2:monitorDetalle"
-				style="margin-top:20px" value="Actualizar todo" />
+
 
 			<p:panel id="monitor" header="MONITOR DE PROCESOS"
 				style="margin-top:20px">
+
+				<p:commandButton class="blue"
+					actionListener="#{monitorProcesos.actualizar}"
+					update="monitorTable jobs result form2:monitorDetalle"
+					style="margin-top:20px" value="Actualizar todo" />
+
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
-					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{monitorProcesos.monitor}" rows="10"
+					style="margin-top:20px" emptyMessage="#{msg.aprob_msj_sinDatos}"
+					value="#{monitorProcesos.monitor}" rows="5"
 					selection="#{monitorProcesos.selectedMonitor}"
 					rowKey="#{mon.sesionId}" paginator="true"
 					rowsPerPageTemplate="5,10,15">
@@ -117,30 +152,27 @@
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
-			</p:panel>
+
+				<p:panel id="jobs" header="Jobs" style="margin-top:20px">
+					<p:dataTable id="jobTable" var="job" paginatorPosition="bottom"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"
+						value="#{monitorProcesos.jobs}" rows="5"
+						selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
+						paginator="true" rowsPerPageTemplate="5,10,15">
 
 
+						<p:column selectionMode="single"
+							style="width:20px;text-align:center" />
 
-			<p:panel id="jobs" header="Jobs" style="margin-top:20px">
-				<p:dataTable id="jobTable" var="job" paginatorPosition="bottom"
-					emptyMessage="#{msg.aprob_msj_sinDatos}"
-					value="#{monitorProcesos.jobs}" rows="10"
-					selection="#{monitorProcesos.selectedJob}" rowKey="#{job.job}"
-					paginator="true" rowsPerPageTemplate="5,10,15">
+						<p:column headerText="#{msg.monitor_job_columna_job}">
+							<h:outputText value="#{job.job}" />
+						</p:column>
 
+						<p:column headerText="#{msg.monitor_job_columna_what}" width="80%">
+							<h:outputText value="#{job.what}" />
+						</p:column>
 
-					<p:column selectionMode="single"
-						style="width:20px;text-align:center" />
-
-					<p:column headerText="#{msg.monitor_job_columna_job}">
-						<h:outputText value="#{job.job}" />
-					</p:column>
-
-					<p:column headerText="#{msg.monitor_job_columna_what}" width="80%">
-						<h:outputText value="#{job.what}" />
-					</p:column>
-
-					<!--
+						<!--
 				<p:column headerText="#{msg.monitor_job_columna_nextDate}">
 					<h:outputText value="#{job.nextDate}" />
 				</p:column>
@@ -149,16 +181,21 @@
 					<h:outputText value="#{job.totalTime}" />
 				</p:column>
 				-->
-				</p:dataTable>
+					</p:dataTable>
 
-				<p:commandButton class="blue"
-					actionListener="#{monitorProcesos.ejecutar}" update="result"
-					value="Ejecutar" style="margin-top:20px" />
+					<p:commandButton class="blue"
+						actionListener="#{monitorProcesos.ejecutar}" update="result"
+						value="Ejecutar" style="margin-top:20px" />
+				</p:panel>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{monitorProcesos}" />
+				</ui:include>
 			</p:panel>
 
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{monitorProcesos}" />
-			</ui:include>
+
+
+
 
 		</h:form>
 
