@@ -96,6 +96,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 	public void cargaFechas() {
 	try {
 		 ordenPagoFechasOut=ordenPagoServ.cargaFechas();
+		 System.out.println("VALOR DE FECHAS: "+ordenPagoFechasOut);
 	}catch (Exception e) {
 		GenericException(e);
 	}	

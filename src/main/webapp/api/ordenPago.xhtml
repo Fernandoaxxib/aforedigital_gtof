@@ -53,7 +53,7 @@
 									
 									<p:column style="text-align: left !important;width: 150px !important;">			 
 									    <p:inputText id="fechaInicio" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaInicio}" style="text-Align:right;font-size:15px;width:120px">
-										<f:convertDateTime pattern = "dd/mm/yyyy" />
+										<f:convertDateTime pattern = "dd/MM/yyyy" />
 						        		 </p:inputText>
 									 </p:column>
 							 </p:row>
@@ -66,7 +66,7 @@
 									</p:column>
 									<p:column style="text-align: left !important;width: 150px !important;">	 
 									      <p:inputText id="fechaUltimo" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaFin}" style="text-Align:right;font-size:15px;width:120px">
-										  <f:convertDateTime pattern = "dd/mm/yyyy" />
+										  <f:convertDateTime pattern = "dd/MM/yyyy" />
 						        		  </p:inputText>
 											
 									</p:column>
@@ -98,7 +98,7 @@
 								   <p:column style="text-align: left !important;width: 120px !important;">
 									
 									<p:commandButton class="blue" action="#{ordenPago.botonGenerarReporte}"  update="form:listSelect  form:result form:nombre " 
-									 value="#{msg.orden_pago_boton_genera_reporte}" ajax="true" />
+									 value="Generar Reporte" ajax="true" />
 									
 									</p:column>						 
 									
