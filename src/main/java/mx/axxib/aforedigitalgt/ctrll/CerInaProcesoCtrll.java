@@ -30,16 +30,25 @@ public class CerInaProcesoCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Date fecha;
+	
+	@Getter
+	private Date fecActual;
+	
+	@Getter
+	private String disabled;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
+			disabled="true";
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 	public void radioSelected() {
 		fecha = null;
+		disabled="false";
 	}
 	public void reset() {
 		fecha = null;		

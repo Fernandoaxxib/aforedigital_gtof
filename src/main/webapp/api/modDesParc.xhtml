@@ -113,7 +113,7 @@
 
 
 		<h:form id="form">          
-			<p:panel id="pnlResult" header="#{msg.modulo_desempleoParc_titulo1}" style="margin-bottom:20px; margin-top:18px">
+			<p:panel id="pnlResult" header="Proceso masivo (primer pago)" style="margin-bottom:20px; margin-top:18px">
 				<p:panelGrid id="pnlSelection" class="no-border no-padding" style="margin-bottom:10px">
 					<p:row>
 						<p:column>
@@ -135,6 +135,8 @@
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									yearNavigator="true" monthNavigator="true"
 									inputStyle="width:120px; text-align:right;" 
+									disabled="#{modDesParcProceso.disabled}"
+									maxdate="#{modDesParcProceso.fecActual}"
 									readonlyInput="true">
 									<p:ajax event="dateSelect"
 										listener="#{modDesParcProceso.buscarRegXProcesar}"

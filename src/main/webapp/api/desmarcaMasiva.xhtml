@@ -44,131 +44,223 @@
 			
 			<h:form id="form">
 <!-- 			<p:growl id="message" /> -->
-			<p:panel id="pnlResult" header="Desmarca Masiva de Cuentas" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
+			<p:panel id="pnlResult" header="DESMARCA MASIVA PROCESOS" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
 			
-			<div class="ui-g">
-				
-					<div class="ui-g-6">
-						<p:panel header="#{msg.carga_masiva_text_titulo}">
+					<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
 						
-								<div class="ui-g" style="text-align: center;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta" action="#{desmarcaMasiva.desmarcaMasivaCuenta}" update=":form:pnlResult result" ajax="true"/>
-								</div>
-								</div>
-							<div class="ui-g" style="margin-top: 10px;">
+						
+						<p:panel  header="DESMARCA MASIVA CUENTAS" style="width:98%">
 							
+							<p:panelGrid class="ui-noborder" style="margin-top:5px">
+							
+							
+							</p:panelGrid>	
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							
+							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+							
+								   <p:column style="text-align: left !important;width: 120px !important;">
+									
 								
-								
-								<div class="ui-g-3">
+									</p:column>						 
+									
+									<p:column style="text-align: left !important;width: 150px !important;">			 
+									   
+									</p:column>
+							
+							
+							</p:row>
+							
+							</p:panelGrid>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">	
+														
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column style="text-align: center !important;width: 450px !important;">
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta" action="#{desmarcaMasiva.desmarcaMasivaCuenta}" update="result" ajax="true"/>
+								</p:column>
+							</p:row>
+							</p:panelGrid>
+							
+							
+							
+							</p:panelGrid>
+							
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							
+						<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+						
+						<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							
+							</p:panelGrid>		
+							
+						
+						</p:panel>
+						
+						
+						
+						<p:panel header="DESMARCA INDIVIDUAL CUENTA" style="width:98%">
+							
+							
+							
+							
+						
+							
+							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+							
+								   <p:column style="text-align: left !important;width: 120px !important;">
+									
 									<p:outputLabel value="Clave Proceso:" />
-								</div>
-								<div class="ui-g-9">
-									<p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
+									
+									</p:column>						 
+									
+									<p:column style="text-align: left !important;width: 150px !important;">			 
+									    <p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
 										requiredMessage="Tipo Proceso es requerido"
 										value="#{desmarcaMasiva.selectedTipoClave}">
-										<f:selectItems value="#{desmarcaMasiva.listaTipoProceso}"/>
-									</p:selectOneMenu>
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Nss:" />
-								</div>
-								<div class="ui-g-9">
-									<p:inputText id="nss" value="#{desmarcaMasiva.desmarcaNSS}" required="false"/>
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
+										<f:selectItems value="#{desmarcaMasiva.listaTipoProceso}" style="text-Align:left;font-size:15px;width:210px"/>
+										</p:selectOneMenu>
+									</p:column>
+							
+							
+							</p:row>
+							
+							</p:panelGrid>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
+									<p:outputLabel value="Nss:"/>
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									<p:inputText id="nss" value="#{desmarcaMasiva.desmarcaNSS}"  style="text-Align:left;font-size:15px;width:213px"/>
+								</p:column>
+							</p:row>
+							</p:panelGrid>	
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">	
+														
+							<p:row>
+								<p:column  style="text-align: left !important;width: 120px !important;">
 									<p:outputLabel value="Curp:" />
-								</div>
-								<div class="ui-g-9">
-									<p:inputText id="curp" value="#{desmarcaMasiva.desmarcaCURP}" required="false"/>
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" value="Cargar" action="#{desmarcaMasiva.desmarcaIndividualCuenta}" update=":form:pnlResult result" ajax="true"/>
-								</div>
-							</div>
-						</p:panel>
-					</div>
-					
-					<div class="ui-g-6">
-						<p:panel header="Reversa Carga Nss">
-							<div class="ui-g">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-3">
-									
-								</div>
-							</div>
-							<div class="ui-g">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-3">
-									
-								</div>
-							</div>
+								</p:column>
+								<p:column style="text-Align:left;font-size:15px;width:150px">
+									<p:inputText id="curp" value="#{desmarcaMasiva.desmarcaCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
+								</p:column>
+							</p:row>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column style="text-align: left !important;width: 450px !important;">
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.desmarcaIndividualCuenta}"  update="nss,curp result" ajax="true"/>
+								</p:column>
+							</p:row>
+							</p:panelGrid>
 							
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-9">
-									
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-								
-							</div>
-							<div class="ui-g" style="text-align: center;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.reversaDesmarcaMasiva}" update=":form:pnlResult result" ajax="true"/>
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									
-								</div>
-								<div class="ui-g-9">
-									
-								</div>
-							</div>
 							
-							<div class="ui-g" style="margin-top: 10px;">
-								
-								
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-								
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								
-							</div>
+							
+							</p:panelGrid>
+							
+							
+							
+							
 						</p:panel>
-					</div>
-					
-			</div>
-			<ui:include src="processResult.xhtml">
+						
+					</p:panelGrid>
+				
+				<ui:include src="processResult.xhtml">
 				<ui:param name="base" value="#{desmarcaMasiva}" />
-			</ui:include>
-			</p:panel>
+				</ui:include>
 			
+			</p:panel>
+
 			
 			
 			</h:form>

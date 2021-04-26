@@ -81,6 +81,8 @@
 					<p:datePicker id="fCapturada" value="#{cerInaProceso.fecha}"
 						locale="es" showIcon="true" pattern="dd-MM-yyyy"
 						yearNavigator="true" monthNavigator="true"
+						maxdate="#{cerInaProceso.fecActual}"
+						disabled="#{cerInaProceso.disabled}"
 						inputStyle="width:120px; text-align:right;" readonlyInput="true" />
 
 					<p:commandButton id="fnEjecutar" styleClass="blue" type="submit"

@@ -329,14 +329,12 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			resultados.add(pr);
 			return false;
 		} else {
-			if (!ValidateUtil.isValidFileName(nombreArchivo)) {
-				UIInput radio = (UIInput) findComponent("nombreArchivo");
-				radio.setValid(false);
-				pr.setStatus("Nombre de archivo no válido");
-				pr.setFechaFinal(DateUtil.getNowDate());
-				resultados.add(pr);
-				return false;
-			}
+			/*
+			 * if (!ValidateUtil.isValidFileName(nombreArchivo)) { UIInput radio = (UIInput)
+			 * findComponent("nombreArchivo"); radio.setValid(false);
+			 * pr.setStatus("Nombre de archivo no válido");
+			 * pr.setFechaFinal(DateUtil.getNowDate()); resultados.add(pr); return false; }
+			 */
 		}
 
 		return true;

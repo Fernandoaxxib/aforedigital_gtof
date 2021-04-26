@@ -95,13 +95,13 @@
 
 					<p:column headerText="Títulos" width="90">
 						<h:outputText value="#{saldo.cuotas}" style="float:left;">
-							<f:convertNumber pattern="#0.00" />
+							<f:convertNumber pattern="#0.000000" />
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Pesos" width="90">
 						<h:outputText value="#{saldo.saldos}" style="float:left;">
-							<f:convertNumber pattern="#0.00" />
+							<f:convertNumber pattern="#0.000000" />
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
@@ -109,8 +109,8 @@
 		</p:dialog>
 
 		<h:form id="form">
-			<p:panel header="Saldos Actuales del Cliente"
-				style="height:90% !important;margin-top:20px">
+			<p:panel header="Saldos actuales del cliente"
+				style="margin-top:20px">
 				<p:panelGrid styleClass="ui-noborder" style="margin-top:20px">
 					<p:row>
 						<p:column>

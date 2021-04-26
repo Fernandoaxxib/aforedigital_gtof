@@ -41,12 +41,18 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 	@Setter
 	private String radioSelected;
 
+	@Getter
+	private String disabled;
+	
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 
@@ -54,6 +60,7 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 		fecha=null;
 		ruta=null;
 		archivo=null;
+		disabled="false";
 	}
 
 	public void procesarReporte() {				
@@ -81,7 +88,11 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 								
 				EjecucionResult result = service.procesarReporte(Integer.valueOf(radioSelected), fecha,ruta,archivo);
 				if (result.getOn_Estatus() == 1) {
+					if(radioSelected.equals("4")) {
+						pr.setStatus("Reporte en implementación");
+					}else {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				    }
 				} else {
 					if (result.getOn_Estatus() == 2) {
 						GenerarErrorNegocio(result.getOcMensaje());
@@ -107,6 +118,7 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 		archivo = null;
 		ruta = null;
 		proceso = null;
+		disabled="true";
 	}
 
 	public void opcionSeleccionada() {

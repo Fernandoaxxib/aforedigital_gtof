@@ -82,6 +82,8 @@
 						<p:datePicker id="fCapturada2" value="#{modDesParcReportes.fecha}"
 							locale="es" showIcon="true" pattern="dd-MM-yyyy"
 							yearNavigator="true" monthNavigator="true"
+							disabled="#{modDesParcReportes.disabled}"
+							maxdate="#{modDesParcReportes.fecActual}"
 							inputStyle="width:120px; text-align:right;" readonlyInput="true">
 
 							<p:ajax event="dateSelect"

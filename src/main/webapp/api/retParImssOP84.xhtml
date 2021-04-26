@@ -76,8 +76,8 @@
 		</p:dialog>
 
 		<h:form id="form">
-			<p:panel header="RETIROS PARCIALES IMSS OP84" style="margin-top:18px">
-				<p:panel header="#{msg.retPar_imss_op84_titulo2}">
+			<p:panel header="Retiros Parciales IMSS OP84" style="margin-top:18px">
+				<p:panel header="Carga de archivo">
 					<p:panelGrid class="ui-noborder">
 						<p:row>
 							<p:column style="width:78px">
@@ -107,7 +107,7 @@
 						</p:row>
 					</p:panelGrid>
 				</p:panel>
-				<p:panel header="RESULTADOS DE LA CONSULTA" style="margin-top:10px">
+				<p:panel header="Resultados de la consulta" style="margin-top:10px">
 					<p:panel id="pnl2" style="border:0px !important">
 						<p:panelGrid class="no-border no-padding">
 							<p:row>
@@ -172,11 +172,7 @@
 										disabled="#{retParImssOP84.disabled4}"
 										update="dlg1 dfini dffin" oncomplete="PF('dlg2').show();" />
 								</p:column>
-							</p:row>
-						</p:panelGrid>
-						<p:panelGrid class="no-border no-padding">
-							<p:row>
-								<p:column style="padding-left:379px !important">
+								<p:column style="padding-left:30px !important">
 									<p:commandButton styleClass="blue ui-button-text" type="submit"
 										value="#{msg.retPar_imss_op84_btnConsultar}"
 										action="#{retParImssOP84.consultarOP84}"
@@ -184,7 +180,7 @@
 										ajax="true" />
 								</p:column>
 							</p:row>
-						</p:panelGrid>
+						</p:panelGrid>						
 					</p:panel>
 
 					<p:dataTable id="table1" var="mon"
@@ -209,7 +205,7 @@
 						</p:column>
 					</p:dataTable>
 				</p:panel>	
-				<p:panel header="GENERACIÓN DE REPORTE" style="margin-top:10px">
+				<p:panel header="Generación de reporte" style="margin-top:10px">
 					<p:panelGrid class="ui-noborder">
 						<p:row>
 							<p:column style="width:78px">

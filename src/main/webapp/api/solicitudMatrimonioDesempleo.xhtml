@@ -206,34 +206,67 @@
 						<p:dataTable var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}"
 						emptyMessage="#{verDatosCheque.mensajeTablaFopagos}"  >
 									
-									<p:column headerText="Beneficiario" style="width:50px;text-align: left;">
-										<h:outputText value="#{verSolicitud.PBenef_Re}"/>
+									<p:column headerText="Beneficiario" style="width:100px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PBenef_Re}" style="float:left"/>
 									</p:column>
-									<p:column headerText="Porc." style="width:50px;text-align: center;">
-										<h:outputText value="#{verSolicitud.PPorcent_Re}" />
+									<p:column headerText="Porc." style="width:40px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PPorcent_Re}" style="float:right">
+										<f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
+										</h:outputText>
 									</p:column>
-									<p:column headerText="Estatus" style="width:50px;text-align: center;">
-										<h:outputText value="#{verSolicitud.PEstatus_Re}"/>
+									<p:column headerText="Estatus" style="width:40px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PEstatus_Re}" style="float:left"/>
 									</p:column>
-									<p:column headerText="Plaza" style="width:50px;text-align: center;">
-										<h:outputText value="#{verSolicitud.PPlaza_Re}"/>
+									<p:column headerText="Plaza" style="width:55px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PPlaza_Re}" style="float:left"/>
 									</p:column>
-									<p:column headerText="Monto Retiro." style="width:50px;text-align: right;">
-										<h:outputText value="#{verSolicitud.PMonBruto_Re}" />
+									<p:column headerText="Monto Retiro." style="width:40px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PMonBruto_Re}" style="float:right">
+										<f:convertNumber type="currency" currencySymbol="$"
+									maxFractionDigits="2" />
+									</h:outputText>
 									</p:column>
-									<p:column headerText="Monto Isr" style="width:50px;text-align: right;">
-										<h:outputText value="#{verSolicitud.PMontoIsr_Re}"/>
+									<p:column headerText="Monto Isr" style="width:40px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PMontoIsr_Re}" style="float:right">
+										<f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
+							</h:outputText>
 									</p:column>
-									<p:column headerText="Neto" style="width:50px;text-align: right;">
-										<h:outputText value="#{verSolicitud.PMontoNeto_Re}" />
+									<p:column headerText="Neto" style="width:40px;text-align: center;">
+										<h:outputText value="#{verSolicitud.PMontoNeto_Re}" style="float:right">
+										<f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
+										</h:outputText>
 									</p:column>
 									
-									<p:columnGroup style="width:50px;text-align: center;" type="footer">
+									<p:columnGroup style="width:40px;text-align: center;" type="footer">
 						                <p:row>
 						                    <p:column colspan="4" style="text-align:right" footerText="Totales:"/>
-						                    <p:column style="text-align:right" footerText="$#{solicitudMatrimonioDesempleo.totalMontoRetiro}"/>
-						                    <p:column style="text-align:right" footerText="$#{solicitudMatrimonioDesempleo.totalMontoIsr}"/>
-						                    <p:column style="text-align:right" footerText="$#{solicitudMatrimonioDesempleo.totalNeto}"/>
+						                   
+						                     	<p:column style="text-align: right">
+											         <f:facet name="footer">
+											             <h:outputText value="#{solicitudMatrimonioDesempleo.totalMontoRetiro}">
+											                <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
+											            </h:outputText>
+											         </f:facet>
+											    </p:column>
+						                    						                    
+						                   		<p:column style="text-align: right">
+											         <f:facet name="footer">
+											             <h:outputText value="#{solicitudMatrimonioDesempleo.totalMontoIsr}">
+											                <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
+											            </h:outputText>
+											         </f:facet>
+											    </p:column>
+						                    
+						                   
+						                    	<p:column style="text-align: right">
+											         <f:facet name="footer">
+											             <h:outputText value="#{solicitudMatrimonioDesempleo.totalNeto}">
+											                <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
+											            </h:outputText>
+											         </f:facet>
+											    </p:column>
+						                    
+						                    
 						                </p:row>
 						            </p:columnGroup>
 						

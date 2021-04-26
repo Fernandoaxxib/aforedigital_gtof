@@ -77,12 +77,11 @@
 			style="font-size:12px;margin-bottom:20px; margin-top:20px">
 			<h:form id="form">
 				<p:panelGrid class="ui-noborder" layout="grid" columns="2">
-					<p:panel header="#{msg.retPar_imss_op8586_titulo2}"
-						style="width:95%">
+					<p:panel header="Generación OP85" style="width:100%">
 
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width: 78px;padding-left: 0px !important">
+								<p:column style="width: 60px;padding-left: 0px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
 								</p:column>
 								<p:column class="outputlabel-shadow"
@@ -98,7 +97,7 @@
 								</p:column>
 								<p:column>
 									<p:inputText id="vArchivo1" value="#{retParImssOP8586.archivo}"
-										style="width:314px" />
+										style="width:325px" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
@@ -111,25 +110,26 @@
 							</div>
 						</div>
 					</p:panel>
-					<p:panel header="#{msg.retPar_imss_op8586_titulo3}">
+					<p:panel header="Carga respuesta OP86">
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width: 78px;padding-left: 0px !important">
+								<p:column style="width: 60px;padding-left: 0px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
 								</p:column>
-								<p:column class="outputlabel-shadow" style="height: 17px !important">
+								<p:column class="outputlabel-shadow"
+									style="height: 17px !important">
 									<p:outputLabel value="#{retParImssOP8586.ruta2}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:67px;padding-left: 0px !important">
+								<p:column style="width:50px;padding-left: 0px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
 								</p:column>
 								<p:column>
 									<p:inputText id="idArchivo2"
-										value="#{retParImssOP8586.archivo2}" style="width:290px" />
+										value="#{retParImssOP8586.archivo2}" style="width:303px" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
@@ -144,7 +144,7 @@
 					</p:panel>
 				</p:panelGrid>
 
-				<p:panel header="GENERAR REPORTE" style="margin-top:20px">
+				<p:panel header="Generar reporte" style="margin-top:20px">
 					<p:panelGrid class="ui-noborder">
 						<p:row>
 							<p:column style="width:100px">
@@ -201,43 +201,45 @@
 							<p:column>
 								<p:inputText id="vLote" value="#{retParImssOP8586.lote}"
 									placeholder="Seleccione lote"
-									style="text-align:right;width:342px"
-									disabled="true" />
+									style="text-align:right;width:342px" disabled="true" />
 
-								<p:commandButton id="btnC" styleClass="blue ui-button-text" style="width:35px"
-									value="..." disabled="#{retParImssOP8586.disabled4}"
+								<p:commandButton id="btnC" styleClass="blue ui-button-text"
+									style="width:35px" value="..."
+									disabled="#{retParImssOP8586.disabled4}"
 									action="#{retParImssOP8586.getLotes}"
 									update="dlg1  dfini dffin" oncomplete="PF('dlg2').show();" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 					<p:panelGrid class="ui-noborder" style="margin-top:20px">
-					   <p:row>
-					      <p:column style="width:110px">
-					          <p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
-					      </p:column>
-					      <p:column class="outputlabel-shadow" style="width:368px; height:17px !important">
-					          <p:outputLabel value="#{retParImssOP8586.ruta3}" />
-					      </p:column>
-					   </p:row>					  				    
+						<p:row>
+							<p:column style="width:110px">
+								<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
+							</p:column>
+							<p:column class="outputlabel-shadow"
+								style="width:368px; height:17px !important">
+								<p:outputLabel value="#{retParImssOP8586.ruta3}" />
+							</p:column>
+						</p:row>
 					</p:panelGrid>
-					<p:panelGrid class="ui-noborder" style="margin-top:10px">					  
-					   <p:row>
-					      <p:column style="width:100px">
-					         <p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
-					      </p:column>
-					      <p:column>
-					         <p:inputText id="idArchivo3" value="#{retParImssOP8586.archivo3}" style="width:382px" />
-					      </p:column>
-					   </p:row>					    
+					<p:panelGrid class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column style="width:100px">
+								<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
+							</p:column>
+							<p:column>
+								<p:inputText id="idArchivo3"
+									value="#{retParImssOP8586.archivo3}" style="width:382px" />
+							</p:column>
+							<p:column>
+								<p:commandButton styleClass="blue"
+									type="submit" value="Generar reporte"
+									action="#{retParImssOP8586.generarReporte}"
+									update="form:result form:vLote form:dfini form:dffin form:customRadio form:customRadio2 form:idArchivo3"
+									ajax="true" />
+							</p:column>
+						</p:row>
 					</p:panelGrid>
-					<p:outputPanel style="margin-top:10px">
-						<p:commandButton styleClass="blue" style="margin-left:385px"
-							type="submit" value="Generar reporte"
-							action="#{retParImssOP8586.generarReporte}"
-							update="form:result form:vLote form:dfini form:dffin form:customRadio form:customRadio2 form:idArchivo3"
-							ajax="true" />
-					</p:outputPanel>
 				</p:panel>
 				<p:panel style="border:0px !important">
 					<ui:include src="processResult.xhtml">

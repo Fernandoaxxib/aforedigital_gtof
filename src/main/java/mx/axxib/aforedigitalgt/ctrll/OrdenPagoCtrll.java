@@ -104,7 +104,10 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 	public void inicializarA() {
 		try {
-			
+			nombre=null;
+			boxDos=null;
+			seleccionarA=null;
+			tipoReporte=null;
 			tipoReporte=ordenPagoServ.inicializarA();
 		}catch (Exception e) {
 			GenericException(e);
@@ -189,7 +192,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 				tiposReportes=ordenPagoServ.creaTipoReporte(seleccionarA);
 				
 				nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
-				
+				System.out.println("NOMBRE ARCHIVO: "+nombre);
 				if (nombre != null) {
 					pr.setStatus("Ejecución con exito");
 				} else {
