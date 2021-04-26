@@ -1,36 +1,35 @@
-.etiqueta{
+.etiqueta {
 	font-size: 12px !important;
 	font-family: 'Montserrat', sans-serif !important;
 	font-weight: 600 !important;
 }
 
 .capitalized {
-    text-transform: uppercase;
+	text-transform: uppercase;
 }
 
 /* Buttons */
 .blue.ui-state-hover .ui-button-text {
-    background: #59ad40 !important;
+	background: #59ad40 !important;
 }
 
 .blue.ui-button .ui-button-text {
-    background: #00529b;
-    color: white;
-    font-size: 12px;
+	background: #00529b;
+	color: white;
+	font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
 	padding: 2px;
 	text-transform: capitalize;
 }
 
 .blue.ui-button .ui-button-hover {
-    background: #59ad40;
-
+	background: #59ad40;
 }
 
 .green.ui-button .ui-button-text {
-    background: #59ad40;
-    color: white;
-    font-size: 12px;
+	background: #59ad40;
+	color: white;
+	font-size: 12px;
 	font-family: 'Montserrat', sans-serif;
 	padding: 2px;
 	text-transform: capitalize;
@@ -38,7 +37,7 @@
 
 /* DataTable */
 .ui-datatable { /* Borde azul en tabla */
-    border: 1px solid #00529b;
+	border: 1px solid #00529b;
 }
 
 .ui-datatable .ui-widget-header {
@@ -48,7 +47,7 @@
 .ui-paginator {
 	text-align: right !important;
 	background: white !important;
-	border: white !important;	
+	border: white !important;
 }
 
 .ui-paginator span {
@@ -56,52 +55,55 @@
 }
 
 .ui-paginator.ui-widget-header .ui-state-active {
-    background: #e4e4e4 !important;
-    color: #ffffff !important;
+	background: #e4e4e4 !important;
+	color: #ffffff !important;
 }
 
-.ui-datatable-header.ui-widget-header{
-	  background: #ffffff !important;
-    color: #000000 !important;
+.ui-datatable-header.ui-widget-header {
+	background: #ffffff !important;
+	color: #000000 !important;
 }
 
-.ui-paginator.ui-state-default, .ui-paginator.ui-widget-content .ui-state-default, .ui-paginator.ui-widget-header .ui-state-default {
-    border: 1px solid #dfdfdf;
-    background: #ffffff;
-    color: #000000 !important;
+.ui-paginator.ui-state-default, .ui-paginator.ui-widget-content .ui-state-default,
+	.ui-paginator.ui-widget-header .ui-state-default {
+	border: 1px solid #dfdfdf;
+	background: #ffffff;
+	color: #000000 !important;
 	opacity: 0.7;
 	font-size: 10px !important;
 }
 
-.ui-datatable-tablewrapper .ui-state-default, .ui-datatable-scrollable-header .ui-state-default {
+.ui-datatable-tablewrapper .ui-state-default,
+	.ui-datatable-scrollable-header .ui-state-default {
 	background: #ffffff !important;
 	color: #00529b !important;
 	font-weight: 500 !important;
 	font-size: 11px !important;
 	font-family: 'Montserrat', sans-serif;
-	/*border: white !important;*/	
+	/*border: white !important;*/
 }
 
-.ui-datatable-data .ui-widget-content{
+.ui-datatable-data .ui-widget-content {
 	border: 1px solid #acbece !important;
 }
 
-.ui-datatable .ui-widget-header{
+.ui-datatable .ui-widget-header {
 	border: 1px solid #ffffff !important;
 }
 
-.sinfondo.ui-datatable .ui-state-highlight{ /* especifico para quitar el color de seleccion en tablas con checks */ 
+.sinfondo.ui-datatable .ui-state-highlight {
+	/* especifico para quitar el color de seleccion en tablas con checks */
 	background: #ffffff !important;
 }
 
-.ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer { /* Alinear contenido del header a la derecha para el conteo de elementos desplegados */
-    text-align: right;
+.ui-datatable .ui-datatable-header, .ui-datatable .ui-datatable-footer {
+	/* Alinear contenido del header a la derecha para el conteo de elementos desplegados */
+	text-align: right;
 }
 
 .sinfondo.ui-datatable .ui-selection-column .ui-chkbox-all {
-	display:none;
+	display: none;
 }
-
 
 /* PanelGrid */
 .ui-panel .ui-panel-titlebar {
@@ -118,9 +120,8 @@
 	border: 1px solid green !important;
 }
 
-
 .no-padding.ui-panelgrid .ui-panelgrid-cell {
-    padding: 0px 0px !important;;
+	padding: 0px 0px !important;;
 }
 
 /* SelectOne */
@@ -137,22 +138,24 @@
 	box-shadow: none !important;
 }
 
-.ui-selectonemenu.ui-state-default, .ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default{
+.ui-selectonemenu.ui-state-default, .ui-selectonemenu .ui-selectonemenu-trigger.ui-state-default
+	{
 	background: transparent !important;
 }
 
-.ui-selectonemenu-items-wrapper .ui-widget-content .ui-state-default{ /* encabezado de tablas dentro de un selecOneMenu */
+.ui-selectonemenu-items-wrapper .ui-widget-content .ui-state-default {
+	/* encabezado de tablas dentro de un selecOneMenu */
 	background: white !important;
 	color: #00529b !important;
 	font-size: 11px;
 	font-family: 'Montserrat', sans-serif;
-	border: white !important;	
+	border: white !important;
 	font-weight: 500 !important;
 }
 
 /* Datepicker */
-.ui-datepicker-trigger{
-    background: #00529b54 !important    
+.ui-datepicker-trigger {
+	background: #00529b54 !important
 }
 
 .ui-datepicker-calendar .ui-state-default {
@@ -167,40 +170,42 @@
 }
 
 .ui-datepicker .ui-widget-header {
-  background: #59ad40 !important;
-	
+	background: #59ad40 !important;
+	border: 0px !important;
 }
 
 .ui-datepicker .ui-widget-content {
-  color: #59ad40 !important;
+	color: #59ad40 !important;
 	font-weight: 500 !important;
+	border: 0px !important;
 }
 
 .ui-datepicker .ui-widget-content .ui-state-active {
-  background: #59ad40bd !important;
+	background: #59ad40bd !important;
 	color: white;
 	font-weight: 600 !important;
 	border: 2px solid #59ad40 !important;
 }
 
 .ui-datepicker .ui-datepicker-today {
-  font-weight: 600 !important;
+	font-weight: 600 !important;
 	border: 2px solid #59ad40;
 }
 
 .ui-datepicker table {
-  border-collapse: separate !important;
+	border-collapse: separate !important;
 }
 
 /* Radio buton */
-
-.ui-radiobutton .ui-state-default{
+.ui-radiobutton .ui-state-default {
 	background: white !important;
 	border: 2px solid #00529b !important;
 }
 
-.ui-radiobutton .ui-state-active .ui-icon{
-    background-image: url("/aforedigitalgt/javax.faces.resource/images/ui-icons_3572ac_256x240.png.jsf?ln=primefaces-pepper-grinder") !important;
+.ui-radiobutton .ui-state-active .ui-icon {
+	background-image:
+		url("/aforedigitalgt/javax.faces.resource/images/ui-icons_3572ac_256x240.png.jsf?ln=primefaces-pepper-grinder")
+		!important;
 }
 
 /* Texto general toda la app */
@@ -216,16 +221,12 @@
 	font-weight: 500;
 }
 
-.ui-panel-content .ui-widget{
+.ui-panel-content .ui-widget {
 	font-weight: 500;
 }
 
-
-
-.ui-widget input,
-.ui-widget select,
-.ui-widget textarea,
-.ui-widget button {
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button
+	{
 	font-family: Montserrat, sans-serif !important;
 	font-size: 12px !important;
 	font-weight: 500;
@@ -234,33 +235,37 @@
 .ui-widget.ui-widget-content {
 	border: 1px solid #59ad40 !important;
 }
+
 .ui-widget-content {
 	border: 1px solid #59ad40;
 	background: #ffffff;
 	color: #000000;
 }
+
 .ui-widget-content a {
 	color: #000000;
 }
+
 .ui-widget-header {
 	border: 1px solid #59ad40 !important;
 	background: #59ad40;
 	color: #ffffff;
 	font-weight: 500 !important;
 }
+
 .ui-widget-header a {
 	color: #ffffff;
 }
 
-.gridCell-right{
-	text-align:right;
+.gridCell-right {
+	text-align: right;
 }
 
-.outputlabel-shadow{		
-	background:#f3f3f3 !important;
-	color:#848484 !important;
-	border:1px #d9d9d9 solid !important; 
-	height:25px !important;
+.outputlabel-shadow {
+	background: #f3f3f3 !important;
+	color: #848484 !important;
+	border: 1px #d9d9d9 solid !important;
+	height: 25px !important;
 	padding-left: 10px !important;
 	text-align: left !important;
 }
@@ -269,60 +274,59 @@
 .ui-inputfield.ui-state-default, .ui-selectonemenu, .ui-radiobutton-box, .ui-chkbox-box .ui-chkbox-icon {
     border: 1px solid #00529b !important;
 }*/
-
 .ui-selectonemenu-trigger {
 	border: 1px solid transparent !important;
 }
 
-.ui-state-highlight{
+.ui-state-highlight {
 	background: #00529b54 !important;
 }
 
-.gridCell-green th{
+.gridCell-green th {
 	background: #59ad40 !important;
-    border-color: #59ad40 !important;
-    color:#ffffff;
+	border-color: #59ad40 !important;
+	color: #ffffff;
 }
 
-.detalleProceso .ui-widget-header{	
+.detalleProceso .ui-widget-header {
 	background: #00529b !important;
 	border: 1px solid #00529b !important;
 	color: #ffffff !important;
-	font-weight: 500 !important;	
-	text-align:left;
+	font-weight: 500 !important;
+	text-align: left;
 	border-radius: .25rem;
 	font-size: 14px !important;
 }
 
-.detalleProceso .ui-paginator{	
+.detalleProceso .ui-paginator {
 	background: #ffffff !important;
 	border: 1px solid #ffffff !important;
 }
 
-
-.fondoDialog .ui-dialog .ui-widget{
+.fondoDialog .ui-dialog .ui-widget {
 	background: rgb(0, 0, 0) transparent;
 }
 
- .modal-backdrop{
-    opacity:.7 !important;
- } 
- 
- 
- .loading.ui-dialog.ui-widget.ui-widget-content{
-       box-shadow: none !important;
-       border: 0px !important;
-       background: rgb(37 37 37) !important;
-       width: 100% !important;
-       height: 100% !important;     
-       overflow: auto;
-       opacity: .7 !important;
-       z-index:1051;
- }
-.ui-widget-overlay {
-    background: rgb(37 37 37) !important;
-    opacity: .7 !important;
+.modal-backdrop {
+	opacity: .7 !important;
 }
+
+.loading.ui-dialog.ui-widget.ui-widget-content {
+	box-shadow: none !important;
+	border: 0px !important;
+	background: rgb(37, 37, 37) !important;
+	width: 100% !important;
+	height: 100% !important;
+	overflow: auto;
+	opacity: .7 !important;
+	z-index: 1051;
+}
+
+.ui-widget-overlay {
+	background: rgb(37, 37, 37) !important;
+	opacity: .7 !important;
+}
+
 .dialogStyle.ui-dialog.ui-widget.ui-widget-content.ui-widget-header {
 	border: 0px !important;
 	background: #ffffff !important;
@@ -330,6 +334,6 @@
 	font-weight: 500 !important;
 }
 
-.flechaArribaAbajo{
-	color:white !important;
+.flechaArribaAbajo {
+	color: white !important;
 }
