@@ -1,3 +1,9 @@
+.etiqueta{
+	font-size: 12px !important;
+	font-family: 'Montserrat', sans-serif !important;
+	font-weight: 600 !important;
+}
+
 .capitalized {
     text-transform: uppercase;
 }
@@ -162,7 +168,7 @@
 .ui-widget {
 	font-family: Montserrat, sans-serif !important;
 	font-size: 12px;
-	font-weight: 500 !important;
+	font-weight: 500;
 }
 
 .ui-widget-content {
