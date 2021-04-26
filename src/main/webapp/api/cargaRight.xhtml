@@ -28,8 +28,7 @@
 					width="100%">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Fecha de Right Fax"
-								style="font-weight: normal" />
+							<p:outputLabel value="Fecha de Right Fax" />
 						</p:column>
 						<p:column>
 							<p:datePicker id="fecha"
@@ -41,26 +40,26 @@
 						<p:column>
 							<p:commandButton class="blue"
 								actionListener="#{cargaRight.crucePrevio}"
-								update="busqueda result" value="Cruce previo" />
+								update="panel result" value="Cruce previo" />
 						</p:column>
 
 					</p:row>
 					<p:row>
 						<p:column style="padding:10px;">
-							<p:outputLabel value="Nombre del archivo (sin extensión): "
-								style="font-weight: normal" />
+							<p:outputLabel value="Nombre del archivo (sin extensión): " />
 						</p:column>
 						<p:column>
-							<p:inputText id="archivo" value="#{cargaRight.archivo}" maxlength="20"></p:inputText>
+							<p:inputText id="archivo" value="#{cargaRight.archivo}" style="width:150px"
+								maxlength="20"></p:inputText>
 						</p:column>
 						<p:column>
 							<p:commandButton class="blue"
-								actionListener="#{cargaRight.cargar}" update="busqueda result"
+								actionListener="#{cargaRight.cargar}" update="panel result"
 								rendered="#{cargaRight.mostrarCarga}" value="Cargar" />
 						</p:column>
 
 					</p:row>
-					<p:row >
+					<p:row>
 						<p:column colspan="3" style="padding:10px;">
 							<p:outputLabel
 								value="El archivo deberá estar en: /RESPALDOS/openserv y con extensión .csv"
@@ -71,11 +70,12 @@
 				</p:panelGrid>
 
 
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{cargaRight}" />
+				</ui:include>
 			</p:panel>
 
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{cargaRight}" />
-			</ui:include>
+
 
 		</h:form>
 
