@@ -1,3 +1,4 @@
+
 .etiqueta{
 	font-size: 12px !important;
 	font-family: 'Montserrat', sans-serif !important;
@@ -163,6 +164,17 @@
 	background-image: url("../Imagenes/calendar.png") !important;
 	background-position: center center !important;
 	background-size: 16px;
+}
+
+/* Radio buton */
+
+.ui-radiobutton .ui-state-default{
+	background: white !important;
+	border: 2px solid #00529b !important;
+}
+
+.ui-radiobutton .ui-state-active .ui-icon{
+    background-image: url("/aforedigitalgt/javax.faces.resource/images/ui-icons_3572ac_256x240.png.jsf?ln=primefaces-pepper-grinder") !important;
 }
 
 /* Texto general toda la app */
