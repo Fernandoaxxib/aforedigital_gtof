@@ -91,6 +91,11 @@
 	border: 1px solid #ffffff !important;
 }
 
+.ui-datatable-scrollable-header-box table{ /*arreglar el margen del renglón encabezado en la tabla con scroll, hay un defase */
+	margin-left: -1px ;
+ 	 margin-bottom: -1px;
+}
+
 .sinfondo.ui-datatable .ui-state-highlight {
 	/* especifico para quitar el color de seleccion en tablas con checks */
 	background: #ffffff !important;
