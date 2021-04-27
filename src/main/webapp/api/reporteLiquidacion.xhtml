@@ -27,12 +27,13 @@
 		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="REPORTE LIQUIDACIÓN DE RETIROS POR DISPOSICIÓN"
+			<p:panel id="busqueda"
+				header="REPORTE LIQUIDACIÓN DE RETIROS POR DISPOSICIÓN"
 				style="margin-top:20px">
 				<p:panelGrid id="panel" columns="6" styleClass="ui-noborder"
 					cellpadding="10" width="100%">
-					<p:outputLabel value="Estatus" style="font-weight: normal" />
-					<p:selectOneMenu id="estatus" style="width:200px" 
+					<p:outputLabel value="Estatus:" />
+					<p:selectOneMenu id="estatus" style="width:200px"
 						value="#{reporteLiquidacion.selectedEstatus}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -40,11 +41,12 @@
 						<f:selectItem itemLabel="Aplicados" itemValue="A" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Lote" style="font-weight: normal" />
-					<p:inputText id="lote" value="#{reporteLiquidacion.lote}" style="width:215px" maxlength="11"/>
+					<p:outputLabel value="Lote:" />
+					<p:inputText id="lote" value="#{reporteLiquidacion.lote}"
+						style="width:215px" maxlength="11" />
 
-					<p:outputLabel value="Tipo" style="font-weight: normal" />
-					<p:selectOneMenu id="tipo" style="width:200px" 
+					<p:outputLabel value="Tipo:" />
+					<p:selectOneMenu id="tipo" style="width:200px"
 						value="#{reporteLiquidacion.selectedTipo}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -52,8 +54,8 @@
 						<f:selectItem itemLabel="Resumen" itemValue="R" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Tipo retiro" style="font-weight: normal" />
-					<p:selectOneMenu id="tipoRetiro" style="width:200px" 
+					<p:outputLabel value="Tipo retiro:" />
+					<p:selectOneMenu id="tipoRetiro" style="width:200px"
 						value="#{reporteLiquidacion.selectedTipoRetiro}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -66,9 +68,9 @@
 						<f:selectItem itemLabel="Sar" itemValue="5" />
 					</p:selectOneMenu>
 
-					<p:outputLabel value="Siefore" style="font-weight: normal" />
+					<p:outputLabel value="Siefore:" />
 					<p:selectOneMenu id="siefore" style="width:200px" var="t"
-						converter="selectOneMenuConverter" 
+						converter="selectOneMenuConverter"
 						value="#{reporteLiquidacion.selectedSiefore}">
 						<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 							itemValue="#{null}" noSelectionOption="true" />
@@ -91,16 +93,18 @@
 
 					<p:outputLabel value="" />
 					<p:commandButton class="blue"
-						actionListener="#{reporteLiquidacion.ejecutarReporte}" update="busqueda result"
-						value="Ejecutar reporte"  />
-						
+						actionListener="#{reporteLiquidacion.ejecutarReporte}"
+						update="panel result" value="Ejecutar reporte" />
+
 
 				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{reporteLiquidacion}" />
+				</ui:include>
 			</p:panel>
-			
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{reporteLiquidacion}" />
-			</ui:include>
+
+
 
 		</h:form>
 

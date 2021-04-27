@@ -32,22 +32,27 @@
 
 				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
 					<p:row>
-						<p:column colspan="2" style="padding:10px;">
-
-							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
+						<p:column style="padding:10px;">
+							<p:outputLabel value="Buscar: " styleClass="etiqueta"/>
+						</p:column>
+						<p:column>
 							<p:inputText id="nss" value="#{diagCuenta.nss}" maxlength="18"
-								style="width:215px" placeholder="NSS/CURP" />
+								style="width:150px" placeholder="NSS/CURP" />
 							<p:commandButton class="blue"
 								actionListener="#{diagCuenta.obtieneCodCuenta}"
 								update="pGrid result" value="Buscar" />
 
 						</p:column>
-						<p:column style="width:200px; padding:10px;" rendered="#{diagCuenta.mostrarBotones}">
-							<p:outputLabel value="Cuenta: " style="font-weight: normal" />
+						<p:column rendered="#{diagCuenta.mostrarBotones}">
+							<p:outputLabel value="Cuenta: " styleClass="etiqueta" />
+						</p:column>
+						<p:column rendered="#{diagCuenta.mostrarBotones}">
 							<h:outputText value="#{diagCuenta.codCuenta}" />
 						</p:column>
-						<p:column style="width:300px; padding:10px;" rendered="#{diagCuenta.mostrarBotones}">
-							<p:outputLabel value="Nombre: " style="font-weight: normal" />
+						<p:column rendered="#{diagCuenta.mostrarBotones}">
+							<p:outputLabel value="Nombre: " styleClass="etiqueta" />
+						</p:column>
+						<p:column rendered="#{diagCuenta.mostrarBotones}">
 							<h:outputText value="#{diagCuenta.nombre}" />
 						</p:column>
 					</p:row>
@@ -55,7 +60,9 @@
 
 					<p:row rendered="#{diagCuenta.mostrarBotones}">
 						<p:column>
-							<p:outputLabel value="Inicio: " style="font-weight: normal" />
+							<p:outputLabel value="Inicio: "  styleClass="etiqueta"/>
+						</p:column>
+						<p:column>
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;" yearNavigator="true"
 								monthNavigator="true" value="#{diagCuenta.fechaInicial}"
@@ -63,16 +70,19 @@
 								readonlyInput="true" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fin: " style="font-weight: normal" />
+							<p:outputLabel value="Fin: "  styleClass="etiqueta"/>
+						</p:column>
+						<p:column>
 							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true" locale="es"
 								pattern="dd-MM-yyyy" readonlyInput="true" />
 
 						</p:column>
-						<p:column colspan="2" style="padding:10px;">
-							<p:outputLabel value="Tipo proceso: " style="font-weight: normal" />
-
+						<p:column >
+							<p:outputLabel value="Tipo proceso: " styleClass="etiqueta"/>
+						</p:column>
+						<p:column>
 							<p:selectOneMenu id="tipoProceso"
 								style="width:300px; vertical-align: inherit;"
 								value="#{diagCuenta.selectedTipo}">
@@ -85,19 +95,16 @@
 					</p:row>
 
 					<p:row rendered="#{diagCuenta.mostrarBotones}">
-						<p:column colspan="4" style="text-align:center;padding:10px;">
+						<p:column colspan="6" style="text-align:right;padding:10px;">
 							<p:commandButton class="blue"
-								
 								actionListener="#{diagCuenta.generarArchivo}"
 								update="pGrid result" value="Generar reporte" />
 
 							<p:commandButton class="blue"
-								rendered="#{diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.desbloquearCuentas}"
 								update="pGrid result" value="Desbloquea cuentas" />
 
 							<p:commandButton class="blue"
-								rendered="#{diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.bloquearCuentas}"
 								update="pGrid result" value="Bloquea cuentas" />
 						</p:column>
@@ -106,11 +113,13 @@
 
 
 				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{diagCuenta}" />
+				</ui:include>
 			</p:panel>
 
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{diagCuenta}" />
-			</ui:include>
+
 
 		</h:form>
 
