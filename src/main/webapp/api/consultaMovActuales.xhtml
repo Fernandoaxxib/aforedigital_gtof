@@ -33,38 +33,52 @@
 
 				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
 					<p:row>
-						<p:column colspan="5" style="padding:10px;">
+						<p:column>
+							<p:outputLabel value="Buscar: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
 
-							<p:outputLabel value="Buscar por: " style="font-weight: normal" />
 							<p:inputText id="nss" value="#{conActuales.nssCurp}"
-								style="width:150px" placeholder="NSS/CURP" maxlength="18"/>
-							<p:commandButton class="blue"
+								style="width:150px" placeholder="NSS/CURP" maxlength="18" />
+							<p:commandButton class="blue" style="margin-left:5px;"
 								actionListener="#{conActuales.consultarCuenta}"
-								update="pGrid form:movimientos form:detalle result" value="Buscar" />
+								update="pGrid form:movimientos form:detalle result"
+								value="Buscar" />
 
 						</p:column>
-					</p:row>
-					<p:row rendered="#{conActuales.mostrar}">
-						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Cuenta: " style="font-weight: normal" />
+						<p:column rendered="#{conActuales.mostrar}">
+							<p:outputLabel value="Cuenta: " styleClass="etiqueta" />
+						</p:column>
+						<p:column rendered="#{conActuales.mostrar}">
 							<h:outputText value="#{conActuales.cuenta.codCuenta}" />
 						</p:column>
-						<p:column style="width:300px; padding:10px;">
-							<p:outputLabel value="Nombre: " style="font-weight: normal" />
+						<p:column rendered="#{conActuales.mostrar}">
+							<p:outputLabel value="Nombre: " styleClass="etiqueta" />
+						</p:column>
+						<p:column rendered="#{conActuales.mostrar}">
 							<h:outputText value="#{conActuales.cuenta.nombre}" />
 						</p:column>
-						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Fecha apertura: " style="font-weight: normal" />
+					</p:row>
+
+					<p:row rendered="#{conActuales.mostrar}">
+						<p:column>
+							<p:outputLabel value="Cliente: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{conActuales.cuenta.tipoSolic}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha apertura: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
 							<h:outputText value="#{conActuales.cuenta.fechaCert}">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:outputText>
 						</p:column>
-						<p:column style="width:150px; padding:10px;">
-							<p:outputLabel value="Cliente: " style="font-weight: normal" />
-							<h:outputText value="#{conActuales.cuenta.tipoSolic}" />
+						<p:column>
+							<p:outputLabel value="Estatus: " styleClass="etiqueta" />
 						</p:column>
-						<p:column style="width:200px; padding:10px;">
-							<p:outputLabel value="Estatus: " style="font-weight: normal" />
+						<p:column>
 							<h:outputText value="#{conActuales.cuenta.codEstado}" />
 						</p:column>
 					</p:row>
@@ -72,7 +86,9 @@
 
 					<p:row rendered="#{conActuales.mostrar}">
 						<p:column>
-							<p:outputLabel value="Inicio: " style="font-weight: normal" />
+							<p:outputLabel value="Inicio: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;"
 								value="#{conActuales.fechaInicial}" showIcon="true" locale="es"
@@ -80,7 +96,9 @@
 								readonlyInput="true" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fin: " style="font-weight: normal" />
+							<p:outputLabel value="Fin: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
 							<p:datePicker id="fechaFinal" value="#{conActuales.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true" locale="es"
@@ -88,182 +106,187 @@
 
 						</p:column>
 
-						<p:column colspan="3" style="text-align:left;padding:10px;">
+						<p:column colspan="3" style="text-align:left;">
 							<p:commandButton class="blue"
 								actionListener="#{conActuales.consultarMovimientos}"
-								update="pGrid pMov form:detalle result" value="Buscar movimientos" />
+								update="pGrid pMov form:detalle result"
+								value="Buscar movimientos" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-			</p:panel>
-
-			<p:panel id="pMov" header="MOVIMIENTOS" style="margin-top:20px">
-				<p:dataTable id="movimientos" var="mon" paginatorPosition="bottom"
-					emptyMessage="#{conActuales.mensajeTabla}"
-					value="#{conActuales.movimientos}" rows="10"
-					selection="#{conActuales.selectedMov}" rowKey="#{mon.noMov}"
-					paginator="true" rowsPerPageTemplate="5,10,15">
-
-					<f:facet name="header" style="float:right">
-
-						<h:outputLabel for="registros"
-							value="#{msg.aprob_label_totalRegistros}" />
-						<h:outputText id="totalRegistros" value="#{conActuales.movCount}" />
-
-					</f:facet>
-
-					<p:ajax event="rowSelectRadio" update="form:detalle form:result" />
-					<p:column id="radio" selectionMode="single"
-						style="width:20px;text-align:center" />
 
 
-					<p:column headerText="No. movimiento"
-						style="width:100px;text-align: center;">
-						<h:outputText value="#{mon.noMov}" />
-					</p:column>
+				<p:panel id="pMov" header="MOVIMIENTOS" style="margin-top:20px">
+					<p:dataTable id="movimientos" var="mon" paginatorPosition="bottom"
+						emptyMessage="#{conActuales.mensajeTabla}"
+						value="#{conActuales.movimientos}" rows="5"
+						selection="#{conActuales.selectedMov}" rowKey="#{mon.noMov}"
+						paginator="true" rowsPerPageTemplate="5,10,15">
 
-					<p:column headerText="Fecha" style="width:100px;">
-						<h:outputText value="#{mon.fechaMov}" style="float:right">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-					</p:column>
+						<f:facet name="header" style="float:right">
 
-					<p:column headerText="Monto" style="width:100px;">
-						<h:outputText value="#{mon.montoMov}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
-						</h:outputText>
-					</p:column>
+							<h:outputLabel for="registros"
+								value="#{msg.aprob_label_totalRegistros}" />
+							<h:outputText id="totalRegistros" value="#{conActuales.movCount}" />
 
-					<p:column headerText="Transacción">
-						<h:outputText value="#{mon.descTransaccion}" />
-					</p:column>
+						</f:facet>
 
-					<p:column headerText="Subtransacción">
-						<h:outputText value="#{mon.descSubtransaccion}" />
-					</p:column>
-
-					<p:column headerText="Agencia">
-						<h:outputText value="#{mon.descAgencia}" />
-					</p:column>
-
-					<p:column headerText="No. lote">
-						<h:outputText value="#{mon.idLote}" />
-					</p:column>
-				</p:dataTable>
-			</p:panel>
+						<p:ajax event="rowSelectRadio" update="form:detalle form:result" />
+						<p:column id="radio" selectionMode="single"
+							style="width:20px;text-align:center" />
 
 
-			<p:panel header="DETALLE DE MOVIMIENTOS" style="margin-top:20px">
-				<p:dataTable id="detalle" var="mon" paginatorPosition="bottom"
-					emptyMessage="#{conActuales.mensajeTabla}"
-					value="#{conActuales.detalle}" rows="10" scrollable="true"
-					rowKey="#{mon.noMovDetalle}" paginator="true"
-					rowsPerPageTemplate="5,10,15">
+						<p:column headerText="No. movimiento"
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.noMov}" />
+						</p:column>
 
-					<f:facet name="header" style="float:right">
+						<p:column headerText="Fecha" style="width:100px;">
+							<h:outputText value="#{mon.fechaMov}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
 
-						<h:outputLabel for="registros"
-							value="#{msg.aprob_label_totalRegistros}" />
-						<h:outputText id="totalRegistros" value="#{conActuales.detCount}" />
+						<p:column headerText="Monto" style="width:100px;">
+							<h:outputText value="#{mon.montoMov}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
 
-					</f:facet>
-					<!-- 
+						<p:column headerText="Transacción">
+							<h:outputText value="#{mon.descTransaccion}" />
+						</p:column>
+
+						<p:column headerText="Subtransacción">
+							<h:outputText value="#{mon.descSubtransaccion}" />
+						</p:column>
+
+						<p:column headerText="Agencia">
+							<h:outputText value="#{mon.descAgencia}" />
+						</p:column>
+
+						<p:column headerText="No. lote">
+							<h:outputText value="#{mon.idLote}" />
+						</p:column>
+					</p:dataTable>
+
+
+				</p:panel>
+
+				<p:panel header="DETALLE DE MOVIMIENTOS" style="margin-top:20px">
+					<p:dataTable id="detalle" var="mon" paginatorPosition="bottom"
+						emptyMessage="#{conActuales.mensajeTabla}"
+						value="#{conActuales.detalle}" rows="5" scrollable="true"
+						rowKey="#{mon.noMovDetalle}" paginator="true"
+						rowsPerPageTemplate="5,10,15">
+
+						<f:facet name="header" style="float:right">
+
+							<h:outputLabel for="registros"
+								value="#{msg.aprob_label_totalRegistros}" />
+							<h:outputText id="totalRegistros" value="#{conActuales.detCount}" />
+
+						</f:facet>
+						<!-- 
 					<p:ajax event="rowSelectRadio" update="form:pDetalle" />
 					<p:column id="radio2" selectionMode="single"
 						style="width:20px;text-align:center" />
 -->
 
-					<p:column headerText="No. movimiento" style="width:100px;text-align: center;">
-						<h:outputText value="#{mon.noMovDetalle}" />
-					</p:column>
+						<p:column headerText="No. movimiento"
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.noMovDetalle}" />
+						</p:column>
 
-					<p:column headerText="Fecha" style="width:80px">
-						<h:outputText value="#{mon.fechaMovDetalle}" style="float:right">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="Fecha" style="width:80px">
+							<h:outputText value="#{mon.fechaMovDetalle}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="Monto" style="width:100px">
-						<h:outputText value="#{mon.montoMov}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="Monto" style="width:100px">
+							<h:outputText value="#{mon.montoMov}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="Estado" style="width:50px;text-align: center;">
-						<h:outputText value="#{mon.estado}" />
-					</p:column>
+						<p:column headerText="Estado"
+							style="width:50px;text-align: center;">
+							<h:outputText value="#{mon.estado}" />
+						</p:column>
 
-					<p:column headerText="Incluído por" style="width:80px">
-						<h:outputText value="#{mon.incluidoPor}" />
-					</p:column>
+						<p:column headerText="Incluído por" style="width:80px">
+							<h:outputText value="#{mon.incluidoPor}" />
+						</p:column>
 
-					<p:column headerText="Modificado por" style="width:80px">
-						<h:outputText value="#{mon.modificadoPor}" />
-					</p:column>
+						<p:column headerText="Modificado por" style="width:80px">
+							<h:outputText value="#{mon.modificadoPor}" />
+						</p:column>
 
-					<p:column headerText="Fecha inclusión" style="width:80px">
-						<h:outputText value="#{mon.fechaInclusion}" style="float:right">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="Fecha inclusión" style="width:80px">
+							<h:outputText value="#{mon.fechaInclusion}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="Fecha modificación" style="width:80px">
-						<h:outputText value="#{mon.fechaModificacion}" style="float:right">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="Fecha modificación" style="width:80px">
+							<h:outputText value="#{mon.fechaModificacion}"
+								style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="Tipo de saldo" style="width:100px">
-						<h:outputText value="#{mon.descTipoSaldo}" />
-					</p:column>
+						<p:column headerText="Tipo de saldo" style="width:100px">
+							<h:outputText value="#{mon.descTipoSaldo}" />
+						</p:column>
 
-					<p:column headerText="Títulos" style="width:100px">
-						<h:outputText value="#{mon.totalCuota}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="Títulos" style="width:100px">
+							<h:outputText value="#{mon.totalCuota}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="Inversión" style="width:120px">
-						<h:outputText value="#{mon.descInversion}" />
-					</p:column>
+						<p:column headerText="Inversión" style="width:120px">
+							<h:outputText value="#{mon.descInversion}" />
+						</p:column>
 
-					<p:column headerText="Fecha aplicación" style="width:80px"> 
-						<h:outputText value="#{mon.fechaAplicado}"  style="float:right">
-							<f:convertDateTime pattern="dd-MM-yyyy" />
-						</h:outputText>
-					</p:column>
+						<p:column headerText="Fecha aplicación" style="width:80px">
+							<h:outputText value="#{mon.fechaAplicado}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
 
-					<p:column headerText="Transacción" style="width:100px">
-						<h:outputText value="#{mon.descTransaccion}" />
-					</p:column>
+						<p:column headerText="Transacción" style="width:100px">
+							<h:outputText value="#{mon.descTransaccion}" />
+						</p:column>
 
-					<p:column headerText="Motivo" style="width:100px">
-						<h:outputText value="#{mon.descSubtransaccion}" />
-					</p:column>
+						<p:column headerText="Motivo" style="width:100px">
+							<h:outputText value="#{mon.descSubtransaccion}" />
+						</p:column>
 
-					<p:column headerText="Valor título" style="width:100px">
-						<h:outputText value="#{mon.valorCuota}" style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
+						<p:column headerText="Valor título" style="width:100px">
+							<h:outputText value="#{mon.valorCuota}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
 
-				<!-- 
+					<!-- 
 				<p:panelGrid id="pDetalle" width="100%" styleClass="ui-noborder">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Tipo de saldo: " style="font-weight: normal" />
+							<p:outputLabel value="Tipo de saldo: "  />
 							<h:outputText
 								value="#{conActuales.selectedDetalle.descTipoSaldo}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Títulos: " style="font-weight: normal" />
+							<p:outputLabel value="Títulos: "  />
 							<h:outputText value="#{conActuales.selectedDetalle.totalCuota}">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Inversión: " style="font-weight: normal" />
+							<p:outputLabel value="Inversión: "  />
 							<h:outputText
 								value="#{conActuales.selectedDetalle.descInversion}" />
 						</p:column>
@@ -278,17 +301,17 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Transacción " style="font-weight: normal" />
+							<p:outputLabel value="Transacción "  />
 							<h:outputText
 								value="#{conActuales.selectedDetalle.descTransaccion}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Motivo: " style="font-weight: normal" />
+							<p:outputLabel value="Motivo: "  />
 							<h:outputText
 								value="#{conActuales.selectedDetalle.descSubtransaccion}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Valor título: " style="font-weight: normal" />
+							<p:outputLabel value="Valor título: "  />
 							<h:outputText value="#{conActuales.selectedDetalle.valorCuota}">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>
@@ -300,12 +323,16 @@
 				</p:panelGrid>
 				 -->
 
+				</p:panel>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{conActuales}" />
+				</ui:include>
 			</p:panel>
 
 
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{conActuales}" />
-			</ui:include>
+
+
 
 		</h:form>
 
