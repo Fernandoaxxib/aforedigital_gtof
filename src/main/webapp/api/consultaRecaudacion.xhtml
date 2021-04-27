@@ -29,20 +29,28 @@
 		<h:form id="form">
 			<p:panel id="pDatos" header="RECAUDACIÓN VENTANILLA ÚNICA"
 				style="margin-top:20px">
-				<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
-					style="font-weight: normal" />
-				<p:inputText id="nss" value="#{consultaRecaudacion.nss}" maxlength="11"
-					style="width:90px"></p:inputText>
 
-				<p:commandButton class="blue"
-					actionListener="#{consultaRecaudacion.consultarNSS}"
-					update="pDatos pMontos pCuotas result" style="margin-top:20px"
-					value="Consultar" />
-
-				<p:commandButton class="blue"
-					actionListener="#{consultaRecaudacion.generarReporte}"
-					rendered="#{consultaRecaudacion.mostrarReporte}" update="result"
-					style="margin-top:20px" value="Generar reporte" />
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder" style="margin-top:20px">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_nss}" />
+							<p:inputText id="nss" value="#{consultaRecaudacion.nss}" 
+								maxlength="11" style="margin-left:5px;width:90px"></p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{consultaRecaudacion.consultarNSS}"
+								update="pGrid datos pMontos pCuotas result"
+								value="Consultar" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{consultaRecaudacion.generarReporte}"
+								rendered="#{consultaRecaudacion.mostrarReporte}" update="result"
+								value="Generar reporte" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 
 				<p:dataTable id="datos" var="dat" style="margin-top:20px"
 					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
@@ -80,111 +88,111 @@
 
 					<p:column headerText="SAR92 monto">
 						<h:outputText value="#{dat.sar92Monto}" style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
-
-
-
-
-			</p:panel>
-
-			<p:panel id="pMontos" header="MONTOS" style="margin-top:20px">
-				<p:dataTable id="monto" var="mon"
-					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
-					value="#{consultaRecaudacion.datos}">
-
-					<p:column headerText="Aportación estatal">
-						<h:outputText value="#{mon.aportacionEstatalMonto}"
-							style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Retiro">
-						<h:outputText value="#{mon.retiroMonto}" style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Cesantía y vejez">
-						<h:outputText value="#{mon.cesantiaVejezMonto}"
-							style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Cuota social">
-						<h:outputText value="#{mon.cuotaSocialMonto}" style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Aportación especial">
-						<h:outputText value="#{mon.aportacionEspecialMonto}"
-							style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Vivienda 97">
-						<h:outputText value="#{mon.vivienda97Monto}" style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-				</p:dataTable>
-			</p:panel>
-
-			<p:panel id="pCuotas" header="CUOTAS" style="margin-top:20px">
-				<p:dataTable id="cuota" var="cuo"
-					emptyMessage="#{consultaRecaudacion.mensajeTabla}"
-					value="#{consultaRecaudacion.datos}">
-
-					<p:column headerText="Aportación estatal">
-						<h:outputText value="#{cuo.aportacionEstatalCuota}"
-							style="float:right">
-							<f:convertNumber type="currency" currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Retiro">
-						<h:outputText value="#{cuo.retiroCuota}" style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Cesantía y vejez">
-						<h:outputText value="#{cuo.cesantiaVejezCuota}"
-							style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Cuota social">
-						<h:outputText value="#{cuo.cuotaSocialCuota}" style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Aportación especial">
-						<h:outputText value="#{cuo.aportacionEspecialCuota}"
-							style="float:right">
-							<f:convertNumber type="currency"  currencySymbol="$" />
-						</h:outputText>
-					</p:column>
-
-					<p:column headerText="Vivienda 97">
-						<h:outputText value="#{cuo.vivienda97Cuota}" style="float:right">
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
 					</p:column>
 				</p:dataTable>
+
+				<p:panel id="pMontos" header="MONTOS" style="margin-top:20px">
+					<p:dataTable id="monto" var="mon"
+						emptyMessage="#{consultaRecaudacion.mensajeTabla}"
+						value="#{consultaRecaudacion.datos}">
+
+						<p:column headerText="Aportación estatal">
+							<h:outputText value="#{mon.aportacionEstatalMonto}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Retiro">
+							<h:outputText value="#{mon.retiroMonto}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Cesantía y vejez">
+							<h:outputText value="#{mon.cesantiaVejezMonto}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Cuota social">
+							<h:outputText value="#{mon.cuotaSocialMonto}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Aportación especial">
+							<h:outputText value="#{mon.aportacionEspecialMonto}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Vivienda 97">
+							<h:outputText value="#{mon.vivienda97Monto}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<p:panel id="pCuotas" header="CUOTAS" style="margin-top:20px">
+					<p:dataTable id="cuota" var="cuo"
+						emptyMessage="#{consultaRecaudacion.mensajeTabla}"
+						value="#{consultaRecaudacion.datos}">
+
+						<p:column headerText="Aportación estatal">
+							<h:outputText value="#{cuo.aportacionEstatalCuota}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Retiro">
+							<h:outputText value="#{cuo.retiroCuota}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Cesantía y vejez">
+							<h:outputText value="#{cuo.cesantiaVejezCuota}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Cuota social">
+							<h:outputText value="#{cuo.cuotaSocialCuota}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Aportación especial">
+							<h:outputText value="#{cuo.aportacionEspecialCuota}"
+								style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Vivienda 97">
+							<h:outputText value="#{cuo.vivienda97Cuota}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{consultaRecaudacion}" />
+				</ui:include>
+
+
 			</p:panel>
 
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{consultaRecaudacion}" />
-			</ui:include>
+
 
 		</h:form>
 
