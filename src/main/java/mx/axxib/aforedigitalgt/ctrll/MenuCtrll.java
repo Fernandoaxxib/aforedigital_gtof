@@ -58,4 +58,10 @@ public class MenuCtrll extends ControllerBase {
 		submenu = menu;
 		navigateMenu();
 	}
+	
+	public void catalogos() {
+		menu = "/api/valoresUMA.jsf";
+		submenu = menu;
+		navigateMenu();
+	}
 }

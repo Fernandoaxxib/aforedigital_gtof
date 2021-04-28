@@ -35,6 +35,11 @@
 	text-transform: capitalize;
 }
 
+.botonEdicion{
+	border: none !important;
+	inline-size: 100 !important;
+}
+
 /* DataTable */
 .ui-datatable { /* Borde azul en tabla */
 	border: 1px solid #00529b;
@@ -109,6 +114,11 @@
 .sinfondo.ui-datatable .ui-selection-column .ui-chkbox-all {
 	display: none;
 }
+
+
+
+
+
 
 /* PanelGrid */
 .ui-panel .ui-panel-titlebar {

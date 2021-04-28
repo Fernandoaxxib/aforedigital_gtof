@@ -20,20 +20,21 @@
 					<ui:include src="menu.xhtml" />
 				</p:column>
 				<p:column style="margin-left:50px">
-					<ui:include src="subMenuReportes.xhtml" />
+					<ui:include src="subMenuCatalogos.xhtml" />
 				</p:column>
 			</p:row>
 		</p:panelGrid>
 
+
 		<h:form id="form">
 			<p:panel header="VALORES UMA" style="margin-top:20px">
-				<p:panelGrid styleClass="ui-noborder">
+				<p:panelGrid id="grid" styleClass="ui-noborder">
+
 					<p:row>
 						<p:column style="width:50%">
 							<p:dataTable id="tabla" var="val"
 								emptyMessage="#{msg.aprob_msj_sinDatos}"
 								value="#{valorUMA.valores}">
-
 
 								<p:column headerText="Valor UMA">
 									<h:outputText value="#{val.monto}" style="float:right">
@@ -42,21 +43,54 @@
 								</p:column>
 
 								<p:column headerText="Fecha UMA">
-									<h:outputText value="#{val.fechaActual}">
+									<h:outputText value="#{val.fechaActual}" style="float:right">
 										<f:convertDateTime pattern="dd-MM-yyyy" />
 									</h:outputText>
 								</p:column>
 
 								<p:column headerText="Fecha última actualización">
-									<h:outputText value="#{val.fechaUltAct}">
+									<h:outputText value="#{val.fechaUltAct}" style="float:right">
 										<f:convertDateTime pattern="dd-MM-yyyy" />
 									</h:outputText>
+
 								</p:column>
 
 								<p:column headerText="Usuario">
 									<h:outputText value="#{val.user}" />
+
+								</p:column>
+
+								<p:column style="width:60px" rendered="false">
+
+									<f:facet name="header">
+										<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
+											icon="ui-icon ui-icon-plus" title="Nuevo"></p:commandButton>
+									</f:facet>
+									<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
+										icon="ui-icon ui-icon-pencil" title="Editar"
+										action="#{valorUMA.editar(val)}"></p:commandButton>
+
+									<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
+										icon="ui-icon ui-icon-trash" title="Borrar"
+										action="#{valorUMA.borrar(val)}"></p:commandButton>
+
+
 								</p:column>
 							</p:dataTable>
+
+
+							<p:confirmDialog id="confirmDialog" appendTo="@(body)"
+								message="¿Desea continuar?" header="Confirmar"
+								widgetVar="confirmDelete" modal="true">
+								<p:panel style="border:0px !important;text-align:center">
+									<p:commandButton value="Si" update="form:grid form:result"
+										class="blue" actionListener="#{valorUMA.eliminar}"
+										oncomplete="PF('confirmDelete').hide();" />
+									<p:commandButton value="No" class="blue"
+										onclick="PF('confirmDelete').hide();" type="button" />
+								</p:panel>
+
+							</p:confirmDialog>
 
 						</p:column>
 						<p:column>
@@ -64,8 +98,7 @@
 
 								<p:row>
 									<p:column>
-										<p:outputLabel value="Fecha Inicio: "
-											style="font-weight: normal" />
+										<p:outputLabel value="Fecha Inicio: " />
 										<p:datePicker id="fechaInicial"
 											inputStyle="width:120px; text-align:right;"
 											yearNavigator="true" monthNavigator="true"
@@ -73,7 +106,7 @@
 											pattern="dd-MM-yyyy" readonlyInput="true" />
 									</p:column>
 									<p:column>
-										<p:outputLabel value="Fecha Fin: " style="font-weight: normal" />
+										<p:outputLabel value="Fecha Fin: " />
 										<p:datePicker id="fechaFinal" value="#{valorUMA.fechaFinal}"
 											yearNavigator="true" monthNavigator="true"
 											inputStyle="width:120px; text-align:right;" showIcon="true"
@@ -83,9 +116,9 @@
 								</p:row>
 								<p:row>
 									<p:column colspan="2">
-										<p:outputLabel value="Ruta reporte: "
-											style="font-weight: normal" />
-										<h:outputText value="#{valorUMA.ruta}" />
+										<p:outputLabel value="Ruta reporte: " />
+										<p:outputLabel class="outputlabel-shadow"
+											value="#{valorUMA.ruta}" />
 									</p:column>
 								</p:row>
 								<p:row>
@@ -100,11 +133,13 @@
 						</p:column>
 					</p:row>
 				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{valorUMA}" />
+				</ui:include>
 			</p:panel>
 
-			<ui:include src="processResult.xhtml">
-				<ui:param name="base" value="#{valorUMA}" />
-			</ui:include>
+
 
 		</h:form>
 

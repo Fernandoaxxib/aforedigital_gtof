@@ -50,11 +50,18 @@
 								actionListener="#{menu.recaudaciones}">
 							</p:commandButton>
 						</p:column>
-						<p:column style="width:350px; text-align: left;">
+						<p:column style="width:150px; text-align: left;">
 							<p:commandButton ajax="false" styleClass="repo corn"
-								value="REPORTES GENERALES"
+								value="CONSULTAS Y REPORTES GENERALES"
 								onclick="showDialog(); return true"
 								actionListener="#{menu.reportes}">
+							</p:commandButton>
+						</p:column>
+						<p:column style="width:350px; text-align: left;">
+							<p:commandButton ajax="false" styleClass="repo corn"
+								value="CATÁLOGOS GENERALES"
+								onclick="showDialog(); return true"
+								actionListener="#{menu.catalogos}">
 							</p:commandButton>
 						</p:column>
 					</p:row>
