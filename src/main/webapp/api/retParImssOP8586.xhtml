@@ -149,11 +149,11 @@
 						<p:row>
 							<p:column style="width:100px">
 								<p:selectOneRadio id="customRadio"
-									value="#{retParImssOP8586.radioSelected}"
+									value="#{retParImssOP8586.radioSelected}"									
 									unselectable="#{retParImssOP8586.seleccion1}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP8586.radioSelected}"
-										update="form:customRadio2 form:dfini form:dffin form:vLote form:btnC form:idArchivo3"
+										update="form:btnGenerar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC form:idArchivo3"
 										global="false" />
 									<f:selectItem itemLabel="Fecha" itemValue="1" />
 								</p:selectOneRadio>
@@ -189,11 +189,11 @@
 						<p:row>
 							<p:column style="width:100px">
 								<p:selectOneRadio id="customRadio2"
-									value="#{retParImssOP8586.radioSelected2}"
+									value="#{retParImssOP8586.radioSelected2}"									
 									unselectable="#{retParImssOP8586.seleccion2}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP8586.radioSelected2}"
-										update="form:customRadio form:dfini form:dffin form:vLote form:btnC form:idArchivo3"
+										update="form:btnGenerar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC form:idArchivo3"
 										global="false" />
 									<f:selectItem itemLabel="Lote" itemValue="1" />
 								</p:selectOneRadio>
@@ -228,13 +228,14 @@
 								<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
 							</p:column>
 							<p:column>
-								<p:inputText id="idArchivo3"
+								<p:inputText id="idArchivo3" disabled="#{retParImssOP8586.disabled5}"
 									value="#{retParImssOP8586.archivo3}" style="width:382px" />
 							</p:column>
 							<p:column>
-								<p:commandButton styleClass="blue"
+								<p:commandButton id="btnGenerar" styleClass="blue"
 									type="submit" value="Generar reporte"
 									action="#{retParImssOP8586.generarReporte}"
+									disabled="#{retParImssOP8586.disabled3}"
 									update="form:result form:vLote form:dfini form:dffin form:customRadio form:customRadio2 form:idArchivo3"
 									ajax="true" />
 							</p:column>

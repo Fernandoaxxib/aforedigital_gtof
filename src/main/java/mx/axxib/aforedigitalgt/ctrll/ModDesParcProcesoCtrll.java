@@ -67,19 +67,25 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 	@Getter
 	private Date fecActual;
 
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
 			proceso = null;
-			fecActual=DateUtil.getNowDate();
+			fecActual=DateUtil.getNowDate();			
 		}
 	}
 
 	public void radioSelected() {
 		fecha = null;
-		disabled="false";
+		disabled="false";				
+		pendientes=null;
+		totales=null;
+		unaExhibicion=null;
+		sinSalario=null;
+		parcialidades=null;
 	}
 
 	public void buscarRegXProcesar() {
@@ -257,8 +263,7 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 	public boolean isFormValid(ProcessResult pr) {
 		if (radioSelected == null) {
 			UIInput radio = (UIInput) findComponent("radSelect");
-			radio.setValid(false);
-
+			radio.setValid(false);       
 			pr.setDescProceso("Debe seleccionar una opción");
 			pr.setStatus("Selección requerida");
 			return false;

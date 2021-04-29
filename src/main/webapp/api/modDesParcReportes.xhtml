@@ -32,20 +32,20 @@
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
 							outcome="/api/modDesempParc.jsf" includeViewParams="true"
 							value="Proceso individual">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
 
-						<p:linkButton styleClass="green ui-button-text"
+						<p:linkButton styleClass="green ui-button-text" style="margin-left:13px !important"
 							outcome="/api/modDesParcReportes.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnReportes}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
 							outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnLProcesar}">
 							<f:param name="init" value="true" />
@@ -55,64 +55,89 @@
 			</p:row>
 		</p:panelGrid>
 
-		<h:form id="form">		    
+		<h:form id="form">
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo2}"
 				style="margin-bottom:20px;margin-top:18px">
-				<p:selectOneRadio id="customRadio2" layout="pageDirection"
-					value="#{modDesParcReportes.radioSelected}" style="font-size:12px">
-					<p:ajax listener="#{modDesParcReportes.radioSelected}"
-						update="form:fCapturada2 form:ruta form:archivo" global="false" />
-					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnRepDiag}"
-						itemValue="1" />
-					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnGenLP}"
-						itemValue="2" />
-					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnRepNS}"
-						itemValue="3" />
-					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnRepMA}"
-						itemValue="4" />
-				</p:selectOneRadio>
+				<p:panelGrid styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:selectOneRadio id="customRadio2" layout="pageDirection"
+								value="#{modDesParcReportes.radioSelected}"
+								style="margin-right:70px">
+								<p:ajax listener="#{modDesParcReportes.radioSelected}"
+									update="form:btnProcesar form:fCapturada2 form:ruta form:archivo form:customRadio2"
+									global="false" />
+								<f:selectItem
+									itemLabel="#{msg.modulo_desempleoParc_radBtnRepDiag}"
+									itemValue="1" />
+								<f:selectItem
+									itemLabel="#{msg.modulo_desempleoParc_radBtnGenLP}"
+									itemValue="2" />
+								<f:selectItem
+									itemLabel="#{msg.modulo_desempleoParc_radBtnRepNS}"
+									itemValue="3" />
+								<f:selectItem
+									itemLabel="#{msg.modulo_desempleoParc_radBtnRepMA}"
+									itemValue="4" />
+							</p:selectOneRadio>
+						</p:column>
+						<p:column>
+							<p:panelGrid styleClass="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:outputLabel for="fCapturada2"
+											value="#{msg.modulo_desempleoParc_lblfecha}" />
+									</p:column>
+									<p:column>
+										<p:datePicker id="fCapturada2"
+											value="#{modDesParcReportes.fecha}" locale="es"
+											showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+											monthNavigator="true"
+											disabled="#{modDesParcReportes.disabled}"
+											maxdate="#{modDesParcReportes.fecActual}"
+											inputStyle="width:120px; text-align:right;"
+											readonlyInput="true">
 
+											<p:ajax event="dateSelect"
+												listener="#{modDesParcReportes.opcionSeleccionada}"
+												update="ruta archivo" global="false" />
+										</p:datePicker>
 
-				<div class="ui-g" style="margin-top:10px">
-					<div class="ui-g-2" style="width:110px">
-						<p:outputLabel for="fCapturada2"
-							value="#{msg.modulo_desempleoParc_lblfecha}" />
-					</div>
-					<div class="ui-g-4" style="padding-left:0px;width:270px">
-						<p:datePicker id="fCapturada2" value="#{modDesParcReportes.fecha}"
-							locale="es" showIcon="true" pattern="dd-MM-yyyy"
-							yearNavigator="true" monthNavigator="true"
-							disabled="#{modDesParcReportes.disabled}"
-							maxdate="#{modDesParcReportes.fecActual}"
-							inputStyle="width:120px; text-align:right;" readonlyInput="true">
-
-							<p:ajax event="dateSelect"
-								listener="#{modDesParcReportes.opcionSeleccionada}"
-								update="ruta archivo" global="false" />
-						</p:datePicker>
-					</div>
-					<div class="ui-g-6" style="text-align: left">
-						<p:commandButton styleClass="blue ui-button-text" type="submit"
-							value="#{msg.modulo_desempleoParc_btnProcesar}"
-							action="#{modDesParcReportes.procesarReporte}" update="form:fCapturada2 form:customRadio2 result" />
-					</div>
-				</div>
-				<div class="ui-g">
-					<div class="ui-g-2" style="margin-top:10px;width:110px">
-						<p:outputLabel value="#{msg.modulo_desempleoParc_lblRuta}" />
-					</div>
-					<div class="ui-g-10 outputlabel-shadow" style="width:348px;margin-top:10px">
-						<p:outputLabel id="ruta" value="#{modDesParcReportes.ruta}"/>
-					</div>
-				</div>
-				<div class="ui-g" style="margin-top: 10px">
-					<div class="ui-g-2" style="width:110px">
-						<p:outputLabel value="#{msg.modulo_desempleoParc_lblArchivo}" />
-					</div>
-					<div class="ui-g-10 outputlabel-shadow" style="width:348px">
-						<p:outputLabel id="archivo" value="#{modDesParcReportes.archivo}" />
-					</div> 
-				</div>
+										<p:commandButton  id="btnProcesar" styleClass="blue ui-button-text"
+											style="margin-left:99px" type="submit"
+											value="#{msg.modulo_desempleoParc_btnProcesar}"
+											disabled="#{modDesParcReportes.disabled}"
+											action="#{modDesParcReportes.procesarReporte}"
+											update="form:fCapturada2 form:customRadio2 form:customRadio2 result" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="#{msg.modulo_desempleoParc_lblRuta}" />
+									</p:column>
+									<p:column>
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:320px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="ruta" value="#{modDesParcReportes.ruta}" />
+										</p:outputPanel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="#{msg.modulo_desempleoParc_lblArchivo}" />
+									</p:column>
+									<p:column>
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:320px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="archivo"
+												value="#{modDesParcReportes.archivo}" />
+										</p:outputPanel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{modDesParcReportes}" />
 				</ui:include>

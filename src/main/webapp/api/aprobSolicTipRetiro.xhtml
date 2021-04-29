@@ -33,11 +33,12 @@
 					<h:form>
 						<p:linkButton styleClass="green"
 							outcome="/api/aprobSolicTipRetiro.jsf" includeViewParams="true"
-							value="APROBACIONES">
+							value="Aprobaciones">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/api/ordenPago.jsf"
-							includeViewParams="true" value="REPORTE DE ALERTAS">
+						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important" outcome="/api/ordenPago.jsf"
+							includeViewParams="true" value="Reporte de Alertas">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 					</h:form>
@@ -47,21 +48,6 @@
 
 		<h:form id="form">
 			<p:panel header="APROBACIONES" style="margin-top:20px">
-				<p:commandButton id="btnRecSolicPend"
-					styleClass="blue ui-button-text" style="margin-right:30px"
-					onclick="PF('listSolicitudes').clearFilters()"
-					action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
-					type="submit"
-					update="form:table1 form:table1:totalRegistros form:result form:table1:btnMarcar form:table1:btnDesmarcar form:table1:btnAprobar"
-					oncomplete="PF('listSolicitudes').selectAllRows();"
-					value="RECUPERAR SOLICITUDES PENDIENTES" ajax="true" />
-
-
-				<p:linkButton styleClass="blue ui-button-text"
-					outcome="/api/ordenPago.jsf" includeViewParams="true"
-					value="GENERAR REPORTE DE ALERTAS">
-					<f:param name="init" value="true" />
-				</p:linkButton>
 
 				<p:dataTable id="table1" var="mon" class="sinfondo"
 					value="#{aprobSolicTipRetiro.listSolicitudes}"
@@ -70,9 +56,9 @@
 					filteredValue="#{aprobSolicTipRetiro.filtro}"
 					globalFilterFunction="#{aprobSolicTipRetiro.globalFilterFunction}"
 					selection="#{aprobSolicTipRetiro.selectedSolicitud}"
-					rowKey="#{mon.numSolicitud}"
-					style="padding-top:10px;margin-top:10px" rows="10" paginator="true"
-					paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
+					rowKey="#{mon.numSolicitud}" style="border:0px" rows="10"
+					paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="5,10,15">
 
 					<p:ajax event="page" global="false" />
 					<p:ajax event="filter" global="false" />
@@ -93,9 +79,34 @@
 						update="table1 table1:totalRegistros" global="false" />
 
 
-
 					<f:facet name="header">
-						<p:outputPanel style="text-align:left;margin-bottom:20px;">
+						<p:panelGrid class="no-border no-padding">
+							<p:row>
+								<p:column
+									style="text-align: left !important;width: 65px !important;">
+									<p:commandButton id="btnRecSolicPend"
+										styleClass="blue ui-button-text" style="margin-right:30px"
+										onclick="PF('listSolicitudes').clearFilters()"
+										action="#{aprobSolicTipRetiro.recuperarSolicPendientes}"
+										type="submit"
+										update="form:table1 form:table1:totalRegistros form:result form:table1:btnMarcar form:table1:btnDesmarcar form:table1:btnAprobar"
+										oncomplete="PF('listSolicitudes').selectAllRows();"
+										value="Recuperar Solicitudes Pendientes" ajax="true" />
+								</p:column>
+								<p:column
+									style="text-align: left !important;width: 65px !important;">
+									<p:linkButton styleClass="blue ui-button-text"
+										outcome="/api/ordenPago.jsf" includeViewParams="true"
+										value="Generar Reporte de Alertas">
+										<f:param name="init" value="true" />
+									</p:linkButton>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</f:facet>
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
 							<h:outputLabel style="margin-right:20px;font-weight:normal;"
 								for="flt" value="#{msg.aprob_label_filtro}" />
 							<p:inputText id="globalFilter"
@@ -118,7 +129,7 @@
 										update="table1 table1:totalRegistros form:table1:count"
 										action="#{aprobSolicTipRetiro.marcarTodos}"
 										onclick="PF('listSolicitudes').selectAllRows()"
-										value="MARCAR TODOS"
+										value="Marcar Todos"
 										disabled="#{aprobSolicTipRetiro.disabled}" ajax="true"
 										global="false" />
 								</p:column>
@@ -129,7 +140,7 @@
 										update="table1 table1:totalRegistros form:table1:count"
 										action="#{aprobSolicTipRetiro.desmarcarTodos}"
 										onclick="PF('listSolicitudes').unselectAllRows()"
-										value="DESMARCAR TODOS"
+										value="Desmarcar Todos"
 										disabled="#{aprobSolicTipRetiro.disabled}" ajax="true"
 										global="false" />
 								</p:column>
@@ -140,7 +151,7 @@
 										action="#{aprobSolicTipRetiro.aprobarSolicitud}" type="submit"
 										onclick="PF('listSolicitudes').clearFilters()"
 										update="form:result form:table1:count form:table1:btnMarcar form:table1:btnDesmarcar form:table1:btnAprobar"
-										value="APROBAR SELECCIONADOS"
+										value="Aprobar Seleccionados"
 										disabled="#{aprobSolicTipRetiro.disabled2}" ajax="true"
 										global="true" />
 								</p:column>

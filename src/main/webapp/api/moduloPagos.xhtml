@@ -48,6 +48,7 @@
 							value="#{msg.modulo_pagos_label_fechaProceso}" />
 						<p:datePicker id="fProceso" value="#{moduloPagos.fechaProceso}"
 							locale="es" showIcon="true" pattern="dd-MM-yyyy"
+							maxdate="#{moduloPagos.fecActual}"
 							yearNavigator="true" monthNavigator="true"
 							inputStyle="width:120px; text-align:right;" readonlyInput="true">
 
@@ -122,6 +123,7 @@
 							<p:column>
 								<p:datePicker id="fProcesoP"
 									value="#{moduloPagos.fechaProcesoPagos}" locale="es"
+									maxdate="#{moduloPagos.fecActual}"
 									showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
 									monthNavigator="true"
 									inputStyle="width:120px; text-align:right;"

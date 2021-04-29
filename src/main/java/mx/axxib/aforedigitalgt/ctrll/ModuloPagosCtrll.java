@@ -42,6 +42,8 @@ public class ModuloPagosCtrll extends ControllerBase {
 	private Date fechaProcesoPagos;
 	@Getter
 	private String msj;
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
@@ -50,6 +52,7 @@ public class ModuloPagosCtrll extends ControllerBase {
 			fechaProceso = DateUtil.getNowDate();
 			fechaProcesoPagos = DateUtil.getNowDate();
 			refresh();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 

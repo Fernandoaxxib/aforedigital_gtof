@@ -36,6 +36,7 @@ public class CerInaProcesoCtrll extends ControllerBase {
 	
 	@Getter
 	private String disabled;
+	
 
 	@Override
 	public void iniciar() {
@@ -43,12 +44,12 @@ public class CerInaProcesoCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			disabled="true";
-			fecActual=DateUtil.getNowDate();
+			fecActual=DateUtil.getNowDate();			
 		}
 	}
 	public void radioSelected() {
 		fecha = null;
-		disabled="false";
+		disabled="false";	
 	}
 	public void reset() {
 		fecha = null;		
@@ -86,8 +87,7 @@ public class CerInaProcesoCtrll extends ControllerBase {
 	public boolean isFormValid(ProcessResult pr) {
 		if (radioSelected == null) {
 			UIInput radio = (UIInput) findComponent("radSelect");
-			radio.setValid(false);
-
+			radio.setValid(false);		
 			pr.setDescProceso("Debe seleccionar una opción");
 			pr.setStatus("Selección requerida");
 			return false;

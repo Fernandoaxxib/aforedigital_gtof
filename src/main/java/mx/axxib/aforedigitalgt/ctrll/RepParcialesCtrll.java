@@ -39,13 +39,16 @@ public class RepParcialesCtrll extends ControllerBase {
 	@Setter
 	private String archivo;
 	@Getter
-	private String respuesta;
+	private String respuesta;	
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 

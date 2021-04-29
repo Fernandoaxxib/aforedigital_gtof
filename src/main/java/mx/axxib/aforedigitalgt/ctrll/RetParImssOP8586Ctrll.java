@@ -102,7 +102,8 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 	private boolean disabled3;
 	@Getter
 	private boolean disabled4;
-
+	@Getter
+	private boolean disabled5;
 	
 	@Override
 	public void iniciar() {
@@ -116,7 +117,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			archivo = format.format(DateUtil.getNowDate());
 			archivo=archivo+".OP85";
 			today= new Date();
-			reset();
+			reset();			
 		}
 	}
 	public void radioSelected() {
@@ -126,9 +127,10 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			seleccion2 = false;
 			disabled1 = false;
 			disabled2 = false;
-			disabled3 = true;
+			disabled3 = false;
 			disabled4 = true;
-			archivo3=null;
+			disabled5 = false;
+			archivo3=null;			
 		}
 
 	}
@@ -144,6 +146,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			disabled2 = true;
 			disabled3 = false;
 			disabled4 = false;
+			disabled5 = false;
 			archivo3=null;
 		}
 
@@ -236,7 +239,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 
 		if (radioSelected != null || radioSelected2 != null) {
 			if(isNombreValid(pr)) {
-			if (radioSelected != null) {
+			if (radioSelected != null && radioSelected.equals("1")) {
 				if (fecIni != null && fecFin != null) {
 					if (DateUtil.isValidDates(fecIni, fecFin)) {					  
 						  try {
@@ -279,7 +282,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 					resultados.add(pr);
 				}
 			}
-			if (radioSelected2 != null) {
+			if (radioSelected2 != null && radioSelected2.equals("1")) {
 				if (lote != null && !lote.isEmpty()) {					
 						  try {
 								ProcesResult res=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
@@ -312,8 +315,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			UIInput radio = (UIInput) findComponent("customRadio");
 			radio.setValid(false);
 			UIInput radio2 = (UIInput) findComponent("customRadio2");
-			radio2.setValid(false);
-
+			radio2.setValid(false);            
 			pr.setStatus("Selección requerida");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -356,6 +358,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		disabled2 = true;
 		disabled3 = true;
 		disabled4 = true;
+		disabled5 = true;
 	}
 	public void limpiar() {
 		lote=null;

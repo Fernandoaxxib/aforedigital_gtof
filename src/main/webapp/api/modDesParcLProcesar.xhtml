@@ -34,19 +34,23 @@
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue" outcome="/api/modDesempParc.jsf"
-							includeViewParams="true" value="Proceso individual">
+						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
+							outcome="/api/modDesempParc.jsf" includeViewParams="true"
+							value="Proceso individual">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
 
 						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
 							outcome="/api/modDesParcReportes.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnReportes}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
 						<p:linkButton styleClass="green"
+							style="margin-left:13px !important"
 							outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnLProcesar}">
 							<f:param name="init" value="true" />
@@ -98,9 +102,9 @@
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo3}"
 				style="margin-bottom:20px;margin-top:18px">
 				<p:selectOneRadio id="radioSelect" layout="pageDirection"
-					value="#{modDesParcLProcesar.radioSelected}" style="font-size:12px">
+					value="#{modDesParcLProcesar.radioSelected}">
 					<p:ajax listener="#{modDesParcLProcesar.radioSelected}"
-						global="false" update="pnl2 pnl3 pnl4 pnl5 pnl6"></p:ajax>
+						global="false" update="pnl2 pnl3 pnl4 pnl5 pnl6 form3:radioSelect"></p:ajax>
 					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnGenLot}"
 						itemValue="1" />
 					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnGenLay}"
@@ -111,23 +115,24 @@
 				<p:panelGrid id="pnl2" class="ui-noborder" style="margin-top:10px">
 					<p:row>
 						<p:column style="width:80px">
-							<p:outputPanel rendered="#{modDesParcLProcesar.radioSelected eq 1}">
+							<p:outputPanel
+								rendered="#{modDesParcLProcesar.radioSelected eq 1}">
 								<p:outputLabel for="fCapturada3"
 									value="#{msg.modulo_desempleoParc_column_fecha}" />
 							</p:outputPanel>
 						</p:column>
-						<p:column style="width:278px">
-							<p:outputPanel rendered="#{modDesParcLProcesar.radioSelected eq 1}">
+						<p:column style="width:262px">
+							<p:outputPanel
+								rendered="#{modDesParcLProcesar.radioSelected eq 1}">
 								<p:datePicker id="fCapturada3"
 									value="#{modDesParcLProcesar.fecha}" locale="es"
 									showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
 									monthNavigator="true"
 									inputStyle="width:200px; text-align:right;"
-									maxdate="#{modDesParcLProcesar.fecActual}"
-									readonlyInput="true" />
+									maxdate="#{modDesParcLProcesar.fecActual}" readonlyInput="true" />
 							</p:outputPanel>
 						</p:column>
-						<p:column>
+						<p:column rendered="#{modDesParcLProcesar.radioSelected eq 1 or (modDesParcLProcesar.radioSelected eq 2 or (modDesParcLProcesar.radioSelected eq 3)) }">
 							<p:commandButton styleClass="blue" type="submit"
 								value="#{msg.modulo_desempleoParc_btnGenerar}" ajax="true"
 								action="#{modDesParcLProcesar.generarAccion}" global="true"

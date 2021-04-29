@@ -37,17 +37,13 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String radioSelected;
-
 	@Getter
 	@Setter
 	private Integer cuentasPendientes;
-
 	@Getter
 	private String ruta;
-
 	@Getter
 	private String archivo;
-
 	@Getter
 	private String display;
 	@Getter
@@ -60,12 +56,15 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 	private String display4;
 	@Getter
 	private String display5;
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 

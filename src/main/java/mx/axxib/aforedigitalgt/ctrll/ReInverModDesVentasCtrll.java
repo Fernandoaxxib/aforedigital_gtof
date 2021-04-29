@@ -58,6 +58,8 @@ public class ReInverModDesVentasCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Double accionesTotal;
+	@Getter
+	private Date fecActual;
 
 	@Override
 	public void iniciar() {
@@ -69,6 +71,7 @@ public class ReInverModDesVentasCtrll extends ControllerBase {
 			fecha = DateUtil.getNowDate();
 			detalleVenta = null;
 			listLotes = null;
+			fecActual=DateUtil.getNowDate();
 		}
 	}
 

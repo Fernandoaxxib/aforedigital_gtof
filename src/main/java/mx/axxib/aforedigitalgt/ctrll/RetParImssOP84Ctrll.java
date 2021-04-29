@@ -90,7 +90,9 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	@Getter
 	private boolean disabled3;
 	@Getter
-	private boolean disabled4;
+	private boolean disabled4;	
+	@Getter
+	private String border;
 
 	@Override
 	public void iniciar() {
@@ -100,7 +102,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
 			today = new Date();
 			reset();
-
+            border="";
 		}
 	}
 
@@ -111,8 +113,9 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			seleccion2 = false;
 			disabled1 = false;
 			disabled2 = false;
-			disabled3 = true;
+			disabled3 = false;
 			disabled4 = true;
+			border="";
 		}
 
 	}
@@ -128,6 +131,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			disabled2 = true;
 			disabled3 = false;
 			disabled4 = false;
+			border="";
 		}
 
 	}
@@ -210,7 +214,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		pr.setDescProceso("Consulta");
 
 		if (radioSelected != null || radioSelected2 != null) {
-			if (radioSelected != null) {
+			if (radioSelected != null && radioSelected.equals("1")) {
 				if (fecIni != null && fecFin != null) {
 					if (DateUtil.isValidDates(fecIni, fecFin)) {
 						try {
@@ -254,7 +258,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 					resultados.add(pr);
 				}
 			}
-			if (radioSelected2 != null) {
+			if (radioSelected2 != null && radioSelected2.equals("1")) {
 				if (lote != null && !lote.isEmpty()) {
 					try {
 						ProcesResult res = service.getConsultaOP84(fecIni, fecFin, lote);
@@ -288,7 +292,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			radio.setValid(false);
 			UIInput radio2 = (UIInput) findComponent("customRadio2");
 			radio2.setValid(false);
-
+            border="red";
 			pr.setStatus("Selección requerida");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -328,14 +332,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 			return false;
-		} else {
-			/*
-			 * if (!ValidateUtil.isValidFileName(nombreArchivo)) { UIInput radio = (UIInput)
-			 * findComponent("nombreArchivo"); radio.setValid(false);
-			 * pr.setStatus("Nombre de archivo no válido");
-			 * pr.setFechaFinal(DateUtil.getNowDate()); resultados.add(pr); return false; }
-			 */
-		}
+		} 
 
 		return true;
 	}

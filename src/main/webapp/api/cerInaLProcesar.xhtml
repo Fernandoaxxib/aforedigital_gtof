@@ -94,9 +94,9 @@
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo3}"
 				style="margin-bottom:20px;margin-top:18px">
 				<p:selectOneRadio id="radioSelect" layout="pageDirection"
-					value="#{cerInaLProcesar.radioSelected}" style="font-size:12px">
+					value="#{cerInaLProcesar.radioSelected}" style="color:#{cerInaLProcesar.border2}">
 					<p:ajax listener="#{cerInaLProcesar.radioSelected}"
-						global="false" update="pnl2 pnl3 pnl4 pnl5 pnl6"></p:ajax>
+						global="false" update="form3:radioSelect pnl2 pnl3 pnl4 pnl5 pnl6"></p:ajax>
 					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnGenLot}"
 						itemValue="1" />
 					<f:selectItem itemLabel="#{msg.modulo_desempleoParc_radBtnGenLay}"
@@ -112,7 +112,7 @@
 									value="#{msg.modulo_desempleoParc_column_fecha}" />
 							</p:outputPanel>
 						</p:column>
-						<p:column style="width:278px">
+						<p:column style="width:262px">
 							<p:outputPanel rendered="#{cerInaLProcesar.radioSelected eq 1}">
 								<p:datePicker id="fCapturada3"
 									value="#{cerInaLProcesar.fecha}" locale="es"
@@ -123,7 +123,7 @@
 									readonlyInput="true" />
 							</p:outputPanel>
 						</p:column>
-						<p:column>
+						<p:column rendered="#{cerInaLProcesar.radioSelected eq 1 or (cerInaLProcesar.radioSelected eq 2 or (cerInaLProcesar.radioSelected eq 3)) }">
 							<p:commandButton styleClass="blue" type="submit"
 								value="#{msg.modulo_desempleoParc_btnGenerar}" ajax="true"
 								action="#{cerInaLProcesar.generarAccion}" global="true"

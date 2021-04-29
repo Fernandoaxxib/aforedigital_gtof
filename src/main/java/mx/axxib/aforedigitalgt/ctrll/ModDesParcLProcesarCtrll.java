@@ -61,12 +61,13 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Getter
 	private Date fecActual;
 	
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
 			reset();
-			fecActual=DateUtil.getNowDate();
+			fecActual=DateUtil.getNowDate();			
 		}
 	}
 	
@@ -75,7 +76,7 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		UIInput arc2 = (UIInput) findComponent("idArchivo2");
 		fec.setValid(true);			
 		arc2.setValid(true);
-		
+
 		if(radioSelected.equals("1")) {			
 			lote=null;
 			archivo2=null;
@@ -186,7 +187,7 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		
 	  }else {
 		    UIInput radio = (UIInput) findComponent("radioSelect");
-			radio.setValid(false);
+			radio.setValid(false);			
 			pr.setDescProceso("Debe seleccionar una opción");
 			pr.setStatus("Selección requerida");					
 			return false;		  

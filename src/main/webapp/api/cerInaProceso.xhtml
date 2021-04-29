@@ -59,14 +59,15 @@
 
 
 
-		<h:form id="form">			
+		<h:form id="form">
 			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title1}"
 				style="font-size:12px;margin-bottom:20px">
 				<p:panelGrid columns="1" styleClass="ui-noborder"
 					style="margin-bottom:10px" cellpadding="5">
 					<p:selectOneRadio id="radSelect" layout="pageDirection"
-						value="#{cerInaProceso.radioSelected}" style="font-size:12px">
-						<p:ajax listener="#{cerInaProceso.radioSelected}" update="form:fCapturada" global="false" />
+						value="#{cerInaProceso.radioSelected}">
+						<p:ajax listener="#{cerInaProceso.radioSelected}"
+							update="form:radSelect form:fCapturada form:fnEjecutar" global="false" />
 						<f:selectItem itemValue="1"
 							itemLabel="#{msg.certifica_inactividad_rdbDiag}" />
 						<f:selectItem itemValue="2"
@@ -86,8 +87,10 @@
 						inputStyle="width:120px; text-align:right;" readonlyInput="true" />
 
 					<p:commandButton id="fnEjecutar" styleClass="blue" type="submit"
+						disabled="#{cerInaProceso.disabled}"
 						value="#{msg.certifica_inactividad_btnEjecutar}"
-						action="#{cerInaProceso.ejecutar}" update="form:radSelect form:fCapturada form:result" ajax="true" />
+						action="#{cerInaProceso.ejecutar}"
+						update="form:radSelect form:fCapturada form:result" ajax="true" />
 				</p:panelGrid>
 
 				<ui:include src="processResult.xhtml">

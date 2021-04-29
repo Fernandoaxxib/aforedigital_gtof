@@ -78,7 +78,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			listSolicitudes=null;
 			recuperarSolicPendientes();
 			PrimeFaces.current().executeScript("PF('listSolicitudes').selectAllRows()");
-			if(listSolicitudes!=null) {
+			if(listSolicitudes!=null && listSolicitudes.size()>0) {
 				seleccionados=listSolicitudes.size();
 				disabled="false";
 				disabled2="false";
@@ -110,7 +110,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			listSolicitudes = service.getListSolicitudes();			
 			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		    seleccionados=listSolicitudes.size();
-		    if(listSolicitudes!=null) {
+		    if(listSolicitudes!=null && listSolicitudes.size()>0) {
 				disabled="false";
 				if(seleccionados>0) {
 					 disabled2="false";
@@ -208,9 +208,10 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 						res=null;						
 					}finally {					
 						results.add(pr2);
+						resultados.addAll(results);
 					}
 				});		
-					filtrarResultados(results);							
+					//filtrarResultados(results);							
 				
 				selectedSolicitud=null;
 				recuperarSolicPendientes();
@@ -291,6 +292,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			 results.add(p);
 			 resultados.addAll(results);
 		 }
+		 
+		 
 		 
 	 }
 

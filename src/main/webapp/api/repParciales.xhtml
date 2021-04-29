@@ -47,6 +47,7 @@
 					<div class="ui-g-3" style="width: 180px;">
 						<p:datePicker id="dini" value="#{repParcialesConsar.fechaInicio}"
 							locale="es" showIcon="true" pattern="dd-MM-yyyy"
+							maxdate="#{repParcialesConsar.fecActual}"
 							yearNavigator="true" monthNavigator="true"
 							inputStyle="width:110px; text-align:right;" readonlyInput="true" />
 					</div>
@@ -56,6 +57,7 @@
 					<div class="ui-g-3">
 						<p:datePicker id="dffin" value="#{repParcialesConsar.fechaFin}"
 							locale="es" showIcon="true" pattern="dd-MM-yyyy"
+							maxdate="#{repParcialesConsar.fecActual}"
 							yearNavigator="true" monthNavigator="true"
 							inputStyle="width:110px; text-align:right;" readonlyInput="true" />
 					</div>

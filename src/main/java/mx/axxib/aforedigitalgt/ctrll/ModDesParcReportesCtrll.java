@@ -46,13 +46,14 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 	
 	@Getter
 	private Date fecActual;
+		
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
-			fecActual=DateUtil.getNowDate();
+			fecActual=DateUtil.getNowDate();			
 		}
 	}
 
@@ -60,7 +61,7 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 		fecha=null;
 		ruta=null;
 		archivo=null;
-		disabled="false";
+		disabled="false";		
 	}
 
 	public void procesarReporte() {				
@@ -162,7 +163,7 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 		if (radioSelected == null) {
 			UIInput radio = (UIInput) findComponent("customRadio2");
 			radio.setValid(false);
-
+			
 			pr.setDescProceso("Debe seleccionar una opción");
 			pr.setStatus("Selección requerida");
 			return false;

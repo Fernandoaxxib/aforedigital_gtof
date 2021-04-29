@@ -113,11 +113,11 @@
 							<p:row>
 								<p:column style="width:100px">
 									<p:selectOneRadio id="customRadio"
-										value="#{retParImssOP84.radioSelected}"
+										value="#{retParImssOP84.radioSelected}"										
 										unselectable="#{retParImssOP84.seleccion1}"
 										layout="pageDirection">
 										<p:ajax listener="#{retParImssOP84.radioSelected}"
-											update="form:customRadio2 form:dfini form:dffin form:vLote form:btnC"
+											update="form:btnConsultar form:customRadio2 form:customRadio form:dfini form:dffin form:vLote form:btnC"
 											global="false" />
 										<f:selectItem itemLabel="Fecha" itemValue="1" />
 									</p:selectOneRadio>
@@ -132,8 +132,8 @@
 										monthNavigator="true"
 										inputStyle="width:100px; text-align:right;"
 										readonlyInput="true" disabled="#{retParImssOP84.disabled1}">
-										<p:ajax event="dateSelect"
-											listener="#{retParImssOP84.limpiar}" update="" />
+										<p:ajax event="dateSelect" global="false"
+											listener="#{retParImssOP84.limpiar}"/>
 									</p:datePicker>
 								</p:column>
 								<p:column>
@@ -153,11 +153,11 @@
 							<p:row>
 								<p:column style="width:75px">
 									<p:selectOneRadio id="customRadio2"
-										value="#{retParImssOP84.radioSelected2}"
+										value="#{retParImssOP84.radioSelected2}"										
 										unselectable="#{retParImssOP84.seleccion2}"
 										layout="pageDirection">
 										<p:ajax listener="#{retParImssOP84.radioSelected2}"
-											update="form:customRadio form:dfini form:dffin form:vLote form:btnC"
+											update="form:btnConsultar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC"
 											global="false" />
 										<f:selectItem itemLabel="Lote" itemValue="1" />
 									</p:selectOneRadio>
@@ -173,9 +173,10 @@
 										update="dlg1 dfini dffin" oncomplete="PF('dlg2').show();" />
 								</p:column>
 								<p:column style="padding-left:30px !important">
-									<p:commandButton styleClass="blue ui-button-text" type="submit"
+									<p:commandButton id="btnConsultar" styleClass="blue ui-button-text" type="submit"
 										value="#{msg.retPar_imss_op84_btnConsultar}"
 										action="#{retParImssOP84.consultarOP84}"
+										disabled="#{retParImssOP84.disabled3}"
 										update="form:table1 form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:result"
 										ajax="true" />
 								</p:column>
@@ -184,7 +185,7 @@
 					</p:panel>
 
 					<p:dataTable id="table1" var="mon"
-						value="#{retParImssOP84.registros}" emptyMessage=""
+						value="#{retParImssOP84.registros}" emptyMessage="Sin información"
 						scrollable="true" scrollHeight="100"
 						style="font-size:12px;margin-top:10px">
 

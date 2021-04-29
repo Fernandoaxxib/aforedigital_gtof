@@ -42,18 +42,22 @@ public class CerInaReportesCtrll extends ControllerBase {
 	private Date fechaFin;
 
 	@Getter
-	@Setter
 	private String disabled;
 	
 	@Getter
+	private String disabled2;
+	
+	@Getter
 	private Date fecActual;
+	
+	
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
-			fecActual=DateUtil.getNowDate();
+			fecActual=DateUtil.getNowDate();			
 		}
 	}
 
@@ -96,7 +100,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 						resultados.add(pr);
 					}
 				} else {
-					UIInput radio = (UIInput) findComponent("fIni");
+					UIInput radio = (UIInput) findComponent("dfini");
 					radio.setValid(false);
 					pr.setDescProceso("Debe seleccionar una fecha");
 					pr.setStatus("Selección requerida");
@@ -134,9 +138,9 @@ public class CerInaReportesCtrll extends ControllerBase {
 								resultados.add(pr);	
 							}
 						} else {
-							UIInput fechaI = (UIInput) findComponent("fIni");
+							UIInput fechaI = (UIInput) findComponent("dfini");
 							fechaI.setValid(false);
-							UIInput fechaF = (UIInput) findComponent("fFin");
+							UIInput fechaF = (UIInput) findComponent("dffin");
 							fechaF.setValid(false);						
 							pr.setDescProceso("Fecha inicio debe ser menor o igual a fecha fin");
 							pr.setStatus("Selección requerida");
@@ -144,9 +148,11 @@ public class CerInaReportesCtrll extends ControllerBase {
 							resultados.add(pr);	
 						}
 					} else {
-						UIInput fechaI = (UIInput) findComponent("fIni");
-						fechaI.setValid(false);
-						UIInput fechaF = (UIInput) findComponent("fFin");
+						
+					
+						UIInput fechaI = (UIInput) findComponent("dfini"); 
+						fechaI.setValid(false);										
+						UIInput fechaF = (UIInput) findComponent("dffin");
 						fechaF.setValid(false);						
 						pr.setDescProceso("Debe seleccionar fecha inicio y fecha fin");
 						pr.setStatus("Selección requerida");
@@ -157,7 +163,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 			}
 		} else {
 			UIInput radio = (UIInput) findComponent("radSelect");
-			radio.setValid(false);
+			radio.setValid(false);			
 			pr.setDescProceso("Debe seleccionar una opción");
 			pr.setStatus("Selección requerida");
 			pr.setFechaFinal(DateUtil.getNowDate());
@@ -165,47 +171,48 @@ public class CerInaReportesCtrll extends ControllerBase {
 		}
 	}
 
-	public void radioSelected() {
+	public void radioSelected() {		
+		disabled="false";
 		switch (radioSelected) {
 
 		case "1":
-			this.disabled = "true";
+			this.disabled2 = "true";
 			this.fechaInicio = null;
 			this.fechaFin = null;			
 			break;
 
 		case "2":
-			this.disabled = "true";
+			this.disabled2 = "true";
 			this.fechaInicio = null;
 			this.fechaFin = null;
 			break;
 
 		case "3":
-			this.disabled = "true";
+			this.disabled2 = "true";
 			this.fechaInicio = null;
 			this.fechaFin = null;
 			break;
 
 		case "4":
-			this.disabled = "true";
+			this.disabled2 = "true";
 			this.fechaInicio = null;
 			this.fechaFin = null;
 			break;
 
 		case "5":
-			this.disabled = "false";
+			this.disabled2 = "false";
 			this.fechaInicio = null;
 			this.fechaFin = null;
 			break;
 
 		case "6":
-			this.disabled = "false";
+			this.disabled2 = "false";
 			this.fechaInicio = null;
 			this.fechaFin = null;
 			break;
 
 		default:
-			this.disabled = "true";
+			this.disabled2 = "true";
 			break;
 
 		}
@@ -254,6 +261,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 
 	public void reset() {
 		disabled = "true";
+		disabled2= "true";
 		ruta = "/RESPALDOS/operaciones";
 		fechaInicio = null;
 		fechaFin = null;

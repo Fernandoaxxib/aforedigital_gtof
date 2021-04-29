@@ -16,7 +16,7 @@
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
 
-	<ui:define name="center">		
+	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:panelGrid class="no-border no-padding" style="width: 100%">
@@ -32,19 +32,19 @@
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
 							outcome="/api/modDesempParc.jsf" includeViewParams="true"
 							value="Proceso individual">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
 							outcome="/api/modDesParcReportes.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnReportes}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue ui-button-text"
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
 							outcome="/api/modDesParcLProcesar.jsf" includeViewParams="true"
 							value="#{msg.modulo_desempleoParc_btnLProcesar}">
 							<f:param name="init" value="true" />
@@ -99,63 +99,69 @@
 					</p:column>
 				</p:dataTable>
 				<p:outputPanel style="text-align:right">
-					<p:commandButton styleClass="blue" value="#{msg.modulo_desempleoParc_btnRegresar}"
-						onclick="PF('dlg2').hide();"
-						style="font-size:12px;" />
-					<p:commandButton styleClass="blue" value="#{msg.modulo_desempleoParc_btnGuardar}"
-						action="#{modDesParcProceso.guardar}" update="form:btnDlg form:radSelect form:fCapturada form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal form:result"
-						oncomplete="PF('dlg2').hide();"
-						style="font-size:12px;" />
+					<p:commandButton styleClass="blue"
+						value="#{msg.modulo_desempleoParc_btnRegresar}"
+						onclick="PF('dlg2').hide();" style="font-size:12px;" />
+					<p:commandButton styleClass="blue"
+						value="#{msg.modulo_desempleoParc_btnGuardar}"
+						action="#{modDesParcProceso.guardar}"
+						update="form:btnDlg form:radSelect form:fCapturada form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal form:result"
+						oncomplete="PF('dlg2').hide();" style="font-size:12px;" />
 				</p:outputPanel>
 			</h:form>
 		</p:dialog>
 
 
 
-		<h:form id="form">          
-			<p:panel id="pnlResult" header="Proceso masivo (primer pago)" style="margin-bottom:20px; margin-top:18px">
-				<p:panelGrid id="pnlSelection" class="no-border no-padding" style="margin-bottom:10px">
+		<h:form id="form">
+			<p:panel id="pnlResult" header="Proceso masivo (primer pago)"
+				style="margin-bottom:20px; margin-top:18px">
+				<p:panelGrid id="pnlSelection" class="no-border no-padding">
 					<p:row>
 						<p:column>
-							<p:selectOneRadio id="radSelect" value="#{modDesParcProceso.radioSelected}">
-								<p:ajax listener="#{modDesParcProceso.radioSelected}" update="form:fCapturada" global="false" />
+							<p:selectOneRadio id="radSelect"								
+								value="#{modDesParcProceso.radioSelected}">
+								<p:ajax listener="#{modDesParcProceso.radioSelected}"
+									update="form:btnEjecutar form:fCapturada form:radSelect form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal"
+									global="false" />
 								<f:selectItem itemValue="1"
 									itemLabel="#{msg.modulo_desempleoParc_radBtnDiag}" />
 								<f:selectItem itemValue="2"
 									itemLabel="#{msg.modulo_desempleoParc_radBtnAprob}" />
 							</p:selectOneRadio>
-						</p:column>						
+						</p:column>
 					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputPanel style="margin-top:10px">
-								<p:outputLabel for="fCapturada" style="margin-right:20px !important"
-									value="#{msg.modulo_desempleoParc_lblfecCap}"/>
-								<p:datePicker id="fCapturada" value="#{modDesParcProceso.fecha}" 
+
+				</p:panelGrid>
+
+				<div class="ui-g">
+					<div class="ui-g-6">
+						<div class="ui-g" style="margin-bottom: 10px">
+							<div class="ui-g-6">
+								<p:outputLabel for="fCapturada"
+									value="#{msg.modulo_desempleoParc_lblfecCap}" />
+							</div>
+							<div class="ui-g-6">
+								<p:datePicker id="fCapturada" value="#{modDesParcProceso.fecha}"
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									yearNavigator="true" monthNavigator="true"
-									inputStyle="width:120px; text-align:right;" 
+									style="margin-left:-6px"
+									inputStyle="width:132px; text-align:right;"
 									disabled="#{modDesParcProceso.disabled}"
-									maxdate="#{modDesParcProceso.fecActual}"
-									readonlyInput="true">
+									maxdate="#{modDesParcProceso.fecActual}" readonlyInput="true">
 									<p:ajax event="dateSelect"
 										listener="#{modDesParcProceso.buscarRegXProcesar}"
 										update="form:radSelect form:result  form:btnDlg form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal" />
 								</p:datePicker>
-							</p:outputPanel>
-						</p:column>						
-					</p:row>
-				</p:panelGrid>
-
-				<div class="ui-g" style="margin-top: 20px;">
-					<div class="ui-g-6">
+							</div>
+						</div>
 						<div class="ui-g" style="margin-bottom: 10px">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblRegXProc"
 									value="#{msg.modulo_desempleoParc_lblRegXProc}" />
 							</div>
 							<div class="ui-g-6 outputlabel-shadow"
-								style="width: 140px; text-align: right !important">
+								style="width: 170px; text-align: right !important">
 								<p:outputLabel id="lblRegXProc"
 									value="#{modDesParcProceso.pendientes}" />
 							</div>
@@ -166,26 +172,26 @@
 									value="#{msg.modulo_desempleoParc_lblSinS}" />
 							</div>
 							<div class="ui-g-3 outputlabel-shadow"
-								style="width: 140px; text-align: right !important">
+								style="width: 170px; text-align: right !important">
 								<p:outputLabel id="lblSinS"
 									value="#{modDesParcProceso.sinSalario}" />
 							</div>
-							<div class="ui-g-1" style="margin-top:-6px">
-								<p:commandButton styleClass="blue" type="submit" value="..." id="btnDlg"
-									action="#{modDesParcProceso.mostrarRegistros}" update="dlg1"
-									oncomplete="PF('dlg2').show();"
+							<div class="ui-g-1" style="margin-top: -6px">
+								<p:commandButton styleClass="blue" type="submit" value="..."
+									id="btnDlg" action="#{modDesParcProceso.mostrarRegistros}"
+									update="dlg1" oncomplete="PF('dlg2').show();"
 									style="display:#{modDesParcProceso.display3};width:35px" />
 							</div>
 						</div>
 					</div>
-					<div class="ui-g-6">
+					<div class="ui-g-6" style="margin-top: 45px">
 						<div class="ui-g" style="margin-bottom: 10px">
 							<div class="ui-g-6">
 								<p:outputLabel for="lblRegParc"
 									value="#{msg.modulo_desempleoParc_lblRegParc}" />
 							</div>
 							<div class="ui-g-6 outputlabel-shadow"
-								style="width: 140px; text-align: right !important">
+								style="width: 170px; text-align: right !important">
 								<p:outputLabel id="lblRegParc"
 									value="#{modDesParcProceso.parcialidades}" />
 							</div>
@@ -196,7 +202,7 @@
 									value="#{msg.modulo_desempleoParc_lblSolUnaEx}" />
 							</div>
 							<div class="ui-g-6 outputlabel-shadow"
-								style="width: 140px; text-align: right !important">
+								style="width: 170px; text-align: right !important">
 								<p:outputLabel id="lblSolUnaEx"
 									value="#{modDesParcProceso.unaExhibicion}" />
 							</div>
@@ -207,7 +213,7 @@
 									value="#{msg.modulo_desempleoParc_lblTotal}" />
 							</div>
 							<div class="ui-g-6 outputlabel-shadow"
-								style="width: 140px; text-align: right !important">
+								style="width: 170px; text-align: right !important">
 								<p:outputLabel id="lblTotal"
 									value="#{modDesParcProceso.totales}" />
 							</div>
@@ -217,14 +223,16 @@
 								<p:commandButton id="btnEjecutar"
 									styleClass="blue ui-button-text" type="submit"
 									value="#{msg.modulo_desempleoParc_btnEjecutar}"
-									action="#{modDesParcProceso.ejecutarAccion}" ajax="true" global="true"
+									disabled="#{modDesParcProceso.disabled}"
+									action="#{modDesParcProceso.ejecutarAccion}" ajax="true"
+									global="true"
 									update="form:radSelect form:fCapturada form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal form:result" />
 							</div>
 						</div>
 					</div>
 				</div>
 
-                <ui:include src="processResult.xhtml">
+				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{modDesParcProceso}" />
 				</ui:include>
 			</p:panel>

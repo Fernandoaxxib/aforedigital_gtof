@@ -59,6 +59,9 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 	private String border;
 	
 	@Getter
+	private String border2;
+	
+	@Getter
 	private Date fecActual;
 	
 	@Override
@@ -67,6 +70,7 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 		if(init) {
 			reset();
 			fecActual=DateUtil.getNowDate();
+			border2="";
 		}
 	}
 	
@@ -75,6 +79,7 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 		UIInput arc2 = (UIInput) findComponent("idArchivo2");
 		fec.setValid(true);			
 		arc2.setValid(true);
+		border2="";
 		
 		if(radioSelected.equals("1")) {			
 			lote=null;
@@ -187,6 +192,7 @@ public class CerInaLProcesarCtrll extends ControllerBase {
 	  }else {
 		    UIInput radio = (UIInput) findComponent("radioSelect");
 			radio.setValid(false);
+			border2="red";
 			pr.setDescProceso("Debe seleccionar una opción");
 			pr.setStatus("Selección requerida");					
 			return false;		  
