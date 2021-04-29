@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<f:metadata>
+		<f:event listener="#{consultarMarcasCuentas.iniciar}" type="preRenderView"/>
+	</f:metadata>
+   
+    	<ui:define name="center">
+
+	<h:outputScript name="js/calendar-localization.js" />
+		<p:panelGrid width="100%" styleClass="ui-noborder">
+			<p:row>
+				<p:column>
+					<ui:include src="menu.xhtml" />
+				</p:column>
+				<p:column style="margin-left:50px">
+					<ui:include src="subMenuReportes.xhtml" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+	<h:form id="form">
+	<p:panel id="datosSalario" header="Consulta Marcas de Cuentas" style="margin-top:20px">
+					
+				
+					
+				 
+						<p:panelGrid styleClass="ui-noborder" style="width:35%;padding:10px;">
+						<p:row>
+										<p:column style="text-align: left !important;width: 180px !important;">
+										<p:outputLabel value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" style="font-weight: bold"/>
+										</p:column>						 
+										
+										<p:column style="text-align: left !important;width: 100px !important;">			 
+										    <p:inputText id="curpNSS" placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}"  style="text-Align:left;font-size:15px;width:180px"/>
+										 </p:column>
+										 
+										<p:column style="text-align: left !important;width: 20px !important;">
+										<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"  update="curpNSS result nombre,nss,curp,codCuenta tableMarcasCuentas"  value="Buscar" ajax="true" class="blue"  />
+										</p:column>	
+										
+										
+						</p:row>				
+										 
+										
+						</p:panelGrid>  
+				    
+						
+						<p:panelGrid styleClass="ui-noborder" style="width:70%;padding:10px;">
+						
+						<p:row>
+						
+										<p:column style="text-align: left !important;width: 30px !important;">
+										    <p:outputLabel value="Nombre:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 150px !important;">	
+										   <p:inputText id="nombre"  value="#{consultarMarcasCuentas.nombre}"  style="text-Align:left;font-size:15px;width:300px"/>
+										 </p:column>
+										 
+										<p:column style="text-align: right !important;width: 30px !important;">
+										    <p:outputLabel value="Nss:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 100px !important;">			 
+										    <p:inputText id="nss"  value="#{consultarMarcasCuentas.nss}"  style="text-Align:left;font-size:15px;width:100px"/>
+										</p:column>
+										
+										<p:column style="text-align: right !important;width: 50px !important;">
+										    <p:outputLabel value="Curp:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 30px !important;">			 
+										    <p:inputText id="curp"  value="#{consultarMarcasCuentas.curp}"  style="text-Align:left;font-size:15px;width:180px"/>
+										</p:column> 
+										
+										<p:column style="text-align: right !important;width: 30px !important;">
+										    <p:outputLabel value="Cuenta:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 100px !important;">			 
+										    <p:inputText id="codCuenta"  value="#{consultarMarcasCuentas.cuenta}"  style="text-Align:left;font-size:15px;width:120px"/>
+										</p:column> 
+
+						</p:row>
+						
+										 
+						</p:panelGrid>   
+						
+						
+						<p:dataTable id="tableMarcasCuentas" var="pro" value="#{consultarMarcasCuentas.cpDatos}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15">
+
+									
+									<f:facet name="header" style="float:right">
+
+								<h:outputLabel for="registros"
+								value="#{msg.aprob_label_totalRegistros}"  />
+								<h:outputText id="totalRegistros"
+								value="#{consultarMarcasCuentas.totalNSSCURP}" />
+
+								</f:facet>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_clave}" style="width:50px;text-align: center;">
+										<h:outputText value="#{pro.CLAVE_PROCESO}" />
+									</p:column>
+				
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_proceso}" style="width:150px;text-align: left;">
+										<h:outputText value="#{pro.DESC_PROCESO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_saldo}" style="width:50px;text-align: center;">
+										<h:outputText value="#{pro.COD_TIPSALDO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_saldo}" style="width:120px;text-align: left;">
+										<h:outputText value="#{pro.DESC_TIPSALDO}" />
+									</p:column>
+									
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_estado}" style="width:50px;text-align: center;">
+										<h:outputText value="#{pro.ESTADO}" />
+									</p:column>
+									
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_estado}" style="width:100px;text-align: center;">
+										<h:outputText value="#{pro.DESC_ESTADO}" />
+									</p:column>
+				
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}" style="width:70px;text-align: center;">
+										<h:outputText value="#{pro.FECHA_INICIO}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_fecha_fin}" style="width:70px;text-align: center;">
+										<h:outputText value="#{pro.FECHA_FIN}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									  <p:column  align="center" style="width:20px;">
+                       					 <p:commandButton id="verDetalle" update=":form:display" oncomplete="PF('productDialog').show()"
+                                          action="#{consultarMarcasCuentas.ejecutarConsultarTraspasos}" icon="ui-icon-search" class="blue">
+                           				 <f:setPropertyActionListener  value="#{pro}" ajax="false" class="blue"
+                                                         target="#{consultarMarcasCuentas.cpDatos2}"/>
+                                         <p:tooltip for="verDetalle" value="Ver Detalle" showEffect="clip" hideEffect="fold" />
+                       					 </p:commandButton>
+                   					 </p:column>
+									
+					</p:dataTable>
+					
+					<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="50%" modal="true" style="font-size:12px">
+						 <p:outputPanel id="display">
+						<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpCursor}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  scrollable="true"  scrollHeight="250" >
+
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_inc_por}" style="width:20px;text-align: center;">
+										<h:outputText value="#{pro.INCLUIDO_POR}" />
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_inclusion}" style="width:20px;text-align: center;">
+										<h:outputText value="#{pro.FEC_INCLUSION}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_mod_por}" style="width:50px;text-align: center;">
+										<h:outputText value="#{pro.MODIFICADO_POR}" />
+									</p:column>
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_mod}" style="width:20px;text-align: center;">
+										<h:outputText value="#{pro.FEC_MODIFICACION}">
+											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+						
+						</p:dataTable>	
+						 </p:outputPanel>
+						</p:dialog>
+						
+						<ui:include src="processResult.xhtml">
+						<ui:param name="base" value="#{consultarMarcasCuentas}" />
+						</ui:include>	 
+
+	</p:panel>	
+						
+		
+  </h:form>
+</ui:define>
+
+
+</ui:composition>

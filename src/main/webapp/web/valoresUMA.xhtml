@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{valorUMA.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="center">
+
+		<p:panelGrid width="100%" styleClass="ui-noborder">
+			<p:row>
+				<p:column>
+					<ui:include src="menu.xhtml" />
+				</p:column>
+				<p:column style="margin-left:50px">
+					<ui:include src="subMenuCatalogos.xhtml" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+
+		<h:form id="form">
+			<p:panel header="VALORES UMA" style="margin-top:20px">
+				<p:panelGrid id="grid" styleClass="ui-noborder">
+
+					<p:row>
+						<p:column style="width:50%">
+							<p:dataTable id="tabla" var="val"
+								emptyMessage="#{msg.aprob_msj_sinDatos}"
+								value="#{valorUMA.valores}">
+
+								<p:column headerText="Valor UMA">
+									<h:outputText value="#{val.monto}" style="float:right">
+										<f:convertNumber type="currency" currencySymbol="$" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Fecha UMA">
+									<h:outputText value="#{val.fechaActual}" style="float:right">
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
+								</p:column>
+
+								<p:column headerText="Fecha última actualización">
+									<h:outputText value="#{val.fechaUltAct}" style="float:right">
+										<f:convertDateTime pattern="dd-MM-yyyy" />
+									</h:outputText>
+
+								</p:column>
+
+								<p:column headerText="Usuario">
+									<h:outputText value="#{val.user}" />
+
+								</p:column>
+
+								<p:column style="width:60px" rendered="false">
+
+									<f:facet name="header">
+										<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
+											icon="ui-icon ui-icon-plus" title="Nuevo"></p:commandButton>
+									</f:facet>
+									<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
+										icon="ui-icon ui-icon-pencil" title="Editar"
+										action="#{valorUMA.editar(val)}"></p:commandButton>
+
+									<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
+										icon="ui-icon ui-icon-trash" title="Borrar"
+										action="#{valorUMA.borrar(val)}"></p:commandButton>
+
+
+								</p:column>
+							</p:dataTable>
+
+
+							<p:confirmDialog id="confirmDialog" appendTo="@(body)"
+								message="¿Desea continuar?" header="Confirmar"
+								widgetVar="confirmDelete" modal="true">
+								<p:panel style="border:0px !important;text-align:center">
+									<p:commandButton value="Si" update="form:grid form:result"
+										class="blue" actionListener="#{valorUMA.eliminar}"
+										oncomplete="PF('confirmDelete').hide();" />
+									<p:commandButton value="No" class="blue"
+										onclick="PF('confirmDelete').hide();" type="button" />
+								</p:panel>
+
+							</p:confirmDialog>
+
+						</p:column>
+						<p:column>
+							<p:panelGrid id="pGrid" styleClass="ui-noborder">
+
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Fecha Inicio: " />
+										<p:datePicker id="fechaInicial"
+											inputStyle="width:120px; text-align:right;"
+											yearNavigator="true" monthNavigator="true"
+											value="#{valorUMA.fechaInicial}" showIcon="true" locale="es"
+											pattern="dd-MM-yyyy" readonlyInput="true" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Fecha Fin: " />
+										<p:datePicker id="fechaFinal" value="#{valorUMA.fechaFinal}"
+											yearNavigator="true" monthNavigator="true"
+											inputStyle="width:120px; text-align:right;" showIcon="true"
+											locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
+
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="2">
+										<p:outputLabel value="Ruta reporte: " />
+										<p:outputLabel class="outputlabel-shadow"
+											value="#{valorUMA.ruta}" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column colspan="2">
+										<p:commandButton class="blue"
+											actionListener="#{valorUMA.generarReporte}"
+											update="pGrid result" value="Generar reporte" />
+									</p:column>
+								</p:row>
+
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{valorUMA}" />
+				</ui:include>
+			</p:panel>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+	
+	<f:metadata>
+		<f:event listener="#{salarioMinimo.iniciar}" type="preRenderView"/>
+	</f:metadata>
+	
+   
+    	<ui:define name="center">
+
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:panelGrid width="100%" styleClass="ui-noborder">
+			<p:row>
+				<p:column>
+					<ui:include src="menu.xhtml" />
+				</p:column>
+				<p:column style="margin-left:50px">
+					<ui:include src="subMenuReportes.xhtml" />
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+		
+		
+		
+	<h:form id="form">
+		<p:panel id="datosSalario" header="Salario Minimo" style="margin-top:20px">
+		
+		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
+        <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
+		<p:commandButton class="blue"  actionListener="#{salarioMinimo.botonGenerarTabla}" update="result usuario"
+							 value="#{msg.salario_minimo_boton_salario}" ajax="true" />
+		
+<!-- 		 <p:growl id="msgs" showDetail="true"/> -->
+ 
+    <p:dataTable id="tableSalario"  widgetVar="salario1" var="salario" emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
+<!--         <f:facet name="header" style="text-align: left;"> -->
+<!--             Salario Minimo (diario) -->
+<!--         </f:facet> -->
+ 		
+ 								<f:facet name="header" style="float:right">
+
+								<h:outputLabel for="registros"
+								value="#{msg.aprob_label_totalRegistros}"  />
+								<h:outputText id="totalRegistros"
+								value="#{salarioMinimo.totalIdUsuario}" />
+
+								</f:facet>
+ 		
+ 
+        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario :form:result" />
+        <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:tableSalario :form:result" />
+ 
+        <p:column headerText="CdZona">
+            <p:cellEditor>
+                <f:facet name="output"> <h:outputText value="#{salario.cdZona}" /> </f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.cdZona}" style="width:100%" /> </f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+          <p:column headerText="FechaCalendario">
+            <p:cellEditor>
+                <f:facet name="output">
+                			<p:datePicker disabled="true"  id="calendarioOut" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:center;" showIcon="false"
+							locale="es" pattern="dd/MM/yyyy" />
+                                       
+                </f:facet>
+                <f:facet name="input">
+                			 <p:datePicker id="calendarioIn" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:center;" showIcon="true"
+							locale="es" pattern="dd/MM/yyyy" />
+                			
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        
+        <p:column headerText="Monto">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{salario.montoDiario}" style="float:right" >  
+                					   <f:convertNumber type="currency" currencySymbol="$" />
+									   </h:outputText>
+                </f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.montoDiario}" style="width:100%" /> </f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column headerText="FechaUltimo">
+            <p:cellEditor>
+                <f:facet name="output">
+                						<p:datePicker disabled="true"  id="fechaUltOut" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:center;" showIcon="false"
+										locale="es" pattern="dd/MM/yyyy" />
+                </f:facet>
+                <f:facet name="input">
+                					   <p:datePicker id="fechaUltIn" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:right;" showIcon="true"
+										locale="es" pattern="dd/MM/yyyy" />
+                </f:facet>
+            </p:cellEditor>
+        </p:column>
+        
+           <p:column headerText="Id User">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{salario.userId}" /></f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.userId}" style="width:100%" /></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column style="width:35px">
+            <p:rowEditor />
+        </p:column>
+    </p:dataTable>
+		
+		<h:panelGrid columns="1" cellpadding="5">
+    		<p:commandButton class="blue" value="Agregar" type="button" onclick="PF('tabla2').show();" />
+        </h:panelGrid>
+			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2" minHeight="40">
+   			 	<h:outputText value="Ingresar Usuario" />
+   			 	<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}" />
+   			 	
+   			 	
+   				 <h:outputText value="Ingresar Fecha Calendario" />
+   				 <p:datePicker id="fechaGuardar" value="#{salarioMinimo.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
+							locale="es" pattern="dd/MM/yyyy" />
+      			
+   			 	
+   			 	<h:outputText value="Ingresar Monto" />
+   			 	<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" />
+   			 	
+   			 	<p:commandButton class="blue" actionListener="#{salarioMinimo.onAddNew}"
+				 value="#{msg.salario_minimo_boton_enviar}" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
+	
+			
+		</p:dialog>
+		</p:panel>	
+		
+		<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{salarioMinimo}" />
+		</ui:include>
+  </h:form>
+</ui:define>
+
+
+</ui:composition>

@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{rechazos.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<p:panelGrid class="no-border no-padding" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="blue"
+							outcome="/web/rechazosSolicitudes.jsf" includeViewParams="true"
+							value="Rechazo">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue"
+							outcome="/web/rechazosSolicitudesReporte.jsf"
+							includeViewParams="true" value="Reporte">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="green"
+							outcome="/web/rechazosSolicitudesCatalogo.jsf"
+							includeViewParams="true" value="Catálogo">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:messages id="messages" showDetail="true" closable="true">
+			<p:autoUpdate />
+		</p:messages>
+
+		<h:form id="form">
+
+			<p:panel id="busqueda" header="CATÁLOGO"
+				style="margin-top:20px;">
+
+				<p:dataTable id="table" var="cat"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					value="#{rechazos.catRechazos}" style="width:60%;">
+
+
+					<p:column headerText="Clave"
+						style="width: 30px; text-align: center">
+						<h:outputText value="#{cat.clave}" />
+					</p:column>
+
+					<p:column headerText="Descripción">
+						<h:outputText value="#{cat.descripcion}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

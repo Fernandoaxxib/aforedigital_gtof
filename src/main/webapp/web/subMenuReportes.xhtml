@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<style>
+.ui-menu {
+	white-space: nowrap;
+	width: auto !important;
+}
+</style>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:selectOneMenu id="sub" class="submenu img" style="width:auto"
+			value="#{menu.submenu}" dir="rtl">
+			<f:selectItem itemLabel="CONSULTAS MARCAS CUENTAS" itemValue="/web/consultarMarcasCuentas.jsf" />
+			<f:selectItem itemLabel="CONSULTA DE MOVIMIENTOS ACTUALES" itemValue="/web/consultaMovActuales.jsf" />
+			<f:selectItem itemLabel="DIAGNÓSTICO DE LA CUENTA INDIVIDUAL" itemValue="/web/diagnosticoCuenta.jsf" />	
+			<f:selectItem itemLabel="RECAUDACIÓN VENTANILLA ÚNICA" itemValue="/web/consultaRecaudacion.jsf" />
+			<f:selectItem itemLabel="REPORTES PARCIALES CONSAR" itemValue="/web/repParciales.jsf" />
+			<f:selectItem itemLabel="CONSULTA RESOLUCIONES DATAMART 31-5" itemValue="/web/consultaResolucionDataMart.jsf" />
+			<f:selectItem itemLabel="SALDOS ACTUALES DEL CLIENTE" itemValue="/web/saldosActuales.jsf" />
+			<f:selectItem itemLabel="SOLICITUDES DE MATRIMONIO Y DESEMPLEO" itemValue="/web/solicitudMatrimonioDesempleo.jsf" />
+			<f:selectItem itemLabel="REPORTE LIQUIDACIÓN DE RETIROS POR DISPOSICIÓN" itemValue="/web/reporteLiquidacion.jsf" />
+			<f:selectItem itemLabel="CONSULTA DE MOVIMIENTOS HISTÓRICOS" itemValue="/web/consultaMovHistoricos.jsf" />
+			<f:selectItem itemLabel="REPORTE DE SOLICITUDES DE RETIRO" itemValue="/web/reporteSolicRetiro.jsf" />
+			<f:selectItem itemLabel="REPORTE DE SALDOS FINALES (SALDOS NEGATIVOS)" itemValue="/web/saldosNegativosImssIsste.jsf" />
+			<f:selectItem itemLabel="SALARIO MÍNIMO" itemValue="/web/salarioMinimo.jsf" />
+			
+            
+			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
+		</p:selectOneMenu>
+	</h:form>
+
+
+</h:body>
+
+
+</html>

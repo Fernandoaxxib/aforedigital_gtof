@@ -1,0 +1,433 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<ui:composition template="layout2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{modDesempParc.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+
+		<p:panelGrid class="no-border no-padding" style="width: 100%">
+			<p:row>
+				<p:column>
+					<ui:include src="subMenuTransacciones.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="blue ui-button-text"
+							outcome="/web/modDesParc.jsf" includeViewParams="true"
+							value="#{msg.modulo_desempleoParc_btnPM}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="green ui-button-text" style="margin-left:13px !important"
+							outcome="/web/modDesempParc.jsf" includeViewParams="true"
+							value="Proceso individual">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
+							outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
+							value="#{msg.modulo_desempleoParc_btnReportes}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
+							outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
+							value="#{msg.modulo_desempleoParc_btnLProcesar}">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<p:panel id="datos" header="PRIMER PAGO - INDIVIDUAL"
+			style="margin-top:20px">
+			<h:form id="form">
+				<p:panelGrid id="solicitud" styleClass="ui-noborder"
+					style="width:100%;padding:10px;">
+
+					<p:row>
+						<p:column style="width:10%;">
+							<p:outputLabel value="#{msg.modDesParc_solicitud_nss}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:25%">
+							<p:inputText id="nss" value="#{modDesempParc.nss}" maxlength="11"
+								style="width:90px"></p:inputText>
+							<p:commandButton class="blue" update="form formCan result"
+								actionListener="#{modDesempParc.consultarSolicitud}"
+								value="Buscar" />
+						</p:column>
+						<p:column style="width:10%;">
+							<p:outputLabel value="#{msg.modDesParc_solicitud_rfc}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:20%">
+							<p:outputLabel value="#{modDesempParc.datosSol.rfc}" />
+						</p:column>
+						<p:column style="width:10%;">
+							<p:outputLabel value="#{msg.modDesParc_solicitud_curp}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:25%">
+							<p:outputLabel value="#{modDesempParc.datosSol.curp}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_nombres}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.nombre}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_aPaterno}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.primerApellido}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_aMaterno}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.segundoApellido}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Número solicitud:" styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:20%">
+							<p:outputLabel value="#{modDesempParc.datosSol.noSolicitud}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel
+								value="#{msg.modDesParc_solicitud_estatusSolicitud}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.estatusSolicitud}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Número resolución:" styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.numResolucion}" />
+						</p:column>
+
+
+
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_tipoPago}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel
+								value="#{modDesempParc.datosSol.clasificacionPago}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_fondo}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.fondo}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_sbcA}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.sbcTipoA}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_remanente}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.remanente}">
+								<f:convertNumber type="currency" currencySymbol="$"
+									maxFractionDigits="2" />
+							</p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel
+								value="#{msg.modDesParc_solicitud_totalPrestacion}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText
+								value="#{modDesempParc.datosSol.monTotalPrestacion}">
+								<f:convertNumber type="currency" currencySymbol="$"
+									maxFractionDigits="2" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_fechaAccion}"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{modDesempParc.datosSol.fechaAccion}">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</p:outputLabel>
+
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+
+				<p:panel id="detalle" header="DETALLE DE PARCIALIDADES"
+					style="margin-top:20px">
+					<p:dataTable id="parcialidadesTable" var="par" scrollable="true"
+						emptyMessage="#{modDesempParc.mensajeTabla}"
+						value="#{modDesempParc.parcialidades}"
+						selection="#{modDesempParc.selectedParcialidad}"
+						rowKey="#{par.pago}">
+
+						<p:ajax event="rowSelectRadio" update="form:admin" />
+						<p:column selectionMode="single"
+							style="width:20px;text-align:center" />
+
+						<p:column headerText="#{msg.modDesParc_parcialidades_pago}"
+							style="width:50px;text-align:center;">
+							<h:outputText value="#{par.pago}" />
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_parcialidades_importe}"
+							style="width:100px">
+							<h:outputText value="#{par.totalPago}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Fecha envío" style="width:120px">
+							<h:outputText value="#{par.fecha}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_parcialidades_estatusPago}"
+							style="width:120px">
+							<h:outputText value="#{par.estatusPagDescrip}" />
+						</p:column>
+
+						<p:column headerText="Fecha trabajador" style="width:120px">
+							<h:outputText value="#{par.fechaManifiestoTrab}"
+								style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Autoriza trabajador"
+							style="text-align: center; width:50px">
+							<h:outputText value="#{par.autorizaTrabajador}" />
+						</p:column>
+
+						<p:column headerText="Fecha envío IMSS" style="width:120px">
+							<h:outputText value="#{par.fechaEnvAutorizaImss}"
+								style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Fecha IMSS" style="width:120px">
+							<h:outputText value="#{par.fechaAutorizaImss}"
+								style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Autoriza IMSS"
+							style="text-align: center; width:50px">
+							<h:outputText value="#{par.autorizaImss}" />
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_parcialidades_tipoPago}"
+							style="width:150px">
+							<h:outputText value="#{par.tipo_pago}" />
+						</p:column>
+
+						<p:column headerText="Clabe" style="width:200px">
+							<h:outputText value="#{par.dpCuenta}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<p:panel id="admin" header="DATOS ADMINISTRATIVOS"
+					style="margin-top:20px">
+					<p:dataTable id="administrativoTable" var="adm"
+						emptyMessage="#{modDesempParc.mensajeTabla}"
+						value="#{modDesempParc.administrativos}">
+
+						<p:ajax event="rowSelect" update="form" />
+
+						<p:column headerText="#{msg.modDesParc_administrativos_pago}">
+							<h:outputText value="#{adm.descripcionPago}" />
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_administrativos_subcuenta}">
+							<h:outputText value="#{adm.subcuenta}" />
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_administrativos_acciones}">
+							<h:outputText value="#{adm.montoAccion}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$"
+									maxFractionDigits="2" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_administrativos_importe}">
+							<h:outputText value="#{adm.montoPesos}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$"
+									maxFractionDigits="2" />
+							</h:outputText>
+						</p:column>
+
+						<p:column
+							headerText="#{msg.modDesParc_administrativos_estatusPago}"
+							style="text-align: center">
+							<h:outputText value="#{adm.estatusPago}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+
+				<p:panel id="marcas" header="MARCAS" style="margin-top:20px">
+					<p:dataTable id="marcasTable" var="mar"
+						emptyMessage="#{modDesempParc.mensajeTabla}"
+						value="#{modDesempParc.marcas}">
+
+						<p:ajax event="rowSelect" update="form" />
+
+						<p:column headerText="#{msg.modDesParc_marcas_cuenta}">
+							<h:outputText value="#{mar.codCuenta}" />
+						</p:column>
+
+						<p:column headerText="Clave" style="width:50px;text-align:center;">
+							<h:outputText value="#{mar.claveProceso}" />
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_marcas_proceso}"
+							style="width:200px;">
+							<h:outputText value="#{mar.descripcion}" />
+						</p:column>
+
+						<p:column headerText="Incluído por">
+							<h:outputText value="#{mar.incluidoPor}" />
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_marcas_fInicio}"
+							style="width:120px">
+							<h:outputText value="#{mar.fechaInicio}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_marcas_fFin}"
+							style="width:120px">
+							<h:outputText value="#{mar.fechaFin}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{msg.modDesParc_marcas_estado}">
+							<h:outputText value="#{mar.estado}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+
+			<h:form id="formCan">
+				<p:panel id="acciones"
+					header="CANCELACIÓN SOLICITUDES INDIVIDUAL/MASIVA"
+					style="margin-top:20px">
+					<p:panelGrid styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
+									rendered="#{modDesempParc.mostrarCancelacion}" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="tipoCancelacion" style="width:200px"
+									rendered="#{modDesempParc.mostrarCancelacion}"
+									value="#{modDesempParc.selectedClaveCancelacion}">
+									<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+										itemValue="" />
+									<f:selectItems value="#{modDesempParc.listaCancelacion}"
+										var="c" itemLabel="#{c.descripcion}"
+										itemValue="#{c.claveProceso}" />
+								</p:selectOneMenu>
+							</p:column>
+
+							<p:column>
+								<p:outputLabel value="Nombre del archivo (sin extensión): "
+								 />
+							</p:column>
+							<p:column>
+								<p:inputText id="archivo" value="#{modDesempParc.archivo}"></p:inputText>
+							</p:column>
+
+						</p:row>
+						<p:row>
+							<p:column colspan="2">
+								<p:commandButton class="blue"
+									rendered="#{modDesempParc.mostrarCancelacion}"
+									update="result acciones"
+									actionListener="#{modDesempParc.cancelarSolicitud}"
+									value="Cancelar solicitud" />
+							</p:column>
+							<p:column colspan="2">
+								<p:outputLabel
+									value="El archivo deberá estar en: /RESPALDOS/operaciones/pruebas y con extensión txt"
+									style="color:blue;margin-top:10px;" />
+							</p:column>
+						</p:row>
+
+						<p:row>
+							<p:column colspan="2">
+							</p:column>
+							<p:column colspan="2">
+								<p:commandButton class="blue" update="result acciones"
+									value="Cancelación masiva" actionListener="#{modDesempParc.cancelarMasiva}" />
+							</p:column>
+
+						</p:row>
+					</p:panelGrid>
+
+				</p:panel>
+			</h:form>
+			
+
+			<ui:include src="processResult.xhtml">
+				<ui:param name="base" value="#{modDesempParc}" />
+			</ui:include>
+
+		</p:panel>
+
+	</ui:define>
+</ui:composition>

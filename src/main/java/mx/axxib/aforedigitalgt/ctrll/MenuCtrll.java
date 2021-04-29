@@ -36,13 +36,13 @@ public class MenuCtrll extends ControllerBase {
 	}
 	
 	public void transacciones() {
-		menu = "/api/aprobSolicTipRetiro.jsf";
+		menu = "/web/aprobSolicTipRetiro.jsf";
 		submenu = menu;
 		navigateMenu();
 	}
 	
 	public void monitor() {
-		menu = "/api/monitorProcesos.jsf";
+		menu = "/web/monitorProcesos.jsf";
 		submenu = menu;
 		navigateMenu();
 	}
@@ -54,13 +54,13 @@ public class MenuCtrll extends ControllerBase {
 	}
 	
 	public void reportes() {
-		menu = "/api/consultarMarcasCuentas.jsf";
+		menu = "/web/consultarMarcasCuentas.jsf";
 		submenu = menu;
 		navigateMenu();
 	}
 	
 	public void catalogos() {
-		menu = "/api/valoresUMA.jsf";
+		menu = "/web/valoresUMA.jsf";
 		submenu = menu;
 		navigateMenu();
 	}

@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout2.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{cargaRight.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="left">
+		<ui:include src="graficas.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<ui:include src="subMenuTransacciones.xhtml" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="CARGA MASIVA RIGHT FAX"
+				style="margin-top:20px">
+				<p:panelGrid id="panel" styleClass="ui-noborder" cellpadding="10"
+					width="100%">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha de Right Fax" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fecha"
+								inputStyle="width:120px; text-align:right;" yearNavigator="true"
+								monthNavigator="true" value="#{cargaRight.fecha}"
+								showIcon="true" locale="es" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{cargaRight.crucePrevio}"
+								update="panel result" value="Cruce previo" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column style="padding:10px;">
+							<p:outputLabel value="Nombre del archivo (sin extensión): " />
+						</p:column>
+						<p:column>
+							<p:inputText id="archivo" value="#{cargaRight.archivo}" style="width:150px"
+								maxlength="20"></p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{cargaRight.cargar}" update="panel result"
+								rendered="#{cargaRight.mostrarCarga}" value="Cargar" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column colspan="3" style="padding:10px;">
+							<p:outputLabel
+								value="El archivo deberá estar en: /RESPALDOS/openserv y con extensión .csv"
+								style="color:blue;" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{cargaRight}" />
+				</ui:include>
+			</p:panel>
+
+
+
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
