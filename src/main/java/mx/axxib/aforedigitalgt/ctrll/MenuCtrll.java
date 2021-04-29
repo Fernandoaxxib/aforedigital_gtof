@@ -47,11 +47,7 @@ public class MenuCtrll extends ControllerBase {
 		navigateMenu();
 	}
 	
-	public void recaudaciones() {
-		menu = null;
-		submenu = menu;
-		navigateMenu();
-	}
+
 	
 	public void reportes() {
 		menu = "/web/consultarMarcasCuentas.jsf";

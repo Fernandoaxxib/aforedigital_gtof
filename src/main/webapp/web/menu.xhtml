@@ -16,7 +16,7 @@
 		<p:selectOneMenu id="mod" class="menu" style="width:94%" value="#{menu.menu}">
             <f:selectItem itemLabel="TRANSACCIONES Y DISPOSICIONES" itemValue="/web/aprobSolicTipRetiro.jsf" />
             <f:selectItem itemLabel="SEGUIMIENTO DE PROCESOS" itemValue="/web/monitorProcesos.jsf" />
-            <f:selectItem itemLabel="RECAUDACIONES" itemValue="" itemDisabled="true"/>
+
             <f:selectItem itemLabel="CONSULTAS Y REPORTES GENERALES" itemValue="/web/consultarMarcasCuentas.jsf" />
             <f:selectItem itemLabel="CATÁLOGOS GENERALES" itemValue="/web/valoresUMA.jsf" />
             <p:ajax event="change" listener="#{menu.navigateMenu}" oncomplete="PF('statusDialog').show();"/>
