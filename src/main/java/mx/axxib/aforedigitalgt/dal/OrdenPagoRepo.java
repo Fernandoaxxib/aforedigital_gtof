@@ -75,18 +75,22 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public TiposReportes creaTipoReporte(String tipoReporte ) throws AforeException {
+	public TiposReportes creaTipoReporte(String tipoReporte , Date fechaInicio, Date fechaFin) throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.ORDEN_PAGO_PACKAGE).concat(".").concat(Constantes.ORDEN_PAGO_CREA_REPORTE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 		
 		query.registerStoredProcedureParameter("P_TIPO_REPORTE", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_FECHA_INICIO", Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_FECHA_FIN", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_NOMBRE_ARCHIVO", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
 				
 		query.setParameter("P_TIPO_REPORTE", tipoReporte);
+		query.setParameter("P_FECHA_INICIO", fechaInicio);
+		query.setParameter("P_FECHA_FIN", fechaFin);
 		
 		
 		TiposReportes res= new TiposReportes ();

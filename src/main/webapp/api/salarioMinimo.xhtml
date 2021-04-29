@@ -33,8 +33,8 @@
 		
 		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
         <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
-		<p:commandButton class="blue"  action="#{salarioMinimo.botonGenerarTabla}" update="form result"
-							type="submit" value="#{msg.salario_minimo_boton_salario}" />
+		<p:commandButton class="blue"  actionListener="#{salarioMinimo.botonGenerarTabla}" update="result usuario"
+							 value="#{msg.salario_minimo_boton_salario}" ajax="true" />
 		
 <!-- 		 <p:growl id="msgs" showDetail="true"/> -->
  
@@ -117,23 +117,21 @@
 		<h:panelGrid columns="1" cellpadding="5">
     		<p:commandButton class="blue" value="Agregar" type="button" onclick="PF('tabla2').show();" />
         </h:panelGrid>
-			<p:dialog header="Agregar Usuario" widgetVar="tabla2" minHeight="40">
+			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2" minHeight="40">
    			 	<h:outputText value="Ingresar Usuario" />
-   			 	<h:inputText id="usuarioInsert" value="#{salarioMinimo.insertUsuario}" />
-   			 	
-   			 	
+   			 	<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}" />
    			 	
    			 	
    				 <h:outputText value="Ingresar Fecha Calendario" />
-   				 <p:datePicker id="calendario" value="#{salarioMinimo.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
+   				 <p:datePicker id="fechaGuardar" value="#{salarioMinimo.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
 							locale="es" pattern="dd/MM/yyyy" />
       			
    			 	
    			 	<h:outputText value="Ingresar Monto" />
-   			 	<h:inputText id="montoDiarionInsert" value="#{salarioMinimo.montoDiario}" />
+   			 	<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" />
    			 	
-   			 	<p:commandButton class="blue" action="#{salarioMinimo.onAddNew}"
-				type="submit" value="#{msg.salario_minimo_boton_enviar}" ajax="false" />
+   			 	<p:commandButton class="blue" actionListener="#{salarioMinimo.onAddNew}"
+				 value="#{msg.salario_minimo_boton_enviar}" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
 	
 			
 		</p:dialog>

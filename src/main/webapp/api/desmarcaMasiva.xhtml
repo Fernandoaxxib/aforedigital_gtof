@@ -51,21 +51,7 @@
 						
 						<p:panel  header="DESMARCA MASIVA CUENTAS" style="width:98%">
 							
-							<p:panelGrid class="ui-noborder" style="margin-top:5px">
-							
-							
-							</p:panelGrid>	
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">
-							
-							<p:row>
-								<p:column  style="text-align: left !important;width: 120px !important;">
-									
-								</p:column>
-								<p:column style="text-Align:left;font-size:15px;width:150px">
-									
-								</p:column>
-							</p:row>
-							</p:panelGrid>	
+													
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							
 							<p:row>
@@ -128,17 +114,6 @@
 							
 							</p:panelGrid>
 							
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">
-							
-							<p:row>
-								<p:column  style="text-align: left !important;width: 120px !important;">
-									
-								</p:column>
-								<p:column style="text-Align:left;font-size:15px;width:150px">
-									
-								</p:column>
-							</p:row>
-							</p:panelGrid>	
 							
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							
@@ -219,27 +194,19 @@
 							
 							<p:row>
 								<p:column  style="text-align: left !important;width: 120px !important;">
-									<p:outputLabel value="Nss:"/>
+									<p:outputLabel value="Nss/Curp:"/>
 								</p:column>
 								<p:column style="text-Align:left;font-size:15px;width:150px">
-									<p:inputText id="nss" value="#{desmarcaMasiva.desmarcaNSS}"  style="text-Align:left;font-size:15px;width:213px"/>
+									<p:inputText id="nssCURP" placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{desmarcaMasiva.nssCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
 								</p:column>
 							</p:row>
 							</p:panelGrid>	
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">	
 														
-							<p:row>
-								<p:column  style="text-align: left !important;width: 120px !important;">
-									<p:outputLabel value="Curp:" />
-								</p:column>
-								<p:column style="text-Align:left;font-size:15px;width:150px">
-									<p:inputText id="curp" value="#{desmarcaMasiva.desmarcaCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
-								</p:column>
-							</p:row>
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
 								<p:column style="text-align: left !important;width: 450px !important;">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.desmarcaIndividualCuenta}"  update="nss,curp result" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="nssCURP result" ajax="true"/>
 								</p:column>
 							</p:row>
 							</p:panelGrid>

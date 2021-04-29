@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import org.apache.commons.lang3.StringUtils;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
@@ -26,6 +27,7 @@ import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "desmarcaMasiva")
@@ -54,6 +56,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String desmarcaCURP;
+	
+	@Getter
+	@Setter
+	private String nssCURP;
 	 
 	@Getter
 	@Setter
@@ -105,6 +111,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		desmarcaNSS=null;
 		desmarcaCURP=null;
 		selectedTipoClave=null;
+		nssCURP=null;
 	}
 	
 	public List<TipoProcesoOut> consultarTodo(){
@@ -138,7 +145,61 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		pr.setFechaFinal(DateUtil.getNowDate());
 		resultados.add(pr);
 	}
-}
+} 
+		
+	public void validarNssRfc() {
+	ProcessResult pr = new ProcessResult();
+	pr.setFechaInicial(DateUtil.getNowDate());
+	pr.setDescProceso("Desmarca Masiva Cuentas");
+		try {
+			if (nssCURP != null && !nssCURP.equals("") ) {
+				
+				 String[] parts = selectedTipoClave.split("-");
+				 String part1 = parts[0]; // 123
+				 String part2 = parts[1]; // 654321
+				
+				if((nssCURP.length() > 0 && nssCURP.length()<=11) && StringUtils.isNumeric(nssCURP)) {
+						
+					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, null,part1);	
+					pr.setStatus("Proceso ejecutado Correctamente");
+					 System.out.println("ES NSS");
+					 
+				}
+				if(StringUtils.isNumeric(nssCURP)==false && (nssCURP.length() > 0 && nssCURP.length()<=11) ){
+					 UIInput inputNss = (UIInput) findComponent("nssCURP");
+			 		 inputNss.setValid(false);
+					 pr.setStatus("Ingresar NSS Valido ");	
+				}
+				if (ValidateUtil.isCURP(nssCURP)) {
+				 
+					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(null, desmarcaCURP,part1);
+					 pr.setStatus("Proceso ejecutado Correctamente");
+					 System.out.println("ES CURP");
+				}
+				if(ValidateUtil.isCURP(nssCURP) ==false && nssCURP.length()>11 ) {
+									
+				 		 UIInput inputCurp = (UIInput) findComponent("nssCURP");
+						 inputCurp.setValid(false);
+						 pr.setStatus("Ingresar CURP Valido ");
+				
+				}
+			
+			 
+			}else {
+				UIInput input = (UIInput) findComponent("nssCURP");
+				input.setValid(false);
+				pr.setStatus("NSS o CURP es requerido");
+				
+			}
+		}catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+	
+	
 //	public void cargarArchivo() {
 //		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
 //			addMessageFail("Ingrese el nombre del archivo.");

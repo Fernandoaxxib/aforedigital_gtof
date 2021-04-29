@@ -45,6 +45,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 	List<ConsultarDatosIcefasOut> cpCursor;
 	
 	@Getter
+	@Setter
 	private String nombre;
 	@Getter
 	@Setter
@@ -160,7 +161,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		int bandera=0;
 		try {
 			ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarNss(nssIn);	
-			
+			System.out.println("VALOR DE RES: "+res);
 			if (res != null && res.getCpDatos() != null && res.getCpDatos().size() > 0) {
 				totalNSSCURP=res.getCpDatos().size();
 				cpDatos=res.getCpDatos();
@@ -182,7 +183,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 			int bandera=0;
 			try {
 				ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarCurp(curpIn);	
-				
+				System.out.println("VALOR DE RES: "+res);
 				if (res != null && res.getCpDatos() != null && res.getCpDatos().size() > 0) {
 					totalNSSCURP=res.getCpDatos().size();
 					cpDatos=res.getCpDatos();

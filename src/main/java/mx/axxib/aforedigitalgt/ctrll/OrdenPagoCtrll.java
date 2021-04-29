@@ -109,6 +109,8 @@ public class OrdenPagoCtrll extends ControllerBase {
 			boxDos=null;
 			seleccionarA=null;
 			tipoReporte=null;
+			fechaInicio=null;
+			fechaUltima=null;
 			tipoReporte=ordenPagoServ.inicializarA();
 		}catch (Exception e) {
 			GenericException(e);
@@ -153,6 +155,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 		
 			if(boxDos ==2){				
 			
+				//BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
 				BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
 				if (res.getEstatus() == 1) {
 					pr.setStatus("Ejecución con exito");
@@ -180,29 +183,93 @@ public class OrdenPagoCtrll extends ControllerBase {
 		pr.setDescProceso("Obtener Nombre Archivo");
 		try {
 			
-				if(seleccionarA !=null) {
+				if(seleccionarA == null && (fechaInicio == null && fechaUltima == null)) {
 					
-					if(boxUno != null){	
-						impresoraReporte();
-						}
-						if(boxDos!= null){	
-						generarArchivo();
-						}
+					UIInput inputSelect = (UIInput) findComponent("listSelect");
+					inputSelect.setValid(false);
+					 UIInput inputInicio = (UIInput) findComponent("fechaInicio");
+					 inputInicio.setValid(false);
+					 UIInput inputFinal = (UIInput) findComponent("fechaUltima");
+					 inputFinal.setValid(false);				
+					 pr.setStatus("Seleccionar Tipo Reporte, Fecha Inicio y Final ");
 					
 				
-				tiposReportes=ordenPagoServ.creaTipoReporte(seleccionarA);
-				
-				nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
-				System.out.println("NOMBRE ARCHIVO: "+nombre);
-				if (nombre != null) {
-					pr.setStatus("Ejecución con exito");
-				} else {
-					pr.setStatus("Se presento un error inesperado");
-				}
 				}else {
-					UIInput input = (UIInput) findComponent("listSelect");
-					input.setValid(false);
-					pr.setStatus("Seleccionar Tipo Reporte");
+						if(seleccionarA ==null ) {
+						
+							
+							UIInput inputSelect = (UIInput) findComponent("listSelect");
+							inputSelect.setValid(false);
+							pr.setStatus("Seleccionar Tipo Reporte");
+					
+					}else {
+						
+							if( fechaInicio == null && fechaUltima== null) {
+								
+								 UIInput inputInicio = (UIInput) findComponent("fechaInicio");
+								 inputInicio.setValid(false);
+								 UIInput inputFinal = (UIInput) findComponent("fechaUltima");
+								 inputFinal.setValid(false);				
+								 pr.setStatus("Seleccionar Fechas ");
+							
+						}else {
+							
+							if( fechaInicio == null) {
+								
+								 UIInput inputInicio = (UIInput) findComponent("fechaInicio");
+								 inputInicio.setValid(false);
+								 pr.setStatus("Seleccionar Fecha Inicio ");
+						
+						}else {
+							
+							
+							
+							if(fechaUltima == null) {
+								
+								 UIInput inputFinal = (UIInput) findComponent("fechaUltima");
+								 inputFinal.setValid(false);				
+								 pr.setStatus("Seleccionar Fecha Final ");
+								
+								
+						}else {
+							
+							if (DateUtil.isValidDates(fechaInicio, fechaUltima)) {
+							
+							if(boxUno != null){	
+								impresoraReporte();
+								}
+								if(boxDos!= null){	
+								generarArchivo();
+								}
+							
+						System.out.println("fechaInicio: "+fechaInicio+"   vakor de fechaUltima: "+ fechaUltima);
+						tiposReportes=ordenPagoServ.creaTipoReporte(seleccionarA,fechaInicio,fechaUltima);
+						
+						nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
+						System.out.println("NOMBRE ARCHIVO: "+nombre);
+						if (nombre != null) {
+							pr.setStatus("Ejecución con exito");
+						} else {
+							pr.setStatus("Se presento un error inesperado");
+						}
+						
+							} else {
+								UIInput fechaIni = (UIInput) findComponent("fechaInicio");
+								fechaIni.setValid(false);
+
+								UIInput fechaFin = (UIInput) findComponent("fechaUltima");
+								fechaFin.setValid(false);
+								pr.setStatus("Fecha inicio debe ser menor o igual a la fecha fin");
+							}
+						
+						
+						}
+							 
+						}			
+							 
+						}
+	
+					}
 					 
 				}
 		

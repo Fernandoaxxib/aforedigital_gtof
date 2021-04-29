@@ -43,61 +43,57 @@
 	<h:form id="form">
 				<p:panel id="datos" header="Orden Pago" style="margin-top:20px">
 				
-					<p:panelGrid class="no-border no-padding" style="margin-top:10px;">
+				<p:panelGrid styleClass="ui-noborder" >
+				
+					<p:panelGrid styleClass="ui-noborder" >
 							<p:row>
-									<p:column style="text-align: left !important;width: 120px !important;">
+									<p:column style="text-align: left !important;width: 80px !important;">
 									
-									<p:outputLabel for="fechaInicio" value="#{msg.orden_pago_txt_fecha_inicio}" />
+									<p:outputLabel value="#{msg.orden_pago_txt_fecha_inicio}" />
 									
 									</p:column>						 
 									
-									<p:column style="text-align: left !important;width: 150px !important;">			 
-									    <p:inputText id="fechaInicio" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaInicio}" style="text-Align:right;font-size:15px;width:120px">
-										<f:convertDateTime pattern = "dd/MM/yyyy" />
-						        		 </p:inputText>
+									<p:column style="text-align: left !important;width: 120px !important;">			 
+									
+									<p:datePicker id="fechaInicio" value="#{ordenPago.fechaInicio}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									yearNavigator="true" monthNavigator="true"
+									inputStyle="width:80px; text-align:right;"
+									readonlyInput="true" />
 									 </p:column>
-							 </p:row>
 									 
-									
-									 <p:row>
-									 
-									 <p:column style="text-align: left !important;width: 120px !important;">
-										  <p:outputLabel for="fechaUltimo" value="#{msg.orden_pago_txt_fecha_final}"  />
+								    <p:column style="text-align: left !important;width: 80px !important;">
+										  <p:outputLabel  value="#{msg.orden_pago_txt_fecha_final}"  />
 									</p:column>
-									<p:column style="text-align: left !important;width: 150px !important;">	 
-									      <p:inputText id="fechaUltimo" disabled="true" 	value="#{ordenPago.ordenPagoFechasOut.fechaFin}" style="text-Align:right;font-size:15px;width:120px">
-										  <f:convertDateTime pattern = "dd/MM/yyyy" />
-						        		  </p:inputText>
-											
+									<p:column style="text-align: left !important;width: 120px !important;">	 
+									<p:datePicker id="fechaUltima" value="#{ordenPago.fechaUltima}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									yearNavigator="true" monthNavigator="true"
+									inputStyle="width:80px; text-align:right;"
+									readonlyInput="true" />		
 									</p:column>
-				 
-				 
-							</p:row>
-							
-							
-							<p:row>
-							
-								   <p:column style="text-align: left !important;width: 120px !important;">
+				 							
+								   <p:column style="text-align: left !important;width: 90px !important;">
 									
-									<p:outputLabel for="listSelect" value="Tipo Reporte:"  />
+									<p:outputLabel value="Tipo Reporte:"  />
 									
 									</p:column>						 
 									
-									<p:column style="text-align: left !important;width: 150px !important;">			 
+									<p:column style="text-align: left !important;width: 40px !important;">			 
 									    <p:selectOneMenu id="listSelect"    value="#{ordenPago.seleccionarA}"  >
 							            <f:selectItem itemLabel="Seleccionar ..." itemValue="#{null}" noSelectionOption="true" />
 							            <f:selectItems value="#{ordenPago.tipoReporte}"/>
 							           	</p:selectOneMenu>
 									</p:column>
-							
-							
-							</p:row>
-							
-							<p:row>
-							
+<!-- 						</p:row> -->
+<!-- 						 </p:panelGrid>   -->
+						
+<!-- 						 <p:panelGrid styleClass="ui-noborder" > -->
+						 
+<!-- 						 <p:row>	 -->
 								   <p:column style="text-align: left !important;width: 120px !important;">
 									
-									<p:commandButton class="blue" action="#{ordenPago.botonGenerarReporte}"  update="form:listSelect  form:result form:nombre " 
+									<p:commandButton class="blue" action="#{ordenPago.botonGenerarReporte}"  update="listSelect  result fechaInicio fechaUltima nombre" 
 									 value="Generar Reporte" ajax="true" />
 									
 									</p:column>						 
@@ -112,21 +108,24 @@
 <!--  									</p:selectOneRadio> -->
 <!--  									</p:column>						  -->
 <!-- 							</p:row> -->
-							
+					 </p:panelGrid>  
+					 <p:panelGrid styleClass="ui-noborder" >		
 							<p:row>
 							
 								   <p:column style="text-align: left !important;width: 120px !important;">
-									<p:outputLabel for="nombre" value="#{msg.orden_pago_txt_nombre}" />
+									<p:outputLabel for="nombre" value="Ruta y Nombre:" />
 									
 									</p:column>						 
 									
-									 <p:column style="text-align: left !important;width: 150px !important;">
-									<p:inputText id="nombre" disabled="true" 	value="#{ordenPago.nombre}" style="text-Align:left;font-size:15px;width:120px" />
+									 <p:column style="text-align: left !important;width: 300px !important;">
+									<p:inputText id="nombre" disabled="true" 	value="#{ordenPago.nombre}" style="text-Align:left;font-size:15px;width:300px" />
 									
 									</p:column>								
 							</p:row>
 				  
 				 </p:panelGrid>  
+				 
+				  </p:panelGrid>  
 				  
 
 <!--    				<p:panelGrid columns="1" styleClass="ui-noborder" style="margin-bottom:10px" cellpadding="5" > -->

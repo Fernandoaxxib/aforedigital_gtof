@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.serv;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,9 @@ public class OrdenPagoServ extends ServiceBase {
 		}
 	}
 	
-	public TiposReportes creaTipoReporte(String tipoReporte ) throws AforeException {
+	public TiposReportes creaTipoReporte(String tipoReporte, Date fechaInicio, Date fechaFin ) throws AforeException {
 		try {
-			return ordenPagoRepo.creaTipoReporte(tipoReporte);
+			return ordenPagoRepo.creaTipoReporte(tipoReporte,fechaInicio,fechaFin);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

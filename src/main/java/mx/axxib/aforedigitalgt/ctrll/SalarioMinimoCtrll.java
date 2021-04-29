@@ -193,16 +193,88 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
-    		salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
+    		
+    		if((insertUsuario == null || insertUsuario == "") || fechaCalendario ==null || montoDiario ==null) {
+    			
+    			boolean bandera=false;
+    			
+    			if((insertUsuario == null || insertUsuario=="") && fechaCalendario ==null && montoDiario ==null){
+    			UIInput inputUsuario = (UIInput) findComponent("usuarioGuardar");
+    			inputUsuario.setValid(false);
+				UIInput inputFecha = (UIInput) findComponent("fechaGuardar");
+				inputFecha.setValid(false);
+				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
+				inputMonto.setValid(false);
+				pr.setStatus("Ingresar Usuario,Fecha y Monto");
+				bandera=true;
+    			}
+    			
+    			
+    			if(fechaCalendario ==null && montoDiario ==null && bandera==false){
+        			UIInput inputFecha = (UIInput) findComponent("fechaGuardar");
+    				inputFecha.setValid(false);
+    				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
+    				inputMonto.setValid(false);
+    				pr.setStatus("Ingresar Fecha y Monto");
+    				bandera=true;
+        		}
+    			
+    			
+    			
+    			if((insertUsuario == null || insertUsuario=="") && montoDiario ==null && bandera==false){
+        			UIInput inputFecha = (UIInput) findComponent("usuarioGuardar");
+    				inputFecha.setValid(false);
+    				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
+    				inputMonto.setValid(false);
+    				pr.setStatus("Ingresar Usuario y Monto");
+    				bandera=true;
+        		}
+    			
+    			if((insertUsuario == null || insertUsuario=="") && fechaCalendario ==null && bandera==false){
+        			UIInput inputFecha = (UIInput) findComponent("usuarioGuardar");
+    				inputFecha.setValid(false);
+    				UIInput inputMonto = (UIInput) findComponent("fechaGuardar");
+    				inputMonto.setValid(false);
+    				pr.setStatus("Ingresar Usuario y Fecha");
+    				bandera=true;
+        		}
+    			
+    			if((insertUsuario == null || insertUsuario=="") && bandera==false){
+    				UIInput inputUsuario = (UIInput) findComponent("usuarioGuardar");
+        			inputUsuario.setValid(false);
+    				pr.setStatus("Ingresar Usuario");
+    				bandera=true;
+        		}
+    			
+    			if(montoDiario ==null && bandera==false){
+    				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
+    				inputMonto.setValid(false);
+    				pr.setStatus("Ingresar Monto");
+    				bandera=true;
+        		}
+    			
+    			if(fechaCalendario ==null && bandera==false){
+    				UIInput inputFecha = (UIInput) findComponent("fechaGuardar");
+    				inputFecha.setValid(false);
+    				pr.setStatus("Ingresar Fecha");
+    				bandera=true;
+        		}
+    			
+    		}else {
+    			
+    			
+				salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
+				
+				if (salarioMinimoMensaje.getEstatus() == 1) {
+					
+			    	pr.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"
+				}else {
+					pr.setStatus("Error al guardar nuevo Usuario");
+				}	
+				
+				
+    		}
 			
-			if (salarioMinimoMensaje.getEstatus() == 1) {
-				
-		    	pr.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"
-			}else {
-				pr.setStatus("Error al guardar nuevo Usuario");
-				
-			}
-
 		} catch (Exception e) {
 			pr = GenericException(e);
 		} finally {

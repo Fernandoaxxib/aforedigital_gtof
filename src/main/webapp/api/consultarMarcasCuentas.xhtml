@@ -27,30 +27,74 @@
 
 	<h:form id="form">
 	<p:panel id="datosSalario" header="Consulta Marcas de Cuentas" style="margin-top:20px">
-					<p:outputPanel style="text-align:left">
-						<h:outputLabel style="font-size:12px" for="flt"
-							value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" />
-						<p:inputText id="curpNSS"
-							style="width:250px;font-size:12px"
-							placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}" >	
-						</p:inputText>
-						<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"
-						 update="form:datosSalario result"  value="Buscar" ajax="true" class="blue"  />
-					</p:outputPanel>
-				<p:panelGrid id="verDetalleProceso"  columns="8"> 
-	 					
- 							<p:outputLabel for="nombre" value="#{msg.consultar_traspasos_icefas_txt_nombre}" />
-			     			<p:inputText id="nombre" disabled="true" 	value="#{consultarMarcasCuentas.nombre}" style="text-Align:left;font-size:15px;width:342px" />
-							<p:outputLabel for="nss" value="#{msg.consultar_traspasos_icefas_txt_nss}" />
-							
-			     			<p:inputText id="nss" disabled="true" 	value="#{consultarMarcasCuentas.nss}" style="text-Align:left;font-size:15px;width:180px" />
-							<p:outputLabel for="curp" value="#{msg.consultar_traspasos_icefas_txt_curp}" />
-			     			<p:inputText id="curp" disabled="true" 	value="#{consultarMarcasCuentas.curp}" style="text-Align:left;font-size:15px;width:250px" />
-							<p:outputLabel for="codCuenta" value="#{msg.consultar_traspasos_icefas_txt_cuenta}" />
-			     			<p:inputText id="codCuenta" disabled="true" 	value="#{consultarMarcasCuentas.cuenta}" style="text-Align:left;font-size:15px;width:180px" />
+					
+				
+					
+				 
+						<p:panelGrid styleClass="ui-noborder" style="width:35%;padding:10px;">
+						<p:row>
+										<p:column style="text-align: left !important;width: 180px !important;">
+										<p:outputLabel value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" style="font-weight: bold"/>
+										</p:column>						 
 										
-				</p:panelGrid> 
-				<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpDatos}"
+										<p:column style="text-align: left !important;width: 100px !important;">			 
+										    <p:inputText id="curpNSS" placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}"  style="text-Align:left;font-size:15px;width:180px"/>
+										 </p:column>
+										 
+										<p:column style="text-align: left !important;width: 20px !important;">
+										<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"  update="curpNSS result nombre,nss,curp,codCuenta tableMarcasCuentas"  value="Buscar" ajax="true" class="blue"  />
+										</p:column>	
+										
+										
+						</p:row>				
+										 
+										
+						</p:panelGrid>  
+				    
+						
+						<p:panelGrid styleClass="ui-noborder" style="width:70%;padding:10px;">
+						
+						<p:row>
+						
+										<p:column style="text-align: left !important;width: 30px !important;">
+										    <p:outputLabel value="Nombre:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 150px !important;">	
+										   <p:inputText id="nombre"  value="#{consultarMarcasCuentas.nombre}"  style="text-Align:left;font-size:15px;width:300px"/>
+										 </p:column>
+										 
+										<p:column style="text-align: right !important;width: 30px !important;">
+										    <p:outputLabel value="Nss:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 100px !important;">			 
+										    <p:inputText id="nss"  value="#{consultarMarcasCuentas.nss}"  style="text-Align:left;font-size:15px;width:100px"/>
+										</p:column>
+										
+										<p:column style="text-align: right !important;width: 50px !important;">
+										    <p:outputLabel value="Curp:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 30px !important;">			 
+										    <p:inputText id="curp"  value="#{consultarMarcasCuentas.curp}"  style="text-Align:left;font-size:15px;width:180px"/>
+										</p:column> 
+										
+										<p:column style="text-align: right !important;width: 30px !important;">
+										    <p:outputLabel value="Cuenta:" styleClass="etiqueta" />
+										</p:column>	
+										
+										<p:column style="text-align: left !important;width: 100px !important;">			 
+										    <p:inputText id="codCuenta"  value="#{consultarMarcasCuentas.cuenta}"  style="text-Align:left;font-size:15px;width:120px"/>
+										</p:column> 
+
+						</p:row>
+						
+										 
+						</p:panelGrid>   
+						
+						
+						<p:dataTable id="tableMarcasCuentas" var="pro" value="#{consultarMarcasCuentas.cpDatos}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15">
 
 									
@@ -107,9 +151,9 @@
                        					 </p:commandButton>
                    					 </p:column>
 									
-					</p:dataTable>	
-				
-						<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="50%" modal="true" style="font-size:12px">
+					</p:dataTable>
+					
+					<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="50%" modal="true" style="font-size:12px">
 						 <p:outputPanel id="display">
 						<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpCursor}"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  scrollable="true"  scrollHeight="250" >
@@ -135,12 +179,11 @@
 						 </p:outputPanel>
 						</p:dialog>
 						
-						
 						<ui:include src="processResult.xhtml">
 						<ui:param name="base" value="#{consultarMarcasCuentas}" />
-						</ui:include>
-						
-						</p:panel>	
+						</ui:include>	 
+
+	</p:panel>	
 						
 		
   </h:form>
