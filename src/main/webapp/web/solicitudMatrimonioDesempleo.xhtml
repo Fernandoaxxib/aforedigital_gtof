@@ -37,30 +37,40 @@
 	<p:panel id="busqueda" header="Solicitudes de Matrimonio y Desempleo" style="margin-top:20px">
 		
 				
-				<p:panelGrid id="solicitud" styleClass="ui-noborder"  style="margin-top:20px; width:100%;">
-									
+				<p:panelGrid id="solicitud" styleClass="ui-noborder"  style="margin-top:20px; width:70%;">
+					
+							
 					<p:row>					
-			     	<p:column>
+			     		<p:column style="text-align: left !important;width: 250px !important;">
 							<p:outputLabel  value="NSS:"  style="font-weight: bold"/>
-						</p:column>
-						<p:column>
-							<p:inputText id="nss" value="#{solicitudMatrimonioDesempleo.nss}" style="width:100px" ></p:inputText>
+<!-- 						</p:column> -->
+<!-- 						<p:column> -->
+<!-- 							<p:inputText id="nss" value="#{solicitudMatrimonioDesempleo.nss}" style="width:100px" ></p:inputText> -->
+							<p:inputText id="nss" placeholder="NSS" value="#{solicitudMatrimonioDesempleo.nss}"  style="text-Align:left;font-size:15px;width:100px"/>
 							<p:commandButton class="blue"  actionListener="#{solicitudMatrimonioDesempleo.consultar}"
-								 update="form solicitud result busqueda pSolicitud pPago" value="Buscar" />
+								 update="result nss nombre cuenta pSolicitud pPago" value="Buscar" />
 						</p:column>
 						
-						<p:column>
+						<p:column style="text-align: left !important;width: 50px !important;">
 							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{solicitudMatrimonioDesempleo.nombre}"></h:outputText>
+<!-- 							<h:outputText value="#{solicitudMatrimonioDesempleo.nombre}"></h:outputText> -->
+							<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombre" value="#{solicitudMatrimonioDesempleo.nombre}" />
+							</p:outputPanel>
 						</p:column>
 						
-						<p:column>
+						<p:column style="text-align: right !important;width: 80px !important;">
 							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{solicitudMatrimonioDesempleo.cuenta}"></h:outputText>
+<!-- 							<h:outputText value="#{solicitudMatrimonioDesempleo.cuenta}"></h:outputText> -->
+							<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:100px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="cuenta" value="#{solicitudMatrimonioDesempleo.cuenta}" />
+							</p:outputPanel>
 						</p:column>
 						
 						
@@ -161,45 +171,50 @@
 			<p:dialog header="Consulta de Pagos" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="80%" modal="true" style="font-size:12px">
 						 <p:outputPanel id="display">
 					
-					 <p:panelGrid id="verNombre" styleClass="ui-noborder" 	style="margin-top:20px; width:100%;">	
+					 <p:panelGrid id="verNombre" styleClass="ui-noborder" 	style="margin-top:20px; width:95%;">	
 						
 						<p:row>					
-			     		<p:column  style="width:20px">
-							<p:outputLabel  value="Poliza"  style="font-weight: bold"/>
+			     		<p:column  style="width:20px;text-align: left;">
+							<p:outputLabel  value="Poliza:"  style="font-weight: bold"/>
 						</p:column>
-						<p:column  style="width:20px">
+						<p:column  style="width:20px;text-align: left;">
 						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PNoPoliza_Pag}"></h:outputText>
 						</p:column>
-						<p:column  style="width:20px">
-							<p:outputLabel  value="No. Referencia"  style="font-weight: bold"/>
+						<p:column  style="width:20px;text-align: left;">
+							<p:outputLabel  value="No. Referencia:"  style="font-weight: bold"/>
 						</p:column>
-						<p:column  style="width:20px">
+						<p:column  style="width:40px;text-align: left;">
 						<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PReferencia}"></h:outputText>
 						</p:column>
-						</p:row>	
-						<p:row>					
-			     		<p:column  style="width:20px">
-							<p:outputLabel  value="Fecha Cheque"  style="font-weight: bold"/>
+						
+						
+						<p:column  style="width:50px;text-align: left;">
+							<p:outputLabel  value="Telefono Contacto:"  style="font-weight: bold"/>
 						</p:column>
-						<p:column  style="width:20px">
-							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PFechaMov_Pag}">
-							<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm" />
-							</h:outputText>
-						</p:column>
-						<p:column  style="width:20px">
-							<p:outputLabel  value="Fecha Reinversion"  style="font-weight: bold"/>
-						</p:column>
-						<p:column  style="width:20px">
-							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PFecReinv_Pag}">
-							<f:convertDateTime type="date" pattern="dd-MM-yyyy HH:mm" />
-							</h:outputText>
-						</p:column>
-						<p:column  style="width:20px">
-							<p:outputLabel  value="Telefono Contacto"  style="font-weight: bold"/>
-						</p:column>
-						<p:column  style="width:20px">
+						<p:column  style="width:20px;text-align: left;">
 							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PTelefono_Pag}"/>
+						</p:column>				
+			     		
+						
+						</p:row>	
+						<p:row>	
+						<p:column  style="width:50px;text-align: left;">
+							<p:outputLabel  value="Fecha Cheque:"  style="font-weight: bold"/>
 						</p:column>
+						<p:column  style="width:20px;text-align: left;">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PFechaMov_Pag}">
+							<f:convertDateTime type="date" pattern="dd-MM-yyyy " />
+							</h:outputText>
+						</p:column>
+						<p:column  style="width:50px;text-align: left;">
+							<p:outputLabel  value="Fecha Reinversion:"  style="font-weight: bold"/>
+						</p:column>
+						<p:column  style="width:20px;text-align: left;">
+							<h:outputText value="#{solicitudMatrimonioDesempleo.fopagos.PFecReinv_Pag}">
+							<f:convertDateTime type="date" pattern="dd-MM-yyyy " />
+							</h:outputText>
+						</p:column>
+						
 						</p:row>	
 					</p:panelGrid>		
 						

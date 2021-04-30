@@ -79,7 +79,7 @@
 									
 									</p:column>						 
 									
-									<p:column style="text-align: left !important;width: 40px !important;">			 
+									<p:column style="text-align: left !important;width: 30px !important;">			 
 									    <p:selectOneMenu id="listSelect"    value="#{ordenPago.seleccionarA}"  >
 							            <f:selectItem itemLabel="Seleccionar ..." itemValue="#{null}" noSelectionOption="true" />
 							            <f:selectItems value="#{ordenPago.tipoReporte}"/>
@@ -91,7 +91,7 @@
 <!-- 						 <p:panelGrid styleClass="ui-noborder" > -->
 						 
 <!-- 						 <p:row>	 -->
-								   <p:column style="text-align: left !important;width: 120px !important;">
+								   <p:column style="text-align: left !important;width: 150px !important;">
 									
 									<p:commandButton class="blue" action="#{ordenPago.botonGenerarReporte}"  update="listSelect  result fechaInicio fechaUltima nombre" 
 									 value="Generar Reporte" ajax="true" />
@@ -112,14 +112,17 @@
 					 <p:panelGrid styleClass="ui-noborder" >		
 							<p:row>
 							
-								   <p:column style="text-align: left !important;width: 120px !important;">
+								   <p:column style="text-align: left !important;width: 100px !important;">
 									<p:outputLabel for="nombre" value="Ruta y Nombre:" />
 									
 									</p:column>						 
 									
 									 <p:column style="text-align: left !important;width: 300px !important;">
-									<p:inputText id="nombre" disabled="true" 	value="#{ordenPago.nombre}" style="text-Align:left;font-size:15px;width:300px" />
-									
+<!-- 									<p:inputText id="nombre" disabled="true" 	value="#{ordenPago.nombre}" style="text-Align:left;font-size:15px;width:300px" /> -->
+									<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:320px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombre" value="#{ordenPago.nombre}" />
+										</p:outputPanel>
 									</p:column>								
 							</p:row>
 				  

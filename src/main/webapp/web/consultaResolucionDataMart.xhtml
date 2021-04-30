@@ -38,89 +38,175 @@
    <p:panel id="busqueda" header="Consulta de Resoluciones Datamart" style="margin-top:20px">
    
 	 <p:panelGrid id="verNombre" styleClass="ui-noborder" 	style="margin-top:20px; width:100%;">
-	 
+	 		
+	 				<p:panelGrid styleClass="ui-noborder" style="width:100%;padding:10px;">
 					 <p:row>					
 			     		<p:column>
 							<p:outputLabel  value="NSS:"  style="font-weight: bold"/>
-							<p:inputText id="nss" value="#{consultaResolucionDataMart.nss}" style="width:100px" ></p:inputText>
+							
+<!-- 						</p:column> -->
+						
+<!-- 						<p:column >	 -->
+<!-- 							<p:inputText id="nss" value="#{consultaResolucionDataMart.nss}" style="width:100px" ></p:inputText> -->
+							 <p:inputText id="nss" placeholder="NSS" value="#{consultaResolucionDataMart.nss}"  style="text-Align:left;font-size:15px;width:110px"/>
+<!-- 						</p:column> -->
+						
+<!-- 						<p:column > -->
 							<p:commandButton class="blue"  actionListener="#{consultaResolucionDataMart.getCuentaNombre}" update="busqueda pSolicitud verConsultaDataMart result" value="Buscar" />
 						</p:column>
-					</p:row>	
-					 <p:row>
-						<p:column>
-							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE}"></h:outputText>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CUENTA}"></h:outputText>
-						</p:column>
-					</p:row>
 						
-					<p:row>
-						<p:column>
-							<p:outputLabel value="NSS DataMart:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NSS_TRABAJADOR}"></h:outputText>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Curp:" style="font-weight: bold"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CURP}"></h:outputText>
-						</p:column>
+						
+						
+						
+						
+						
+						
 					</p:row>
-	 				
-	 				<p:row>
+					</p:panelGrid>  
+					
+					<p:panelGrid styleClass="ui-noborder" style="width:100%;padding:10px;">	
+					 <p:row>
 						
 						<p:column>
 							<p:outputLabel value="Nombre DataMart:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_DATAMART}"></h:outputText>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_DATAMART}"></h:outputText> -->
+						<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_NOMBRE_DATAMART" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_DATAMART}" />
+						</p:outputPanel>
 						</p:column>
+						
+						
+						
+						<p:column >
+							<p:outputLabel value="NSS DataMart:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NSS_TRABAJADOR}"></h:outputText> -->
+						<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:100px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_NSS_TRABAJADOR" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NSS_TRABAJADOR}" />
+						</p:outputPanel>
+						</p:column>
+						
+						
+						
+						<p:column  >
+							<p:outputLabel value="Curp:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						<p:column>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CURP}"></h:outputText> -->
+						<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:150px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_CURP" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CURP}" />
+						</p:outputPanel>
+						</p:column>
+					
+						
+					</p:row>
+<!-- 					</p:panelGrid>   -->
+					
+					
+<!-- 					<p:panelGrid styleClass="ui-noborder" style="width:100%;padding:10px;">	 -->
+					
+	 				<p:row>
+						
+						
+						
 					
 						<p:column>
 							<p:outputLabel value="Nombre Afore:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_AFORE}"></h:outputText>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_AFORE}"></h:outputText> -->
+							<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_NOMBRE_AFORE" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE_AFORE}" />
+						</p:outputPanel>
 						</p:column>
-					</p:row>
-					<p:row>
+<!-- 					</p:row> -->
+<!-- 					<p:row> -->
 						<p:column>
 							<p:outputLabel value="Paterno Afore:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_PATERNO_AFORE}"></h:outputText>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_PATERNO_AFORE}"></h:outputText> -->
+						<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:100px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_PATERNO_AFORE" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_PATERNO_AFORE}" />
+						</p:outputPanel>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Materno Afore:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_MATERNO_AFORE}"></h:outputText>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_MATERNO_AFORE}"></h:outputText> -->
+							<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:150px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_MATERNO_AFORE" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_MATERNO_AFORE}" />
+							</p:outputPanel>
+						
 						</p:column>
 					</p:row>
+<!-- 					</p:panelGrid>   -->
+					
+					
+<!-- 					<p:panelGrid styleClass="ui-noborder" style="width:60%;padding:10px;">	 -->
+					
+					
 					<p:row>
+					
+						<p:column >
+							<p:outputLabel value="Nombre:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						
+						<p:column>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE}"></h:outputText> -->
+						<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_NOMBRE" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_NOMBRE}" />
+						</p:outputPanel>	
+						</p:column>
+						
+						
+						<p:column  >
+							<p:outputLabel value="Cod Cuenta:" style="font-weight: bold"></p:outputLabel>
+						</p:column>
+						
+						<p:column>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CUENTA}"></h:outputText> -->
+						<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:100px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_CUENTA" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_CUENTA}" />
+						</p:outputPanel>	
+						</p:column>
 						<p:column>
 							<p:outputLabel value="Derecho:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_derecho}"></h:outputText>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_derecho}"></h:outputText> -->
+							<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:150px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_derecho" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_derecho}" />
+							</p:outputPanel>
 						</p:column>
+						</p:row>
+						<p:row>
 						<p:column>
 							<p:outputLabel value="Descripcion Derecho:" style="font-weight: bold"></p:outputLabel>
 						</p:column>
 						<p:column>
-							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_desc_derecho}"></h:outputText>
+<!-- 							<h:outputText value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_desc_derecho}"></h:outputText> -->
+						   <p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="p_desc_derecho" value="#{consultaResolucionDataMart.consultaResolucionesNombreOut.p_desc_derecho}" />
+							</p:outputPanel>	
+							
 						</p:column>
 					</p:row>
-		
+			</p:panelGrid>  
   	</p:panelGrid>	
   	
   		
@@ -190,13 +276,13 @@
 		    	<p:column headerText="PORC" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.porcentajeVALUACION}" />
 		    	</p:column>	
-		    	<p:column headerText="SEM COT" style="width:50px;text-align: center;">
+		    	<p:column headerText="SEM COT" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.semanasCOTIZADAS}" />
 		    	</p:column>	
-		    	<p:column headerText="DIALG REG" style="width:50px;text-align: center;">
+		    	<p:column headerText="DIALG REG" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.diagREGISTRO}" />
 		    	</p:column>	
-		    	<p:column headerText="NUM RES" style="width:50px;text-align: center;">
+		    	<p:column headerText="NUM RES" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.numRESOLUCION}" />
 		    	</p:column>	
 		    	<p:column headerText="AP CS" style="width:50px;text-align: center;">
@@ -208,13 +294,13 @@
 		    	<p:column headerText="SBC B" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.sbcTIPO_B}" />
 		    	</p:column>	
-		    	<p:column headerText="PAG COM" style="width:50px;text-align: center;">
+		    	<p:column headerText="PAG COM" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.pagoCOMP}" />
 		    	</p:column>	
-		    	<p:column headerText="MONT RET" style="width:50px;text-align: center;">
+		    	<p:column headerText="MONT RET" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.montoRETIRO_ORG}" />
 		    	</p:column>
-		    	<p:column headerText="SALD ANT" style="width:50px;text-align: center;">
+		    	<p:column headerText="SALD ANT" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.saldoANT}" />
 		    	</p:column>
 		</p:dataTable>

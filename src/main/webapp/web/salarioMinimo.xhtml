@@ -33,7 +33,7 @@
 		
 		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
         <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
-		<p:commandButton class="blue"  actionListener="#{salarioMinimo.botonGenerarTabla}" update="result usuario"
+		<p:commandButton class="blue"  actionListener="#{salarioMinimo.botonGenerarTabla}" update="result usuario tableSalario"
 							 value="#{msg.salario_minimo_boton_salario}" ajax="true" />
 		
 <!-- 		 <p:growl id="msgs" showDetail="true"/> -->
@@ -56,22 +56,22 @@
         <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario :form:result" />
         <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:tableSalario :form:result" />
  
-        <p:column headerText="CdZona">
-            <p:cellEditor>
-                <f:facet name="output"> <h:outputText value="#{salario.cdZona}" /> </f:facet>
-                <f:facet name="input"><p:inputText value="#{salario.cdZona}" style="width:100%" /> </f:facet>
+        <p:column headerText="CdZona" >
+            <p:cellEditor  style="text-align: center">
+                <f:facet name="output"> <h:outputText value="#{salario.cdZona}" style="text-align: center"/> </f:facet>
+                <f:facet name="input"><p:inputText value="#{salario.cdZona}" style="text-align: center" /> </f:facet>
             </p:cellEditor>
         </p:column>
  
           <p:column headerText="FechaCalendario">
             <p:cellEditor>
                 <f:facet name="output">
-                			<p:datePicker disabled="true"  id="calendarioOut" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:center;" showIcon="false"
+                			<p:datePicker disabled="true"  id="calendarioOut" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="false"
 							locale="es" pattern="dd/MM/yyyy" />
                                        
                 </f:facet>
                 <f:facet name="input">
-                			 <p:datePicker id="calendarioIn" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:center;" showIcon="true"
+                			 <p:datePicker id="calendarioIn" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
 							locale="es" pattern="dd/MM/yyyy" />
                 			
                 </f:facet>
@@ -92,7 +92,7 @@
         <p:column headerText="FechaUltimo">
             <p:cellEditor>
                 <f:facet name="output">
-                						<p:datePicker disabled="true"  id="fechaUltOut" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:center;" showIcon="false"
+                						<p:datePicker disabled="true"  id="fechaUltOut" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:right;" showIcon="false"
 										locale="es" pattern="dd/MM/yyyy" />
                 </f:facet>
                 <f:facet name="input">
