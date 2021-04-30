@@ -43,7 +43,8 @@
 										<p:outputLabel value="Inicio:" />
 									</p:column>
 									<p:column>
-										<p:datePicker id="fechaInicial"
+										<p:datePicker id="fechaInicial" yearNavigator="true"
+											monthNavigator="true"
 											inputStyle="width:120px; text-align:right;"
 											value="#{ventaTitulos.fechaInicial}" showIcon="true"
 											locale="es" pattern="dd-MM-yyyy"
@@ -54,8 +55,8 @@
 										<p:outputLabel value="Fin:" />
 									</p:column>
 									<p:column>
-										<p:datePicker id="fechaFinal"
-											value="#{ventaTitulos.fechaFinal}"
+										<p:datePicker id="fechaFinal" yearNavigator="true"
+											monthNavigator="true" value="#{ventaTitulos.fechaFinal}"
 											inputStyle="width:120px; text-align:right;" showIcon="true"
 											locale="es" pattern="dd-MM-yyyy"
 											mindate="#{ventaTitulos.fechaActual}" readonlyInput="true" />
@@ -176,18 +177,19 @@
 							</p:outputPanel>
 						</p:column>
 						<p:column style="vertical-align: bottom;">
-							<p:commandButton class="blue" update="pBusqueda ventaTable result"
-								style="margin-bottom:6px" actionListener="#{ventaTitulos.buscarMontos}" value="Buscar" />
+							<p:commandButton class="blue"
+								update="pBusqueda ventaTable result" style="margin-bottom:6px"
+								actionListener="#{ventaTitulos.buscarMontos}" value="Buscar" />
 
 							<p:commandButton class="blue" id="venta" update="result"
 								actionListener="#{ventaTitulos.ventaTitulosMonitor}"
-								style="margin-left:20px;margin-bottom:6px;" rendered="#{ventaTitulos.mostrarVenta}"
-								value="Venta en monitor" />
+								style="margin-left:20px;margin-bottom:6px;"
+								rendered="#{ventaTitulos.mostrarVenta}" value="Venta en monitor" />
 
 							<p:commandButton class="blue" id="ventaCT" update="result"
 								actionListener="#{ventaTitulos.ventaTitulosMonitorCT}"
 								style="margin-left:20px;margin-bottom:6px;"
-								rendered="#{ventaTitulos.mostrarVentaCT}" 
+								rendered="#{ventaTitulos.mostrarVentaCT}"
 								value="Venta en monitor corte trans." />
 						</p:column>
 
