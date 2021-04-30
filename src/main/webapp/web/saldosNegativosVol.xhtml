@@ -46,19 +46,49 @@
 			
 							
 					
-				<p:panel header="Reporte Saldo Voluntario"  style="font-size:12px;margin-bottom:20px;margin-top:20px">
-					<p:panelGrid id="panel" columns="6" styleClass="ui-noborder" cellpadding="10" width="100%">
+				<p:panel header="Reporte Saldo Voluntario"  styleClass="ui-noborder" >
+					<p:panelGrid styleClass="ui-noborder" >
 							
-						<p:outputLabel value="Ruta:" />					
-						<p:inputText id="rutaVol" disabled="true" 	value="#{saldosNegativosVol.rutaSaldoNegativo}" style="text-Align:left;font-size:15px;width:350px"/>
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:outputLabel value="Ruta:" />		
+						</p:column>	
+						<p:column style="text-align: left !important;width: 50px !important;">			
+<!-- 						<p:inputText id="rutaVol" disabled="true" 	value="#{saldosNegativosVol.rutaSaldoNegativo}" style="text-Align:left;font-size:15px;width:350px"/> -->
+								<p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="rutaVol" value="#{saldosNegativosVol.rutaSaldoNegativo}" />
+								</p:outputPanel>
+						
+						</p:column>	
+						
+						<p:column style="text-align: left !important;width: 120px !important;">	
 						<p:outputLabel value="Nombre Archivo:" />
-						<p:inputText id="nombreVol" disabled="true"  value="#{saldosNegativosVol.nombreSaldoNegativo}" style="text-Align:left;font-size:15px;width:350px"/>
+						</p:column>	
+						 <p:column style="text-align: left !important;width: 50px !important;">
+						<p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="nombreVol" value="#{saldosNegativosVol.nombreSaldoNegativo}" />
+					    </p:outputPanel>
+						
+						</p:column>	
+						
+						<p:column style="text-align: left !important;width: 200px !important;">	
 						<p:outputLabel value="Fecha Mov:" />
-						<p:datePicker id="fechaVol" inputStyle="width:120px; text-align:right;"
-						value="#{saldosNegativosVol.saldoFechaMovimiento}" showIcon="true" locale="es"
-						pattern="dd-MM-yyyy" readonlyInput="true" />
-						<p:commandButton styleClass="blue ui-button-text" process="nombreVol" value="Reporte" action="#{saldosNegativosVol.ejecutarReporteNegativo}" update="form result" ajax="true"/>
-									
+						<p:datePicker id="fechaUltima" value="#{saldosNegativosVol.saldoFechaMovimiento}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									yearNavigator="true" monthNavigator="true"
+									inputStyle="width:80px; text-align:right;"
+									readonlyInput="true" />	
+						
+						</p:column>	
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:commandButton styleClass="blue ui-button-text" process="nombreVol" value="Reporte" action="#{saldosNegativosVol.ejecutarReporteNegativo}" update="result" ajax="true"/>
+						</p:column>	
+						
+						
+						</p:row>			
 								
 							
 					</p:panelGrid>	

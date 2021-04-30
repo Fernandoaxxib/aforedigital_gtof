@@ -47,58 +47,89 @@
 							
 					<div class="ui-g-6">
 						<p:panel header="Carga Nss Reporte Saldo Imss">
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="Ruta:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.rutaNssImss}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Nombre Archivo:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-										<p:outputLabel value="#{saldosNegativosImssIsste.nombreNssImss}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Carga" action="#{saldosNegativosImssIsste.ejecutarImssCarga}" update="form result" />
-								</div>
-							</div>
+						
+						<p:panelGrid styleClass="ui-noborder" >
+							
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:outputLabel value="Ruta:" />		
+						</p:column>		
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="rutaNssImss" value="#{saldosNegativosImssIsste.rutaNssImss}" />
+					   				 </p:outputPanel>
+						</p:column>	
+						
+						</p:row>	
+						
+						<p:row>	
+						<p:column style="text-align: left !important;width: 120px !important;">	
+						<p:outputLabel value="Nombre Archivo:" />		
+						</p:column>		
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="nombreNssImss" value="#{saldosNegativosImssIsste.nombreNssImss}" />
+					   				 </p:outputPanel>
+						</p:column>	
+							
+						</p:row>	
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:commandButton styleClass="blue ui-button-text" value="Carga" action="#{saldosNegativosImssIsste.ejecutarImssCarga}" update="result" ajax="true" />	
+						</p:column>			
+						</p:row>			
+						
+					</p:panelGrid>		
 						</p:panel>
 					</div>
 					
 					<div class="ui-g-6">
 						<p:panel header="Reporte Saldos Actuales Imss">
 						
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="Ruta:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.rutaReporteImss}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Nombre Archivo:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.nombreReporteImss}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Reporte" action="#{saldosNegativosImssIsste.ejecutarImssReporte}" update="form result" ajax="true"/>
-								</div>
-							</div>
+						<p:panelGrid styleClass="ui-noborder" >
+							
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:outputLabel value="Ruta:" />		
+						</p:column>		
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="rutaReporteImss" value="#{saldosNegativosImssIsste.rutaReporteImss}" />
+					   				 </p:outputPanel>
+						</p:column>	
+						
+						</p:row>	
+						
+						<p:row>	
+						<p:column style="text-align: left !important;width: 120px !important;">	
+						<p:outputLabel value="Nombre Archivo:" />		
+						</p:column>		
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="nombreReporteImss" value="#{saldosNegativosImssIsste.nombreReporteImss}" />
+					   				 </p:outputPanel>
+						</p:column>	
+							
+						</p:row>	
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:commandButton styleClass="blue ui-button-text" value="Reporte" action="#{saldosNegativosImssIsste.ejecutarImssReporte}" update="result" ajax="true"/>	
+						</p:column>			
+						</p:row>			
+						
+					</p:panelGrid>		
+						
+
 						</p:panel>
 					
 					</div>
@@ -111,29 +142,46 @@
 				
 					<div class="ui-g-6">
 						<p:panel header="Carga Curp Reporte Saldos Isste">
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="Ruta:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.rutaCurpIsste}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Nombre Archivo:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.nombreCurpIsste}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Carga" action="#{saldosNegativosImssIsste.ejecutarIssteCarga}" update="form result" ajax="true"/>
-								</div>
-							</div>
+						
+						<p:panelGrid styleClass="ui-noborder" >
+							
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:outputLabel value="Ruta:" />		
+						</p:column>		
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="rutaCurpIsste" value="#{saldosNegativosImssIsste.rutaCurpIsste}" />
+					   				 </p:outputPanel>
+						</p:column>	
+						
+						</p:row>	
+						
+						<p:row>	
+						<p:column style="text-align: left !important;width: 120px !important;">	
+						<p:outputLabel value="Nombre Archivo:" />		
+						</p:column>		
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="nombreCurpIsste" value="#{saldosNegativosImssIsste.nombreCurpIsste}" />
+					   				 </p:outputPanel>
+						</p:column>	
+							
+						</p:row>	
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:commandButton styleClass="blue ui-button-text" value="Carga" action="#{saldosNegativosImssIsste.ejecutarIssteCarga}" update="result" ajax="true"/>	
+						</p:column>			
+						</p:row>			
+						
+					</p:panelGrid>		
+						
+
 						</p:panel>
 						
 						
@@ -142,29 +190,44 @@
 					<div class="ui-g-6">
 						<p:panel header="Reporte Saldos Actuales Isste">
 						
-							<div class="ui-g">
-								<div class="ui-g-3">
-									<p:outputLabel value="Ruta:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.rutaReporteIsste}" />
-								</div>
-							</div>
-							<div class="ui-g" style="margin-top: 10px;">
-								<div class="ui-g-3">
-									<p:outputLabel value="Nombre Archivo:" />
-								</div>
-								<div class="ui-g-9"
-									style="background: #dddddd; border-radius: 5px; height: 25px; font-size: 10px; text-align: left;">
-									<p:outputLabel value="#{saldosNegativosImssIsste.nombreReporteIsste}" />
-								</div>
-							</div>
-							<div class="ui-g" style="text-align: right;">
-								<div class="ui-g-12">
-									<p:commandButton styleClass="blue ui-button-text" type="submit" value="Reporte" action="#{saldosNegativosImssIsste.ejecutarIssteReporte}" update="form result" ajax="true"/>
-								</div>
-							</div>
+							<p:panelGrid styleClass="ui-noborder" >
+							
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:outputLabel value="Ruta:" />		
+						</p:column>		
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="rutaReporteIsste" value="#{saldosNegativosImssIsste.rutaReporteIsste}" />
+					   				 </p:outputPanel>
+						</p:column>	
+						
+						</p:row>	
+						
+						<p:row>	
+						<p:column style="text-align: left !important;width: 120px !important;">	
+						<p:outputLabel value="Nombre Archivo:" />		
+						</p:column>		
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+									  <p:outputPanel styleClass="outputlabel-shadow"
+													style="width:300px;height:19px !important;padding-top:5px">
+													<p:outputLabel id="nombreReporteIsste" value="#{saldosNegativosImssIsste.nombreReporteIsste}" />
+					   				 </p:outputPanel>
+						</p:column>	
+							
+						</p:row>	
+						<p:row>	
+						
+						<p:column style="text-align: left !important;width: 50px !important;">	
+						<p:commandButton styleClass="blue ui-button-text" value="Reporte" action="#{saldosNegativosImssIsste.ejecutarIssteReporte}" update="result" ajax="true"/>	
+						</p:column>			
+						</p:row>			
+						
+					</p:panelGrid>		
+
 						</p:panel>
 					
 					</div>
