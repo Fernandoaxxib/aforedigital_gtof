@@ -116,6 +116,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		    if (salarioMinOut.getEstatus() == 1 && salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
 				totalIdUsuario=salarioMinOut.getListSalarioMin().size();
 				salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();
+				System.out.println("VALOR DE salarioMinimoTablaOut: "+salarioMinimoTablaOut);
 		    	pr.setStatus("Consulta Exitosa Id Usuario");//"Consulta Exitosa"
 			}else {
 				pr.setStatus("No se encontraron resultados por Id Usuario");

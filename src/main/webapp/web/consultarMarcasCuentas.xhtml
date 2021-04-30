@@ -31,17 +31,17 @@
 				
 					
 				 
-						<p:panelGrid styleClass="ui-noborder" style="width:35%;padding:10px;">
+						<p:panelGrid styleClass="ui-noborder" style="width:50%;padding:10px;">
 						<p:row>
-										<p:column style="text-align: left !important;width: 180px !important;">
+										<p:column style="text-align: left !important;width: 155px !important;">
 										<p:outputLabel value="#{msg.consultar_traspasos_icefas_txt_nss_curp}" style="font-weight: bold"/>
 										</p:column>						 
 										
 										<p:column style="text-align: left !important;width: 100px !important;">			 
-										    <p:inputText id="curpNSS" placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}"  style="text-Align:left;font-size:15px;width:180px"/>
-										 </p:column>
+										    <p:inputText id="curpNSS" placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{consultarMarcasCuentas.curp_o_nssIn}"  style="text-Align:left;font-size:15px;width:160px"/>
+										</p:column>
 										 
-										<p:column style="text-align: left !important;width: 20px !important;">
+										<p:column >
 										<p:commandButton action="#{consultarMarcasCuentas.validarNssRfc}"  update="curpNSS result nombre,nss,curp,codCuenta tableMarcasCuentas"  value="Buscar" ajax="true" class="blue"  />
 										</p:column>	
 										
@@ -61,7 +61,11 @@
 										</p:column>	
 										
 										<p:column style="text-align: left !important;width: 150px !important;">	
-										   <p:inputText id="nombre"  value="#{consultarMarcasCuentas.nombre}"  style="text-Align:left;font-size:15px;width:300px"/>
+<!-- 										   <p:inputText id="nombre"  value="#{consultarMarcasCuentas.nombre}"  style="text-Align:left;font-size:15px;width:300px"/> -->
+										 <p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombre" value="#{consultarMarcasCuentas.nombre}" />
+										</p:outputPanel>
 										 </p:column>
 										 
 										<p:column style="text-align: right !important;width: 30px !important;">
@@ -69,7 +73,11 @@
 										</p:column>	
 										
 										<p:column style="text-align: left !important;width: 100px !important;">			 
-										    <p:inputText id="nss"  value="#{consultarMarcasCuentas.nss}"  style="text-Align:left;font-size:15px;width:100px"/>
+<!-- 										    <p:inputText id="nss"  value="#{consultarMarcasCuentas.nss}"  style="text-Align:left;font-size:15px;width:100px"/> -->
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:100px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nss" value="#{consultarMarcasCuentas.nss}" />
+										</p:outputPanel>
 										</p:column>
 										
 										<p:column style="text-align: right !important;width: 50px !important;">
@@ -77,7 +85,11 @@
 										</p:column>	
 										
 										<p:column style="text-align: left !important;width: 30px !important;">			 
-										    <p:inputText id="curp"  value="#{consultarMarcasCuentas.curp}"  style="text-Align:left;font-size:15px;width:180px"/>
+<!-- 										    <p:inputText id="curp"  value="#{consultarMarcasCuentas.curp}"  style="text-Align:left;font-size:15px;width:180px"/> -->
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:180px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="curp" value="#{consultarMarcasCuentas.curp}" />
+										</p:outputPanel>
 										</p:column> 
 										
 										<p:column style="text-align: right !important;width: 30px !important;">
@@ -85,7 +97,11 @@
 										</p:column>	
 										
 										<p:column style="text-align: left !important;width: 100px !important;">			 
-										    <p:inputText id="codCuenta"  value="#{consultarMarcasCuentas.cuenta}"  style="text-Align:left;font-size:15px;width:120px"/>
+<!-- 										    <p:inputText id="codCuenta"  value="#{consultarMarcasCuentas.cuenta}"  style="text-Align:left;font-size:15px;width:120px"/> -->
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:120px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="codCuenta" value="#{consultarMarcasCuentas.cuenta}" />
+										</p:outputPanel>
 										</p:column> 
 
 						</p:row>
