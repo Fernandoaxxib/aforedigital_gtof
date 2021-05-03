@@ -37,11 +37,7 @@
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						<p:linkButton styleClass="blue"
-							outcome="/web/rechazosSolicitudesCatalogo.jsf"
-							includeViewParams="true" value="Catálogo">
-							<f:param name="init" value="true" />
-						</p:linkButton>
+						
 					</h:form>
 				</p:column>
 			</p:row>
@@ -56,7 +52,7 @@
 
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Fecha inicio: " style="font-weight: normal" />
+							<p:outputLabel value="Fecha inicio: "  />
 							<p:datePicker id="fechaInicial"
 								inputStyle="width:120px; text-align:right;"
 								value="#{rechazos.fechaInicial}" showIcon="true" locale="es"
@@ -64,7 +60,7 @@
 								pattern="dd-MM-yyyy" readonlyInput="true"  />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fecha fin: " style="font-weight: normal" />
+							<p:outputLabel value="Fecha fin: " />
 							<p:datePicker id="fechaFinal" value="#{rechazos.fechaFinal}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true"
@@ -72,12 +68,9 @@
 								 />
 
 						</p:column>
-					</p:row>
 
-
-					<p:row>
 						<p:column colspan="2" style="padding:10px">
-							<h:outputLabel value="Nombre de Archivo (sin extensión):" style="font-weight: normal" />
+							<h:outputLabel value="Nombre de archivo (sin extensión):"  />
 							<p:inputText id="archivo" value="#{rechazos.nombreArchivo}" style="width:150px;" maxlength="20"
 								></p:inputText>
 							
@@ -85,8 +78,8 @@
 					</p:row>
 
 					<p:row>
-						<p:column>
-							<p:commandButton class="blue" actionListener="#{rechazos.generarReporte}"
+						<p:column colspan="3" style="text-align:right;">
+							<p:commandButton class="blue"  actionListener="#{rechazos.generarReporte}"
 								 value="Generar reporte" update="busqueda result" />
 						</p:column>
 					</p:row>
