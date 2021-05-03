@@ -39,11 +39,13 @@
 							<f:param name="init" value="true" />
 						</p:linkButton>
 						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
 							outcome="/web/reInverModDesCompras.jsf" includeViewParams="true"
 							value="Compras">
 							<f:param name="init" value="true" />
 						</p:linkButton>
 						<p:linkButton styleClass="green"
+							style="margin-left:13px !important"
 							outcome="/web/reInverModDesVentas.jsf" includeViewParams="true"
 							value="Ventas">
 							<f:param name="init" value="true" />
@@ -100,9 +102,8 @@
 							<p:outputLabel value="Fecha: " />
 						</p:column>
 						<p:column>
-							<p:datePicker id="fecha"
-								value="#{reinversionModDesVentas.fecha}" locale="es"
-								maxdate="#{reinversionModDesVentas.fecActual}"
+							<p:datePicker id="fecha" value="#{reinversionModDesVentas.fecha}"
+								locale="es" maxdate="#{reinversionModDesVentas.fecActual}"
 								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
 								monthNavigator="true"
 								inputStyle="width:100px; text-align:right;" readonlyInput="true">
@@ -115,8 +116,8 @@
 							<p:outputLabel value="Lote: " />
 						</p:column>
 						<p:column>
-							<p:inputText id="vLote" value="#{reinversionModDesVentas.lote}" disabled="true"
-								placeholder="Seleccione lote"
+							<p:inputText id="vLote" value="#{reinversionModDesVentas.lote}"
+								disabled="true" placeholder="Seleccione lote"
 								style="text-align:right;width:150px;margin-left:10px !important" />
 							<p:commandButton styleClass="blue" style="width:35px" value="..."
 								action="#{reinversionModDesVentas.getLotes}"
@@ -125,13 +126,13 @@
 						</p:column>
 						<p:column>
 							<p:commandButton styleClass="blue" value="Generar Reporte"
-								action="#{reinversionModDesVentas.generarReporte}" update="form:vLote form:fecha form:result"
-								oncomplete="" />
+								action="#{reinversionModDesVentas.generarReporte}"
+								update="form:vLote form:fecha form:result" oncomplete="" />
 						</p:column>
 						<p:column>
 							<p:commandButton styleClass="blue" value="Venta"
-								action="#{reinversionModDesVentas.vender}" update="form:vLote form:fecha form:result"
-								oncomplete="" />
+								action="#{reinversionModDesVentas.vender}"
+								update="form:vLote form:fecha form:result" oncomplete="" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -163,7 +164,8 @@
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
 						<f:facet name="footer">
-							<h:outputText id="idMonto" value="#{reinversionModDesVentas.montoTotal}"
+							<h:outputText id="idMonto"
+								value="#{reinversionModDesVentas.montoTotal}"
 								style="float:right">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>
@@ -175,7 +177,8 @@
 							<f:convertNumber type="currency" currencySymbol="$" />
 						</h:outputText>
 						<f:facet name="footer">
-							<h:outputText id="idAcciones" value="#{reinversionModDesVentas.accionesTotal}"
+							<h:outputText id="idAcciones"
+								value="#{reinversionModDesVentas.accionesTotal}"
 								style="float:right">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>

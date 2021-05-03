@@ -75,6 +75,12 @@
 					<p:ajax process="@this" event="rowSelect"
 						listener="#{modDesParcLProcesar.onRowSelect}" />
 
+					<f:facet name="header">
+						<p:outputPanel style="text-align:left;margin-top:10px;">
+							<h:outputLabel style="font-weight:normal;"
+								value="Seleccione el lote de su interés" />
+						</p:outputPanel>
+					</f:facet>
 
 					<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
 						styleClass="gridCell-right">
@@ -86,17 +92,15 @@
 							<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 						</h:outputText>
 					</p:column>
-
 				</p:dataTable>
-				<p:outputPanel style="text-align:right">
-					<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
-						styleClass="blue" style="margin-right:10px" />
-					<p:commandButton value="Seleccionar"
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
 						actionListener="#{modDesParcLProcesar.opcionSeleccionada2}"
 						oncomplete="PF('dlg2').hide();" update="pnl2 pnl3 pnl4"
 						styleClass="blue" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue" style="margin-left:13px" />
 				</p:outputPanel>
-
 			</p:dialog>
 
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo3}"
@@ -132,7 +136,8 @@
 									maxdate="#{modDesParcLProcesar.fecActual}" readonlyInput="true" />
 							</p:outputPanel>
 						</p:column>
-						<p:column rendered="#{modDesParcLProcesar.radioSelected eq 1 or (modDesParcLProcesar.radioSelected eq 2 or (modDesParcLProcesar.radioSelected eq 3)) }">
+						<p:column
+							rendered="#{modDesParcLProcesar.radioSelected eq 1 or (modDesParcLProcesar.radioSelected eq 2 or (modDesParcLProcesar.radioSelected eq 3)) }">
 							<p:commandButton styleClass="blue" type="submit"
 								value="#{msg.modulo_desempleoParc_btnGenerar}" ajax="true"
 								action="#{modDesParcLProcesar.generarAccion}" global="true"

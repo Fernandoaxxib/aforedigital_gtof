@@ -33,88 +33,104 @@
 				</p:column>
 				<p:column style="text-align:right">
 					<h:form>
-						<p:linkButton styleClass="green" outcome="/web/reInverModDesProceso.jsf"
-							includeViewParams="true"
+						<p:linkButton styleClass="green"
+							outcome="/web/reInverModDesProceso.jsf" includeViewParams="true"
 							value="Proceso">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/reInverModDesCompras.jsf"
-							includeViewParams="true"
+						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
+							outcome="/web/reInverModDesCompras.jsf" includeViewParams="true"
 							value="Compras">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/reInverModDesVentas.jsf"
-							includeViewParams="true"
+						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
+							outcome="/web/reInverModDesVentas.jsf" includeViewParams="true"
 							value="Ventas">
 							<f:param name="init" value="true" />
-						</p:linkButton>						
+						</p:linkButton>
 					</h:form>
 				</p:column>
 			</p:row>
 		</p:panelGrid>
 
 		<h:form id="form">
-			<p:panel id="pnl1" header="Proceso" style="margin-bottom:20px">
+			<p:panel id="pnl1" header="Proceso" style="margin-top:10px;margin-bottom:20px">
 				<p:panelGrid columns="1" styleClass="ui-noborder"
 					style="margin-bottom:10px" cellpadding="5">
 					<p:selectOneRadio id="radSelect" layout="pageDirection"
 						value="#{reinversionModDesProceso.radioSelected}">
 						<p:ajax listener="#{reinversionModDesProceso.radioSelected}"
-							update="form:pnl2 form:pnl3 form:pnl4 form:pnl5 form:pnl6 form:pnl7 form:result" global="false" />
-						<f:selectItem itemValue="4" itemLabel="Reporte de Cuentas Canceladas" />
-						<f:selectItem itemValue="1"	itemLabel="Obtener Saldos Actuales Cuentas a Reinvertir" />
-						<f:selectItem itemValue="2" itemLabel="Reporte de Cuentas a Reinvertir" />
+							update="form:pnl2 form:pnl3 form:pnl4 form:pnl5 form:pnl6 form:pnl7 form:result"
+							global="false" />
+						<f:selectItem itemValue="4"
+							itemLabel="Reporte de Cuentas Canceladas" />
+						<f:selectItem itemValue="1"
+							itemLabel="Obtener Saldos Actuales Cuentas a Reinvertir" />
+						<f:selectItem itemValue="2"
+							itemLabel="Reporte de Cuentas a Reinvertir" />
 						<f:selectItem itemValue="3" itemLabel="Generación de Movimientos" />
 					</p:selectOneRadio>
 				</p:panelGrid>
 
-				<p:outputPanel id="pnl2" style="display:#{reinversionModDesProceso.display1}">
+				<p:outputPanel id="pnl2"
+					style="display:#{reinversionModDesProceso.display1}">
 					<p:panelGrid styleClass="ui-noborder">
 						<p:row>
-							<p:column style="width:130px">
-								<p:outputLabel value="Fecha Inicial: " />
+							<p:column style="width:50px">
+								<p:outputLabel value="Inicio:" />
 							</p:column>
 							<p:column>
-								<p:datePicker id="fechaI" value="#{reinversionModDesProceso.fechaI}"
-									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								<p:datePicker id="fechaI"
+									value="#{reinversionModDesProceso.fechaI}" locale="es"
+									showIcon="true" pattern="dd-MM-yyyy"
 									maxdate="#{reinversionModDesProceso.fecActual}"
 									yearNavigator="true" monthNavigator="true"
-									inputStyle="width:185px; text-align:right;"
+									inputStyle="width:120px; text-align:right;"
 									readonlyInput="true" />
 							</p:column>
-							<p:column style="width:130px">
-								<p:outputLabel value="Fecha Final: " />
+							<p:column style="width:50px">
+								<p:outputLabel value="Fin:" />
 							</p:column>
 							<p:column>
-								<p:datePicker id="fechaF" value="#{reinversionModDesProceso.fechaF}"
-									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								<p:datePicker id="fechaF"
+									value="#{reinversionModDesProceso.fechaF}" locale="es"
+									showIcon="true" pattern="dd-MM-yyyy"
 									maxdate="#{reinversionModDesProceso.fecActual}"
 									yearNavigator="true" monthNavigator="true"
-									inputStyle="width:185px; text-align:right;"
+									inputStyle="width:120px; text-align:right;"
 									readonlyInput="true" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 				</p:outputPanel>
 
-                <p:outputPanel id="pnl3" style="display:#{reinversionModDesProceso.display2}">
-				<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
-					<p:row>
-						<p:column style="width:130px">
-							<p:outputLabel value="Fecha: " />
-						</p:column>
-						<p:column>
-							<p:datePicker id="fCapturada"
-								value="#{reinversionModDesProceso.fecha}" locale="es"
-								maxdate="#{reinversionModDesProceso.fecActual}"
-								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
-								monthNavigator="true"
-								inputStyle="width:185px; text-align:right;" readonlyInput="true" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+				<p:outputPanel id="pnl3"
+					style="display:#{reinversionModDesProceso.display2}">
+					<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column style="width:130px">
+								<p:outputLabel value="Fecha: " />
+							</p:column>
+							<p:column>
+								<p:datePicker id="fCapturada"
+									value="#{reinversionModDesProceso.fecha}" locale="es"
+									maxdate="#{reinversionModDesProceso.fecActual}" showIcon="true"
+									pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
+									inputStyle="width:185px; text-align:right;"
+									readonlyInput="true" />
+							</p:column>
+							<p:column>
+								<p:commandButton styleClass="blue" type="submit"
+									disabled="#{reinversionModDesProceso.disabled}" value="Ejecutar"
+									action="#{reinversionModDesProceso.ejecutar}"
+									update="form:result form:fechaI form:fechaF form:fCapturada" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:outputPanel>
-				
+
 				<p:outputPanel id="pnl4"
 					style="display:#{reinversionModDesProceso.display}">
 					<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
@@ -124,47 +140,54 @@
 							</p:column>
 							<p:column class="outputlabel-shadow"
 								style="width:200px !important;height:17px !important;text-align:right !important">
-								<p:outputLabel value="#{reinversionModDesProceso.cuentasPendientes}" />
+								<p:outputLabel
+									value="#{reinversionModDesProceso.cuentasPendientes}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
 				</p:outputPanel>
-				
-				<p:outputPanel id="pnl5" style="display:#{reinversionModDesProceso.display3}">
-				<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
-					<p:row>
-						<p:column style="width:140px">
-							<p:outputLabel value="Ruta: " />
-						</p:column>
-						<p:column class="outputlabel-shadow" style="width:300px !important;height:17px !important">
-							<p:outputLabel id="ruta" value="#{reinversionModDesProceso.ruta}" />
-						</p:column>
-					</p:row>					
-				</p:panelGrid>
+
+				<p:outputPanel id="pnl5"
+					style="display:#{reinversionModDesProceso.display3}">
+					<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column style="width:60px">
+								<p:outputLabel value="Ruta: " />
+							</p:column>
+							<p:column class="outputlabel-shadow"
+								style="width:385px !important;height:17px !important">
+								<p:outputLabel id="ruta"
+									value="#{reinversionModDesProceso.ruta}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:outputPanel>
-				
-				<p:outputPanel id="pnl6" style="display:#{reinversionModDesProceso.display4}">
-				<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">					
-					<p:row style="margin-top:10px">
-						<p:column style="width:140px">
-							<p:outputLabel value="Archivo: " />
-						</p:column>
-						<p:column class="outputlabel-shadow" style="width:300px !important;height:17px !important">
-							<p:outputLabel id="archivo"
-								value="#{reinversionModDesProceso.archivo}" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+				<p:outputPanel id="pnl6"
+					style="display:#{reinversionModDesProceso.display4}">
+					<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
+						<p:row style="margin-top:10px">
+							<p:column style="width:60px">
+								<p:outputLabel value="Archivo: " />
+							</p:column>
+							<p:column class="outputlabel-shadow"
+								style="width:385px !important;height:17px !important">
+								<p:outputLabel id="archivo"
+									value="#{reinversionModDesProceso.archivo}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:outputPanel>
-				
-				<p:outputPanel id="pnl7" style="display:#{reinversionModDesProceso.display5}">
-				<div class="ui-g" style="width:490px">
-				<div class="ui-g-12" style="margin-top: 10px;text-align:right">
-							<p:commandButton styleClass="blue" type="submit"
-								value="Ejecutar" action="#{reinversionModDesProceso.ejecutar}" update="form:result form:fechaI form:fechaF form:fCapturada"/>							
-								
-				</div>
-				</div>
+
+				<p:outputPanel id="pnl7">
+					<div class="ui-g" style="width: 495px">
+						<div class="ui-g-12" style="margin-top: 10px; text-align: right">
+							<p:commandButton
+								rendered="#{reinversionModDesProceso.radioSelected eq 4}"
+								styleClass="blue" type="submit" value="Ejecutar"
+								action="#{reinversionModDesProceso.ejecutar}"
+								update="form:result form:fechaI form:fechaF form:fCapturada" />
+						</div>
+					</div>
 				</p:outputPanel>
 
 				<ui:include src="processResult.xhtml">

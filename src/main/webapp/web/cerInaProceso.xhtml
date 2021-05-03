@@ -37,18 +37,21 @@
 							value="#{msg.certifica_inactividad_btnProceso}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/cerInaReportes.jsf"
+						<p:linkButton styleClass="blue" style="margin-left:13px !important"
+						    outcome="/web/cerInaReportes.jsf"
 							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnReportes}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/cerInaLProcesar.jsf"
+						<p:linkButton styleClass="blue" style="margin-left:13px !important"
+						    outcome="/web/cerInaLProcesar.jsf"
 							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnLayout}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/cerInaApp.jsf"
-							includeViewParams="true"
+						<p:linkButton styleClass="blue" style="margin-left:13px !important"
+						    outcome="/web/cerInaApp.jsf"
+							includeViewParams="true" 
 							value="#{msg.certifica_inactividad_btnApp}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
@@ -61,7 +64,7 @@
 
 		<h:form id="form">
 			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title1}"
-				style="font-size:12px;margin-bottom:20px">
+				style="font-size:12px;margin-top:11px">
 				<p:panelGrid columns="1" styleClass="ui-noborder"
 					style="margin-bottom:10px" cellpadding="5">
 					<p:selectOneRadio id="radSelect" layout="pageDirection"
@@ -92,7 +95,6 @@
 						action="#{cerInaProceso.ejecutar}"
 						update="form:radSelect form:fCapturada form:result" ajax="true" />
 				</p:panelGrid>
-
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{cerInaProceso}" />
 				</ui:include>

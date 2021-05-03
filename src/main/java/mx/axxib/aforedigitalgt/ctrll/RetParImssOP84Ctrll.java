@@ -90,19 +90,16 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	@Getter
 	private boolean disabled3;
 	@Getter
-	private boolean disabled4;	
+	private boolean disabled4;
 	@Getter
-	private String border;
+	private boolean disabled5;
+	
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if (init) {
-			ruta = "/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
-			ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
-			today = new Date();
-			reset();
-            border="";
+		if (init) {			
+			reset();			
 		}
 	}
 
@@ -114,8 +111,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			disabled1 = false;
 			disabled2 = false;
 			disabled3 = false;
-			disabled4 = true;
-			border="";
+			disabled4 = true;			
 		}
 
 	}
@@ -130,8 +126,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			disabled1 = true;
 			disabled2 = true;
 			disabled3 = false;
-			disabled4 = false;
-			border="";
+			disabled4 = false;			
 		}
 
 	}
@@ -155,9 +150,9 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	}
 
 	public void opcionSeleccionada2() {
-
-		lote = lote1.getID_LOTE();
-
+		if (lote1 != null) {
+			lote = lote1.getID_LOTE();
+		}
 	}
 
 	public void generarReporte() {
@@ -171,6 +166,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						ProcesResult res = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
 						if (res.getOn_Estatus() == 1) {
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							reset();
 						} else {
 							if (res.getOn_Estatus() == 2) {
 								GenerarErrorNegocio(res.getP_Message());
@@ -184,7 +180,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
 					}
-				}else {
+				} else {
 					pr.setDescProceso("Generación de reporte");
 					pr.setStatus("Nombre de archivo no válido");
 					UIInput radio = (UIInput) findComponent("vArchivo");
@@ -212,6 +208,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta");
+		archivo=null;
 
 		if (radioSelected != null || radioSelected2 != null) {
 			if (radioSelected != null && radioSelected.equals("1")) {
@@ -222,6 +219,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 							if (res.getOn_Estatus() == 1) {
 								pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 								registros = res.getRegistros();
+								if(registros.size()>0) {
+									disabled5=false;
+								}else {
+									disabled5=true;
+								}
 							} else {
 								if (res.getOn_Estatus() == 2) {
 									GenerarErrorNegocio(res.getP_Message());
@@ -265,6 +267,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						if (res.getOn_Estatus() == 1) {
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 							registros = res.getRegistros();
+							if(registros.size()>0) {
+								disabled5=false;
+							}else {
+								disabled5=true;
+							}
 						} else {
 							if (res.getOn_Estatus() == 2) {
 								GenerarErrorNegocio(res.getP_Message());
@@ -291,8 +298,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			UIInput radio = (UIInput) findComponent("customRadio");
 			radio.setValid(false);
 			UIInput radio2 = (UIInput) findComponent("customRadio2");
-			radio2.setValid(false);
-            border="red";
+			radio2.setValid(false);			
 			pr.setStatus("Selección requerida");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -332,7 +338,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 			return false;
-		} 
+		}
 
 		return true;
 	}
@@ -345,6 +351,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		registros = null;
 		nombreArchivo = null;
 		lote = null;
+		lote1 = null;
 		fecIni = null;
 		fecFin = null;
 		archivo = null;
@@ -357,5 +364,9 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		disabled2 = true;
 		disabled3 = true;
 		disabled4 = true;
+		disabled5 = true;
+		ruta = "/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
+		ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
+		today = new Date();
 	}
 }

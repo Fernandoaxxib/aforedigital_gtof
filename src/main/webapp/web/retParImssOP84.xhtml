@@ -30,7 +30,7 @@
 							includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP84}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue"
+						<p:linkButton styleClass="blue" style="margin-left:13px"
 							outcome="/web/retParImssOP8586.jsf" includeViewParams="true"
 							value="#{msg.retPar_imss_op84_btnOP8586}">
 							<f:param name="init" value="true" />
@@ -45,9 +45,19 @@
 		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
 			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
 			resizable="false" style="font-size:12px">
+
 			<p:dataTable var="registro" value="#{retParImssOP84.listLotes}"
 				selectionMode="single" selection="#{retParImssOP84.selectedLote}"
 				rowKey="#{registro.ID_LOTE}" style="padding-bottom:10px">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:left;margin-top:10px;">
+						<h:outputLabel style="font-weight:normal;"
+							value="Seleccione el lote de su interés" />
+					</p:outputPanel>
+				</f:facet>
+
+
 				<p:ajax process="@this" event="rowSelect"
 					listener="#{retParImssOP84.onRowSelect}" />
 
@@ -65,13 +75,13 @@
 					<h:outputText value="#{registro.NUMERO_REGISTROS}" />
 				</p:column>
 			</p:dataTable>
-			<p:outputPanel style="text-align:right">
-				<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
-					styleClass="blue ui-button-text" style="margin-right:10px" />
-				<p:commandButton value="Seleccionar"
+			<p:outputPanel style="margin-top:20px;text-align:right">
+				<p:commandButton value="Aceptar"
 					actionListener="#{retParImssOP84.opcionSeleccionada2}"
 					oncomplete="PF('dlg2').hide();" update=":form:pnl2"
 					styleClass="blue ui-button-text" />
+				<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+					styleClass="blue ui-button-text" style="margin-left:13px" />
 			</p:outputPanel>
 		</p:dialog>
 
@@ -107,82 +117,83 @@
 						</p:row>
 					</p:panelGrid>
 				</p:panel>
-				<p:panel header="Resultados de la consulta" style="margin-top:10px">
-					<p:panel id="pnl2" style="border:0px !important">
-						<p:panelGrid class="no-border no-padding">
-							<p:row>
-								<p:column style="width:100px">
-									<p:selectOneRadio id="customRadio"
-										value="#{retParImssOP84.radioSelected}"										
-										unselectable="#{retParImssOP84.seleccion1}"
-										layout="pageDirection">
-										<p:ajax listener="#{retParImssOP84.radioSelected}"
-											update="form:btnConsultar form:customRadio2 form:customRadio form:dfini form:dffin form:vLote form:btnC"
-											global="false" />
-										<f:selectItem itemLabel="Fecha" itemValue="1" />
-									</p:selectOneRadio>
-								</p:column>
-								<p:column>
-									<p:outputLabel value="#{msg.retPar_imss_op84_lblFecIni}" />
-								</p:column>
-								<p:column style="padding-right:20px !important">
-									<p:datePicker id="dfini" value="#{retParImssOP84.fecIni}"
-										locale="es" showIcon="true" pattern="dd-MM-yyyy"
-										maxdate="#{retParImssOP84.today}" yearNavigator="true"
-										monthNavigator="true"
-										inputStyle="width:100px; text-align:right;"
-										readonlyInput="true" disabled="#{retParImssOP84.disabled1}">
-										<p:ajax event="dateSelect" global="false"
-											listener="#{retParImssOP84.limpiar}"/>
-									</p:datePicker>
-								</p:column>
-								<p:column>
-									<p:outputLabel value="#{msg.retPar_imss_op84_lblFecFin}" />
-								</p:column>
-								<p:column>
-									<p:datePicker id="dffin" value="#{retParImssOP84.fecFin}"
-										locale="es" showIcon="true" pattern="dd-MM-yyyy"
-										maxdate="#{retParImssOP84.today}" yearNavigator="true"
-										monthNavigator="true"
-										inputStyle="width:100px; text-align:right;"
-										readonlyInput="true" disabled="#{retParImssOP84.disabled2}" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
-						<p:panelGrid class="no-border no-padding" style="margin-top:5px">
-							<p:row>
-								<p:column style="width:75px">
-									<p:selectOneRadio id="customRadio2"
-										value="#{retParImssOP84.radioSelected2}"										
-										unselectable="#{retParImssOP84.seleccion2}"
-										layout="pageDirection">
-										<p:ajax listener="#{retParImssOP84.radioSelected2}"
-											update="form:btnConsultar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC"
-											global="false" />
-										<f:selectItem itemLabel="Lote" itemValue="1" />
-									</p:selectOneRadio>
-								</p:column>
-								<p:column>
-									<p:inputText id="vLote" value="#{retParImssOP84.lote}"
-										placeholder="Seleccione lote"
-										style="text-align:right;width:310px;margin-left:25px !important"
-										disabled="true" />
-									<p:commandButton id="btnC" styleClass="blue" style="width:35px"
-										value="..." action="#{retParImssOP84.getLotes}"
-										disabled="#{retParImssOP84.disabled4}"
-										update="dlg1 dfini dffin" oncomplete="PF('dlg2').show();" />
-								</p:column>
-								<p:column style="padding-left:30px !important">
-									<p:commandButton id="btnConsultar" styleClass="blue ui-button-text" type="submit"
-										value="#{msg.retPar_imss_op84_btnConsultar}"
-										action="#{retParImssOP84.consultarOP84}"
-										disabled="#{retParImssOP84.disabled3}"
-										update="form:table1 form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:result"
-										ajax="true" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>						
-					</p:panel>
+
+				<p:panel header="GENERAR REPORTE" id="pnl2" style="margin-top:20px">
+					<p:panelGrid class="no-border no-padding">
+						<p:row>
+							<p:column style="width:100px">
+								<p:selectOneRadio id="customRadio"
+									value="#{retParImssOP84.radioSelected}"
+									unselectable="#{retParImssOP84.seleccion1}"
+									layout="pageDirection">
+									<p:ajax listener="#{retParImssOP84.radioSelected}"
+										update="form:btnConsultar form:customRadio2 form:customRadio form:dfini form:dffin form:vLote form:btnC"
+										global="false" />
+									<f:selectItem itemLabel="Fecha" itemValue="1" />
+								</p:selectOneRadio>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblFecIni}" />
+							</p:column>
+							<p:column style="padding-right:20px !important">
+								<p:datePicker id="dfini" value="#{retParImssOP84.fecIni}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									maxdate="#{retParImssOP84.today}" yearNavigator="true"
+									monthNavigator="true"
+									inputStyle="width:100px; text-align:right;"
+									readonlyInput="true" disabled="#{retParImssOP84.disabled1}">
+									<p:ajax event="dateSelect" global="false"
+										listener="#{retParImssOP84.limpiar}" />
+								</p:datePicker>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblFecFin}" />
+							</p:column>
+							<p:column>
+								<p:datePicker id="dffin" value="#{retParImssOP84.fecFin}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									maxdate="#{retParImssOP84.today}" yearNavigator="true"
+									monthNavigator="true"
+									inputStyle="width:100px; text-align:right;"
+									readonlyInput="true" disabled="#{retParImssOP84.disabled2}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid class="no-border no-padding" style="margin-top:5px">
+						<p:row>
+							<p:column style="width:75px">
+								<p:selectOneRadio id="customRadio2"
+									value="#{retParImssOP84.radioSelected2}"
+									unselectable="#{retParImssOP84.seleccion2}"
+									layout="pageDirection">
+									<p:ajax listener="#{retParImssOP84.radioSelected2}"
+										update="form:btnConsultar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC"
+										global="false" />
+									<f:selectItem itemLabel="Lote" itemValue="1" />
+								</p:selectOneRadio>
+							</p:column>
+							<p:column>
+								<p:inputText id="vLote" value="#{retParImssOP84.lote}"
+									placeholder="Seleccione lote"
+									style="text-align:right;width:310px;margin-left:25px !important"
+									disabled="true" />
+								<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+									value="..." action="#{retParImssOP84.getLotes}"
+									disabled="#{retParImssOP84.disabled4}"
+									update="dlg1 dfini dffin" oncomplete="PF('dlg2').show();" />
+							</p:column>
+							<p:column style="padding-left:30px !important">
+								<p:commandButton id="btnConsultar"
+									styleClass="blue ui-button-text" type="submit"
+									value="#{msg.retPar_imss_op84_btnConsultar}"
+									action="#{retParImssOP84.consultarOP84}"
+									disabled="#{retParImssOP84.disabled3}"
+									update="form:vArchivo form:btnGenerar form:table1 form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:result"
+									ajax="true" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+
 
 					<p:dataTable id="table1" var="mon"
 						value="#{retParImssOP84.registros}" emptyMessage="Sin información"
@@ -205,13 +216,11 @@
 								style="float:right;" />
 						</p:column>
 					</p:dataTable>
-				</p:panel>	
-				<p:panel header="Generación de reporte" style="margin-top:10px">
-					<p:panelGrid class="ui-noborder">
+					<p:panelGrid class="ui-noborder" style="margin-top:20px">
 						<p:row>
 							<p:column style="width:78px">
 								<p:outputLabel value="#{msg.retPar_imss_op84_lblRuta}" />
-							</p:column>							
+							</p:column>
 							<p:column class="outputlabel-shadow"
 								style="width:290px;height:17px !important">
 								<p:outputLabel value="#{retParImssOP84.ruta2}" />
@@ -225,24 +234,25 @@
 							</p:column>
 							<p:column>
 								<p:inputText id="vArchivo" value="#{retParImssOP84.archivo}"
+									disabled="#{retParImssOP84.disabled5}"
 									style="width:303px;margin-right: 10px;" />
 							</p:column>
 							<p:column>
-								<p:commandButton styleClass="blue ui-button-text" type="submit"
+								<p:commandButton id="btnGenerar"
+									styleClass="blue ui-button-text" type="submit"
 									value="Generar Reporte"
 									action="#{retParImssOP84.generarReporte}"
-									update="form:result form:vArchivo form:customRadio form:customRadio2"
+									disabled="#{retParImssOP84.disabled5}"
+									update="form:table1 form:result form:btnGenerar form:vArchivo form:form:dfini form:form:dffin form:vLote form:btnC form:customRadio form:customRadio2"
 									ajax="true" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
+				</p:panel>
 
-				</p:panel>
-				<p:panel style="border:0px !important">
-					<ui:include src="processResult.xhtml">
-						<ui:param name="base" value="#{retParImssOP84}" />
-					</ui:include>
-				</p:panel>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{retParImssOP84}" />
+				</ui:include>
 			</p:panel>
 		</h:form>
 	</ui:define>

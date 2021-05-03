@@ -167,9 +167,9 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		}
 	}
 	public void opcionSeleccionada2() {
-		
-		lote = lote1.getID_LOTE();		
-
+		if(lote1!=null) {
+			lote = lote1.getID_LOTE();
+		}			
 	}
 	public void generarOP85(){
 		ProcessResult pr = new ProcessResult();
@@ -347,6 +347,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		fecIni=null;
 		fecFin=null;
 		lote=null;
+		lote1=null;
 		archivo2=null;
 		archivo3=null;
 		proceso=null;

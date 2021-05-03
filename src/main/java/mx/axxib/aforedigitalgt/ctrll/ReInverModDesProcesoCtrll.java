@@ -55,10 +55,10 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 	@Getter
 	private String display4;
 	@Getter
-	private String display5;
-	@Getter
 	private Date fecActual;
-
+    @Getter
+	private boolean disabled;
+	
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -77,10 +77,10 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 		display1 = "none";
 		display2 = "none";
 		display3 = "none";
-		display4 = "none";
-		display5 = "none";
+		display4 = "none";		
 		archivo = null;
 		radioSelected = null;
+		disabled=false;
 	}
 
 	public void radioSelected() {
@@ -89,6 +89,7 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 
 		if (radioSelected.equals("1")) {
+			disabled=true;
 			try {
 				cuentasPendientes = service.getValorCuentas().intValue();				
 				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));				
@@ -96,13 +97,11 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 				display1 = "none";
 				display2 = "inline";
 				display3 = "none";
-				display4 = "none";
-				if (cuentasPendientes > 0) {
-					display5 = "inline";
-				} else {
-					display5 = "none";
-				}
+				display4 = "none";				
 				archivo = null;
+				if(cuentasPendientes>0) {
+					disabled=false;
+				}
 			} catch (AforeException e) {
 				pr = GenericException(e);
 			} finally {
@@ -120,7 +119,7 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 			display2 = "inline";
 			display3 = "inline";
 			display4 = "inline";
-			display5 = "inline";
+			disabled=false;
 		}
 		if (radioSelected.equals("3")) {
 			cuentasPendientes = null;
@@ -128,9 +127,8 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 			display1 = "none";
 			display2 = "inline";
 			display3 = "none";
-			display4 = "none";
-			display5 = "inline";
-			archivo = null;
+			display4 = "none";			
+			disabled=false;
 		}
 		if (radioSelected.equals("4")) {
 			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
@@ -141,8 +139,7 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 			display1 = "inline";
 			display2 = "none";
 			display3 = "inline";
-			display4 = "inline";
-			display5 = "inline";
+			display4 = "inline";			
 			archivo = "REPORTE_CANCELADAS_" + fI + "_" + fF + ".xls";
 		}
 	}

@@ -20,7 +20,7 @@
 		<ui:include src="graficas.xhtml" />
 	</ui:define>
 
-	<ui:define name="center">		
+	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 
@@ -36,17 +36,20 @@
 							value="#{msg.certifica_inactividad_btnProceso}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/cerInaReportes.jsf"
-							includeViewParams="true"
+						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
+							outcome="/web/cerInaReportes.jsf" includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnReportes}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="blue" outcome="/web/cerInaLProcesar.jsf"
-							includeViewParams="true"
+						<p:linkButton styleClass="blue"
+							style="margin-left:13px !important"
+							outcome="/web/cerInaLProcesar.jsf" includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnLayout}">
 							<f:param name="init" value="true" />
 						</p:linkButton>
-						<p:linkButton styleClass="green" outcome="/web/cerInaApp.jsf"
+						<p:linkButton styleClass="green"
+							style="margin-left:13px !important" outcome="/web/cerInaApp.jsf"
 							includeViewParams="true"
 							value="#{msg.certifica_inactividad_btnApp}">
 							<f:param name="init" value="true" />
@@ -55,21 +58,19 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-
-
-
 		<h:form id="form">
 			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title4}"
-				style="margin-top:20px">
+				style="margin-top:11px">
 				<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
 					<p:panel header="#{msg.certifica_inactividad_title5}"
-						style="width:98%">
+						style="width:98%;height:182px">
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
 								<p:column style="width:78px">
-									<p:outputLabel value="#{msg.certifica_inactividad_lblRuta}"/>
+									<p:outputLabel value="#{msg.certifica_inactividad_lblRuta}" />
 								</p:column>
-								<p:column class="outputlabel-shadow" style="width:310px;padding-left: 10px !important;">
+								<p:column class="outputlabel-shadow"
+									style="width:310px;padding-left: 10px !important;">
 									<p:outputLabel value="#{cerInaApp.ruta}" />
 								</p:column>
 							</p:row>
@@ -77,15 +78,16 @@
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
 								<p:column style="width:78px">
-									<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}"/>
+									<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}" />
 								</p:column>
-								<p:column class="outputlabel-shadow" style="width:310px;padding-left: 10px !important;">
+								<p:column class="outputlabel-shadow"
+									style="width:310px;padding-left: 10px !important;">
 									<p:outputLabel value="#{cerInaApp.archivo}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: right; width: 95%">
+							<div class="ui-g-12" style="text-align: right; width: 96%">
 								<p:commandButton id="fnEjecutar" styleClass="blue" type="submit"
 									value="#{msg.certifica_inactividad_btnEjecutar}"
 									action="#{cerInaApp.ejecutar}" update="form:result" ajax="true" />
@@ -96,7 +98,7 @@
 						style="width:95%;height:95%;margin-left: 10px !important;">
 						<p:panelGrid class="no-border no-padding" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:90px !important">
+								<p:column style="width:78px !important">
 									<p:outputLabel value="#{msg.certifica_inactividad_lblFecha}" />
 								</p:column>
 								<p:column>
@@ -104,13 +106,39 @@
 										locale="es" showIcon="true" pattern="dd-MM-yyyy"
 										yearNavigator="true" monthNavigator="true"
 										inputStyle="width:170px; text-align:right;"
-										maxdate="#{cerInaApp.fecActual}"
-										readonlyInput="true" />
+										maxdate="#{cerInaApp.fecActual}" readonlyInput="true">
+										
+										<p:ajax event="dateSelect"
+												listener="#{cerInaApp.opcionSeleccionada}"
+												update="form:vArchivo2" global="false" />										
+										</p:datePicker>
+								</p:column>
+							</p:row>
+						</p:panelGrid>						
+						<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column style="width:78px">
+									<p:outputLabel value="#{msg.certifica_inactividad_lblRuta}" />
+								</p:column>
+								<p:column class="outputlabel-shadow"
+									style="width:310px;padding-left: 10px !important;">
+									<p:outputLabel value="#{cerInaApp.ruta}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column style="width:78px">
+									<p:outputLabel value="#{msg.certifica_inactividad_lblArchivo}" />
+								</p:column>
+								<p:column class="outputlabel-shadow"
+									style="width:310px;padding-left: 10px !important;">
+									<p:outputLabel id="vArchivo2"  value="#{cerInaApp.archivo2}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: right; width: 74%">
+							<div class="ui-g-12" style="text-align: right; width: 99%">
 								<p:commandButton id="fnGenerar" styleClass="blue" type="submit"
 									value="#{msg.certifica_inactividad_btnGenerar}"
 									action="#{cerInaApp.generar}"
@@ -119,11 +147,9 @@
 						</div>
 					</p:panel>
 				</p:panelGrid>
-				<p:panel style="border:0px !important">
-					<ui:include src="processResult.xhtml">
-						<ui:param name="base" value="#{cerInaApp}" />
-					</ui:include>
-				</p:panel>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{cerInaApp}" />
+				</ui:include>
 			</p:panel>
 		</h:form>
 	</ui:define>

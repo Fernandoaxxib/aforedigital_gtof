@@ -64,18 +64,19 @@
 					<h:outputText value="#{registro.TOTAL_DE_REGISTROS}" />
 				</p:column>
 			</p:dataTable>
-			<p:outputPanel style="text-align:right">
-				<p:commandButton value="Cancelar" onclick="PF('dlg2').hide();"
-					styleClass="blue ui-button-text" style="margin-right:10px" />
-				<p:commandButton value="Seleccionar"
+			<p:outputPanel style="margin-top:20px;text-align:right">
+				<p:commandButton value="Aceptar"
 					actionListener="#{retParImssOP8586.opcionSeleccionada2}"
 					oncomplete="PF('dlg2').hide();" update=":form:vLote"
 					styleClass="blue ui-button-text" />
+				<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+					styleClass="blue ui-button-text" style="margin-left:20px" />
 			</p:outputPanel>
 		</p:dialog>
-		<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
-			style="font-size:12px;margin-bottom:20px; margin-top:20px">
-			<h:form id="form">
+
+		<h:form id="form">
+			<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
+				style="font-size:12px;margin-bottom:20px; margin-top:20px">
 				<p:panelGrid class="ui-noborder" layout="grid" columns="2">
 					<p:panel header="Generación OP85" style="width:100%">
 
@@ -149,7 +150,7 @@
 						<p:row>
 							<p:column style="width:100px">
 								<p:selectOneRadio id="customRadio"
-									value="#{retParImssOP8586.radioSelected}"									
+									value="#{retParImssOP8586.radioSelected}"
 									unselectable="#{retParImssOP8586.seleccion1}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP8586.radioSelected}"
@@ -189,7 +190,7 @@
 						<p:row>
 							<p:column style="width:100px">
 								<p:selectOneRadio id="customRadio2"
-									value="#{retParImssOP8586.radioSelected2}"									
+									value="#{retParImssOP8586.radioSelected2}"
 									unselectable="#{retParImssOP8586.seleccion2}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP8586.radioSelected2}"
@@ -228,12 +229,13 @@
 								<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
 							</p:column>
 							<p:column>
-								<p:inputText id="idArchivo3" disabled="#{retParImssOP8586.disabled5}"
+								<p:inputText id="idArchivo3"
+									disabled="#{retParImssOP8586.disabled5}"
 									value="#{retParImssOP8586.archivo3}" style="width:382px" />
 							</p:column>
 							<p:column>
-								<p:commandButton id="btnGenerar" styleClass="blue"
-									type="submit" value="Generar reporte"
+								<p:commandButton id="btnGenerar" styleClass="blue" type="submit"
+									value="Generar reporte"
 									action="#{retParImssOP8586.generarReporte}"
 									disabled="#{retParImssOP8586.disabled3}"
 									update="form:result form:vLote form:dfini form:dffin form:customRadio form:customRadio2 form:idArchivo3"
@@ -242,12 +244,10 @@
 						</p:row>
 					</p:panelGrid>
 				</p:panel>
-				<p:panel style="border:0px !important">
-					<ui:include src="processResult.xhtml">
-						<ui:param name="base" value="#{retParImssOP8586}" />
-					</ui:include>
-				</p:panel>
-			</h:form>
-		</p:panel>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{retParImssOP8586}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
 	</ui:define>
 </ui:composition>

@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
@@ -24,12 +25,12 @@ public class CerInaAppCtrll extends ControllerBase {
 
 	@Autowired
 	private CerInaAppServ service;
-	@Getter
-	@Setter
+	@Getter	
 	private String ruta;
 	@Getter
-	@Setter
-	private String archivo;
+	private String archivo;	
+	@Getter
+	private String archivo2;
 	@Getter
 	@Setter
 	private Date fecha;
@@ -48,8 +49,11 @@ public class CerInaAppCtrll extends ControllerBase {
 
 	public void reset() {
 		ruta = "/RESPALDOS/operaciones";
-		archivo = "PRTFT.DP.A01530.S180221.NOTFOLIO.C001";
+		archivo = "PRTFT.DP.A01530.S180221.NOTFOLIO.C001";				
 		fecha = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+		String f = format.format(fecha);			
+		archivo2 = "DP_A01530_" + f;
 	}
 
 	public void ejecutar() {
@@ -115,5 +119,11 @@ public class CerInaAppCtrll extends ControllerBase {
 	public void addMessageFail(String summary) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
 		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+	
+	public void opcionSeleccionada() {		
+			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
+			String f = format.format(fecha);			
+			this.archivo2 = "DP_A01530_" + f;									
 	}
 }
