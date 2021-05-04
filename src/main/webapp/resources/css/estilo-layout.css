@@ -65,10 +65,24 @@
 	padding: 2px;
 }
 
+.ui-layout-east {
+	border: 0 none !important;
+	padding: 2px;
+}
+
 .ui-layout-center {
 	border: 0 none !important;
 	margin-top: -6px !important;
 	height: 560px !important;
+	
+}
+
+#centrado{
+	padding-right: 200px;
+}
+
+#menuBar{
+	padding: 5px !important;
 }
 
 .ui-layout-resizer-west-dragging, .ui-layout-resizer-west-open-hover {

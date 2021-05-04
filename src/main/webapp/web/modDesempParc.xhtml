@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 
-<ui:composition template="layout2.xhtml"
+<ui:composition template="layout3.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -12,49 +12,47 @@
 		<f:event listener="#{modDesempParc.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="blue ui-button-text"
+				outcome="/web/modDesParc.jsf" includeViewParams="true"
+				value="#{msg.modulo_desempleoParc_btnPM}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="green ui-button-text"
+				style="margin-left:13px !important" outcome="/web/modDesempParc.jsf"
+				includeViewParams="true" value="Proceso individual">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue ui-button-text"
+				style="margin-left:13px !important"
+				outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
+				value="#{msg.modulo_desempleoParc_btnReportes}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue ui-button-text"
+				style="margin-left:13px !important"
+				outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
+				value="#{msg.modulo_desempleoParc_btnLProcesar}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
 	</ui:define>
 
 	<ui:define name="center">
 
-		<p:panelGrid class="no-border no-padding" style="width: 100%">
-			<p:row>
-				<p:column>
-					<ui:include src="subMenuTransacciones.xhtml" />
-				</p:column>
-				<p:column style="text-align:right">
-					<h:form>
-						<p:linkButton styleClass="blue ui-button-text"
-							outcome="/web/modDesParc.jsf" includeViewParams="true"
-							value="#{msg.modulo_desempleoParc_btnPM}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-
-						<p:linkButton styleClass="green ui-button-text" style="margin-left:13px !important"
-							outcome="/web/modDesempParc.jsf" includeViewParams="true"
-							value="Proceso individual">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-
-						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
-							outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
-							value="#{msg.modulo_desempleoParc_btnReportes}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-
-						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
-							outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
-							value="#{msg.modulo_desempleoParc_btnLProcesar}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-					</h:form>
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-
-		<p:panel id="datos" header="PRIMER PAGO - INDIVIDUAL"
-			style="margin-top:20px">
+		<p:panel id="datos" header="PRIMER PAGO - INDIVIDUAL">
 			<h:form id="form">
 				<p:panelGrid id="solicitud" styleClass="ui-noborder"
 					style="width:100%;padding:10px;">
@@ -385,8 +383,7 @@
 							</p:column>
 
 							<p:column>
-								<p:outputLabel value="Nombre del archivo (sin extensión): "
-								 />
+								<p:outputLabel value="Nombre del archivo (sin extensión): " />
 							</p:column>
 							<p:column>
 								<p:inputText id="archivo" value="#{modDesempParc.archivo}"></p:inputText>
@@ -413,7 +410,8 @@
 							</p:column>
 							<p:column colspan="2">
 								<p:commandButton class="blue" update="result acciones"
-									value="Cancelación masiva" actionListener="#{modDesempParc.cancelarMasiva}" />
+									value="Cancelación masiva"
+									actionListener="#{modDesempParc.cancelarMasiva}" />
 							</p:column>
 
 						</p:row>
@@ -421,7 +419,7 @@
 
 				</p:panel>
 			</h:form>
-			
+
 
 			<ui:include src="processResult.xhtml">
 				<ui:param name="base" value="#{modDesempParc}" />

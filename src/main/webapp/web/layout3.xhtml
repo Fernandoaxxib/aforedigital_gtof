@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<title>Afore digital</title>
+	<link rel="shortcut icon"
+		href="#{request.contextPath}/javax.faces.resource/Imagenes/favicon.ico.jsf" />
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resources/css/estilo-layout.css"></link>
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resources/css/estilo-base.css"></link>
+	<link href="http://fonts.googleapis.com/css?family=Roboto"
+		rel="stylesheet" type="text/css"></link>
+	<link type="text/css" rel="stylesheet"
+		href="#{request.contextPath}/resources/css/font-montserrat.css"></link>
+
+
+
+	<script type="text/javascript">
+		function showDialog() {
+			PF('statusDialog').show();
+		}
+		function hideDialog() {
+			$("#dialogo1").css("visibility", "hidden");
+			$("#dialogo1_modal").css("display", "none");
+			$("#dialogo1").css("background", "transparent !important;");
+		}
+	</script>
+</h:head>
+
+<h:body>
+	<p:ajaxStatus onstart="setTimeout(PF('statusDialog').show(), 30000);"
+		onsuccess="PF('statusDialog').hide()"
+		onerror="alert('No se obtuvo respuesta del servidor'); hideDialog();" />
+	<p:dialog id="dialogo1" styleClass="loading" widgetVar="statusDialog"
+		modal="true" draggable="false" closable="false" resizable="false"
+		showHeader="false">
+		<p:graphicImage
+			url="#{request.contextPath}/javax.faces.resource/Imagenes/3.gif.jsf"
+			style="width: 11%;height: 17%;margin-left: 650px;margin-top: 200px;" />
+		<div class="ui-g">
+			<div class="ui-g-12">
+				<p:outputLabel value="Espere un momento por favor..."
+					style="color: #fff;     font-weight: bold;font-size: 17px; font-family: sans-serif; margin-left: 590px; margin-top: 13px;" />
+			</div>
+		</div>
+	</p:dialog>
+
+	<pe:layout>
+		<pe:layoutPane position="north" id="header" class="no-border"
+			resizable="false" closable="false">
+
+			<p:panelGrid class="no-border pad-cel" columns="2" style="width:100%">
+				<p:panelGrid class="pad-rig" columns="4">
+					<h:graphicImage library="Imagenes" name="logo-ban.png"
+						class="est-imgencab" />
+					<h:outputLink class="plataforma" value="../web/operaciones.jsf"> PLATAFORMA AFORE DIGITAL </h:outputLink>
+					<h:outputLink class="texto" href="#">ACERCA DE</h:outputLink>
+					<h:outputLink class="texto" href="#">PRIVACIDAD</h:outputLink>
+				</p:panelGrid>
+
+
+				<p:panelGrid columns="2" style="width:100%; text-align: right">
+					<h:outputText class="texto" value="#{home.saludo()}" />
+
+					<h:form onsubmit="this.action='#{request.contextPath}/logout';">
+						<h:commandLink class="cerrar"
+							value="#{msg.login_boton_cerrarSesion}"></h:commandLink>
+					</h:form>
+				</p:panelGrid>
+
+			</p:panelGrid>
+
+
+		</pe:layoutPane>
+
+		<pe:layoutPane id="centro" class="content" position="center"
+			resizable="false" closable="false">
+
+			<pe:layoutPane position="west" size="200" resizable="false"
+				closable="false" />
+
+			<pe:layoutPane id="menuBar" position="north" resizable="false" closable="false">
+				<p:panelGrid class="no-border no-padding" style="width: 100%">
+					<p:row>
+						<p:column style="width:400px">
+							<ui:insert name="menu" />
+						</p:column>
+						<p:column style="width:350px">
+							<ui:insert name="submenu" />
+						</p:column>
+						<p:column style="text-align:right">
+							<ui:insert name="botones" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</pe:layoutPane>
+			<pe:layoutPane position="center" resizable="false" closable="false"
+				id="centrado">
+				<ui:insert name="center" />
+			</pe:layoutPane>
+
+
+
+		</pe:layoutPane>
+
+		<pe:layoutPane id="footer" position="south" resizable="false"
+			closable="false">
+			<p:panelGrid class="no-border pad-cel" style="width: 100%;">
+				<p:row>
+					<p:column>
+						<h:outputText class="textoF" style="margin-left:100px;"
+							value="© 2021. Afore XXI Banorte S.A. de C.V. Derechos
+							Reservados" />
+					</p:column>
+
+					<p:column style="text-align:center;">
+						<h:outputLink href="https://twitter.com/XXIBanorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes" name="icn_tw.svg" width="23"
+								height="23" />
+						</h:outputLink>
+						<h:outputLink href="https://www.facebook.com/xxibanorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes" name="icn_fb.svg" width="23"
+								height="23" style="margin-left:5px;" />
+						</h:outputLink>
+
+						<h:outputLink href="https://www.youtube.com/user/AforeXXIBanorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes" name="icn_youtube_circle_.svg"
+								width="23" height="23" style="margin-left:5px;" />
+						</h:outputLink>
+						<h:outputLink
+							href="https://mx.linkedin.com/company/afore-xxi-banorte"
+							target="_blank">
+							<h:graphicImage library="Imagenes"
+								name="icn_linkedin_circle_.svg" width="23" height="23"
+								style="margin-left:5px;" />
+						</h:outputLink>
+					</p:column>
+
+				</p:row>
+			</p:panelGrid>
+
+
+		</pe:layoutPane>
+	</pe:layout>
+
+
+
+</h:body>
+</html>

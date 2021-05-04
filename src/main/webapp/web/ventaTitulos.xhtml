@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="layout2.xhtml"
+<ui:composition template="layout3.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
@@ -11,22 +11,22 @@
 		<f:event listener="#{ventaTitulos.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
 	</ui:define>
 
-	<ui:define name="center">
-
+	<ui:define name="submenu">
 		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
+
+
+
+	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
 
 		<h:form id="form">
-
-
-
 			<p:panel id="busqueda"
-				header="VENTA DE TÍTULO POR SECTOR DE INVERSIÓN"
-				style="margin-top:20px">
+				header="VENTA DE TÍTULO POR SECTOR DE INVERSIÓN">
 				<p:panelGrid id="pBusqueda" styleClass="ui-noborder">
 
 					<p:row>

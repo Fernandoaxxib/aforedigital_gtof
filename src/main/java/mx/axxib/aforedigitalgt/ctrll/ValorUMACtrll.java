@@ -21,6 +21,7 @@ import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMA;
 import mx.axxib.aforedigitalgt.serv.ValorUMAServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "valorUMA")
@@ -43,12 +44,28 @@ public class ValorUMACtrll extends ControllerBase {
 
 	@Getter
 	private List<ValorUMA> valores;
+	
+	@Getter
+	@Setter
+	private String valorUMA;
+	
+	@Getter
+	@Setter
+	private Date fechaUMA;
+	
+	@Getter
+	private String mensaje;
+	
+	private int modo; //0=no definido, 1=nuevo, 2=edicion
+	
+	private ProcessResult prG;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
-
+			mensaje = null;
+			modo = 0;
 			fechaInicial = null;
 			fechaFinal = null;
 			ruta = "/RESPALDOS/operaciones";
@@ -60,6 +77,49 @@ public class ValorUMACtrll extends ControllerBase {
 			init = false;
 		}
 	}
+	
+	
+	
+	
+	public void nuevo() {
+		mensaje = "Nuevo valor UMA";
+		modo = 1;
+		prG = new ProcessResult();
+		prG.setFechaInicial(DateUtil.getNowDate());
+		prG.setDescProceso("Nuevo valor UMA");
+		valorUMA = null;
+		fechaUMA = null;
+	}
+	
+	public void guardar() {
+		if(modo == 1) {
+			if (fechaUMA == null) {
+				UIInput fini = (UIInput) findComponent("fechaUMA");
+				fini.setValid(false);
+				prG.setStatus("Fecha UMA es requerida");
+				resultados.add(prG);
+				return;
+			}
+			
+			if(!ValidateUtil.isDouble(valorUMA)) {
+				UIInput fini = (UIInput) findComponent("valorUMA");
+				fini.setValid(false);
+				prG.setStatus("Valor UMA no válido");
+				resultados.add(prG);
+				return;
+			}
+			
+			insertar();
+		}
+		
+	}
+	
+	private void insertar() {
+		System.out.println("guardado");
+		prG.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+		resultados.add(prG);
+	}
+
 
 	public void editar(ValorUMA valor) {
 		//valores.remove(valor);
