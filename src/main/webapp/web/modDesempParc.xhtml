@@ -367,12 +367,11 @@
 					<p:panelGrid styleClass="ui-noborder">
 						<p:row>
 							<p:column>
-								<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"
-									rendered="#{modDesempParc.mostrarCancelacion}" />
+								<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"/>
 							</p:column>
 							<p:column>
 								<p:selectOneMenu id="tipoCancelacion" style="width:200px"
-									rendered="#{modDesempParc.mostrarCancelacion}"
+									disabled="#{!modDesempParc.mostrarCancelacion}"
 									value="#{modDesempParc.selectedClaveCancelacion}">
 									<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 										itemValue="" />
@@ -393,7 +392,7 @@
 						<p:row>
 							<p:column colspan="2">
 								<p:commandButton class="blue"
-									rendered="#{modDesempParc.mostrarCancelacion}"
+									disabled="#{!modDesempParc.mostrarCancelacion}"
 									update="result acciones"
 									actionListener="#{modDesempParc.cancelarSolicitud}"
 									value="Cancelar solicitud" />
