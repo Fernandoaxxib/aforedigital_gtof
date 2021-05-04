@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.RechazosSolicitudesRepo;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.CatRechazosOut;
 import mx.axxib.aforedigitalgt.eml.GeneraReporteIn;
 import mx.axxib.aforedigitalgt.eml.GeneraReporteOut;
@@ -24,33 +25,18 @@ public class RechazosSolicitudesServ extends ServiceBase {
 		}
 	}
 	
-//	public RechazosOut getConsultaFolio(String folio) throws AforeException {
-//		try {
-//			return rechazos.getConsultaFolio(folio);
-//		} catch (Exception e) {
-//			throw GenericException(e);
-//		}
-//	}
-//
-//	public RechazosOut getConsultaResolucion(String resolucion) throws AforeException {
-//		try {
-//			return rechazos.getConsultaResolucion(resolucion);
-//		} catch (Exception e) {
-//			throw GenericException(e);
-//		}
-//	}
-//	
-//	public RechazosOut getConsultaNSS(String nss) throws AforeException {
-//		try {
-//			return rechazos.getConsultaNSS(nss);
-//		} catch (Exception e) {
-//			throw GenericException(e);
-//		}
-//	}
 	
 	public CatRechazosOut getCatalogo() throws AforeException {
 		try {
 			return rechazos.getCatalogo();
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public BaseOut ingresarRechazos(RechazosOut parametros) throws AforeException  {
+		try {
+			return rechazos.ingresarRechazos(parametros);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

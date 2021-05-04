@@ -37,7 +37,7 @@
 							<f:param name="init" value="true" />
 						</p:linkButton>
 
-						
+
 					</h:form>
 				</p:column>
 			</p:row>
@@ -49,12 +49,11 @@
 
 		<h:form id="form">
 
-			<p:panel id="busqueda" header="RECHAZO"
-				style="margin-top:20px">
+			<p:panel id="busqueda" header="RECHAZO" style="margin-top:20px">
 
 				<p:panelGrid id="panel" styleClass="ui-noborder">
 					<p:row>
-						<p:column >
+						<p:column>
 							<p:selectOneRadio id="opcion" value="#{rechazos.opcion}"
 								unselectable="false">
 								<f:selectItem itemLabel="Folio" itemValue="1" />
@@ -64,12 +63,12 @@
 						</p:column>
 					</p:row>
 					<p:row>
-						<p:column >
-							<p:inputText id="valor" value="#{rechazos.valor}" style="width:150px" maxlength="11"
-								></p:inputText>
-						
-							<p:commandButton class="blue" actionListener="#{rechazos.buscar}" 
-								update="panel pGrid pGrid2 result" value="Buscar" />
+						<p:column>
+							<p:inputText id="valor" value="#{rechazos.valor}"
+								style="width:150px" maxlength="11"></p:inputText>
+
+							<p:commandButton class="blue" actionListener="#{rechazos.buscar}" style="margin-left:5px;"
+								update="panel pGrid result" value="Buscar" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -78,7 +77,31 @@
 					style="margin-top:20px;">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Nombre:" style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Folio:" styleClass="etiqueta"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.folio}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Resolución:" styleClass="etiqueta"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.resolucion}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="NSS:" styleClass="etiqueta"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{rechazos.rechazo.nss}"></h:outputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Nombre:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.nombre}"></h:outputText>
@@ -86,8 +109,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Tipo presentación:"
-								style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Tipo presentación:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.descPrestacion}"></h:outputText>
@@ -95,7 +117,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Tipo pensión:" style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Tipo pensión:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.descPension}"></h:outputText>
@@ -103,7 +125,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Ejecutivo:" style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Ejecutivo:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.nombreEmpleado}"></h:outputText>
@@ -111,7 +133,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Right Fax:" style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Right Fax:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.fax}"></h:outputText>
@@ -119,7 +141,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Plaza:" style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Plaza:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.plaza}"></h:outputText>
@@ -127,7 +149,7 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Fecha capturada:" style="font-weight: normal"></p:outputLabel>
+							<p:outputLabel value="Fecha capturada:" styleClass="etiqueta"></p:outputLabel>
 						</p:column>
 						<p:column>
 							<h:outputText value="#{rechazos.rechazo.fechaInclusion}">
@@ -136,50 +158,101 @@
 						</p:column>
 
 					</p:row>
+					
+					<p:row>
+						<p:column>
+							
+						</p:column>
+						<p:column>
+							
+						</p:column>
+
+					</p:row>
+
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Rechazo 1:" styleClass="etiqueta"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="rechazo1" style="width:auto" 
+								disabled="#{rechazos.deshabilitado}"
+								converter="selectOneMenuConverter" value="#{rechazos.rechazo1}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{rechazos.catRechazos}" var="c"
+									itemLabel="#{c.descripcion}" itemValue="#{c}" />
+							
+							</p:selectOneMenu>
+						</p:column>
+
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Rechazo 2:" styleClass="etiqueta"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="rechazo2" style="width:auto" var="t"
+								disabled="#{rechazos.deshabilitado}"
+								converter="selectOneMenuConverter" value="#{rechazos.rechazo2}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{rechazos.catRechazos}" var="c"
+									itemLabel="#{c.descripcion}" itemValue="#{c}" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Descripción" />
+									</f:facet>
+									<h:outputText value="#{t.descripcion}" />
+								</p:column>
+
+							</p:selectOneMenu>
+						</p:column>
+
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Rechazo 3:" styleClass="etiqueta"></p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="rechazo3" style="width:auto" var="t"
+								disabled="#{rechazos.deshabilitado}"
+								converter="selectOneMenuConverter" value="#{rechazos.rechazo3}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{rechazos.catRechazos}" var="c"
+									itemLabel="#{c.descripcion}" itemValue="#{c}" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Descripción" />
+									</f:facet>
+									<h:outputText value="#{t.descripcion}" />
+								</p:column>
+
+							</p:selectOneMenu>
+						</p:column>
+
+					</p:row>
+
+					<p:row>
+						<p:column>
+
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" disabled="#{rechazos.deshabilitado}"
+								actionListener="#{rechazos.rechazar}"
+								update="panel pGrid result" value="Rechazar" />
+						</p:column>
+					</p:row>
+
+
 
 				</p:panelGrid>
 
 
-				<p:panelGrid id="pGrid2" styleClass="ui-noborder"
-					style="margin-top:30px;">
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Causa de rechazo"
-								style="font-weight: normal;"></p:outputLabel>
-						</p:column>
-						<p:column>
-							<p:outputLabel value="Descripción de la causa"
-								style="font-weight: normal"></p:outputLabel>
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.causaRechazo}"></h:outputText>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.descCausa}"></h:outputText>
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.causaRechazo2}"></h:outputText>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.descCausa2}"></h:outputText>
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.causaRechazo3}"></h:outputText>
-						</p:column>
-						<p:column>
-							<h:outputText value="#{rechazos.rechazo.descCausa3}"></h:outputText>
-						</p:column>
-					</p:row>
-				</p:panelGrid>
+				
 			</p:panel>
 
 			<ui:include src="processResult.xhtml">

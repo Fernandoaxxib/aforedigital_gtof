@@ -13,6 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @MappedSuperclass
 public class RechazosOut {
+	private String folio;
+	private String nss;
+	private String resolucion;
+	private Integer tipo;
+	
 	private String nombre;
 	private String fax;
 	private String tipoPrestacion;

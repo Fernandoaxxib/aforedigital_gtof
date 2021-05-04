@@ -60,7 +60,7 @@
 
 								</p:column>
 
-								<p:column style="width:60px" rendered="false">
+								<p:column style="width:60px">
 
 									<f:facet name="header">
 										<p:commandButton styleClass="botonEdicion" update="form:tabla form:result"
@@ -94,7 +94,7 @@
 
 						</p:column>
 						<p:column>
-							<p:panelGrid id="pGrid" styleClass="ui-noborder">
+							<p:panelGrid id="pGrid" styleClass="ui-noborder" >
 
 								<p:row>
 									<p:column>
@@ -114,10 +114,10 @@
 
 									</p:column>
 								</p:row>
-								<p:row>
-									<p:column colspan="2">
+								<p:row >
+									<p:column colspan="2" style="padding: 15px 8px !important">
 										<p:outputLabel value="Ruta reporte: " />
-										<p:outputLabel class="outputlabel-shadow"
+										<p:outputLabel class="outputlabel-shadow" style="padding: 4px !important;"
 											value="#{valorUMA.ruta}" />
 									</p:column>
 								</p:row>

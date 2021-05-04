@@ -130,6 +130,7 @@ public class Constantes {
 	public static final String RECHAZOS_SOLICITUDES_CONSULTA_NSS = "PRC_CONSULTA_NSS";
 	public static final String RECHAZOS_SOLICITUDES_CATALOGO = "PRC_CAT_RECHASOS";
 	public static final String RECHAZOS_SOLICITUDES_GENERA_REPORTE = "prc_genera_reporte";
+	public static final String RECHAZOS_SOLICITUDES_INGRESAR_RECHAZOS = "PRC_INGRESAR_RECHAZOS";
 
 	// VER DESMARCA MASIVA FODSMCTA
 	public static final String DETALLE_DESMARCA_CARGA_MASIVA_PACKAGE = "PKG_RET_FODSMCTA";
