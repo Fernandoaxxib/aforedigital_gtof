@@ -117,9 +117,9 @@
 				<p:panelGrid id="acciones" styleClass="ui-noborder"
 					style="margin-top:20px; text-align: right; width:100%;">
 					<p:row>
-						<p:column rendered="#{notificacionPagos.mostrarEnviar}">
+						<p:column style="width:45%;text-align:right">
 							<p:commandButton id="enviar" class="blue"
-								update="acciones result"
+								update="acciones result" disabled="#{!notificacionPagos.mostrarEnviar}"
 								actionListener="#{notificacionPagos.enviar}" value="Enviar" />
 						</p:column>
 						<p:column rendered="#{notificacionPagos.mostrarExportar}">

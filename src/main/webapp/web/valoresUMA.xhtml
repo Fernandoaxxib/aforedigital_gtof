@@ -14,12 +14,12 @@
 
 	<ui:define name="center">
 
-		<p:panelGrid width="100%" styleClass="ui-noborder">
+		<p:panelGrid width="100%" styleClass="ui-noborder no-padding" >
 			<p:row>
-				<p:column>
+				<p:column style="width:400px">
 					<ui:include src="menu.xhtml" />
 				</p:column>
-				<p:column style="margin-left:50px">
+				<p:column>
 					<ui:include src="subMenuCatalogos.xhtml" />
 				</p:column>
 			</p:row>
@@ -71,11 +71,14 @@
 			</p:dialog>
 
 
-			<p:panel header="VALORES UMA" style="margin-top:20px">
-				<p:panelGrid id="grid" styleClass="ui-noborder">
+			<p:panel header="VALORES UMA" style="margin-top:10px">
+
+				<p:panelGrid id="grid" styleClass="ui-noborder" >
 
 					<p:row>
-						<p:column style="width:50%">
+						<p:column style="width:250px">
+						</p:column>
+						<p:column style="width:650px">
 							<p:dataTable id="tabla" var="val"
 								emptyMessage="#{msg.aprob_msj_sinDatos}"
 								value="#{valorUMA.valores}">
@@ -139,7 +142,12 @@
 							</p:confirmDialog>
 
 						</p:column>
-						<p:column>
+
+					</p:row>
+					<p:row>
+						<p:column >
+						</p:column>
+						<p:column >
 							<p:panelGrid id="pGrid" styleClass="ui-noborder">
 
 								<p:row>
@@ -159,22 +167,12 @@
 											locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
 
 									</p:column>
-								</p:row>
-								<p:row>
-									<p:column colspan="2" style="padding: 15px 8px !important">
-										<p:outputLabel value="Ruta reporte: " />
-										<p:outputLabel class="outputlabel-shadow"
-											style="padding: 4px !important;" value="#{valorUMA.ruta}" />
-									</p:column>
-								</p:row>
-								<p:row>
-									<p:column colspan="2">
+									<p:column colspan="2" style="text-align:right">
 										<p:commandButton class="blue"
 											actionListener="#{valorUMA.generarReporte}"
 											update="pGrid result" value="Generar reporte" />
 									</p:column>
 								</p:row>
-
 							</p:panelGrid>
 						</p:column>
 					</p:row>

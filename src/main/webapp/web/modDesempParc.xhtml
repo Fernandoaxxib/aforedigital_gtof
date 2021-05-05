@@ -364,7 +364,7 @@
 				<p:panel id="acciones"
 					header="CANCELACIÓN SOLICITUDES INDIVIDUAL/MASIVA"
 					style="margin-top:20px">
-					<p:panelGrid styleClass="ui-noborder">
+					<p:panelGrid styleClass="ui-noborder" style="width:100%">
 						<p:row>
 							<p:column>
 								<p:outputLabel value="#{msg.modDesParc_combo_tipoCancelacion}"/>
@@ -380,11 +380,14 @@
 										itemValue="#{c.claveProceso}" />
 								</p:selectOneMenu>
 							</p:column>
+							<p:column style="width:50px">
+								
+							</p:column>
 
-							<p:column>
+							<p:column style="width:220px">
 								<p:outputLabel value="Nombre del archivo (sin extensión): " />
 							</p:column>
-							<p:column>
+							<p:column >
 								<p:inputText id="archivo" value="#{modDesempParc.archivo}"></p:inputText>
 							</p:column>
 
@@ -397,6 +400,10 @@
 									actionListener="#{modDesempParc.cancelarSolicitud}"
 									value="Cancelar solicitud" />
 							</p:column>
+							<p:column style="width:50px">
+								
+							</p:column>
+							
 							<p:column colspan="2">
 								<p:outputLabel
 									value="El archivo deberá estar en: /RESPALDOS/operaciones/pruebas y con extensión txt"
@@ -407,6 +414,10 @@
 						<p:row>
 							<p:column colspan="2">
 							</p:column>
+							<p:column style="width:50px">
+								
+							</p:column>
+							
 							<p:column colspan="2">
 								<p:commandButton class="blue" update="result acciones"
 									value="Cancelación masiva"

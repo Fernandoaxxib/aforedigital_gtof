@@ -93,7 +93,7 @@ public class CargaRightCtrll extends ControllerBase {
 				CargaRightOut res = cargaService.getCrucePrevio(parametros);
 				if (res.getEstatus() == 1) {
 					mostrarCarga = true;
-					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje()
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": <br>" + res.getMensaje()
 							+ " línea: " + res.getLinea());
 				} else {
 					if (res.getEstatus() == 2) {
@@ -123,7 +123,7 @@ public class CargaRightCtrll extends ControllerBase {
 				parametros.setNombreArchivo(path + archivo + ext);
 				CargaRightOut res = cargaService.getCarga(parametros);
 				if (res.getEstatus() == 1) {
-					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje()
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": <br>" + res.getMensaje()
 							+ " línea: " + res.getLinea());
 				} else {
 					if (res.getEstatus() == 2) {

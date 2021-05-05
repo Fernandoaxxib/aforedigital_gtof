@@ -353,7 +353,7 @@ public class RechazosSolicitudesCtrll extends ControllerBase {
 
 				if (res.getEstatus() == 1) {
 					pr.setStatus(
-							aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje());
+							aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": <br>" + res.getMensaje());
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());

@@ -7,6 +7,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
+	
 
 <h:head>
 </h:head>
@@ -27,7 +28,8 @@
 			</p:column>
 
 			<p:column headerText="ESTADO">
-				<h:outputText value="#{pro.status}" styleClass="capitalized" />
+				<h:outputText value="#{pro.status}" styleClass="capitalized" escape="false" />
+				
 			</p:column>
 
 			<p:column headerText="HORA INICIO" style="width:100px;">

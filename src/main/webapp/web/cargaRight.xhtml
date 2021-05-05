@@ -28,7 +28,7 @@
 					width="100%">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Fecha de Right Fax" />
+							<p:outputLabel value="Fecha de right fax" />
 						</p:column>
 						<p:column>
 							<p:datePicker id="fecha"
@@ -55,7 +55,7 @@
 						<p:column>
 							<p:commandButton class="blue"
 								actionListener="#{cargaRight.cargar}" update="panel result"
-								rendered="#{cargaRight.mostrarCarga}" value="Cargar" />
+								disabled="#{!cargaRight.mostrarCarga}" value="Cargar" />
 						</p:column>
 
 					</p:row>

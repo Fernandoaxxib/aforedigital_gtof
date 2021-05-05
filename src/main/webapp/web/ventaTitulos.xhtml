@@ -113,7 +113,7 @@
 									</p:selectOneMenu>
 
 									<p:radioButton id="opt3" for="customRadio" itemIndex="2" />
-									<h:outputLabel for="opt3" value="Traspasos Afore-Afore" />
+									<h:outputLabel for="opt3" value="Traspasos afore-afore" />
 									<p:selectOneMenu id="comboTraspasos" style="width:200px"
 										var="t" disabled="#{ventaTitulos.disTraspasos}"
 										converter="selectOneMenuConverter"
@@ -184,13 +184,13 @@
 							<p:commandButton class="blue" id="venta" update="result"
 								actionListener="#{ventaTitulos.ventaTitulosMonitor}"
 								style="margin-left:20px;margin-bottom:6px;"
-								rendered="#{ventaTitulos.mostrarVenta}" value="Venta en monitor" />
+								disabled="#{!ventaTitulos.mostrarVenta}" value="Venta monitor" />
 
 							<p:commandButton class="blue" id="ventaCT" update="result"
 								actionListener="#{ventaTitulos.ventaTitulosMonitorCT}"
 								style="margin-left:20px;margin-bottom:6px;"
-								rendered="#{ventaTitulos.mostrarVentaCT}"
-								value="Venta en monitor corte trans." />
+								disabled="#{!ventaTitulos.mostrarVentaCT}"
+								value="Venta corte" />
 						</p:column>
 
 

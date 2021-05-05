@@ -234,7 +234,7 @@ public class ValorUMACtrll extends ControllerBase {
 				BaseOut res = valorUMAService.getGeneraReporte(parametros);
 				if (res.getEstatus() == 1) {
 					pr.setStatus(
-							aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": " + res.getMensaje());
+							aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null) + ": <BR>" + res.getMensaje());
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
