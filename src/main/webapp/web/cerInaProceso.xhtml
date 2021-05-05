@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/web/layout2.xhtml"
+<ui:composition template="/web/layout3.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -16,61 +16,47 @@
 		<ui:include src="menu.xhtml" />
 	</ui:define>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green" outcome="/web/cerInaProceso.jsf"
+				includeViewParams="true"
+				value="#{msg.certifica_inactividad_btnProceso}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/cerInaReportes.jsf" includeViewParams="true"
+				value="#{msg.certifica_inactividad_btnReportes}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/cerInaLProcesar.jsf" includeViewParams="true"
+				value="#{msg.certifica_inactividad_btnLayout}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/cerInaApp.jsf" includeViewParams="true"
+				value="#{msg.certifica_inactividad_btnApp}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
 	</ui:define>
 
 	<ui:define name="center">
-		<h:outputStylesheet name="estilo-base.css" library="css" />
 		<h:outputScript library="js" name="calendar-localization.js" />
 
-
-		<p:panelGrid class="no-border" style="width: 100%">
-			<p:row>
-				<p:column>
-					<ui:include src="subMenuTransacciones.xhtml" />
-				</p:column>
-				<p:column style="text-align:right">
-					<h:form>
-						<p:linkButton styleClass="green" outcome="/web/cerInaProceso.jsf"
-							includeViewParams="true"
-							value="#{msg.certifica_inactividad_btnProceso}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-						<p:linkButton styleClass="blue" style="margin-left:13px !important"
-						    outcome="/web/cerInaReportes.jsf"
-							includeViewParams="true"
-							value="#{msg.certifica_inactividad_btnReportes}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-						<p:linkButton styleClass="blue" style="margin-left:13px !important"
-						    outcome="/web/cerInaLProcesar.jsf"
-							includeViewParams="true"
-							value="#{msg.certifica_inactividad_btnLayout}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-						<p:linkButton styleClass="blue" style="margin-left:13px !important"
-						    outcome="/web/cerInaApp.jsf"
-							includeViewParams="true" 
-							value="#{msg.certifica_inactividad_btnApp}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-					</h:form>
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-
-
-
 		<h:form id="form">
-			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title1}"
-				style="font-size:12px;margin-top:11px">
+			<p:panel id="pnl1" header="#{msg.certifica_inactividad_title1}" >
 				<p:panelGrid columns="1" styleClass="ui-noborder"
 					style="margin-bottom:10px" cellpadding="5">
 					<p:selectOneRadio id="radSelect" layout="pageDirection"
 						value="#{cerInaProceso.radioSelected}">
 						<p:ajax listener="#{cerInaProceso.radioSelected}"
-							update="form:radSelect form:fCapturada form:fnEjecutar" global="false" />
+							update="form:radSelect form:fCapturada form:fnEjecutar"
+							global="false" />
 						<f:selectItem itemValue="1"
 							itemLabel="#{msg.certifica_inactividad_rdbDiag}" />
 						<f:selectItem itemValue="2"
@@ -78,8 +64,7 @@
 					</p:selectOneRadio>
 				</p:panelGrid>
 				<p:panelGrid class="no-border" columns="3">
-					<p:outputLabel for="fCapturada"
-						value="#{msg.certifica_inactividad_lblFechaCap}"
+					<p:outputLabel for="fCapturada" value="Fecha:"
 						style="font-size:12px" />
 
 					<p:datePicker id="fCapturada" value="#{cerInaProceso.fecha}"

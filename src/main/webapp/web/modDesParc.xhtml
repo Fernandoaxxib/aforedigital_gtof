@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/web/layout2.xhtml"
+<ui:composition template="/web/layout3.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -12,48 +12,46 @@
 		<f:event listener="#{modDesParcProceso.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green ui-button-text"
+				outcome="/web/modDesParc.jsf" includeViewParams="true"
+				value="#{msg.modulo_desempleoParc_btnPM}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue ui-button-text"
+				style="margin-left:13px !important" outcome="/web/modDesempParc.jsf"
+				includeViewParams="true" value="Proceso individual">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue ui-button-text"
+				style="margin-left:13px !important"
+				outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
+				value="#{msg.modulo_desempleoParc_btnReportes}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue ui-button-text"
+				style="margin-left:13px !important"
+				outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
+				value="#{msg.modulo_desempleoParc_btnLProcesar}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
 	</ui:define>
 
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
-
-		<p:panelGrid class="no-border no-padding" style="width: 100%">
-			<p:row>
-				<p:column>
-					<ui:include src="subMenuTransacciones.xhtml" />
-				</p:column>
-				<p:column style="text-align:right">
-					<h:form>
-						<p:linkButton styleClass="green ui-button-text"
-							outcome="/web/modDesParc.jsf" includeViewParams="true"
-							value="#{msg.modulo_desempleoParc_btnPM}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-
-						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
-							outcome="/web/modDesempParc.jsf" includeViewParams="true"
-							value="Proceso individual">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-
-						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
-							outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
-							value="#{msg.modulo_desempleoParc_btnReportes}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-
-						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px !important"
-							outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
-							value="#{msg.modulo_desempleoParc_btnLProcesar}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-					</h:form>
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-
 
 		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo4}"
 			appendTo="@(body)" widgetVar="dlg2" resizable="false" width="60%"
@@ -115,11 +113,11 @@
 
 		<h:form id="form">
 			<p:panel id="pnlResult" header="Proceso masivo (primer pago)"
-				style="margin-bottom:20px; margin-top:18px">
-				<p:panelGrid id="pnlSelection" class="no-border no-padding">
+				style="margin-bottom:20px;">
+				<p:panelGrid id="pnlSelection" class="no-border no-padding" >
 					<p:row>
 						<p:column>
-							<p:selectOneRadio id="radSelect"								
+							<p:selectOneRadio id="radSelect"
 								value="#{modDesParcProceso.radioSelected}">
 								<p:ajax listener="#{modDesParcProceso.radioSelected}"
 									update="form:btnEjecutar form:fCapturada form:radSelect form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal"
@@ -137,7 +135,7 @@
 				<div class="ui-g">
 					<div class="ui-g-6">
 						<div class="ui-g" style="margin-bottom: 10px">
-							<div class="ui-g-6" style="padding-top:13px">
+							<div class="ui-g-6" style="padding-top: 13px">
 								<p:outputLabel for="fCapturada"
 									value="#{msg.modulo_desempleoParc_lblfecCap}" />
 							</div>
@@ -219,7 +217,7 @@
 							</div>
 						</div>
 						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: right">
+							<div class="ui-g-12" style="width:85%;text-align: right">
 								<p:commandButton id="btnEjecutar"
 									styleClass="blue ui-button-text" type="submit"
 									value="#{msg.modulo_desempleoParc_btnEjecutar}"

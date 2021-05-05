@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/web/layout2.xhtml"
+<ui:composition template="/web/layout3.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -12,34 +12,29 @@
 		<f:event listener="#{retParImssOP8586.iniciar}" type="preRenderView" />
 	</f:metadata>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
 	</ui:define>
 
-	<ui:define name="center">
-		<h:outputStylesheet name="estilo-base.css" library="css" />
-		<h:outputScript library="js" name="calendar-localization.js" />
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
 
-		<p:panelGrid class="no-border no-padding" style="width: 100%">
-			<p:row>
-				<p:column>
-					<ui:include src="subMenuTransacciones.xhtml" />
-				</p:column>
-				<p:column style="text-align:right">
-					<h:form>
-						<p:linkButton styleClass="blue" outcome="/web/retParImssOP84.jsf"
-							includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP84}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-						<p:linkButton styleClass="green"
-							outcome="/web/retParImssOP8586.jsf" includeViewParams="true"
-							value="#{msg.retPar_imss_op84_btnOP8586}">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-					</h:form>
-				</p:column>
-			</p:row>
-		</p:panelGrid>
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="blue" outcome="/web/retParImssOP84.jsf"
+				includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP84}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="green" outcome="/web/retParImssOP8586.jsf"
+				includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP8586}">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">		
+		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
 			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
@@ -76,7 +71,7 @@
 
 		<h:form id="form">
 			<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
-				style="font-size:12px;margin-bottom:20px; margin-top:20px">
+				style="margin-bottom:20px">
 				<p:panelGrid class="ui-noborder" layout="grid" columns="2">
 					<p:panel header="Generación OP85" style="width:100%">
 
