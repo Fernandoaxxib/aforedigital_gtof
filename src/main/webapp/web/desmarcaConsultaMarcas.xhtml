@@ -81,9 +81,9 @@
 							
 							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
 							
-									<p:row>
+									<p:row style="text-align: right !important;width: 450px !important;">
 									
-										   <p:column style="text-align: left !important;width: 300px !important;">
+										   <p:column style="text-align: right !important;width: 450px !important;">
 											<p:commandButton styleClass="blue ui-button-text"  value="Consultar Marcas" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="result" ajax="true"/>
 											</p:column>				 
 									
@@ -125,10 +125,11 @@
 									<p:inputText id="nombreCarga" value="#{desmarcaConsultaMarcas.nombreArchivoCarga}"  style="text-Align:left;font-size:15px;width:308px"/>
 								</p:column>
 							</p:row>
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							</p:panelGrid>
-							<p:row>
-								<p:column style="text-align: right !important;width: 120px !important;">
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
+							<p:row style="text-align: right !important;width: 450px !important;">
+								<p:column style="text-align: right !important;width: 450px !important;">
 
 									<p:commandButton styleClass="blue ui-button-text" value="Consultar Marcas" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="result nombreCarga" ajax="true"/>
 								</p:column>
