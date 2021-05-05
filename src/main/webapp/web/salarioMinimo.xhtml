@@ -114,25 +114,59 @@
         </p:column>
     </p:dataTable>
 		
-		<h:panelGrid columns="1" cellpadding="5">
-    		<p:commandButton class="blue" value="Agregar" type="button" onclick="PF('tabla2').show();" />
-        </h:panelGrid>
-			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2" minHeight="40">
-   			 	<h:outputText value="Ingresar Usuario" />
-   			 	<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}" />
+
+        <p:commandButton class="blue" value="Agregar" type="button" onclick="PF('tabla2').show();" />
+			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2"  resizable="false" positionType="absolute">
+   			 	<p:panelGrid styleClass="ui-noborder" >
+   			 	<p:panelGrid styleClass="ui-noborder" >
+   			 	<p:row >
+   			 	 <p:column style="text-align: left !important;width: 20px !important;">
+									
+									<p:outputLabel value="Usuario:"  />
+   			 	</p:column>						 
+				<p:column style="text-align: left !important;width: 300px !important;">
+									
+									
+									<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}"  style="text-Align:left;font-size:15px;width:300px"/>
+   			 	</p:column>							
+				<p:column style="text-align: left !important;width: 120px !important;">
+									
+									<p:outputLabel value="Fecha Calendario:" />
+									
+				</p:column>						 
+									
+									<p:column style="text-align: left !important;width: 120px !important;">			 
+									
+									<p:datePicker id="fechaGuardar" value="#{salarioMinimo.fechaCalendario}"
+									locale="es" showIcon="true" pattern="dd-MM-yyyy"
+									yearNavigator="true" monthNavigator="true"
+									inputStyle="width:80px; text-align:right;"
+									readonlyInput="true" />
+				</p:column>
+				 <p:column style="text-align: left !important;width: 5px !important;">
+									
+									<p:outputLabel value="Monto:"  />
+   			 	</p:column>						 
+				<p:column style="text-align: left !important;width: 5px !important;">
+									
+									<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" />
+   			 	</p:column>		
+														
+				</p:row>
+				</p:panelGrid>
+				
+				
+				<p:outputPanel style="text-align:right">
+									
+									<p:commandButton class="blue" onclick="PF('dialogGuardar').hide();" update="result" value="Cerrar" />
+   			 	
+									<p:commandButton class="blue" actionListener="#{salarioMinimo.onAddNew}"
+				 value="Enviar" oncomplete="PF('dialogGuardar').hide();" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
+   			 	</p:outputPanel>
    			 	
    			 	
-   				 <h:outputText value="Ingresar Fecha Calendario" />
-   				 <p:datePicker id="fechaGuardar" value="#{salarioMinimo.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
-							locale="es" pattern="dd/MM/yyyy" />
-      			
-   			 	
-   			 	<h:outputText value="Ingresar Monto" />
-   			 	<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" />
-   			 	
-   			 	<p:commandButton class="blue" actionListener="#{salarioMinimo.onAddNew}"
-				 value="#{msg.salario_minimo_boton_enviar}" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
-	
+				
+				</p:panelGrid>
 			
 		</p:dialog>
 		</p:panel>	
