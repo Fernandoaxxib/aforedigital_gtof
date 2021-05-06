@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/web/layout2.xhtml"
+<ui:composition template="layout3.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -16,33 +16,29 @@
 		<ui:include src="menu.xhtml" />
 	</ui:define>
 	
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
 	</ui:define>
+	
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green ui-button-text" style="margin-left:20px !important" outcome="/web/desmarcaCargaMasiva.jsf" includeViewParams="true" value="#{msg.carga_masiva_text_titulo_carga}" >			         
+					    <f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue ui-button-text" style="margin-left:20px !important" outcome="/web/desmarcaMasiva.jsf" includeViewParams="true" value="#{msg.desmarca_masiva_text_titulo}" >			         
+					    <f:param name="init" value="true" />
+		    </p:linkButton>
+		    <p:linkButton styleClass="blue ui-button-text" style="margin-left:20px !important" outcome="/web/desmarcaConsultaMarcas.jsf" includeViewParams="true" value="#{msg.marca_masiva_text_titulo}" >			         
+					    <f:param name="init" value="true" />
+		    </p:linkButton>
+		</h:form>
+	</ui:define>
+	
 	
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
          
-        <p:panelGrid class="no-border no-padding" style="width: 100%">
-			<p:row>
-			   <p:column>
-		             <ui:include src="subMenuTransacciones.xhtml" />
-		       </p:column>
-		       <p:column>
-		           <h:form>
-		              <p:linkButton styleClass="green ui-button-text" outcome="/web/desmarcaCargaMasiva.jsf" includeViewParams="true" value="#{msg.carga_masiva_text_titulo_carga}" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-				      <p:linkButton styleClass="blue ui-button-text" outcome="/web/desmarcaMasiva.jsf" includeViewParams="true" value="#{msg.desmarca_masiva_text_titulo}" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-				        <p:linkButton styleClass="blue ui-button-text" outcome="/web/desmarcaConsultaMarcas.jsf" includeViewParams="true" value="#{msg.marca_masiva_text_titulo}" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-		           </h:form>
-		       </p:column>
-		    </p:row>
-		 </p:panelGrid>
+       
 			
 			<h:form id="form">
 
@@ -70,10 +66,11 @@
 									<p:inputText id="nombreCarga" value="#{desmarcaCargaMasiva.nombreArchivoCarga}"  style="text-Align:left;font-size:15px;width:308px"/>
 								</p:column>
 							</p:row>
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
 							</p:panelGrid>
-							<p:row>
-								<p:column style="text-align: left !important;width: 120px !important;">
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row style="text-align: right !important;width: 450px !important;">
+								<p:column style="text-align: right !important;width: 450px !important;">
 <!-- 									<div class="ui-g"> -->
 <!-- 									<div class="ui-g-12" > -->
 									<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="result  nombreCarga" ajax="true"/>
@@ -128,7 +125,7 @@
 							</p:row>
 						</p:panelGrid>
 						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
-							<p:row>
+							<p:row >
 								<div class="ui-g">
 									<div class="ui-g-12" style="text-align: center; width: 95%">
 									<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update="result" ajax="true"/>

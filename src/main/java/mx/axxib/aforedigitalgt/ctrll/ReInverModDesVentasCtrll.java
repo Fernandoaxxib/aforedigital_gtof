@@ -87,8 +87,10 @@ public class ReInverModDesVentasCtrll extends ControllerBase {
 	}
 
 	public void opcionSeleccionada2() throws Exception {
-		lote = lote1.getId_lote();
-		detalleVenta();
+		if(lote1!=null) {
+			lote = lote1.getId_lote();
+			detalleVenta();
+		}		
 	}
 
 	public void generarReporte() {

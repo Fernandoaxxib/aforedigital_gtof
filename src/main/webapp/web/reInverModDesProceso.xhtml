@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/web/layout2.xhtml"
+<ui:composition template="/web/layout3.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -17,46 +17,36 @@
 		<ui:include src="menu.xhtml" />
 	</ui:define>
 
-	<ui:define name="left">
-		<ui:include src="graficas.xhtml" />
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
 	</ui:define>
 
-	<ui:define name="center">
-		<h:outputStylesheet name="estilo-base.css" library="css" />
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green"
+				outcome="/web/reInverModDesProceso.jsf" includeViewParams="true"
+				value="Proceso">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/reInverModDesCompras.jsf" includeViewParams="true"
+				value="Compras">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/reInverModDesVentas.jsf" includeViewParams="true"
+				value="Ventas">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">		
 		<h:outputScript library="js" name="calendar-localization.js" />
 
-
-		<p:panelGrid class="no-border" style="width: 100%">
-			<p:row>
-				<p:column>
-					<ui:include src="subMenuTransacciones.xhtml" />
-				</p:column>
-				<p:column style="text-align:right">
-					<h:form>
-						<p:linkButton styleClass="green"
-							outcome="/web/reInverModDesProceso.jsf" includeViewParams="true"
-							value="Proceso">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-						<p:linkButton styleClass="blue"
-							style="margin-left:13px !important"
-							outcome="/web/reInverModDesCompras.jsf" includeViewParams="true"
-							value="Compras">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-						<p:linkButton styleClass="blue"
-							style="margin-left:13px !important"
-							outcome="/web/reInverModDesVentas.jsf" includeViewParams="true"
-							value="Ventas">
-							<f:param name="init" value="true" />
-						</p:linkButton>
-					</h:form>
-				</p:column>
-			</p:row>
-		</p:panelGrid>
-
 		<h:form id="form">
-			<p:panel id="pnl1" header="Proceso" style="margin-top:10px;margin-bottom:20px">
+			<p:panel id="pnl1" header="Proceso"
+				style="margin-bottom:20px">
 				<p:panelGrid columns="1" styleClass="ui-noborder"
 					style="margin-bottom:10px" cellpadding="5">
 					<p:selectOneRadio id="radSelect" layout="pageDirection"
@@ -110,7 +100,7 @@
 					style="display:#{reinversionModDesProceso.display2}">
 					<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
 						<p:row>
-							<p:column style="width:130px">
+							<p:column style="width:140px">
 								<p:outputLabel value="Fecha: " />
 							</p:column>
 							<p:column>
@@ -123,8 +113,8 @@
 							</p:column>
 							<p:column>
 								<p:commandButton styleClass="blue" type="submit"
-									disabled="#{reinversionModDesProceso.disabled}" value="Ejecutar"
-									action="#{reinversionModDesProceso.ejecutar}"
+									disabled="#{reinversionModDesProceso.disabled}"
+									value="Ejecutar" action="#{reinversionModDesProceso.ejecutar}"
 									update="form:result form:fechaI form:fechaF form:fCapturada" />
 							</p:column>
 						</p:row>
@@ -135,7 +125,7 @@
 					style="display:#{reinversionModDesProceso.display}">
 					<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
 						<p:row>
-							<p:column style="width:140px">
+							<p:column style="width:150px">
 								<p:outputLabel value="Cuentas Pendientes: " />
 							</p:column>
 							<p:column class="outputlabel-shadow"
