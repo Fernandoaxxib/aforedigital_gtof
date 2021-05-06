@@ -136,16 +136,16 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Desmarca Masiva Cuentas");
-	try {
-		 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
-		 pr.setStatus("Proceso ejecutado Correctamente");
-	}catch (Exception e) {
-		pr = GenericException(e);
-	} finally {
-		pr.setFechaFinal(DateUtil.getNowDate());
-		resultados.add(pr);
-	}
-} 
+		try {
+			 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
+			 pr.setStatus("Proceso ejecutado Correctamente");
+		}catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	} 
 		
 	public void validarNssRfc() {
 	ProcessResult pr = new ProcessResult();

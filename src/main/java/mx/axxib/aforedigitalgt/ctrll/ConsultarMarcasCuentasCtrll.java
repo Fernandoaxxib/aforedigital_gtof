@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import javax.faces.component.UIInput;
 
+import org.apache.commons.lang3.StringUtils;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -122,6 +123,8 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS o CURP");
 			if (curp_o_nssIn != null && !curp_o_nssIn.equals("") ) {
+					boolean bandera=false;
+				
 					if (ValidateUtil.isCURP(curp_o_nssIn)) {
 						
 						int valorCurp=ejecutarConsultaCurp(curp_o_nssIn);
@@ -132,7 +135,8 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 							mensajeTabla = "Sin información por CURP";
 						}
 						
-				    } else {
+				    }
+					if((curp_o_nssIn.length() > 0 && curp_o_nssIn.length()<=11) && StringUtils.isNumeric(curp_o_nssIn)) 	{
 				    	
 				    	int valorNss= ejecutarConsultaNss(curp_o_nssIn);
 				    	if(valorNss ==1) {
@@ -142,6 +146,21 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 							mensajeTabla = "Sin información por NSS";
 						}
 				    }
+					
+					if((curp_o_nssIn.length() > 0 && curp_o_nssIn.length()<=11) && StringUtils.isNumeric(curp_o_nssIn)== false) 	{
+				    	
+						UIInput inputCurp = (UIInput) findComponent("curpNSS");
+						 inputCurp.setValid(false);
+						 pr.setStatus("Ingresar NSS Valido ");
+				    }
+					
+					if(ValidateUtil.isCURP(curp_o_nssIn) ==false && curp_o_nssIn.length()>11 ) {
+						
+				 		 UIInput inputCurp = (UIInput) findComponent("curpNSS");
+						 inputCurp.setValid(false);
+						 pr.setStatus("Ingresar CURP Valido ");
+				
+					}
 				}else {
 					UIInput input = (UIInput) findComponent("curpNSS");
 					input.setValid(false);

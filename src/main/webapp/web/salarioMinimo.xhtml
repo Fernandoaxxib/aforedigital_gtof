@@ -56,26 +56,18 @@
         <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario :form:result" />
         <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:tableSalario :form:result" />
  
-        <p:column headerText="CdZona" >
-            <p:cellEditor  style="text-align: center">
-                <f:facet name="output"> <h:outputText value="#{salario.cdZona}" style="text-align: center"/> </f:facet>
-                <f:facet name="input"><p:inputText value="#{salario.cdZona}" style="text-align: center" /> </f:facet>
-            </p:cellEditor>
+        <p:column headerText="CdZona"  style="text-align: center">
+        <h:outputText value="#{salario.cdZona}" style="text-align: center"/> 
+            
         </p:column>
  
           <p:column headerText="FechaCalendario">
-            <p:cellEditor>
-                <f:facet name="output">
-                			<p:datePicker disabled="true"  id="calendarioOut" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="false"
-							locale="es" pattern="dd/MM/yyyy" />
-                                       
-                </f:facet>
-                <f:facet name="input">
-                			 <p:datePicker id="calendarioIn" value="#{salario.fechaCalendario}" inputStyle="width:120px; text-align:right;" showIcon="true"
-							locale="es" pattern="dd/MM/yyyy" />
-                			
-                </f:facet>
-            </p:cellEditor>
+          	
+          	<h:outputText id="calendarioOut" value="#{salario.fechaCalendario}" style="float:right" > 
+                						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+                						 </h:outputText> 
+          
+            
         </p:column>
  
         
@@ -90,23 +82,16 @@
         </p:column>
  
         <p:column headerText="FechaUltimo">
-            <p:cellEditor>
-                <f:facet name="output">
-                						<p:datePicker disabled="true"  id="fechaUltOut" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:right;" showIcon="false"
-										locale="es" pattern="dd/MM/yyyy" />
-                </f:facet>
-                <f:facet name="input">
-                					   <p:datePicker id="fechaUltIn" value="#{salario.fechaUltimo}" inputStyle="width:120px; text-align:right;" showIcon="true"
-										locale="es" pattern="dd/MM/yyyy" />
-                </f:facet>
-            </p:cellEditor>
+        
+        								<h:outputText id="fechaUltOut" value="#{salario.fechaUltimo}" style="float:right" > 
+                						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+                						 </h:outputText> 
+            
         </p:column>
         
            <p:column headerText="Id User">
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{salario.userId}" /></f:facet>
-                <f:facet name="input"><p:inputText value="#{salario.userId}" style="width:100%" /></f:facet>
-            </p:cellEditor>
+           <h:outputText value="#{salario.userId}" />
+            
         </p:column>
  
         <p:column style="width:35px">
@@ -115,8 +100,12 @@
     </p:dataTable>
 		
 
-        <p:commandButton class="blue" value="Agregar" type="button" onclick="PF('tabla2').show();" />
-			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2"  resizable="false" positionType="absolute">
+        <p:commandButton id="verDetalle" styleClass="blue ui-button-text" value="Agregar"  onclick="PF('tabla2').show();" />
+        
+        
+			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2"   appendTo="@(body)"  modal="true"  resizable="false" positionType="absolute" style="margin-top:20px">
+   			 	<p:outputPanel id="display">
+   			 	
    			 	<p:panelGrid styleClass="ui-noborder" >
    			 	<p:panelGrid styleClass="ui-noborder" >
    			 	<p:row >
@@ -158,16 +147,16 @@
 				
 				<p:outputPanel style="text-align:right">
 									
-									<p:commandButton class="blue" onclick="PF('dialogGuardar').hide();" update="result" value="Cerrar" />
+									<p:commandButton onclick="PF('tabla2').hide();" update="result" value="Cerrar" styleClass="blue ui-button-text" style="margin-right:10px"  />
    			 	
-									<p:commandButton class="blue" actionListener="#{salarioMinimo.onAddNew}"
-				 value="Enviar" oncomplete="PF('dialogGuardar').hide();" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
+									<p:commandButton styleClass="blue ui-button-text" actionListener="#{salarioMinimo.onAddNew}"
+				 value="Enviar" oncomplete="PF('tabla2').hide();" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
    			 	</p:outputPanel>
    			 	
    			 	
 				
 				</p:panelGrid>
-			
+		 </p:outputPanel>	
 		</p:dialog>
 		</p:panel>	
 		
