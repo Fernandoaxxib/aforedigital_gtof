@@ -60,18 +60,22 @@ public class ReInverModDesVentasCtrll extends ControllerBase {
 	private Double accionesTotal;
 	@Getter
 	private Date fecActual;
+	@Getter
+	private boolean disabled;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			lote = null;
+			lote1=null;
 			montoTotal = 0.0;
 			accionesTotal = 0.0;
 			fecha = DateUtil.getNowDate();
 			detalleVenta = null;
 			listLotes = null;
 			fecActual=DateUtil.getNowDate();
+			disabled=true;
 		}
 	}
 
@@ -196,6 +200,9 @@ public class ReInverModDesVentasCtrll extends ControllerBase {
 				montoTotal = montoTotal + p.getMONTO();
 				accionesTotal = accionesTotal + p.getACCIONES();
 			});
+			disabled=false;
+		}else {
+			disabled=true;
 		}
 	}
 

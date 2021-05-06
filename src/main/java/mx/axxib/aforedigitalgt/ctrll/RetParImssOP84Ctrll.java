@@ -93,6 +93,8 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	private boolean disabled4;
 	@Getter
 	private boolean disabled5;
+	@Getter
+	private String border;
 	
 
 	@Override
@@ -105,6 +107,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 
 	public void radioSelected() {
 		if (radioSelected != null) {
+			border="";
 			radioSelected2 = null;
 			lote = null;
 			seleccion2 = false;
@@ -117,8 +120,8 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	}
 
 	public void radioSelected2() {
-
 		if (radioSelected2 != null) {
+			border="";
 			fecIni = null;
 			fecFin = null;
 			radioSelected = null;
@@ -126,7 +129,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			disabled1 = true;
 			disabled2 = true;
 			disabled3 = false;
-			disabled4 = false;			
+			disabled4 = false;					
 		}
 
 	}
@@ -261,7 +264,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				}
 			}
 			if (radioSelected2 != null && radioSelected2.equals("1")) {
-				if (lote != null && !lote.isEmpty()) {
+				if (lote != null) {
 					try {
 						ProcesResult res = service.getConsultaOP84(fecIni, fecFin, lote);
 						if (res.getOn_Estatus() == 1) {
@@ -285,10 +288,8 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
 					}
-				} else {
-					UIInput radio2 = (UIInput) findComponent("vLote");
-					radio2.setValid(false);
-
+				} else {					
+					border="2px solid #ff0028 !important;";
 					pr.setStatus("Se requiere el número de lote");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
@@ -368,5 +369,6 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ruta = "/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
 		ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
 		today = new Date();
+		border="";
 	}
 }

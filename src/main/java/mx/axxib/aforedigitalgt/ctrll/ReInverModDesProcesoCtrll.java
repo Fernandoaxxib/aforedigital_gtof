@@ -45,16 +45,6 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 	@Getter
 	private String archivo;
 	@Getter
-	private String display;
-	@Getter
-	private String display1;
-	@Getter
-	private String display2;
-	@Getter
-	private String display3;
-	@Getter
-	private String display4;
-	@Getter
 	private Date fecActual;
     @Getter
 	private boolean disabled;
@@ -72,12 +62,7 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 		ruta = "/RESPALDOS/operaciones";
 		fecha = DateUtil.getNowDate();
 		fechaI = DateUtil.getNowDate();
-		fechaF = DateUtil.getNowDate();
-		display = "none";
-		display1 = "none";
-		display2 = "none";
-		display3 = "none";
-		display4 = "none";		
+		fechaF = DateUtil.getNowDate();			
 		archivo = null;
 		radioSelected = null;
 		disabled=false;
@@ -92,12 +77,7 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 			disabled=true;
 			try {
 				cuentasPendientes = service.getValorCuentas().intValue();				
-				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));				
-				display = "inline";
-				display1 = "none";
-				display2 = "inline";
-				display3 = "none";
-				display4 = "none";				
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));												
 				archivo = null;
 				if(cuentasPendientes>0) {
 					disabled=false;
@@ -113,33 +93,18 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
 			String f = format.format(fecha);
 			archivo = "REPORTE_REINVERSION_" + f;
-			cuentasPendientes = null;
-			display = "none";
-			display1 = "none";
-			display2 = "inline";
-			display3 = "inline";
-			display4 = "inline";
+			cuentasPendientes = null;			
 			disabled=false;
 		}
 		if (radioSelected.equals("3")) {
-			cuentasPendientes = null;
-			display = "none";
-			display1 = "none";
-			display2 = "inline";
-			display3 = "none";
-			display4 = "none";			
+			cuentasPendientes = null;						
 			disabled=false;
 		}
 		if (radioSelected.equals("4")) {
 			SimpleDateFormat format = new SimpleDateFormat("ddMMyyyy");
 			String fI = format.format(fechaI);
 			String fF = format.format(fechaF);
-			cuentasPendientes = null;
-			display = "none";
-			display1 = "inline";
-			display2 = "none";
-			display3 = "inline";
-			display4 = "inline";			
+			cuentasPendientes = null;						
 			archivo = "REPORTE_CANCELADAS_" + fI + "_" + fF + ".xls";
 		}
 	}

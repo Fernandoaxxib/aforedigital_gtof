@@ -82,7 +82,7 @@
 				<p:commandButton value="Aceptar"
 					actionListener="#{reinversionModDesVentas.opcionSeleccionada2}"
 					oncomplete="PF('dlg2').hide();"
-					update="form:vLote form:fecha form:detalleLotes"
+					update="form:vLote form:fecha form:detalleLotes form:btnVenta form:btnGenerar"
 					styleClass="blue ui-button-text" />
 				<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
 					styleClass="blue ui-button-text" style="margin-left:13px" />
@@ -103,7 +103,7 @@
 								inputStyle="width:100px; text-align:right;" readonlyInput="true">
 								<p:ajax event="dateSelect"
 									listener="#{reinversionModDesVentas.selectLote}"
-									update="form:vLote form:detalleLotes form:detalleLotes:idMonto form:detalleLotes:idAcciones" />
+									update="form:vLote form:detalleLotes form:detalleLotes:idMonto form:detalleLotes:idAcciones form:btnVenta form:btnGenerar" />
 							</p:datePicker>
 						</p:column>
 						<p:column>
@@ -119,15 +119,17 @@
 								oncomplete="PF('dlg2').show();" />
 						</p:column>
 						<p:column>
-							<p:commandButton styleClass="blue" value="Generar Reporte"
-								action="#{reinversionModDesVentas.generarReporte}"
-								update="form:vLote form:fecha form:result" oncomplete="" />
-						</p:column>
-						<p:column>
-							<p:commandButton styleClass="blue" value="Venta"
+							<p:commandButton id="btnVenta" styleClass="blue" value="Venta"
 								action="#{reinversionModDesVentas.vender}"
+								disabled="#{reinversionModDesVentas.disabled}"
 								update="form:vLote form:fecha form:result" oncomplete="" />
 						</p:column>
+						<p:column>					
+							<p:commandButton id="btnGenerar" styleClass="blue" value="Generar Reporte"
+								action="#{reinversionModDesVentas.generarReporte}"
+								disabled="#{reinversionModDesVentas.disabled}"
+								update="form:vLote form:fecha form:result" oncomplete="" />
+						</p:column>						
 					</p:row>
 				</p:panelGrid>
 

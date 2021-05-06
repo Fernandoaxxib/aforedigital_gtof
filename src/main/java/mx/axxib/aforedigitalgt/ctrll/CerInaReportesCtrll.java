@@ -40,24 +40,33 @@ public class CerInaReportesCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Date fechaFin;
-
-	@Getter
-	private String disabled;
-	
-	@Getter
-	private String disabled2;
 	
 	@Getter
 	private Date fecActual;
 	
+	@Getter
+	@Setter
+	private Date fecha;
 	
+	@Getter
+	private String display;
+	@Getter
+	private String display2;
+	@Getter
+	private boolean disabled;	
+	@Getter
+	private boolean disabled2;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			reset();
-			fecActual=DateUtil.getNowDate();			
+			fecActual=DateUtil.getNowDate();	
+			display="inline";
+			display2="none";
+			disabled=true;
+			disabled2=true;
 		}
 	}
 
@@ -66,7 +75,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		if (radioSelected != null) {
 			if (radioSelected.equals("1") || radioSelected.equals("2") || radioSelected.equals("3")	|| radioSelected.equals("4")) {
-				if (fechaInicio != null) {
+				if (fecha != null) {
 					switch (radioSelected) {
 					case "1":
 						pr.setDescProceso("Reporte de mensualidades");
@@ -83,7 +92,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 					}
 					
 					try {						
-						ReporteOut resp = service.procesarReporte(fechaInicio, fechaFin, radioSelected);
+						ReporteOut resp = service.procesarReporte(fecha, fechaFin, radioSelected);
 						if(resp.getOn_Estatus()==1) {							
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));						
 						}else {
@@ -100,7 +109,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 						resultados.add(pr);
 					}
 				} else {
-					UIInput radio = (UIInput) findComponent("dfini");
+					UIInput radio = (UIInput) findComponent("idFecha");
 					radio.setValid(false);
 					pr.setDescProceso("Debe seleccionar una fecha");
 					pr.setStatus("Selección requerida");
@@ -171,48 +180,71 @@ public class CerInaReportesCtrll extends ControllerBase {
 		}
 	}
 
-	public void radioSelected() {		
-		disabled="false";
+	public void radioSelected() {
+		disabled2=false;
+		UIInput fechaI = (UIInput) findComponent("dfini"); 
+		fechaI.setValid(true);										
+		UIInput fechaF = (UIInput) findComponent("dffin");
+		fechaF.setValid(true);	
+		UIInput fecha = (UIInput) findComponent("idFecha");
+		fecha.setValid(true);	
+		
 		switch (radioSelected) {
-
 		case "1":
-			this.disabled2 = "true";
-			this.fechaInicio = null;
-			this.fechaFin = null;			
-			break;
-
-		case "2":
-			this.disabled2 = "true";
 			this.fechaInicio = null;
 			this.fechaFin = null;
+			this.fecha=null;
+			display="none";
+			display2="inline";
+			disabled=true;			
+			break;
+
+		case "2":			
+			this.fechaInicio = null;
+			this.fechaFin = null;
+			this.fecha=null;
+			display="none";
+			display2="inline";
+			disabled=true;
 			break;
 
 		case "3":
-			this.disabled2 = "true";
 			this.fechaInicio = null;
 			this.fechaFin = null;
+			this.fecha=null;
+			display="none";
+			display2="inline";
+			disabled=true;
 			break;
 
-		case "4":
-			this.disabled2 = "true";
+		case "4":			
 			this.fechaInicio = null;
 			this.fechaFin = null;
+			this.fecha=null;
+			display="none";
+			display2="inline";
+			disabled=true;
 			break;
 
-		case "5":
-			this.disabled2 = "false";
+		case "5":			
 			this.fechaInicio = null;
 			this.fechaFin = null;
+			this.fecha=null;
+			display="inline";
+			display2="none";
+			disabled=false;
 			break;
 
-		case "6":
-			this.disabled2 = "false";
+		case "6":					
 			this.fechaInicio = null;
 			this.fechaFin = null;
+			this.fecha=null;
+			display="inline";
+			display2="none";
+			disabled=false;
 			break;
 
-		default:
-			this.disabled2 = "true";
+		default:			
 			break;
 
 		}
@@ -222,8 +254,14 @@ public class CerInaReportesCtrll extends ControllerBase {
 	public void opcionSeleccionada() {
 
 		if (radioSelected != null) {
+			String f=null;
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-			String f = format.format(fechaInicio);
+			if(radioSelected.equals("5")||radioSelected.equals("6")) {
+				f = format.format(fechaInicio);
+			}else {
+				f = format.format(fecha);
+			}
+			
 
 			switch (radioSelected) {
 
@@ -260,11 +298,11 @@ public class CerInaReportesCtrll extends ControllerBase {
 	}
 
 	public void reset() {
-		disabled = "true";
-		disabled2= "true";
+		display="inline";
 		ruta = "/RESPALDOS/operaciones";
 		fechaInicio = null;
 		fechaFin = null;
+		fecha=null;
 		archivo = null;		
 		radioSelected = null;
 	}

@@ -26,14 +26,15 @@
 				includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP84}">
 				<f:param name="init" value="true" />
 			</p:linkButton>
-			<p:linkButton styleClass="green" outcome="/web/retParImssOP8586.jsf"
-				includeViewParams="true" value="#{msg.retPar_imss_op84_btnOP8586}">
+			<p:linkButton styleClass="green" style="margin-left:13px"
+				outcome="/web/retParImssOP8586.jsf" includeViewParams="true"
+				value="#{msg.retPar_imss_op84_btnOP8586}">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 		</h:form>
 	</ui:define>
 
-	<ui:define name="center">		
+	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
@@ -77,7 +78,7 @@
 
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width: 60px;padding-left: 0px !important">
+								<p:column style="width: 89px;padding-left: 0px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
 								</p:column>
 								<p:column class="outputlabel-shadow"
@@ -98,7 +99,7 @@
 							</p:row>
 						</p:panelGrid>
 						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: right; width: 100%">
+							<div class="ui-g-12" style="text-align: right; width: 96%">
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
 									value="#{msg.retPar_imss_op8586_btnGenerar85}"
 									action="#{retParImssOP8586.generarOP85}" update="form:result"
@@ -109,7 +110,7 @@
 					<p:panel header="Carga respuesta OP86">
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width: 60px;padding-left: 0px !important">
+								<p:column style="width: 89px;padding-left: 0px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
 								</p:column>
 								<p:column class="outputlabel-shadow"
@@ -120,17 +121,17 @@
 						</p:panelGrid>
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:50px;padding-left: 0px !important">
+								<p:column style="width:79px;padding-left: 0px !important">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
 								</p:column>
 								<p:column>
 									<p:inputText id="idArchivo2"
-										value="#{retParImssOP8586.archivo2}" style="width:303px" />
+										value="#{retParImssOP8586.archivo2}" style="width:305px" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
 						<div class="ui-g">
-							<div class="ui-g-12" style="text-align: right; width: 94%">
+							<div class="ui-g-12" style="text-align: right; width: 93%">
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
 									value="#{msg.retPar_imss_op8586_btnCargar86}"
 									action="#{retParImssOP8586.cargarOP86}"
@@ -162,8 +163,8 @@
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									maxdate="#{retParImssOP8586.today}" yearNavigator="true"
 									monthNavigator="true"
-									inputStyle="width:120px; text-align:right;"
-									readonlyInput="true" disabled="#{retParImssOP8586.disabled1}">
+									inputStyle="width:90px; text-align:right;" readonlyInput="true"
+									disabled="#{retParImssOP8586.disabled1}">
 									<p:ajax event="dateSelect"
 										listener="#{retParImssOP8586.limpiar}" update="vLote" />
 								</p:datePicker>
@@ -176,8 +177,8 @@
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									maxdate="#{retParImssOP8586.today}" yearNavigator="true"
 									monthNavigator="true"
-									inputStyle="width:120px; text-align:right;"
-									readonlyInput="true" disabled="#{retParImssOP8586.disabled2}" />
+									inputStyle="width:90px; text-align:right;" readonlyInput="true"
+									disabled="#{retParImssOP8586.disabled2}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -213,7 +214,7 @@
 								<p:outputLabel value="#{msg.retPar_imss_op8586_lblRuta}" />
 							</p:column>
 							<p:column class="outputlabel-shadow"
-								style="width:368px; height:17px !important">
+								style="width:363px; height:17px !important">
 								<p:outputLabel value="#{retParImssOP8586.ruta3}" />
 							</p:column>
 						</p:row>
@@ -226,7 +227,7 @@
 							<p:column>
 								<p:inputText id="idArchivo3"
 									disabled="#{retParImssOP8586.disabled5}"
-									value="#{retParImssOP8586.archivo3}" style="width:382px" />
+									value="#{retParImssOP8586.archivo3}" style="width:376px" />
 							</p:column>
 							<p:column>
 								<p:commandButton id="btnGenerar" styleClass="blue" type="submit"
