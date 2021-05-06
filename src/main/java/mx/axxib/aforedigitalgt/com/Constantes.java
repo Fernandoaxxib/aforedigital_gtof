@@ -147,6 +147,9 @@ public class Constantes {
 	public static final String VALORES_UMA_PACKAGE = "PKG_RET_FOVALUMA";
 	public static final String VALORES_UMA_VALORES = "PRC_CAT_UMA";
 	public static final String VALORES_UMA_GENERAR_REPORTE = "PRC_GENERA_REPORTE";
+	public static final String VALORES_UMA_INSERTAR_UMA = "PRC_SALARIO_UMA_INSERT";
+	public static final String VALORES_UMA_ACTUALIZAR_UMA = "PRC_SALARIO_UMA_UPD";
+	public static final String VALORES_UMA_ELIMINAR_UMA = "PRC_DELETE_UMA";
 
 	// Diagnóstico de la cuenta individual FOREPMAR
 	public static final String DIAGNOSTICO_CUENTA_PACKAGE = "PKG_RET_FOREPMAR";

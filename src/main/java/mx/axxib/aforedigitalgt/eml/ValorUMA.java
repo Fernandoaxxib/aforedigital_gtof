@@ -9,12 +9,10 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
 @SqlResultSetMappings({
@@ -32,14 +30,18 @@ import lombok.NoArgsConstructor;
 })
 
 public class ValorUMA {
+	public ValorUMA(BigDecimal monto, String user, Date fecha, Date fechaUltAct) {
+		super();
+		this.monto = monto;
+		this.user = user;
+		this.fecha = fecha;
+		this.fechaUltAct = fechaUltAct;
+	}
+	
 	private BigDecimal monto;
 	private String user;
-	private Date fechaActual;
+	private Date fecha;
 	private Date fechaUltAct;
+	private Date fechaNueva;
 }
 
-//MONTO_DIARIO
-//FECHA_ACTUAL
-//FECHA_MAX
-//USER_ID
-//ERROR

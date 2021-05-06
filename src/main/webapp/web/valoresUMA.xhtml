@@ -14,7 +14,7 @@
 
 	<ui:define name="center">
 
-		<p:panelGrid width="100%" styleClass="ui-noborder no-padding" >
+		<p:panelGrid width="100%" styleClass="ui-noborder no-padding">
 			<p:row>
 				<p:column style="width:400px">
 					<ui:include src="menu.xhtml" />
@@ -27,54 +27,8 @@
 
 
 		<h:form id="form">
-			<p:dialog id="dlg" header="Valor UMA" appendTo="@(body)"
-				widgetVar="dlg" modal="true" resizable="false">
-
-				<p:panelGrid id="dGrid" styleClass="ui-noborder">
-					<p:row>
-						<p:column colspan="2">
-							<p:outputLabel value="#{valorUMA.mensaje}" styleClass="etiqueta" />
-						</p:column>
-					</p:row>
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Valor UMA: " />
-						</p:column>
-						<p:column>
-							<p:inputText id="valorUMA" value="#{valorUMA.valorUMA}"
-								maxlength="11" style="width:150px"></p:inputText>
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column>
-							<p:outputLabel value="Fecha UMA: " />
-						</p:column>
-						<p:column>
-							<p:datePicker id="fechaUMA"
-								inputStyle="width:120px; text-align:right;" yearNavigator="true"
-								monthNavigator="true" value="#{valorUMA.fechaUMA}"
-								showIcon="true" locale="es" pattern="dd-MM-yyyy"
-								readonlyInput="true" />
-						</p:column>
-					</p:row>
-				</p:panelGrid>
-
-
-				<p:outputPanel style="margin-top:20px;text-align:right">
-					<p:commandButton value="Guardar" action="#{valorUMA.guardar}"
-						update="tabla result" oncomplete="PF('dlg').hide();"
-						styleClass="blue" />
-					<p:commandButton value="Cerrar" onclick="PF('dlg').hide();"
-						update="tabla result" styleClass="blue" style="margin-left:13px" />
-				</p:outputPanel>
-			</p:dialog>
-
-
 			<p:panel header="VALORES UMA" style="margin-top:10px">
-
-				<p:panelGrid id="grid" styleClass="ui-noborder" >
-
+				<p:panelGrid id="grid" styleClass="ui-noborder">
 					<p:row>
 						<p:column style="width:250px">
 						</p:column>
@@ -90,7 +44,7 @@
 								</p:column>
 
 								<p:column headerText="Fecha UMA">
-									<h:outputText value="#{val.fechaActual}" style="float:right">
+									<h:outputText value="#{val.fecha}" style="float:right">
 										<f:convertDateTime pattern="dd-MM-yyyy" />
 									</h:outputText>
 								</p:column>
@@ -111,43 +65,46 @@
 
 									<f:facet name="header">
 										<p:commandButton styleClass="botonEdicion"
-											action="#{valorUMA.nuevo}" update="form:dGrid"
+											actionListener="#{valorUMA.nuevo}"
+											update="formDlg:mensaje formDlg:valorUMA formDlg:fechaUMA"
 											icon="ui-icon ui-icon-plus" title="Nuevo"
-											onclick="PF('dlg').show();"></p:commandButton>
+											oncomplete="PF('dlg').show();"></p:commandButton>
 									</f:facet>
 									<p:commandButton styleClass="botonEdicion"
-										update="form:tabla form:result" icon="ui-icon ui-icon-pencil"
-										title="Editar" action="#{valorUMA.editar(val)}"></p:commandButton>
+										update="formDlg:mensaje formDlg:valorUMA formDlg:fechaUMA"
+										icon="ui-icon ui-icon-pencil" title="Editar"
+										actionListener="#{valorUMA.editar(val)}"
+										oncomplete="PF('dlg').show();"></p:commandButton>
 
 									<p:commandButton styleClass="botonEdicion"
 										update="form:tabla form:result" icon="ui-icon ui-icon-trash"
-										title="Borrar" action="#{valorUMA.borrar(val)}"></p:commandButton>
+										title="Borrar" oncomplete="PF('confirmDelete').show();"
+										actionListener="#{valorUMA.borrar(val)}"></p:commandButton>
 
 
 								</p:column>
 							</p:dataTable>
 
 
-							<p:confirmDialog id="confirmDialog" appendTo="@(body)"
-								message="¿Desea continuar?" header="Confirmar"
-								widgetVar="confirmDelete" modal="true">
-								<p:panel style="border:0px !important;text-align:center">
+							<p:confirmDialog appendTo="@(body)" message="¿Desea continuar?"
+								header="Borrar valor UMA" widgetVar="confirmDelete" modal="true">
+
+								<p:outputPanel style="text-align:center">
 									<p:commandButton value="Si" update="form:grid form:result"
-										class="blue" actionListener="#{valorUMA.eliminar}"
+										class="blue" actionListener="#{valorUMA.guardar}"
 										oncomplete="PF('confirmDelete').hide();" />
 									<p:commandButton value="No" class="blue"
 										onclick="PF('confirmDelete').hide();" type="button" />
-								</p:panel>
-
+								</p:outputPanel>
 							</p:confirmDialog>
 
 						</p:column>
 
 					</p:row>
 					<p:row>
-						<p:column >
+						<p:column>
 						</p:column>
-						<p:column >
+						<p:column>
 							<p:panelGrid id="pGrid" styleClass="ui-noborder">
 
 								<p:row>
@@ -186,6 +143,58 @@
 
 
 		</h:form>
+
+
+		<p:dialog header="Valor UMA" appendTo="@(body)" widgetVar="dlg"
+			modal="true" resizable="false">
+			<h:form id="formDlg">
+				<p:messages autoUpdate="true" />
+				<p:panelGrid id="dGrid" styleClass="ui-noborder">
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel id="mensaje" value="#{valorUMA.mensaje}"
+								styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Valor UMA: " />
+						</p:column>
+						<p:column>
+							<p:inputText id="valorUMA" value="#{valorUMA.valorUMA}"
+								maxlength="11" style="width:150px;text-align:right;"></p:inputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha UMA: " />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fechaUMA"
+								inputStyle="width:120px; text-align:right;" yearNavigator="true"
+								monthNavigator="true" value="#{valorUMA.fechaUMA}"
+								showIcon="true" locale="es" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Guardar"
+						actionListener="#{valorUMA.guardar}"
+						oncomplete="PF('dlg').hide();" update="form:tabla form:result"
+						styleClass="blue" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg').hide();"
+						update="form:tabla form:result" styleClass="blue"
+						style="margin-left:13px" />
+
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
 
 	</ui:define>
 

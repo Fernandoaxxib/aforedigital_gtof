@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
@@ -19,6 +21,7 @@ import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMA;
+import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 import mx.axxib.aforedigitalgt.serv.ValorUMAServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
@@ -28,6 +31,9 @@ import mx.axxib.aforedigitalgt.util.ValidateUtil;
 @ELBeanName(value = "valorUMA")
 public class ValorUMACtrll extends ControllerBase {
 
+	@Autowired
+	HikariDataSource dataSource;
+	
 	@Autowired
 	private ValorUMAServ valorUMAService;
 
@@ -45,18 +51,31 @@ public class ValorUMACtrll extends ControllerBase {
 	@Getter
 	private List<ValorUMA> valores;
 	
-	@Getter
-	@Setter
+
 	private String valorUMA;
 	
+	public String getValorUMA() {
+		return valorUMA;
+	}
+
+
+
+
+	public void setValorUMA(String valorUMA) {
+		this.valorUMA = valorUMA;
+	}
+
 	@Getter
 	@Setter
 	private Date fechaUMA;
 	
 	@Getter
+	private ValorUMA seleccionado;
+	
+	@Getter
 	private String mensaje;
 	
-	private int modo; //0=no definido, 1=nuevo, 2=edicion
+	private int modo; //0=no definido, 1=nuevo, 2=edicion 3=eliminar
 	
 	private ProcessResult prG;
 
@@ -82,6 +101,7 @@ public class ValorUMACtrll extends ControllerBase {
 	
 	
 	public void nuevo() {
+		seleccionado = null;
 		mensaje = "Nuevo valor UMA";
 		modo = 1;
 		prG = new ProcessResult();
@@ -91,15 +111,27 @@ public class ValorUMACtrll extends ControllerBase {
 		fechaUMA = null;
 	}
 	
+	public void editar(ValorUMA valor) {
+		seleccionado = valor;
+		mensaje = "Editar valor UMA";
+		modo = 2;
+		prG = new ProcessResult();
+		prG.setFechaInicial(DateUtil.getNowDate());
+		prG.setDescProceso("Editar valor UMA");
+		valorUMA = valor.getMonto().toString();
+		fechaUMA = valor.getFecha();
+	}
+	
+	public void borrar(ValorUMA valor) {
+		seleccionado = valor;
+		modo = 3;
+		prG = new ProcessResult();
+		prG.setFechaInicial(DateUtil.getNowDate());
+		prG.setDescProceso("Borrar valor UMA");
+	}
+	
 	public void guardar() {
-		if(modo == 1) {
-			if (fechaUMA == null) {
-				UIInput fini = (UIInput) findComponent("fechaUMA");
-				fini.setValid(false);
-				prG.setStatus("Fecha UMA es requerida");
-				resultados.add(prG);
-				return;
-			}
+		if(modo == 1 || modo == 2) {
 			
 			if(!ValidateUtil.isDouble(valorUMA)) {
 				UIInput fini = (UIInput) findComponent("valorUMA");
@@ -109,36 +141,111 @@ public class ValorUMACtrll extends ControllerBase {
 				return;
 			}
 			
-			insertar();
+			if (fechaUMA == null) {
+				UIInput fini = (UIInput) findComponent("fechaUMA");
+				fini.setValid(false);
+				prG.setStatus("Fecha UMA es requerida");
+				resultados.add(prG);
+				return;
+			}			
 		}
 		
+		if(modo==1) {
+			insertar();
+		} else if(modo==2) {
+			actualizar();
+		} else if(modo==3) {
+			eliminar();
+		}
 	}
 	
 	private void insertar() {
-		System.out.println("guardado");
-		prG.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-		resultados.add(prG);
+		try {
+			ValorUMA parametros = new ValorUMA();
+			parametros.setFecha(fechaUMA);
+			parametros.setMonto(new BigDecimal (valorUMA));
+			parametros.setUser(dataSource.getUsername());
+			BaseOut res = valorUMAService.insertarUMA(parametros );
+			if (res.getEstatus() == 1) {
+				
+				prG.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				ValorUMAOut val = valorUMAService.getValoresUMA();
+				if (val.getEstatus() == 1) {
+					valores = val.getValores();
+				}
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					prG.setStatus(res.getMensaje());
+				}
+			}
+		} catch (Exception e) {
+			prG = GenericException(e);
+		} finally {
+			prG.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(prG);
+		}
+
 	}
 
 
-	public void editar(ValorUMA valor) {
-		//valores.remove(valor);
-		ProcessResult pr = new ProcessResult();
-		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Editar");
-		pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-		resultados.add(pr);
+	private void actualizar() {
+		try {
+			seleccionado.setMonto(new BigDecimal(valorUMA));
+			//if(fechaUMA.compareTo(seleccionado.getFecha()) != 0)
+				seleccionado.setFechaNueva(fechaUMA);
+			BaseOut res = valorUMAService.actualizarUMA(seleccionado);
+			if (res.getEstatus() == 1) {
+				
+				prG.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				ValorUMAOut val = valorUMAService.getValoresUMA();
+				if (val.getEstatus() == 1) {
+					valores = val.getValores();
+				}
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					prG.setStatus(res.getMensaje());
+				}
+			}
+		} catch (Exception e) {
+			prG = GenericException(e);
+		} finally {
+			prG.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(prG);
+		}
+	}
+	
+
+	private void eliminar() {
+		try {
+			BaseOut res = valorUMAService.eliminarUMA(seleccionado);
+			if (res.getEstatus() == 1) {
+				
+				prG.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				ValorUMAOut val = valorUMAService.getValoresUMA();
+				if (val.getEstatus() == 1) {
+					valores = val.getValores();
+				}
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					prG.setStatus(res.getMensaje());
+				}
+			}
+		} catch (Exception e) {
+			prG = GenericException(e);
+		} finally {
+			prG.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(prG);
+		}
 	}
 
 	
-	public void borrar(ValorUMA valor) {
-		valores.remove(valor);
-		ProcessResult pr = new ProcessResult();
-		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Eliminar");
-		pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-		resultados.add(pr);
-	}
+
 	
 	
 
@@ -148,40 +255,40 @@ public class ValorUMACtrll extends ControllerBase {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Obtener valores UMA");
 
-			ValorUMA v1 = new ValorUMA();
-			v1.setUser("User1");
-			v1.setMonto(new BigDecimal(10));
-			v1.setFechaActual(new Date());
-			v1.setFechaUltAct(new Date());
+//			ValorUMA v1 = new ValorUMA();
+//			v1.setUser("User1");
+//			v1.setMonto(new BigDecimal(10));
+//			v1.setFecha(new Date());
+//			v1.setFechaUltAct(new Date());
+//
+//			ValorUMA v2 = new ValorUMA();
+//			v2.setUser("User2");
+//			v2.setMonto(new BigDecimal(11));
+//			v2.setFecha(new Date());
+//			v2.setFechaUltAct(new Date());
+//
+//			ValorUMA v3 = new ValorUMA();
+//			v3.setUser("User3");
+//			v3.setMonto(new BigDecimal(12));
+//			v3.setFecha(new Date());
+//			v3.setFechaUltAct(new Date());
+//
+//			valores.add(v1);
+//			valores.add(v2);
+//			valores.add(v3);
 
-			ValorUMA v2 = new ValorUMA();
-			v2.setUser("User2");
-			v2.setMonto(new BigDecimal(11));
-			v2.setFechaActual(new Date());
-			v2.setFechaUltAct(new Date());
 
-			ValorUMA v3 = new ValorUMA();
-			v3.setUser("User3");
-			v3.setMonto(new BigDecimal(12));
-			v3.setFechaActual(new Date());
-			v3.setFechaUltAct(new Date());
-
-			valores.add(v1);
-			valores.add(v2);
-			valores.add(v3);
-
-//			String usuario = "USER1"; // TODO: revisar qué usuario se debe enviar en la versión final
-//			ValorUMAOut res = valorUMAService.getValorUMA(usuario);
-//			if (res.getEstatus() == 1) {
-//				valores = res.getValores();
+			ValorUMAOut res = valorUMAService.getValoresUMA();
+			if (res.getEstatus() == 1) {
+				valores = res.getValores();
 				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-//			} else {
-//				if (res.getEstatus() == 2) {
-//					GenerarErrorNegocio(res.getMensaje());
-//				} else if (res.getEstatus() == 0) {
-//					pr.setStatus(res.getMensaje());
-//				}
-//			}
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					pr.setStatus(res.getMensaje());
+				}
+			}
 		} catch (Exception e) {
 			pr = GenericException(e);
 		} finally {

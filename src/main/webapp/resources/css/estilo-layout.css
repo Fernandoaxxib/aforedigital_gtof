@@ -183,7 +183,13 @@
 
 #centro, #izquierdo {
 	background: transparent !important;
+	
 }
+
+#izquierdo{
+ 	margin-left:5px !important;
+}
+
 
 #menu { /*transparencia layout*/
 	background: transparent;
