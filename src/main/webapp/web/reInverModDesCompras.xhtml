@@ -42,23 +42,25 @@
 
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
-		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
-			appendTo="@(body)" widgetVar="dlg2" modal="true" width="50%"
-			resizable="false" style="margin-top:20px">
+		<p:dialog id="dlg1" styleClass="styleWhite" appendTo="@(body)"
+			widgetVar="dlg2" modal="true" width="50%" resizable="false"
+			style="margin-top:20px">
 
 			<p:dataTable var="registro"
 				value="#{reinversionModDesCompras.listLotes}" scrollable="true"
 				scrollHeight="250" selectionMode="single"
 				selection="#{reinversionModDesCompras.selectedLote}"
-				rowKey="#{registro.id_lote}" styleClass="gridCell-green"
-				style="padding-bottom:10px">
+				emptyMessage="Sin información" rowKey="#{registro.id_lote}"
+				styleClass="styleTable2" style="padding-bottom:10px;border:0px">
+				
 				<p:ajax process="@this" event="rowSelect"
 					listener="#{reinversionModDesCompras.onRowSelect}" />
 
 				<f:facet name="header">
-					<p:outputPanel style="text-align:left;margin-top:10px;">
-						<h:outputLabel style="font-weight:normal;"
-							value="Seleccione el lote de su interés" />
+					<p:outputPanel style="text-align:center;margin-bottom:20px">
+						<h:outputLabel
+							style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+							value="LISTA DE LOTES" />
 					</p:outputPanel>
 				</f:facet>
 
@@ -86,7 +88,7 @@
 			</p:outputPanel>
 		</p:dialog>
 		<h:form id="form">
-			<p:panel id="pnl1" header="Compras" >
+			<p:panel id="pnl1" header="Compras">
 				<p:panelGrid styleClass="ui-noborder">
 					<p:row>
 						<p:column>
@@ -115,18 +117,19 @@
 								update="dlg1 form:vLote form:fecha"
 								oncomplete="PF('dlg2').show();" />
 						</p:column>
-						
+
 						<p:column>
-							<p:commandButton id="btnComprar" styleClass="blue" value="Compra"							    
+							<p:commandButton id="btnComprar" styleClass="blue" value="Compra"
 								action="#{reinversionModDesCompras.comprar}"
 								disabled="#{reinversionModDesCompras.disabled}"
-								update="form:vLote form:fecha form:result"  />
+								update="form:vLote form:fecha form:result" />
 						</p:column>
 						<p:column>
-							<p:commandButton id="btnGenerar" styleClass="blue" value="Generar Reporte"
+							<p:commandButton id="btnGenerar" styleClass="blue"
+								value="Generar Reporte"
 								action="#{reinversionModDesCompras.generarReporte}"
 								disabled="#{reinversionModDesCompras.disabled}"
-								update="form:vLote form:fecha form:result"  />
+								update="form:vLote form:fecha form:result" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

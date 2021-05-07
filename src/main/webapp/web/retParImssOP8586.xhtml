@@ -37,12 +37,23 @@
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
-		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
-			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
-			resizable="false" style="font-size:12px">
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" style="font-size:12px"
+			styleClass="styleWhite">
+
 			<p:dataTable var="registro" value="#{retParImssOP8586.listLotes}"
 				selectionMode="single" selection="#{retParImssOP8586.selectedLote}"
-				rowKey="#{registro.ID_LOTE}" style="padding-bottom:10px">
+				emptyMessage="Sin información" rowKey="#{registro.ID_LOTE}"
+				style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+				<f:facet name="header">
+					<p:outputPanel style="text-align:center;margin-bottom:20px">
+						<h:outputLabel
+							style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+							value="LISTA DE LOTES" />
+					</p:outputPanel>
+				</f:facet>
+
 				<p:ajax process="@this" event="rowSelect"
 					listener="#{retParImssOP8586.onRowSelect}" />
 

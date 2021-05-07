@@ -33,21 +33,23 @@
 			</p:linkButton>
 		</h:form>
 	</ui:define>
-	
+
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
-		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
-			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
-			resizable="false" style="font-size:12px">
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite"
+			style="font-size:12px">
 
 			<p:dataTable var="registro" value="#{retParImssOP84.listLotes}"
 				selectionMode="single" selection="#{retParImssOP84.selectedLote}"
-				rowKey="#{registro.ID_LOTE}" style="padding-bottom:10px">
+				rowKey="#{registro.ID_LOTE}" emptyMessage="Sin información"
+				style="padding-bottom:10px;border:0px" styleClass="styleTable2">
 
 				<f:facet name="header">
-					<p:outputPanel style="text-align:left;margin-top:10px;">
-						<h:outputLabel style="font-weight:normal;"
-							value="Seleccione el lote de su interés" />
+					<p:outputPanel style="text-align:center;margin-bottom:20px">
+						<h:outputLabel
+							style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+							value="LISTA DE LOTES" />
 					</p:outputPanel>
 				</f:facet>
 
@@ -134,8 +136,8 @@
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									maxdate="#{retParImssOP84.today}" yearNavigator="true"
 									monthNavigator="true"
-									inputStyle="width:90px; text-align:right;"
-									readonlyInput="true" disabled="#{retParImssOP84.disabled1}">
+									inputStyle="width:90px; text-align:right;" readonlyInput="true"
+									disabled="#{retParImssOP84.disabled1}">
 									<p:ajax event="dateSelect" global="false"
 										listener="#{retParImssOP84.limpiar}" />
 								</p:datePicker>
@@ -148,8 +150,8 @@
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
 									maxdate="#{retParImssOP84.today}" yearNavigator="true"
 									monthNavigator="true"
-									inputStyle="width:90px; text-align:right;"
-									readonlyInput="true" disabled="#{retParImssOP84.disabled2}" />
+									inputStyle="width:90px; text-align:right;" readonlyInput="true"
+									disabled="#{retParImssOP84.disabled2}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -157,8 +159,7 @@
 						<p:row>
 							<p:column>
 								<p:selectOneRadio id="customRadio2"
-									value="#{retParImssOP84.radioSelected2}"
-									style="width:100px"
+									value="#{retParImssOP84.radioSelected2}" style="width:100px"
 									unselectable="#{retParImssOP84.seleccion2}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP84.radioSelected2}"
@@ -170,10 +171,10 @@
 							<p:column>
 								<p:outputPanel id="vLote" class="outputlabel-shadow"
 									style="padding-top:5px;width:285px;height:17px !important;border:#{retParImssOP84.border}">
-									<p:outputLabel  value="#{retParImssOP84.lote}" />
+									<p:outputLabel value="#{retParImssOP84.lote}" />
 								</p:outputPanel>
 							</p:column>
-							<p:column>		
+							<p:column>
 								<p:commandButton id="btnC" styleClass="blue" style="width:35px"
 									value="..." action="#{retParImssOP84.getLotes}"
 									disabled="#{retParImssOP84.disabled4}"

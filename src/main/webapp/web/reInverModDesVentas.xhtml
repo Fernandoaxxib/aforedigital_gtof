@@ -41,26 +41,28 @@
 		</h:form>
 	</ui:define>
 
-	<ui:define name="center">		
+	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
-		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
+		<p:dialog id="dlg1" styleClass="styleWhite" style="margin-top:20px"
 			appendTo="@(body)" widgetVar="dlg2" modal="true" width="50%"
-			resizable="false" style="margin-top:20px">
+			resizable="false">
 
 			<p:dataTable var="registro"
 				value="#{reinversionModDesVentas.listLotes}" scrollable="true"
 				scrollHeight="250" selectionMode="single"
 				selection="#{reinversionModDesVentas.selectedLote}"
-				rowKey="#{registro.id_lote}" styleClass="gridCell-green"
-				style="padding-bottom:10px">
+				rowKey="#{registro.id_lote}" styleClass="styleTable2"
+				style="padding-bottom:10px;border:0px">
+				
 				<p:ajax process="@this" event="rowSelect"
 					listener="#{reinversionModDesVentas.onRowSelect}" />
 
 				<f:facet name="header">
-					<p:outputPanel style="text-align:left;margin-top:10px;">
-						<h:outputLabel style="font-weight:normal;"
-							value="Seleccione el lote de su interés" />
+					<p:outputPanel style="text-align:center;margin-bottom:20px">
+						<h:outputLabel
+							style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+							value="LISTA DE LOTES" />
 					</p:outputPanel>
 				</f:facet>
 
@@ -124,12 +126,13 @@
 								disabled="#{reinversionModDesVentas.disabled}"
 								update="form:vLote form:fecha form:result" oncomplete="" />
 						</p:column>
-						<p:column>					
-							<p:commandButton id="btnGenerar" styleClass="blue" value="Generar Reporte"
+						<p:column>
+							<p:commandButton id="btnGenerar" styleClass="blue"
+								value="Generar Reporte"
 								action="#{reinversionModDesVentas.generarReporte}"
 								disabled="#{reinversionModDesVentas.disabled}"
 								update="form:vLote form:fecha form:result" oncomplete="" />
-						</p:column>						
+						</p:column>
 					</p:row>
 				</p:panelGrid>
 
