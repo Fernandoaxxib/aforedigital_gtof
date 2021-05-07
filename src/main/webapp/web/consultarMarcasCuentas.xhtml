@@ -144,18 +144,18 @@
 										<h:outputText value="#{pro.ESTADO}" />
 									</p:column>
 									
-									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_estado}" style="width:100px;text-align: center;">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_desc_estado}" style="width:100px;text-align: left;">
 										<h:outputText value="#{pro.DESC_ESTADO}" />
 									</p:column>
 				
-									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}" style="width:70px;text-align: center;">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_ini}" style="width:70px;text-align: right;">
 										<h:outputText value="#{pro.FECHA_INICIO}">
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 										</h:outputText>
 									</p:column>
-									<p:column headerText="#{msg.consultar_traspasos_icefas_fecha_fin}" style="width:70px;text-align: center;">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_fecha_fin}" style="width:70px;text-align: right;">
 										<h:outputText value="#{pro.FECHA_FIN}">
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 										</h:outputText>
 									</p:column>
 									  <p:column  align="center" style="width:20px;">
@@ -179,7 +179,7 @@
 									</p:column>
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_inclusion}" style="width:20px;text-align: center;">
 										<h:outputText value="#{pro.FEC_INCLUSION}">
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 										</h:outputText>
 									</p:column>
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_mod_por}" style="width:50px;text-align: center;">
@@ -187,7 +187,7 @@
 									</p:column>
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_mod}" style="width:20px;text-align: center;">
 										<h:outputText value="#{pro.FEC_MODIFICACION}">
-											<f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+											<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 										</h:outputText>
 									</p:column>
 						

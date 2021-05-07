@@ -93,7 +93,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		super.iniciar();
 		if(init) {
 		idUsuario=null;
-		insertUsuario=null;
+		insertUsuario="";
 		fechaCalendario=null;
 		montoDiario=null;
 		fechaIni=null;
@@ -188,13 +188,13 @@ public class SalarioMinimoCtrll extends ControllerBase {
     public void onAddNew() {
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Guardar Nuevo Usuario");
+		pr.setDescProceso("Agregar Nuevo Usuario");
         //se insertaron  correctamente los datos
     									//String usuario, Date calendario, Double monto
     	
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
-    		
+    		System.out.println("insertUsuario: "+insertUsuario+"   fechaCalendario: "+fechaCalendario+"  montoDiario: "+montoDiario);
     		if((insertUsuario == null || insertUsuario == "") || fechaCalendario ==null || montoDiario ==null) {
     			
     			boolean bandera=false;
@@ -260,12 +260,18 @@ public class SalarioMinimoCtrll extends ControllerBase {
     				pr.setStatus("Ingresar Fecha");
     				bandera=true;
         		}
+//    			if(esDecimal(montoDiario ) ==false && bandera==false){
+//    				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
+//    				inputMonto.setValid(false);
+//    				pr.setStatus("Ingresar Digitos para Monto");
+//    				bandera=true;
+//        		}
     			
     		}else {
     			
     			
-				salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
-				
+				salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);//Double.parseDouble(montoDiario)
+				System.out.println("MENSAJE: "+salarioMinimoMensaje.getMensaje());
 				if (salarioMinimoMensaje.getEstatus() == 1) {
 					
 			    	pr.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"
@@ -284,4 +290,16 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		}
     }
      
+    public boolean esDecimal(String cad)
+    {
+    try
+    {
+      Double.parseDouble(cad);
+      return true;
+    }
+    catch(NumberFormatException nfe)
+    {
+      return false;
+    }
+    }
 }

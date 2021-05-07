@@ -110,11 +110,11 @@
 		    
 		    <p:column headerText="#{msg.cheque_ver_columna_fechaOperacion}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.fechaOperacion}" >
-		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		        <f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 				</h:outputText>
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}" style="width:50px;text-align: center;">
+		    <p:column headerText="#{msg.cheque_ver_columna_diagnostico}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.diagnosticoCuenta}" />
 		    </p:column>
 		    
@@ -122,19 +122,19 @@
 		        <h:outputText value="#{verSolicitud.tipoPrestacion}" />
 		    </p:column>
 		 
-		    <p:column headerText="#{msg.cheque_ver_columna_NoSolicitud}" style="width:50px;text-align: center;">
+		    <p:column headerText="#{msg.cheque_ver_columna_NoSolicitud}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.numeroSolicitud}" />
 		    </p:column>
 		 	
 		 	<p:column headerText="#{msg.cheque_ver_columna_fechaSolicitud}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.fechaTraspaso}" >
-		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		        <f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 				</h:outputText>
 		    </p:column>
 		 
 		    <p:column headerText="#{msg.cheque_ver_columna_folioSolicitud}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.fechaPago}" >
-		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		        <f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 				</h:outputText>
 		    </p:column>
 		    
@@ -145,15 +145,15 @@
 		    
 		    <p:column headerText="#{msg.cheque_ver_columna_fechaResolucion}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.fechaSolicitud}" >
-		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+		        <f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 				</h:outputText>
 		    </p:column>
 		    
-		     <p:column headerText="#{msg.cheque_ver_columna_fechaPension}" style="width:50px;text-align: center;">
+		     <p:column headerText="#{msg.cheque_ver_columna_fechaPension}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.consecutivo}" />
 		    </p:column>
 		    
-		    <p:column headerText="#{msg.cheque_ver_columna_Ejecucion}" style="width:50px;text-align: center;">
+		    <p:column headerText="#{msg.cheque_ver_columna_Ejecucion}" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verSolicitud.numeroEmpleado}" />
 		    </p:column>
 		 

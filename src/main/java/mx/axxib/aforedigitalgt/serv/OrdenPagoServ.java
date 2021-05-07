@@ -72,8 +72,8 @@ public class OrdenPagoServ extends ServiceBase {
 
 
 			 List<String> listaTipoReporte = new ArrayList<String>();
-			 listaTipoReporte.add("A");
-			 listaTipoReporte.add("B");
+			 listaTipoReporte.add("Alerta Aportaciones");//A   Alerta Aportaciones
+			 listaTipoReporte.add("Alerta Retiros");//R   Alerta Retiros
 //			 listaTipoReporte.add("C");
 //			 listaTipoReporte.add("D");
 //			 listaTipoReporte.add("E");
