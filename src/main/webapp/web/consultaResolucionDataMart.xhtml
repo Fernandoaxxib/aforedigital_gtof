@@ -263,17 +263,17 @@
 		   		<p:column headerText="NO COM" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.numCONSIDERANDO}" />
 		    	</p:column>	
-		 		<p:column headerText="FEC INI" style="width:80px;text-align: center;">
+		 		<p:column headerText="FEC INI" style="width:80px;text-align: right;">
 		        <h:outputText value="#{verPago.fecINI_PENSION}" >
 		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</h:outputText>
 		    	</p:column>	
-		    	<p:column headerText="FEC EMI" style="width:80px;text-align: center;">
+		    	<p:column headerText="FEC EMI" style="width:80px;text-align: right;">
 		        <h:outputText value="#{verPago.fecEMI_RESOLUCION}" >
 		        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
 				</h:outputText>
 		    	</p:column>	
-		    	<p:column headerText="PORC" style="width:50px;text-align: center;">
+		    	<p:column headerText="PORC" style="width:50px;text-align: right;">
 		        <h:outputText value="#{verPago.porcentajeVALUACION}" />
 		    	</p:column>	
 		    	<p:column headerText="SEM COT" style="width:80px;text-align: center;">
@@ -282,7 +282,7 @@
 		    	<p:column headerText="DIALG REG" style="width:80px;text-align: center;">
 		        <h:outputText value="#{verPago.diagREGISTRO}" />
 		    	</p:column>	
-		    	<p:column headerText="NUM RES" style="width:80px;text-align: center;">
+		    	<p:column headerText="NUM RES" style="width:80px;text-align: right;">
 		        <h:outputText value="#{verPago.numRESOLUCION}" />
 		    	</p:column>	
 		    	<p:column headerText="AP CS" style="width:50px;text-align: center;">
@@ -294,13 +294,13 @@
 		    	<p:column headerText="SBC B" style="width:50px;text-align: center;">
 		        <h:outputText value="#{verPago.sbcTIPO_B}" />
 		    	</p:column>	
-		    	<p:column headerText="PAG COM" style="width:80px;text-align: center;">
+		    	<p:column headerText="PAG COM" style="width:80px;text-align: right;">
 		        <h:outputText value="#{verPago.pagoCOMP}" />
 		    	</p:column>	
-		    	<p:column headerText="MONT RET" style="width:80px;text-align: center;">
+		    	<p:column headerText="MONT RET" style="width:80px;text-align: right;">
 		        <h:outputText value="#{verPago.montoRETIRO_ORG}" />
 		    	</p:column>
-		    	<p:column headerText="SALD ANT" style="width:80px;text-align: center;">
+		    	<p:column headerText="SALD ANT" style="width:80px;text-align: right;">
 		        <h:outputText value="#{verPago.saldoANT}" />
 		    	</p:column>
 		</p:dataTable>

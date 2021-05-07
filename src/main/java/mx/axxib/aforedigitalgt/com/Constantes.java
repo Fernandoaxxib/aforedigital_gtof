@@ -88,7 +88,8 @@ public class Constantes {
 	public static final String SALARIO_MINIMO_STORED = "PRC_SALARIO_MIN";
 	public static final String SALARIO_MINIMO_INSERT_STORED = "PRC_SALARIO_MIN_INSERT";
 	public static final String SALARIO_MINIMO_UPDATE_STORED = "PRC_SALARIO_MINIMO_UPD";
-
+	public static final String SALARIO_MINIMO_DELETE_STORED = "PRC_DELETE";
+	
 	// VER ORDEN DE PAGO FOREPALE
 	public static final String ORDEN_PAGO_PACKAGE = "PKG_RET_FUSION_FOREPALE";
 	public static final String ORDEN_PAGO_OBTIENE_FECHA_STORED = "PRC_OBTIENE_FECHAS";

@@ -59,18 +59,22 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 	private Double accionesTotal;
 	@Getter
 	private Date fecActual;
+	@Getter
+	private boolean disabled;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			lote = null;
+			lote1=null;
 			montoTotal = 0.0;
 			accionesTotal = 0.0;
 			fecha = DateUtil.getNowDate();
 			detalleCompra = null;
 			listLotes = null;
-			fecActual=DateUtil.getNowDate();
+			fecActual = DateUtil.getNowDate();
+			disabled=true;
 		}
 	}
 
@@ -86,10 +90,10 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 	}
 
 	public void opcionSeleccionada2() throws Exception {
-		if(lote1!=null) {
+		if (lote1 != null) {
 			lote = lote1.getId_lote();
 			detalleCompra();
-		}		
+		}
 	}
 
 	public void generarReporte() {
@@ -187,14 +191,17 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 	}
 
 	public void detalleCompra() throws Exception {
-		montoTotal=0.0;
-		accionesTotal=0.0;
+		montoTotal = 0.0;
+		accionesTotal = 0.0;
 		detalleCompra = service.getDetalleCompra(lote);
 		if (detalleCompra != null && !detalleCompra.isEmpty()) {
 			detalleCompra.forEach(p -> {
 				montoTotal = montoTotal + p.getMONTO();
 				accionesTotal = accionesTotal + p.getACCIONES();
 			});
+			disabled=false;
+		}else {
+			disabled=true;
 		}
 	}
 

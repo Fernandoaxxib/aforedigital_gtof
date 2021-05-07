@@ -243,7 +243,13 @@ public class OrdenPagoCtrll extends ControllerBase {
 								}
 							
 						System.out.println("fechaInicio: "+fechaInicio+"   vakor de fechaUltima: "+ fechaUltima);
-						tiposReportes=ordenPagoServ.creaTipoReporte(seleccionarA,fechaInicio,fechaUltima);
+						if(seleccionarA=="Alerta Aportaciones"|| seleccionarA.equals("Alerta Aportaciones")) {
+							tiposReportes=ordenPagoServ.creaTipoReporte("A",fechaInicio,fechaUltima);
+						}
+						else {
+							tiposReportes=ordenPagoServ.creaTipoReporte("R",fechaInicio,fechaUltima);
+						}
+						
 						
 						nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
 						System.out.println("NOMBRE ARCHIVO: "+nombre);

@@ -31,12 +31,8 @@
 	<h:form id="form">
 		<p:panel id="datosSalario" header="Salario Minimo" style="margin-top:20px">
 		
-		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
-        <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
-		<p:commandButton class="blue"  actionListener="#{salarioMinimo.botonGenerarTabla}" update="result usuario tableSalario"
-							 value="#{msg.salario_minimo_boton_salario}" ajax="true" />
 		
-<!-- 		 <p:growl id="msgs" showDetail="true"/> -->
+
  
     <p:dataTable id="tableSalario"  widgetVar="salario1" var="salario" emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
 <!--         <f:facet name="header" style="text-align: left;"> -->
@@ -103,10 +99,11 @@
         <p:commandButton id="verDetalle" styleClass="blue ui-button-text" value="Agregar"  onclick="PF('tabla2').show();" />
         
         
-			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2"   appendTo="@(body)"  modal="true"  resizable="false" positionType="absolute" style="margin-top:20px">
+			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2"   resizable="false" positionType="absolute" style="margin-top:20px">
    			 	<p:outputPanel id="display">
    			 	
-   			 	<p:panelGrid styleClass="ui-noborder" >
+   			 	
+   			 	
    			 	<p:panelGrid styleClass="ui-noborder" >
    			 	<p:row >
    			 	 <p:column style="text-align: left !important;width: 20px !important;">
@@ -114,17 +111,26 @@
 									<p:outputLabel value="Usuario:"  />
    			 	</p:column>						 
 				<p:column style="text-align: left !important;width: 300px !important;">
-									
-									
+					
 									<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}"  style="text-Align:left;font-size:15px;width:300px"/>
    			 	</p:column>							
+				
+				<p:column style="text-align: left !important;width: 20px !important;">
+									
+									<p:outputLabel value="Zona:"  />
+   			 	</p:column>						 
+				<p:column style="text-align: left !important;width: 10px !important;">
+					
+									<p:inputText id="zonaGuardar" value="#{salarioMinimo.insertZona}"  style="text-Align:left;font-size:15px;width:10px"/>
+   			 	</p:column>	
+				
 				<p:column style="text-align: left !important;width: 120px !important;">
 									
 									<p:outputLabel value="Fecha Calendario:" />
 									
 				</p:column>						 
 									
-									<p:column style="text-align: left !important;width: 120px !important;">			 
+				<p:column style="text-align: left !important;width: 120px !important;">			 
 									
 									<p:datePicker id="fechaGuardar" value="#{salarioMinimo.fechaCalendario}"
 									locale="es" showIcon="true" pattern="dd-MM-yyyy"
@@ -147,17 +153,19 @@
 				
 				<p:outputPanel style="text-align:right">
 									
-									<p:commandButton onclick="PF('tabla2').hide();" update="result" value="Cerrar" styleClass="blue ui-button-text" style="margin-right:10px"  />
+				<p:commandButton onclick="PF('tabla2').hide();" update="result" value="Cerrar" styleClass="blue ui-button-text" style="margin-right:10px" ajax="true" />
    			 	
-									<p:commandButton styleClass="blue ui-button-text" actionListener="#{salarioMinimo.onAddNew}"
-				 value="Enviar" oncomplete="PF('tabla2').hide();" update="result usuarioGuardar,fechaGuardar,montoGuardar" ajax="true" />
+				<p:commandButton styleClass="blue ui-button-text" actionListener="#{salarioMinimo.onAddNew}"
+				 value="Enviar"  update="result usuarioGuardar,zonaGuardar,fechaGuardar,montoGuardar"  ajax="true"/>
    			 	</p:outputPanel>
    			 	
    			 	
 				
-				</p:panelGrid>
+				
 		 </p:outputPanel>	
 		</p:dialog>
+		
+		
 		</p:panel>	
 		
 		<ui:include src="processResult.xhtml">

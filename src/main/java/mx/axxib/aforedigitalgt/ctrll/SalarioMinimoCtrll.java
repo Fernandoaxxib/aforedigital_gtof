@@ -41,13 +41,13 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	@Autowired
 	private AforeMessage aforeMessage;
 	
-	@Setter
-	@Getter
-	private String zona;
+//	@Setter
+//	@Getter
+//	private String zona;
 	
 	@Setter
 	@Getter
-	private Double montoDiario;
+	private String montoDiario;
 	
 	@Getter
 	@Setter
@@ -57,13 +57,15 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	@Setter
 	private Date fechaCalendario;
 	
-	@Getter
-	@Setter
-	private String idUsuario;
+	
 	
 	@Getter
 	@Setter
 	private String insertUsuario;
+	
+	@Setter
+	@Getter
+	private String insertZona;
 	
 //	@Getter
 //	@Setter
@@ -71,7 +73,13 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	
 	@Getter
 	@Setter
+	private  SalarioMinOut salarioMinOut;
+	
+	@Getter
+	@Setter
 	private List<SalarioMinimoOut> salarioMinimoTablaOut;
+	
+	
 	
 	@Getter
 	@Setter
@@ -92,14 +100,13 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
-		idUsuario=null;
-		insertUsuario=null;
+		botonGenerarTabla();
+		insertUsuario="";
+		insertZona="";
 		fechaCalendario=null;
 		montoDiario=null;
 		fechaIni=null;
-		zona=null;
-		salarioMinimoTablaOut=null;
-		totalIdUsuario=null;
+		
 	}
 	}
 	
@@ -107,27 +114,23 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	public void botonGenerarTabla() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Búsqueda por Id Usuario");
+		pr.setDescProceso("Obtener Salario Minimo");
 		try {
-			if (idUsuario != null && !idUsuario.equals("") ){
+			
 			//SalarioMinOut salarioMinOut =new SalarioMinOut();
-		    SalarioMinOut salarioMinOut = salarioMinService.getSalarioMinimo(idUsuario);
+		    salarioMinOut = salarioMinService.getSalarioMinimo();
 		   
 		    if (salarioMinOut.getEstatus() == 1 && salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
 				totalIdUsuario=salarioMinOut.getListSalarioMin().size();
 				salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();
-				System.out.println("VALOR DE salarioMinimoTablaOut: "+salarioMinimoTablaOut);
-		    	pr.setStatus("Consulta Exitosa Id Usuario");//"Consulta Exitosa"
+				System.out.println("VALOR DE salarioMinimoTablaOut: "+totalIdUsuario);
+		    	pr.setStatus("Consulta Exitosa");//"Consulta Exitosa"
 			}else {
 				pr.setStatus("No se encontraron resultados por Id Usuario");
-				mensajeTabla = "Sin información por Id Usuario";
+				mensajeTabla = "Sin información";
 			}
 		    			
-			}else {
-				UIInput input = (UIInput) findComponent("usuario");
-				input.setValid(false);
-				pr.setStatus("Usuario es requerido");
-			}
+			
 		} catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -188,25 +191,27 @@ public class SalarioMinimoCtrll extends ControllerBase {
     public void onAddNew() {
     	ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Guardar Nuevo Usuario");
+		pr.setDescProceso("Agregar Nuevo Usuario");
         //se insertaron  correctamente los datos
     									//String usuario, Date calendario, Double monto
     	
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
-    		
+    		System.out.println("insertUsuario: "+insertUsuario+"   fechaCalendario: "+fechaCalendario+"  montoDiario: "+montoDiario);
     		if((insertUsuario == null || insertUsuario == "") || fechaCalendario ==null || montoDiario ==null) {
     			
     			boolean bandera=false;
     			
-    			if((insertUsuario == null || insertUsuario=="") && fechaCalendario ==null && montoDiario ==null){
+    			if((insertUsuario == null || insertUsuario=="") && fechaCalendario ==null && montoDiario ==null && insertZona==null){
     			UIInput inputUsuario = (UIInput) findComponent("usuarioGuardar");
     			inputUsuario.setValid(false);
+    			UIInput inputZona = (UIInput) findComponent("zonaGuardar");
+    			inputZona.setValid(false);
 				UIInput inputFecha = (UIInput) findComponent("fechaGuardar");
 				inputFecha.setValid(false);
 				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
 				inputMonto.setValid(false);
-				pr.setStatus("Ingresar Usuario,Fecha y Monto");
+				pr.setStatus("Ingresar Usuario,Zona,Fecha y Monto");
 				bandera=true;
     			}
     			
@@ -219,8 +224,6 @@ public class SalarioMinimoCtrll extends ControllerBase {
     				pr.setStatus("Ingresar Fecha y Monto");
     				bandera=true;
         		}
-    			
-    			
     			
     			if((insertUsuario == null || insertUsuario=="") && montoDiario ==null && bandera==false){
         			UIInput inputFecha = (UIInput) findComponent("usuarioGuardar");
@@ -260,12 +263,24 @@ public class SalarioMinimoCtrll extends ControllerBase {
     				pr.setStatus("Ingresar Fecha");
     				bandera=true;
         		}
+    			if(esDecimal(montoDiario ) ==false && bandera==false){
+    				UIInput inputMonto = (UIInput) findComponent("montoGuardar");
+    				inputMonto.setValid(false);
+    				pr.setStatus("Ingresar Digitos para Monto");
+    				bandera=true;
+        		}
+    			if(insertZona  ==null && bandera==false){
+    				UIInput inputMonto = (UIInput) findComponent("zonaGuardar");
+    				inputMonto.setValid(false);
+    				pr.setStatus("Ingresar Zona");
+    				bandera=true;
+        		}
     			
     		}else {
     			
     			
-				salarioMinimoMensaje=salarioMinService.save(insertUsuario, fechaCalendario, montoDiario);
-				
+				salarioMinimoMensaje=salarioMinService.save(insertUsuario, insertZona, fechaCalendario, Double.parseDouble(montoDiario));//Double.parseDouble(montoDiario)
+				System.out.println("MENSAJE: "+salarioMinimoMensaje.getMensaje());
 				if (salarioMinimoMensaje.getEstatus() == 1) {
 					
 			    	pr.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"
@@ -284,4 +299,16 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		}
     }
      
+    public boolean esDecimal(String cad)
+    {
+    try
+    {
+      Double.parseDouble(cad);
+      return true;
+    }
+    catch(NumberFormatException nfe)
+    {
+      return false;
+    }
+    }
 }

@@ -18,9 +18,9 @@ public class SalarioMinimoServ extends ServiceBase {
 	@Autowired
 	private SalarioMinimoRepo dao;
 	
-	public SalarioMinOut getSalarioMinimo(String usuario) throws AforeException {
+	public SalarioMinOut getSalarioMinimo() throws AforeException {
 		try {
-			return dao.getSalarioMinimo(usuario);
+			return dao.getSalarioMinimo();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
@@ -34,9 +34,9 @@ public class SalarioMinimoServ extends ServiceBase {
 		}
 	}
 	
-	public SalarioMinimoMensaje save(String usuario, Date calendario, Double monto) throws AforeException {
+	public SalarioMinimoMensaje save(String usuario, String zona, Date calendario, Double monto) throws AforeException {
 		try {
-			return dao.save(usuario,calendario,monto);
+			return dao.save(usuario,zona,calendario,monto);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

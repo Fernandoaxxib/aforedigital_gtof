@@ -79,7 +79,7 @@
 				<p:commandButton value="Aceptar"
 					actionListener="#{reinversionModDesCompras.opcionSeleccionada2}"
 					oncomplete="PF('dlg2').hide();"
-					update="form:vLote form:fecha form:detalleLotes"
+					update="form:vLote form:fecha form:detalleLotes form:btnComprar form:btnGenerar"
 					styleClass="blue ui-button-text" />
 				<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
 					styleClass="blue ui-button-text" style="margin-left:13px" />
@@ -100,7 +100,7 @@
 								inputStyle="width:100px; text-align:right;" readonlyInput="true">
 								<p:ajax event="dateSelect"
 									listener="#{reinversionModDesCompras.selectLote}"
-									update="form:vLote form:detalleLotes form:detalleLotes:idMonto form:detalleLotes:idAcciones" />
+									update="form:vLote form:detalleLotes form:detalleLotes:idMonto form:detalleLotes:idAcciones form:btnComprar form:btnGenerar" />
 							</p:datePicker>
 						</p:column>
 						<p:column>
@@ -115,15 +115,18 @@
 								update="dlg1 form:vLote form:fecha"
 								oncomplete="PF('dlg2').show();" />
 						</p:column>
+						
 						<p:column>
-							<p:commandButton styleClass="blue" value="Generar Reporte"
-								action="#{reinversionModDesCompras.generarReporte}"
-								update="form:vLote form:fecha form:result" oncomplete="" />
+							<p:commandButton id="btnComprar" styleClass="blue" value="Compra"							    
+								action="#{reinversionModDesCompras.comprar}"
+								disabled="#{reinversionModDesCompras.disabled}"
+								update="form:vLote form:fecha form:result"  />
 						</p:column>
 						<p:column>
-							<p:commandButton styleClass="blue" value="Compra"
-								action="#{reinversionModDesCompras.comprar}"
-								update="form:vLote form:fecha form:result" oncomplete="" />
+							<p:commandButton id="btnGenerar" styleClass="blue" value="Generar Reporte"
+								action="#{reinversionModDesCompras.generarReporte}"
+								disabled="#{reinversionModDesCompras.disabled}"
+								update="form:vLote form:fecha form:result"  />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
