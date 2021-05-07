@@ -49,4 +49,12 @@ public class SalarioMinimoServ extends ServiceBase {
 			throw GenericException(e);
 		}
 	}
+	
+	public SalarioMinimoMensaje delete(String usuario, Date calendario)  throws AforeException {
+		try {
+			return dao.delete(usuario,calendario);
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
 }
