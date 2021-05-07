@@ -193,7 +193,7 @@ public class ValorUMACtrll extends ControllerBase {
 	private void actualizar() {
 		try {
 			seleccionado.setMonto(new BigDecimal(valorUMA));
-			//if(fechaUMA.compareTo(seleccionado.getFecha()) != 0)
+			if(fechaUMA.compareTo(seleccionado.getFecha()) != 0)
 				seleccionado.setFechaNueva(fechaUMA);
 			BaseOut res = valorUMAService.actualizarUMA(seleccionado);
 			if (res.getEstatus() == 1) {
