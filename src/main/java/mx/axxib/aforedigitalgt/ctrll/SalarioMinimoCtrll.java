@@ -179,7 +179,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		
         try {
         event.getObject().getUserId();
-        pr.setStatus("Se cancelo el update columna");
+        pr.setStatus("Se cancelo el update columna Monto");
         }catch (Exception e) {
 			pr = GenericException(e);
 		} finally {

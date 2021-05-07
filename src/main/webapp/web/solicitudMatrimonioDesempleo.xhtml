@@ -168,7 +168,7 @@
 		 	
 		</p:dataTable>
 		
-			<p:dialog header="Consulta de Pagos" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="80%" modal="true" style="font-size:12px">
+			<p:dialog header="Consulta de Pagos" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="80%" modal="true"  styleClass="styleWhite" style="font-size:12px">
 						 <p:outputPanel id="display">
 					
 					 <p:panelGrid id="verNombre" styleClass="ui-noborder" 	style="margin-top:20px; width:95%;">	
@@ -218,7 +218,7 @@
 						</p:row>	
 					</p:panelGrid>		
 						
-						<p:dataTable var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}"
+						<p:dataTable styleClass="styleTable3" var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}"
 						emptyMessage="#{verDatosCheque.mensajeTablaFopagos}"  >
 									
 									<p:column headerText="Beneficiario" style="width:100px;text-align: center;">
@@ -252,9 +252,9 @@
 										</h:outputText>
 									</p:column>
 									
-									<p:columnGroup style="width:40px;text-align: center;" type="footer">
+									<p:columnGroup  style="width:40px;text-align: center;" type="footer">
 						                <p:row>
-						                    <p:column colspan="4" style="text-align:right" footerText="Totales:"/>
+						                    <p:column  colspan="4" style="text-align:right" footerText="Totales:"/>
 						                   
 						                     	<p:column style="text-align: right">
 											         <f:facet name="footer">
@@ -264,8 +264,8 @@
 											         </f:facet>
 											    </p:column>
 						                    						                    
-						                   		<p:column style="text-align: right">
-											         <f:facet name="footer">
+						                   		<p:column   style="text-align: right">
+											         <f:facet  name="footer">
 											             <h:outputText value="#{solicitudMatrimonioDesempleo.totalMontoIsr}">
 											                <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />
 											            </h:outputText>
@@ -273,7 +273,7 @@
 											    </p:column>
 						                    
 						                   
-						                    	<p:column style="text-align: right">
+						                    	<p:column  style="text-align: right">
 											         <f:facet name="footer">
 											             <h:outputText value="#{solicitudMatrimonioDesempleo.totalNeto}">
 											                <f:convertNumber type="currency" currencySymbol="$" maxFractionDigits="2" />

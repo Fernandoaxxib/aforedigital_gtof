@@ -169,10 +169,10 @@
 									
 					</p:dataTable>
 					
-					<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="50%" modal="true" style="font-size:12px">
+					<p:dialog header="Detalle Marca Cuenta" widgetVar="productDialog"  appendTo="@(body)"   resizable="false" width="60%" modal="true" styleClass="styleWhite" style="font-size:12px">
 						 <p:outputPanel id="display">
-						<p:dataTable var="pro" value="#{consultarMarcasCuentas.cpCursor}"
-						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  scrollable="true"  scrollHeight="250" >
+						<p:dataTable styleClass="styleTable3" var="pro" value="#{consultarMarcasCuentas.cpCursor}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"  paginatorPosition="bottom"  scrollable="true"  scrollHeight="300" >
 
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_inc_por}" style="width:20px;text-align: center;">
 										<h:outputText value="#{pro.INCLUIDO_POR}" />
@@ -185,7 +185,7 @@
 									<p:column headerText="#{msg.consultar_traspasos_icefas_table_mod_por}" style="width:50px;text-align: center;">
 										<h:outputText value="#{pro.MODIFICADO_POR}" />
 									</p:column>
-									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_mod}" style="width:20px;text-align: right;">
+									<p:column headerText="#{msg.consultar_traspasos_icefas_table_fecha_mod}" style="width:50px;text-align: right;">
 										<h:outputText value="#{pro.FEC_MODIFICACION}">
 											<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
 										</h:outputText>

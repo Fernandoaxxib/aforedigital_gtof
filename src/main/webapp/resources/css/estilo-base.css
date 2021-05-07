@@ -385,3 +385,18 @@
 .styleTable2 .ui-datatable .ui-widget-header{
 	border:0px;
 } 
+
+.styleTable3 .ui-state-default{
+	background: #abc6de !important;
+	border:1px solid #abc6de !important;
+	color: #00529b !important;
+	font-size:12px !important;
+} 
+
+.styleTable3 .ui-widget-header.ui-datatable-scrollable-header{
+	background: #abc6de !important;
+}
+
+.styleTable3 .ui-datatable .ui-widget-header{
+	border:0px;
+} 
