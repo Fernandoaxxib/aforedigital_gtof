@@ -43,6 +43,8 @@ public class ModuloPagosCtrll extends ControllerBase {
 	@Getter
 	private String msj;
 	@Getter
+	private String ruta;
+	@Getter
 	private Date fecActual;
 
 	@Override
@@ -53,6 +55,8 @@ public class ModuloPagosCtrll extends ControllerBase {
 			fechaProcesoPagos = DateUtil.getNowDate();
 			refresh();
 			fecActual=DateUtil.getNowDate();
+			msj=null;
+			ruta=null;
 		}
 	}
 
@@ -94,6 +98,7 @@ public class ModuloPagosCtrll extends ControllerBase {
 						institucion);
 				if (res.getOn_Estatus() == 1) {
 					msj=res.getOcMensaje();
+					ruta="Ruta= /iprod/PROCESAR/RECEPCION/AFORE/RETIROS/";					
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getOn_Estatus() == 2) {
@@ -121,7 +126,7 @@ public class ModuloPagosCtrll extends ControllerBase {
 			try {
 				EjecucionResult res = service.generarPagos(fechaProcesoPagos, procesosRetiros, institucion, tiposPagos);
 				if (res.getOn_Estatus() == 1) {
-					msj=res.getOcMensaje();
+					msj=res.getOcMensaje();					
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getOn_Estatus() == 2) {

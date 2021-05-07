@@ -1,11 +1,15 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,13 +57,20 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	@Setter
 	private LoteOut selectedLote;
 	@Getter
+	@Setter
 	private List<LoteOut> listLotes;
+	
+	@Getter
+	@Setter
+	private List<LoteOut> filtro;
 	
 	@Getter
 	private String border;
 	
 	@Getter
 	private Date fecActual;
+	
+	
 	
 	
 	@Override
@@ -143,11 +154,12 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 		}
 	}
 	
-	public void getLotes() {
+	public void getLotes() {		
 		try {
 			if (listLotes == null) {
-				listLotes = service.getLotes();
-			}					
+				listLotes = service.getLotes();								
+			}
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -193,6 +205,25 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 			return false;		  
 	  }
 	  return true;
+	}
+	
+	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+        if (filterText == null || filterText.equals("")) {
+            return true;
+        }
+        
+        LoteOut car = (LoteOut) value;
+        
+        String fechaOperacion= cadenaFecha(car.getFEC_OPERACION());
+        return car.getID_LOTE().toString().contains(filterText)  
+                || fechaOperacion.contains(filterText);
+    }
+	
+    private String cadenaFecha(Date fecha) {		
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+		String strDate = dateFormat.format(fecha);  		
+		return strDate;
 	}
 
 	public void reset() {

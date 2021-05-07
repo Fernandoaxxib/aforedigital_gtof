@@ -356,3 +356,32 @@
 .flechaArribaAbajo {
 	color: white !important;
 }
+
+.styleWhite .ui-dialog-titlebar.ui-widget-header.ui-helper-clearfix.ui-corner-top.ui-draggable-handle{
+	background: transparent !important;
+    border: 0px !important;
+}
+
+.styleWhite.ui-widget.ui-widget-content{
+	border: 1px solid #191b19 !important;
+}
+
+.styleTable1 ui-state-default gridCell-right {
+	    background: #abc6de !important;
+        border: 1px solid #abc6de !important;
+}
+
+.styleTable2 .ui-state-default{
+	background: #abc6de !important;
+	border:1px solid #abc6de !important;
+	color: #00529b !important;
+	font-size:14px !important;
+} 
+
+.styleTable2 .ui-widget-header.ui-datatable-scrollable-header{
+	background: #abc6de !important;
+}
+
+.styleTable2 .ui-datatable .ui-widget-header{
+	border:0px;
+} 

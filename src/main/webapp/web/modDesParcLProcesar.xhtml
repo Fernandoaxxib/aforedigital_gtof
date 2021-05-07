@@ -47,24 +47,44 @@
 
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
-		<h:form id="form3">
-			<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo5}"
-				appendTo="@(body)" widgetVar="dlg2" modal="true" width="30%"
-				resizable="false">
 
-				<p:dataTable id="multipleDT" var="registro" scrollable="true"
-					scrollHeight="250" value="#{modDesParcLProcesar.listLotes}"
-					selectionMode="single"
+		<p:dialog id="dlg1" styleClass="styleWhite" appendTo="@(body)"
+			widgetVar="dlg2" modal="true" width="30%" resizable="false">
+			<h:form>
+				<p:dataTable id="multipleDT" var="registro" widgetVar="listaLotes"
+					scrollable="true" scrollHeight="250"
+					value="#{modDesParcLProcesar.listLotes}" selectionMode="single"
+					filteredValue="#{modDesParcLProcesar.filtro}"
+					globalFilterFunction="#{modDesParcLProcesar.globalFilterFunction}"
 					selection="#{modDesParcLProcesar.selectedLote}"
-					styleClass="gridCell-green" rowKey="#{registro.ID_LOTE}"
-					style="padding-bottom:10px">
+					emptyMessage="Sin información"
+					styleClass="styleTable2" rowKey="#{registro.ID_LOTE}"
+					style="padding-bottom:10px;border:0px">
+					
 					<p:ajax process="@this" event="rowSelect"
 						listener="#{modDesParcLProcesar.onRowSelect}" />
 
+					<p:ajax event="filter" global="false" />
+
 					<f:facet name="header">
-						<p:outputPanel style="text-align:left;margin-top:10px;">
-							<h:outputLabel style="font-weight:normal;"
-								value="Seleccione el lote de su interés" />
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE LOTES" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"							
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important" placeholder="Número de lote | Fecha de operación">
+
+							</p:inputText>
 						</p:outputPanel>
 					</f:facet>
 
@@ -82,18 +102,19 @@
 				<p:outputPanel style="margin-top:20px;text-align:right">
 					<p:commandButton value="Aceptar"
 						actionListener="#{modDesParcLProcesar.opcionSeleccionada2}"
-						oncomplete="PF('dlg2').hide();" update="pnl2 pnl3 pnl4"
-						styleClass="blue" />
+						oncomplete="PF('dlg2').hide();"
+						update="form3:pnl2 form3:pnl3 form3:pnl4" styleClass="blue" />
 					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
 						styleClass="blue" style="margin-left:13px" />
 				</p:outputPanel>
-			</p:dialog>
-
+			</h:form>
+		</p:dialog>
+		<h:form id="form3">
 			<p:panel id="pnl1" header="#{msg.modulo_desempleoParc_titulo3}"
 				style="margin-bottom:20px">
 
 				<div class="ui-g">
-					<div class="ui-g-6" style="width:45%">
+					<div class="ui-g-6" style="width: 45%">
 						<p:selectOneRadio id="radioSelect" layout="pageDirection"
 							value="#{modDesParcLProcesar.radioSelected}">
 							<p:ajax listener="#{modDesParcLProcesar.radioSelected}"
