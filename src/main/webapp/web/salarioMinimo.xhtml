@@ -31,12 +31,8 @@
 	<h:form id="form">
 		<p:panel id="datosSalario" header="Salario Minimo" style="margin-top:20px">
 		
-		<h:outputText value="#{msg.salario_minimo_txt_id_usuario}" />
-        <p:inputText id="usuario" value="#{salarioMinimo.idUsuario}" > </p:inputText>
-		<p:commandButton class="blue"  actionListener="#{salarioMinimo.botonGenerarTabla}" update="result usuario tableSalario"
-							 value="#{msg.salario_minimo_boton_salario}" ajax="true" />
 		
-<!-- 		 <p:growl id="msgs" showDetail="true"/> -->
+
  
     <p:dataTable id="tableSalario"  widgetVar="salario1" var="salario" emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
 <!--         <f:facet name="header" style="text-align: left;"> -->
@@ -118,6 +114,16 @@
 					
 									<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}"  style="text-Align:left;font-size:15px;width:300px"/>
    			 	</p:column>							
+				
+				<p:column style="text-align: left !important;width: 20px !important;">
+									
+									<p:outputLabel value="Zona:"  />
+   			 	</p:column>						 
+				<p:column style="text-align: left !important;width: 10px !important;">
+					
+									<p:inputText id="zonaGuardar" value="#{salarioMinimo.insertZona}"  style="text-Align:left;font-size:15px;width:10px"/>
+   			 	</p:column>	
+				
 				<p:column style="text-align: left !important;width: 120px !important;">
 									
 									<p:outputLabel value="Fecha Calendario:" />
@@ -150,7 +156,7 @@
 				<p:commandButton onclick="PF('tabla2').hide();" update="result" value="Cerrar" styleClass="blue ui-button-text" style="margin-right:10px" ajax="true" />
    			 	
 				<p:commandButton styleClass="blue ui-button-text" actionListener="#{salarioMinimo.onAddNew}"
-				 value="Enviar"  update="result usuarioGuardar,fechaGuardar,montoGuardar"  ajax="true"/>
+				 value="Enviar"  update="result usuarioGuardar,zonaGuardar,fechaGuardar,montoGuardar"  ajax="true"/>
    			 	</p:outputPanel>
    			 	
    			 	
