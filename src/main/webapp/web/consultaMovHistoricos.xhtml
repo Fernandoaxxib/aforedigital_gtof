@@ -46,21 +46,21 @@
 								value="Buscar" />
 
 						</p:column>
-						<p:column rendered="#{conHistoricos.mostrar}">
+						<p:column >
 							<p:outputLabel value="Cuenta: " styleClass="etiqueta" />
 						</p:column>
-						<p:column rendered="#{conHistoricos.mostrar}">
+						<p:column >
 							<h:outputText value="#{conHistoricos.cuenta.codCuenta}" />
 						</p:column>
-						<p:column rendered="#{conHistoricos.mostrar}">
+						<p:column >
 							<p:outputLabel value="Nombre: " styleClass="etiqueta" />
 						</p:column>
-						<p:column rendered="#{conHistoricos.mostrar}">
+						<p:column >
 							<h:outputText value="#{conHistoricos.cuenta.nombre}" />
 						</p:column>
 					</p:row>
 
-					<p:row rendered="#{conHistoricos.mostrar}">
+					<p:row >
 						<p:column>
 							<p:outputLabel value="Cliente: " styleClass="etiqueta" />
 						</p:column>
@@ -84,12 +84,12 @@
 					</p:row>
 
 
-					<p:row rendered="#{conHistoricos.mostrar}">
+					<p:row >
 						<p:column>
 							<p:outputLabel value="Inicio: " styleClass="etiqueta" />
 						</p:column>
 						<p:column>
-							<p:datePicker id="fechaInicial"
+							<p:datePicker id="fechaInicial" disabled="#{!conHistoricos.mostrar}"
 								inputStyle="width:120px; text-align:right;"
 								value="#{conHistoricos.fechaInicial}" showIcon="true"
 								locale="es" yearNavigator="true" monthNavigator="true"
@@ -99,7 +99,7 @@
 							<p:outputLabel value="Fin: " styleClass="etiqueta" />
 						</p:column>
 						<p:column>
-							<p:datePicker id="fechaFinal" value="#{conHistoricos.fechaFinal}"
+							<p:datePicker id="fechaFinal" value="#{conHistoricos.fechaFinal}" disabled="#{!conHistoricos.mostrar}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true" locale="es"
 								pattern="dd-MM-yyyy" readonlyInput="true" />
@@ -107,7 +107,7 @@
 						</p:column>
 
 						<p:column colspan="3" style="text-align:left;">
-							<p:commandButton class="blue"
+							<p:commandButton class="blue" disabled="#{!conHistoricos.mostrar}"
 								actionListener="#{conHistoricos.consultarMovimientos}"
 								update="pGrid pMov form:detalle result"
 								value="Buscar movimientos" />

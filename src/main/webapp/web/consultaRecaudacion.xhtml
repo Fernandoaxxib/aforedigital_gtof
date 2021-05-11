@@ -46,7 +46,7 @@
 						<p:column>
 							<p:commandButton class="blue"
 								actionListener="#{consultaRecaudacion.generarReporte}"
-								rendered="#{consultaRecaudacion.mostrarReporte}" update="result"
+								disabled="#{!consultaRecaudacion.mostrarReporte}" update="result"
 								value="Generar reporte" />
 						</p:column>
 					</p:row>

@@ -86,17 +86,25 @@
 							</p:dataTable>
 
 
-							<p:confirmDialog appendTo="@(body)" message="¿Desea continuar?"
-								header="Borrar valor UMA" widgetVar="confirmDelete" modal="true">
+							<p:dialog styleClass="styleWhite" appendTo="@(body)"
+								 header="Borrar valor UMA"  showEffect="fade" resizable="false"
+								widgetVar="confirmDelete" modal="true">
+								<p:panel style="border:0px !important;text-align:center">
+									<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+										<p:outputLabel
+											value="¿Desea continuar?"
+											style="font-size:14px !important; color: #59ad40 !important;" />
+									</p:outputPanel>
 
-								<p:outputPanel style="text-align:center">
-									<p:commandButton value="Si" update="form:grid form:result"
-										class="blue" actionListener="#{valorUMA.guardar}"
-										oncomplete="PF('confirmDelete').hide();" />
-									<p:commandButton value="No" class="blue"
-										onclick="PF('confirmDelete').hide();" type="button" />
-								</p:outputPanel>
-							</p:confirmDialog>
+									<p:outputPanel style="text-align:center">
+										<p:commandButton value="Si" update="form:grid form:result" style="width:90px"
+											class="blue" actionListener="#{valorUMA.guardar}"
+											oncomplete="PF('confirmDelete').hide();" />
+										<p:commandButton value="No" class="blue" style="width:90px"
+											onclick="PF('confirmDelete').hide();" type="button" />
+									</p:outputPanel>
+								</p:panel>
+							</p:dialog>
 
 						</p:column>
 
@@ -145,7 +153,7 @@
 		</h:form>
 
 
-		<p:dialog header="Valor UMA" appendTo="@(body)" widgetVar="dlg"
+		<p:dialog styleClass="styleWhite" header="Valor UMA" appendTo="@(body)" widgetVar="dlg" showEffect="fade"
 			modal="true" resizable="false">
 			<h:form id="formDlg">
 				<p:messages autoUpdate="true" />

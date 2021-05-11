@@ -43,27 +43,27 @@
 								update="pGrid result" value="Buscar" />
 
 						</p:column>
-						<p:column rendered="#{diagCuenta.mostrarBotones}">
+						<p:column >
 							<p:outputLabel value="Cuenta: " styleClass="etiqueta" />
 						</p:column>
-						<p:column rendered="#{diagCuenta.mostrarBotones}">
+						<p:column >
 							<h:outputText value="#{diagCuenta.codCuenta}" />
 						</p:column>
-						<p:column rendered="#{diagCuenta.mostrarBotones}">
+						<p:column >
 							<p:outputLabel value="Nombre: " styleClass="etiqueta" />
 						</p:column>
-						<p:column rendered="#{diagCuenta.mostrarBotones}">
+						<p:column >
 							<h:outputText value="#{diagCuenta.nombre}" />
 						</p:column>
 					</p:row>
 
 
-					<p:row rendered="#{diagCuenta.mostrarBotones}">
+					<p:row >
 						<p:column>
 							<p:outputLabel value="Inicio: "  styleClass="etiqueta"/>
 						</p:column>
 						<p:column>
-							<p:datePicker id="fechaInicial"
+							<p:datePicker id="fechaInicial" disabled="#{!diagCuenta.mostrarBotones}"
 								inputStyle="width:120px; text-align:right;" yearNavigator="true"
 								monthNavigator="true" value="#{diagCuenta.fechaInicial}"
 								showIcon="true" locale="es" pattern="dd-MM-yyyy"
@@ -73,7 +73,7 @@
 							<p:outputLabel value="Fin: "  styleClass="etiqueta"/>
 						</p:column>
 						<p:column>
-							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFinal}"
+							<p:datePicker id="fechaFinal" value="#{diagCuenta.fechaFinal}" disabled="#{!diagCuenta.mostrarBotones}"
 								inputStyle="width:120px; text-align:right;" showIcon="true"
 								yearNavigator="true" monthNavigator="true" locale="es"
 								pattern="dd-MM-yyyy" readonlyInput="true" />
@@ -83,7 +83,7 @@
 							<p:outputLabel value="Tipo proceso: " styleClass="etiqueta"/>
 						</p:column>
 						<p:column>
-							<p:selectOneMenu id="tipoProceso"
+							<p:selectOneMenu id="tipoProceso" disabled="#{!diagCuenta.mostrarBotones}"
 								style="width:300px; vertical-align: inherit;"
 								value="#{diagCuenta.selectedTipo}">
 								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -94,17 +94,17 @@
 						</p:column>
 					</p:row>
 
-					<p:row rendered="#{diagCuenta.mostrarBotones}">
+					<p:row >
 						<p:column colspan="6" style="text-align:right;padding:10px;">
-							<p:commandButton class="blue"
+							<p:commandButton class="blue" disabled="#{!diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.generarArchivo}"
 								update="pGrid result" value="Generar reporte" />
 
-							<p:commandButton class="blue"
+							<p:commandButton class="blue" disabled="#{!diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.desbloquearCuentas}"
 								update="pGrid result" value="Desbloquea cuentas" />
 
-							<p:commandButton class="blue"
+							<p:commandButton class="blue" disabled="#{!diagCuenta.mostrarBotones}"
 								actionListener="#{diagCuenta.bloquearCuentas}"
 								update="pGrid result" value="Bloquea cuentas" />
 						</p:column>
