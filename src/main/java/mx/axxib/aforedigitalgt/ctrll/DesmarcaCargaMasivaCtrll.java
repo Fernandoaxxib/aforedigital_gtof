@@ -107,7 +107,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 			input.setValid(false);
 			pr.setStatus("Ingrese nombre para la carga de Archivo");
 		}else {
-			if(nombreArchivoCarga.endsWith(".txt")) {
+			if(nombreArchivoCarga.endsWith(".txt") || nombreArchivoCarga.endsWith(".TXT")) {
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
 			
 			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...") ) {
@@ -120,7 +120,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 //				proceso.setAbrevProceso(resp);//"Generar reporte"
 //				proceso.setEstadoProceso("FALLIDO");
 //				 addMessageFail(resp);
-				pr.setStatus("Error al ejecutar la carga de Archivo");
+				pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
 			}
 			}else {
 				UIInput input = (UIInput) findComponent("nombreCarga");

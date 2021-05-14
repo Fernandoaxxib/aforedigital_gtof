@@ -120,18 +120,18 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	}
 	
 	public List<TipoProcesoOut> consultarTodo(){
-		ProcessResult pr = new ProcessResult();
-		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cargar Clave Proceso");
+//		ProcessResult pr = new ProcessResult();
+//		pr.setFechaInicial(DateUtil.getNowDate());
+//		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			pr.setStatus("Proceso ejecutado Correctamente");
+//			pr.setStatus("Proceso ejecutado Correctamente");
 			System.out.println("VALOR DE  LISTA TIPO PROCESO "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
 		}catch (Exception e) {
-			pr = GenericException(e);
+			GenericException(e);
 		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
+//			pr.setFechaFinal(DateUtil.getNowDate());
+//			resultados.add(pr);
 		}
 		return listaTipoProceso;
 	}
@@ -162,8 +162,8 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 String[] parts = selectedTipoClave.split("-");
 				 String part1 = parts[0]; // 123
 				 String part2 = parts[1]; // 654321
-				
-				if((nssCURP.length() > 0 && nssCURP.length()<=11) && StringUtils.isNumeric(nssCURP) && radioSelected== 1) {
+				System.out.println("VALOR DE RADIOSELECT;"+radioSelected);
+				if((nssCURP.length() > 0 && nssCURP.length()<=11)  && radioSelected == 1) {//&& StringUtils.isNumeric(nssCURP)
 						
 					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(radioSelected,desmarcaNSS, null,part1);	
 					
@@ -189,7 +189,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 			 		 inputNss.setValid(false);
 					 pr.setStatus("Ingresar NSS Valido ");	
 				}
-				if (ValidateUtil.isCURP(nssCURP)) {
+				if (ValidateUtil.isCURP(nssCURP) && radioSelected== 2) {
 				 
 					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(radioSelected,null, desmarcaCURP,part1);
 					 System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());

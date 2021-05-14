@@ -48,7 +48,7 @@
 						<p:panel  header="DESMARCA MASIVA CUENTAS" style="width:98%">
 							
 													
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:panelGrid class="ui-noborder" style="margin-top:11px">
 							
 							<p:row>
 								<p:column  style="text-align: left !important;width: 120px !important;">
@@ -205,27 +205,19 @@
 							</p:panelGrid>
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column  style="text-align: left !important;width: 120px !important;">
-									<p:outputLabel value="Nss/Curp:"/>
-								</p:column>
+
 								<p:column style="text-Align:left;font-size:15px;width:150px">
-									<p:inputText id="nssCURP" placeholder="#{msg.consultar_traspasos_icefas_txt_nss_curp_placeholder}" value="#{desmarcaMasiva.nssCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
+									<p:inputText id="nssCURP" placeholder="" value="#{desmarcaMasiva.nssCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
 								</p:column>
+								
+							
+								<p:column style="text-align: right !important;width: 450px !important;">
+									<p:commandButton id="btnEjecutar" styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="nssCURP radSelect result" ajax="true"/>
+								</p:column>
+								
 							</p:row>
 							</p:panelGrid>	
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">	
-														
-							<p:panelGrid class="ui-noborder" style="margin-top:10px">
-							<p:row style="text-align: right !important;width: 450px !important;">
-								<p:column style="text-align: right !important;width: 450px !important;">
-									<p:commandButton id="btnEjecutar" styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="nssCURP result" ajax="true"/>
-								</p:column>
-							</p:row>
-							</p:panelGrid>
-							
-							
-							
-							</p:panelGrid>
+
 							
 							
 							

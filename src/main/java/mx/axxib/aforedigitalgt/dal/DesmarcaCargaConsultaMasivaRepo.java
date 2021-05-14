@@ -49,6 +49,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 
 		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
 		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		System.out.println(" res: "+res);
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
