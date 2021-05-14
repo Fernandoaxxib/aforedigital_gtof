@@ -47,48 +47,68 @@
 		<p:dialog id="dlg1" styleClass="styleWhite" style="margin-top:20px"
 			appendTo="@(body)" widgetVar="dlg2" modal="true" width="50%"
 			resizable="false">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{reinversionModDesVentas.listLotes}"
+					filteredValue="#{reinversionModDesVentas.filtro}"
+					globalFilterFunction="#{reinversionModDesVentas.globalFilterFunction}"
+					emptyMessage="Sin información" selectionMode="single"
+					selection="#{reinversionModDesVentas.selectedLote}"
+					rowKey="#{registro.id_lote}" styleClass="styleTable2"
+					style="padding-bottom:10px;border:0px">
 
-			<p:dataTable var="registro"
-				value="#{reinversionModDesVentas.listLotes}" scrollable="true"
-				scrollHeight="250" selectionMode="single"
-				selection="#{reinversionModDesVentas.selectedLote}"
-				rowKey="#{registro.id_lote}" styleClass="styleTable2"
-				style="padding-bottom:10px;border:0px">
-				
-				<p:ajax process="@this" event="rowSelect"
-					listener="#{reinversionModDesVentas.onRowSelect}" />
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{reinversionModDesVentas.onRowSelect}" />
 
-				<f:facet name="header">
-					<p:outputPanel style="text-align:center;margin-bottom:20px">
-						<h:outputLabel
-							style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
-							value="LISTA DE LOTES" />
-					</p:outputPanel>
-				</f:facet>
+					<p:ajax event="filter" global="false" />
 
-				<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
-					styleClass="gridCell-right">
-					<h:outputText value="#{registro.id_lote}" />
-				</p:column>
-				<p:column headerText="Descripción" styleClass="gridCell-right">
-					<h:outputText value="#{registro.descripcion}" />
-				</p:column>
-				<p:column headerText="Fecha Movimiento" styleClass="gridCell-right">
-					<h:outputText value="#{registro.FEC_MOVIMTO}">
-						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
-					</h:outputText>
-				</p:column>
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE LOTES" />
+						</p:outputPanel>
+					</f:facet>
 
-			</p:dataTable>
-			<p:outputPanel style="margin-top:20px;text-align:right">
-				<p:commandButton value="Aceptar"
-					actionListener="#{reinversionModDesVentas.opcionSeleccionada2}"
-					oncomplete="PF('dlg2').hide();"
-					update="form:vLote form:fecha form:detalleLotes form:btnVenta form:btnGenerar"
-					styleClass="blue ui-button-text" />
-				<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
-					styleClass="blue ui-button-text" style="margin-left:13px" />
-			</p:outputPanel>
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Número de lote | Fecha de movimiento">
+
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
+						styleClass="gridCell-right">
+						<h:outputText value="#{registro.id_lote}" />
+					</p:column>
+					<p:column headerText="Descripción" styleClass="gridCell-right">
+						<h:outputText value="#{registro.descripcion}" />
+					</p:column>
+					<p:column headerText="Fecha Movimiento" styleClass="gridCell-right">
+						<h:outputText value="#{registro.FEC_MOVIMTO}">
+							<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+						</h:outputText>
+					</p:column>
+
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{reinversionModDesVentas.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();"
+						update="form:vLote form:fecha form:detalleLotes form:btnVenta form:btnGenerar"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
 		</p:dialog>
 		<h:form id="form">
 			<p:panel id="pnl1" header="Ventas">
@@ -112,10 +132,14 @@
 							<p:outputLabel value="Lote: " />
 						</p:column>
 						<p:column>
-							<p:inputText id="vLote" value="#{reinversionModDesVentas.lote}"
-								disabled="true" placeholder="Seleccione lote"
-								style="text-align:right;width:150px;margin-left:10px !important" />
-							<p:commandButton styleClass="blue" style="width:35px" value="..."
+							<p:outputPanel id="vLote" class="outputlabel-shadow"
+								style="padding-top:5px;width:100px;height:17px !important;text-align: right !important;padding-right: 5px">
+								<p:outputLabel value="#{reinversionModDesVentas.lote}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue"
+								style="width:35px;margin-left:-19px" value="..."
 								action="#{reinversionModDesVentas.getLotes}"
 								update="dlg1 form:vLote form:fecha"
 								oncomplete="PF('dlg2').show();" />

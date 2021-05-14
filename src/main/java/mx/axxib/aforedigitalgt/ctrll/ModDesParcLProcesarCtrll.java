@@ -77,8 +77,7 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
-			reset();
-			fecActual=DateUtil.getNowDate();			
+			reset();						
 		}
 	}
 	
@@ -227,15 +226,17 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	}
 
 	public void reset() {
-		fecha=null;		
-		radioSelected=null;		
 		archivo = "PRTFT.DP.A01530.CINACTIV.GDG";	
 		archivo2=null;
-		ruta = "/RESPALDOS/operaciones/pruebas";
+		border="";
+		fecha=null;	
+		fecActual=DateUtil.getNowDate();
+		filtro=null;
+		listLotes=null;
 		lote=null;
 		Lote1=null;
-		selectedLote=null;
-		listLotes=null;
-		border="";
+        radioSelected=null;				
+		ruta = "/RESPALDOS/operaciones/pruebas";
+		selectedLote=null;		
 	}	
 }

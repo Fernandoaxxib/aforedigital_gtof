@@ -1,10 +1,14 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -45,6 +49,9 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private List<LoteCOut> listLotes;
+	@Getter
+	@Setter
+	private List<LoteCOut> filtro;
 
 	@Getter
 	@Setter
@@ -66,15 +73,17 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
-			lote = null;
-			lote1=null;
-			montoTotal = 0.0;
 			accionesTotal = 0.0;
-			fecha = DateUtil.getNowDate();
 			detalleCompra = null;
-			listLotes = null;
+			disabled = true;
+			fecha = DateUtil.getNowDate();
 			fecActual = DateUtil.getNowDate();
-			disabled=true;
+			filtro = null;
+			lote = null;
+			lote1 = null;
+			listLotes = null;
+			montoTotal = 0.0;	
+			selectedLote=null;
 		}
 	}
 
@@ -83,6 +92,7 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 			if (listLotes == null) {
 				listLotes = service.getLotes();
 			}
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -101,7 +111,7 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 
 		if (fecha != null) {
-			if (lote != null && !lote.isEmpty()) {
+			if (lote != null) {
 				if (detalleCompra != null && !detalleCompra.isEmpty()) {
 					pr.setDescProceso("Generar Reporte");
 					try {
@@ -130,8 +140,6 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 					resultados.add(pr);
 				}
 			} else {
-				UIInput lote = (UIInput) findComponent("vLote");
-				lote.setValid(false);
 				pr.setDescProceso("Falta definidir el lote");
 				pr.setStatus("Información requerida");
 				pr.setFechaFinal(DateUtil.getNowDate());
@@ -172,8 +180,6 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 				}
 
 			} else {
-				UIInput lote = (UIInput) findComponent("vLote");
-				lote.setValid(false);
 				pr.setDescProceso("Falta definidir el lote");
 				pr.setStatus("Información requerida");
 				pr.setFechaFinal(DateUtil.getNowDate());
@@ -199,9 +205,9 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 				montoTotal = montoTotal + p.getMONTO();
 				accionesTotal = accionesTotal + p.getACCIONES();
 			});
-			disabled=false;
-		}else {
-			disabled=true;
+			disabled = false;
+		} else {
+			disabled = true;
 		}
 	}
 
@@ -216,5 +222,23 @@ public class ReInverModDesComprasCtrll extends ControllerBase {
 		String f = format.format(fecha);
 		lote = "04" + f;
 		detalleCompra();
+	}
+
+	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (filterText == null || filterText.equals("")) {
+			return true;
+		}
+
+		LoteCOut car = (LoteCOut) value;
+
+		String fechaOperacion = cadenaFecha(car.getFEC_MOVIMTO());
+		return car.getId_lote().toString().contains(filterText) || fechaOperacion.contains(filterText);
+	}
+
+	private String cadenaFecha(Date fecha) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String strDate = dateFormat.format(fecha);
+		return strDate;
 	}
 }

@@ -53,37 +53,48 @@
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
-		<p:dialog id="dlg1" header="#{msg.modulo_desempleoParc_titulo4}"
-			appendTo="@(body)" widgetVar="dlg2" resizable="false" width="60%"
-			modal="true" style="font-size:12px">
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2"
+			resizable="false" width="60%" modal="true" styleClass="styleWhite">
 			<h:form>
 				<p:dataTable id="idTablaRegistros" var="registro"
-					value="#{modDesParcProceso.listSolicitudes}"
-					emptyMessage="#{msg.aprob_msj_sinDatos}" editable="true"
-					editMode="cell" widgetVar="celdas"
-					style="padding-bottom:10px;font-size:12px">
+					value="#{modDesParcProceso.listSolicitudes}" scrollable="true"
+					scrollHeight="250" emptyMessage="#{msg.aprob_msj_sinDatos}"
+					editable="true" editMode="cell" widgetVar="celdas"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
 					<p:ajax event="cellEdit" listener="#{modDesParcProceso.onCellEdit}"
 						update="columnEdited" immediate="true" />
+
 					<p:column headerText="#{msg.modulo_desempleoParc_column_numSolic}"
 						style="text-align:right">
 						<h:outputText value="#{registro.onNumSolicitud}" />
 					</p:column>
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="REGISTROS CON SALARIO CERO" />
+						</p:outputPanel>
+					</f:facet>
+
 					<p:column headerText="#{msg.modulo_desempleoParc_column_nss}"
 						style="text-align:right">
 						<h:outputText value="#{registro.onNss}" />
 					</p:column>
+
 					<p:column id="columnEdited"
 						headerText="#{msg.modulo_desempleoParc_column_sbca}"
 						style="text-align:right">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="#{registro.onSbcTipoA}">
-									<f:convertNumber type="number" />
+								<h:outputText value="$#{registro.onSbcTipoA}">
+									<f:convertNumber pattern="#0.00" />
 								</h:outputText>
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{registro.onSbcTipoA}">
-									<f:convertNumber type="number" />
+								<p:inputText value="#{registro.onSbcTipoA}" maxlength="7">
+									<f:convertNumber pattern="#0.00" />
 								</p:inputText>
 							</f:facet>
 						</p:cellEditor>
@@ -98,13 +109,13 @@
 				</p:dataTable>
 				<p:outputPanel style="text-align:right">
 					<p:commandButton styleClass="blue"
-						value="#{msg.modulo_desempleoParc_btnRegresar}"
-						onclick="PF('dlg2').hide();" style="font-size:12px;" />
-					<p:commandButton styleClass="blue"
 						value="#{msg.modulo_desempleoParc_btnGuardar}"
 						action="#{modDesParcProceso.guardar}"
 						update="form:btnDlg form:radSelect form:fCapturada form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal form:result"
-						oncomplete="PF('dlg2').hide();" style="font-size:12px;" />
+						oncomplete="PF('dlg2').hide();" />
+					<p:commandButton styleClass="blue" value="Cerrar" style="margin-left:13px"
+						onclick="PF('dlg2').hide();" />
+
 				</p:outputPanel>
 			</h:form>
 		</p:dialog>
@@ -114,7 +125,7 @@
 		<h:form id="form">
 			<p:panel id="pnlResult" header="#{msg.modulo_desempleoParc_titulo1}"
 				style="margin-bottom:20px;">
-				<p:panelGrid id="pnlSelection" class="no-border no-padding" >
+				<p:panelGrid id="pnlSelection" class="no-border no-padding">
 					<p:row>
 						<p:column>
 							<p:selectOneRadio id="radSelect"
@@ -216,7 +227,7 @@
 							</div>
 						</div>
 						<div class="ui-g">
-							<div class="ui-g-12" style="width:85%;text-align: right">
+							<div class="ui-g-12" style="width: 85%; text-align: right">
 								<p:commandButton id="btnEjecutar"
 									styleClass="blue ui-button-text" type="submit"
 									value="#{msg.modulo_desempleoParc_btnEjecutar}"

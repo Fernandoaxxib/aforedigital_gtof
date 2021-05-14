@@ -37,48 +37,68 @@
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
-			width="45%" resizable="false" styleClass="styleWhite"
-			style="font-size:12px">
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{retParImssOP84.listLotes}"
+					filteredValue="#{retParImssOP84.filtro}"
+					globalFilterFunction="#{retParImssOP84.globalFilterFunction}"
+					selectionMode="single" selection="#{retParImssOP84.selectedLote}"
+					rowKey="#{registro.ID_LOTE}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
 
-			<p:dataTable var="registro" value="#{retParImssOP84.listLotes}"
-				selectionMode="single" selection="#{retParImssOP84.selectedLote}"
-				rowKey="#{registro.ID_LOTE}" emptyMessage="Sin información"
-				style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{retParImssOP84.onRowSelect}" />
 
-				<f:facet name="header">
-					<p:outputPanel style="text-align:center;margin-bottom:20px">
-						<h:outputLabel
-							style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
-							value="LISTA DE LOTES" />
-					</p:outputPanel>
-				</f:facet>
+					<p:ajax event="filter" global="false" />
 
 
-				<p:ajax process="@this" event="rowSelect"
-					listener="#{retParImssOP84.onRowSelect}" />
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE LOTES" />
+						</p:outputPanel>
+					</f:facet>
 
-				<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
-					styleClass="gridCell-right">
-					<h:outputText value="#{registro.ID_LOTE}" />
-				</p:column>
-				<p:column headerText="Fecha lote" styleClass="gridCell-right">
-					<h:outputText value="#{registro.FECHA_LOTE}">
-						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
-					</h:outputText>
-				</p:column>
-				<p:column headerText="Número de registros"
-					styleClass="gridCell-right">
-					<h:outputText value="#{registro.NUMERO_REGISTROS}" />
-				</p:column>
-			</p:dataTable>
-			<p:outputPanel style="margin-top:20px;text-align:right">
-				<p:commandButton value="Aceptar"
-					actionListener="#{retParImssOP84.opcionSeleccionada2}"
-					oncomplete="PF('dlg2').hide();" update=":form:pnl2"
-					styleClass="blue ui-button-text" />
-				<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
-					styleClass="blue ui-button-text" style="margin-left:13px" />
-			</p:outputPanel>
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Número de lote | Fecha lote">
+
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="#{msg.modulo_desempleoParc_lblIdLote}"
+						styleClass="gridCell-right">
+						<h:outputText value="#{registro.ID_LOTE}" />
+					</p:column>
+					<p:column headerText="Fecha lote" styleClass="gridCell-right">
+						<h:outputText value="#{registro.FECHA_LOTE}">
+							<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Número de registros"
+						styleClass="gridCell-right">
+						<h:outputText value="#{registro.NUMERO_REGISTROS}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{retParImssOP84.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update=":form:pnl2"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
 		</p:dialog>
 
 		<h:form id="form">
@@ -170,7 +190,7 @@
 							</p:column>
 							<p:column>
 								<p:outputPanel id="vLote" class="outputlabel-shadow"
-									style="padding-top:5px;width:285px;height:17px !important;border:#{retParImssOP84.border}">
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:285px;height:17px !important;border:#{retParImssOP84.border}">
 									<p:outputLabel value="#{retParImssOP84.lote}" />
 								</p:outputPanel>
 							</p:column>

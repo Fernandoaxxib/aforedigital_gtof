@@ -28,7 +28,7 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		<p:dialog id="dlg1" header="Consulta Saldos Fecha Corte"
+		<p:dialog id="dlg1" header="Consulta Saldos Fecha Corte" styleClass="styleWhite"
 			appendTo="@(body)" widgetVar="dlg2" modal="true" width="45%"
 			resizable="false">
 			<h:form>
@@ -83,7 +83,7 @@
 				</p:panelGrid>
 				<p:dataTable id="tblSaldos" var="saldo"
 					value="#{saldosActuales.listaSaldos}" emptyMessage=""
-					scrollable="true" scrollHeight="100" style="margin-top:10px">
+					scrollable="true" scrollHeight="100" style="margin-top:10px;border:0px" styleClass="styleTable2">
 
 					<p:column headerText="Sector Inversión" width="90">
 						<h:outputText value="#{saldo.desc_siefore}" style="float:left;" />
