@@ -189,6 +189,22 @@
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							
 							<p:row>
+								<p:column>
+									<p:selectOneRadio id="radSelect"
+									value="#{desmarcaMasiva.radioSelected}">
+<!-- 									<p:ajax listener="#{desmarcaMasiva.radioSelected}" -->
+<!-- 									update="form:btnEjecutar" -->
+<!-- 									global="false" /> -->
+									<f:selectItem itemValue="1"
+									itemLabel="NSS" />
+									<f:selectItem itemValue="2"
+									itemLabel="CURP" />
+									</p:selectOneRadio>
+								</p:column>
+							</p:row>
+							</p:panelGrid>
+							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							<p:row>
 								<p:column  style="text-align: left !important;width: 120px !important;">
 									<p:outputLabel value="Nss/Curp:"/>
 								</p:column>
@@ -202,7 +218,7 @@
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row style="text-align: right !important;width: 450px !important;">
 								<p:column style="text-align: right !important;width: 450px !important;">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="nssCURP result" ajax="true"/>
+									<p:commandButton id="btnEjecutar" styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="nssCURP result" ajax="true"/>
 								</p:column>
 							</p:row>
 							</p:panelGrid>

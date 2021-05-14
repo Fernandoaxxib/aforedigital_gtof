@@ -74,7 +74,7 @@
 							
 							</p:panelGrid>
 							
-							<p:panelGrid  class="ui-noborder" style="margin-top:10px">
+							<p:panelGrid  class="ui-noborder" style="margin-top:17px">
 							
 									<p:row style="text-align: right !important;width: 450px !important;">
 									
@@ -85,7 +85,7 @@
 									</p:row>
 							
 							</p:panelGrid>
-							<p:panelGrid class="ui-noborder" style="margin-top:18px">
+							<p:panelGrid class="ui-noborder" style="margin-top:25px">
 							
 							
 							</p:panelGrid>	
@@ -124,11 +124,22 @@
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							
 							<p:row style="text-align: right !important;width: 450px !important;">
+<!-- 								<p:column style="padding:150px;"> -->
+<!-- 									  <p:commandButton type="button" id="animate" icon="ui-icon-comment" class="blue"/> -->
+<!--     								   <p:tooltip for="animate" value="El archivo deberá tener la extensión .txt" showEffect="clip" hideEffect="fold" /> -->
+<!-- 								</p:column> -->
+							
 								<p:column style="text-align: right !important;width: 450px !important;">
 
 									<p:commandButton styleClass="blue ui-button-text" value="Consultar Marcas" action="#{desmarcaConsultaMarcas.cargarArchivo}" update="result nombreCarga" ajax="true"/>
 								</p:column>
 							</p:row>
+							<p:row>
+						<p:column colspan="3" style="padding:10px;">
+							<p:outputLabel
+								value="El archivo deberá tener la extensión .txt"  style="color:blue;" />
+						</p:column>
+						</p:row>
 						</p:panelGrid>
 							
 				</p:panel>

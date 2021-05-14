@@ -49,9 +49,9 @@ public class DesmarcaCargaConsultaMasivaService extends ServiceBase {
 		}
 	}
 	
-	public DesmarcaCargaConsultaMasivaOut desmarcaIndividualCuenta(String nss, String curp, String claveProceso) throws AforeException {
+	public DesmarcaCargaConsultaMasivaOut desmarcaIndividualCuenta(Integer opcion,String nss, String curp, String claveProceso) throws AforeException {
 		try {
-			return desmarcaCargaConsultaMasivaRepo.desmarcaIndividualCuenta(nss,curp,claveProceso);
+			return desmarcaCargaConsultaMasivaRepo.desmarcaIndividualCuenta(opcion,nss,curp,claveProceso);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

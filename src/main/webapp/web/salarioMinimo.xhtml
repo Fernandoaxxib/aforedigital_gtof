@@ -30,100 +30,186 @@
 		
 	<h:form id="form">
 		<p:panel id="datosSalario" header="Salario Minimo" style="margin-top:20px">
+		<p:panelGrid id="grid" styleClass="ui-noborder">
 		
-		
-
- 
-    <p:dataTable id="tableSalario"  widgetVar="salario1" var="salario" emptyMessage="#{msg.aprob_msj_sinDatos}"   paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15" value="#{salarioMinimo.salarioMinimoTablaOut}" editable="true"  style="margin-top:20px; margin-bottom:20px">
-<!--         <f:facet name="header" style="text-align: left;"> -->
-<!--             Salario Minimo (diario) -->
-<!--         </f:facet> -->
- 		
- 								<f:facet name="header" style="float:right">
-
-								<h:outputLabel for="registros"
-								value="#{msg.aprob_label_totalRegistros}"  />
-								<h:outputText id="totalRegistros"
-								value="#{salarioMinimo.totalIdUsuario}" />
-
-								</f:facet>
- 		
- 
-        <p:ajax event="rowEdit" listener="#{salarioMinimo.onRowEdit}" update=":form:tableSalario :form:result" />
-        <p:ajax event="rowEditCancel" listener="#{salarioMinimo.onRowCancel}" update=":form:tableSalario :form:result" />
- 
-        <p:column headerText="CdZona"  style="text-align: center">
-        <h:outputText value="#{salario.cdZona}" style="text-align: center"/> 
-            
-        </p:column>
- 
-          <p:column headerText="FechaCalendario">
-          	
-          	<h:outputText id="calendarioOut" value="#{salario.fechaCalendario}" style="float:right" > 
-                						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
-                						 </h:outputText> 
-          
-            
-        </p:column>
- 
-        
-        <p:column headerText="Monto">
-            <p:cellEditor>
-                <f:facet name="output"><h:outputText value="#{salario.montoDiario}" style="float:right" >  
-                					   <f:convertNumber type="currency" currencySymbol="$" />
-									   </h:outputText>
-                </f:facet>
-                <f:facet name="input"><p:inputText value="#{salario.montoDiario}" style="width:100%" /> </f:facet>
-            </p:cellEditor>
-        </p:column>
- 
-        <p:column headerText="FechaUltimo">
-        
-        								<h:outputText id="fechaUltOut" value="#{salario.fechaUltimo}" style="float:right" > 
-                						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
-                						 </h:outputText> 
-            
-        </p:column>
-        
-           <p:column headerText="Id User">
-           <h:outputText value="#{salario.userId}" />
-            
-        </p:column>
- 
-        <p:column style="width:35px">
-            <p:rowEditor />
-        </p:column>
-    </p:dataTable>
-		
-
-        <p:commandButton id="verDetalle" styleClass="blue ui-button-text" value="Agregar"  onclick="PF('tabla2').show();" />
-        
-        
-			<p:dialog id="dialogGuardar" header="Agregar Usuario" widgetVar="tabla2"   resizable="false" positionType="absolute" style="margin-top:20px">
-   			 	<p:outputPanel id="display">
-   			 	
-   			 	
-   			 	
-   			 	<p:panelGrid styleClass="ui-noborder" >
-   			 	<p:row >
-   			 	 <p:column style="text-align: left !important;width: 20px !important;">
+		<p:row>
+						<p:column style="width:250px">
+						</p:column>
+						<p:column style="width:650px">
+									<p:dataTable id="tabla" var="salario"  paginatorPosition="bottom" rows="10" paginator="true" rowsPerPageTemplate="5,10,15" emptyMessage="#{msg.aprob_msj_sinDatos}" value="#{salarioMinimo.salarioMinimoTablaOut}">
 									
-									<p:outputLabel value="Usuario:"  />
-   			 	</p:column>						 
-				<p:column style="text-align: left !important;width: 300px !important;">
-					
-									<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}"  style="text-Align:left;font-size:15px;width:300px"/>
-   			 	</p:column>							
+									<p:column headerText="CdZona"  style="text-align: center">
+			        				<h:outputText value="#{salario.cdZona}" style="text-align: center"/> 
+			            			</p:column>
+			            			
+			            			<p:column headerText="FechaCalendario">
+			          	        	<h:outputText id="calendarioOut" value="#{salario.fechaCalendario}" style="float:right" > 
+			                		<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+			                        </h:outputText> 
+			                        </p:column>
+								
+									<p:column headerText="Monto">
+									<h:outputText id="montoOut" value="#{salario.montoDiario}" style="float:right">
+									<f:convertNumber type="currency" currencySymbol="$" />
+									</h:outputText>
+									</p:column>
+									
+									<p:column headerText="FechaUltimo">
+        							<h:outputText id="fechaUltOut" value="#{salario.fechaUltimo}" style="float:right" > 
+               						<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+            						</h:outputText> 
+                                    </p:column>
+        
+           							<p:column headerText="Id User">
+           							<h:outputText value="#{salario.userId}" />
+                                    </p:column>
+                                    
+                                    <p:column style="width:60px">
+                                    	
+                                    	<f:facet name="header">
+										<p:commandButton styleClass="botonEdicion"
+											actionListener="#{salarioMinimo.nuevo}"
+											update="formDlg:montoGuardar formDlg:fechaGuardar formDlg:zonaGuardar"
+											icon="ui-icon ui-icon-plus" title="Nuevo"
+											oncomplete="PF('nuevo').show();"></p:commandButton>
+										</f:facet>
+                                    	
+                                    	<p:commandButton styleClass="botonEdicion"
+										update=" formDlgEdit:montoGuardar "
+										icon="ui-icon ui-icon-pencil" title="Editar"
+										actionListener="#{salarioMinimo.editar(salario)}"
+										oncomplete="PF('editar').show();"></p:commandButton>
+                                    	
+                                    	<p:commandButton styleClass="botonEdicion"
+										update="form:tabla form:result" icon="ui-icon ui-icon-trash"
+										title="Borrar" oncomplete="PF('confirmDelete').show();"
+										actionListener="#{salarioMinimo.borrar(salario)}"></p:commandButton>
+									 </p:column>
+									</p:dataTable>
+									
+									<p:dialog styleClass="styleWhite" appendTo="@(body)"
+												 header="Borrar Salario Minimo"  showEffect="fade" resizable="false"
+												widgetVar="confirmDelete" modal="true">
+												<p:panel style="border:0px !important;text-align:center">
+													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+														<p:outputLabel
+															value="¿Desea continuar?"
+															style="font-size:14px !important; color: #59ad40 !important;" />
+													</p:outputPanel>
 				
+													<p:outputPanel style="text-align:center">
+														<p:commandButton value="Si" update="form:grid form:result" style="width:90px"
+															class="blue" actionListener="#{salarioMinimo.guardar}"
+															oncomplete="PF('confirmDelete').hide();" />
+														<p:commandButton value="No" class="blue" style="width:90px"
+															onclick="PF('confirmDelete').hide();" type="button" />
+													</p:outputPanel>
+												</p:panel>
+									</p:dialog>
+									
+									
+						</p:column>
+		</p:row>
+		</p:panelGrid>
+		<ui:include src="processResult.xhtml">
+			<ui:param name="base" value="#{salarioMinimo}" />
+		</ui:include>
+		</p:panel>
+	</h:form>	
+	
+		
+		 <p:dialog styleClass="styleWhite" header="Editar Usuario" appendTo="@(body)" widgetVar="editar" showEffect="fade" modal="true" resizable="false">
+        
+			
+   			
+   			<h:form id="formDlgEdit"> 	
+   			 	
+   			 	<p:messages autoUpdate="true" />
+   			
+   			 	
+   			 	
+   			 	<p:panelGrid id="dGrid" styleClass="ui-noborder">
+   			 	
+				<p:row>
+						<p:column colspan="2">
+							<p:outputLabel id="mensaje" value="#{salarioMinimo.mensaje}"
+								styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+
+
+				<p:row>
+				 <p:column style="text-align: left !important;width: 5px !important;">
+									
+									<p:outputLabel value="Monto:"  />
+   			 	</p:column>						 
+				<p:column style="text-align: left !important;width: 5px !important;">
+									
+									<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" />
+   			 	</p:column>		
+														
+				</p:row>
+				</p:panelGrid>
+				
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Guardar"
+						actionListener="#{salarioMinimo.guardar}"
+						oncomplete="PF('editar').hide();" update="form:tabla form:result"
+						styleClass="blue" />
+					<p:commandButton value="Cerrar" onclick="PF('editar').hide();"
+						update="form:tabla form:result" styleClass="blue"
+						style="margin-left:13px" />
+
+				</p:outputPanel>
+				
+				
+		 </h:form>
+		 </p:dialog>
+		 
+		
+		 
+       <p:dialog styleClass="styleWhite" header="Agregar Usuario" appendTo="@(body)" widgetVar="nuevo" showEffect="fade" modal="true" resizable="false">
+        
+			
+   			
+   			<h:form id="formDlg"> 	
+   			 	
+   			 	<p:messages autoUpdate="true" />
+   			
+   			 	
+   			 	
+   			 	<p:panelGrid id="dGrid" styleClass="ui-noborder">
+   			 	
+   			 	<p:row>
+						<p:column colspan="2">
+							<p:outputLabel id="mensaje" value="#{salarioMinimo.mensaje}"
+								styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+   			 	
+<!--    			 	<p:row > -->
+<!--    			 	 <p:column style="text-align: left !important;width: 20px !important;"> -->
+									
+<!-- 									<p:outputLabel value="Usuario:"  /> -->
+<!--    			 	</p:column>						  -->
+<!-- 				<p:column style="text-align: left !important;width: 300px !important;"> -->
+					
+<!-- 									<p:inputText id="usuarioGuardar" value="#{salarioMinimo.insertUsuario}"  style="text-Align:left;font-size:15px;width:300px"/> -->
+<!--    			 	</p:column>							 -->
+<!-- 				</p:row> -->
+
+				<p:row>
 				<p:column style="text-align: left !important;width: 20px !important;">
 									
 									<p:outputLabel value="Zona:"  />
    			 	</p:column>						 
 				<p:column style="text-align: left !important;width: 20px !important;">
 					
-									<p:inputText id="zonaGuardar" value="#{salarioMinimo.insertZona}"  style="text-Align:left;font-size:15px;width:10px"/>
+									<p:inputText id="zonaGuardar" value="#{salarioMinimo.insertZona}"  style="text-Align:left;font-size:15px;width:80px"/>
    			 	</p:column>	
-				
+				</p:row>
+
+				<p:row>
 				<p:column style="text-align: left !important;width: 120px !important;">
 									
 									<p:outputLabel value="Fecha Calendario:" />
@@ -138,40 +224,49 @@
 									inputStyle="width:80px; text-align:right;"
 									readonlyInput="true" />
 				</p:column>
+				</p:row>
+
+				<p:row>
 				 <p:column style="text-align: left !important;width: 5px !important;">
 									
 									<p:outputLabel value="Monto:"  />
    			 	</p:column>						 
-				<p:column style="text-align: left !important;width: 5px !important;">
+				<p:column style="text-align: left !important;width: 30px !important;">
 									
-									<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" />
+									<p:inputText id="montoGuardar" value="#{salarioMinimo.montoDiario}" style="text-Align:left;font-size:15px;width:50px" />
    			 	</p:column>		
 														
 				</p:row>
 				</p:panelGrid>
 				
 				
-				<p:outputPanel style="text-align:right">
-									
-				<p:commandButton onclick="PF('tabla2').hide();" update="result" value="Cerrar" styleClass="blue ui-button-text" style="margin-right:10px" ajax="true" />
-   			 	
-				<p:commandButton styleClass="blue ui-button-text" actionListener="#{salarioMinimo.onAddNew}"
-				 value="Enviar"  update="result usuarioGuardar,zonaGuardar,fechaGuardar,montoGuardar"  ajax="true"/>
-   			 	</p:outputPanel>
-   			 	
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Guardar"
+						actionListener="#{salarioMinimo.guardar}"
+						oncomplete="PF('nuevo').hide();" update="form:tabla form:result"
+						styleClass="blue" />
+					<p:commandButton value="Cerrar" onclick="PF('nuevo').hide();"
+						update="form:tabla form:result" styleClass="blue"
+						style="margin-left:13px" />
+
+				</p:outputPanel>
    			 	
 				
 				
-		 </p:outputPanel>	
-		</p:dialog>
+	
+		 
+		 </h:form>
+		 </p:dialog>
+		 
 		
 		
-		</p:panel>	
 		
-		<ui:include src="processResult.xhtml">
-			<ui:param name="base" value="#{salarioMinimo}" />
-		</ui:include>
-  </h:form>
+		
+		
+		
+
+	
+	
 </ui:define>
 
 
