@@ -24,6 +24,12 @@ import mx.axxib.aforedigitalgt.serv.ReporteLiquidacionServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de reporte de liquidación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 14/Ene/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "reporteLiquidacion")
 @ELBeanName(value = "reporteLiquidacion")

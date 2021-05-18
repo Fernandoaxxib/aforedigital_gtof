@@ -29,6 +29,13 @@ import mx.axxib.aforedigitalgt.eml.ObtieneMontoTraspasosIn;
 import mx.axxib.aforedigitalgt.eml.VentaTitulosMonitorCTIn;
 import mx.axxib.aforedigitalgt.eml.VentaTitulosMonitorIn;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de venta de títulos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 14/Dic/2020
+//** Última Modificación:
+//***********************************************//
+
 @Repository
 @Transactional
 public class VentaTitulosRepo extends RepoBase {

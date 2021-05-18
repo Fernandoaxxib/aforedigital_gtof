@@ -41,6 +41,12 @@ import mx.axxib.aforedigitalgt.serv.VentaTitulosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de venta de títulos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 14/Dic/2020
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "ventaTitulos")
 @ELBeanName(value = "ventaTitulos")

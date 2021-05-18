@@ -16,6 +16,13 @@ import mx.axxib.aforedigitalgt.eml.ExportarIn;
 import mx.axxib.aforedigitalgt.eml.LlenaInfoOut;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de notificación de pagos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 5/Ene/2021
+//** Última Modificación:
+//***********************************************//
+
 @Repository
 @Transactional
 public class NotificacionPagosRepo extends RepoBase {

@@ -15,6 +15,13 @@ import mx.axxib.aforedigitalgt.eml.LiqEjecutaReporteIn;
 import mx.axxib.aforedigitalgt.eml.LiqObtieneParametrosOut;
 import mx.axxib.aforedigitalgt.eml.LiqObtieneSieforeOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de reporte de liquidación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 14/Ene/2021
+//** Última Modificación:
+//***********************************************//
+
 @Repository
 @Transactional
 public class ReporteLiquidacionRepo extends RepoBase {

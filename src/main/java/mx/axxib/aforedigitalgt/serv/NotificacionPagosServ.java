@@ -11,6 +11,13 @@ import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ExportarIn;
 import mx.axxib.aforedigitalgt.eml.LlenaInfoOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de notificación de pagos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 5/Ene/2021
+//** Última Modificación:
+//***********************************************//
+
 @Service
 public class NotificacionPagosServ extends ServiceBase {
 
