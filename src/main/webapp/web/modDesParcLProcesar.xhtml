@@ -47,7 +47,6 @@
 
 	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
-
 		<p:dialog id="dlg1" styleClass="styleWhite" appendTo="@(body)"
 			widgetVar="dlg2" modal="true" width="30%" resizable="false">
 			<h:form>
@@ -57,10 +56,9 @@
 					filteredValue="#{modDesParcLProcesar.filtro}"
 					globalFilterFunction="#{modDesParcLProcesar.globalFilterFunction}"
 					selection="#{modDesParcLProcesar.selectedLote}"
-					emptyMessage="Sin información"
-					styleClass="styleTable2" rowKey="#{registro.ID_LOTE}"
-					style="padding-bottom:10px;border:0px">
-					
+					rowKey="#{registro.ID_LOTE}" emptyMessage="Sin información"
+					styleClass="styleTable2" style="padding-bottom:10px;border:0px">
+
 					<p:ajax process="@this" event="rowSelect"
 						listener="#{modDesParcLProcesar.onRowSelect}" />
 
@@ -80,9 +78,10 @@
 							<h:outputLabel style="margin-right:20px;font-weight:normal;"
 								value="#{msg.aprob_label_filtro}" />
 							<p:inputText id="globalFilter"
-								onkeyup="PF('listaLotes').filter()"							
+								onkeyup="PF('listaLotes').filter()"
 								onkeypress="if (event.keyCode == 13) { return false; }"
-								style="width:270px !important;background:#ffffff !important;font-size:12px !important" placeholder="Número de lote | Fecha de operación">
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Número de lote | Fecha de operación">
 
 							</p:inputText>
 						</p:outputPanel>
@@ -164,13 +163,13 @@
 								</p:column>
 								<p:column rendered="#{modDesParcLProcesar.radioSelected eq 2}">
 									<p:outputPanel class="outputlabel-shadow"
-										style="padding-top:5px;width:285px;height:19px !important;border:#{modDesParcLProcesar.border}">
+										style="padding-top:5px;width:303px;height:17px !important;border:#{modDesParcLProcesar.border}">
 										<p:outputLabel id="idLote" value="#{modDesParcLProcesar.lote}" />
 									</p:outputPanel>
 								</p:column>
 								<p:column rendered="#{modDesParcLProcesar.radioSelected eq 2}">
-									<p:commandButton styleClass="blue" style="width:35px"
-										type="submit" value="..."
+									<p:commandButton styleClass="blue"
+										style="width:35px;margin-left:-19px" type="submit" value="..."
 										action="#{modDesParcLProcesar.getLotes}" update="dlg1"
 										oncomplete="PF('dlg2').show();" />
 								</p:column>
@@ -184,7 +183,7 @@
 								</p:column>
 								<p:column rendered="#{modDesParcLProcesar.radioSelected eq 2}">
 									<p:outputPanel class="outputlabel-shadow"
-										style="padding-top:5px;width:338px;height:19px !important">
+										style="padding-top:5px;width:338px;height:17px !important">
 										<p:outputLabel value="#{modDesParcLProcesar.ruta}" />
 									</p:outputPanel>
 								</p:column>
@@ -196,7 +195,7 @@
 								</p:column>
 								<p:column rendered="#{modDesParcLProcesar.radioSelected eq 2}">
 									<p:outputPanel class="outputlabel-shadow"
-										style="padding-top:5px;width:338px;height:19px !important">
+										style="padding-top:5px;width:338px;height:17px !important">
 										<p:outputLabel value="#{modDesParcLProcesar.archivo}" />
 									</p:outputPanel>
 								</p:column>
@@ -210,7 +209,7 @@
 								</p:column>
 								<p:column rendered="#{modDesParcLProcesar.radioSelected eq 3}">
 									<p:outputPanel class="outputlabel-shadow"
-										style="padding-top:5px;width:338px;height:19px !important">
+										style="padding-top:5px;width:338px;height:17px !important">
 										<p:outputLabel style="width:150px"
 											value="#{modDesParcLProcesar.ruta}" />
 									</p:outputPanel>

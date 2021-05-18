@@ -24,6 +24,7 @@ import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.ProcesoOut;
+import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -73,6 +74,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	@Setter
 	private List<TipoProcesoOut> listaTipoProceso;
 	
+	@Getter
+	@Setter
+	private Integer radioSelected;
+	
 //	
 //	@Getter
 //	@Setter
@@ -115,18 +120,18 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	}
 	
 	public List<TipoProcesoOut> consultarTodo(){
-		ProcessResult pr = new ProcessResult();
-		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cargar Clave Proceso");
+//		ProcessResult pr = new ProcessResult();
+//		pr.setFechaInicial(DateUtil.getNowDate());
+//		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			pr.setStatus("Proceso ejecutado Correctamente");
+//			pr.setStatus("Proceso ejecutado Correctamente");
 			System.out.println("VALOR DE  LISTA TIPO PROCESO "+listaTipoProceso.size()+" VALOR: "+listaTipoProceso.get(0));
 		}catch (Exception e) {
-			pr = GenericException(e);
+			GenericException(e);
 		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
+//			pr.setFechaFinal(DateUtil.getNowDate());
+//			resultados.add(pr);
 		}
 		return listaTipoProceso;
 	}
@@ -157,24 +162,51 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 String[] parts = selectedTipoClave.split("-");
 				 String part1 = parts[0]; // 123
 				 String part2 = parts[1]; // 654321
-				
-				if((nssCURP.length() > 0 && nssCURP.length()<=11) && StringUtils.isNumeric(nssCURP)) {
+				System.out.println("VALOR DE RADIOSELECT;"+radioSelected);
+				if((nssCURP.length() > 0 && nssCURP.length()<=11)  && radioSelected == 1) {//&& StringUtils.isNumeric(nssCURP)
 						
-					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, null,part1);	
-					pr.setStatus("Proceso ejecutado Correctamente");
-					 System.out.println("ES NSS");
-					 
+					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(radioSelected,desmarcaNSS, null,part1);	
+					
+					System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 1) {
+						pr.setStatus("Proceso ejecutado Correctamente");//"Consulta Exitosa"
+						
+						
+					}else {
+						if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+						} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
+							pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+						}
+					//pr.setStatus("Proceso ejecutado Correctamente");
+					
+					
+					System.out.println("ES NSS");
+					}	 
 				}
 				if(StringUtils.isNumeric(nssCURP)==false && (nssCURP.length() > 0 && nssCURP.length()<=11) ){
 					 UIInput inputNss = (UIInput) findComponent("nssCURP");
 			 		 inputNss.setValid(false);
 					 pr.setStatus("Ingresar NSS Valido ");	
 				}
-				if (ValidateUtil.isCURP(nssCURP)) {
+				if (ValidateUtil.isCURP(nssCURP) && radioSelected== 2) {
 				 
-					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(null, desmarcaCURP,part1);
-					 pr.setStatus("Proceso ejecutado Correctamente");
+					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(radioSelected,null, desmarcaCURP,part1);
+					 System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+						if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 1) {
+							pr.setStatus("Proceso ejecutado Correctamente");//"Consulta Exitosa"
+							
+							
+						}else {
+							if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
+								GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+							} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
+								pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+							}
+					 
+					 //pr.setStatus("Proceso ejecutado Correctamente");
 					 System.out.println("ES CURP");
+						}
 				}
 				if(ValidateUtil.isCURP(nssCURP) ==false && nssCURP.length()>11 ) {
 									
@@ -374,7 +406,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 String part1 = parts[0]; // 123
 				 String part2 = parts[1]; // 654321
 				 
-				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,part1);
+				 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(0,desmarcaNSS, desmarcaCURP,part1);
 //					Date today2= new Date();		
 //					proceso.setFechahoraFinal(format.format(today2));
 				 

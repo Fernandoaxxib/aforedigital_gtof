@@ -1,9 +1,14 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -54,6 +59,10 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 
 	@Getter
 	@Setter
+	private List<LoteOP84Out> filtro;
+
+	@Getter
+	@Setter
 	private LoteOP84Out selectedLote;
 
 	@Getter
@@ -95,33 +104,32 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	private boolean disabled5;
 	@Getter
 	private String border;
-	
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if (init) {			
-			reset();			
+		if (init) {
+			reset();
 		}
 	}
 
 	public void radioSelected() {
 		if (radioSelected != null) {
-			border="";
+			border = "";
 			radioSelected2 = null;
 			lote = null;
 			seleccion2 = false;
 			disabled1 = false;
 			disabled2 = false;
 			disabled3 = false;
-			disabled4 = true;			
+			disabled4 = true;
 		}
 
 	}
 
 	public void radioSelected2() {
 		if (radioSelected2 != null) {
-			border="";
+			border = "";
 			fecIni = null;
 			fecFin = null;
 			radioSelected = null;
@@ -129,7 +137,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			disabled1 = true;
 			disabled2 = true;
 			disabled3 = false;
-			disabled4 = false;					
+			disabled4 = false;
 		}
 
 	}
@@ -146,6 +154,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			}
 			fecIni = null;
 			fecFin = null;
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -211,7 +220,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta");
-		archivo=null;
+		archivo = null;
 
 		if (radioSelected != null || radioSelected2 != null) {
 			if (radioSelected != null && radioSelected.equals("1")) {
@@ -222,10 +231,10 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 							if (res.getOn_Estatus() == 1) {
 								pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 								registros = res.getRegistros();
-								if(registros.size()>0) {
-									disabled5=false;
-								}else {
-									disabled5=true;
+								if (registros.size() > 0) {
+									disabled5 = false;
+								} else {
+									disabled5 = true;
 								}
 							} else {
 								if (res.getOn_Estatus() == 2) {
@@ -265,15 +274,16 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			}
 			if (radioSelected2 != null && radioSelected2.equals("1")) {
 				if (lote != null) {
+					border = "";
 					try {
 						ProcesResult res = service.getConsultaOP84(fecIni, fecFin, lote);
 						if (res.getOn_Estatus() == 1) {
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 							registros = res.getRegistros();
-							if(registros.size()>0) {
-								disabled5=false;
-							}else {
-								disabled5=true;
+							if (registros.size() > 0) {
+								disabled5 = false;
+							} else {
+								disabled5 = true;
 							}
 						} else {
 							if (res.getOn_Estatus() == 2) {
@@ -288,8 +298,8 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
 					}
-				} else {					
-					border="2px solid #ff0028 !important;";
+				} else {
+					border = "2px solid #ff0028 !important;";
 					pr.setStatus("Se requiere el número de lote");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
@@ -299,7 +309,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			UIInput radio = (UIInput) findComponent("customRadio");
 			radio.setValid(false);
 			UIInput radio2 = (UIInput) findComponent("customRadio2");
-			radio2.setValid(false);			
+			radio2.setValid(false);
 			pr.setStatus("Selección requerida");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
@@ -349,26 +359,47 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	}
 
 	public void reset() {
-		registros = null;
-		nombreArchivo = null;
-		lote = null;
-		lote1 = null;
-		fecIni = null;
-		fecFin = null;
 		archivo = null;
-		proceso = null;
-		radioSelected = null;
-		radioSelected2 = null;
-		seleccion1 = false;
-		seleccion2 = false;
+		border = "";
 		disabled1 = true;
 		disabled2 = true;
 		disabled3 = true;
 		disabled4 = true;
 		disabled5 = true;
+		fecIni = null;
+		fecFin = null;
+		filtro = null;
+		listLotes = null;
+		lote = null;
+		lote1 = null;			
+		nombreArchivo = null;
+		proceso = null;
+		radioSelected = null;
+		radioSelected2 = null;
+		registros=null;
 		ruta = "/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
 		ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
+		seleccion1 = false;
+		seleccion2 = false;
 		today = new Date();
-		border="";
+
+	}
+
+	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (filterText == null || filterText.equals("")) {
+			return true;
+		}
+
+		LoteOP84Out car = (LoteOP84Out) value;
+
+		String fechaOperacion = cadenaFecha(car.getFECHA_LOTE());
+		return car.getID_LOTE().toString().contains(filterText) || fechaOperacion.contains(filterText);
+	}
+
+	private String cadenaFecha(Date fecha) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		String strDate = dateFormat.format(fecha);
+		return strDate;
 	}
 }

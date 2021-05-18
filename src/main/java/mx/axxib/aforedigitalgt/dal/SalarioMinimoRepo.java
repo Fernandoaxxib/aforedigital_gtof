@@ -107,7 +107,7 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SalarioMinimoMensaje update(String usuario, String cdZona , Date calendario, Double monto) throws AforeException {
+	public SalarioMinimoMensaje update(SalarioMinimoOut seleccionado) throws AforeException {
 		try {
 			
 	        
@@ -117,14 +117,16 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_CDG_ZONA", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_FCH_CALENDARIO", Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("P_FCH_NUEVA", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MONTO_DIARIO", Double.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
-		query.setParameter("P_USUARIO", usuario);
-		query.setParameter("P_CDG_ZONA", cdZona);
-		query.setParameter("P_FCH_CALENDARIO", calendario);
-		query.setParameter("P_MONTO_DIARIO", monto);
+		query.setParameter("P_USUARIO", seleccionado.getUserId());
+		query.setParameter("P_CDG_ZONA", seleccionado.getCdZona());
+		query.setParameter("P_FCH_CALENDARIO",seleccionado.getFechaCalendario());
+		query.setParameter("P_FCH_NUEVA", seleccionado.getFechaUltimo());
+		query.setParameter("P_MONTO_DIARIO",seleccionado.getMontoDiario());
 		
 		SalarioMinimoMensaje res=new SalarioMinimoMensaje();
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
@@ -136,7 +138,7 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SalarioMinimoMensaje delete(String usuario,Date calendario) throws AforeException {
+	public SalarioMinimoMensaje delete( SalarioMinimoOut seleccionado) throws AforeException {
 		try {
 			
 	        
@@ -148,8 +150,8 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
-		query.setParameter("P_USUARIO", usuario);
-		query.setParameter("P_FCH_CALENDARIO", calendario);
+		query.setParameter("P_USUARIO", seleccionado.getUserId());
+		query.setParameter("P_FCH_CALENDARIO", seleccionado.getFechaCalendario());
 		
 		
 		SalarioMinimoMensaje res=new SalarioMinimoMensaje();

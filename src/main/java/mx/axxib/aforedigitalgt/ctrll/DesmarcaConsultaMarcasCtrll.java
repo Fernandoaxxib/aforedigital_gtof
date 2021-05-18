@@ -142,6 +142,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();
 //			proceso.setFechahoraInicio(format.format(today));
+			if(nombreArchivoCarga.endsWith(".txt")) {
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));
@@ -166,6 +167,11 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
 //				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
 //			}
+			}else {
+				UIInput input = (UIInput) findComponent("nombreCarga");
+				input.setValid(false);
+				pr.setStatus("Ingrese archivo con extensión .txt");	
+			}
 		}
 		}catch (Exception e) {
 			pr = GenericException(e);

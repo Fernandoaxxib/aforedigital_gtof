@@ -42,17 +42,17 @@ public class SalarioMinimoServ extends ServiceBase {
 		}
 	}
 	
-	public SalarioMinimoMensaje update(String usuario, String cdZona , Date calendario, Double monto)  throws AforeException {
+	public SalarioMinimoMensaje update(SalarioMinimoOut seleccionado)  throws AforeException {
 		try {
-			return dao.update(usuario,cdZona,calendario,monto);
+			return dao.update(seleccionado);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public SalarioMinimoMensaje delete(String usuario, Date calendario)  throws AforeException {
+	public SalarioMinimoMensaje delete( SalarioMinimoOut seleccionado)  throws AforeException {
 		try {
-			return dao.delete(usuario,calendario);
+			return dao.delete(seleccionado);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

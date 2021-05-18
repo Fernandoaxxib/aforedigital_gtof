@@ -49,6 +49,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 
 		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
 		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		System.out.println(" res: "+res);
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -124,11 +125,12 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public DesmarcaCargaConsultaMasivaOut desmarcaIndividualCuenta(String nss, String curp, String claveProceso) throws AforeException {
+	public DesmarcaCargaConsultaMasivaOut desmarcaIndividualCuenta(Integer opcion,String nss, String curp, String claveProceso) throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_DESMARCA_CARGA_MASIVA_PACKAGE).concat(".").concat(Constantes.DETALLE_DESMARCA_MASIVA_INDIVIDUAL_CITA_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
-
+		
+		query.registerStoredProcedureParameter("p_Opcion", Integer.class, ParameterMode.IN);		
 		query.registerStoredProcedureParameter("p_Nss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_CURP", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_CveProc", String.class, ParameterMode.IN);
@@ -136,6 +138,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);		
 		
+		query.setParameter("p_Opcion", opcion);
 		query.setParameter("p_Nss", nss);
 		query.setParameter("p_CURP", curp);
 		query.setParameter("p_CveProc", claveProceso);

@@ -64,12 +64,20 @@
 								</p:column>
 								<p:column style="text-Align:left;font-size:15px;width:308px">
 									<p:inputText id="nombreCarga" value="#{desmarcaCargaMasiva.nombreArchivoCarga}"  style="text-Align:left;font-size:15px;width:308px"/>
+<!-- 									<p:tooltip for="nombreCarga" value="El archivo deberá tener la extensión .txt" trackMouse="true"/> -->
 								</p:column>
 							</p:row>
 							
 							</p:panelGrid>
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
+							
 							<p:row style="text-align: right !important;width: 450px !important;">
+								
+								
+
+								
+							
+							
 								<p:column style="text-align: right !important;width: 450px !important;">
 <!-- 									<div class="ui-g"> -->
 <!-- 									<div class="ui-g-12" > -->
@@ -78,6 +86,20 @@
 <!-- 									</div> -->
 								</p:column>
 							</p:row>
+<!-- 							<p:row style="text-align: left !important;width: 450px !important;"> -->
+								
+<!-- 								<p:column colspan="1" style="padding:150px;"> -->
+<!-- 									  <p:commandButton type="button" id="animate" icon="ui-icon-comment" class="blue"/> -->
+<!--     								   <p:tooltip for="animate" value="El archivo deberá tener la extensión .txt" showEffect="clip" hideEffect="fold" /> -->
+<!-- 								</p:column> -->
+							
+<!-- 							</p:row> -->
+						<p:row>
+						<p:column colspan="3" style="padding:10px;">
+							<p:outputLabel
+								value="El archivo deberá tener la extensión .txt"  style="color:blue;" />
+						</p:column>
+						</p:row>
 						</p:panelGrid>
 						
 					</p:panel>
@@ -144,6 +166,15 @@
 							</p:row>
 						</p:panelGrid>
 						
+						<p:panelGrid  class="ui-noborder" style="margin-top:15px">
+							<p:row>
+								<p:column >
+								</p:column>
+								<p:column >
+									
+								</p:column>
+							</p:row>
+						</p:panelGrid>
 						<p:panelGrid  class="ui-noborder" style="margin-top:10px">
 							<p:row>
 								<p:column >

@@ -1,11 +1,15 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
 import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -32,6 +36,10 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 	@Getter
 	@Setter
 	private List<LoteOP85Out> listLotes;
+	
+	@Getter
+	@Setter
+	private List<LoteOP85Out> filtro;
 	
 	@Getter
 	@Setter
@@ -104,19 +112,13 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 	private boolean disabled4;
 	@Getter
 	private boolean disabled5;
+	@Getter
+	private String border;
 	
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
-			ruta="/iprod/PROCESAR/TRANSMISION/AFORE/RETIROS";
-			ruta2="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
-			ruta3="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
-			archivo="";
-			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");
-			archivo = format.format(DateUtil.getNowDate());
-			archivo=archivo+".OP85";
-			today= new Date();
+		if(init) {			
 			reset();			
 		}
 	}
@@ -130,7 +132,8 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			disabled3 = false;
 			disabled4 = true;
 			disabled5 = false;
-			archivo3=null;			
+			archivo3=null;	
+			border="";
 		}
 
 	}
@@ -148,6 +151,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			disabled4 = false;
 			disabled5 = false;
 			archivo3=null;
+			border="";
 		}
 
 	}
@@ -159,9 +163,10 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		try {
 			if(listLotes==null) {
 			listLotes=service.getLotesOP85();
-			}
+			}			
 			fecIni=null;
 			fecFin=null;
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -283,7 +288,8 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 				}
 			}
 			if (radioSelected2 != null && radioSelected2.equals("1")) {
-				if (lote != null && !lote.isEmpty()) {					
+				if (lote != null) {	
+					border="";
 						  try {
 								ProcesResult res=service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
 								if (res.getOn_Estatus() == 1) {
@@ -301,10 +307,8 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 								pr.setFechaFinal(DateUtil.getNowDate());
 								resultados.add(pr);
 							}					  
-				} else {
-					UIInput radio2 = (UIInput) findComponent("vLote");
-					radio2.setValid(false);
-
+				} else {					
+					border="2px solid #ff0028 !important;";
 					pr.setStatus("Se requiere el número de lote");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
@@ -344,25 +348,51 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		 }
 	}
 	public void reset() {
-		fecIni=null;
-		fecFin=null;
-		lote=null;
-		lote1=null;
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd");		
+		archivo = format.format(DateUtil.getNowDate());
+		archivo=archivo+".OP85";
 		archivo2=null;
 		archivo3=null;
-		proceso=null;
-		radioSelected = null;
-		radioSelected2 = null;
-		seleccion1 = false;
-		seleccion2 = false;
+		border="";
 		disabled1 = true;
 		disabled2 = true;
 		disabled3 = true;
 		disabled4 = true;
-		disabled5 = true;
+		disabled5 = true;		
+		fecIni=null;
+		fecFin=null;
+		filtro=null;
+		listLotes=null;
+		lote=null;
+		lote1=null;		
+		proceso=null;
+		radioSelected = null;
+		radioSelected2 = null;
+		ruta="/iprod/PROCESAR/TRANSMISION/AFORE/RETIROS";
+		ruta2="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
+		ruta3="/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
+		seleccion1 = false;
+		seleccion2 = false;
+		today= new Date();
 	}
 	public void limpiar() {
 		lote=null;
 	}
-	
+	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+        String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+        if (filterText == null || filterText.equals("")) {
+            return true;
+        }
+        
+        LoteOP85Out car = (LoteOP85Out) value;
+        
+        String fechaOperacion= cadenaFecha(car.getFECHA_LOTE());
+        return car.getID_LOTE().toString().contains(filterText)  
+                || fechaOperacion.contains(filterText);
+    }
+	private String cadenaFecha(Date fecha) {		
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");  
+		String strDate = dateFormat.format(fecha);  		
+		return strDate;
+	}
 }
