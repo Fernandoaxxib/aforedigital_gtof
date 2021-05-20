@@ -132,6 +132,15 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
+					<p:panelGrid class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column>
+								<p:outputLabel
+									value="El archivo deberá tener la extensión .OP84"
+									style="color:blue;" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:panel>
 
 				<p:panel header="GENERAR REPORTE" id="pnl2" style="margin-top:20px">
@@ -143,7 +152,7 @@
 									unselectable="#{retParImssOP84.seleccion1}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP84.radioSelected}"
-										update="form:btnConsultar form:customRadio2 form:customRadio form:dfini form:dffin form:vLote form:btnC"
+										update="form:btnConsultar form:customRadio2 form:customRadio form:dfini form:dffin form:vLote form:btnC form:table1 form:vArchivo"
 										global="false" />
 									<f:selectItem itemLabel="Fecha" itemValue="1" />
 								</p:selectOneRadio>
@@ -183,7 +192,7 @@
 									unselectable="#{retParImssOP84.seleccion2}"
 									layout="pageDirection">
 									<p:ajax listener="#{retParImssOP84.radioSelected2}"
-										update="form:btnConsultar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC"
+										update="form:btnConsultar form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:btnC form:table1 form:vArchivo"
 										global="false" />
 									<f:selectItem itemLabel="Lote" itemValue="1" />
 								</p:selectOneRadio>
@@ -206,7 +215,7 @@
 									value="#{msg.retPar_imss_op84_btnConsultar}"
 									action="#{retParImssOP84.consultarOP84}"
 									disabled="#{retParImssOP84.disabled3}"
-									update="form:vArchivo form:btnGenerar form:table1 form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:result"
+									update="form:vArchivo form:btnGenerar form:table1 form:customRadio form:customRadio2 form:dfini form:dffin form:vLote form:result form:btnConsultar"
 									ajax="true" />
 							</p:column>
 						</p:row>
@@ -252,7 +261,7 @@
 							</p:column>
 							<p:column>
 								<p:inputText id="vArchivo" value="#{retParImssOP84.archivo}"
-									disabled="#{retParImssOP84.disabled5}"
+									disabled="#{retParImssOP84.disabled5}" maxlength="50"
 									style="width:306px;margin-right: 10px;" />
 							</p:column>
 							<p:column>
@@ -261,13 +270,20 @@
 									value="Generar Reporte"
 									action="#{retParImssOP84.generarReporte}"
 									disabled="#{retParImssOP84.disabled5}"
-									update="form:table1 form:result form:btnGenerar form:vArchivo form:form:dfini form:form:dffin form:vLote form:btnC form:customRadio form:customRadio2"
+									update="form:table1 form:result form:btnGenerar form:vArchivo form:form:dfini form:form:dffin form:vLote form:btnC form:customRadio form:customRadio2 form:btnConsultar"
 									ajax="true" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
+					<p:panelGrid class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="El archivo deberá tener la extensión .xls"
+									style="color:blue;" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:panel>
-
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{retParImssOP84}" />
 				</ui:include>

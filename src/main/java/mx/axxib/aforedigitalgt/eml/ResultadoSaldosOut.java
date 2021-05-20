@@ -19,5 +19,5 @@ public class ResultadoSaldosOut {
 	private List<DetalleSaldoOut> listSaldos;
 	private List<DatosClienteOut> datosCliente;
 	private List<DatosClienteNSSOut> datosClienteNSS;
-	private List<SaldoOut> saldos;
+	private List<Saldo2Out> saldos;
 }

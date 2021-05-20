@@ -3,23 +3,20 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.faces.component.UIInput;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DatosClienteOut;
 import mx.axxib.aforedigitalgt.eml.DetalleSaldoOut;
 import mx.axxib.aforedigitalgt.eml.ResultadoSaldosOut;
-import mx.axxib.aforedigitalgt.eml.SaldoOut;
+import mx.axxib.aforedigitalgt.eml.Saldo2Out;
 import mx.axxib.aforedigitalgt.serv.SaldosActualesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
@@ -55,21 +52,33 @@ public class SaldosActualesCtrll extends ControllerBase {
 	private List<DetalleSaldoOut> listaSaldos;
 	@Getter
 	@Setter
-	private List<SaldoOut> saldos;
+	private List<Saldo2Out> saldos;
 	@Getter
 	@Setter
-	private SaldoOut selectedSaldo;
+	private Saldo2Out selectedSaldo;
+	
+	@Getter
+	private boolean disabled;
+	
+	@Getter
+	private Double saldoTotal;
+	
+	@Getter
+	private Integer nivel;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
+			saldoTotal=0.0;
 			listaNombres = null;
 			valorEntrada = null;
 			selectedNombre = null;
 			fechaCorte = DateUtil.getNowDate();
 			radioSelected = null;
-			saldos=null;
+			saldos = null;
+			disabled=true;		
+			nivel=1;
 		}
 	}
 
@@ -122,30 +131,13 @@ public class SaldosActualesCtrll extends ControllerBase {
 		}
 	}
 
-	public void probar() throws Exception {
-		ProcessResult pr = new ProcessResult();
-		pr.setFechaInicial(DateUtil.getNowDate());
-
-		try {
-			// ResultadoSaldosOut res = service.getDatosXNSS("53876932673");
-			ResultadoSaldosOut res = service.getDatosXNombre("ABAD MORAYOLANDA");
-			if (res.getP_ESTATUS() == 1) {
-				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-			} else {
-				if (res.getP_ESTATUS() == 2) {
-					GenerarErrorNegocio(res.getP_MENSAJE());
-				} else if (res.getP_ESTATUS() == 0) {
-					pr.setStatus(res.getP_MENSAJE());
-				}
-			}
-		} catch (AforeException e) {
-			pr = GenericException(e);
-		}
-	}
-
 	public void buscar() {
+		this.disabled=true;				
+		this.saldos = null;
 		this.selectedNombre = null;
-		this.saldos=null;
+		this.listaNombres=null;
+		this.saldoTotal=0.0;
+		
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 
@@ -183,7 +175,7 @@ public class SaldosActualesCtrll extends ControllerBase {
 				}
 			} else {
 				try {
-					ResultadoSaldosOut res = service.getDatosXNombre(valorEntrada);
+					ResultadoSaldosOut res = service.getDatosXNombre(valorEntrada.toUpperCase());
 					if (res.getP_ESTATUS() == 1) {
 						listaNombres = res.getDatosCliente();
 					} else {
@@ -212,12 +204,14 @@ public class SaldosActualesCtrll extends ControllerBase {
 		return true;
 	}
 
-	public void pruebita() {
+	public void limpiar() {
 		radioSelected = null;
 		listaSaldos = null;
 	}
 
 	public void cargaSaldos() {
+		saldoTotal=0.0;
+		nivel=1;
 		if (selectedNombre != null) {
 			ProcessResult pr = new ProcessResult();
 			try {
@@ -227,6 +221,13 @@ public class SaldosActualesCtrll extends ControllerBase {
 						this.selectedNombre.getCOD_CUENTA());
 				if (res.getP_ESTATUS() == 1) {
 					saldos = res.getSaldos();
+					if(saldos!=null) {
+						saldos.forEach(s->{
+							 saldoTotal+=s.getSaldo_subproduct();
+						});
+						disabled=false;		
+						selectedSaldo=null;
+					}
 				} else {
 					if (res.getP_ESTATUS() == 2) {
 						GenerarErrorNegocio(res.getP_MENSAJE());
@@ -245,6 +246,8 @@ public class SaldosActualesCtrll extends ControllerBase {
 	}
 
 	public void cargaNuevoNivel() {
+		nivel=2;
+		saldoTotal=0.0;
 		if (selectedSaldo != null) {
 			ProcessResult pr = new ProcessResult();
 			try {
@@ -254,6 +257,13 @@ public class SaldosActualesCtrll extends ControllerBase {
 						this.selectedNombre.getCOD_CUENTA());
 				if (res.getP_ESTATUS() == 1) {
 					saldos = res.getSaldos();
+					if(saldos!=null) {
+						saldos.forEach(s->{
+							 saldoTotal+=s.getSaldo_subproduct();
+						});
+						disabled=false;	
+						selectedSaldo=null;
+					}
 				} else {
 					if (res.getP_ESTATUS() == 2) {
 						GenerarErrorNegocio(res.getP_MENSAJE());
@@ -268,5 +278,27 @@ public class SaldosActualesCtrll extends ControllerBase {
 				resultados.add(pr);
 			}
 		}
+	}
+
+	public void onRowSelect(SelectEvent<Saldo2Out> event) {		
+		saldos.forEach(p -> {
+			if (p.getCod_subproduct().equals(event.getObject().getCod_subproduct()) ) {
+				if(event.getObject().getSaldo_subproduct()>0) {				
+						p.setDisabled(false);
+						p.setDisabled2(false);										
+				}else {
+					if(nivel==1) {
+						p.setDisabled(true);
+						p.setDisabled2(true);
+					}else {
+						p.setDisabled(false);
+						p.setDisabled2(true);
+					}					
+				}				
+			}else {
+				p.setDisabled(true);
+				p.setDisabled2(true);
+			}			
+		});
 	}
 }
