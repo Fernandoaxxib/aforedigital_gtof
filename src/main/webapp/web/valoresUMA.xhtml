@@ -35,11 +35,12 @@
 						<p:column style="width:650px">
 							<p:dataTable id="tabla" var="val"
 								emptyMessage="#{msg.aprob_msj_sinDatos}"
-								value="#{valorUMA.valores}">
+								value="#{valorUMA.valores}" paginator="true"  rows="5"
+				>
 
 								<p:column headerText="Valor UMA">
 									<h:outputText value="#{val.monto}" style="float:right">
-										<f:convertNumber type="currency" currencySymbol="$" />
+										<f:convertNumber type="currency" currencySymbol="$" minFractionDigits="6"/>
 									</h:outputText>
 								</p:column>
 
