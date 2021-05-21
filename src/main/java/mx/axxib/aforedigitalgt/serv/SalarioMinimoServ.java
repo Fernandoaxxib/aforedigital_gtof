@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.serv;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,22 @@ public class SalarioMinimoServ extends ServiceBase {
 	@Autowired
 	private SalarioMinimoRepo dao;
 	
+	public List<String> inicializarA() throws AforeException{
+		try {
+
+
+			 List<String> listaTipoReporte = new ArrayList<String>();
+			 listaTipoReporte.add("A");
+			 listaTipoReporte.add("B");
+			 listaTipoReporte.add("C");
+			 listaTipoReporte.add("M");
+			 listaTipoReporte.add("X");
+			return listaTipoReporte;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
 	public SalarioMinOut getSalarioMinimo() throws AforeException {
 		try {
 			return dao.getSalarioMinimo();
@@ -34,9 +51,9 @@ public class SalarioMinimoServ extends ServiceBase {
 		}
 	}
 	
-	public SalarioMinimoMensaje save(String usuario, String zona, Date calendario, Double monto) throws AforeException {
+	public SalarioMinimoMensaje save(SalarioMinimoOut parametros) throws AforeException {
 		try {
-			return dao.save(usuario,zona,calendario,monto);
+			return dao.save(parametros);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

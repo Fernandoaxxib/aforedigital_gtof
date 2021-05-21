@@ -80,7 +80,7 @@ private final EntityManager entityManager;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public SalarioMinimoMensaje save(String usuario, String zona, Date calendario, Double monto) throws AforeException {
+	public SalarioMinimoMensaje save(SalarioMinimoOut parametros) throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALARIO_MINIMO_PACKAGE).concat(".").concat(Constantes.SALARIO_MINIMO_INSERT_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
@@ -92,10 +92,10 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
-		query.setParameter("P_USUARIO", usuario);
-		query.setParameter("P_CDG_ZONA", zona);
-		query.setParameter("P_FCH_CALENDARIO", calendario);
-		query.setParameter("P_MONTO_DIARIO", monto);
+		query.setParameter("P_USUARIO", parametros.getUserId());
+		query.setParameter("P_CDG_ZONA", parametros.getCdZona());
+		query.setParameter("P_FCH_CALENDARIO", parametros.getFechaCalendario());
+		query.setParameter("P_MONTO_DIARIO", parametros.getMontoDiario());
 		
 		SalarioMinimoMensaje res=new SalarioMinimoMensaje();
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
@@ -117,7 +117,7 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_CDG_ZONA", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_FCH_CALENDARIO", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("P_FCH_NUEVA", Date.class, ParameterMode.IN);
+//		query.registerStoredProcedureParameter("P_FCH_NUEVA", Date.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MONTO_DIARIO", Double.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
@@ -125,7 +125,7 @@ private final EntityManager entityManager;
 		query.setParameter("P_USUARIO", seleccionado.getUserId());
 		query.setParameter("P_CDG_ZONA", seleccionado.getCdZona());
 		query.setParameter("P_FCH_CALENDARIO",seleccionado.getFechaCalendario());
-		query.setParameter("P_FCH_NUEVA", seleccionado.getFechaUltimo());
+//		query.setParameter("P_FCH_NUEVA", seleccionado.getFechaUltimo());
 		query.setParameter("P_MONTO_DIARIO",seleccionado.getMontoDiario());
 		
 		SalarioMinimoMensaje res=new SalarioMinimoMensaje();
@@ -141,18 +141,19 @@ private final EntityManager entityManager;
 	public SalarioMinimoMensaje delete( SalarioMinimoOut seleccionado) throws AforeException {
 		try {
 			
-	        
+	       System.out.println("VALORES DE DELETE SELECCIONADO:"+seleccionado); 
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALARIO_MINIMO_PACKAGE).concat(".").concat(Constantes.SALARIO_MINIMO_DELETE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 		    
 		query.registerStoredProcedureParameter("P_USUARIO", String.class, ParameterMode.IN);		
-		query.registerStoredProcedureParameter("P_FCH_CALENDARIO", Date.class, ParameterMode.IN);		
+		query.registerStoredProcedureParameter("P_FCH_CALENDARIO", Date.class, ParameterMode.IN);	
+		query.registerStoredProcedureParameter("P_CDG_ZONA",String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("P_USUARIO", seleccionado.getUserId());
 		query.setParameter("P_FCH_CALENDARIO", seleccionado.getFechaCalendario());
-		
+		query.setParameter("P_CDG_ZONA", seleccionado.getCdZona());
 		
 		SalarioMinimoMensaje res=new SalarioMinimoMensaje();
 		res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));

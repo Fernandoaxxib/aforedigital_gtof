@@ -22,7 +22,7 @@
 			value="#{menu.submenu}" dir="rtl">
 			
 			<f:selectItem itemLabel="VALORES UMA" itemValue="/web/valoresUMA.jsf" />
-            
+            <f:selectItem itemLabel="SALARIO MÍNIMO" itemValue="/web/salarioMinimo.jsf" />
 			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
 	</h:form>
