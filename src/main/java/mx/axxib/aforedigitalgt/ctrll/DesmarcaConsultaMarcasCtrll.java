@@ -142,7 +142,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 //			Date today= new Date();		
 //			proceso = new ProcesoOut();
 //			proceso.setFechahoraInicio(format.format(today));
-			if(nombreArchivoCarga.endsWith(".txt")) {
+			if(nombreArchivoCarga.endsWith(".txt") && (nombreArchivoCarga.length()>4) ) {
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
 //			Date today2= new Date();		
 //			proceso.setFechahoraFinal(format.format(today2));

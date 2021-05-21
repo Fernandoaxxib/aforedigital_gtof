@@ -76,7 +76,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	
 	@Getter
 	@Setter
-	private Integer radioSelected;
+	private String radioSelected;
 	
 //	
 //	@Getter
@@ -157,19 +157,24 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	pr.setFechaInicial(DateUtil.getNowDate());
 	pr.setDescProceso("Desmarca Masiva Cuentas");
 		try {
-			if (nssCURP != null && !nssCURP.equals("") ) {
+			System.out.println("VALOR DE RADIOSELECT;"+radioSelected+ "  nssCURP: "+nssCURP+ " selectedTipoClave: "+ selectedTipoClave);
+			if ((nssCURP != null || !nssCURP.equals("") ) &&(selectedTipoClave!=null || !selectedTipoClave.equals("")) && (radioSelected!=null || !radioSelected.equals(""))) {
+			
+				if(selectedTipoClave!=null && !selectedTipoClave.equals("")) {
 				
 				 String[] parts = selectedTipoClave.split("-");
-				 String part1 = parts[0]; // 123
-				 String part2 = parts[1]; // 654321
-				System.out.println("VALOR DE RADIOSELECT;"+radioSelected);
-				if((nssCURP.length() > 0 && nssCURP.length()<=11)  && radioSelected == 1) {//&& StringUtils.isNumeric(nssCURP)
+				 String part1 = parts[0]; // 
+				 String part2 = parts[1]; // 
+				System.out.println("VALOR DE RADIOSELECT;"+radioSelected+ "  nssCURP"+nssCURP);
+				if(nssCURP.length()<=11  && (radioSelected.equals("1") || radioSelected== "1")) {//&& StringUtils.isNumeric(nssCURP)
 						
-					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(radioSelected,desmarcaNSS, null,part1);	
+					
+					
+					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(Integer.parseInt(radioSelected),nssCURP, null,part1);	
 					
 					System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
 					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 1) {
-						pr.setStatus("Proceso ejecutado Correctamente");//"Consulta Exitosa"
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Consulta Exitosa"
 						
 						
 					}else {
@@ -184,17 +189,20 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 					System.out.println("ES NSS");
 					}	 
 				}
-				if(StringUtils.isNumeric(nssCURP)==false && (nssCURP.length() > 0 && nssCURP.length()<=11) ){
+				if(StringUtils.isNumeric(nssCURP)==false && (nssCURP.length() < 11) ){
 					 UIInput inputNss = (UIInput) findComponent("nssCURP");
 			 		 inputNss.setValid(false);
-					 pr.setStatus("Ingresar NSS Valido ");	
+			 		 
+			 		 
+					 pr.setStatus("Ingresar NSS Valido ");	//selectedTipoClave
+					 
 				}
-				if (ValidateUtil.isCURP(nssCURP) && radioSelected== 2) {
+				if (ValidateUtil.isCURP(nssCURP) && (radioSelected.equals("2") || radioSelected== "2")) {
 				 
-					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(radioSelected,null, desmarcaCURP,part1);
+					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(Integer.parseInt(radioSelected),null, nssCURP,part1);
 					 System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
 						if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 1) {
-							pr.setStatus("Proceso ejecutado Correctamente");//"Consulta Exitosa"
+							pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Consulta Exitosa"
 							
 							
 						}else {
@@ -205,8 +213,9 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 							}
 					 
 					 //pr.setStatus("Proceso ejecutado Correctamente");
-					 System.out.println("ES CURP");
+					
 						}
+						 System.out.println("ES CURP");
 				}
 				if(ValidateUtil.isCURP(nssCURP) ==false && nssCURP.length()>11 ) {
 									
@@ -216,12 +225,80 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				
 				}
 			
-			 
 			}else {
-				UIInput input = (UIInput) findComponent("nssCURP");
+				if(selectedTipoClave.equals("") || selectedTipoClave == null) {
+				UIInput input = (UIInput) findComponent("tipoProceso");
 				input.setValid(false);
-				pr.setStatus("NSS o CURP es requerido");
+				pr.setStatus("Tipo Clave es requerido");
+				}//selectedTipoClave
+			}
+			}else {
 				
+//				if(radioSelected.equals("1") ) {
+//					UIInput input = (UIInput) findComponent("nssCURP");
+//					input.setValid(false);
+//					pr.setStatus("NSS es requerido");
+//					}
+//					if(radioSelected.equals("2")) {
+//						UIInput input = (UIInput) findComponent("nssCURP");
+//						input.setValid(false);
+//						pr.setStatus("CURP es requerido");
+//						}
+//					if(selectedTipoClave.equals("") || selectedTipoClave == null) {
+//						UIInput input = (UIInput) findComponent("tipoProceso");
+//						input.setValid(false);
+//						pr.setStatus("Tipo Clave es requerido");
+//						}//selectedTipoClave
+				
+				if((selectedTipoClave.equals(null) || selectedTipoClave == null) && (radioSelected.equals(null) || radioSelected == null) && (nssCURP.equals(null) || nssCURP == null)) {//
+				UIInput nssCURP = (UIInput) findComponent("nssCURP");
+				nssCURP.setValid(false);
+				UIInput tipoProceso = (UIInput) findComponent("tipoProceso");
+				tipoProceso.setValid(false);
+				UIInput radSelect = (UIInput) findComponent("radSelect");
+				radSelect.setValid(false);
+				pr.setStatus("NSS o Curp Tipo Clave es requerido");//
+				}
+				if((selectedTipoClave.equals(null) || selectedTipoClave == null) && (radioSelected.equals("") || radioSelected == null)) {//
+					UIInput tipoProceso = (UIInput) findComponent("tipoProceso");
+					tipoProceso.setValid(false);
+					UIInput radSelect = (UIInput) findComponent("radSelect");
+					radSelect.setValid(false);
+					pr.setStatus("Tipo Radio, Tipo Clave es requerido");//
+					}
+				
+				if((selectedTipoClave.equals("") || selectedTipoClave == null)  && (nssCURP.equals("") || nssCURP == null)) {//
+					UIInput nssCURP = (UIInput) findComponent("nssCURP");
+					nssCURP.setValid(false);
+					UIInput tipoProceso = (UIInput) findComponent("tipoProceso");
+					tipoProceso.setValid(false);
+					UIInput radSelect = (UIInput) findComponent("radSelect");
+					radSelect.setValid(false);
+					pr.setStatus("NSS o Curp y Tipo Clave es requerido");//
+					}
+				if( (radioSelected.equals("") || radioSelected == null) && (nssCURP.equals("") || nssCURP == null)) {//
+					UIInput tipoProceso = (UIInput) findComponent("tipoProceso");
+					tipoProceso.setValid(false);
+					UIInput radSelect = (UIInput) findComponent("nssCURP");
+					radSelect.setValid(false);
+					pr.setStatus("Tipo Radio  Tipo Clave es requerido");//
+					}
+				if(selectedTipoClave.equals("") || selectedTipoClave == null ) {//
+					
+					UIInput tipoProceso = (UIInput) findComponent("tipoProceso");
+					tipoProceso.setValid(false);
+					pr.setStatus("Tipo Clave es requerido");//
+					}
+				if( radioSelected.equals("") || radioSelected == null ) {//
+					UIInput radSelect = (UIInput) findComponent("radSelect");
+					radSelect.setValid(false);
+					pr.setStatus("Tipo Radio es requerido");//
+					}
+				if( nssCURP.equals("") || nssCURP == null) {//
+					UIInput nssCURP = (UIInput) findComponent("nssCURP");
+					nssCURP.setValid(false);
+					pr.setStatus("NSS o Curp es requerido");//
+					}
 			}
 		}catch (Exception e) {
 			pr = GenericException(e);

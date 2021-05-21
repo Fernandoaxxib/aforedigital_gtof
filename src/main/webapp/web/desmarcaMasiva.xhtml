@@ -174,12 +174,17 @@
 									
 									</p:column>						 
 									
-									<p:column style="text-align: left !important;width: 150px !important;">			 
-									    <p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
-										requiredMessage="Tipo Proceso es requerido"
-										value="#{desmarcaMasiva.selectedTipoClave}">
-										<f:selectItems value="#{desmarcaMasiva.listaTipoProceso}" style="text-Align:left;font-size:15px;width:210px"/>
-										</p:selectOneMenu>
+<!-- 									<p:column style="text-align: left !important;width: 150px !important;">			  -->
+<!-- 									    <p:selectOneMenu id="tipoProceso" style="width:200px" required="false" -->
+<!-- 										requiredMessage="Tipo Proceso es requerido" -->
+<!-- 										value="#{desmarcaMasiva.selectedTipoClave}"> -->
+<!-- 										<f:selectItems value="#{desmarcaMasiva.listaTipoProceso}" style="text-Align:left;font-size:15px;width:210px"/> -->
+<!-- 										</p:selectOneMenu> -->
+<!-- 									</p:column> -->
+									<p:column  style="text-align: left !important;width: 150px !important;">	
+									<p:selectOneMenu id="tipoProceso" style="text-align: left !important;width: 150px !important;" placeholder="Seleccionar" value="#{desmarcaMasiva.selectedTipoClave}" effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+        							<f:selectItems value="#{desmarcaMasiva.listaTipoProceso}" />
+   									</p:selectOneMenu>
 									</p:column>
 							
 							
@@ -190,15 +195,12 @@
 							
 							<p:row>
 								<p:column>
-									<p:selectOneRadio id="radSelect"
-									value="#{desmarcaMasiva.radioSelected}">
+									<p:selectOneRadio id="radSelect"  unselectable="false" value="#{desmarcaMasiva.radioSelected}">
 <!-- 									<p:ajax listener="#{desmarcaMasiva.radioSelected}" -->
 <!-- 									update="form:btnEjecutar" -->
 <!-- 									global="false" /> -->
-									<f:selectItem itemValue="1"
-									itemLabel="NSS" />
-									<f:selectItem itemValue="2"
-									itemLabel="CURP" />
+									<f:selectItem itemValue="1" itemLabel="NSS" />
+									<f:selectItem itemValue="2" itemLabel="CURP" />
 									</p:selectOneRadio>
 								</p:column>
 							</p:row>
@@ -207,12 +209,12 @@
 							<p:row>
 
 								<p:column style="text-Align:left;font-size:15px;width:150px">
-									<p:inputText id="nssCURP" placeholder="" value="#{desmarcaMasiva.nssCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
+									<p:inputText id="nssCURP" maxlength="18" placeholder="" value="#{desmarcaMasiva.nssCURP}"  style="text-Align:left;font-size:15px;width:213px"/>
 								</p:column>
 								
 							
 								<p:column style="text-align: right !important;width: 450px !important;">
-									<p:commandButton id="btnEjecutar" styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="nssCURP radSelect result" ajax="true"/>
+									<p:commandButton id="btnEjecutar" styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="tipoProceso nssCURP radSelect result" ajax="true"/>
 								</p:column>
 								
 							</p:row>
