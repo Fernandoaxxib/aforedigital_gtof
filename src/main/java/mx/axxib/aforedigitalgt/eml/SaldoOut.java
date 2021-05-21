@@ -18,12 +18,11 @@ import lombok.NoArgsConstructor;
 				@ColumnResult(name = "cod_subproduct", type = String.class),
 				@ColumnResult(name = "descripcion", type = String.class),
 				@ColumnResult(name = "saldo_subproduct", type = Double.class),
-				@ColumnResult(name = "total_saldos", type = Double.class)
+				@ColumnResult(name = "total_saldos", type = Double.class)				
 		}) }) })
 public class SaldoOut {
-
 	private String cod_subproduct;
 	private String descripcion;
 	private Double saldo_subproduct;
-	private Double total_saldos;
+	private Double total_saldos;	
 }

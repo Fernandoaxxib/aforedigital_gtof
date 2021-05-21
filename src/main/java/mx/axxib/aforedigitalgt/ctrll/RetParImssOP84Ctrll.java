@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import java.util.regex.Pattern;
 import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.PrimeFaces;
@@ -23,7 +23,6 @@ import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP84Serv;
 import mx.axxib.aforedigitalgt.util.DateUtil;
-import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 @Scope(value = "session")
 @Component(value = "retParImssOP84")
@@ -118,6 +117,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			border = "";
 			radioSelected2 = null;
 			lote = null;
+			registros=null;
 			seleccion2 = false;
 			disabled1 = false;
 			disabled2 = false;
@@ -133,7 +133,8 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			fecIni = null;
 			fecFin = null;
 			radioSelected = null;
-			seleccion1 = false;
+			seleccion1 = false;			
+			registros=null;
 			disabled1 = true;
 			disabled2 = true;
 			disabled3 = false;
@@ -151,10 +152,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		try {
 			if (listLotes == null) {
 				listLotes = service.getLotesOP84();
+			}else {
+				PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 			}
 			fecIni = null;
-			fecFin = null;
-			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
+			fecFin = null;			
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -171,13 +173,14 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Generación de reporte");
-		if (registros != null && !registros.isEmpty()) {
-			if (archivo != null && !archivo.isEmpty()) {
-				if (ValidateUtil.isValidFileName(archivo)) {
+		if (registros != null && !registros.isEmpty()) {			
+				if (isNombreValid2(pr)) {
 					try {
 						ProcesResult res = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
 						if (res.getOn_Estatus() == 1) {
-							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+							String resp=aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+							resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo).concat(" ,RUTA: ").concat(ruta2);
+							pr.setStatus(resp);
 							reset();
 						} else {
 							if (res.getOn_Estatus() == 2) {
@@ -192,35 +195,39 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						pr.setFechaFinal(DateUtil.getNowDate());
 						resultados.add(pr);
 					}
-				} else {
-					pr.setDescProceso("Generación de reporte");
-					pr.setStatus("Nombre de archivo no válido");
-					UIInput radio = (UIInput) findComponent("vArchivo");
-					radio.setValid(false);
-					pr.setFechaFinal(DateUtil.getNowDate());
-					resultados.add(pr);
-				}
-			} else {
-				pr.setDescProceso("Generación de reporte");
-				pr.setStatus("Nombre de archivo requerido");
-				UIInput radio = (UIInput) findComponent("vArchivo");
-				radio.setValid(false);
-				pr.setFechaFinal(DateUtil.getNowDate());
-				resultados.add(pr);
-			}
+				}			 
 		} else {
 			pr.setStatus("No existen datos o no se ha realizado la consulta");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
-
+	}
+	public boolean isNombreValid2(ProcessResult pr) {
+		if (archivo == null || archivo.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("vArchivo");
+			radio.setValid(false);			
+			pr.setStatus("Nombre de archivo requerido");			
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);			
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]{1,}\\.(xls)$");					
+			if(!pattern.matcher(archivo).matches()) {
+				UIInput radio = (UIInput) findComponent("vArchivo");
+				radio.setValid(false);
+				pr.setStatus("El archivo debe tener extensión .xls");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+		   return true;
+		}
 	}
 
 	public void consultarOP84() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta");
-		archivo = null;
 
 		if (radioSelected != null || radioSelected2 != null) {
 			if (radioSelected != null && radioSelected.equals("1")) {
@@ -322,7 +329,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		pr.setDescProceso("Carga de archivo");
 		if (isNombreValid(pr)) {
 			try {
-				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo);
+				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo.toUpperCase());
 				if (resp.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -345,13 +352,22 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		if (nombreArchivo == null || nombreArchivo.isEmpty()) {
 			UIInput radio = (UIInput) findComponent("nombreArchivo");
 			radio.setValid(false);
-			pr.setStatus("Nombre de archivo requerido");
+			pr.setStatus("Se requiere que ingrese el nombre del archivo");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 			return false;
+		} else {
+			Pattern pattern = Pattern.compile("\\d{8}\\.(OP84)$");					
+			if(!pattern.matcher(nombreArchivo.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreArchivo");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe seguir el patrón yyyymmdd.OP84");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+		   return true;
 		}
-
-		return true;
 	}
 
 	public void limpiar() {
@@ -371,16 +387,17 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		filtro = null;
 		listLotes = null;
 		lote = null;
-		lote1 = null;			
+		lote1 = null;
 		nombreArchivo = null;
 		proceso = null;
 		radioSelected = null;
 		radioSelected2 = null;
-		registros=null;
+		registros = null;
 		ruta = "/iprod/PROCESAR/RECEPCION/AFORE/RETIROS";
 		ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
 		seleccion1 = false;
 		seleccion2 = false;
+		selectedLote=null;
 		today = new Date();
 
 	}
