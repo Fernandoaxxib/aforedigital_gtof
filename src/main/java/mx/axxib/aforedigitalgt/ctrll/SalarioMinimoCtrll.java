@@ -1,15 +1,10 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.primefaces.event.RowEditEvent;
@@ -17,22 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.com.AforeException;
-import mx.axxib.aforedigitalgt.com.AforeMessage;
-import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
-import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoInsertTablaOut;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoMensaje;
 import mx.axxib.aforedigitalgt.eml.SalarioMinimoOut;
-import mx.axxib.aforedigitalgt.eml.SalarioMinimoTablaOut;
-import mx.axxib.aforedigitalgt.eml.ValorUMA;
-import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 import mx.axxib.aforedigitalgt.serv.SalarioMinimoServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
@@ -45,12 +31,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	@Autowired
 	private SalarioMinimoServ salarioMinService;
 	
-	@Autowired
-	private AforeMessage aforeMessage;
-	
-	@Autowired
-	HikariDataSource dataSource;
-	
+
 //	@Setter
 //	@Getter
 //	private String zona;
@@ -255,13 +236,13 @@ public class SalarioMinimoCtrll extends ControllerBase {
 			parametros.setFechaCalendario(fechaCalendario);
 			//parametros.setFechaUltimo(fechaUltimo);
 			parametros.setMontoDiario(Double.parseDouble(montoDiario));
-			parametros.setUserId(dataSource.getUsername());
+			parametros.setUserId("FO");
 			
 //			parametros.setFecha(fechaUMA);
 //			parametros.setMonto(new BigDecimal (valorUMA));
 //			parametros.setUser(dataSource.getUsername());
 			//BaseOut res = valorUMAService.insertarUMA(parametros );
-			salarioMinimoMensaje=salarioMinService.save(dataSource.getUsername(), insertZona, fechaCalendario, Double.parseDouble(montoDiario));//Double.parseDouble(montoDiario)
+			salarioMinimoMensaje=salarioMinService.save("FO", insertZona, fechaCalendario, Double.parseDouble(montoDiario));//Double.parseDouble(montoDiario)
 			System.out.println("MENSAJE: "+salarioMinimoMensaje.getMensaje());
 			if (salarioMinimoMensaje.getEstatus() == 1) {
 				prG.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"

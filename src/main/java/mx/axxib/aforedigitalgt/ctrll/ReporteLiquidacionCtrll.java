@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
@@ -34,9 +32,6 @@ import mx.axxib.aforedigitalgt.util.ValidateUtil;
 @Component(value = "reporteLiquidacion")
 @ELBeanName(value = "reporteLiquidacion")
 public class ReporteLiquidacionCtrll extends ControllerBase {
-
-	@Autowired
-	HikariDataSource dataSource;
 
 	@Autowired
 	private ReporteLiquidacionServ reporteLiquidacionService;
@@ -166,7 +161,7 @@ public class ReporteLiquidacionCtrll extends ControllerBase {
 				parametros.setSiefore(selectedSiefore.getSiefore());
 				parametros.setTipoReporte(selectedTipo);
 				parametros.setTipoRetiro(selectedTipoRetiro);
-				parametros.setUsuario(dataSource.getUsername());
+				parametros.setUsuario("FO");
 				BaseOut res = reporteLiquidacionService.ejecutarReporte(parametros);
 				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)+": "+res.getMensaje());

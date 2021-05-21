@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
@@ -51,9 +49,6 @@ import mx.axxib.aforedigitalgt.util.ValidateUtil;
 @Component(value = "ventaTitulos")
 @ELBeanName(value = "ventaTitulos")
 public class VentaTitulosCtrll extends ControllerBase {
-
-	@Autowired
-	HikariDataSource dataSource;
 
 	@Autowired
 	private VentaTitulosServ ventaTitulosService;
@@ -417,7 +412,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				parametros.setSiafore(selectedSiefore.getSiefore());
 				parametros.setRetiroAforeMnd(selectedSiefore.getRetiroAforeMND());
 				parametros.setValorCuota(selectedSiefore.getValCuota());
-				parametros.setUsuario(dataSource.getUsername());
+				parametros.setUsuario("FO");
 				switch (opcion) {
 				case "R":
 					parametros.setTransacMov(selectedTipoRetiro.getTipoTransaccion());
@@ -463,7 +458,7 @@ public class VentaTitulosCtrll extends ControllerBase {
 				parametros.setSiafore(selectedSiefore.getSiefore());
 				parametros.setRetiroAforeMnd(selectedSiefore.getRetiroAforeMND());
 				parametros.setValorCuota(selectedSiefore.getValCuota());
-				parametros.setUsuario(dataSource.getUsername());
+				parametros.setUsuario("FO");
 				parametros.setLoteCorte(lote);
 
 				BaseOut res = ventaTitulosService.ventaTitulosMonitorCT(parametros);

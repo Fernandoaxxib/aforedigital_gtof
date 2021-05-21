@@ -223,8 +223,7 @@
 
 .ui-radiobutton .ui-state-active .ui-icon {
 	background-image:
-		url("/aforedigitalgt/javax.faces.resource/images/ui-icons_3572ac_256x240.png.jsf?ln=primefaces-pepper-grinder")
-		!important;
+		url("../Imagenes/ui-icons_3572ac_256x240.png") !important;
 }
 
 /* Texto general toda la app */

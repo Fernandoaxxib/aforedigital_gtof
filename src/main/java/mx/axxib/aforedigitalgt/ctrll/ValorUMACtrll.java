@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
@@ -31,8 +29,6 @@ import mx.axxib.aforedigitalgt.util.ValidateUtil;
 @ELBeanName(value = "valorUMA")
 public class ValorUMACtrll extends ControllerBase {
 
-	@Autowired
-	HikariDataSource dataSource;
 	
 	@Autowired
 	private ValorUMAServ valorUMAService;
@@ -164,7 +160,7 @@ public class ValorUMACtrll extends ControllerBase {
 			ValorUMA parametros = new ValorUMA();
 			parametros.setFecha(fechaUMA);
 			parametros.setMonto(new BigDecimal (valorUMA));
-			parametros.setUser(dataSource.getUsername());
+			parametros.setUser("FO");
 			BaseOut res = valorUMAService.insertarUMA(parametros );
 			if (res.getEstatus() == 1) {
 				

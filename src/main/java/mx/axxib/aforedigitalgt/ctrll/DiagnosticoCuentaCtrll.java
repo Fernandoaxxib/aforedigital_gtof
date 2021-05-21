@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.zaxxer.hikari.HikariDataSource;
-
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
@@ -32,8 +30,6 @@ import mx.axxib.aforedigitalgt.util.ValidateUtil;
 @ELBeanName(value = "diagCuenta")
 public class DiagnosticoCuentaCtrll extends ControllerBase {
 
-	@Autowired
-	HikariDataSource dataSource;
 
 	@Autowired
 	private DiagnosticoCuentaServ diagCuentaServ;
@@ -250,7 +246,7 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 				parametros.setClave(selectedTipo);
 				parametros.setCodCuenta(codCuenta);
 				parametros.setFechaInicio(fechaInicial);
-				parametros.setUsuario(dataSource.getUsername());
+				parametros.setUsuario("FO");
 				BaseOut res = diagCuentaServ.desbloqueaCuentas(parametros);
 				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
@@ -280,7 +276,7 @@ public class DiagnosticoCuentaCtrll extends ControllerBase {
 				parametros.setClave(selectedTipo);
 				parametros.setCodCuenta(codCuenta);
 				parametros.setFechaInicio(fechaInicial);
-				parametros.setUsuario(dataSource.getUsername());
+				parametros.setUsuario("FO");
 				BaseOut res = diagCuentaServ.bloqueaCuentas(parametros);
 				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
