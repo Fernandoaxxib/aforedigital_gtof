@@ -104,7 +104,7 @@
 			<p:panel id="pnlResult" header="#{msg.retPar_imss_op8586_titulo1}"
 				style="margin-bottom:20px">
 				<p:panelGrid class="ui-noborder" layout="grid" columns="2">
-					<p:panel header="Generación OP85" style="width:100%">
+					<p:panel header="Generación OP85" style="width:100%;height:189px">
 
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
@@ -119,34 +119,26 @@
 						</p:panelGrid>
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
-								<p:column style="width:78px;padding-left: 0px !important;">
+								<p:column style="width:89px;padding-left: 0px !important;">
 									<p:outputLabel value="#{msg.retPar_imss_op8586_lblArchivo}" />
 								</p:column>
-								<p:column>
-									<p:inputText id="vArchivo1" maxlength="50"
-										value="#{retParImssOP8586.archivo}" style="width:325px" />
+								<p:column class="outputlabel-shadow"
+									style="height:17px !important;width:312px">
+									<p:outputLabel value="#{retParImssOP8586.archivo}" />
 								</p:column>
 							</p:row>
 						</p:panelGrid>
-						<p:panelGrid class="ui-noborder" style="margin-top:10px">
-							<p:row>
-								<p:column>
-									<p:outputLabel
-										value="El archivo deberá tener la extensión .OP85"
-										style="color:blue;" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
+
 						<div class="ui-g">
 							<div class="ui-g-12" style="text-align: right; width: 96%">
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
 									value="#{msg.retPar_imss_op8586_btnGenerar85}"
-									action="#{retParImssOP8586.generarOP85}"
-									update="form:result form:vArchivo1" ajax="true" />
+									action="#{retParImssOP8586.generarOP85}" update="form:result"
+									ajax="true" />
 							</div>
 						</div>
 					</p:panel>
-					<p:panel header="Carga respuesta OP86">
+					<p:panel header="Carga respuesta OP86" style="height:189px">
 						<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
 								<p:column style="width: 89px;padding-left: 0px !important">
@@ -169,15 +161,6 @@
 								</p:column>
 							</p:row>
 						</p:panelGrid>
-						<p:panelGrid class="ui-noborder" style="margin-top:10px">
-							<p:row>
-								<p:column>
-									<p:outputLabel
-										value="El archivo deberá tener la extensión .OP86"
-										style="color:blue;" />
-								</p:column>
-							</p:row>
-						</p:panelGrid>
 						<div class="ui-g">
 							<div class="ui-g-12" style="text-align: right; width: 93%">
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
@@ -186,6 +169,15 @@
 									update="form:result form:idArchivo2" ajax="true" />
 							</div>
 						</div>
+						<p:panelGrid class="ui-noborder">
+							<p:row>
+								<p:column>
+									<p:outputLabel
+										value="El archivo deberá tener la extensión .xls"
+										style="color:blue;" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
 					</p:panel>
 				</p:panelGrid>
 				<p:panel header="Generar reporte" style="margin-top:20px">
@@ -297,9 +289,11 @@
 						</p:row>
 					</p:panelGrid>
 				</p:panel>
-				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{retParImssOP8586}" />
-				</ui:include>
+				<p:panel style="border:0px !important; margin-bottom:10px !important">
+					<ui:include src="processResult.xhtml">
+						<ui:param name="base" value="#{retParImssOP8586}" />
+					</ui:include>
+				</p:panel>
 			</p:panel>
 		</h:form>
 	</ui:define>

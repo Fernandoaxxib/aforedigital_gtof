@@ -179,7 +179,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 						ProcesResult res = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
 						if (res.getOn_Estatus() == 1) {
 							String resp=aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-							resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo).concat(" ,RUTA: ").concat(ruta2);
+							resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo).concat(" , RUTA: ").concat(ruta2);
 							pr.setStatus(resp);
 							reset();
 						} else {
@@ -211,7 +211,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			resultados.add(pr);			
 			return false;
 		} else {
-			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]{1,}\\.(xls)$");					
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]{1,}(.xls|.XLS)$");					
 			if(!pattern.matcher(archivo).matches()) {
 				UIInput radio = (UIInput) findComponent("vArchivo");
 				radio.setValid(false);
@@ -329,9 +329,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		pr.setDescProceso("Carga de archivo");
 		if (isNombreValid(pr)) {
 			try {
-				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo.toUpperCase());
+				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo);
 				if (resp.getOn_Estatus() == 1) {
-					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					String msj="";
+					msj=msj.concat(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)).concat(" - ").concat(resp.getP_Message());
+					pr.setStatus(msj);
 				} else {
 					if (resp.getOn_Estatus() == 2) {
 						GenerarErrorNegocio(resp.getP_Message());
@@ -357,11 +359,11 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			resultados.add(pr);
 			return false;
 		} else {
-			Pattern pattern = Pattern.compile("\\d{8}\\.(OP84)$");					
-			if(!pattern.matcher(nombreArchivo.toUpperCase()).matches()) {
+			Pattern pattern = Pattern.compile("\\d{8}(.OP84|.op84)$");					
+			if(!pattern.matcher(nombreArchivo).matches()) {
 				UIInput radio = (UIInput) findComponent("nombreArchivo");
 				radio.setValid(false);
-				pr.setStatus("el nombre del archivo debe seguir el patrón yyyymmdd.OP84");
+				pr.setStatus("el nombre del archivo debe tener el formato yyyymmdd.OP84");
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 				return false;

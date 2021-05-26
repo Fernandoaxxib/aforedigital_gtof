@@ -134,7 +134,6 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			archivo3 = null;
 			border = "";
 		}
-
 	}
 
 	public void radioSelected2() {
@@ -205,19 +204,15 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 	}
 
 	public boolean isNombreValid1(ProcessResult pr) {
-		if (archivo == null || archivo.isEmpty()) {
-			UIInput radio = (UIInput) findComponent("vArchivo1");
-			radio.setValid(false);
+		if (archivo == null || archivo.isEmpty()) {			
 			pr.setStatus("Nombre de archivo requerido");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 			return false;
 		} else {
 			Pattern pattern = Pattern.compile("\\d{8}\\.(OP85)$");
-			if (!pattern.matcher(archivo.toUpperCase()).matches()) {
-				UIInput radio = (UIInput) findComponent("vArchivo1");
-				radio.setValid(false);
-				pr.setStatus("el nombre del archivo debe seguir el patrón yyyymmdd.OP85");
+			if (!pattern.matcher(archivo.toUpperCase()).matches()) {				
+				pr.setStatus("el nombre del archivo debe tener el formato yyyymmdd.OP85");
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 				return false;
@@ -262,11 +257,11 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			resultados.add(pr);
 			return false;
 		} else {
-			Pattern pattern = Pattern.compile("\\d{8}\\.(OP86)$");
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]+(.xls|.XLS)$");
 			if (!pattern.matcher(archivo2.toUpperCase()).matches()) {
 				UIInput radio = (UIInput) findComponent("idArchivo2");
 				radio.setValid(false);
-				pr.setStatus("el nombre del archivo debe seguir el patrón yyyymmdd.OP86");
+				pr.setStatus("el nombre del archivo debe tener extensión .xls");
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 				return false;
@@ -286,7 +281,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 						ProcesResult res = service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
 						if (res.getOn_Estatus() == 1) {
 							String resp=aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-							resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo3).concat(" ,RUTA: ").concat(ruta3);
+							resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo3).concat(" , RUTA: ").concat(ruta3);
 							pr.setStatus(resp);
 							reset();
 						} else {
@@ -383,11 +378,11 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			resultados.add(pr);
 			return false;
 		} else {
-			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]{1,}\\.(xls)$");
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]+(.xls|.XLS)$");
 			if (!pattern.matcher(archivo3).matches()) {
 				UIInput radio = (UIInput) findComponent("idArchivo3");
 				radio.setValid(false);
-				pr.setStatus("El archivo debe tener extensión .xls");
+				pr.setStatus("El nombre del archivo debe tener extensión .xls");
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 				return false;

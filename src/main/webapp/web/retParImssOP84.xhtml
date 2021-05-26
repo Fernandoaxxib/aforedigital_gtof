@@ -122,6 +122,7 @@
 							</p:column>
 							<p:column>
 								<p:inputText id="nombreArchivo" maxlength="50"
+									placeholder="YYYYMMDD.OP84"
 									value="#{retParImssOP84.nombreArchivo}" style="width:306px" />
 							</p:column>
 							<p:column>
@@ -129,15 +130,6 @@
 									value="#{msg.retPar_imss_op84_btnCargar}"
 									action="#{retParImssOP84.cargarArchivo}"
 									update="form:result form:nombreArchivo" ajax="true" />
-							</p:column>
-						</p:row>
-					</p:panelGrid>
-					<p:panelGrid class="ui-noborder" style="margin-top:10px">
-						<p:row>
-							<p:column>
-								<p:outputLabel
-									value="El archivo deberá tener la extensión .OP84"
-									style="color:blue;" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -284,9 +276,11 @@
 						</p:row>
 					</p:panelGrid>
 				</p:panel>
-				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{retParImssOP84}" />
-				</ui:include>
+				<p:panel style="border:0px !important; margin-bottom:10px !important">
+					<ui:include src="processResult.xhtml">
+						<ui:param name="base" value="#{retParImssOP84}" />
+					</ui:include>
+				</p:panel>
 			</p:panel>
 		</h:form>
 	</ui:define>
