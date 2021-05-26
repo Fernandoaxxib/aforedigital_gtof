@@ -62,9 +62,7 @@
 											</p:column>						 
 											
 											<p:column style="text-align: left !important;width: 150px !important;">			 
-											    <p:selectOneMenu id="tipoProceso" style="width:200px" required="false"
-												requiredMessage="Tipo Proceso es requerido"
-												value="#{desmarcaConsultaMarcas.selectedTipoClave}">
+											    <p:selectOneMenu id="tipoProceso" style="width:200px" placeholder="Seleccionar" value="#{desmarcaConsultaMarcas.selectedTipoClave}" effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
 												<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}" style="text-Align:left;font-size:15px;width:210px"/>
 												</p:selectOneMenu>
 											</p:column>
@@ -79,7 +77,7 @@
 									<p:row style="text-align: right !important;width: 450px !important;">
 									
 										   <p:column style="text-align: right !important;width: 450px !important;">
-											<p:commandButton styleClass="blue ui-button-text"  value="Consultar Marcas" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="result" ajax="true"/>
+											<p:commandButton styleClass="blue ui-button-text"  value="Consultar Marcas" action="#{desmarcaConsultaMarcas.reversaArchivo}" update="tipoProceso result" ajax="true"/>
 											</p:column>				 
 									
 									</p:row>
@@ -137,7 +135,7 @@
 							<p:row>
 						<p:column colspan="3" style="padding:10px;">
 							<p:outputLabel
-								value="El archivo deberá tener la extensión .txt"  style="color:blue;" />
+								value="El archivo deberá tener la extensión .xls"  style="color:blue;" />
 						</p:column>
 						</p:row>
 						</p:panelGrid>

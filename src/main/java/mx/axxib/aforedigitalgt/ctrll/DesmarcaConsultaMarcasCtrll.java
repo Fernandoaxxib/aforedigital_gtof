@@ -57,41 +57,12 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 	@Setter
 	private List<TipoProcesoOut> listaTipoProceso;
 	
-//	@Getter
-//	@Setter
-//	private String desmarcaNSS;
-//	
-//	@Getter
-//	@Setter
-//	private String desmarcaCURP;
-//	 
-//	@Getter
-//	@Setter
-//	private String desmarcaCLAVE;
-//	
-//	@Getter
-//	@Setter
-//	private String claveMarca;
-//	 
-//	@Getter
-//	@Setter
-//	private String descripcionMarca;
-//	
-//	@Getter
-//	@Setter
-//	private String rutaMarca;
-//	 
-//	@Getter
-//	@Setter
-//	private String nombreMarca;
+
 	
 	@Getter
 	private Date today;
 	
-//	@Getter
-//	@Setter
-//	private ProcesoOut proceso;
-	
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -117,11 +88,11 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			listaTipoProceso=cargaMasiva.consultarTodo();
 			 pr.setStatus("Proceso ejecutado Correctamente");
 		}catch (Exception e) {
-			pr = GenericException(e);
-		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
+				GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
 		return listaTipoProceso;
 	}
 	
@@ -138,39 +109,25 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			pr.setStatus("Ingrese nombre de archivo");
 		}else {
 		
-//			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-//			Date today= new Date();		
-//			proceso = new ProcesoOut();
-//			proceso.setFechahoraInicio(format.format(today));
-			if(nombreArchivoCarga.endsWith(".txt") && (nombreArchivoCarga.length()>4) ) {
+			if(nombreArchivoCarga.endsWith(".xls") && (nombreArchivoCarga.length()>4) ) {
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
-//			Date today2= new Date();		
-//			proceso.setFechahoraFinal(format.format(today2));
-			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
-			
-			
+	
+			System.out.println("cargar archivo: "+desmarcaCargaConsultaMasivaOut);
 			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-//				proceso.setAbrevProceso(resp);//"Generar reporte"
-//				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-//				addMessageOK(resp);
-				pr.setStatus("Proceso ejecutado Correctamente");
-				}else {
-//					proceso.setAbrevProceso(resp);//"Generar reporte"
-//					proceso.setEstadoProceso("FALLIDO");
-//					 addMessageFail(resp);
-					pr.setStatus("Error al ejecutar Desmarca Masiva");
+				pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+			}else {
+					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					}
+
 				}
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
+
 			}else {
 				UIInput input = (UIInput) findComponent("nombreCarga");
 				input.setValid(false);
-				pr.setStatus("Ingrese archivo con extensión .txt");	
+				pr.setStatus("Ingrese archivo con extensión .xls");	
 			}
 		}
 		}catch (Exception e) {
@@ -188,15 +145,11 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		pr.setDescProceso("Consulta Marca por Proceso Operativo");
 		
 		try {
-//			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-//			Date today= new Date();		
-//			proceso = new ProcesoOut();
-//			proceso.setFechahoraInicio(format.format(today));
 		
 		if(selectedTipoClave==null || selectedTipoClave.isEmpty()) {
 			 UIInput inputTipo = (UIInput) findComponent("tipoProceso");
 			 inputTipo.setValid(false);				
-			 pr.setStatus("Ingresar Tipo Proceso ");
+			 pr.setStatus("Seleccionar Clave Proceso ");
 			
 		}else {
 			
@@ -205,29 +158,22 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			 String part2 = parts[1]; // 654321
 			 
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(part1,part2);
-//			Date today2= new Date();		
-//			proceso.setFechahoraFinal(format.format(today2));
-			
-//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+			System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
 			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-//				proceso.setAbrevProceso(resp);//"Generar reporte"
-//				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-//				addMessageOK(resp);
-				pr.setStatus("Proceso ejecutado Correctamente");
+
+				pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+
 				}else {
-//					proceso.setAbrevProceso(resp);//"Generar reporte"
-//					proceso.setEstadoProceso("FALLIDO");
-//					 addMessageFail(resp);
-					pr.setStatus("Error al ejecutar por Proceso operativo");
+
+					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					}
+					
 				}
 		}
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
+
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -236,72 +182,5 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		}
 	}
 	
-//	public void desmarcaMasiva() {
-//		try {System.out.println("REVERSA CARGA");
-//		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
-//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-//	public void desmarcaIndividualCuenta() {
-//		try {System.out.println("VALOR DE desmarcaNSS:"+desmarcaNSS+" /desmarcaCURP:"+desmarcaCURP+" /desmarcaCLAVE:"+desmarcaCLAVE);
-//			String msg =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,desmarcaCLAVE);
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-//	public void consultaMarcas() {
-//		try {System.out.println("VALOR DE claveMarca:"+claveMarca+" /descripcionMarca:"+descripcionMarca);
-//			String msg =cargaMasiva.consultaMarcas(claveMarca, descripcionMarca);
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-//	public void consultaMarcasArchivo() {
-//		try {System.out.println("VALOR DE rutaMarca:"+rutaMarca+" /nombreMarca:"+nombreMarca);
-//			String msg =cargaMasiva.consultaMarcasArchivo(rutaMarca, nombreMarca);
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
+
 }

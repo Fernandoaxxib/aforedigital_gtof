@@ -35,7 +35,7 @@
 						<p:column style="width:250px">
 						</p:column>
 						<p:column style="width:650px">
-									<p:dataTable id="tabla" var="salario"  paginatorPosition="bottom" rows="10" paginator="true" rowsPerPageTemplate="5,10,15" emptyMessage="#{msg.aprob_msj_sinDatos}" value="#{salarioMinimo.salarioMinimoTablaOut}">
+									<p:dataTable id="tabla" var="salario"  paginatorPosition="bottom" rows="5" paginator="true" rowsPerPageTemplate="5,10,15" emptyMessage="#{msg.aprob_msj_sinDatos}" value="#{salarioMinimo.salarioMinimoTablaOut}">
 									
 									<p:column headerText="CdZona"  style="text-align: center">
 			        				<h:outputText value="#{salario.cdZona}" style="text-align: center"/> 
@@ -75,7 +75,7 @@
 										</f:facet>
                                     	
                                     	<p:commandButton styleClass="botonEdicion"
-										update=" formDlgEdit:montoGuardar "
+										update=" formDlgEdit:montoEditar "
 										icon="ui-icon ui-icon-pencil" title="Editar"
 										actionListener="#{salarioMinimo.editar(salario)}"
 										oncomplete="PF('editar').show();"></p:commandButton>
@@ -146,7 +146,7 @@
 				<p:column style="text-align: left !important;width: 5px !important;">
 									
 <!-- 									<p:inputText id="montoGuardar" maxlength="7" value="#{salarioMinimo.montoDiario}" > -->
-									 <p:inputNumber id="montoGuardar" value="#{salarioMinimo.montoDiario}" minValue="0.00"
+									 <p:inputNumber id="montoEditar" value="#{salarioMinimo.montoDiario}" minValue="0.00"
                                 maxValue="9999.99" decimalPlaces="2" />
 <!-- 									 <f:convertNumber pattern="#,##0.00" /> -->
 <!-- 									</p:inputText> -->
@@ -217,7 +217,7 @@
 				<p:row>
 				<p:column style="text-align: left !important;width: 20px !important;">
 									
-									<p:outputLabel  for="zonaGuardar" value="Zona:"  />
+									<p:outputLabel  value="Zona:"  />
    			 	</p:column>						 
 
    			 	

@@ -47,40 +47,10 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private DesmarcaCargaConsultaMasivaOut desmarcaCargaConsultaMasivaOut;
-//	@Getter
-//	@Setter
-//	private String desmarcaNSS;
-//	
-//	@Getter
-//	@Setter
-//	private String desmarcaCURP;
-//	 
-//	@Getter
-//	@Setter
-//	private String desmarcaCLAVE;
-//	
-//	@Getter
-//	@Setter
-//	private String claveMarca;
-//	 
-//	@Getter
-//	@Setter
-//	private String descripcionMarca;
-//	
-//	@Getter
-//	@Setter
-//	private String rutaMarca;
-//	 
-//	@Getter
-//	@Setter
-//	private String nombreMarca;
+
 	
 	@Getter
 	private Date today;
-	
-//	@Getter
-//	@Setter
-//	private ProcesoOut proceso;
 	
 	@Override
 	public void iniciar() {
@@ -102,39 +72,29 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		pr.setDescProceso("Cargar Archivo");
 		try {
 		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
-			//addMessageFail("Ingrese el nombre del archivo.");
 			UIInput input = (UIInput) findComponent("nombreCarga");
 			input.setValid(false);
 			pr.setStatus("Ingrese nombre para la carga de Archivo");
 		}else {
-			if((nombreArchivoCarga.endsWith(".txt") || nombreArchivoCarga.endsWith(".TXT")) && (nombreArchivoCarga.length()>4)) {
+			if((nombreArchivoCarga.endsWith(".txt")) && (nombreArchivoCarga.length()>4)) {
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
-			
-			//if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...") ) {
+			System.out.println("cargar archivo: "+desmarcaCargaConsultaMasivaOut);
 			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-			pr.setStatus("Proceso ejecutado Correctamente");
-//			proceso.setAbrevProceso(resp);//"Generar reporte"
-//			proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-//			addMessageOK(resp);
+			pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Proceso ejecutado Correctamente"
 			}else {
-//				proceso.setAbrevProceso(resp);//"Generar reporte"
-//				proceso.setEstadoProceso("FALLIDO");
-//				 addMessageFail(resp);
-				pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+				if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
+					GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+				} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
+					pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+				}			
 			}
 			}else {
 				UIInput input = (UIInput) findComponent("nombreCarga");
 				input.setValid(false);
-				pr.setStatus("Ingrese archivo con extensión .txt");	
+				pr.setStatus("Ingrese Nombre de Archivo con extensión .txt");	
 			}
 		}
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
+
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -149,32 +109,19 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cargar Archivo");
 		try {
-//			SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
-//			Date today= new Date();		
-//			proceso = new ProcesoOut();
-//			proceso.setFechahoraInicio(format.format(today));
+
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.reversaArchivoCarga();
-//			Date today2= new Date();		
-//			proceso.setFechahoraFinal(format.format(today2));
-//			if(desmarcaCargaConsultaMasivaOut.getP_Mensaje().equals("PROCESO ENVIADO A MONITOR, FAVOR DE VERIFICAR...")) {
+		System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
 		if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-//				proceso.setAbrevProceso(resp);//"Generar reporte"
-//				proceso.setEstadoProceso("SATISFACTORIO");		//"Proceso ejecutado"
-//				addMessageOK(resp);
-				pr.setStatus("Proceso ejecutado Correctamente");
+			pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//pr.setStatus("Proceso ejecutado Correctamente");
 				}else {
-//					proceso.setAbrevProceso(resp);//"Generar reporte"
-//					proceso.setEstadoProceso("FALLIDO");
-//					 addMessageFail(resp);
-					pr.setStatus("Error al ejecutar la reversa de Archivo");
+					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					}
+
 				}
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -183,72 +130,4 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		}
 	}
 	
-//	public void desmarcaMasiva() {
-//		try {System.out.println("REVERSA CARGA");
-//			String msg =cargaMasiva.desmarcaMasivaCuenta();
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-//	public void desmarcaIndividualCuenta() {
-//		try {System.out.println("VALOR DE desmarcaNSS:"+desmarcaNSS+" /desmarcaCURP:"+desmarcaCURP+" /desmarcaCLAVE:"+desmarcaCLAVE);
-//			String msg =cargaMasiva.desmarcaIndividualCuenta(desmarcaNSS, desmarcaCURP,desmarcaCLAVE);
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-//	public void consultaMarcas() {
-//		try {System.out.println("VALOR DE claveMarca:"+claveMarca+" /descripcionMarca:"+descripcionMarca);
-//			String msg =cargaMasiva.consultaMarcas(claveMarca, descripcionMarca);
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-//	public void consultaMarcasArchivo() {
-//		try {System.out.println("VALOR DE rutaMarca:"+rutaMarca+" /nombreMarca:"+nombreMarca);
-//			String msg =cargaMasiva.consultaMarcasArchivo(rutaMarca, nombreMarca);
-//			if(msg.trim().toUpperCase().equals("OK")) {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, null, msg));
-//			} else {
-//				msg = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_ERROR, null);
-//				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, null, msg));
-//			}
-//		}catch (Exception e) {
-//			GenericException(e);
-//		}
-//	}
-	
-	public void addMessageOK(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
-	public void addMessageFail(String summary) {
-		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary, null);
-		FacesContext.getCurrentInstance().addMessage(null, message);
-	}
 }
