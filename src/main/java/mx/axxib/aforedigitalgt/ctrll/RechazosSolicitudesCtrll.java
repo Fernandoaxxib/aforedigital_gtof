@@ -25,6 +25,12 @@ import mx.axxib.aforedigitalgt.serv.RechazosSolicitudesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de rechazo de solicitudes
+//** Interventor Principal: JSAS
+//** Fecha Creación: 29/Ene/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "rechazos")
 @ELBeanName(value = "rechazos")

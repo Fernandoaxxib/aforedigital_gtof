@@ -8,6 +8,12 @@ import mx.axxib.aforedigitalgt.dal.CargaRightRepo;
 import mx.axxib.aforedigitalgt.eml.CargaRightIn;
 import mx.axxib.aforedigitalgt.eml.CargaRightOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de carga right fax
+//** Interventor Principal: JSAS
+//** Fecha Creación: 25/Ene/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class CargaRightServ extends ServiceBase {
 

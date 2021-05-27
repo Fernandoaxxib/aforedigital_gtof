@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.eml.GeneraReporteIn;
 import mx.axxib.aforedigitalgt.eml.GeneraReporteOut;
 import mx.axxib.aforedigitalgt.eml.RechazosOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de rechazo de solicitudes
+//** Interventor Principal: JSAS
+//** Fecha Creación: 29/Ene/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class RechazosSolicitudesServ extends ServiceBase {
 

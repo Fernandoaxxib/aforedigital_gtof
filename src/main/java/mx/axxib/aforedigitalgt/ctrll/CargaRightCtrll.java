@@ -19,6 +19,12 @@ import mx.axxib.aforedigitalgt.serv.CargaRightServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de carga right fax
+//** Interventor Principal: JSAS
+//** Fecha Creación: 25/Ene/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "cargaRight")
 @ELBeanName(value = "cargaRight")

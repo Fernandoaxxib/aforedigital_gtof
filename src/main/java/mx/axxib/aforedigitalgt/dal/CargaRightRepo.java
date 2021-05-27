@@ -13,6 +13,12 @@ import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.CargaRightIn;
 import mx.axxib.aforedigitalgt.eml.CargaRightOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de carga right fax
+//** Interventor Principal: JSAS
+//** Fecha Creación: 25/Ene/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class CargaRightRepo extends RepoBase {
