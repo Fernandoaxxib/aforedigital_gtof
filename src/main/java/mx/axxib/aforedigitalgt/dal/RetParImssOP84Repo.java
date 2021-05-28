@@ -38,63 +38,70 @@ public class RetParImssOP84Repo extends RepoBase {
 			query.registerStoredProcedureParameter("p_Nombre_Archivo", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
-			
 
 			query.setParameter("p_Path", p_Path);
 			query.setParameter("p_Nombre_Archivo", p_Nombre_Archivo);
 
-			ProcesResult resp=new ProcesResult();
-			
+			ProcesResult resp = new ProcesResult();
+
 			resp.setP_Message((String) query.getOutputParameterValue("oc_Mensaje"));
 			resp.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
-					;
+			;
 			return resp;
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<LoteOP84Out> getLotesOP84() throws AforeException {
-	  try {	
-		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE).concat(".").concat(Constantes.RET_PARIMSS_OP84_BTN_LOTES_OP84);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteOP84Out");		
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE)
+					.concat(".").concat(Constantes.RET_PARIMSS_OP84_BTN_LOTES_OP84);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteOP84Out");
 
-		query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);		
-		List<LoteOP84Out> res = query.getResultList();
-		return res;
-	  }catch(Exception e) {
-		 throw GenericException(e); 
-	  }
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+			List<LoteOP84Out> res = query.getResultList();
+			return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public ProcesResult getConsultaOP84(Date p_FechaInicial,Date p_FechaFinal,String p_Lote) throws AforeException {
-	  try {	
-		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE).concat(".").concat(Constantes.RET_PARIMSS_OP84_CONSULTA_OP84);
-		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "RegOP84Out");		
+	public ProcesResult getConsultaOP84(Date p_FechaInicial, Date p_FechaFinal, String p_Lote) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE)
+					.concat(".").concat(Constantes.RET_PARIMSS_OP84_CONSULTA_OP84);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "RegOP84Out");
 
-		query.registerStoredProcedureParameter("p_FechaInicial", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_FechaFinal", Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("p_Lote", String.class, ParameterMode.IN);		
-		query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);	
-		query.registerStoredProcedureParameter("p_Path", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
-		query.setParameter("p_FechaInicial", p_FechaInicial);
-		query.setParameter("p_FechaFinal", p_FechaFinal);
-		query.setParameter("p_Lote", p_Lote);
-		
-		ProcesResult res= new ProcesResult();		
-		List<RegOP84Out> lista = query.getResultList();
-		res.setRegistros(lista);
-		res.setP_Message((String)query.getOutputParameterValue("oc_Mensaje"));
-		res.setOn_Estatus((Integer)query.getOutputParameterValue("on_Estatus"));
-		return res;
-	  }catch(Exception e) {
-		 throw GenericException(e); 
-	  }
+			query.registerStoredProcedureParameter("p_FechaInicial", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("p_FechaFinal", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("p_Lote", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("p_Path", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+			query.setParameter("p_FechaInicial", p_FechaInicial);
+			query.setParameter("p_FechaFinal", p_FechaFinal);
+			query.setParameter("p_Lote", p_Lote);
+
+			ProcesResult res = new ProcesResult();
+			res.setP_Message((String) query.getOutputParameterValue("oc_Mensaje"));
+			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+
+			if (res.getOn_Estatus() == 1) {
+				List<RegOP84Out> lista = query.getResultList();
+				res.setRegistros(lista);
+			}
+			return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
 	}
-	public ProcesResult generarReporteOP84(String p_Path,String p_Nombre_Archivo,String p_Lote,Date p_Fecha_Inicial,Date p_Fecha_Final) throws AforeException {
+
+	public ProcesResult generarReporteOP84(String p_Path, String p_Nombre_Archivo, String p_Lote, Date p_Fecha_Inicial,
+			Date p_Fecha_Final) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.RET_PARIMSS_OP84_PACKAGE)
 					.concat(".").concat(Constantes.RET_PARIMSS_OP84_GENEREA_REPOP84);
@@ -104,7 +111,7 @@ public class RetParImssOP84Repo extends RepoBase {
 			query.registerStoredProcedureParameter("p_Nombre_Archivo", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("p_Lote", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("p_Fecha_Inicial", Date.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("p_Fecha_Final", Date.class, ParameterMode.IN);			
+			query.registerStoredProcedureParameter("p_Fecha_Final", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 
@@ -113,15 +120,14 @@ public class RetParImssOP84Repo extends RepoBase {
 			query.setParameter("p_Lote", p_Lote);
 			query.setParameter("p_Fecha_Inicial", p_Fecha_Inicial);
 			query.setParameter("p_Fecha_Final", p_Fecha_Final);
-			
 
 			ProcesResult resp = new ProcesResult();
-		    resp.setP_Message((String) query.getOutputParameterValue("oc_Mensaje"));			
-		    resp.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+			resp.setP_Message((String) query.getOutputParameterValue("oc_Mensaje"));
+			resp.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 			return resp;
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
-	
+
 }

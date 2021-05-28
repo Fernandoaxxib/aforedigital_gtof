@@ -133,6 +133,8 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			disabled5 = false;
 			archivo3 = null;
 			border = "";
+			UIInput idArchivo = (UIInput) findComponent("idArchivo3");
+			idArchivo.setValid(true);			
 		}
 	}
 
@@ -150,6 +152,8 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			disabled5 = false;
 			archivo3 = null;
 			border = "";
+			UIInput idArchivo = (UIInput) findComponent("idArchivo3");
+			idArchivo.setValid(true);	
 		}
 
 	}
@@ -166,6 +170,9 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 			}
 			fecIni = null;
 			fecFin = null;
+			selectedLote = null;
+			lote=null;
+			lote1=null;
 			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		} catch (Exception e) {
 			GenericException(e);
@@ -307,7 +314,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 							ProcesResult res = service.generarReporteOP86(ruta3, archivo3, lote, fecIni, fecFin);
 							if (res.getOn_Estatus() == 1) {
 								String resp=aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-								resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo3).concat(" ,RUTA: ").concat(ruta3);
+								resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo3).concat(" , RUTA: ").concat(ruta3);
 								pr.setStatus(resp);
 								reset();
 							} else {

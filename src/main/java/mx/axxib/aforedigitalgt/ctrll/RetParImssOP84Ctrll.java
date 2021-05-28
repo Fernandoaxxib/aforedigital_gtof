@@ -116,13 +116,17 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		if (radioSelected != null) {
 			border = "";
 			radioSelected2 = null;
+			archivo = null;
 			lote = null;
-			registros=null;
+			registros = null;
 			seleccion2 = false;
 			disabled1 = false;
 			disabled2 = false;
 			disabled3 = false;
 			disabled4 = true;
+			disabled5 = true;
+			UIInput radio = (UIInput) findComponent("vArchivo");
+			radio.setValid(true);
 		}
 
 	}
@@ -130,15 +134,23 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 	public void radioSelected2() {
 		if (radioSelected2 != null) {
 			border = "";
+			archivo = null;
 			fecIni = null;
 			fecFin = null;
 			radioSelected = null;
-			seleccion1 = false;			
-			registros=null;
+			seleccion1 = false;
+			registros = null;
 			disabled1 = true;
 			disabled2 = true;
 			disabled3 = false;
 			disabled4 = false;
+			disabled5 = true;
+			UIInput inpArch = (UIInput) findComponent("vArchivo");
+			inpArch.setValid(true);
+			UIInput inpF1 = (UIInput) findComponent("dfini");
+			inpF1.setValid(true);
+			UIInput inpF2 = (UIInput) findComponent("dffin");
+			inpF2.setValid(true);			
 		}
 
 	}
@@ -152,11 +164,14 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		try {
 			if (listLotes == null) {
 				listLotes = service.getLotesOP84();
-			}else {
+			} else {
 				PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 			}
 			fecIni = null;
-			fecFin = null;			
+			fecFin = null;
+			selectedLote = null;
+			lote=null;
+			lote1=null;
 		} catch (Exception e) {
 			GenericException(e);
 		}
@@ -173,46 +188,48 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Generación de reporte");
-		if (registros != null && !registros.isEmpty()) {			
-				if (isNombreValid2(pr)) {
-					try {
-						ProcesResult res = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
-						if (res.getOn_Estatus() == 1) {
-							String resp=aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
-							resp=resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo).concat(" , RUTA: ").concat(ruta2);
-							pr.setStatus(resp);
-							reset();
-						} else {
-							if (res.getOn_Estatus() == 2) {
-								GenerarErrorNegocio(res.getP_Message());
-							} else if (res.getOn_Estatus() == 0) {
-								pr.setStatus(res.getP_Message());
-							}
+		if (registros != null && !registros.isEmpty()) {
+			if (isNombreValid2(pr)) {
+				try {
+					ProcesResult res = service.generarReporteOP84(ruta2, archivo, lote, fecIni, fecFin);
+					if (res.getOn_Estatus() == 1) {
+						String resp = aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null);
+						resp = resp.concat(" - SE GENERÓ EL ARCHIVO: ").concat(archivo).concat(" , RUTA: ")
+								.concat(ruta2);
+						pr.setStatus(resp);
+						reset();
+					} else {
+						if (res.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(res.getP_Message());
+						} else if (res.getOn_Estatus() == 0) {
+							pr.setStatus(res.getP_Message());
 						}
-					} catch (Exception e) {
-						pr = GenericException(e);
-					} finally {
-						pr.setFechaFinal(DateUtil.getNowDate());
-						resultados.add(pr);
 					}
-				}			 
+				} catch (Exception e) {
+					pr = GenericException(e);
+				} finally {
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
+				}
+			}
 		} else {
 			pr.setStatus("No existen datos o no se ha realizado la consulta");
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
 	}
+
 	public boolean isNombreValid2(ProcessResult pr) {
 		if (archivo == null || archivo.isEmpty()) {
 			UIInput radio = (UIInput) findComponent("vArchivo");
-			radio.setValid(false);			
-			pr.setStatus("Nombre de archivo requerido");			
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
 			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);			
+			resultados.add(pr);
 			return false;
 		} else {
-			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]{1,}(.xls|.XLS)$");					
-			if(!pattern.matcher(archivo).matches()) {
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]{1,}(.xls|.XLS)$");
+			if (!pattern.matcher(archivo).matches()) {
 				UIInput radio = (UIInput) findComponent("vArchivo");
 				radio.setValid(false);
 				pr.setStatus("El archivo debe tener extensión .xls");
@@ -220,7 +237,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				resultados.add(pr);
 				return false;
 			}
-		   return true;
+			return true;
 		}
 	}
 
@@ -331,8 +348,9 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			try {
 				ProcesResult resp = service.cargarArchivoOP84(ruta, nombreArchivo);
 				if (resp.getOn_Estatus() == 1) {
-					String msj="";
-					msj=msj.concat(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)).concat(" - ").concat(resp.getP_Message());
+					String msj = "";
+					msj = msj.concat(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null)).concat(" - ")
+							.concat(resp.getP_Message());
 					pr.setStatus(msj);
 				} else {
 					if (resp.getOn_Estatus() == 2) {
@@ -359,8 +377,8 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 			resultados.add(pr);
 			return false;
 		} else {
-			Pattern pattern = Pattern.compile("\\d{8}(.OP84|.op84)$");					
-			if(!pattern.matcher(nombreArchivo).matches()) {
+			Pattern pattern = Pattern.compile("\\d{8}(.OP84|.op84)$");
+			if (!pattern.matcher(nombreArchivo).matches()) {
 				UIInput radio = (UIInput) findComponent("nombreArchivo");
 				radio.setValid(false);
 				pr.setStatus("el nombre del archivo debe tener el formato yyyymmdd.OP84");
@@ -368,7 +386,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 				resultados.add(pr);
 				return false;
 			}
-		   return true;
+			return true;
 		}
 	}
 
@@ -399,7 +417,7 @@ public class RetParImssOP84Ctrll extends ControllerBase {
 		ruta2 = "/RESPALDOS/operaciones/ReportesOperaciones";
 		seleccion1 = false;
 		seleccion2 = false;
-		selectedLote=null;
+		selectedLote = null;
 		today = new Date();
 
 	}

@@ -11,7 +11,7 @@
 	<f:metadata>
 		<f:event listener="#{repParcialesConsar.iniciar}" type="preRenderView" />
 	</f:metadata>
-	<ui:define name="center">		
+	<ui:define name="center">
 		<h:outputScript library="js" name="calendar-localization.js" />
 
 		<p:panelGrid width="100%" styleClass="ui-noborder">
@@ -24,70 +24,77 @@
 				</p:column>
 			</p:row>
 		</p:panelGrid>
-		<p:dialog header="Mensaje" id="dlg1" styleClass="styleWhite" appendTo="@(body)"
-			widgetVar="dlg3" minHeight="140" width="350" showEffect="fade"
-			resizable="false" modal="true">
-			<p:panel style="border:0px !important;text-align:center">
-				<p:outputPanel style="margin-top:10px;margin-bottom:10px">
-					<p:outputLabel value="#{repParcialesConsar.respuesta}"
-						style="font-size:14px !important; color: #59ad40 !important;" />
-				</p:outputPanel>
-				<p:commandButton type="button" value="CERRAR" styleClass="blue"
-					onclick="PF('dlg3').hide();" />
-			</p:panel>
-		</p:dialog>
+		
 		<h:form id="form">
-			<p:panel header="REPORTE DE PARCIALES CONSAR"
-				style="height:90% !important">
-				<div class="ui-g" style="margin-top: 10px;">
-					<div class="ui-g-3"
-						style="text-align: left; width: 110px; padding-top: 13px">
-						<p:outputLabel for="dini" value="Fecha Inicio: " />
-					</div>
-					<div class="ui-g-3" style="width: 180px;">
-						<p:datePicker id="dini" value="#{repParcialesConsar.fechaInicio}"
-							locale="es" showIcon="true" pattern="dd-MM-yyyy"
-							maxdate="#{repParcialesConsar.fecActual}"
-							yearNavigator="true" monthNavigator="true"
-							inputStyle="width:110px; text-align:right;" readonlyInput="true" />
-					</div>
-					<div class="ui-g-3" style="padding-top: 13px; width: 110px;">
-						<p:outputLabel for="dffin" value="Fecha Fin: " />
-					</div>
-					<div class="ui-g-3">
-						<p:datePicker id="dffin" value="#{repParcialesConsar.fechaFin}"
-							locale="es" showIcon="true" pattern="dd-MM-yyyy"
-							maxdate="#{repParcialesConsar.fecActual}"
-							yearNavigator="true" monthNavigator="true"
-							inputStyle="width:110px; text-align:right;" readonlyInput="true" />
-					</div>
-				</div>
-				<div class="ui-g" style="margin-top: 10px;">
-					<div class="ui-g-6" style="text-align: left; width: 115px">
-						<p:outputLabel value="Ruta:" />
-					</div>
-					<div class="ui-g-6 outputlabel-shadow" style="width: 440px">
-						<p:outputLabel value="#{repParcialesConsar.ruta}" />
-					</div>
-				</div>
-				<div class="ui-g" style="margin-top: 10px;">
-					<div class="ui-g-6"
-						style="width: 109px; padding-top: 13px !important">
-						<p:outputLabel value="Nombre archivo:" />
-					</div>
-					<div class="ui-g-6" style="text-align: left;">
-						<p:inputText id="archivo" value="#{repParcialesConsar.archivo}"
-							style=" width: 430px;" />
-					</div>
-				</div>
-				<div class="ui-g">
-					<div class="ui-g-6" style="text-align: right; width: 561px">
-						<p:commandButton styleClass="blue" type="submit"
-							value="GENERAR REPORTE"
-							update="dlg1 form:dini form:dffin form:archivo"
-							action="#{repParcialesConsar.generarReporte}" />
-					</div>
-				</div>
+			<p:panel header="REPORTE DE PARCIALES CONSAR" style="margin-top:20px">
+				<p:panelGrid styleClass="ui-noborder" style="margin-top:20px">
+					<p:row>
+						<p:column style="width:110px">
+							<p:outputLabel value="Fecha inicio: " />
+						</p:column>
+						<p:column style="width:172px">
+							<p:datePicker id="dini" value="#{repParcialesConsar.fechaInicio}"
+								locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								maxdate="#{repParcialesConsar.fecActual}" yearNavigator="true"
+								monthNavigator="true"
+								inputStyle="width:110px; text-align:right;" readonlyInput="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha fin: " />
+						</p:column>
+						<p:column>
+							<p:datePicker id="dffin" value="#{repParcialesConsar.fechaFin}"
+								locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								maxdate="#{repParcialesConsar.fecActual}" yearNavigator="true"
+								monthNavigator="true"
+								inputStyle="width:110px; text-align:right;" readonlyInput="true" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
+					<p:row>
+						<p:column style="width:120px">
+							<p:outputLabel value="Ruta:" />
+						</p:column>
+						<p:column class="outputlabel-shadow"
+							style="width:398px;height:17px !important">
+							<p:outputLabel value="#{repParcialesConsar.ruta}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
+					<p:row>
+						<p:column style="width:109px">
+							<p:outputLabel value="Nombre archivo:" />
+						</p:column>
+						<p:column>
+							<p:inputText id="archivo" value="#{repParcialesConsar.archivo}" maxlength="50"
+								style=" width: 412px" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid class="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel
+								value="El nombre del archivo no debe tener extensión"
+								style="color:blue;" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid styleClass="ui-noborder" style="margin-top:10px">
+					<p:row>
+						<p:column style="width: 552px;text-align: right;">
+							<p:commandButton styleClass="blue" type="submit"
+								value="GENERAR REPORTE"
+								update="form:dini form:dffin form:archivo form:result"
+								action="#{repParcialesConsar.generarReporte}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{repParcialesConsar}" />
+				</ui:include>
 			</p:panel>
 		</h:form>
 	</ui:define>
