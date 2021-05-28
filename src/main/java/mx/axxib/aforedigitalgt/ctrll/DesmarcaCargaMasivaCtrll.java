@@ -3,6 +3,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
@@ -70,37 +71,42 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cargar Archivo");
-		try {
-		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
-			UIInput input = (UIInput) findComponent("nombreCarga");
-			input.setValid(false);
-			pr.setStatus("Ingrese nombre para la carga de Archivo");
-		}else {
-			if((nombreArchivoCarga.endsWith(".txt")) && (nombreArchivoCarga.length()>4)) {
+		
+//		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
+//			UIInput input = (UIInput) findComponent("nombreCarga");
+//			input.setValid(false);
+//			pr.setStatus("Ingrese nombre para la carga de Archivo");
+//		}else {
+			//if((nombreArchivoCarga.endsWith(".txt")) && (nombreArchivoCarga.length()>4)) {
+			if(isNombreValido(pr)) {
+				
+				try {	
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
 			System.out.println("cargar archivo: "+desmarcaCargaConsultaMasivaOut);
-			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-			pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Proceso ejecutado Correctamente"
+			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
+			pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Proceso ejecutado Correctamente"
 			}else {
-				if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-					GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-				} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-					pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+				if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+					GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+				} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+					pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 				}			
 			}
-			}else {
-				UIInput input = (UIInput) findComponent("nombreCarga");
-				input.setValid(false);
-				pr.setStatus("Ingrese Nombre de Archivo con extensión .txt");	
+//			}else {
+//				UIInput input = (UIInput) findComponent("nombreCarga");
+//				input.setValid(false);
+//				pr.setStatus("Ingrese Nombre de Archivo con extensión .txt");	
+//			}
+		
+			}catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
-		}
+			}
 
-		}catch (Exception e) {
-			pr = GenericException(e);
-		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
+		
 	}
 	
 	
@@ -112,13 +118,13 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.reversaArchivoCarga();
 		System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
-		if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-			pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//pr.setStatus("Proceso ejecutado Correctamente");
+		if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
+			pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//pr.setStatus("Proceso ejecutado Correctamente");
 				}else {
-					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 					}
 
 				}
@@ -127,6 +133,28 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
+		}
+	}
+	
+	public boolean isNombreValido(ProcessResult pr) {
+		if (nombreArchivoCarga == null || nombreArchivoCarga.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreCarga");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]+(.txt|.TXT)$");
+			if (!pattern.matcher(nombreArchivoCarga.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreCarga");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .txt");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
 		}
 	}
 	

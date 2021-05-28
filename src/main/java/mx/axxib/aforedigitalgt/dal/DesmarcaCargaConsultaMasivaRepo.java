@@ -39,6 +39,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		query.registerStoredProcedureParameter("p_Archivo", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("p_Regresa", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("p_Ruta", ruta);
 		query.setParameter("p_Archivo", nombre);
@@ -47,8 +48,9 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		
 //		String res = (String) query.getOutputParameterValue("p_Mensaje");
 
-		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
-		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
+		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setRegresa((Integer) query.getOutputParameterValue("p_Regresa"));
 		System.out.println(" res: "+res);
 		return res;
 		} catch (Exception e) {
@@ -68,8 +70,8 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		
 		//String res = (String) query.getOutputParameterValue("p_Mensaje");
 		DesmarcaCargaConsultaMasivaOut res=new DesmarcaCargaConsultaMasivaOut();
-		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
-		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
+		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -88,8 +90,8 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		
 		//String res = (String) query.getOutputParameterValue("p_Mensaje");
 		DesmarcaCargaConsultaMasivaOut res=new DesmarcaCargaConsultaMasivaOut();
-		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
-		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
+		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -145,8 +147,8 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		
 		//String res = (String) query.getOutputParameterValue("p_Mensaje");
 		DesmarcaCargaConsultaMasivaOut res=new DesmarcaCargaConsultaMasivaOut();
-		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
-		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
+		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -172,8 +174,8 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 				
 		//String res = (String) query.getOutputParameterValue("p_Mensaje");
 		DesmarcaCargaConsultaMasivaOut res=new DesmarcaCargaConsultaMasivaOut();
-		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
-		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
+		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -191,14 +193,18 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		query.registerStoredProcedureParameter("p_NomCons", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);		
 		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("pRegresa", Integer.class, ParameterMode.OUT);
 		
 		query.setParameter("p_Ruta", ruta);
 		query.setParameter("p_NomCons", nombre);
 		
 		//String res = (String) query.getOutputParameterValue("p_Mensaje");
 		DesmarcaCargaConsultaMasivaOut res=new DesmarcaCargaConsultaMasivaOut();
-		res.setP_Mensaje((String) query.getOutputParameterValue("p_Mensaje"));
-		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
+		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
+		res.setRegresa((Integer) query.getOutputParameterValue("pRegresa"));
+		System.out.println("VALOR DE RES:"+res);
+		
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);

@@ -116,7 +116,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		pr.setDescProceso("Desmarca Masiva Cuentas");
 		try {
 			 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
-		     pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Consulta Exitosa"
+		     pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Consulta Exitosa"
 		}catch (Exception e) {
 			pr = GenericException(e);
 		} finally {
@@ -139,51 +139,51 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 String part1 = parts[0]; // 
 				 String part2 = parts[1]; // 
 				System.out.println("VALOR DE RADIOSELECT;"+radioSelected+ "  nssCURP"+nssCURP);
-				if(nssCURP.length()==11  && (radioSelected.equals("1") || radioSelected== "1")) {//&& StringUtils.isNumeric(nssCURP)
+				//if((nssCURP.length()==11 && StringUtils.isNumeric(nssCURP)==true && )  && (radioSelected.equals("1") || radioSelected== "1")) {//&& StringUtils.isNumeric(nssCURP)
+					if(isNSS(pr)  && (radioSelected.equals("1") || radioSelected== "1")) {//&& StringUtils.isNumeric(nssCURP)
+						
 					System.out.println("ES NSS *****************");	
 					
 					
 					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(Integer.parseInt(radioSelected),nssCURP, null,part1);	
 					System.out.println("validarNssRfc: "+desmarcaCargaConsultaMasivaOut);
-					System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 1) {
-						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Consulta Exitosa"
+					System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getEstatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getMensaje());
+					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 1) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Consulta Exitosa"
 						
 						
 					}else {
-						if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-							GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-						} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-							pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+						if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+							GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+						} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+							pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 						}
 					}	 
 				}
 				if(StringUtils.isNumeric(nssCURP)==false && (radioSelected.equals("1") || radioSelected== "1" )){
 					 UIInput inputNss = (UIInput) findComponent("nssCURP");
 			 		 inputNss.setValid(false);
-			 		 
-					 pr.setStatus("Ingresar NSS Valido ");	//selectedTipoClave
-					 
+			 		 pr.setStatus("Ingresar NSS Valido ");	//selectedTipoClave
 				}
 				if(StringUtils.isNumeric(nssCURP)==true && nssCURP.length()!=11 && (radioSelected.equals("1") || radioSelected== "1" )){
 					 UIInput inputNss = (UIInput) findComponent("nssCURP");
 			 		 inputNss.setValid(false);
-					 pr.setStatus("Ingresar NSS Valido ");	//selectedTipoClave
+					 pr.setStatus("Ingresar NSS Valido");	//selectedTipoClave
 					 
 				}
 				if (ValidateUtil.isCURP(nssCURP) && (radioSelected.equals("2") || radioSelected== "2")) {
 				 System.out.println("ES CURP *****************");
 					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(Integer.parseInt(radioSelected),null, nssCURP,part1);
-					 System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getOn_Estatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-						if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 1) {
-							pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());//"Consulta Exitosa"
+					 System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getEstatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getMensaje());
+						if (desmarcaCargaConsultaMasivaOut.getEstatus() == 1) {
+							pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Consulta Exitosa"
 							
 							
 						}else {
-							if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-								GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-							} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-								pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+							if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+								GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+							} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+								pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 							}
 					 
 					}
@@ -265,13 +265,13 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
 		
 		System.out.println("reversaDesmarcaMasiva: "+desmarcaCargaConsultaMasivaOut);
-		if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
+		if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 			pr.setStatus("Proceso ejecutado Correctamente");
 				}else {
-					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 					}
 				}	 
 		}
@@ -283,7 +283,20 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		}
 	}
 	
+	public boolean isNSS(ProcessResult pr) {
 
+			Pattern pattern = Pattern.compile("\\d{11}"); 
+			if (!pattern.matcher(nssCURP.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nssCURP");
+				radio.setValid(false);
+				pr.setStatus("Ingresar NSS Valido");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		
+	}
 	
 	
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @MappedSuperclass
 public class DesmarcaCargaConsultaMasivaOut {
-	private String p_Mensaje;
-	private Integer on_Estatus;
+	private String mensaje;
+	private Integer estatus;
+	private Integer regresa;
 }

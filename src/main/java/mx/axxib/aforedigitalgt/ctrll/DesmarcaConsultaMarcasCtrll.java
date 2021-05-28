@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
@@ -101,41 +102,46 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta Marca por Nss y/o Curp");
-		try {
 		
-		if(nombreArchivoCarga== null || nombreArchivoCarga.isEmpty()) {
-			UIInput input = (UIInput) findComponent("nombreCarga");
-			input.setValid(false);
-			pr.setStatus("Ingrese nombre de archivo");
-		}else {
 		
-			if(nombreArchivoCarga.endsWith(".xls") && (nombreArchivoCarga.length()>4) ) {
+//		if(nombreArchivoCarga== null || nombreArchivoCarga.isEmpty()) {
+//			UIInput input = (UIInput) findComponent("nombreCarga");
+//			input.setValid(false);
+//			pr.setStatus("Ingrese nombre de archivo");
+//		}else {
+		
+			//if(nombreArchivoCarga.endsWith(".xls") && (nombreArchivoCarga.length()>4) ) {
+		if(isNombreValido(pr)) {
+				try {	
+				
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
 	
-			System.out.println("cargar archivo: "+desmarcaCargaConsultaMasivaOut);
-			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
-				pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+			System.out.println("cargar archivo XLS: "+desmarcaCargaConsultaMasivaOut);
+			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
+				pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 			}else {
-					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 					}
 
 				}
-
-			}else {
-				UIInput input = (UIInput) findComponent("nombreCarga");
-				input.setValid(false);
-				pr.setStatus("Ingrese archivo con extensión .xls");	
+			
+			}catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
 			}
+			
+//			}else {
+//				UIInput input = (UIInput) findComponent("nombreCarga");
+//				input.setValid(false);
+//				pr.setStatus("Ingrese archivo con extensión .xls");	
+//			}
 		}
-		}catch (Exception e) {
-			pr = GenericException(e);
-		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
+		
 	}
 	
 	
@@ -159,16 +165,16 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			 
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(part1,part2);
 			System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
-			if(desmarcaCargaConsultaMasivaOut.getOn_Estatus()==1 ) {
+			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 
-				pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+				pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 
 				}else {
 
-					if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 2) {
-						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
-					} else if (desmarcaCargaConsultaMasivaOut.getOn_Estatus() == 0) {
-						pr.setStatus(desmarcaCargaConsultaMasivaOut.getP_Mensaje());
+					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
+						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+					} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
+						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 					}
 					
 				}
@@ -182,5 +188,26 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		}
 	}
 	
+	public boolean isNombreValido(ProcessResult pr) {
+		if (nombreArchivoCarga == null || nombreArchivoCarga.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreCarga");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("[-_ A-Za-z0-9]+(.xls|.XLS)$");
+			if (!pattern.matcher(nombreArchivoCarga.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreCarga");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .xls");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		}
+	}
 
 }
