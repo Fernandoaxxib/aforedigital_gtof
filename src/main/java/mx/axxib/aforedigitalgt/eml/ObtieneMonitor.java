@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 		@SqlResultSetMapping(name = "ObtieneMonitor", 
 				classes = { @ConstructorResult(targetClass = ObtieneMonitor.class, 
 					columns = {
-						@ColumnResult(name = "SESION_ID", type = Integer.class),
+						@ColumnResult(name = "SESION_ID", type = String.class),
 						@ColumnResult(name = "ABREV_PROCESO", type = String.class),
 						@ColumnResult(name = "DESC_PROCESO", type = String.class),
 						@ColumnResult(name = "ESTADO_PROCESO", type = String.class),
@@ -40,7 +40,7 @@ import lombok.NoArgsConstructor;
 })
 
 public class ObtieneMonitor {
-	private Integer sesionId;
+	private String sesionId;
 	private String abrevProceso;
 	private String descProceso;
 	private String estadoProceso;

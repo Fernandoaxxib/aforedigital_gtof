@@ -107,15 +107,16 @@
 				style="margin-top:10px">
 
 				<p:commandButton class="blue"
-					actionListener="#{monitorProcesos.actualizar}"
+					actionListener="#{monitorProcesos.actualizar}" onclick="PF('monitorTable').clearFilters()"
 					update="monitorTable jobs result form2:monitorDetalle"
 					style="margin-top:20px" value="Actualizar todo" />
 
-				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom"
+				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" widgetVar="monitorTable"
 					style="margin-top:20px" emptyMessage="#{msg.aprob_msj_sinDatos}"
 					value="#{monitorProcesos.monitor}" rows="5"
-					selection="#{monitorProcesos.selectedMonitor}"
-					rowKey="#{mon.sesionId}" paginator="true"
+					filteredValue="#{monitorProcesos.filtro}"
+					selection="#{monitorProcesos.selectedMonitor}" editable="false"  
+					rowKey="#{mon.sesionId}" paginator="true" 
 					rowsPerPageTemplate="5,10,15">
 
 					<f:facet name="header" style="float:right">
@@ -128,16 +129,18 @@
 					</f:facet>
 
 					<p:ajax event="rowSelectRadio" update="form2" />
+					<p:ajax event="filter" global="false" />
+					
 					<p:column id="radio" selectionMode="single"
 						style="width:20px;text-align:center" />
 
 
 					 
-				<p:column headerText="#{msg.monitor_monitor_columna_id}">
+				<p:column headerText="#{msg.monitor_monitor_columna_id}" filterBy="#{mon.sesionId}" filterPosition="top" >
 					<h:outputText value="#{mon.sesionId}" />
 				</p:column>
  
-					<p:column headerText="Identificador del proceso">
+					<p:column headerText="Identificador del proceso" >
 						<h:outputText value="#{mon.abrevProceso}" />
 					</p:column>
 

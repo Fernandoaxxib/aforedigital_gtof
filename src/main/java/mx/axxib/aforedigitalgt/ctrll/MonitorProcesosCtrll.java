@@ -39,6 +39,10 @@ public class MonitorProcesosCtrll extends ControllerBase {
 
 	@Getter
 	private List<ObtieneMonitor> monitor;
+	
+	@Getter
+	@Setter
+	private List<ObtieneMonitor> filtro;
 
 	@Getter
 	private List<ObtieneJobs> jobs;
