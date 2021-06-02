@@ -12,15 +12,12 @@
 		<f:event listener="#{aprobSolicTipRetiro.iniciar}"
 			type="preRenderView" />
 	</f:metadata>
-
 	<ui:define name="menu">
 		<ui:include src="menu.xhtml" />
 	</ui:define>
-
 	<ui:define name="submenu">
 		<ui:include src="subMenuTransacciones.xhtml" />
 	</ui:define>
-
 	<ui:define name="botones">
 		<h:form>
 			<p:linkButton styleClass="green"
@@ -51,9 +48,6 @@
 
 					<p:ajax event="page" global="false" />
 					<p:ajax event="filter" global="false" />
-
-
-
 					<p:ajax event="rowSelectCheckbox"
 						listener="#{aprobSolicTipRetiro.seleccion}"
 						update="table1 table1:totalRegistros" global="false" />
@@ -164,8 +158,6 @@
 								value="#{aprobSolicTipRetiro.seleccionados}" />
 						</p:outputPanel>
 					</f:facet>
-
-
 					<p:column selectionMode="multiple"
 						style="width:16px;text-align:center;" />
 					<p:column headerText="#{msg.aprob_tabla_columna_noSolicitud}"
@@ -188,7 +180,6 @@
 					<p:column headerText="#{msg.aprob_tabla_columna_cuenta}" width="70">
 						<h:outputText value="#{mon.codCuenta}" style="float:right" />
 					</p:column>
-
 					<p:column headerText="#{msg.aprob_tabla_columna_titular}">
 						<h:outputText value="#{mon.nombre}" />
 					</p:column>

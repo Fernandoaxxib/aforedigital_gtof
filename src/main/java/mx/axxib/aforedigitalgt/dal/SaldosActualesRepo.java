@@ -183,21 +183,31 @@ public class SaldosActualesRepo extends RepoBase {
 			List<SaldoOut> lista = query.getResultList();
 			List<Saldo2Out> lista2 = new ArrayList<>();
 
-			lista.forEach(p -> {
+			if(!lista.isEmpty()) {
+				lista.forEach(p -> {
+					Saldo2Out s = new Saldo2Out();
+					s.setCod_subproduct(p.getCod_subproduct());
+					s.setDescripcion(p.getDescripcion());
+					s.setDisabled(true);
+					s.setDisabled2(true);
+					s.setSaldo_subproduct(p.getSaldo_subproduct());
+					s.setTotal_saldos(p.getTotal_saldos());
+					lista2.add(s);
+				});
+			}else {
 				Saldo2Out s = new Saldo2Out();
-				s.setCod_subproduct(p.getCod_subproduct());
-				s.setDescripcion(p.getDescripcion());
+				s.setCod_subproduct("");
+				s.setDescripcion("");
+				s.setSaldo_subproduct(0.0);
+				s.setTotal_saldos(0.0);
 				s.setDisabled(true);
 				s.setDisabled2(true);
-				s.setSaldo_subproduct(p.getSaldo_subproduct());
-				s.setTotal_saldos(p.getTotal_saldos());
 				lista2.add(s);
-			});
-
+			}
+			
 			res.setSaldos(lista2);
 			res.setP_MENSAJE((String) query.getOutputParameterValue("P_MENSAJE"));
 			res.setP_ESTATUS((Integer) query.getOutputParameterValue("P_ESTATUS"));
-
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);

@@ -33,41 +33,30 @@ import mx.axxib.aforedigitalgt.util.DateUtil;
 public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 	@Autowired
-	private AprobSolicTipRetiroServ service;
-	
+	private AprobSolicTipRetiroServ service;	
 	@Autowired
-	private MonitorProcesosServ monitorService;
-	
+	private MonitorProcesosServ monitorService;	
 	@Getter
-	private List<SolicitudOut> listSolicitudes;
-	
-	
+	private List<SolicitudOut> listSolicitudes;	
 	@Getter
-	private List<ObtieneMonitor> procesoEjecutado;
-	
+	private List<ObtieneMonitor> procesoEjecutado;	
 	@Getter
 	@Setter
-	private List<SolicitudOut> selectedSolicitud;
-	
+	private List<SolicitudOut> selectedSolicitud;	
 	@Getter
 	@Setter
-	private List<SolicitudOut> filtro;
-	
+	private List<SolicitudOut> filtro;	
 	@Getter
-	private Integer idProceso;
-	
+	private Integer idProceso;	
 	@Getter
-	private AprobarSolicResult res;
-	
+	private AprobarSolicResult res;	
 	@Getter
 	@Setter
 	private boolean seleccionado;		
 	@Getter
-	private Integer seleccionados;
-	
+	private Integer seleccionados;	
 	@Getter
-	private String disabled;
-	
+	private String disabled;	
 	@Getter
 	private String disabled2;
 	
@@ -88,10 +77,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 				disabled2="true";
 			}			
 		}
-	}
-	
-	public int getCount() {
-	
+	}	
+	public int getCount() {	
 		if(filtro!=null && !filtro.isEmpty()) {
 			return filtro.size();
 		}
@@ -100,8 +87,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			return listSolicitudes.size();
 		}		
 			return 0;		
-	}
-	
+	}	
 	public void recuperarSolicPendientes() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
@@ -138,7 +124,6 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		    pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
-
 	}
 	public void recuperarProcesoEjecutado() {
 		try {
@@ -147,19 +132,13 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		} catch (Exception e) {
 			GenericException(e);
 		}
-	}
-	
-	
+	}		
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
         String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
         if (filterText == null || filterText.equals("")) {
             return true;
-        }
-        
-        
- 
-        SolicitudOut car = (SolicitudOut) value;
-        
+        } 
+        SolicitudOut car = (SolicitudOut) value;        
         String fechaOperacion= cadenaFecha(car.getFechaOperacion());
         return car.getNumSolicitud().toString().contains(filterText)
                 || car.getTransaccion().toLowerCase().contains(filterText)
@@ -167,19 +146,12 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
                 || car.getCodCuenta().contains(filterText)   
                 || fechaOperacion.contains(filterText)       
                 || car.getNombre().toLowerCase().contains(filterText) ;
-    }
-	
-	private String cadenaFecha(Date fecha) {
-		
+    }	
+	private String cadenaFecha(Date fecha) {		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");  
-		String strDate = dateFormat.format(fecha);  
-		
+		String strDate = dateFormat.format(fecha);  		
 		return strDate;
-	}
-	
-
-
-	
+	}	
 	public void aprobarSolicitud()  {
      List<ProcessResult> results= new ArrayList<>();	
 	 ProcessResult pr = new ProcessResult();	
@@ -229,11 +201,9 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		  pr.setStatus("No hay solicitudes por aprobar");
 		  pr.setFechaFinal(DateUtil.getNowDate());
 		  resultados.add(pr);
-	  }
-		
+	  }		
 	 seleccionados=0;
-	}
-	
+	}	
 	 public void seleccion(SelectEvent<SolicitudOut> event) {
 		 if(!selectedSolicitud.contains(event.getObject())){
 			 selectedSolicitud.add(event.getObject());			 			 
@@ -291,10 +261,6 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 			 results.removeIf(x -> x.getDescProceso().equals("GEN_MOVS_RETPAR"));		 
 			 results.add(p);
 			 resultados.addAll(results);
-		 }
-		 
-		 
-		 
+		 } 
 	 }
-
 }
