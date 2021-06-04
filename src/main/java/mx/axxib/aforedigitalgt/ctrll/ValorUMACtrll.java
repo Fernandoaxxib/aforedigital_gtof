@@ -24,6 +24,13 @@ import mx.axxib.aforedigitalgt.serv.ValorUMAServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de valor UMA
+//** Interventor Principal: JSAS
+//** Fecha Creación: 8/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "valorUMA")
 @ELBeanName(value = "valorUMA")

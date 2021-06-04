@@ -16,6 +16,12 @@ import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMA;
 import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de valor UMA
+//** Interventor Principal: JSAS
+//** Fecha Creación: 8/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ValorUMARepo extends RepoBase {

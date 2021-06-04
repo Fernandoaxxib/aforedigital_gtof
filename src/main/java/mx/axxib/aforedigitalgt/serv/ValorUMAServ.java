@@ -10,6 +10,12 @@ import mx.axxib.aforedigitalgt.eml.GeneraReporteUMAIn;
 import mx.axxib.aforedigitalgt.eml.ValorUMA;
 import mx.axxib.aforedigitalgt.eml.ValorUMAOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de valor UMA
+//** Interventor Principal: JSAS
+//** Fecha Creación: 8/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class ValorUMAServ extends ServiceBase {
 
