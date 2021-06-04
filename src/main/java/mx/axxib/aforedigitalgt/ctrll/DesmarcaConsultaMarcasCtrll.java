@@ -87,7 +87,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			 pr.setStatus("Proceso ejecutado Correctamente");
+			 pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		}catch (Exception e) {
 				GenericException(e);
 			} finally {
@@ -154,14 +154,14 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
 			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 
-				pr.setStatus("Proceso ejecutado Correctamente");
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 
 				}else {
 
 					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
-						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
+						GenerarErrorNegocio("Se presentó un error inesperado");
 					} else if (desmarcaCargaConsultaMasivaOut.getEstatus() == 0) {
-						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
+						pr.setStatus("Error en base de datos");
 					}
 					
 				}

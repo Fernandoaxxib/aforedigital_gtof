@@ -127,8 +127,9 @@ public class OrdenPagoCtrll extends ControllerBase {
 				pr.setFechaInicial(DateUtil.getNowDate());
 				pr.setDescProceso("Mandar a Imprimir");
 				BaseOut res =ordenPagoServ.enviarImpresora(ordenPagoFechasOut, boxUno);
+				System.out.println("VALOR DE res:"+res);
 				if (res.getEstatus() == 1) {
-					pr.setStatus("Ejecución con exito");
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
@@ -157,8 +158,9 @@ public class OrdenPagoCtrll extends ControllerBase {
 			
 				//BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
 				BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
+				System.out.println("VALOR DE res:"+res);
 				if (res.getEstatus() == 1) {
-					pr.setStatus("Ejecución con exito");
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
@@ -252,11 +254,16 @@ public class OrdenPagoCtrll extends ControllerBase {
 						
 						
 						nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
-						System.out.println("NOMBRE ARCHIVO: "+nombre);
-						if (nombre != null) {
-							pr.setStatus("Ejecución con exito");
+						System.out.println("VALOR DE tiposReportes: "+tiposReportes);
+						if (tiposReportes.getP_ESTATUS()==1) {
+							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 						} else {
-							pr.setStatus("Se presento un error inesperado");
+							if (tiposReportes.getP_ESTATUS() == 2) {
+								GenerarErrorNegocio("Se presento un error inesperado");
+							} else if (tiposReportes.getP_ESTATUS() == 0) {
+								pr.setStatus("Error al crear Archivo");
+							}	
+							
 						}
 						
 							} else {

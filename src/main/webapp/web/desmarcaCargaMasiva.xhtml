@@ -150,8 +150,8 @@
 							<p:row >
 								<div class="ui-g">
 									<div class="ui-g-12" style="text-align: center; width: 95%">
-									<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga" action="#{desmarcaCargaMasiva.reversaArchivo}" update="result" ajax="true"/>
-									</div>
+									<p:commandButton styleClass="blue ui-button-text" value="Reversa Carga"  onclick="PF('reversaCarga').show();" />
+								</div>
 								</div>
 						</p:row>
 						</p:panelGrid>
@@ -186,6 +186,25 @@
 						</p:panelGrid>
 					</p:panel>
 					
+					<p:dialog styleClass="styleWhite" appendTo="@(body)"
+												 header="Reversa Carga"  showEffect="fade" resizable="false"
+												widgetVar="reversaCarga" modal="true">
+												<p:panel style="border:0px !important;text-align:center">
+													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+														<p:outputLabel
+															value="¿Desea continuar?"
+															style="font-size:14px !important; color: #59ad40 !important;" />
+													</p:outputPanel>
+				
+													<p:outputPanel style="text-align:center">
+														<p:commandButton value="Si" update="result" style="width:90px"
+															class="blue" actionListener="#{desmarcaCargaMasiva.reversaArchivo}"
+															oncomplete="PF('reversaCarga').hide();" />
+														<p:commandButton value="No" class="blue" style="width:90px"
+															onclick="PF('reversaCarga').hide();" type="button" />
+													</p:outputPanel>
+												</p:panel>
+									</p:dialog>
 					
 			</p:panelGrid>
 				

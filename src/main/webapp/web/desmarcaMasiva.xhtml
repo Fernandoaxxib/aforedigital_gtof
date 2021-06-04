@@ -101,12 +101,30 @@
 							<p:panelGrid class="ui-noborder" style="margin-top:20px">
 							<p:row>
 								<p:column style="text-align: center !important;width: 450px !important;">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta" action="#{desmarcaMasiva.desmarcaMasivaCuenta}" update="result" ajax="true"/>
+									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta"  onclick="PF('desmarcaCuenta').show();" />
 								</p:column>
 							</p:row>
 							</p:panelGrid>
 							
-							
+							<p:dialog styleClass="styleWhite" appendTo="@(body)"
+												 header="Desmarca Masiva Cuenta"  showEffect="fade" resizable="false"
+												widgetVar="desmarcaCuenta" modal="true">
+												<p:panel style="border:0px !important;text-align:center">
+													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+														<p:outputLabel
+															value="¿Desea continuar?"
+															style="font-size:14px !important; color: #59ad40 !important;" />
+													</p:outputPanel>
+				
+													<p:outputPanel style="text-align:center">
+														<p:commandButton value="Si" update="result" style="width:90px"
+															class="blue" actionListener="#{desmarcaMasiva.desmarcaMasivaCuenta}"
+															oncomplete="PF('desmarcaCuenta').hide();" />
+														<p:commandButton value="No" class="blue" style="width:90px"
+															onclick="PF('desmarcaCuenta').hide();" type="button" />
+													</p:outputPanel>
+												</p:panel>
+									</p:dialog>
 							
 							</p:panelGrid>
 							

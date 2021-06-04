@@ -99,7 +99,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			pr.setStatus("Proceso ejecutado Correctamente");
+			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		}catch (Exception e) {
 			GenericException(e);
 		} finally {
