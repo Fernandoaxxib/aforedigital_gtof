@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
@@ -40,6 +41,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	private AforeMessage aforeMessage;
 	
 	@Getter
+	@Setter
 	ConsultaSaldoImssIssteOut consultaSaldoImssIssteOut;
 	
 	@Getter
@@ -76,30 +78,11 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 	@Getter
 	@Setter
 	private String nombreReporteIsste;
-	 
-	@Getter
-	@Setter
-	private String rutaSaldoNegativo;
 	
-	@Getter
-	@Setter
-	private String nombreSaldoNegativo;
-	 
-	@Getter
-	@Setter
-	private Date saldoFechaMovimiento;
 	
 	@Getter
 	private Date today;
 	
-	
-	
-//	@Getter
-//	@Setter
-//	public List<ProcessResult> resultados;
-	
-	@Getter
-	private String mensajeTabla;
 	@Override
 	public void iniciar() {
 		super.iniciar();
@@ -116,13 +99,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 			rutaReporteIsste="/RESPALDOS/operaciones";	
 			nombreReporteIsste="RPT-SLD-ISSS-FIN-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".xls";;
 			today= new Date();
-			limpiar();
 		}
-	}
-	
-	public void limpiar() {
-		mensajeTabla=null;
-		
 	}
 	
 	public void ejecutarImssCarga() {
@@ -131,30 +108,17 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		pr.setDescProceso("Carga Imss por NSS");
 		
 		try {
-			
-			if(nombreNssImss != null && !nombreNssImss.isEmpty() ) {
-			//if(nombreNssImss.toLowerCase().endsWith(".txt")) {
-				if(nombreNssImss.endsWith(".txt") && nombreNssImss.contains("NSS-CARGA-REP-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
-				
-				
+				System.out.println("VALOR DE CARGA IMSS consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
-				pr.setStatus("Proceso Exitoso");
-				}else {
-				pr.setStatus("Proceso Fallido");	
-				}
-			}else {
-//				UIInput input = (UIInput) findComponent("cargaImss");
-//				input.setValid(false);
-//				pr.setStatus("Nombre Carga Imss formato invalido");
-				
-			}
-			}else {
-//				UIInput input = (UIInput) findComponent("cargaImss");
-//				input.setValid(false);
-//				pr.setStatus("Nombre Carga Imss es requerido");
-				
-			}
+					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+					}else {
+						if (consultaSaldoImssIssteOut.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(consultaSaldoImssIssteOut.getMensaje());
+						} else if (consultaSaldoImssIssteOut.getOn_Estatus() == 0) {
+							pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+						}	
+					}
 		}catch (Exception e) {
 			pr = GenericException(e);
 			
@@ -162,14 +126,8 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 			pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
-		
-		
-
+	
 	}
-	
-
-	
-
 	
 	public void ejecutarImssReporte() {
 		
@@ -177,26 +135,19 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Reporte Imss por NSS");
 		try {
-			if(nombreReporteImss != null && !nombreReporteImss.isEmpty() ) {
-			//if(nombreReporteImss.toLowerCase().endsWith(".xls")) {
-				if(nombreReporteImss.endsWith(".xls") && nombreReporteImss.contains("RPT-SLD-IMSS-FIN-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
-				
-				if(consultaSaldoImssIssteOut.getEstatus()==1) {
-					pr.setStatus("Proceso Exitoso");
+				System.out.println("VALOR DE REPORTE IMSS consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
+				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
+					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
 					}else {
-					pr.setStatus("Proceso Fallido");	
+						if (consultaSaldoImssIssteOut.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(consultaSaldoImssIssteOut.getMensaje());
+						} else if (consultaSaldoImssIssteOut.getOn_Estatus() == 0) {
+							pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+						}	
+						
 					}
-			}else {
-//				UIInput input = (UIInput) findComponent("reporteImss");
-//				input.setValid(false);
-//				pr.setStatus("Reporte Nombre Imss formato invalido");	
-			}
-			}else {
-//				UIInput input = (UIInput) findComponent("reporteImss");
-//				input.setValid(false);
-//				pr.setStatus("Reporte Nombre Imss es requerido");
-			}
+		
 		}catch (Exception e) {
 			pr = GenericException(e);
 			
@@ -206,8 +157,6 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		}
 		
 	}
-
-	
 
 	public void ejecutarIssteCarga() {
 		ProcessResult pr = new ProcessResult();
@@ -216,28 +165,19 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		
 		try {
 			
-			if(nombreCurpIsste != null && !nombreCurpIsste.isEmpty()) {
-			//if(nombreCurpIsste.toLowerCase().endsWith(".txt")) {
-				if(nombreCurpIsste.endsWith(".txt") && nombreCurpIsste.contains("CURP-CARGA-REP-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);
-				
+				System.out.println("VALOR DE CARGA ISSTE consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
-				pr.setStatus("Proceso Exitoso");
-				}else {
-				pr.setStatus("Proceso Fallido");	
-				}
-			}else {
-//				UIInput input = (UIInput) findComponent("cargaIsste");
-//				input.setValid(false);
-//				pr.setStatus("Nombre Carga Isste formato invalido");
-				
-			}
-			}else {
-//				UIInput input = (UIInput) findComponent("cargaIsste");
-//				input.setValid(false);
-//				pr.setStatus("Nombre Carga Isste es requerido");
-				
-			}
+					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+					}else {
+						if (consultaSaldoImssIssteOut.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(consultaSaldoImssIssteOut.getMensaje());
+						} else if (consultaSaldoImssIssteOut.getOn_Estatus() == 0) {
+							pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+						}	
+						
+					}
+			
 		}catch (Exception e) {
 			pr = GenericException(e);
 			
@@ -255,28 +195,18 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		
 		try {
 			
-			if(nombreReporteIsste != null && !nombreReporteIsste.isEmpty() ) {
-			//if(nombreReporteIsste.toLowerCase().endsWith(".xls")) {
-				if(nombreReporteIsste.endsWith(".xls") && nombreReporteIsste.contains("RPT-SLD-ISSS-FIN-")) {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
-				
+				System.out.println("VALOR DE REPORTE ISSTE consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
-				pr.setStatus("Proceso Exitoso");
-				}else {
-				pr.setStatus("Proceso Fallido");	
-				}
-			}else {
-//				UIInput input = (UIInput) findComponent("reporteIsste");
-//				input.setValid(false);
-//				pr.setStatus("Reporte Nombre Isste formato invalido");
-				
-			}
-			}else {
-//				UIInput input = (UIInput) findComponent("reporteIsste");
-//				input.setValid(false);
-//				pr.setStatus("Reporte Nombre Isste es requerido");
-				
-			}
+					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+					}else {
+						if (consultaSaldoImssIssteOut.getOn_Estatus() == 2) {
+							GenerarErrorNegocio(consultaSaldoImssIssteOut.getMensaje());
+						} else if (consultaSaldoImssIssteOut.getOn_Estatus() == 0) {
+							pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+						}		
+					}
+			
 		}catch (Exception e) {
 			pr = GenericException(e);
 			
@@ -286,4 +216,92 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		}
 	}
 	
+	
+	public boolean isNombreValidoNssImss(ProcessResult pr) {
+		if (nombreNssImss == null || nombreNssImss.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreNssImss");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("(NSS-CARGA-REP-)+(\\d{4}\\d{2}\\d{2})+(.txt|.TXT)$");
+			if (!pattern.matcher(nombreNssImss.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreNssImss");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .txt");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		}
+	}
+	
+	public boolean isReporteValidoNssImss(ProcessResult pr) {
+		if (nombreReporteImss == null || nombreReporteImss.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreReporteImss");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("(RPT-SLD-IMSS-FIN-)+(\\d{4}\\d{2}\\d{2})+(.xls|.XLS)$");
+			if (!pattern.matcher(nombreReporteImss.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreReporteImss");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .xls");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		}
+	}
+	
+	public boolean isNombreValidoCurpIsste(ProcessResult pr) {
+		if (nombreCurpIsste == null || nombreCurpIsste.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreCurpIsste");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("(CURP-CARGA-REP-)+(\\d{4}\\d{2}\\d{2})+(.txt|.TXT)$");
+			if (!pattern.matcher(nombreCurpIsste.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreCurpIsste");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .txt");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		}
+	}
+	
+	public boolean isReporteValidoCurpIsste(ProcessResult pr) {
+		if (nombreReporteIsste == null || nombreReporteIsste.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreReporteImss");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("(RPT-SLD-ISSS-FIN-)+(\\d{4}\\d{2}\\d{2})+(.xls|.XLS)$");
+			if (!pattern.matcher(nombreReporteIsste.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreReporteImss");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .xls");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		}
+	}
 }

@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
@@ -37,17 +38,9 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	
 	@Autowired
 	SaldosImssIssteServ saldosImssIsste;
-	
-	@Autowired
-	private AforeMessage aforeMessage;
-	
+		
 	@Getter
 	ConsultaSaldoImssIssteOut consultaSaldoImssIssteOut;
-	
-	@Getter
-	ConsultaSaldoNegativoOut consultaSaldoNegativoOut;
-	
-	
 	
 	@Getter
 	@Setter
@@ -64,58 +57,50 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 	@Getter
 	private Date today;
 	
-//	@Getter
-//	@Setter
-//	private ProcesoOut proceso;
-	
+	@Getter
+	@Setter
+	private String saldoNegativoFecha;
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		Date myDate = new Date();
-		//RTP-MOVS-SLD-FIN-20210221.xls
+		Date myDate2 = new Date();
 		new SimpleDateFormat("yyyyMMdd").format(myDate);
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		
+		
 		if(init) {
 			rutaSaldoNegativo="/RESPALDOS/operaciones/pruebas";
 			nombreSaldoNegativo="RPT-MOVS-SLD-FIN-"+new SimpleDateFormat("yyyyMMdd").format(myDate)+".xls";
 			today= new Date();
 			saldoFechaMovimiento=today;
-			reset();
+			saldoNegativoFecha = formatter.format(myDate2);
+			
+			
 		}
-	}
-	
-	public void reset() {
-		
-		
 	}
 	
 	public void ejecutarReporteNegativo() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Carga por Saldos Vol.");
+		
 		try {
 			
-			if(nombreSaldoNegativo != null && !nombreSaldoNegativo.equals("") ) {
-				//if(nombreSaldoNegativo.toLowerCase().endsWith(".xls")) {
-					if(nombreSaldoNegativo.endsWith(".xls") && nombreSaldoNegativo.contains("RPT-MOVS-SLD-FIN-")) {
-					
 					consultaSaldoImssIssteOut=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
-					
+					System.out.println("VALOR DE CARGA IMSS consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
 					if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
-						pr.setStatus("Proceso Exitoso");
+						pr.setStatus(consultaSaldoImssIssteOut.getMensaje());//"Proceso Exitoso"
 						}else {
-						pr.setStatus("Proceso Fallido");	
-						//pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+							if (consultaSaldoImssIssteOut.getOn_Estatus() == 2) {
+								GenerarErrorNegocio(consultaSaldoImssIssteOut.getMensaje());
+							} else if (consultaSaldoImssIssteOut.getOn_Estatus() == 0) {
+								pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
+							}	
+							
 						}
-				}else {
-					UIInput input = (UIInput) findComponent("nombreVol");
-					input.setValid(false);
-					pr.setStatus("Carga Nombre Saldos Vol. formato invalido");	
-				}
-				}else {
-					UIInput input = (UIInput) findComponent("nombreVol");
-					input.setValid(false);
-					pr.setStatus("Carga Nombre Saldos Vol. es requerido");
-				}
 		}catch (Exception e) {
 			pr = GenericException(e);
 			
@@ -125,6 +110,27 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 		}
 		
 	}
-
+	
+	public boolean isNombreValido(ProcessResult pr) {
+		if (nombreSaldoNegativo == null || nombreSaldoNegativo.isEmpty()) {
+			UIInput radio = (UIInput) findComponent("nombreVol");
+			radio.setValid(false);
+			pr.setStatus("Nombre de archivo requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+			return false;
+		} else {
+			Pattern pattern = Pattern.compile("(RPT-MOVS-SLD-FIN-)+(\\d{4}\\d{2}\\d{2})+(.xls|.XLS)$");
+			if (!pattern.matcher(nombreSaldoNegativo.toUpperCase()).matches()) {
+				UIInput radio = (UIInput) findComponent("nombreVol");
+				radio.setValid(false);
+				pr.setStatus("el nombre del archivo debe tener extensión .xls");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+				return false;
+			}
+			return true;
+		}
+	}
 	
 }

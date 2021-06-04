@@ -122,8 +122,9 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		limpiar();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS o CURP");
+		System.out.println("VALOR DE curp_o_nssIn: "+curp_o_nssIn);
 			if (curp_o_nssIn != null && !curp_o_nssIn.equals("") ) {
-					boolean bandera=false;
+				int bandera=0;	
 				
 					if (ValidateUtil.isCURP(curp_o_nssIn)) {
 						
@@ -136,7 +137,8 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 						}
 						
 				    }
-					if((curp_o_nssIn.length() > 0 && curp_o_nssIn.length()<=11) && StringUtils.isNumeric(curp_o_nssIn)) 	{
+					if(isNSS()) {
+					//if((curp_o_nssIn.length() > 0 && curp_o_nssIn.length()<=11) && StringUtils.isNumeric(curp_o_nssIn)) 	{
 				    	
 				    	int valorNss= ejecutarConsultaNss(curp_o_nssIn);
 				    	if(valorNss ==1) {
@@ -146,15 +148,16 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 							mensajeTabla = "Sin información por NSS";
 						}
 				    }
-					
-					if((curp_o_nssIn.length() > 0 && curp_o_nssIn.length()<=11) && StringUtils.isNumeric(curp_o_nssIn)== false) 	{
+					if(curp_o_nssIn.length() != 11 && StringUtils.isNumeric(curp_o_nssIn) == true) {
+					//if((curp_o_nssIn.length() > 0 && curp_o_nssIn.length()<=11) && StringUtils.isNumeric(curp_o_nssIn)== false) 	{
 				    	
 						UIInput inputCurp = (UIInput) findComponent("curpNSS");
 						 inputCurp.setValid(false);
 						 pr.setStatus("Ingresar NSS Valido ");
+						 bandera=1;
 				    }
 					
-					if(ValidateUtil.isCURP(curp_o_nssIn) ==false && curp_o_nssIn.length()>11 ) {
+					if( ValidateUtil.isCURP(curp_o_nssIn) == false && bandera==0) { // && curp_o_nssIn.length() != 18
 						
 				 		 UIInput inputCurp = (UIInput) findComponent("curpNSS");
 						 inputCurp.setValid(false);
@@ -238,5 +241,19 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		
 	}
 	
+	public boolean isNSS() {
+
+		Pattern pattern = Pattern.compile("\\d{11}"); 
+		if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches()) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
+//			UIInput radio = (UIInput) findComponent("curpNSS");
+//			radio.setValid(false);
+//			pr.setStatus("Ingresar NSS Valido");
+//			pr.setFechaFinal(DateUtil.getNowDate());
+//			resultados.add(pr);
+			return false;
+		}
+		return true;
+	}
+
 
 }

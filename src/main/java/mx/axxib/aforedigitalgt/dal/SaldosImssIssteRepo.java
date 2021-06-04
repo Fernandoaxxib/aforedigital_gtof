@@ -120,7 +120,7 @@ private final EntityManager entityManager;
 		query.registerStoredProcedureParameter("p_RutaRepSldIss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_ArchRepSldIss", String.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter("p_Estatus", Integer.class, ParameterMode.OUT);
-		//query.registerStoredProcedureParameter("p_vMensaje", String.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter("p_vMensaje", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("p_Mensaje", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 		
@@ -130,7 +130,7 @@ private final EntityManager entityManager;
 		ConsultaSaldoImssIssteOut res= new ConsultaSaldoImssIssteOut();
 		res.setEstatus((Integer) query.getOutputParameterValue("p_Estatus"));
 		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje") );
-		//res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
+		res.setVMensaje((String) query.getOutputParameterValue("p_vMensaje") );
 		res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 		
 		return res;

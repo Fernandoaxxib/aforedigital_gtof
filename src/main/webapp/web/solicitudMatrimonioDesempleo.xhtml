@@ -46,7 +46,7 @@
 <!-- 						</p:column> -->
 <!-- 						<p:column> -->
 <!-- 							<p:inputText id="nss" value="#{solicitudMatrimonioDesempleo.nss}" style="width:100px" ></p:inputText> -->
-							<p:inputText id="nss" placeholder="NSS" value="#{solicitudMatrimonioDesempleo.nss}"  style="text-Align:left;font-size:15px;width:100px"/>
+							<p:inputText id="nss" maxlength="11" placeholder="NSS" value="#{solicitudMatrimonioDesempleo.nss}"  style="text-Align:left;font-size:15px;width:100px"/>
 							<p:commandButton class="blue"  actionListener="#{solicitudMatrimonioDesempleo.consultar}"
 								 update="result nss nombre cuenta pSolicitud pPago" value="Buscar" />
 						</p:column>

@@ -2,6 +2,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 import javax.faces.component.UIInput;
 
@@ -170,8 +171,9 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Búsqueda por NSS");
 		if (nss != null && !nss.equals("") ) {
+			if(isNSS(pr)) {
 			//if (ValidateUtil.isNSS(nss)) {
-				if (nss.matches("[0-9]*")) {
+			//	if (nss.matches("[0-9]*")) {
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nss);
 			
 			nombre=verChequeOut.getNombre();
@@ -184,14 +186,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				pr.setStatus("No se encontraron resultados");	
 			}
 			
-	
-			
+			} 
 
-			} else {
-				UIInput input = (UIInput) findComponent("nss");
-				input.setValid(false);
-				pr.setStatus("NSS no válido");
-			}
 		} else {
 			UIInput input = (UIInput) findComponent("nss");
 			input.setValid(false);
@@ -328,4 +324,17 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		}
 		
 	}
+	
+	public boolean isNSS(ProcessResult pr) {
+
+		Pattern pattern = Pattern.compile("\\d{11}"); 
+		if (!pattern.matcher(nss.toUpperCase()).matches()) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
+			UIInput radio = (UIInput) findComponent("nss");
+			radio.setValid(false);
+			pr.setStatus("Ingresar NSS Valido");
+			return false;
+		}
+		return true;
+	}
+	
 }

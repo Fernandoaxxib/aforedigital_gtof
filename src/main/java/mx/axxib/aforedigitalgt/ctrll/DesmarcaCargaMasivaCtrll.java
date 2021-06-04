@@ -113,7 +113,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 	public void reversaArchivo() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
-		pr.setDescProceso("Cargar Archivo");
+		pr.setDescProceso("Revera Carga");
 		try {
 
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.reversaArchivoCarga();

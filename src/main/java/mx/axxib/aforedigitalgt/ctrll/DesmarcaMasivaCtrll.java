@@ -131,8 +131,6 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	pr.setDescProceso("Desmarca Masiva Cuentas");
 		try {
 			
-			
-			
 			if((selectedTipoClave != null ) && (!nssCURP.equals("") || nssCURP!="")  ) {
 			
 				 String[] parts = selectedTipoClave.split("-");
@@ -290,8 +288,6 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				UIInput radio = (UIInput) findComponent("nssCURP");
 				radio.setValid(false);
 				pr.setStatus("Ingresar NSS Valido");
-				pr.setFechaFinal(DateUtil.getNowDate());
-				resultados.add(pr);
 				return false;
 			}
 			return true;

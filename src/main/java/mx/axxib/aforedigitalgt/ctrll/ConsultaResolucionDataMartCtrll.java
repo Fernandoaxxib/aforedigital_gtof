@@ -2,6 +2,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import javax.faces.component.UIInput;
 
@@ -85,24 +86,15 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 		if (nss != null && !nss.equals("") ) {
 			
 			//if (ValidateUtil.isInteger(nss) ) {
-			if (nss.matches("[0-9]*")) {
-			
+			//if (nss.matches("[0-9]*")) {
+			if(isNSS(pr)) {
 			//consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Integer.parseInt(nss));Long.valueOf(String s).longValue();
 				consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Long.valueOf(nss).longValue());
 			if(consultaResolucionesNombreOut  != null && consultaResolucionesNombreOut.getCursor() != null && consultaResolucionesNombreOut.getCursor().size()>0) {
 				listaCurp=consultaResolucionesNombreOut.getCursor();
 				
 				totalSolicitud=consultaResolucionesNombreOut.getCursor().size();	
-				
-//				 for (ConsultaResolucionDataMartOut model : listaCurp) {
-//			            System.out.println(model.getRegimen());
-//			        }
-				
-				Iterator<ConsultaResolucionDataMartOut> nombreIterator = listaCurp.iterator();
-				while(nombreIterator.hasNext()){
-					ConsultaResolucionDataMartOut elemento = nombreIterator.next();
-					
-				}
+			
 				if ( consultaResolucionesNombreOut.getCursor().size() == 0) {
 					mensajeTabla = "Sin información";
 					pr.setStatus("No se encontraron resultados");
@@ -117,12 +109,8 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 				pr.setStatus("No se encontraron resultados");
 				mensajeTabla = "Sin información";
 			}
-		} else {
-			UIInput input = (UIInput) findComponent("nss");
-			input.setValid(false);
-			pr.setStatus("NSS no válido ingrese digitos");
-		}
-			
+			}
+
 		}else {
 				UIInput input = (UIInput) findComponent("nss");
 				input.setValid(false);
@@ -136,6 +124,18 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 				resultados.add(pr);
 			}
 	
+	}
+		
+	public boolean isNSS(ProcessResult pr) {
+
+		Pattern pattern = Pattern.compile("\\d{11}"); 
+		if (!pattern.matcher(nss.toUpperCase()).matches()) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
+			UIInput radio = (UIInput) findComponent("nss");
+			radio.setValid(false);
+			pr.setStatus("Ingresar NSS Valido");
+			return false;
+		}
+		return true;
 	}
 	
 	}

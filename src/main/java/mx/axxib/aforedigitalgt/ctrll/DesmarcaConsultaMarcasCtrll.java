@@ -103,14 +103,6 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Consulta Marca por Nss y/o Curp");
 		
-		
-//		if(nombreArchivoCarga== null || nombreArchivoCarga.isEmpty()) {
-//			UIInput input = (UIInput) findComponent("nombreCarga");
-//			input.setValid(false);
-//			pr.setStatus("Ingrese nombre de archivo");
-//		}else {
-		
-			//if(nombreArchivoCarga.endsWith(".xls") && (nombreArchivoCarga.length()>4) ) {
 		if(isNombreValido(pr)) {
 				try {	
 				
@@ -135,11 +127,6 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 				resultados.add(pr);
 			}
 			
-//			}else {
-//				UIInput input = (UIInput) findComponent("nombreCarga");
-//				input.setValid(false);
-//				pr.setStatus("Ingrese archivo con extensión .xls");	
-//			}
 		}
 		
 	}
@@ -167,7 +154,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
 			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 
-				pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
+				pr.setStatus("Proceso ejecutado Correctamente");
 
 				}else {
 
