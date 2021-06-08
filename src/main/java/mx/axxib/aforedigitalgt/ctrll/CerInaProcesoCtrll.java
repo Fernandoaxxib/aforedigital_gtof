@@ -15,6 +15,12 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.serv.CerInaProServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Certificación de inactividad - Proceso
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "cerInaProceso")
 @ELBeanName(value = "cerInaProceso")

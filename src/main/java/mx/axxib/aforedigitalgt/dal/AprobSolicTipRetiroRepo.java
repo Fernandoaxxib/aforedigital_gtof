@@ -9,6 +9,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
+//***********************************************//
+//** Funcionalidad: Repositorio - Aprobación de solicitudes por tipo de retiro
+//** Desarrollador: JJSC
+//** Fecha de creación: 19/Nov/2020
+//** Última modificación:
+//***********************************************//
 
 @Repository
 @Transactional

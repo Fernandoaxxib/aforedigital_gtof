@@ -21,6 +21,12 @@ import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
 import mx.axxib.aforedigitalgt.serv.ModDesParcProcesoServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Desempleo parcialidades - Proceso masivo (primer pago)
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "modDesParcProceso")
 @ELBeanName(value = "modDesParcProceso")

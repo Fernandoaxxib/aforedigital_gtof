@@ -15,6 +15,12 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.LoteCOut;
 import mx.axxib.aforedigitalgt.eml.TotalesOut;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Reinversiones a básicas parcialidades - Compras
+//** Desarrollador: JJSC
+//** Fecha de creación: 01/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ReInverModDesComprasRepo extends RepoBase{

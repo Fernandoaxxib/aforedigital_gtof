@@ -7,6 +7,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.SaldosActualesRepo;
 import mx.axxib.aforedigitalgt.eml.ResultadoSaldosOut;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Saldos actuales del cliente
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class SaldosActualesServ extends ServiceBase{
 	

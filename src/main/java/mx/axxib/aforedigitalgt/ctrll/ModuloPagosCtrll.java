@@ -14,6 +14,12 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.serv.ModPagosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Liquidación de fondos y tipos de pagos
+//** Desarrollador: JJSC
+//** Fecha de creación: 23/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "moduloPagos")
 @ELBeanName(value = "moduloPagos")

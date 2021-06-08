@@ -20,26 +20,25 @@ import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
-import mx.axxib.aforedigitalgt.eml.ObtieneMonitor;
-import mx.axxib.aforedigitalgt.eml.ObtieneMonitorOut;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
 import mx.axxib.aforedigitalgt.serv.AprobSolicTipRetiroServ;
-import mx.axxib.aforedigitalgt.serv.MonitorProcesosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Aprobación de solicitudes por tipo de retiro
+//** Desarrollador: JJSC
+//** Fecha de creación: 19/Nov/2020
+//** Última modificación:
+//***********************************************//
 @Scope(value ="session")
 @Component(value = "aprobSolicTipRetiro")
 @ELBeanName(value = "aprobSolicTipRetiro")
 public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 
 	@Autowired
-	private AprobSolicTipRetiroServ service;	
-	@Autowired
-	private MonitorProcesosServ monitorService;	
+	private AprobSolicTipRetiroServ service;		
 	@Getter
-	private List<SolicitudOut> listSolicitudes;	
-	@Getter
-	private List<ObtieneMonitor> procesoEjecutado;	
+	private List<SolicitudOut> listSolicitudes;		
 	@Getter
 	@Setter
 	private List<SolicitudOut> selectedSolicitud;	
@@ -124,15 +123,7 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		    pr.setFechaFinal(DateUtil.getNowDate());
 			resultados.add(pr);
 		}
-	}
-	public void recuperarProcesoEjecutado() {
-		try {
-			ObtieneMonitorOut res = monitorService.getMonitor();
-			procesoEjecutado = res.getMonitor();
-		} catch (Exception e) {
-			GenericException(e);
-		}
-	}		
+	}	
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
         String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
         if (filterText == null || filterText.equals("")) {

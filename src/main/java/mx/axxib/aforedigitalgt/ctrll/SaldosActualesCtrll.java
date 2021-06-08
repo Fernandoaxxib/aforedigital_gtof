@@ -21,6 +21,12 @@ import mx.axxib.aforedigitalgt.serv.SaldosActualesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Saldos actuales del cliente
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "saldosActuales")
 @ELBeanName(value = "saldosActuales")

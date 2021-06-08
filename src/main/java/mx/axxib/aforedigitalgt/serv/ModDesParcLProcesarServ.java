@@ -13,7 +13,12 @@ import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 
-
+//***********************************************//
+//** Funcionalidad: Servicio - Desempleo parcialidades - Layout procesar
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Service
 public class ModDesParcLProcesarServ extends ServiceBase {
 

@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Desempleo parcialidades - Layout procesar
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ModDesParcLProcesarRepo extends RepoBase {

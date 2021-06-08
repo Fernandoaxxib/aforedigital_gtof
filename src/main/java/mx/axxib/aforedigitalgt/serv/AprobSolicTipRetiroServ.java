@@ -7,7 +7,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.AprobSolicTipRetiroRepo;
 import mx.axxib.aforedigitalgt.eml.AprobarSolicResult;
 import mx.axxib.aforedigitalgt.eml.SolicitudOut;
-
+//***********************************************//
+//** Funcionalidad: Servicio - Aprobación de solicitudes por tipo de retiro
+//** Desarrollador: JJSC
+//** Fecha de creación: 19/Nov/2020
+//** Última modificación:
+//***********************************************//
 @Service
 public class AprobSolicTipRetiroServ extends ServiceBase {
 

@@ -23,6 +23,12 @@ import mx.axxib.aforedigitalgt.eml.LoteCOut;
 import mx.axxib.aforedigitalgt.serv.ReInverModDesVentasServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Reinversiones a básicas parcialidades - Ventas
+//** Desarrollador: JJSC
+//** Fecha de creación: 01/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "reinversionModDesVentas")
 @ELBeanName(value = "reinversionModDesVentas")

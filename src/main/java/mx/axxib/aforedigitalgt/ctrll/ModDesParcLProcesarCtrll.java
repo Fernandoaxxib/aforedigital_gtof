@@ -24,6 +24,12 @@ import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.serv.ModDesParcLProcesarServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Desempleo parcialidades - Layout procesar
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "modDesParcLProcesar")
 @ELBeanName(value = "modDesParcLProcesar")

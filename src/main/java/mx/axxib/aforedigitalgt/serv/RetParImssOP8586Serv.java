@@ -10,14 +10,18 @@ import mx.axxib.aforedigitalgt.dal.RetParImssOP8586Repo;
 import mx.axxib.aforedigitalgt.eml.LoteOP85Out;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Retiros parciales IMSS OP85-OP86
+//** Desarrollador: JJSC
+//** Fecha de creación: 05/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class RetParImssOP8586Serv extends ServiceBase{
 
 	@Autowired
 	private RetParImssOP8586Repo repositorio;
-	
-	
-	
+		
 	public ProcesResult cargarArchivoOP85(String p_Path, String p_Nombre_Archivo) throws AforeException {
 		try {
 			return repositorio.cargarArchivoOP85(p_Path, p_Nombre_Archivo);

@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.dal.RetParImssOP84Repo;
 import mx.axxib.aforedigitalgt.eml.LoteOP84Out;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Retiros parciales IMSS OP84
+//** Desarrollador: JJSC
+//** Fecha de creación: 05/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class RetParImssOP84Serv extends ServiceBase{
 

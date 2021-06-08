@@ -12,7 +12,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ReporteOut;
 
-
+//***********************************************//
+//** Funcionalidad: Repositorio - Certificación de inactividad - Reportes
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class CerInaRepRepo extends RepoBase{

@@ -9,6 +9,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ModDesParcReportesRepo;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Desempleo parcialidades - Reportes
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Service
 public class ModDesParcReportesServ extends ServiceBase {
 

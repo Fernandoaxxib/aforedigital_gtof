@@ -9,6 +9,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ReInverModDesProcesoRepo;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Reinversiones a básicas parcialidades - Proceso
+//** Desarrollador: JJSC
+//** Fecha de creación: 01/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class ReInverModDesProcesoServ extends ServiceBase {
 

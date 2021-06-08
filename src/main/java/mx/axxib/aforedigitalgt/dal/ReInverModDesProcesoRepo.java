@@ -13,6 +13,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Reinversiones a básicas parcialidades - Proceso
+//** Desarrollador: JJSC
+//** Fecha de creación: 01/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ReInverModDesProcesoRepo extends RepoBase {

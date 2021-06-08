@@ -9,6 +9,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.CerInaProRepo;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Certificación de inactividad - Proceso
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class CerInaProServ extends ServiceBase {
 

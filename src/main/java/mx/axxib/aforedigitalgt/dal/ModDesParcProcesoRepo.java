@@ -14,6 +14,12 @@ import mx.axxib.aforedigitalgt.eml.DiagnosticoResult;
 import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Desempleo parcialidades - Proceso masivo (primer pago)
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ModDesParcProcesoRepo extends RepoBase {

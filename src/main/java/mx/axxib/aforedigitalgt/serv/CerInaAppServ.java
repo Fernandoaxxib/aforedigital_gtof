@@ -9,6 +9,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.CerInaAppRepo;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Certificación de inactividad - AppMovil
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class CerInaAppServ extends ServiceBase{
 

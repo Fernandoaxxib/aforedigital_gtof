@@ -7,15 +7,18 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.dal.ModPagosRepo;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
-
+//***********************************************//
+//** Funcionalidad: Servicio - Liquidación de fondos y tipos de pagos
+//** Desarrollador: JJSC
+//** Fecha de creación: 23/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Service
 public class ModPagosServ extends ServiceBase{
 
 	@Autowired
 	private ModPagosRepo service;
-	
-	
-	
+		
 	public EjecucionResult refresh(String ic_BotonContinuar,Date id_Fecha_Proceso,Date id_Fecha_Retiro) throws AforeException {
 		try {
 			return service.getRefresh(ic_BotonContinuar,id_Fecha_Proceso,id_Fecha_Retiro);
@@ -37,7 +40,6 @@ public class ModPagosServ extends ServiceBase{
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
-	}
-	
+	}	
 	
 }

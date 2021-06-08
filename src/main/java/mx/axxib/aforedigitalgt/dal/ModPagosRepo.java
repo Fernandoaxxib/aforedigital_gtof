@@ -10,6 +10,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Liquidación de fondos y tipos de pagos
+//** Desarrollador: JJSC
+//** Fecha de creación: 23/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ModPagosRepo extends RepoBase {

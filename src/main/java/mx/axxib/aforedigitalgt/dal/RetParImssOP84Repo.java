@@ -17,6 +17,12 @@ import mx.axxib.aforedigitalgt.eml.LoteOP84Out;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 import mx.axxib.aforedigitalgt.eml.RegOP84Out;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Retiros parciales IMSS OP84
+//** Desarrollador: JJSC
+//** Fecha de creación: 05/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class RetParImssOP84Repo extends RepoBase {

@@ -24,6 +24,12 @@ import mx.axxib.aforedigitalgt.eml.RegOP84Out;
 import mx.axxib.aforedigitalgt.serv.RetParImssOP84Serv;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Retiros parciales IMSS OP84
+//** Desarrollador: JJSC
+//** Fecha de creación: 05/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "retParImssOP84")
 @ELBeanName(value = "retParImssOP84")

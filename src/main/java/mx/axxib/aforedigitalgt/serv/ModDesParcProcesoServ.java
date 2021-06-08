@@ -12,8 +12,12 @@ import mx.axxib.aforedigitalgt.eml.DiagnosticoResult;
 import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.RegisSinSalarioOut;
 
- 
-
+//***********************************************//
+//** Funcionalidad: Servicio - Desempleo parcialidades - Proceso masivo (primer pago)
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Service
 public class ModDesParcProcesoServ extends ServiceBase {
 	@Autowired

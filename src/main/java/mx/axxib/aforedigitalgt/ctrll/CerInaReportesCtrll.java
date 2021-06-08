@@ -15,6 +15,12 @@ import mx.axxib.aforedigitalgt.eml.ReporteOut;
 import mx.axxib.aforedigitalgt.serv.CerInaRepServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Certificación de inactividad - Reportes
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "cerInaReportes")
 @ELBeanName(value = "cerInaReportes")

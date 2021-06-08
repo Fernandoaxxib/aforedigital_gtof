@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.dal.CerInaLPRepo;
 import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.ProcesResult;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Certificación de inactividad - Layout PROCESAR
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Ene/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class CerInaLPServ extends ServiceBase{
 

@@ -19,6 +19,12 @@ import mx.axxib.aforedigitalgt.eml.ResultadoSaldosOut;
 import mx.axxib.aforedigitalgt.eml.Saldo2Out;
 import mx.axxib.aforedigitalgt.eml.SaldoOut;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Saldos actuales del cliente
+//** Desarrollador: JJSC
+//** Fecha de creación: 18/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class SaldosActualesRepo extends RepoBase {

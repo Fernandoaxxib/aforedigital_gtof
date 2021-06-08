@@ -10,6 +10,12 @@ import mx.axxib.aforedigitalgt.dal.RepParcialesRepo;
 import mx.axxib.aforedigitalgt.dal.RepoBase;
 import mx.axxib.aforedigitalgt.eml.ReporteOut;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Reporte de parciales CONSAR
+//** Desarrollador: JJSC
+//** Fecha de creación: 15/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class RepParcialesServ extends RepoBase{
 

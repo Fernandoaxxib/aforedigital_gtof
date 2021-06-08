@@ -16,6 +16,12 @@ import mx.axxib.aforedigitalgt.eml.ProcesoOut;
 import mx.axxib.aforedigitalgt.serv.ModDesParcReportesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Desempleo parcialidades - Reportes
+//** Desarrollador: JJSC
+//** Fecha de creación: 10/Dic/2020
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "modDesParcReportes")
 @ELBeanName(value = "modDesParcReportes")

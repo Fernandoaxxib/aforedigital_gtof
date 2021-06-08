@@ -15,6 +15,12 @@ import mx.axxib.aforedigitalgt.serv.RepParcialesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** Funcionalidad: Controlador - Reporte de parciales CONSAR
+//** Desarrollador: JJSC
+//** Fecha de creación: 15/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "repParcialesConsar")
 @ELBeanName(value = "repParcialesConsar")

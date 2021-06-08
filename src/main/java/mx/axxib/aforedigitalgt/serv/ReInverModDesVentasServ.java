@@ -13,6 +13,12 @@ import mx.axxib.aforedigitalgt.eml.EjecucionResult;
 import mx.axxib.aforedigitalgt.eml.LoteCOut;
 import mx.axxib.aforedigitalgt.eml.TotalesOut;
 
+//***********************************************//
+//** Funcionalidad: Servicio - Reinversiones a básicas parcialidades - Ventas
+//** Desarrollador: JJSC
+//** Fecha de creación: 01/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Service
 public class ReInverModDesVentasServ extends ServiceBase {
 	

@@ -13,6 +13,12 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.ReporteOut;
 
+//***********************************************//
+//** Funcionalidad: Repositorio - Reporte de parciales CONSAR
+//** Desarrollador: JJSC
+//** Fecha de creación: 15/Feb/2021
+//** Última modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class RepParcialesRepo extends RepoBase {
