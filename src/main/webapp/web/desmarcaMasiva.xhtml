@@ -101,12 +101,12 @@
 							<p:panelGrid class="ui-noborder" style="margin-top:20px">
 							<p:row>
 								<p:column style="text-align: center !important;width: 450px !important;">
-									<p:commandButton styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta"  onclick="PF('desmarcaCuenta').show();" />
+									<p:commandButton  styleClass="blue ui-button-text" value="Desmarca Masiva Cuenta"  onclick="PF('desmarcaCuenta').show();" />
 								</p:column>
 							</p:row>
 							</p:panelGrid>
 							
-							<p:dialog styleClass="styleWhite" appendTo="@(body)"
+							<p:dialog  styleClass="styleWhite" appendTo="@(body)"
 												 header="Desmarca Masiva Cuenta"  showEffect="fade" resizable="false"
 												widgetVar="desmarcaCuenta" modal="true">
 												<p:panel style="border:0px !important;text-align:center">
@@ -237,7 +237,7 @@
 									</p:column>		
 									
 								<p:column  style="text-Align:left;font-size:15px;width:150px">
-									<p:inputText id="nssCURP" maxlength="18" placeholder="NSS ó CURP" value="#{desmarcaMasiva.nssCURP}"  style="text-Align:left;font-size:15px;width:210px"/>
+									<p:inputText id="nssCURP" maxlength="18" placeholder="NSS ó CURP"  value="#{desmarcaMasiva.nssCURP}" style="text-Align:left;font-size:15px;width:210px"/>
 								</p:column>
 							
 							</p:row>
@@ -245,14 +245,21 @@
 							<p:panelGrid class="ui-noborder" style="margin-top:10px">
 							<p:row>
 								<p:column  style="text-align: left !important;width: 450px !important;">
-									<p:commandButton  styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="tipoProceso nssCURP radSelect result" global="true" ajax="true"/>
+									<p:commandButton id="ingresarNssCurp"  styleClass="blue ui-button-text" value="Desmarca Individual Cuenta" action="#{desmarcaMasiva.validarNssRfc}"  update="tipoProceso nssCURP radSelect result" ajax="true"/>
+									<p:defaultCommand target="ingresarNssCurp" />
 								</p:column>
+								 
 							</p:row>
 							</p:panelGrid>	
 							
 							
 							
 						</p:panel>
+						
+						
+						
+						
+						
 						
 					</p:panelGrid>
 				

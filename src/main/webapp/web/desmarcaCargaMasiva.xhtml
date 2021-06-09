@@ -81,7 +81,8 @@
 								<p:column style="text-align: right !important;width: 450px !important;">
 <!-- 									<div class="ui-g"> -->
 <!-- 									<div class="ui-g-12" > -->
-									<p:commandButton styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="result  nombreCarga" ajax="true"/>
+									<p:commandButton id="archivoNombre" styleClass="blue ui-button-text"  value="Cargar Archivo" action="#{desmarcaCargaMasiva.cargarArchivo}" update="result  nombreCarga" ajax="true"/>
+									<p:defaultCommand target="archivoNombre" />
 <!-- 									</div> -->
 <!-- 									</div> -->
 								</p:column>

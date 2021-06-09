@@ -26,8 +26,9 @@ import lombok.NoArgsConstructor;
 				})
 })
 
-public class TipoProcesoOut {
+public class TipoProcesoOut  {
 	private String CLAVE_PROCESO;
 	//private String DESCRIPCION;
 
+	
 }

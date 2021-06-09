@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -87,7 +88,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 		pr.setDescProceso("Cargar Clave Proceso");
 		try {
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			 pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		}catch (Exception e) {
 				GenericException(e);
 			} finally {

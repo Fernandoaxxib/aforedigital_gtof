@@ -1,12 +1,8 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 import java.util.regex.Pattern;
-
+import java.util.*;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -98,8 +94,10 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cargar Clave Proceso");
 		try {
+			
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+			//Collections.sort(listaTipoProceso);
+    		pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		}catch (Exception e) {
 			GenericException(e);
 		} finally {
@@ -109,7 +107,13 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		return listaTipoProceso;
 	}
 	
-	
+//	@SuppressWarnings("unchecked")
+//	private static void printList(String title, @SuppressWarnings("rawtypes") List list) {
+//        System.out.println(title);
+//        list.forEach(x -> System.out.println("\t" + x.toString()));
+//        System.out.println("");
+//    }
+ 
 	public void desmarcaMasivaCuenta() {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
