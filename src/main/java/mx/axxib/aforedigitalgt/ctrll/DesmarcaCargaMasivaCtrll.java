@@ -72,12 +72,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Cargar Archivo");
 		
-//		if(nombreArchivoCarga==null || nombreArchivoCarga.isEmpty()) {
-//			UIInput input = (UIInput) findComponent("nombreCarga");
-//			input.setValid(false);
-//			pr.setStatus("Ingrese nombre para la carga de Archivo");
-//		}else {
-			//if((nombreArchivoCarga.endsWith(".txt")) && (nombreArchivoCarga.length()>4)) {
+
 			if(isNombreValido(pr)) {
 				
 				try {	
@@ -92,11 +87,6 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 					pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 				}			
 			}
-//			}else {
-//				UIInput input = (UIInput) findComponent("nombreCarga");
-//				input.setValid(false);
-//				pr.setStatus("Ingrese Nombre de Archivo con extensión .txt");	
-//			}
 		
 			}catch (Exception e) {
 				pr = GenericException(e);

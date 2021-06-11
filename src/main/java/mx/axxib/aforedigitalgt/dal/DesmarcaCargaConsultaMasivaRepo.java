@@ -1,6 +1,5 @@
 package mx.axxib.aforedigitalgt.dal;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -15,7 +14,6 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaMasivaClaveOut;
-import mx.axxib.aforedigitalgt.eml.LoteOut;
 import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 
 @Repository
@@ -29,7 +27,6 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		this.entityManager = entityManager;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public DesmarcaCargaConsultaMasivaOut ejecutarArchivoCarga(String ruta, String nombre) throws AforeException {
 		try {
 	 	String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_DESMARCA_CARGA_MASIVA_PACKAGE).concat(".").concat(Constantes.DETALLE_DESMARCA_CARGA_MASIVA_CREAR_ARCHIVO_STORED);
@@ -59,7 +56,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		
 	}
 	
-	@SuppressWarnings("unchecked")
+	
 	public DesmarcaCargaConsultaMasivaOut reversaArchivoCarga() throws AforeException {
 		try {
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.DETALLE_DESMARCA_CARGA_MASIVA_PACKAGE).concat(".").concat(Constantes.DETALLE_DESMARCA_CARGA_MASIVA_REVERSA_ARCHIVO_STORED);

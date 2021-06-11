@@ -33,7 +33,8 @@
 		
 	<h:form id="form">
 
-
+	<p:panel  style="margin-top:20px">
+	
 	<p:panel id="busqueda" header="Solicitudes de Matrimonio y Desempleo" style="margin-top:20px">
 		
 				
@@ -84,14 +85,13 @@
 				
   		
  	</p:panel>
- 
+ 	
+ 	 	
+ 	
  	<p:panel id="pSolicitud" header="Solicitud Matrimonio,Desempleo" style="margin-top:20px">
  		
- 		<p:dataTable id="verSolicitudMatrimonio"  var="verSolicitud" scrollable="true" scrollHeight="250"
-			paginatorPosition="bottom"
-					emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTablaSolicitud}"
-			 value="#{solicitudMatrimonioDesempleo.listSolicitudChequeOut}"  rows="10" paginator="true"
-					rowsPerPageTemplate="5,10,15"
+ 		<p:dataTable id="verSolicitudMatrimonio"  var="verSolicitud" scrollable="true" scrollHeight="250" paginatorPosition="bottom" emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTablaSolicitud}"
+			 value="#{solicitudMatrimonioDesempleo.listSolicitudChequeOut}"  rows="10" paginator="true" rowsPerPageTemplate="5,10,15"
 					>
 		    
 					<f:facet name="header" style="float:right">
@@ -218,8 +218,7 @@
 						</p:row>	
 					</p:panelGrid>		
 						
-						<p:dataTable styleClass="styleTable3" var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}"
-						emptyMessage="#{verDatosCheque.mensajeTablaFopagos}"  >
+						<p:dataTable styleClass="styleTable3" var="verSolicitud" value="#{solicitudMatrimonioDesempleo.fopagos}" emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTablaFopagos}"  >
 									
 									<p:column headerText="Beneficiario" style="width:100px;text-align: center;">
 										<h:outputText value="#{verSolicitud.PBenef_Re}" style="float:left"/>
@@ -290,12 +289,12 @@
 						</p:dialog>
  		
  	</p:panel>
- 	<p:panel id="pPago" header="Pagos Efectuados" style="margin-top:20px">
+
+
+<p:panel id="pPago" header="Pagos Efectuados" style="margin-top:20px">
 			
-			<p:dataTable id="verPagosEfectuados"  var="verPago"  scrollable="true" scrollHeight="250" paginatorPosition="bottom"
-					emptyMessage="#{verDatosCheque.mensajeTablaPago}"
-			 value="#{solicitudMatrimonioDesempleo.listPagoChequeOut}"  rows="10" paginator="true"
-					rowsPerPageTemplate="5,10,15" >
+			<p:dataTable id="verPagosEfectuados"  var="verPago"  scrollable="true" scrollHeight="250" paginatorPosition="bottom" emptyMessage="#{solicitudMatrimonioDesempleo.mensajeTablaPago}"
+			 value="#{solicitudMatrimonioDesempleo.listPagoChequeOut}"  rows="10" paginator="true" rowsPerPageTemplate="5,10,15" >
 		    		    
 					
 					<f:facet name="header" style="float:right">
@@ -353,17 +352,12 @@
 		
 		</p:dataTable>
 		
-		
-		
-		
-		  
-		
-						
+				
 							
-  </p:panel>
+  	</p:panel>
 		
 			
-		
+	</p:panel>	
 		<ui:include src="processResult.xhtml">
 			<ui:param name="base" value="#{solicitudMatrimonioDesempleo}" />
 		</ui:include>

@@ -122,9 +122,9 @@ public class ConsultarMarcasCuentasRepo extends RepoBase{
 				res.setCuenta((Integer)query.getOutputParameterValue("P_cuenta"));
 				res.setNombre((String) query.getOutputParameterValue("P_nombre"));
 				res.setCurp_o_nss((String)query.getOutputParameterValue("P_curp"));
-				res.setCpDatos(query.getResultList());
 				res.setStatus((Integer) query.getOutputParameterValue("P_ESTATUS"));
 				res.setMensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+				res.setCpDatos(query.getResultList());	
 			}
 			
 			

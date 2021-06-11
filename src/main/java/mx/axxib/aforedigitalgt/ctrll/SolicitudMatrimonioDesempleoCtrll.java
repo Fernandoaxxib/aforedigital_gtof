@@ -101,12 +101,15 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	private String cuenta;
 	
 	@Getter
+	@Setter
 	private String mensajeTablaPago;
 	
 	@Getter
+	@Setter
 	private String mensajeTablaSolicitud;
 	
 	@Getter
+	@Setter
 	private String mensajeTablaFopagos;
 	
 	@Getter
@@ -154,6 +157,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	
 	private void limpiar() {
 		mensajeTablaSolicitud=null;
+		mensajeTablaPago=null;
 		totalSolicitud=0;
 		totalPago=0;
 		//verDatoCheque=false;
@@ -175,15 +179,25 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			//if (ValidateUtil.isNSS(nss)) {
 			//	if (nss.matches("[0-9]*")) {
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nss);
-			
+			System.out.println("VALOR DE verChequeOut ES: "+verChequeOut);
 			nombre=verChequeOut.getNombre();
 			cuenta=verChequeOut.getCuenta();
-			if(verChequeOut.getNombre()!=null) {
+			if(verChequeOut.getStatus().equals("1")) {
 			pr.setStatus("Consulta Exitosa Nss");
 			verDatoCheque=true;
-			consultarSolicitud(cuenta);
-			}else {
-				pr.setStatus("No se encontraron resultados");	
+			if(!cuenta.isEmpty()) {
+				consultarSolicitud(cuenta);
+			}
+			
+			if(!cuenta.isEmpty()) {
+				consultarPago(cuenta);
+			}
+			} else {
+				if (verChequeOut.getStatus().equals("2")) {
+					GenerarErrorNegocio(verChequeOut.getMensaje());
+				} else if (verChequeOut.getStatus().equals("0")) {
+					pr.setStatus(verChequeOut.getMensaje());
+				}
 			}
 			
 			} 
@@ -202,21 +216,17 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		}
 	}
 	
-//	public void botonDatosCheque() {
-//		consultarSolicitud(cuenta);
-//		
-//	}
-	
+
 	public void consultarSolicitud(String cuenta) {
 		ProcessResult pr = new ProcessResult();
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Búsqueda por Cuenta Solicitud Matrimonio");
+			pr.setDescProceso("Búsqueda Cuenta Solicitud Matrimonio");
 			//limpiar();
 			//totalSolicitud=0;
 			res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
 			
-			
+			System.out.println("VALOR DE consultarSolicitud res: "+res);
 			
 			if (res != null && res.getVerSolicitudChequeListOut() != null && res.getVerSolicitudChequeListOut().size() > 0) {
 				listSolicitudChequeOut = res.getVerSolicitudChequeListOut();
@@ -236,7 +246,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				pr.setStatus("No se encontraron resultados");
 				mensajeTablaSolicitud = "Sin información";
 			}
-			consultarPago(cuenta);
+			//consultarPago(cuenta);
 		}catch (Exception e) {
 			resultados.add(GenericException(e));
 		} finally {
@@ -249,11 +259,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 		ProcessResult pr = new ProcessResult();
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Búsqueda por Cuenta Pagos Efectuados");
+			pr.setDescProceso("Búsqueda Cuenta Pagos Efectuados");
 			//limpiar();
 			//totalPago=0;
 			verPagoChequeOut=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
-			
+			System.out.println("VALOR DE consultarPago verPagoChequeOut: "+verPagoChequeOut);
 			
 			if (verPagoChequeOut != null && verPagoChequeOut.getVerPagoChequeListOut() != null && verPagoChequeOut.getVerPagoChequeListOut().size() > 0) {
 				listPagoChequeOut = verPagoChequeOut.getVerPagoChequeListOut();
@@ -267,8 +277,9 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 				pr.setStatus("Consulta Exitosa Pago");//"Consulta Exitosa"
 				}
 			}else {
-				pr.setStatus("No se encontraron resultados");
 				mensajeTablaPago = "Sin información";
+				pr.setStatus("No se encontraron resultados");
+				
 			}
 		
 		}catch (Exception e) {
@@ -292,31 +303,39 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			System.out.println("valor de Solicitud"+solicitudChequeOut.getNumeroSolicitud());
 			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(Long.valueOf(solicitudChequeOut.getNumeroSolicitud()), nss, cuenta, nombre);
 			System.out.println("VALORES DE FOPAGO:"+fopagos);
-			System.out.println("MONTO BRUTO:"+fopagos.getPMonBruto_Re());
-			System.out.println("MONTO ISR:"+fopagos.getPMontoIsr_Re());
-			System.out.println("MONTO NETO:"+fopagos.getPMontoNeto_Re());
-			totalMontoRetiro=fopagos.getPMonBruto_Re();
-			totalMontoIsr=fopagos.getPMontoIsr_Re();
-			totalNeto=fopagos.getPMontoNeto_Re();
-			}
-			//fopagos= solicitudMatrimonioDesempleoServ.getFopagos(pagoChequeOut.getIdentificarOperacion(), nss, cuenta, nombre);
-			///System.out.println(""+pagoChequeOut.getIdentificarOperacion());
+
 			if(fopagos != null) {
+				
+				totalMontoRetiro=fopagos.getPMonBruto_Re();
+				totalMontoIsr=fopagos.getPMontoIsr_Re();
+				totalNeto=fopagos.getPMontoNeto_Re();
+				
 				if (fopagos.getOn_Estatus() == 1 ) {
 					pr.setStatus("Consulta Exitosa Fopagos");
 					
 				}else {
-					pr.setStatus("No se encontraron resultados");
+					if(fopagos.getOn_Estatus() == 2 ) {
+						
+						GenerarErrorNegocio(fopagos.getPMensaje());
+					}else if(fopagos.getOn_Estatus() == 0 ) {
+						pr.setStatus("No existen datos para este No. de Solicitud: "+solicitudChequeOut.getNumeroSolicitud());
+					}
 					mensajeTablaFopagos = "Sin información";	
 				}
 			}else {
-					pr.setStatus("No se encontraron resultados");
 					mensajeTablaFopagos = "Sin información";
+					pr.setStatus("No existen datos para este No. de Solicitud: "+solicitudChequeOut.getNumeroSolicitud());
+					
 				}
+			}else {
+				mensajeTablaFopagos = "Sin información";
+				pr.setStatus("No tiene No. Solicitud");
 				
+			}	
 			 
 			
 		} catch (Exception e) {
+			mensajeTablaFopagos = "Sin información";
 			pr = GenericException(e);
 		} finally {
 			pr.setFechaFinal(DateUtil.getNowDate());
@@ -328,7 +347,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 	public boolean isNSS(ProcessResult pr) {
 
 		Pattern pattern = Pattern.compile("\\d{11}"); 
-		if (!pattern.matcher(nss.toUpperCase()).matches()) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
+		if (!pattern.matcher(nss.toUpperCase()).matches()   || nss.equals("00000000000") ) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
 			UIInput radio = (UIInput) findComponent("nss");
 			radio.setValid(false);
 			pr.setStatus("Ingresar NSS Valido");

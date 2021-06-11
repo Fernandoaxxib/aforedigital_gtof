@@ -49,13 +49,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	@Setter
 	private List<String> tipoZona;
 	
-//	@Autowired
-//	HikariDataSource dataSource;
-	
-//	@Setter
-//	@Getter
-//	private String zona;
-	
+
 	@Setter
 	@Getter
 	private String montoDiario;
@@ -78,10 +72,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	@Getter
 	private String insertZona;
 	
-//	@Getter
-//	@Setter
-//	private List<SalarioMinimoTablaOut> salarioMinimoTablaOut;
-	
+
 	@Getter
 	@Setter
 	private  SalarioMinOut salarioMinOut;
@@ -139,6 +130,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		fechaUlt=null;
 		modo=0;
 		salarioMinimoTablaOut= new ArrayList<SalarioMinimoOut>();
+		mensajeTabla = null;
 		botonGenerarTabla();
 		
 		
@@ -161,24 +153,29 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Obtener Salario Minimo");
+		mensajeTabla = null;
 		try {
 			
 			//SalarioMinOut salarioMinOut =new SalarioMinOut();
 			SalarioMinOut salarioMinOut = salarioMinService.getSalarioMinimo();
-		   
-		    if (salarioMinOut.getEstatus() == 1 && salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
-				totalIdUsuario=salarioMinOut.getListSalarioMin().size();
-				salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();
+		   System.out.println("VALOR DE SALARIO: "+salarioMinOut);
+		    if (salarioMinOut.getEstatus() == 1) {
+				
 				System.out.println("VALOR DE salarioMinimoTablaOut: "+totalIdUsuario);
-		    	pr.setStatus("Consulta Exitosa");//"Consulta Exitosa"
+				if(salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
+					totalIdUsuario=salarioMinOut.getListSalarioMin().size();
+					salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();	
+				}else {
+					mensajeTabla = "Sin información";
+				}
+		    	pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));//"Consulta Exitosa"
 			}else {
 				if (salarioMinOut.getEstatus() == 2) {
 					GenerarErrorNegocio(salarioMinimoMensaje.getMensaje());
 				} else if (salarioMinOut.getEstatus() == 0) {
 					prG.setStatus(salarioMinimoMensaje.getMensaje());
 				}
-//				pr.setStatus("No se encontraron resultados por Id Usuario");
-//				mensajeTabla = "Sin información";
+
 			}
 		    			
 			

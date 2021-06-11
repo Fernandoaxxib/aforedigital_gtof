@@ -88,27 +88,30 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 			//if (ValidateUtil.isInteger(nss) ) {
 			//if (nss.matches("[0-9]*")) {
 			if(isNSS(pr)) {
-			//consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Integer.parseInt(nss));Long.valueOf(String s).longValue();
+			
 				consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Long.valueOf(nss).longValue());
-			if(consultaResolucionesNombreOut  != null && consultaResolucionesNombreOut.getCursor() != null && consultaResolucionesNombreOut.getCursor().size()>0) {
-				listaCurp=consultaResolucionesNombreOut.getCursor();
-				
-				totalSolicitud=consultaResolucionesNombreOut.getCursor().size();	
 			
-				if ( consultaResolucionesNombreOut.getCursor().size() == 0) {
-					mensajeTabla = "Sin información";
-					pr.setStatus("No se encontraron resultados");
-				}else {
+				System.out.println("VALOR DE consultaResolucionesNombreOut:"+consultaResolucionesNombreOut);
 				
-				//mensajeSolicitud=consultaResolucionesNombreOut.getP_MENSAJE();
-				pr.setStatus("Consulta Exitosa");//"Consulta Exitosa"
-				//System.out.println(" VALOR SEC PENSION: "+listaCurp.get(0).getRegimen());
+				if(consultaResolucionesNombreOut.getP_ESTATUS().equals("1")) {
+					
+					if( consultaResolucionesNombreOut.getCursor().size()>0) {
+						listaCurp=consultaResolucionesNombreOut.getCursor();
+						
+						totalSolicitud=consultaResolucionesNombreOut.getCursor().size();	
+						pr.setStatus("Consulta Exitosa por NSS");
+					}else {
+						pr.setStatus("No se encontraron resultados por Consulta NSS");
+						mensajeTabla = "Sin información";
+					}
+				} else {
+					if (consultaResolucionesNombreOut.getP_ESTATUS().equals("2")) {
+						GenerarErrorNegocio(consultaResolucionesNombreOut.getP_MENSAJE());
+					} else if (consultaResolucionesNombreOut.getP_ESTATUS().equals("0")) {
+						pr.setStatus("Verifique su NSS, no existen datos para :"+nss);
+					}
 				}
-			
-			}else {
-				pr.setStatus("No se encontraron resultados");
-				mensajeTabla = "Sin información";
-			}
+				
 			}
 
 		}else {
@@ -129,7 +132,7 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 	public boolean isNSS(ProcessResult pr) {
 
 		Pattern pattern = Pattern.compile("\\d{11}"); 
-		if (!pattern.matcher(nss.toUpperCase()).matches()) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
+		if (!pattern.matcher(nss.toUpperCase()).matches() || nss.equals("00000000000")  ) {//if (!pattern.matcher(curp_o_nssIn.toUpperCase()).matches())
 			UIInput radio = (UIInput) findComponent("nss");
 			radio.setValid(false);
 			pr.setStatus("Ingresar NSS Valido");

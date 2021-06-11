@@ -1,6 +1,5 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.text.SimpleDateFormat;
 import java.util.regex.Pattern;
 import java.util.*;
 import javax.faces.application.FacesMessage;
@@ -19,8 +18,6 @@ import mx.axxib.aforedigitalgt.com.AforeMessage;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.eml.DesmarcaCargaConsultaMasivaOut;
-import mx.axxib.aforedigitalgt.eml.ProcesoOut;
-import mx.axxib.aforedigitalgt.eml.SalarioMinOut;
 import mx.axxib.aforedigitalgt.eml.TipoProcesoOut;
 import mx.axxib.aforedigitalgt.serv.DesmarcaCargaConsultaMasivaService;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -96,8 +93,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		try {
 			
 			listaTipoProceso=cargaMasiva.consultarTodo();
-			//Collections.sort(listaTipoProceso);
-    		pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 		}catch (Exception e) {
 			GenericException(e);
 		} finally {
@@ -107,12 +103,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		return listaTipoProceso;
 	}
 	
-//	@SuppressWarnings("unchecked")
-//	private static void printList(String title, @SuppressWarnings("rawtypes") List list) {
-//        System.out.println(title);
-//        list.forEach(x -> System.out.println("\t" + x.toString()));
-//        System.out.println("");
-//    }
+
  
 	public void desmarcaMasivaCuenta() {
 		ProcessResult pr = new ProcessResult();
@@ -141,8 +132,8 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				 String part1 = parts[0]; // 
 				 String part2 = parts[1]; // 
 				System.out.println("VALOR DE RADIOSELECT;"+radioSelected+ "  nssCURP"+nssCURP);
-				//if((nssCURP.length()==11 && StringUtils.isNumeric(nssCURP)==true && )  && (radioSelected.equals("1") || radioSelected== "1")) {//&& StringUtils.isNumeric(nssCURP)
-					if(isNSS(pr)  && (radioSelected.equals("1") || radioSelected== "1")) {//&& StringUtils.isNumeric(nssCURP)
+				
+					if(isNSS(pr)  && (radioSelected.equals("1") || radioSelected== "1")) {
 						
 					System.out.println("ES NSS *****************");	
 					
@@ -152,8 +143,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 					System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getEstatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getMensaje());
 					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 1) {
 						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Consulta Exitosa"
-						
-						
+					
 					}else {
 						if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
 							GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
@@ -199,7 +189,6 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 				
 				}
 			
-
 			}else {
 				int bandera=0;
 
@@ -266,9 +255,9 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
 		
-		System.out.println("reversaDesmarcaMasiva: "+desmarcaCargaConsultaMasivaOut);
+		System.out.println("reversaDesmarcaMasiva*****: "+desmarcaCargaConsultaMasivaOut);
 		if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
-			pr.setStatus("Proceso ejecutado Correctamente");
+			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				}else {
 					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 2) {
 						GenerarErrorNegocio(desmarcaCargaConsultaMasivaOut.getMensaje());
@@ -287,13 +276,15 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 	
 	public boolean isNSS(ProcessResult pr) {
 
-			Pattern pattern = Pattern.compile("\\d{11}"); 
-			if (!pattern.matcher(nssCURP.toUpperCase()).matches()) {
+			Pattern pattern11digitos = Pattern.compile("\\d{11}"); 
+			
+			if (!pattern11digitos.matcher(nssCURP.toUpperCase()).matches() || nssCURP.equals("00000000000")  ) {
 				UIInput radio = (UIInput) findComponent("nssCURP");
 				radio.setValid(false);
 				pr.setStatus("Ingresar NSS Valido");
 				return false;
 			}
+			
 			return true;
 		
 	}
