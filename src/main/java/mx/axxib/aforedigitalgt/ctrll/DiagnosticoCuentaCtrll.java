@@ -25,6 +25,12 @@ import mx.axxib.aforedigitalgt.serv.DiagnosticoCuentaServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de diagnóstico de la cuenta
+//** Interventor Principal: JSAS
+//** Fecha Creación: 12/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "diagCuenta")
 @ELBeanName(value = "diagCuenta")

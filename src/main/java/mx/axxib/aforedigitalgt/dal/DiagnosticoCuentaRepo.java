@@ -16,6 +16,12 @@ import mx.axxib.aforedigitalgt.eml.GeneraArchivoIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneCodCuentaOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneTipoProcesoOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de diagnóstico de la cuenta
+//** Interventor Principal: JSAS
+//** Fecha Creación: 12/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class DiagnosticoCuentaRepo extends RepoBase {

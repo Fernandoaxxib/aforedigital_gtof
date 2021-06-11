@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.eml.GeneraArchivoIn;
 import mx.axxib.aforedigitalgt.eml.ObtieneCodCuentaOut;
 import mx.axxib.aforedigitalgt.eml.ObtieneTipoProcesoOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de diagnóstico de la cuenta
+//** Interventor Principal: JSAS
+//** Fecha Creación: 12/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class DiagnosticoCuentaServ extends ServiceBase {
 
