@@ -83,7 +83,8 @@ public class ModDesParcLProcesarCtrll extends ControllerBase {
 	public void iniciar() {
 		super.iniciar();
 		if(init) {
-			reset();						
+			reset();		
+			init=false;
 		}
 	}
 	

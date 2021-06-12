@@ -50,7 +50,8 @@ public class CerInaProcesoCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			disabled="true";
-			fecActual=DateUtil.getNowDate();			
+			fecActual=DateUtil.getNowDate();		
+			init=false;
 		}
 	}
 	public void radioSelected() {

@@ -50,6 +50,7 @@ public class CerInaAppCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			fecActual=DateUtil.getNowDate();
+			init=false;
 		}
 	}
 

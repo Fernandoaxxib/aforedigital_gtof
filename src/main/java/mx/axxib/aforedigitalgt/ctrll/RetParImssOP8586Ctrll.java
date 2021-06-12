@@ -124,6 +124,7 @@ public class RetParImssOP8586Ctrll extends ControllerBase {
 		super.iniciar();
 		if (init) {
 			reset();
+			init=false;
 		}
 	}
 

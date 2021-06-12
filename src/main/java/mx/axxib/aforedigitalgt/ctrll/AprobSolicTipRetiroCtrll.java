@@ -74,7 +74,8 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 				seleccionados=0;
 				disabled="true";
 				disabled2="true";
-			}			
+			}	
+			init=false;
 		}
 	}	
 	public int getCount() {	

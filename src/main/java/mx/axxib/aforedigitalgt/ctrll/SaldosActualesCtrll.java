@@ -85,6 +85,7 @@ public class SaldosActualesCtrll extends ControllerBase {
 			saldos = null;
 			disabled=true;		
 			nivel=1;
+			init=false;
 		}
 	}
 

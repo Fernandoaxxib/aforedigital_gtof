@@ -73,6 +73,7 @@ public class CerInaReportesCtrll extends ControllerBase {
 			display2="none";
 			disabled=true;
 			disabled2=true;
+			init=false;
 		}
 	}
 

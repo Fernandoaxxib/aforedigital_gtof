@@ -80,7 +80,8 @@ public class ModDesParcProcesoCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			proceso = null;
-			fecActual=DateUtil.getNowDate();			
+			fecActual=DateUtil.getNowDate();	
+			init=false;
 		}
 	}
 

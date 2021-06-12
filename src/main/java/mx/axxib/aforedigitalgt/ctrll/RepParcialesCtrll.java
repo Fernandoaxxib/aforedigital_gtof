@@ -48,6 +48,7 @@ public class RepParcialesCtrll extends ControllerBase {
 		super.iniciar();
 		if (init) {
 			reset();
+			init=false;
 		}
 	}
 

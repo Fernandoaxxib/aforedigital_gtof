@@ -61,6 +61,7 @@ public class ReInverModDesProcesoCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			fecActual=DateUtil.getNowDate();
+			init=false;
 		}
 	}
 

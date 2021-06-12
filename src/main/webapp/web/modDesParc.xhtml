@@ -1,12 +1,11 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<ui:composition template="/web/layout3.xhtml"
-	xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="layout3.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
 		<f:event listener="#{modDesParcProceso.iniciar}" type="preRenderView" />
@@ -22,26 +21,26 @@
 
 	<ui:define name="botones">
 		<h:form>
-			<p:linkButton styleClass="green ui-button-text"
+			<p:linkButton styleClass="green"
 				outcome="/web/modDesParc.jsf" includeViewParams="true"
 				value="#{msg.modulo_desempleoParc_btnPM}">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-			<p:linkButton styleClass="blue ui-button-text"
+			<p:linkButton styleClass="blue"
 				style="margin-left:13px !important" outcome="/web/modDesempParc.jsf"
 				includeViewParams="true" value="Proceso individual">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-			<p:linkButton styleClass="blue ui-button-text"
+			<p:linkButton styleClass="blue"
 				style="margin-left:13px !important"
 				outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
 				value="#{msg.modulo_desempleoParc_btnReportes}">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-			<p:linkButton styleClass="blue ui-button-text"
+			<p:linkButton styleClass="blue"
 				style="margin-left:13px !important"
 				outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
 				value="#{msg.modulo_desempleoParc_btnLProcesar}">

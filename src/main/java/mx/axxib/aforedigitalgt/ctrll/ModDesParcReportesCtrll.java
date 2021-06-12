@@ -60,6 +60,7 @@ public class ModDesParcReportesCtrll extends ControllerBase {
 		if (init) {
 			reset();
 			fecActual=DateUtil.getNowDate();			
+			init=false;
 		}
 	}
 

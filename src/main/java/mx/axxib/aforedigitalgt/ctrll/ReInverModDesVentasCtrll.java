@@ -91,6 +91,7 @@ public class ReInverModDesVentasCtrll extends ControllerBase {
 			lote1 = null;
 			montoTotal = 0.0;
 			selectedLote=null;
+			init=false;
 		}
 	}
 

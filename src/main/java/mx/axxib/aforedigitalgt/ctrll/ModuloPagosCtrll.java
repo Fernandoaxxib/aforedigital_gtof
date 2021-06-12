@@ -70,6 +70,7 @@ public class ModuloPagosCtrll extends ControllerBase {
 			institucion=null;
 			pagosAfiliados=null;
 			procesosRetiros=null;
+			init=false;
 		}
 	}
 
