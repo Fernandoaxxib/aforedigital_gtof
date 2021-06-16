@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaNSSOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de Recaudación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 22/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ConsultaRecaudacionRepo extends RepoBase {

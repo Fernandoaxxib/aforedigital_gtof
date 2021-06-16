@@ -20,6 +20,12 @@ import mx.axxib.aforedigitalgt.serv.ConsultaRecaudacionServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 22/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "consultaRecaudacion")
 @ELBeanName(value = "consultaRecaudacion")

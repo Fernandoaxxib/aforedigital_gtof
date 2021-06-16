@@ -8,6 +8,12 @@ import mx.axxib.aforedigitalgt.dal.ConsultaRecaudacionRepo;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.eml.ConsultaNSSOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de Recaudación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 22/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class ConsultaRecaudacionServ extends ServiceBase {
 
