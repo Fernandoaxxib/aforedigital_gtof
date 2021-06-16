@@ -20,7 +20,6 @@ public class AprobarSolicResult {
 	private String ocGlobalSistProc;
 	private String ocGlobalAbrevProc;
 	private String ocNombreAplicacion;
-	private String ocMensaje;
-	private List<ProcesMonitorOut> listaProceso;
+	private String ocMensaje;	
 	private Integer on_estatus;
 }

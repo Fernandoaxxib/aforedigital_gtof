@@ -51,9 +51,8 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 		query.registerStoredProcedureParameter("oc_GlobalSistProc", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("oc_GlobalAbrevProc", String.class, ParameterMode.OUT);
 		query.registerStoredProcedureParameter("oc_NombreAplicacion", String.class, ParameterMode.OUT);
-		query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);		
-		query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
-		query.registerStoredProcedureParameter("on_estatus", Integer.class, ParameterMode.OUT);	
+		query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);				
+		query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);	
 		
 							
 		query.setParameter("in_NoSolicitud", inNoSolicitud).setParameter("in_TipTransac", inTipTransac).setParameter("ic_SubTipTransac", icSubTipTransac);		
@@ -67,8 +66,7 @@ public class AprobSolicTipRetiroRepo extends RepoBase {
 		result.setOcGlobalAbrevProc((String)query.getOutputParameterValue("oc_GlobalAbrevProc"));
 		result.setOcNombreAplicacion((String)query.getOutputParameterValue("oc_NombreAplicacion"));
 		result.setOcMensaje((String)query.getOutputParameterValue("oc_Mensaje"));
-		result.setOn_estatus((Integer)query.getOutputParameterValue("on_estatus"));
-		result.setListaProceso(query.getResultList());
+		result.setOn_estatus((Integer)query.getOutputParameterValue("on_Estatus"));		
 		return result;		
 	  }catch(Exception e) {
 			 throw GenericException(e); 

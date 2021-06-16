@@ -21,27 +21,24 @@
 
 	<ui:define name="botones">
 		<h:form>
-			<p:linkButton styleClass="green"
-				outcome="/web/modDesParc.jsf" includeViewParams="true"
-				value="#{msg.modulo_desempleoParc_btnPM}">
+			<p:linkButton styleClass="green" outcome="/web/modDesParc.jsf"
+				includeViewParams="true" value="#{msg.modulo_desempleoParc_btnPM}">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-			<p:linkButton styleClass="blue"
-				style="margin-left:13px !important" outcome="/web/modDesempParc.jsf"
-				includeViewParams="true" value="Proceso individual">
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/modDesempParc.jsf" includeViewParams="true"
+				value="Proceso individual">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-			<p:linkButton styleClass="blue"
-				style="margin-left:13px !important"
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
 				outcome="/web/modDesParcReportes.jsf" includeViewParams="true"
 				value="#{msg.modulo_desempleoParc_btnReportes}">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-			<p:linkButton styleClass="blue"
-				style="margin-left:13px !important"
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
 				outcome="/web/modDesParcLProcesar.jsf" includeViewParams="true"
 				value="#{msg.modulo_desempleoParc_btnLProcesar}">
 				<f:param name="init" value="true" />
@@ -82,19 +79,18 @@
 						<h:outputText value="#{registro.onNss}" />
 					</p:column>
 
-					<p:column id="columnEdited"
-						headerText="#{msg.modulo_desempleoParc_column_sbca}"
-						style="text-align:right">
+					<p:column id="columnEdited" style="text-align:right !important"
+						headerText="#{msg.modulo_desempleoParc_column_sbca}">
 						<p:cellEditor>
 							<f:facet name="output">
 								<h:outputText value="$#{registro.onSbcTipoA}">
-									<f:convertNumber pattern="#0.00" />
-								</h:outputText>
+								   <f:convertNumber pattern="##,##0.00"  />
+								</h:outputText>														
 							</f:facet>
 							<f:facet name="input">
-								<p:inputText value="#{registro.onSbcTipoA}" maxlength="7">
-									<f:convertNumber pattern="#0.00" />
-								</p:inputText>
+								<p:inputNumber value="#{registro.onSbcTipoA}" minValue="0"
+									symbol="$" symbolPosition="p" maxValue="1000000"
+									decimalPlaces="2" inputStyle="text-align:right !important" />
 							</f:facet>
 						</p:cellEditor>
 					</p:column>
@@ -112,8 +108,8 @@
 						action="#{modDesParcProceso.guardar}"
 						update="form:btnDlg form:radSelect form:fCapturada form:lblRegXProc form:lblSinS form:lblRegParc form:lblSolUnaEx form:lblTotal form:result"
 						oncomplete="PF('dlg2').hide();" />
-					<p:commandButton styleClass="blue" value="Cerrar" style="margin-left:13px"
-						onclick="PF('dlg2').hide();" />
+					<p:commandButton styleClass="blue" value="Cerrar"
+						style="margin-left:13px" onclick="PF('dlg2').hide();" />
 
 				</p:outputPanel>
 			</h:form>

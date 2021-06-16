@@ -144,35 +144,31 @@ public class AprobSolicTipRetiroCtrll  extends ControllerBase{
 		String strDate = dateFormat.format(fecha);  		
 		return strDate;
 	}	
-	public void aprobarSolicitud()  {
-     List<ProcessResult> results= new ArrayList<>();	
+	public void aprobarSolicitud()  {     
 	 ProcessResult pr = new ProcessResult();	
 	  if(listSolicitudes!=null && !listSolicitudes.isEmpty()) {		  	  
 		if(selectedSolicitud!=null&&!selectedSolicitud.isEmpty()) {				    
 				selectedSolicitud.forEach(p -> {	
 					ProcessResult pr2 = new ProcessResult();
-					try {						
-						SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd HH:mm:ss",Locale.getDefault());
+					pr2.setFechaInicial(DateUtil.getNowDate());
+					pr2.setDescProceso("Aprobación de solicitud");
+					try {												
 						res = service.aprobarSolicitud(p.getNumSolicitud(),Integer.valueOf(p.getTransaccion().substring(0, 1)),p.getSubTransaccion().substring(0, 1));																	
 						if(res.getOn_estatus()==1) {
-							pr2.setFechaInicial(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_INICIO()));
-							pr2.setFechaFinal(formatter.parse(res.getListaProceso().get(0).getFECHA_HORA_FINAL()));					    
-						    pr2.setDescProceso(res.getListaProceso().get(0).getABREV_PROCESO());
-							pr2.setStatus(res.getListaProceso().get(0).getESTADO_PROCESO());	
+							pr2.setStatus(res.getOcMensaje());								
 						}else {
 							if(res.getOn_estatus() == 2) {
 								GenerarErrorNegocio(res.getOcMensaje());
 							} else if(res.getOn_estatus() == 0) {
 								pr2.setStatus(res.getOcMensaje());
 							} 
-						}
-										
+						}										
 					} catch (Exception e) {						
 						pr2=GenericException(e);
 						res=null;						
-					}finally {					
-						results.add(pr2);
-						resultados.addAll(results);
+					}finally {	
+						pr2.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr2);											
 					}
 				});		
 					//filtrarResultados(results);							
