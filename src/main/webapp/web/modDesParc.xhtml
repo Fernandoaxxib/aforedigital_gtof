@@ -83,8 +83,8 @@
 						headerText="#{msg.modulo_desempleoParc_column_sbca}">
 						<p:cellEditor>
 							<f:facet name="output">
-								<h:outputText value="$#{registro.onSbcTipoA}">
-								   <f:convertNumber pattern="##,##0.00"  />
+								<h:outputText value="#{registro.onSbcTipoA}">
+								   <f:convertNumber pattern="$###,##0.00"  />
 								</h:outputText>														
 							</f:facet>
 							<f:facet name="input">
