@@ -90,9 +90,7 @@ public class ConsultaResolucionDataMartCtrll extends ControllerBase {
 			if(isNSS(pr)) {
 			
 				consultaResolucionesNombreOut=consultaResolucionDataMartServ.getCuentaNombre(Long.valueOf(nss).longValue());
-			
-				System.out.println("VALOR DE consultaResolucionesNombreOut:"+consultaResolucionesNombreOut);
-				
+							
 				if(consultaResolucionesNombreOut.getP_ESTATUS().equals("1")) {
 					
 					if( consultaResolucionesNombreOut.getCursor().size()>0) {

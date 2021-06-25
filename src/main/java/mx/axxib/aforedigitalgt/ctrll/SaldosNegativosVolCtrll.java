@@ -90,7 +90,7 @@ public class SaldosNegativosVolCtrll extends ControllerBase{
 		try {
 			
 					consultaSaldoImssIssteOut=saldosImssIsste.ejecutarReporteNegativo(rutaSaldoNegativo, nombreSaldoNegativo,saldoFechaMovimiento);
-					System.out.println("VALOR DE CARGA IMSS consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
+					
 					if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 						pr.setStatus(consultaSaldoImssIssteOut.getMensaje());//"Proceso Exitoso"
 						}else {

@@ -39,7 +39,7 @@
         
 			<h:form id="form">
 
-			<p:panel id="pnlResult" header="CONSULTA MARCAS POR PROCESO OPERATIVO" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
+			<p:panel id="pnlResult" header="CONSULTA MARCAS POR PROCESO OPERATIVO" 	style="font-size:12px;margin-bottom:20px;margin-top:10px">
 			
 			
 			<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
@@ -62,7 +62,7 @@
 											</p:column>						 
 											
 											<p:column style="text-align: left !important;width: 150px !important;">			 
-											    <p:selectOneMenu id="tipoProceso" style="width:200px" placeholder="Seleccionar" value="#{desmarcaConsultaMarcas.selectedTipoClave}" effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+											    <p:selectOneMenu id="tipoProceso" style="width:200px" placeholder="Seleccionar" value="#{desmarcaConsultaMarcas.selectedTipoClave}" effect="fold" filter="true" filterMatchMode="startsWith">
 												<f:selectItems value="#{desmarcaConsultaMarcas.listaTipoProceso}" style="text-Align:left;font-size:15px;width:210px"/>
 												</p:selectOneMenu>
 											</p:column>

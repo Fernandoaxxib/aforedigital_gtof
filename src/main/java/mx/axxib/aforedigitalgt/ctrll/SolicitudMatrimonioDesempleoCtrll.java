@@ -179,7 +179,7 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			//if (ValidateUtil.isNSS(nss)) {
 			//	if (nss.matches("[0-9]*")) {
 			verChequeOut=solicitudMatrimonioDesempleoServ.getVerCheque(nss);
-			System.out.println("VALOR DE verChequeOut ES: "+verChequeOut);
+			
 			nombre=verChequeOut.getNombre();
 			cuenta=verChequeOut.getCuenta();
 			if(verChequeOut.getStatus().equals("1")) {
@@ -226,12 +226,11 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			//totalSolicitud=0;
 			res=solicitudMatrimonioDesempleoServ.getVerSolicitudCheque(cuenta);
 			
-			System.out.println("VALOR DE consultarSolicitud res: "+res);
 			
 			if (res != null && res.getVerSolicitudChequeListOut() != null && res.getVerSolicitudChequeListOut().size() > 0) {
 				listSolicitudChequeOut = res.getVerSolicitudChequeListOut();
 				totalSolicitud = res.getVerSolicitudChequeListOut().size();
-				System.out.println("TOTAL SOLICITUD"+totalSolicitud);
+				
 				if ( res.getVerSolicitudChequeListOut().size() > 0) {
 					
 					mensajeSolicitud=res.getMensaje();
@@ -263,7 +262,6 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			//limpiar();
 			//totalPago=0;
 			verPagoChequeOut=solicitudMatrimonioDesempleoServ.getVerPagosCheque(cuenta);
-			System.out.println("VALOR DE consultarPago verPagoChequeOut: "+verPagoChequeOut);
 			
 			if (verPagoChequeOut != null && verPagoChequeOut.getVerPagoChequeListOut() != null && verPagoChequeOut.getVerPagoChequeListOut().size() > 0) {
 				listPagoChequeOut = verPagoChequeOut.getVerPagoChequeListOut();
@@ -300,9 +298,8 @@ public class SolicitudMatrimonioDesempleoCtrll extends ControllerBase{
 			
 			
 			if(solicitudChequeOut.getNumeroSolicitud() != null) {
-			System.out.println("valor de Solicitud"+solicitudChequeOut.getNumeroSolicitud());
+			
 			fopagos= solicitudMatrimonioDesempleoServ.getFopagos(Long.valueOf(solicitudChequeOut.getNumeroSolicitud()), nss, cuenta, nombre);
-			System.out.println("VALORES DE FOPAGO:"+fopagos);
 
 			if(fopagos != null) {
 				

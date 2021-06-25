@@ -158,10 +158,9 @@ public class SalarioMinimoCtrll extends ControllerBase {
 			
 			//SalarioMinOut salarioMinOut =new SalarioMinOut();
 			SalarioMinOut salarioMinOut = salarioMinService.getSalarioMinimo();
-		   System.out.println("VALOR DE SALARIO: "+salarioMinOut);
+		   
 		    if (salarioMinOut.getEstatus() == 1) {
 				
-				System.out.println("VALOR DE salarioMinimoTablaOut: "+totalIdUsuario);
 				if(salarioMinOut.getListSalarioMin() != null && salarioMinOut.getListSalarioMin().size() > 0) {
 					totalIdUsuario=salarioMinOut.getListSalarioMin().size();
 					salarioMinimoTablaOut=salarioMinOut.getListSalarioMin();	
@@ -232,7 +231,6 @@ public class SalarioMinimoCtrll extends ControllerBase {
 		if(modo == 1 ) {
 			int bandera=0;
 			if (montoDiario==null && insertZona == null && bandera==0) {
-				System.out.println("montoDiario: "+montoDiario+ "  insert:"+insertZona);
 				UIInput zona = (UIInput) findComponent("zonaGuardar");
 				zona.setValid(false);
 				UIInput monto = (UIInput) findComponent("montoGuardar");
@@ -310,8 +308,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
 //			parametros.setUser(dataSource.getUsername());
 			//BaseOut res = valorUMAService.insertarUMA(parametros );
 			//salarioMinimoMensaje=salarioMinService.save(dataSource.getUsername(), insertZona, fechaCalendario, Double.parseDouble(montoDiario));//Double.parseDouble(montoDiario)
-			salarioMinimoMensaje=salarioMinService.save(parametros);
-			System.out.println("MENSAJE: "+salarioMinimoMensaje.getMensaje());
+			salarioMinimoMensaje=salarioMinService.save(parametros);			
 			if (salarioMinimoMensaje.getEstatus() == 1) {
 				prG.setStatus(salarioMinimoMensaje.getMensaje());//"Consulta Exitosa"
 				SalarioMinOut salarioMinOut =salarioMinService.getSalarioMinimo();
@@ -344,7 +341,6 @@ public class SalarioMinimoCtrll extends ControllerBase {
 			 //salarioMinimoMensaje=salarioMinService.update(dataSource.getUsername(), insertZona, fechaCalendario,fechaUlt, Double.parseDouble(montoDiario));
 			seleccionado.setMontoDiario( Double.parseDouble(montoDiario));
 			salarioMinimoMensaje=salarioMinService.update(seleccionado);
-			System.out.println("VALOR DE UPDATE: "+salarioMinimoMensaje);
 			if (salarioMinimoMensaje.getEstatus() == 1) {
 					prG.setStatus(salarioMinimoMensaje.getMensaje());//"Consulta Exitosa"
 					SalarioMinOut salarioMinOut =salarioMinService.getSalarioMinimo();
@@ -370,7 +366,6 @@ public class SalarioMinimoCtrll extends ControllerBase {
 	
 	private void eliminar() {
 		try {
-			System.out.println("VALOR DE SELECCIONADO: "+seleccionado);
 			SalarioMinimoMensaje salarioMinimoMensaje = salarioMinService.delete(seleccionado);
 			if (salarioMinimoMensaje.getEstatus() == 1) {
 				prG.setStatus(salarioMinimoMensaje.getMensaje());//"Consulta Exitosa"
@@ -459,7 +454,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
     	
     	try {
     		//String msg=salarioMinService.save(salarioMinimoInsertTablaOut.getUserId(), salarioMinimoInsertTablaOut.getFechaCalendario(), salarioMinimoInsertTablaOut.getMontoDiario());
-    		System.out.println("insertUsuario: "+insertUsuario+"   fechaCalendario: "+fechaCalendario+"  montoDiario: "+montoDiario);
+    		
     		if((insertUsuario == null || insertUsuario == "") || fechaCalendario ==null || montoDiario ==null) {
     			
     			boolean bandera=false;
@@ -542,7 +537,7 @@ public class SalarioMinimoCtrll extends ControllerBase {
     			
     			
 				//salarioMinimoMensaje=salarioMinService.save(insertUsuario, insertZona, fechaCalendario, Double.parseDouble(montoDiario));//Double.parseDouble(montoDiario)
-				System.out.println("MENSAJE: "+salarioMinimoMensaje.getMensaje());
+				
 				if (salarioMinimoMensaje.getEstatus() == 1) {
 					
 			    	pr.setStatus("Se guardo el nuevo Usuario");//"Consulta Exitosa"

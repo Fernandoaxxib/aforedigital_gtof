@@ -109,7 +109,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		
 		try {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssCarga(rutaNssImss, nombreNssImss);
-				System.out.println("VALOR DE CARGA IMSS consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
+				
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
 					}else {
@@ -136,7 +136,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		pr.setDescProceso("Reporte Imss por NSS");
 		try {
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarImssReporte(rutaReporteImss, nombreReporteImss);		
-				System.out.println("VALOR DE REPORTE IMSS consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
+				
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
 					}else {
@@ -166,7 +166,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		try {
 			
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteCarga(rutaCurpIsste, nombreCurpIsste);
-				System.out.println("VALOR DE CARGA ISSTE consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
+				
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
 					}else {
@@ -196,7 +196,7 @@ public class SaldosNegativosImssIssteCtrll extends ControllerBase{
 		try {
 			
 				consultaSaldoImssIssteOut=saldosImssIsste.ejecutarIssteReporte(rutaReporteIsste, nombreReporteIsste);
-				System.out.println("VALOR DE REPORTE ISSTE consultaSaldoImssIssteOut;"+consultaSaldoImssIssteOut);
+				
 				if(consultaSaldoImssIssteOut.getOn_Estatus()==1) {
 					pr.setStatus(consultaSaldoImssIssteOut.getMensaje());
 					}else {

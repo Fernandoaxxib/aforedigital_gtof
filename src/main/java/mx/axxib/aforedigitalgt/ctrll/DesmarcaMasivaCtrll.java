@@ -130,17 +130,13 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 			
 				 String[] parts = selectedTipoClave.split("-");
 				 String part1 = parts[0]; // 
-				 String part2 = parts[1]; // 
-				System.out.println("VALOR DE RADIOSELECT;"+radioSelected+ "  nssCURP"+nssCURP);
+				 String part2 = parts[1]; // 				
 				
 					if(isNSS(pr)  && (radioSelected.equals("1") || radioSelected== "1")) {
-						
-					System.out.println("ES NSS *****************");	
-					
+															
 					
 					desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(Integer.parseInt(radioSelected),nssCURP, null,part1);	
-					System.out.println("validarNssRfc: "+desmarcaCargaConsultaMasivaOut);
-					System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getEstatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getMensaje());
+					
 					if (desmarcaCargaConsultaMasivaOut.getEstatus() == 1) {
 						pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Consulta Exitosa"
 					
@@ -164,9 +160,9 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 					 
 				}
 				if (ValidateUtil.isCURP(nssCURP) && (radioSelected.equals("2") || radioSelected== "2")) {
-				 System.out.println("ES CURP *****************");
+				 
 					 desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaIndividualCuenta(Integer.parseInt(radioSelected),null, nssCURP,part1);
-					 System.out.println("ESTATUS: "+desmarcaCargaConsultaMasivaOut.getEstatus()+ " MENSAJE: "+desmarcaCargaConsultaMasivaOut.getMensaje());
+					 
 						if (desmarcaCargaConsultaMasivaOut.getEstatus() == 1) {
 							pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Consulta Exitosa"
 							
@@ -244,7 +240,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Reversa Carga Archivo");
 		try {
-		System.out.println("DESMARCA MASIVA REVERSA");
+		
 		
 		if(selectedTipoClave==null || selectedTipoClave.isEmpty()) {
 			 UIInput inputTipo = (UIInput) findComponent("tipoProceso");
@@ -255,7 +251,7 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 		
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.desmarcaMasivaCuenta();
 		
-		System.out.println("reversaDesmarcaMasiva*****: "+desmarcaCargaConsultaMasivaOut);
+		
 		if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 			pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				}else {
@@ -278,12 +274,16 @@ public class DesmarcaMasivaCtrll extends ControllerBase {
 
 			Pattern pattern11digitos = Pattern.compile("\\d{11}"); 
 			
-			if (!pattern11digitos.matcher(nssCURP.toUpperCase()).matches() || nssCURP.equals("00000000000")  ) {
-				UIInput radio = (UIInput) findComponent("nssCURP");
-				radio.setValid(false);
-				pr.setStatus("Ingresar NSS Valido");
+			if(ValidateUtil.isNSS(nssCURP)) {
+				if (!pattern11digitos.matcher(nssCURP.toUpperCase()).matches() || nssCURP.equals("00000000000")  ) {
+					UIInput radio = (UIInput) findComponent("nssCURP");
+					radio.setValid(false);
+					pr.setStatus("Ingresar NSS Valido");
+					return false;
+				}
+			}else {
 				return false;
-			}
+			}						
 			
 			return true;
 		

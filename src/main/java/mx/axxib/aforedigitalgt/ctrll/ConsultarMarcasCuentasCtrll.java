@@ -128,7 +128,6 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		try {
 		
-		System.out.println("VALOR DE curp_o_nssIn: "+curp_o_nssIn);
 			if (curp_o_nssIn != null && !curp_o_nssIn.equals("") ) {
 				int bandera=0;	
 				
@@ -137,7 +136,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 
 						try {
 							ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarCurp(curp_o_nssIn);	
-							System.out.println("VALOR DE RES: "+res);
+							
 							if(res.getStatus()==1) {
 									if (res.getCpDatos().size() > 0) {
 										totalNSSCURP=res.getCpDatos().size();
@@ -170,8 +169,7 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 					if(isNSS()) {
 						pr.setDescProceso("Búsqueda por NSS");						
 						try {
-							ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarNss(curp_o_nssIn);	
-							System.out.println("VALOR DE RES: "+res);
+							ConsultarNombreCuentaIcefasOut res=consultarMarcasCuentasServices.getConsultarNss(curp_o_nssIn);								
 									if (res.getStatus()==1) {	
 										if(res.getCpDatos().size() > 0) {
 											totalNSSCURP=res.getCpDatos().size();
@@ -248,9 +246,9 @@ public class ConsultarMarcasCuentasCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("Detalle Marca Cuenta");	
 		try {
-			System.out.println("VALOR DE RES CUENTA: "+cuenta+"  TIPO SALDO: "+cpDatos2.getCOD_TIPSALDO()+" CLAVE PROCESO: "+cpDatos2.getCLAVE_PROCESO()+" ESTADO:  " +cpDatos2.getESTADO());			
+						
 			ConsultarTraspasosIcefasOut res=consultarMarcasCuentasServices.getConsultarTraspasos(Integer.toString(cuenta), cpDatos2.getCOD_TIPSALDO(), Integer.toString(cpDatos2.getCLAVE_PROCESO()), cpDatos2.getESTADO());			
-			System.out.println("VALOR DE RES: "+res);
+			
 			if(res.getStatus()==1) {
 					if( res.getCpCursor().size() > 0) {
 						cpCursor=res.getCpCursor();

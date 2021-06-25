@@ -95,8 +95,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 	
 	public void cargaFechas() {
 	try {
-		 ordenPagoFechasOut=ordenPagoServ.cargaFechas();
-		 System.out.println("VALOR DE FECHAS: "+ordenPagoFechasOut);
+		 ordenPagoFechasOut=ordenPagoServ.cargaFechas();		 
 	}catch (Exception e) {
 		GenericException(e);
 	}	
@@ -126,8 +125,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 				
 				pr.setFechaInicial(DateUtil.getNowDate());
 				pr.setDescProceso("Mandar a Imprimir");
-				BaseOut res =ordenPagoServ.enviarImpresora(ordenPagoFechasOut, boxUno);
-				System.out.println("VALOR DE res:"+res);
+				BaseOut res =ordenPagoServ.enviarImpresora(ordenPagoFechasOut, boxUno);				
 				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -157,8 +155,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 			if(boxDos ==2){				
 			
 				//BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
-				BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);
-				System.out.println("VALOR DE res:"+res);
+				BaseOut res=ordenPagoServ.generarArchivo(ordenPagoFechasOut, boxDos);				
 				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -243,8 +240,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 								if(boxDos!= null){	
 								generarArchivo();
 								}
-							
-						System.out.println("fechaInicio: "+fechaInicio+"   vakor de fechaUltima: "+ fechaUltima);
+													
 						if(seleccionarA=="Alerta Aportaciones"|| seleccionarA.equals("Alerta Aportaciones")) {
 							tiposReportes=ordenPagoServ.creaTipoReporte("A",fechaInicio,fechaUltima);
 						}
@@ -253,8 +249,7 @@ public class OrdenPagoCtrll extends ControllerBase {
 						}
 						
 						
-						nombre=tiposReportes.getP_NOMBRE_ARCHIVO();
-						System.out.println("VALOR DE tiposReportes: "+tiposReportes);
+						nombre=tiposReportes.getP_NOMBRE_ARCHIVO();						
 						if (tiposReportes.getP_ESTATUS()==1) {
 							pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 						} else {

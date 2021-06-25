@@ -139,9 +139,7 @@ private final EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
 	public SalarioMinimoMensaje delete( SalarioMinimoOut seleccionado) throws AforeException {
-		try {
-			
-	       System.out.println("VALORES DE DELETE SELECCIONADO:"+seleccionado); 
+		try {	       
 		String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.SALARIO_MINIMO_PACKAGE).concat(".").concat(Constantes.SALARIO_MINIMO_DELETE_STORED);
 		StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 		    

@@ -77,7 +77,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 				
 				try {	
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.ejecutarArchivoCarga(rutaCarga, nombreArchivoCarga);
-			System.out.println("cargar archivo: "+desmarcaCargaConsultaMasivaOut);
+		
 			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 			pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//"Proceso ejecutado Correctamente"
 			}else {
@@ -107,7 +107,7 @@ public class DesmarcaCargaMasivaCtrll extends ControllerBase {
 		try {
 
 		desmarcaCargaConsultaMasivaOut =cargaMasiva.reversaArchivoCarga();
-		System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
+		
 		if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 			pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());//pr.setStatus("Proceso ejecutado Correctamente");
 				}else {

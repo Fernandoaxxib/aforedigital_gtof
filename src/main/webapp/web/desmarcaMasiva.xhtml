@@ -40,7 +40,7 @@
     			
 			<h:form id="form">
 <!-- 			<p:growl id="message" /> -->
-			<p:panel id="pnlResult" header="DESMARCA MASIVA PROCESOS" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
+			<p:panel id="pnlResult" header="DESMARCA MASIVA PROCESOS" 	style="font-size:12px;margin-bottom:20px;margin-top:10px">
 			
 					<p:panelGrid class="no-border no-padding" layout="grid" columns="2">
 						
@@ -200,7 +200,7 @@
 <!-- 										</p:selectOneMenu> -->
 <!-- 									</p:column> -->
 									<p:column  style="text-align: left !important;width: 150px !important;">	
-									<p:selectOneMenu id="tipoProceso" style="text-align: left !important;width: 150px !important;" placeholder="Seleccionar" value="#{desmarcaMasiva.selectedTipoClave}" effect="fold" editable="true" filter="true" filterMatchMode="startsWith">
+									<p:selectOneMenu id="tipoProceso" style="text-align: left !important;width: 150px !important;" placeholder="Seleccionar" value="#{desmarcaMasiva.selectedTipoClave}" effect="fold"  filter="true" filterMatchMode="startsWith">
         							<f:selectItems value="#{desmarcaMasiva.listaTipoProceso}" />
    									</p:selectOneMenu>
 									</p:column>

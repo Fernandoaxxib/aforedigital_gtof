@@ -109,7 +109,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 				
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcasArchivo(rutaCarga, nombreArchivoCarga);
 	
-			System.out.println("cargar archivo XLS: "+desmarcaCargaConsultaMasivaOut);
+			
 			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 				pr.setStatus(desmarcaCargaConsultaMasivaOut.getMensaje());
 			}else {
@@ -152,7 +152,7 @@ public class DesmarcaConsultaMarcasCtrll extends ControllerBase {
 			 String part2 = parts[1]; // 654321
 			 
 			desmarcaCargaConsultaMasivaOut =cargaMasiva.consultaMarcas(part1,part2);
-			System.out.println("reversa archivo: "+desmarcaCargaConsultaMasivaOut);
+			
 			if(desmarcaCargaConsultaMasivaOut.getEstatus()==1 ) {
 
 				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));

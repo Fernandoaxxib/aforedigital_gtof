@@ -47,8 +47,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 
 		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
 		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
-		res.setRegresa((Integer) query.getOutputParameterValue("p_Regresa"));
-		System.out.println(" res: "+res);
+		res.setRegresa((Integer) query.getOutputParameterValue("p_Regresa"));		
 		return res;
 		} catch (Exception e) {
 			throw GenericException(e);
@@ -199,8 +198,7 @@ public class DesmarcaCargaConsultaMasivaRepo extends RepoBase{
 		DesmarcaCargaConsultaMasivaOut res=new DesmarcaCargaConsultaMasivaOut();
 		res.setMensaje((String) query.getOutputParameterValue("p_Mensaje"));
 		res.setEstatus((Integer) query.getOutputParameterValue("on_Estatus"));
-		res.setRegresa((Integer) query.getOutputParameterValue("pRegresa"));
-		System.out.println("VALOR DE RES:"+res);
+		res.setRegresa((Integer) query.getOutputParameterValue("pRegresa"));		
 		
 		return res;
 		} catch (Exception e) {

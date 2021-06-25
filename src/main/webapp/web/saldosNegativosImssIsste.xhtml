@@ -8,328 +8,366 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <f:metadata>
-		<f:event listener="#{saldosNegativosImssIsste.iniciar}" type="preRenderView"/>		
+	<f:metadata>
+		<f:event listener="#{saldosNegativosImssIsste.iniciar}"
+			type="preRenderView" />
 	</f:metadata>
-	
-	
-	
+
+
+
 	<ui:define name="center">
-		
+
 		<h:outputScript library="js" name="calendar-localization.js" />
-         
-        <p:panelGrid class="no-border no-padding" style="width: 100%">
+
+		<p:panelGrid class="no-border no-padding" style="width: 100%">
 			<p:row>
-			<p:column>
+				<p:column style="width:400px">
 					<ui:include src="menu.xhtml" />
 				</p:column>
-			   <p:column>
-		             <ui:include src="subMenuReportes.xhtml" />
-		       </p:column>
-		       <p:column>
-		           <h:form>
-		              <p:linkButton styleClass="green ui-button-text" outcome="/web/saldosNegativosImssIsste.jsf" includeViewParams="true" value="Saldos Imss/Isste" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-				      <p:linkButton styleClass="blue ui-button-text" outcome="/web/saldosNegativosVol.jsf" includeViewParams="true" value="Saldos Vol" >			         
-					    <f:param name="init" value="true" />
-				      </p:linkButton>
-		           </h:form>
-		       </p:column>
-		    </p:row>
-		 </p:panelGrid>
-			
-			<h:form id="form">
-<!-- 			<p:growl id="message" /> -->
-			<p:panel id="pnlResult" header="Reporte Saldos Finales" 	style="font-size:12px;margin-bottom:20px;margin-top:20px">
-			
-			<div class="ui-g">
-							
+				<p:column>
+					<ui:include src="subMenuReportes.xhtml" />
+				</p:column>
+				<p:column style="text-align:right">
+					<h:form>
+						<p:linkButton styleClass="green ui-button-text"
+							outcome="/web/saldosNegativosImssIsste.jsf"
+							includeViewParams="true" value="Saldos Imss/Isste">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+						<p:linkButton styleClass="blue ui-button-text" style="margin-left:13px"
+							outcome="/web/saldosNegativosVol.jsf" includeViewParams="true"
+							value="Saldos Vol">
+							<f:param name="init" value="true" />
+						</p:linkButton>
+					</h:form>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+
+		<h:form id="form">
+			<!-- 			<p:growl id="message" /> -->
+			<p:panel id="pnlResult" header="Reporte Saldos Finales"
+				style="font-size:12px;margin-bottom:20px;margin-top:10px">
+
+				<div class="ui-g">
+
 					<div class="ui-g-6">
 						<p:panel header="Carga Nss Reporte Saldo Imss">
-						
-						<p:panelGrid styleClass="ui-noborder" >
-							
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-						<p:outputLabel value="Ruta:" />		
-						</p:column>		
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="rutaNssImss" value="#{saldosNegativosImssIsste.rutaNssImss}" />
-					   				 </p:outputPanel>
-						</p:column>	
-						
-						</p:row>	
-						
-						<p:row>	
-						<p:column style="text-align: left !important;width: 120px !important;">	
-						<p:outputLabel value="Nombre Archivo:" />		
-						</p:column>		
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="nombreNssImss" value="#{saldosNegativosImssIsste.nombreNssImss}" />
-					   				 </p:outputPanel>
-						</p:column>	
-							
-						</p:row>	
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-						<p:commandButton styleClass="blue ui-button-text"  value="Carga"  onclick="PF('cargaImss').show();" />
-						</p:column>			
-						</p:row>			
-						
-						<p:dialog styleClass="styleWhite" appendTo="@(body)"
-												 header="Carga Saldos IMSS"  showEffect="fade" resizable="false"
-												widgetVar="cargaImss" modal="true">
-												<p:panel style="border:0px !important;text-align:center">
-													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
-														<p:outputLabel
-															value="¿Desea continuar?"
-															style="font-size:14px !important; color: #59ad40 !important;" />
-													</p:outputPanel>
-				
-													<p:outputPanel style="text-align:center">
-														<p:commandButton value="Si" update="result" style="width:90px"
-															class="blue" actionListener="#{saldosNegativosImssIsste.ejecutarImssCarga}"
-															oncomplete="PF('cargaImss').hide();" />
-														<p:commandButton value="No" class="blue" style="width:90px"
-															onclick="PF('cargaImss').hide();" type="button" />
-													</p:outputPanel>
-												</p:panel>
-									</p:dialog>
-					</p:panelGrid>
-					
-							
-							
-							
-							
-					</p:panel>
+
+							<p:panelGrid styleClass="ui-noborder">
+
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputLabel value="Ruta:" />
+									</p:column>
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="rutaNssImss"
+												value="#{saldosNegativosImssIsste.rutaNssImss}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+
+								<p:row>
+									<p:column
+										style="text-align: left !important;width: 120px !important;">
+										<p:outputLabel value="Nombre Archivo:" />
+									</p:column>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombreNssImss"
+												value="#{saldosNegativosImssIsste.nombreNssImss}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:commandButton styleClass="blue ui-button-text"
+											value="Carga" onclick="PF('cargaImss').show();" />
+									</p:column>
+								</p:row>
+
+								<p:dialog styleClass="styleWhite" appendTo="@(body)"
+									header="Carga Saldos IMSS" showEffect="fade" resizable="false"
+									widgetVar="cargaImss" modal="true">
+									<p:panel style="border:0px !important;text-align:center">
+										<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+											<p:outputLabel value="¿Desea continuar?"
+												style="font-size:14px !important; color: #59ad40 !important;" />
+										</p:outputPanel>
+
+										<p:outputPanel style="text-align:center">
+											<p:commandButton value="Si" update="result"
+												style="width:90px" class="blue"
+												actionListener="#{saldosNegativosImssIsste.ejecutarImssCarga}"
+												oncomplete="PF('cargaImss').hide();" />
+											<p:commandButton value="No" class="blue" style="width:90px"
+												onclick="PF('cargaImss').hide();" type="button" />
+										</p:outputPanel>
+									</p:panel>
+								</p:dialog>
+							</p:panelGrid>
+
+
+
+
+
+						</p:panel>
 					</div>
-					
+
 					<div class="ui-g-6">
 						<p:panel header="Reporte Saldos Actuales Imss">
-						
-						<p:panelGrid styleClass="ui-noborder" >
-							
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-						<p:outputLabel value="Ruta:" />		
-						</p:column>		
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="rutaReporteImss" value="#{saldosNegativosImssIsste.rutaReporteImss}" />
-					   				 </p:outputPanel>
-						</p:column>	
-						
-						</p:row>	
-						
-						<p:row>	
-						<p:column style="text-align: left !important;width: 120px !important;">	
-						<p:outputLabel value="Nombre Archivo:" />		
-						</p:column>		
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="nombreReporteImss" value="#{saldosNegativosImssIsste.nombreReporteImss}" />
-					   				 </p:outputPanel>
-						</p:column>	
-							
-						</p:row>	
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-						<p:commandButton styleClass="blue ui-button-text"  value="Reporte"  onclick="PF('reporteImss').show();" />
-						</p:column>			
-						</p:row>			
-						
-						<p:dialog styleClass="styleWhite" appendTo="@(body)"
-												 header="Reporte Saldos IMSS"  showEffect="fade" resizable="false"
-												widgetVar="reporteImss" modal="true">
-												<p:panel style="border:0px !important;text-align:center">
-													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
-														<p:outputLabel
-															value="¿Desea continuar?"
-															style="font-size:14px !important; color: #59ad40 !important;" />
-													</p:outputPanel>
-				
-													<p:outputPanel style="text-align:center">
-														<p:commandButton value="Si" update="result" style="width:90px"
-															class="blue" actionListener="#{saldosNegativosImssIsste.ejecutarImssReporte}"
-															oncomplete="PF('reporteImss').hide();" />
-														<p:commandButton value="No" class="blue" style="width:90px"
-															onclick="PF('reporteImss').hide();" type="button" />
-													</p:outputPanel>
-												</p:panel>
-									</p:dialog>
-						
-					</p:panelGrid>		
-						
+
+							<p:panelGrid styleClass="ui-noborder">
+
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputLabel value="Ruta:" />
+									</p:column>
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="rutaReporteImss"
+												value="#{saldosNegativosImssIsste.rutaReporteImss}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+
+								<p:row>
+									<p:column
+										style="text-align: left !important;width: 120px !important;">
+										<p:outputLabel value="Nombre Archivo:" />
+									</p:column>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombreReporteImss"
+												value="#{saldosNegativosImssIsste.nombreReporteImss}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:commandButton styleClass="blue ui-button-text"
+											value="Reporte" onclick="PF('reporteImss').show();" />
+									</p:column>
+								</p:row>
+
+								<p:dialog styleClass="styleWhite" appendTo="@(body)"
+									header="Reporte Saldos IMSS" showEffect="fade"
+									resizable="false" widgetVar="reporteImss" modal="true">
+									<p:panel style="border:0px !important;text-align:center">
+										<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+											<p:outputLabel value="¿Desea continuar?"
+												style="font-size:14px !important; color: #59ad40 !important;" />
+										</p:outputPanel>
+
+										<p:outputPanel style="text-align:center">
+											<p:commandButton value="Si" update="result"
+												style="width:90px" class="blue"
+												actionListener="#{saldosNegativosImssIsste.ejecutarImssReporte}"
+												oncomplete="PF('reporteImss').hide();" />
+											<p:commandButton value="No" class="blue" style="width:90px"
+												onclick="PF('reporteImss').hide();" type="button" />
+										</p:outputPanel>
+									</p:panel>
+								</p:dialog>
+
+							</p:panelGrid>
+
 
 						</p:panel>
-					
+
 					</div>
-				 
-			</div>
-			
-			
-			
-			<div class="ui-g">
-				
+
+				</div>
+
+
+
+				<div class="ui-g">
+
 					<div class="ui-g-6">
 						<p:panel header="Carga Curp Reporte Saldos Isste">
-						
-						<p:panelGrid styleClass="ui-noborder" >
-							
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-						<p:outputLabel value="Ruta:" />		
-						</p:column>		
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="rutaCurpIsste" value="#{saldosNegativosImssIsste.rutaCurpIsste}" />
-					   				 </p:outputPanel>
-						</p:column>	
-						
-						</p:row>	
-						
-						<p:row>	
-						<p:column style="text-align: left !important;width: 120px !important;">	
-						<p:outputLabel value="Nombre Archivo:" />		
-						</p:column>		
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="nombreCurpIsste" value="#{saldosNegativosImssIsste.nombreCurpIsste}" />
-					   				 </p:outputPanel>
-						</p:column>	
-							
-						</p:row>	
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">
-						<p:commandButton styleClass="blue ui-button-text" value="Carga"  onclick="PF('cargaIsste').show();" />	
-						</p:column>			
-						</p:row>			
-						
-						<p:dialog styleClass="styleWhite" appendTo="@(body)"
-												 header="Carga Saldos ISSTE"  showEffect="fade" resizable="false"
-												widgetVar="cargaIsste" modal="true">
-												<p:panel style="border:0px !important;text-align:center">
-													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
-														<p:outputLabel
-															value="¿Desea continuar?"
-															style="font-size:14px !important; color: #59ad40 !important;" />
-													</p:outputPanel>
-				
-													<p:outputPanel style="text-align:center">
-														<p:commandButton value="Si" update="result" style="width:90px"
-															class="blue" actionListener="#{saldosNegativosImssIsste.ejecutarIssteCarga}"
-															oncomplete="PF('cargaIsste').hide();" />
-														<p:commandButton value="No" class="blue" style="width:90px"
-															onclick="PF('cargaIsste').hide();" type="button" />
-													</p:outputPanel>
-												</p:panel>
-									</p:dialog>
-						
-					</p:panelGrid>		
-						
+
+							<p:panelGrid styleClass="ui-noborder">
+
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputLabel value="Ruta:" />
+									</p:column>
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="rutaCurpIsste"
+												value="#{saldosNegativosImssIsste.rutaCurpIsste}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+
+								<p:row>
+									<p:column
+										style="text-align: left !important;width: 120px !important;">
+										<p:outputLabel value="Nombre Archivo:" />
+									</p:column>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombreCurpIsste"
+												value="#{saldosNegativosImssIsste.nombreCurpIsste}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:commandButton styleClass="blue ui-button-text"
+											value="Carga" onclick="PF('cargaIsste').show();" />
+									</p:column>
+								</p:row>
+
+								<p:dialog styleClass="styleWhite" appendTo="@(body)"
+									header="Carga Saldos ISSTE" showEffect="fade" resizable="false"
+									widgetVar="cargaIsste" modal="true">
+									<p:panel style="border:0px !important;text-align:center">
+										<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+											<p:outputLabel value="¿Desea continuar?"
+												style="font-size:14px !important; color: #59ad40 !important;" />
+										</p:outputPanel>
+
+										<p:outputPanel style="text-align:center">
+											<p:commandButton value="Si" update="result"
+												style="width:90px" class="blue"
+												actionListener="#{saldosNegativosImssIsste.ejecutarIssteCarga}"
+												oncomplete="PF('cargaIsste').hide();" />
+											<p:commandButton value="No" class="blue" style="width:90px"
+												onclick="PF('cargaIsste').hide();" type="button" />
+										</p:outputPanel>
+									</p:panel>
+								</p:dialog>
+
+							</p:panelGrid>
+
 
 						</p:panel>
-						
-						
+
+
 					</div>
-					
+
 					<div class="ui-g-6">
 						<p:panel header="Reporte Saldos Actuales Isste">
-						
-							<p:panelGrid styleClass="ui-noborder" >
-							
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-						<p:outputLabel value="Ruta:" />		
-						</p:column>		
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="rutaReporteIsste" value="#{saldosNegativosImssIsste.rutaReporteIsste}" />
-					   				 </p:outputPanel>
-						</p:column>	
-						
-						</p:row>	
-						
-						<p:row>	
-						<p:column style="text-align: left !important;width: 120px !important;">	
-						<p:outputLabel value="Nombre Archivo:" />		
-						</p:column>		
-						
-						<p:column style="text-align: left !important;width: 50px !important;">	
-									  <p:outputPanel styleClass="outputlabel-shadow"
-													style="width:300px;height:19px !important;padding-top:5px">
-													<p:outputLabel id="nombreReporteIsste" value="#{saldosNegativosImssIsste.nombreReporteIsste}" />
-					   				 </p:outputPanel>
-						</p:column>	
-							
-						</p:row>	
-						<p:row>	
-						
-						<p:column style="text-align: left !important;width: 50px !important;">
-						<p:commandButton styleClass="blue ui-button-text" value="Reporte"  onclick="PF('reporteIsste').show();" />		
-						</p:column>			
-						</p:row>			
-						
-						<p:dialog styleClass="styleWhite" appendTo="@(body)"
-												 header="Reporte Saldos ISSTE"  showEffect="fade" resizable="false"
-												widgetVar="reporteIsste" modal="true">
-												<p:panel style="border:0px !important;text-align:center">
-													<p:outputPanel style="margin-top:10px;margin-bottom:10px">
-														<p:outputLabel
-															value="¿Desea continuar?"
-															style="font-size:14px !important; color: #59ad40 !important;" />
-													</p:outputPanel>
-				
-													<p:outputPanel style="text-align:center">
-														<p:commandButton value="Si" update="result" style="width:90px"
-															class="blue" actionListener="#{saldosNegativosImssIsste.ejecutarIssteReporte}"
-															oncomplete="PF('reporteIsste').hide();" />
-														<p:commandButton value="No" class="blue" style="width:90px"
-															onclick="PF('reporteIsste').hide();" type="button" />
-													</p:outputPanel>
-												</p:panel>
-						</p:dialog>
-						
-					</p:panelGrid>		
+
+							<p:panelGrid styleClass="ui-noborder">
+
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputLabel value="Ruta:" />
+									</p:column>
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="rutaReporteIsste"
+												value="#{saldosNegativosImssIsste.rutaReporteIsste}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+
+								<p:row>
+									<p:column
+										style="text-align: left !important;width: 120px !important;">
+										<p:outputLabel value="Nombre Archivo:" />
+									</p:column>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:outputPanel styleClass="outputlabel-shadow"
+											style="width:300px;height:19px !important;padding-top:5px">
+											<p:outputLabel id="nombreReporteIsste"
+												value="#{saldosNegativosImssIsste.nombreReporteIsste}" />
+										</p:outputPanel>
+									</p:column>
+
+								</p:row>
+								<p:row>
+
+									<p:column
+										style="text-align: left !important;width: 50px !important;">
+										<p:commandButton styleClass="blue ui-button-text"
+											value="Reporte" onclick="PF('reporteIsste').show();" />
+									</p:column>
+								</p:row>
+
+								<p:dialog styleClass="styleWhite" appendTo="@(body)"
+									header="Reporte Saldos ISSTE" showEffect="fade"
+									resizable="false" widgetVar="reporteIsste" modal="true">
+									<p:panel style="border:0px !important;text-align:center">
+										<p:outputPanel style="margin-top:10px;margin-bottom:10px">
+											<p:outputLabel value="¿Desea continuar?"
+												style="font-size:14px !important; color: #59ad40 !important;" />
+										</p:outputPanel>
+
+										<p:outputPanel style="text-align:center">
+											<p:commandButton value="Si" update="result"
+												style="width:90px" class="blue"
+												actionListener="#{saldosNegativosImssIsste.ejecutarIssteReporte}"
+												oncomplete="PF('reporteIsste').hide();" />
+											<p:commandButton value="No" class="blue" style="width:90px"
+												onclick="PF('reporteIsste').hide();" type="button" />
+										</p:outputPanel>
+									</p:panel>
+								</p:dialog>
+
+							</p:panelGrid>
 
 						</p:panel>
-					
+
 					</div>
-				
-			</div>
-			
-			
-			<ui:include src="processResult.xhtml">
-			<ui:param name="base" value="#{saldosNegativosImssIsste}" />
-			</ui:include>
-			
+
+				</div>
+
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{saldosNegativosImssIsste}" />
+				</ui:include>
+
 			</p:panel>
-			
-			
-			
-			</h:form>
-		
-			
-		
+
+
+
+		</h:form>
+
+
+
 	</ui:define>
 </ui:composition>
