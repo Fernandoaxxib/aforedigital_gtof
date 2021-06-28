@@ -14,6 +14,12 @@ import mx.axxib.aforedigitalgt.eml.LlenaDetalleOut;
 import mx.axxib.aforedigitalgt.eml.LlenaMovimientosOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerCodCuentaOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de Recaudación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 26/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ConsultaMovActualesRepo extends RepoBase {

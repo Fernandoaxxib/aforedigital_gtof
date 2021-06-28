@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.eml.LlenaDetalleOut;
 import mx.axxib.aforedigitalgt.eml.LlenaMovimientosOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerCodCuentaOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de Recaudación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 26/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class ConsultaMovActualesServ extends ServiceBase {
 

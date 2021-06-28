@@ -23,6 +23,12 @@ import mx.axxib.aforedigitalgt.serv.ConsultaMovActualesServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudación
+//** Interventor Principal: JSAS
+//** Fecha Creación: 26/Feb/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "conActuales")
 @ELBeanName(value = "conActuales")
