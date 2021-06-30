@@ -3,6 +3,7 @@ package mx.axxib.aforedigitalgt.ctrll;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -16,11 +17,13 @@ import javax.faces.context.FacesContext;
 import org.apache.myfaces.component.visit.FullVisitContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
+import mx.axxib.aforedigitalgt.com.AforeUser;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.util.AforeLogger;
 import mx.axxib.aforedigitalgt.util.DateUtil;
@@ -40,9 +43,13 @@ public class ControllerBase {
 	
 	@Value("${resultados.maximoElementos}")
 	private int maxElementos;
+	
 	@Getter
 	@Setter
 	public boolean init;
+	
+	@Getter
+	public HashMap<String, Boolean> permisos;
 	
 	@Getter
 	@Setter
@@ -68,6 +75,11 @@ public class ControllerBase {
 	}
 	
 	public void iniciar() {
+		permisos = ((AforeUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPermisos();
+		if(!permisos.get("moduloPagos")) {
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/web/introduccion.jsf");
+			return;
+		}
 		if(force) {
 			resultados = new ArrayList<ProcessResult>();
 			init = true;

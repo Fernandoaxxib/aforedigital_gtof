@@ -1,13 +1,18 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
+import java.util.HashMap;
+
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.context.annotation.Scope;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.AforeUser;
 
 @Scope(value = "session")
 @Component(value = "menu")
@@ -21,6 +26,14 @@ public class MenuCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String submenu;
+	
+	@Getter
+	public HashMap<String, Boolean> permisos;
+	
+	@PostConstruct
+	public void init() {
+		permisos = ((AforeUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPermisos();
+	}
 	
 	public void navigateMenu() {
 		if(menu != null) {

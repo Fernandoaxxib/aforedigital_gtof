@@ -23,7 +23,7 @@
 				itemLabel="MONITOR DE PROCESOS"
 				itemValue="/web/monitorProcesos.jsf" />
 			<f:selectItem itemLabel="LIQUIDACIÓN DE FONDOS Y TIPOS DE PAGOS"
-				itemValue="/web/moduloPagos.js" />
+				itemValue="/web/moduloPagos.jsf" itemDisabled="#{!menu.permisos['moduloPagos']}"/>
 			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>
 	</h:form>

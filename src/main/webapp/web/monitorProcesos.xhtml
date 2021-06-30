@@ -109,7 +109,7 @@
 				<p:commandButton class="blue"
 					actionListener="#{monitorProcesos.actualizar}" onclick="PF('monitorTable').clearFilters()"
 					update="monitorTable jobs result form2:monitorDetalle"
-					style="margin-top:20px" value="Actualizar todo" />
+					style="margin-top:20px" value="Actualizar todo" rendered="#{monitorProcesos.permisos['actualizar']}"/>
 
 				<p:dataTable id="monitorTable" var="mon" paginatorPosition="bottom" widgetVar="monitorTable"
 					style="margin-top:20px" emptyMessage="#{msg.aprob_msj_sinDatos}"
@@ -188,7 +188,7 @@
 
 					<p:commandButton class="blue"
 						actionListener="#{monitorProcesos.ejecutar}" update="result"
-						value="Ejecutar" style="margin-top:20px" />
+						value="Ejecutar" style="margin-top:20px" rendered="#{monitorProcesos.permisos['ejecutar']}"/>
 				</p:panel>
 
 				<ui:include src="processResult.xhtml">

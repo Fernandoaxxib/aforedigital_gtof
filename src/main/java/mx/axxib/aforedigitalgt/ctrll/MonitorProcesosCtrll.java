@@ -60,6 +60,7 @@ public class MonitorProcesosCtrll extends ControllerBase {
 
 	@Override
 	public void iniciar() {
+		
 		super.iniciar();
 		if (init) {
 			

@@ -1,9 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
-import java.io.IOException;
 import java.util.Map;
 
-import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
 
 import org.ocpsoft.rewrite.annotation.Join;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
-import mx.axxib.aforedigitalgt.eml.PermisoResult;
 
 
 @Scope(value = "session")
@@ -37,9 +34,7 @@ public class HomeCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Integer count;
-	@Getter
-	@Setter
-	private PermisoResult permisos;
+	
 
 	@Override
 	public void iniciar() {

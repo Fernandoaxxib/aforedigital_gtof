@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.ctrll;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 
+import mx.axxib.aforedigitalgt.com.AforeUserDetail;
 import mx.axxib.aforedigitalgt.com.JsfRedirectStrategy;
 
 //***********************************************//
@@ -19,6 +21,10 @@ import mx.axxib.aforedigitalgt.com.JsfRedirectStrategy;
 //***********************************************//
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	@Qualifier("AforeUserDetail")
+	AforeUserDetail aforeUserDetail;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -39,9 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		     
 		     InvalidSessionStrategy invalidSessionStrategy = new JsfRedirectStrategy();
 		     
+		     
 			http.sessionManagement().invalidSessionStrategy(invalidSessionStrategy )
 		        .invalidSessionUrl("/invalidSession.html")
 		     	.maximumSessions(1).expiredUrl("/login?expired=true");
+			
+			
+			
 	}
 
 	@Autowired
@@ -49,10 +59,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		BCryptPasswordEncoder encoder = passwordEncoder();
 		String result = encoder.encode("1");
 
-//		auth.inMemoryAuthentication().withUser("user").password(result).roles("USER").and().withUser("admin")
-//				.password(result).roles("ADMIN");
+		auth.userDetailsService(aforeUserDetail);
 		auth.inMemoryAuthentication().withUser("sygno.afore").password(result).roles("ADMIN");
-
+		
 	}
 
 	@Bean

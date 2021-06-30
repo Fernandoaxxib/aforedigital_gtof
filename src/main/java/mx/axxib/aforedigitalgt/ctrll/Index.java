@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeMessage;
-import mx.axxib.aforedigitalgt.eml.PermisoResult;
 import mx.axxib.aforedigitalgt.serv.PermisoService;
 
 @Scope(value = "session")
@@ -30,9 +29,8 @@ public class Index extends ControllerBase {
 	@Getter
 	@Setter
 	private Integer count;
-	@Getter
-	@Setter
-	private PermisoResult permisos;
+	
+	
 
 	public void listAllPersons() {
 		try {
@@ -53,8 +51,7 @@ public class Index extends ControllerBase {
 
 	public void getPersonFullNameById() {
 		try {
-			permisos = personService.getPermisosUsuario(usuario);
-			count = permisos.getDatos().size();
+			
 		} catch (Exception e) {
 			GenericException(e);
 		}
