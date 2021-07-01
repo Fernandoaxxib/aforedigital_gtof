@@ -73,4 +73,10 @@ public class MenuCtrll extends ControllerBase {
 		submenu = menu;
 		navigateMenu();
 	}
+	
+	public void graficas() {
+		menu = "/web/graficas.jsf";
+		submenu = menu;
+		navigateMenu();
+	}
 }

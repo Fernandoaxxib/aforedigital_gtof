@@ -1,62 +1,53 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="layout3.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
-<h:head>
+	<f:metadata>
+		<f:event listener="#{graficasCtrll.iniciar}" type="preRenderView" />
+	</f:metadata>
 
-</h:head>
-<h:body>
-
-	<ui:include src="menu.xhtml" />
-
-
-	<h:form>
-	    
-	    <p:growl id="out3" showDetail="true" skipDetailIfEqualsSummary="true" />
-		
-		<p:panel id="basic" header="HISTÓRICO DE APROBACIONES EN RETIROS" style="margin-top:18px"
-			>
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
 
 
-			<h:panelGrid columns="2" layout="flex">
-				<h:outputLabel for="periodoIni" value="Periodo del:" />
-				
-				<p:selectOneMenu id="fInicio" value="#{graficasCtrll.fechaInicioCombo}" panelStyle="width:180px" effect="fade" style="width:160px">										
-					<p:ajax event="change" listener="#{graficasCtrll.reset}" update="fFin" global="false" />   
-					<f:selectItem itemLabel="------" itemValue="0" />
-					<f:selectItems value="#{graficasCtrll.fechasInicio}"/>                    
-				</p:selectOneMenu>
-				
-			    <h:outputLabel for="periodoFin" value="Al:" />
-				
-				<p:selectOneMenu id="fFin" value="#{graficasCtrll.fechaFinCombo}" panelStyle="width:180px" effect="fade" style="width:160px">                         							
-					<p:ajax event="change" listener="#{graficasCtrll.onCountryChange}" update="out" />   
-					<f:selectItem itemLabel="------" itemValue="0" />
-					<f:selectItems value="#{graficasCtrll.fechasFin}"/>                    
-				</p:selectOneMenu>
-			</h:panelGrid>
-			
-            <h:panelGrid id="out" columns="2" style="margin-bottom:10px" cellpadding="5">
-               <h:outputLabel for="totalGeneral" value="Total general en parciales: " />
-               <h:outputLabel for="totalGR" value="#{graficasCtrll.totParcial}" />
-               <h:outputLabel for="totalGeneral" value="Total general en totales: " />
-               <h:outputLabel for="totalGTR" value="#{graficasCtrll.totTotal}" />                             
-            </h:panelGrid>            		 															
-		</p:panel>
-		
-		<p:panel id="basic1" header="RESUMEN DETALLE POR TIPO DE RETIRO: TOTALES"
-			style="margin-top:20px;">
-         		 															
-		</p:panel>
-		 						
-	</h:form>
-
-</h:body>
-
-
-</html>
+	<ui:define name="center">
+		<h:form id="form">
+			<p:panel class="ui-noborder">
+				<p:panelGrid class="ui-noborder">
+					<p:row>
+						<p:column style="width:400px">
+							<p:pieChart model="#{graficasCtrll.pieModel}"
+								style="width: 100%; height: 400px;margin-right:50px !important" />
+						</p:column>
+						<p:column style="width:400px">
+							<p:barChart model="#{graficasCtrll.barModel}"
+								style="width: 100%; height: 400px;" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid class="ui-noborder"
+					style="margin-top:30px !important;margin-bottom:55px !important">
+					<p:row>
+						<p:column style="width:300px">
+							<p:barChart model="#{graficasCtrll.barModel2}"
+								style="height: 300px;margin-right:50px !important" />
+						</p:column>
+						<p:column style="width:300px">
+							<p:donutChart model="#{graficasCtrll.donutModel}"
+								style="width: 100%; height: 300px;" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
