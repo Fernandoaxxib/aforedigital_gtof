@@ -21,29 +21,101 @@
 
 	<ui:define name="center">
 		<h:form id="form">
-			<p:panel class="ui-noborder">
-				<p:panelGrid class="ui-noborder">
+			<p:panel style="border:0px !important">
+
+				<p:outputPanel>
+					<p:dataTable id="table1" var="dato"
+						style="display:#{graficasCtrll.display};border:0px !important"
+						value="#{graficasCtrll.datos}">
+
+						<p:column headerText="Retiros Cancelados">
+							<h:outputText value="#{dato.cancelados}" style="float:right;" />
+						</p:column>
+
+						<p:column headerText="Retiros Capturada">
+							<h:outputText value="#{dato.capturada}" style="float:right;" />
+						</p:column>
+
+						<p:column headerText="Retiros Prev Liquida">
+							<h:outputText value="#{dato.prevLiquida}" style="float:right;" />
+						</p:column>
+
+						<p:column headerText="Retiros Liquidados">
+							<h:outputText value="#{dato.liquidados}" style="float:right;" />
+						</p:column>
+						<p:column headerText="Retiros Liquida Mens">
+							<h:outputText value="#{dato.liquidaMens}" style="float:right;" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+
+
+				<p:panelGrid id="graf1" class="ui-noborder"
+					style="margin-top:30px !important;display:#{graficasCtrll.display}">
 					<p:row>
 						<p:column style="width:400px">
 							<p:pieChart model="#{graficasCtrll.pieModel}"
-								style="width: 100%; height: 400px;margin-right:50px !important" />
+								style="width: 100%; height: 400px;margin-right:50px !important">
+								<p:ajax event="itemSelect"
+									listener="#{graficasCtrll.itemSelect}"
+									update="form:graf1 form:graf2 form:table1 form:table2 form:btn" />
+							</p:pieChart>
 						</p:column>
 						<p:column style="width:400px">
-							<p:barChart model="#{graficasCtrll.barModel}"
-								style="width: 100%; height: 400px;" />
+							<p:barChart model="#{graficasCtrll.barModel2}"
+								style="width: 100%; height: 400px;margin-right:50px !important">
+								<p:ajax event="itemSelect"
+									listener="#{graficasCtrll.itemSelect}"
+									update="form:graf1 form:graf2 form:table1 form:table2 form:btn" />
+							</p:barChart>
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:panelGrid class="ui-noborder"
-					style="margin-top:30px !important;margin-bottom:55px !important">
+
+				<p:outputPanel id="btn"
+					style="text-align:right !important;margin-bottom:20px !important">
+					<p:commandButton style="display:#{graficasCtrll.display2}"
+						styleClass="blue" type="submit" value="Regresar"
+						action="#{graficasCtrll.regresar}"
+						update="form:graf1 form:graf2 form:table1 form:table2 form:btn"
+						ajax="true" />
+				</p:outputPanel>
+
+				<p:dataTable id="table2" styleClass="styleTable2" var="dato"
+					style="display:#{graficasCtrll.display2};border:0px !important"
+					value="#{graficasCtrll.datos2}">
+
+					<p:column headerText="Retiros Cancelados">
+						<h:outputText value="#{dato.cancelados}" style="float:right;" />
+					</p:column>
+
+					<p:column headerText="Retiros Capturada">
+						<h:outputText value="#{dato.capturada}" style="float:right;" />
+					</p:column>
+
+					<p:column headerText="Retiros Prev Liquida">
+						<h:outputText value="#{dato.prevLiquida}" style="float:right;" />
+					</p:column>
+
+					<p:column headerText="Retiros Liquidados">
+						<h:outputText value="#{dato.liquidados}" style="float:right;" />
+					</p:column>
+					<p:column headerText="Retiros Liquida Mens">
+						<h:outputText value="#{dato.liquidaMens}" style="float:right;" />
+					</p:column>
+				</p:dataTable>
+
+				<p:panelGrid id="graf2" class="ui-noborder"
+					style="margin-top:20px !important;display:#{graficasCtrll.display2}">
 					<p:row>
-						<p:column style="width:300px">
+						<p:column style="width:400px">
 							<p:barChart model="#{graficasCtrll.barModel2}"
-								style="height: 300px;margin-right:50px !important" />
+								style="width: 100%; height: 400px;margin-right:50px !important" />
 						</p:column>
-						<p:column style="width:300px">
+						<p:column style="width:400px">
 							<p:donutChart model="#{graficasCtrll.donutModel}"
-								style="width: 100%; height: 300px;" />
+								style="width: 100%; height: 400px;" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

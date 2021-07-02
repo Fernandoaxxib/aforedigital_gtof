@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.AforeException;
+import mx.axxib.aforedigitalgt.eml.TipoRetiroOut;
 import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
 import mx.axxib.aforedigitalgt.serv.GraficasServ;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import java.util.Map;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-
 
 import org.primefaces.event.ItemSelectEvent;
 
@@ -38,8 +38,6 @@ import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.optionconfig.tooltip.Tooltip;
 import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.*;
-        
-
 
 @Scope(value = "session")
 @Component(value = "graficasCtrll")
@@ -70,44 +68,62 @@ public class GraficasCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Map<String, String> fechasFin;
-	
+
 	@Getter
 	private Integer totParcial;
 	@Getter
 	private Integer totTotal;
-	
+
 	@Getter
 	@Setter
 	private BarChartModel barModel;
-	
+
 	@Getter
 	@Setter
 	private BarChartModel barModel2;
-	
+
 	@Getter
 	@Setter
 	private BarChartModel stackedBarModel;
-	
+
 	@Getter
 	@Setter
 	private PieChartModel pieModel;
+
+	@Getter
+	@Setter
+	private DonutChartModel donutModel;
+
+	@Getter
+	@Setter
+	private List<TipoRetiroOut> datos;
 	
 	@Getter
 	@Setter
-	 private DonutChartModel donutModel;
+	private List<TipoRetiroOut> datos2;
 	
+	@Getter
+	@Setter
+	private String display;
 	
+	@Getter
+	@Setter
+	private String display2;
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if(init) {
+		if (init) {
+			display="inline";
+			display2="none";
 			createBarModel();
 			createBarModel2();
-			createPieModel() ;
+			createPieModel();
 			createDonutModel();
-			init=false;
+			cargarDatos();
+			init = false;
 		}
-	}	
+	}
 
 	/*
 	 * @PostConstruct public void init2() { fechasInicio = new LinkedHashMap<>();
@@ -126,7 +142,7 @@ public class GraficasCtrll extends ControllerBase {
 	 * 
 	 * }
 	 */
-	
+
 	/*
 	 * public void init() { fechasInicio = new LinkedHashMap<>();
 	 * fechasInicio.put("ENE-2020", "1"); fechasInicio.put("FEB-2020", "2");
@@ -143,35 +159,42 @@ public class GraficasCtrll extends ControllerBase {
 	 * }
 	 */
 
-	
+	public void cargarDatos() {
+		datos = new ArrayList<>();
+		datos.add(new TipoRetiroOut(3, 2, 58, 32, 25));
+		datos2= new ArrayList<>();
+		datos2.add(new TipoRetiroOut(65, 59, 80, 81, 56));
+	}
+
 	public void reset() {
 		fechaFinCombo = "0";
 	}
 
 	public void onCountryChange() {
 		// **************************
-		String fechaI="";
-		String fechaF="";
-		//addMessage("Fecha inicio: " + fechaInicioCombo + " Fecha fin: " + fechaFinCombo);
+		String fechaI = "";
+		String fechaF = "";
+		// addMessage("Fecha inicio: " + fechaInicioCombo + " Fecha fin: " +
+		// fechaFinCombo);
 
-		if(Integer.parseInt(fechaInicioCombo)<10) {
-		   fechaI="01".concat("0"+fechaInicioCombo).concat("20");
-		}else {
-			 fechaI="01".concat(fechaInicioCombo).concat("20");
+		if (Integer.parseInt(fechaInicioCombo) < 10) {
+			fechaI = "01".concat("0" + fechaInicioCombo).concat("20");
+		} else {
+			fechaI = "01".concat(fechaInicioCombo).concat("20");
 		}
-		
-		if(Integer.parseInt(fechaFinCombo)<10) {
-			fechaF="01".concat("0"+fechaFinCombo).concat("20");
-		}else {
-			fechaF="01".concat(fechaFinCombo).concat("20");
+
+		if (Integer.parseInt(fechaFinCombo) < 10) {
+			fechaF = "01".concat("0" + fechaFinCombo).concat("20");
+		} else {
+			fechaF = "01".concat(fechaFinCombo).concat("20");
 		}
-		
+
 		try {
-			List<TipoTransacOut> tipoTransacciones= graficasService.getTipoTransacciones(fechaI, fechaF);
-			totParcial=tipoTransacciones.get(0).getTotParcial();
-			totTotal=tipoTransacciones.get(0).getTotTotal();
+			List<TipoTransacOut> tipoTransacciones = graficasService.getTipoTransacciones(fechaI, fechaF);
+			totParcial = tipoTransacciones.get(0).getTotParcial();
+			totTotal = tipoTransacciones.get(0).getTotTotal();
 		} catch (AforeException e) {
-			
+
 			e.printStackTrace();
 		}
 		// ***************************
@@ -289,12 +312,13 @@ public class GraficasCtrll extends ControllerBase {
 		lineModel.setData(data);
 	}
 
-	public void itemSelect(ItemSelectEvent event) {
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected",
-				"Item Index: " + event.getItemIndex() + ", DataSet Index:" + event.getDataSetIndex());
-
-		FacesContext.getCurrentInstance().addMessage(null, msg);
-	}
+	/*
+	 * public void itemSelect(ItemSelectEvent event) { FacesMessage msg = new
+	 * FacesMessage(FacesMessage.SEVERITY_INFO, "Item selected", "Item Index: " +
+	 * event.getItemIndex() + ", DataSet Index:" + event.getDataSetIndex());
+	 * 
+	 * FacesContext.getCurrentInstance().addMessage(null, msg); }
+	 */
 
 	public void addMessage(String summary) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
@@ -303,355 +327,332 @@ public class GraficasCtrll extends ControllerBase {
 
 	public void createBarModel() {
 		barModel = new BarChartModel();
-        ChartData data = new ChartData();
+		ChartData data = new ChartData();
 
-        BarChartDataSet barDataSet = new BarChartDataSet();
-        barDataSet.setLabel("Retiros Cancelados");    
-        barDataSet.setBackgroundColor("rgba(255, 99, 132, 0.2)");
-        barDataSet.setBorderColor("rgb(255, 99, 132)");
-        barDataSet.setBorderWidth(1);
-        List<Number> values = new ArrayList<>();
-        values.add(3); 
-        values.add(0);
-        values.add(0);
-        values.add(0);
-        values.add(0);
-        barDataSet.setData(values);        
-      
-        BarChartDataSet barDataSet2 = new BarChartDataSet();
-        barDataSet2.setLabel("Retiros Capturada");                                
-        barDataSet2.setBackgroundColor("rgba(255, 159, 64, 0.2)");
-        barDataSet2.setBorderColor("rgba(255, 159, 64)");
-        barDataSet2.setBorderWidth(1);
-        List<Number> values2 = new ArrayList<>();        
-        values2.add(0);  
-        values2.add(2);
-        values2.add(0);
-        values2.add(0);
-        values2.add(0);
-        barDataSet2.setData(values2);   
-                
-        
-        BarChartDataSet barDataSet3 = new BarChartDataSet();
-        barDataSet3.setLabel("Retiros Prev Liquida");                                
-        barDataSet3.setBackgroundColor("rgba(255, 205, 86, 0.2)");
-        barDataSet3.setBorderColor("rgb(255, 205, 86)");
-        barDataSet3.setBorderWidth(1);
-        List<Number> values3 = new ArrayList<>();        
-        values3.add(0);  
-        values3.add(0);
-        values3.add(58);
-        values3.add(0);
-        values3.add(0);
-        barDataSet3.setData(values3);  
-                
-        
-        BarChartDataSet barDataSet4 = new BarChartDataSet();
-        barDataSet4.setLabel("Retiros Liquidados");                                
-        barDataSet4.setBackgroundColor("rgb(75, 192, 192,0.2)");
-        barDataSet4.setBorderColor("rgb(75, 192, 192)");
-        barDataSet4.setBorderWidth(1);
-        List<Number> values4 = new ArrayList<>();        
-        values4.add(0);  
-        values4.add(0);
-        values4.add(0);
-        values4.add(32);
-        values4.add(0);
-        barDataSet4.setData(values4);         
-        
-        BarChartDataSet barDataSet5 = new BarChartDataSet();
-        barDataSet5.setLabel("Retiros Liquida Mens");                                
-        barDataSet5.setBackgroundColor("rgb(75, 192, 192,0.2)");
-        barDataSet5.setBorderColor("rgb(75, 192, 192)");
-        barDataSet5.setBorderWidth(1);
-        List<Number> values5 = new ArrayList<>();        
-        values5.add(0);  
-        values5.add(0);
-        values5.add(0);
-        values5.add(0);
-        values5.add(25);
-        barDataSet5.setData(values5);
-        
-        data.addChartDataSet(barDataSet);
-        data.addChartDataSet(barDataSet2);
-        data.addChartDataSet(barDataSet3);
-        data.addChartDataSet(barDataSet4);
-        data.addChartDataSet(barDataSet5);
-        
-        List<String> labels = new ArrayList<>();
-        labels.add("");
-        labels.add(""); 
-        labels.add("");         
-        labels.add("");
-        labels.add("");
-        data.setLabels(labels);
-        barModel.setData(data);
+		BarChartDataSet barDataSet = new BarChartDataSet();
+		barDataSet.setLabel("Retiros Cancelados");
+		barDataSet.setBackgroundColor("rgba(255, 99, 132, 0.2)");
+		barDataSet.setBorderColor("rgb(255, 99, 132)");
+		barDataSet.setBorderWidth(1);
+		List<Number> values = new ArrayList<>();
+		values.add(3);
+		values.add(0);
+		values.add(0);
+		values.add(0);
+		values.add(0);
+		barDataSet.setData(values);
 
+		BarChartDataSet barDataSet2 = new BarChartDataSet();
+		barDataSet2.setLabel("Retiros Capturada");
+		barDataSet2.setBackgroundColor("rgba(255, 159, 64, 0.2)");
+		barDataSet2.setBorderColor("rgba(255, 159, 64)");
+		barDataSet2.setBorderWidth(1);
+		List<Number> values2 = new ArrayList<>();
+		values2.add(0);
+		values2.add(2);
+		values2.add(0);
+		values2.add(0);
+		values2.add(0);
+		barDataSet2.setData(values2);
 
-        //Options
-        BarChartOptions options = new BarChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        linearAxes.setOffset(true);
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addYAxesData(linearAxes);
-       
-        options.setScales(cScales);
+		BarChartDataSet barDataSet3 = new BarChartDataSet();
+		barDataSet3.setLabel("Retiros Prev Liquida");
+		barDataSet3.setBackgroundColor("rgba(255, 205, 86, 0.2)");
+		barDataSet3.setBorderColor("rgb(255, 205, 86)");
+		barDataSet3.setBorderWidth(1);
+		List<Number> values3 = new ArrayList<>();
+		values3.add(0);
+		values3.add(0);
+		values3.add(58);
+		values3.add(0);
+		values3.add(0);
+		barDataSet3.setData(values3);
 
-        
+		BarChartDataSet barDataSet4 = new BarChartDataSet();
+		barDataSet4.setLabel("Retiros Liquidados");
+		barDataSet4.setBackgroundColor("rgb(75, 192, 192,0.2)");
+		barDataSet4.setBorderColor("rgb(75, 192, 192)");
+		barDataSet4.setBorderWidth(1);
+		List<Number> values4 = new ArrayList<>();
+		values4.add(0);
+		values4.add(0);
+		values4.add(0);
+		values4.add(32);
+		values4.add(0);
+		barDataSet4.setData(values4);
 
-        Legend legend = new Legend();
-        legend.setDisplay(true);
-        legend.setPosition("top");
-        LegendLabel legendLabels = new LegendLabel();
-        legendLabels.setFontStyle("bold");
-        legendLabels.setFontColor("#2980B9");
-        legendLabels.setFontSize(12);
-        legend.setLabels(legendLabels);
-        options.setLegend(legend);
-        
-        Tooltip t= new Tooltip();
-        t.setEnabled(true);
-        t.setBackgroundColor("RED");
-        options.setTooltip(t);
+		BarChartDataSet barDataSet5 = new BarChartDataSet();
+		barDataSet5.setLabel("Retiros Liquida Mens");
+		barDataSet5.setBackgroundColor("rgb(75, 192, 192,0.2)");
+		barDataSet5.setBorderColor("rgb(75, 192, 192)");
+		barDataSet5.setBorderWidth(1);
+		List<Number> values5 = new ArrayList<>();
+		values5.add(0);
+		values5.add(0);
+		values5.add(0);
+		values5.add(0);
+		values5.add(25);
+		barDataSet5.setData(values5);
 
-       
-        // disable animation
+		data.addChartDataSet(barDataSet);
+		data.addChartDataSet(barDataSet2);
+		data.addChartDataSet(barDataSet3);
+		data.addChartDataSet(barDataSet4);
+		data.addChartDataSet(barDataSet5);
+
+		List<String> labels = new ArrayList<>();
+		labels.add("");
+		labels.add("");
+		labels.add("");
+		labels.add("");
+		labels.add("");
+		data.setLabels(labels);
+		barModel.setData(data);
+
+		// Options
+		BarChartOptions options = new BarChartOptions();
+		CartesianScales cScales = new CartesianScales();
+		CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+		linearAxes.setOffset(true);
+		CartesianLinearTicks ticks = new CartesianLinearTicks();
+		ticks.setBeginAtZero(true);
+		linearAxes.setTicks(ticks);
+		cScales.addYAxesData(linearAxes);
+
+		options.setScales(cScales);
+
+		Legend legend = new Legend();
+		legend.setDisplay(true);
+		legend.setPosition("top");
+		LegendLabel legendLabels = new LegendLabel();
+		legendLabels.setFontStyle("bold");
+		legendLabels.setFontColor("#2980B9");
+		legendLabels.setFontSize(12);
+		legend.setLabels(legendLabels);
+		options.setLegend(legend);
+
+		Tooltip t = new Tooltip();
+		t.setEnabled(true);
+		t.setBackgroundColor("RED");
+		options.setTooltip(t);
+
+		// disable animation
 		/*
 		 * Animation animation = new Animation(); animation.setDuration(0);
 		 * options.setAnimation(animation);
 		 */
 
-        barModel.setOptions(options);
-    }
+		barModel.setOptions(options);
+	}
+
 	private void createPieModel() {
 		pieModel = new PieChartModel();
-		
-        ChartData data = new ChartData();
-        
-        
-        PieChartDataSet dataSet = new PieChartDataSet();
-        
-        List<Number> values = new ArrayList<>();
-        values.add(3670);
-        values.add(2232);        
-        dataSet.setData(values);
-        
-        List<String> bgColors = new ArrayList<>();
-        bgColors.add("rgb(255, 99, 132)");
-        bgColors.add("rgb(54, 162, 235)");        
-        dataSet.setBackgroundColor(bgColors);
-        
-        
-        data.addChartDataSet(dataSet);
-        List<String> labels = new ArrayList<>();
-        labels.add("Parcial");
-        labels.add("Total");        
-        data.setLabels(labels);
-        
-        PieChartOptions options = new PieChartOptions();
-        Legend l= new Legend();
-        l.setPosition("bottom");
-        options.setLegend(l);
-        
-        pieModel.setOptions(options);
-        pieModel.setData(data);
-    }
-	
+
+		ChartData data = new ChartData();
+
+		PieChartDataSet dataSet = new PieChartDataSet();
+
+		List<Number> values = new ArrayList<>();
+		values.add(3670);
+		values.add(2232);
+		dataSet.setData(values);
+
+		List<String> bgColors = new ArrayList<>();
+		bgColors.add("rgb(255, 99, 132)");
+		bgColors.add("rgb(54, 162, 235)");
+		dataSet.setBackgroundColor(bgColors);
+
+		data.addChartDataSet(dataSet);
+		List<String> labels = new ArrayList<>();
+		labels.add("Parcial");
+		labels.add("Total");
+		data.setLabels(labels);
+
+		PieChartOptions options = new PieChartOptions();
+		Legend l = new Legend();
+		l.setPosition("bottom");
+		options.setLegend(l);
+
+		pieModel.setOptions(options);
+		pieModel.setData(data);
+	}
+
 	/*
-	 public void createBarModel() {
-		barModel = new BarChartModel();
-        ChartData data = new ChartData();
-
-        BarChartDataSet barDataSet = new BarChartDataSet();
-        barDataSet.setLabel("Parciales");
-        
-
-        List<Number> values = new ArrayList<>();
-        values.add(65);
-        values.add(59);
-        values.add(80);
-        values.add(81);
-        values.add(56);
-        values.add(55);
-        values.add(40);
-        barDataSet.setData(values);
-        
-
-        List<String> bgColor = new ArrayList<>();
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-       
-        barDataSet.setBackgroundColor(bgColor);
-
-        List<String> borderColor = new ArrayList<>();
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 99, 132)");
-        
-        barDataSet.setBorderColor(borderColor);
-        barDataSet.setBorderWidth(1);
-
-        data.addChartDataSet(barDataSet);
-
-        List<String> labels = new ArrayList<>();
-        labels.add("Enero");
-        labels.add("Febrero");
-        labels.add("Marzo");
-        labels.add("Abril");
-        labels.add("Mayo");
-        labels.add("Junio");
-        labels.add("Julio");
-        data.setLabels(labels);
-        barModel.setData(data);
-
-        //Options
-        BarChartOptions options = new BarChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        linearAxes.setOffset(true);
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addYAxesData(linearAxes);
-        options.setScales(cScales);
-
-        
-
-        Legend legend = new Legend();
-        legend.setDisplay(true);
-        legend.setPosition("top");
-        LegendLabel legendLabels = new LegendLabel();
-        legendLabels.setFontStyle("bold");
-        legendLabels.setFontColor("#2980B9");
-        legendLabels.setFontSize(24);
-        legend.setLabels(legendLabels);
-        options.setLegend(legend);
-
-        // disable animation
-		
-		  Animation animation = new Animation(); animation.setDuration(0);
-		  options.setAnimation(animation);
-		 
-
-        barModel.setOptions(options);
-    }
-	 * */
+	 * public void createBarModel() { barModel = new BarChartModel(); ChartData data
+	 * = new ChartData();
+	 * 
+	 * BarChartDataSet barDataSet = new BarChartDataSet();
+	 * barDataSet.setLabel("Parciales");
+	 * 
+	 * 
+	 * List<Number> values = new ArrayList<>(); values.add(65); values.add(59);
+	 * values.add(80); values.add(81); values.add(56); values.add(55);
+	 * values.add(40); barDataSet.setData(values);
+	 * 
+	 * 
+	 * List<String> bgColor = new ArrayList<>();
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * bgColor.add("rgba(255, 99, 132, 0.2)");
+	 * 
+	 * barDataSet.setBackgroundColor(bgColor);
+	 * 
+	 * List<String> borderColor = new ArrayList<>();
+	 * borderColor.add("rgb(255, 99, 132)"); borderColor.add("rgb(255, 99, 132)");
+	 * borderColor.add("rgb(255, 99, 132)"); borderColor.add("rgb(255, 99, 132)");
+	 * borderColor.add("rgb(255, 99, 132)"); borderColor.add("rgb(255, 99, 132)");
+	 * borderColor.add("rgb(255, 99, 132)");
+	 * 
+	 * barDataSet.setBorderColor(borderColor); barDataSet.setBorderWidth(1);
+	 * 
+	 * data.addChartDataSet(barDataSet);
+	 * 
+	 * List<String> labels = new ArrayList<>(); labels.add("Enero");
+	 * labels.add("Febrero"); labels.add("Marzo"); labels.add("Abril");
+	 * labels.add("Mayo"); labels.add("Junio"); labels.add("Julio");
+	 * data.setLabels(labels); barModel.setData(data);
+	 * 
+	 * //Options BarChartOptions options = new BarChartOptions(); CartesianScales
+	 * cScales = new CartesianScales(); CartesianLinearAxes linearAxes = new
+	 * CartesianLinearAxes(); linearAxes.setOffset(true); CartesianLinearTicks ticks
+	 * = new CartesianLinearTicks(); ticks.setBeginAtZero(true);
+	 * linearAxes.setTicks(ticks); cScales.addYAxesData(linearAxes);
+	 * options.setScales(cScales);
+	 * 
+	 * 
+	 * 
+	 * Legend legend = new Legend(); legend.setDisplay(true);
+	 * legend.setPosition("top"); LegendLabel legendLabels = new LegendLabel();
+	 * legendLabels.setFontStyle("bold"); legendLabels.setFontColor("#2980B9");
+	 * legendLabels.setFontSize(24); legend.setLabels(legendLabels);
+	 * options.setLegend(legend);
+	 * 
+	 * // disable animation
+	 * 
+	 * Animation animation = new Animation(); animation.setDuration(0);
+	 * options.setAnimation(animation);
+	 * 
+	 * 
+	 * barModel.setOptions(options); }
+	 */
 	public void createBarModel2() {
-        barModel2 = new BarChartModel();
-        ChartData data = new ChartData();
+		barModel2 = new BarChartModel();
+		ChartData data = new ChartData();
 
-        BarChartDataSet barDataSet = new BarChartDataSet();
-        //barDataSet.setLabel("My First Dataset");
+		BarChartDataSet barDataSet = new BarChartDataSet();
+		// barDataSet.setLabel("My First Dataset");
 
-        List<Number> values = new ArrayList<>();
-        values.add(65);
-        values.add(59);
-        values.add(80);
-        values.add(81);
-        values.add(56);
-        values.add(55);
-        values.add(40);
-        barDataSet.setData(values);
+		List<Number> values = new ArrayList<>();
+		values.add(65);
+		values.add(59);
+		values.add(80);
+		values.add(81);
+		values.add(56);
+		values.add(55);
+		values.add(40);
+		barDataSet.setData(values);
 
-        List<String> bgColor = new ArrayList<>();
-        bgColor.add("rgba(255, 99, 132, 0.2)");
-        bgColor.add("rgba(255, 159, 64, 0.2)");
-        bgColor.add("rgba(255, 205, 86, 0.2)");
-        bgColor.add("rgba(75, 192, 192, 0.2)");
-        bgColor.add("rgba(54, 162, 235, 0.2)");
-        bgColor.add("rgba(153, 102, 255, 0.2)");
-        bgColor.add("rgba(201, 203, 207, 0.2)");
-        barDataSet.setBackgroundColor(bgColor);
+		List<String> bgColor = new ArrayList<>();
+		bgColor.add("rgba(255, 99, 132, 0.2)");
+		bgColor.add("rgba(255, 159, 64, 0.2)");
+		bgColor.add("rgba(255, 205, 86, 0.2)");
+		bgColor.add("rgba(75, 192, 192, 0.2)");
+		bgColor.add("rgba(54, 162, 235, 0.2)");
+		bgColor.add("rgba(153, 102, 255, 0.2)");
+		bgColor.add("rgba(201, 203, 207, 0.2)");
+		barDataSet.setBackgroundColor(bgColor);
 
-        List<String> borderColor = new ArrayList<>();
-        borderColor.add("rgb(255, 99, 132)");
-        borderColor.add("rgb(255, 159, 64)");
-        borderColor.add("rgb(255, 205, 86)");
-        borderColor.add("rgb(75, 192, 192)");
-        borderColor.add("rgb(54, 162, 235)");
-        borderColor.add("rgb(153, 102, 255)");
-        borderColor.add("rgb(201, 203, 207)");
-        barDataSet.setBorderColor(borderColor);
-        barDataSet.setBorderWidth(1);
+		List<String> borderColor = new ArrayList<>();
+		borderColor.add("rgb(255, 99, 132)");
+		borderColor.add("rgb(255, 159, 64)");
+		borderColor.add("rgb(255, 205, 86)");
+		borderColor.add("rgb(75, 192, 192)");
+		borderColor.add("rgb(54, 162, 235)");
+		borderColor.add("rgb(153, 102, 255)");
+		borderColor.add("rgb(201, 203, 207)");
+		barDataSet.setBorderColor(borderColor);
+		barDataSet.setBorderWidth(1);
 
-        data.addChartDataSet(barDataSet);
+		data.addChartDataSet(barDataSet);
 
-        List<String> labels = new ArrayList<>();                                      
-        labels.add("Retiros Cancelados");
-        labels.add("Retiros Capturada");
-        labels.add("Retiros Prev Liquida");
-        labels.add("Retiros Liquidados");
-        labels.add("Retiros Liquida Mens");
-        
-        data.setLabels(labels);
-        barModel2.setData(data);
+		List<String> labels = new ArrayList<>();
+		labels.add("Retiros Cancelados");
+		labels.add("Retiros Capturada");
+		labels.add("Retiros Prev Liquida");
+		labels.add("Retiros Liquidados");
+		labels.add("Retiros Liquida Mens");
 
-        //Options
-        BarChartOptions options = new BarChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        linearAxes.setOffset(true);
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addYAxesData(linearAxes);
-        options.setScales(cScales);
+		data.setLabels(labels);
+		barModel2.setData(data);
 
-        Legend legend = new Legend();
-        legend.setDisplay(false);
-        legend.setPosition("top");
-        LegendLabel legendLabels = new LegendLabel();
-        legendLabels.setFontStyle("bold");
-        legendLabels.setFontColor("#2980B9");
-        legendLabels.setFontSize(12);
-        legend.setLabels(legendLabels);
-        options.setLegend(legend);
+		// Options
+		BarChartOptions options = new BarChartOptions();
+		CartesianScales cScales = new CartesianScales();
+		CartesianLinearAxes linearAxes = new CartesianLinearAxes();
+		linearAxes.setOffset(true);
+		CartesianLinearTicks ticks = new CartesianLinearTicks();
+		ticks.setBeginAtZero(true);
+		linearAxes.setTicks(ticks);
+		cScales.addYAxesData(linearAxes);
+		options.setScales(cScales);
 
-        // disable animation
+		Legend legend = new Legend();
+		legend.setDisplay(false);
+		legend.setPosition("top");
+		LegendLabel legendLabels = new LegendLabel();
+		legendLabels.setFontStyle("bold");
+		legendLabels.setFontColor("#2980B9");
+		legendLabels.setFontSize(12);
+		legend.setLabels(legendLabels);
+		options.setLegend(legend);
+
+		// disable animation
 		/*
 		 * Animation animation = new Animation(); animation.setDuration(0);
 		 * options.setAnimation(animation);
 		 */
 
-        barModel2.setOptions(options);
-    }
+		barModel2.setOptions(options);
+	}
 
-	 public void createDonutModel() {
-	        donutModel = new DonutChartModel();
-	        ChartData data = new ChartData();
+	public void createDonutModel() {
+		donutModel = new DonutChartModel();
+		ChartData data = new ChartData();
 
-	        DonutChartDataSet dataSet = new DonutChartDataSet();
-	        List<Number> values = new ArrayList<>();
-	        values.add(3670);
-	        values.add(2232);
-	        dataSet.setData(values);
+		DonutChartDataSet dataSet = new DonutChartDataSet();
+		List<Number> values = new ArrayList<>();
+		values.add(3670);
+		values.add(2232);
+		dataSet.setData(values);
 
-	        List<String> bgColors = new ArrayList<>();
-	        bgColors.add("rgb(255, 99, 132)");
-	        bgColors.add("rgb(54, 162, 235)");
-	        
-	        dataSet.setBackgroundColor(bgColors);
+		List<String> bgColors = new ArrayList<>();
+		bgColors.add("rgb(255, 99, 132)");
+		bgColors.add("rgb(54, 162, 235)");
 
-	        data.addChartDataSet(dataSet);
-	        List<String> labels = new ArrayList<>();
-	        labels.add("Parcial");
-	        labels.add("Total");
-	        
-	        data.setLabels(labels);
+		dataSet.setBackgroundColor(bgColors);
 
-	        donutModel.setData(data);
-	    }
+		data.addChartDataSet(dataSet);
+		List<String> labels = new ArrayList<>();
+		labels.add("Parcial");
+		labels.add("Total");
 
+		data.setLabels(labels);
+
+		donutModel.setData(data);
+	}
+
+	public void itemSelect(ItemSelectEvent event) {
+		display="none";
+		display2="inline";
+	}
+
+	public void regresar() {
+		display="inline";
+		display2="none";
+	}
+	
 }
