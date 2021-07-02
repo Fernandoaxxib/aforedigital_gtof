@@ -3,6 +3,7 @@
 		url("#{request.contextPath}/javax.faces.resource/Imagenes/intro-ad-op.jpg.jsf") !important;
 	background-position-x: 0;
 	background-position-y: 0;
+	height: 100% !important;
 }
 
 #seccion1 .ui-g-3 {

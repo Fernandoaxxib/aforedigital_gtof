@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{graficasCtrll.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+	<ui:define name="submenu">
+		<ui:include src="subMenuTransacciones.xhtml" />
+	</ui:define>
+
+
+	<ui:define name="center">
+		<h:form id="form">
+		 
+			<p:panel class="ui-noborder">
+				<p:panelGrid style="width:96%" id="bar">
+					<p:row>
+						<p:column style="width:50%">
+							<div class="card">
+								<p:barChart model="#{graficasCtrll2.barModel}"
+									style="width: 100%; height: 500px;">
+									<p:ajax event="itemSelect"
+										listener="#{graficasCtrll2.itemSelect}" update="bar" />
+								</p:barChart>
+							</div>
+						</p:column>
+						<p:column  style="width:50%" rendered="#{graficasCtrll2.mostrar}">
+							<div class="card" >
+								<p:barChart  model="#{graficasCtrll2.hbarModel}" 
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<div class="card">
+								<p:barChart model="#{graficasCtrll2.stackedBarModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+						<p:column>
+							<div class="card">
+								<p:barChart model="#{graficasCtrll2.stackedGroupBarModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column>
+							<div class="card">
+								<p:bubbleChart model="#{graficasCtrll2.bubbleModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+						<p:column>
+							<div class="card">
+								<p:donutChart model="#{graficasCtrll2.donutModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<div class="card">
+								<p:lineChart model="#{graficasCtrll2.lineModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+						<p:column>
+							<div class="card">
+								<p:lineChart model="#{graficasCtrll2.cartesianLinerModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<div class="card">
+								<p:pieChart model="#{graficasCtrll2.pieModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+						<p:column>
+							<div class="card">
+								<p:scatterChart model="#{graficasCtrll2.scatterModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<div class="card">
+								<p:polarAreaChart model="#{graficasCtrll2.polarAreaModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+						<p:column>
+							<div class="card">
+								<p:radarChart model="#{graficasCtrll2.radarModel}"
+									style="width: 100%; height: 500px;" />
+							</div>
+						</p:column>
+					</p:row>
+
+
+				</p:panelGrid>
+
+
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
