@@ -8,6 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase que sobreescribe los detalles de un usuario en springboot
+//** Interventor Principal: JSAS
+//** Fecha Creación: 8/Julio/2021
+//** Última Modificación:
+//***********************************************//
 @Service("AforeUserDetail")
 public class AforeUserDetail implements UserDetailsService {
 

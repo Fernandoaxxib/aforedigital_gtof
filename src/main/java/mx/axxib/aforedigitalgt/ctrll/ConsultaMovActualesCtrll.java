@@ -24,7 +24,7 @@ import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudación
+//** FUNCIONALIDAD DEL OBJETO: Controlador de movimientos actuales
 //** Interventor Principal: JSAS
 //** Fecha Creación: 26/Feb/2021
 //** Última Modificación:

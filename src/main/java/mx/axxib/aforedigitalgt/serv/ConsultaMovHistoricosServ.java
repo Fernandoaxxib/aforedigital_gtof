@@ -11,6 +11,12 @@ import mx.axxib.aforedigitalgt.eml.LlenaDetalleHOut;
 import mx.axxib.aforedigitalgt.eml.LlenaMovimientosHOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerCodCuentaHOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Servicio de movimientos históricos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 4/Mar/2021
+//** Última Modificación:
+//***********************************************//
 @Service
 public class ConsultaMovHistoricosServ extends ServiceBase {
 

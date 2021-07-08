@@ -23,6 +23,12 @@ import mx.axxib.aforedigitalgt.serv.ConsultaMovHistoricosServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de movimientos históricos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 4/Mar/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "conHistoricos")
 @ELBeanName(value = "conHistoricos")

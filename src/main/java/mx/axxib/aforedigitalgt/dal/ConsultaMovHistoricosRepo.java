@@ -14,6 +14,12 @@ import mx.axxib.aforedigitalgt.eml.LlenaDetalleHOut;
 import mx.axxib.aforedigitalgt.eml.LlenaMovimientosHOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerCodCuentaHOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de movimientos históricos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 4/Mar/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ConsultaMovHistoricosRepo extends RepoBase {

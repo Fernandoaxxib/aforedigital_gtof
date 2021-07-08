@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.eml.LlenaMovimientosOut;
 import mx.axxib.aforedigitalgt.eml.ObtenerCodCuentaOut;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Servicio de Recaudación
+//** FUNCIONALIDAD DEL OBJETO: Servicio de movimientos actuales
 //** Interventor Principal: JSAS
 //** Fecha Creación: 26/Feb/2021
 //** Última Modificación:

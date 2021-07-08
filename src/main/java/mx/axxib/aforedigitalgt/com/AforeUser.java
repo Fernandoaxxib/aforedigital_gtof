@@ -7,6 +7,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase que representa al usuario de dominio con su lista de permisos
+//** Interventor Principal: JSAS
+//** Fecha Creación: 8/Julio/2021
+//** Última Modificación:
+//***********************************************//
 public class AforeUser implements UserDetails{
 
 	private HashMap<String, Boolean> permisos;
