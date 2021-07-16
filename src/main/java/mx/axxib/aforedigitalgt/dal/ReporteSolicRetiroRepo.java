@@ -15,6 +15,12 @@ import mx.axxib.aforedigitalgt.eml.ReporteSolcChequeRetiroIn;
 import mx.axxib.aforedigitalgt.eml.SubtransaccionesOut;
 import mx.axxib.aforedigitalgt.eml.TransaccionesOut;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Repositorio de reporte de solicitudes de retiro
+//** Interventor Principal: JSAS
+//** Fecha Creación: 11/Mar/2021
+//** Última Modificación:
+//***********************************************//
 @Repository
 @Transactional
 public class ReporteSolicRetiroRepo extends RepoBase {

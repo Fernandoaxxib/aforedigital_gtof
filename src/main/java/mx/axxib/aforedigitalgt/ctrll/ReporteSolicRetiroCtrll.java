@@ -25,6 +25,12 @@ import mx.axxib.aforedigitalgt.serv.ReporteSolicRetiroServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Controlador de reporte de solicitudes de retiro
+//** Interventor Principal: JSAS
+//** Fecha Creación: 11/Mar/2021
+//** Última Modificación:
+//***********************************************//
 @Scope(value = "session")
 @Component(value = "repSolRetiro")
 @ELBeanName(value = "repSolRetiro")
