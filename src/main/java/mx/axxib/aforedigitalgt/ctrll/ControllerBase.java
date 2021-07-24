@@ -77,7 +77,7 @@ public class ControllerBase {
 	public void iniciar() {
 		permisos = ((AforeUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getPermisos();
 		if(!permisos.get("moduloPagos")) {
-			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/web/introduccion.jsf");
+			FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/web/operaciones.jsf");
 			return;
 		}
 		if(force) {

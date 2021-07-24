@@ -20,7 +20,7 @@ import mx.axxib.aforedigitalgt.com.AforeMessage;
 @Scope(value = "session")
 @Component(value = "home")
 @ELBeanName(value = "home")
-@Join(path = "/home", to = "/web/introduccion.jsf")
+@Join(path = "/home", to = "/web/operaciones.jsf")
 public class HomeCtrll extends ControllerBase {
 
 
@@ -43,7 +43,7 @@ public class HomeCtrll extends ControllerBase {
 			String param = params.get("redirect");
 			if(param != null) {
 				if(param.equals("true")) {
-					FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/web/introduccion.jsf");
+					FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "/web/operaciones.jsf");
 					//FacesContext.getCurrentInstance().getExternalContext().redirect("/home");
 				}
 

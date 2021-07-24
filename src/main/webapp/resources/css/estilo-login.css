@@ -1,9 +1,38 @@
+.blue.ui-state-hover .ui-button-text {
+	background: #59ad40 !important;
+}
+
+.blue.ui-button .ui-button-text {
+	background: #00529b;
+	color: white;
+	font-size: 14px;
+	font-family: 'Montserrat', sans-serif;
+	padding: 10px;
+	padding-left:10px !important;
+	padding-right:10px !important;
+	text-transform: capitalize;
+}
+
+#sesion .card-header-titulo {
+    color: #464646;
+    font-weight: 600;
+    padding: .7rem;
+    font-size: 30px;
+    position: absolute;
+    bottom: 455px;
+    left: 49px;
+    text-shadow: 6px 6px 2px #cccccc9c;
+    font-family: 'Montserrat', sans-serif;
+    width: 414px;
+    line-height: 1.5;
+}
+
 /*IMANGEN DE FONDO*/
 
 #sesion {
 	background-image:
 		url("#{request.contextPath}/javax.faces.resource/Imagenes/fondo-hex-ani.gif.jsf");
-	height: 600px;
+	height: 590px;
 	background-position: center;
 	background-size: cover;
 	margin-left: -7px;
@@ -131,15 +160,15 @@ left: 2px;
 
 /*ESTILO CENTRAL LOGIN*/
 .est-img-logo {
-	height: 183px;
-    margin-left: 90px;
+	height: 163px;
+    margin-left: 120px;
     margin-top: 56px;
     width: 308px;
 }
 
 .est-form-login {
-	margin-left: 94px;
-	width: 295px;
+	margin-left: 124px;
+	width: 300px;
 	background-color: #fdfdff;
 	margin-top: 14px;
 }
@@ -152,7 +181,7 @@ left: 2px;
 }
 
 #log-card .est-form-login {
-	height: 290px;
+	height: 300px;
 }
 
 .est-form-login:hover {
@@ -192,7 +221,7 @@ left: 2px;
 
 /*FOOTER */
 .fixed-footer {
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: #5d5d5d;
     font-size: 14px;
     font-weight: 500;
@@ -207,9 +236,10 @@ left: 2px;
 }
 
 .est-version{
-	margin-left: 154px;
-    margin-top: 13px;
+	margin-left: 170px;
+    margin-top: 26px;
     font-size: 14px;
-    font-family: 'Noto Sans', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     color: #5d5d5d;
+    font-weight: 500 !important;
 }
