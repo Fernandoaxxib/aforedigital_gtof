@@ -16,6 +16,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+//***********************************************//
+//** FUNCIONALIDAD DEL OBJETO: Clase que personaliza la autenticación de spring security haciendo uso de un servicio rest para validar el usuario y contraseña
+//** Interventor Principal: JSAS
+//** Fecha Creación: 26/Julio/2021
+//** Última Modificación:
+//***********************************************//
 @Component
 public class AforeAuthenticationProvider implements AuthenticationProvider {
 
