@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.session.InvalidSessionStrategy;
 
+import mx.axxib.aforedigitalgt.com.AforeAuthenticationProvider;
 import mx.axxib.aforedigitalgt.com.AforeUserDetail;
 import mx.axxib.aforedigitalgt.com.JsfRedirectStrategy;
 
@@ -25,6 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	@Qualifier("AforeUserDetail")
 	AforeUserDetail aforeUserDetail;
+	
+	@Autowired
+	AforeAuthenticationProvider aforeAuthenticationProvider;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -56,11 +60,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		BCryptPasswordEncoder encoder = passwordEncoder();
-		String result = encoder.encode("1");
+//		BCryptPasswordEncoder encoder = passwordEncoder();
+//		String result = encoder.encode("1");
 
-		auth.userDetailsService(aforeUserDetail);
-		auth.inMemoryAuthentication().withUser("sygno.afore").password(result).roles("ADMIN");
+		//auth.userDetailsService(aforeUserDetail);
+		auth.authenticationProvider(aforeAuthenticationProvider);
+		//auth.inMemoryAuthentication().withUser("sygno.afore").password(result).roles("ADMIN");
 		
 	}
 

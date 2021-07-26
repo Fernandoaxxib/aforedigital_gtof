@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Clase que representa al usuario de dominio con su lista de permisos
@@ -18,19 +17,13 @@ public class AforeUser implements UserDetails{
 	private HashMap<String, Boolean> permisos;
 			
 	private String user;
-	private String pass;
+	private String token;
 	
 	private static final long serialVersionUID = 1L;
 	
-	public AforeUser(String pUser, String pPass) {
+	public AforeUser(String pUser, String pToken) {
 		user = pUser;
-		
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		String result = encoder.encode(pPass);
-		
-		pass = result;
-		
-
+		token = pToken;
 	}
 	
 	public HashMap<String, Boolean> getPermisos() {
@@ -48,9 +41,9 @@ public class AforeUser implements UserDetails{
 		return null;
 	}
 
-	@Override
-	public String getPassword() {
-		return pass;
+
+	public String getToken() {
+		return token;
 	}
 
 	@Override
@@ -80,6 +73,11 @@ public class AforeUser implements UserDetails{
 	public boolean isEnabled() {
 
 		return true;
+	}
+
+	@Override
+	public String getPassword() {
+		return null;
 	}
 
 }

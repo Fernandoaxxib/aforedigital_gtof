@@ -57,10 +57,10 @@
 				<div class="card-header ">#{msg.login_titulo}</div>	
 								
 				<div class="card-body">
-					<h:form prependId="false" class="est-form">				
-				     <p:outputLabel  class="est-msg-error" value="#{msg.login_mensaje_error}"
-								rendered="${!empty param['error']}" />
-								<p:outputLabel  class="est-msg-error" value="Tu sesión ha expirado"
+					<h:form prependId="false" class="est-form">	
+					 <p:outputLabel  class="est-msg-error" value="${SPRING_SECURITY_LAST_EXCEPTION.message}"
+								rendered="${!empty param['error']}" />							     
+						<p:outputLabel  class="est-msg-error" value="Tu sesión ha expirado"
 								rendered="${!empty param['expired']}" />
 						<div class="form-group">
 							<h:outputLabel value="Cuenta usuario:" />
