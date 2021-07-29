@@ -23,28 +23,47 @@
 		<h:form id="form">
 			<p:panel style="border:0px !important">
 
-				<p:outputPanel>
+				<p:outputPanel style="margin-bottom:25px !important">
 					<p:dataTable id="table1" var="dato"
-						style="display:#{graficasCtrll.display};border:0px !important"
-						value="#{graficasCtrll.datos}">
+						style="display:#{graficasCtrll.display};border:0px !important;"
+						value="#{graficasCtrll.datosTotales}">
 
-						<p:column headerText="Retiros Cancelados">
-							<h:outputText value="#{dato.cancelados}" style="float:right;" />
+						<p:column headerText="Tipo retiro" style="width:110px !important;">
+							<h:outputText value="#{dato.TIPO_RETIRO}" style="float:left;" />
 						</p:column>
 
-						<p:column headerText="Retiros Capturada">
-							<h:outputText value="#{dato.capturada}" style="float:right;" />
+						<p:column headerText="Total retiro">
+							<h:outputText value="#{dato.TOTAL_RETIROS}" style="float:right;" />
 						</p:column>
 
-						<p:column headerText="Retiros Prev Liquida">
-							<h:outputText value="#{dato.prevLiquida}" style="float:right;" />
+						<p:column headerText="Retiros cancelados">
+							<h:outputText value="#{dato.RETIROS_CANCELADOS}"
+								style="float:right;" />
 						</p:column>
 
-						<p:column headerText="Retiros Liquidados">
-							<h:outputText value="#{dato.liquidados}" style="float:right;" />
+						<p:column headerText="Retiros precaptura">
+							<h:outputText value="#{dato.RETIROS_PRECAPTURA}"
+								style="float:right;" />
 						</p:column>
-						<p:column headerText="Retiros Liquida Mens">
-							<h:outputText value="#{dato.liquidaMens}" style="float:right;" />
+						<p:column headerText="Retiros capturada">
+							<h:outputText value="#{dato.RETIROS_CAPTURADA}"
+								style="float:right;" />
+						</p:column>
+						<p:column headerText="Retiros rechazada">
+							<h:outputText value="#{dato.RETIROS_RECHAZADA}"
+								style="float:right;" />
+						</p:column>
+						<p:column headerText="Retiros prev liquida">
+							<h:outputText value="#{dato.RETIROS_PREV_LIQUIDA}"
+								style="float:right;" />
+						</p:column>
+						<p:column headerText="Retiros liquidados">
+							<h:outputText value="#{dato.RETIROS_LIQUIDADOS}"
+								style="float:right;" />
+						</p:column>
+						<p:column headerText="Retiros liquida mens">
+							<h:outputText value="#{dato.RETIRO_LIQUIDA_MENS}"
+								style="float:right;" />
 						</p:column>
 					</p:dataTable>
 				</p:outputPanel>
@@ -52,9 +71,9 @@
 
 
 				<p:panelGrid id="graf1" class="ui-noborder"
-					style="margin-top:30px !important;display:#{graficasCtrll.display}">
+					style="display:#{graficasCtrll.display}">
 					<p:row>
-						<p:column style="width:400px">
+						<p:column style="width:300px">
 							<p:pieChart model="#{graficasCtrll.pieModel}"
 								style="width: 100%; height: 400px;margin-right:50px !important">
 								<p:ajax event="itemSelect"
@@ -62,8 +81,16 @@
 									update="form:graf1 form:graf2 form:table1 form:table2 form:btn" />
 							</p:pieChart>
 						</p:column>
-						<p:column style="width:400px">
-							<p:barChart model="#{graficasCtrll.barModel2}"
+						<p:column style="width:300px">
+							<p:barChart model="#{graficasCtrll.barModel1_1}"
+								style="width: 100%; height: 400px;margin-right:50px !important">
+								<p:ajax event="itemSelect"
+									listener="#{graficasCtrll.itemSelect}"
+									update="form:graf1 form:graf2 form:table1 form:table2 form:btn" />
+							</p:barChart>
+						</p:column>
+						<p:column style="width:300px">
+							<p:barChart model="#{graficasCtrll.barModel1_2}"
 								style="width: 100%; height: 400px;margin-right:50px !important">
 								<p:ajax event="itemSelect"
 									listener="#{graficasCtrll.itemSelect}"
@@ -74,7 +101,7 @@
 				</p:panelGrid>
 
 				<p:outputPanel id="btn"
-					style="text-align:right !important;margin-bottom:20px !important">
+					style="text-align:right !important;margin-bottom:10px !important">
 					<p:commandButton style="display:#{graficasCtrll.display2}"
 						styleClass="blue" type="submit" value="Regresar"
 						action="#{graficasCtrll.regresar}"
@@ -82,43 +109,65 @@
 						ajax="true" />
 				</p:outputPanel>
 
-				<p:dataTable id="table2" styleClass="styleTable2" var="dato"
-					style="display:#{graficasCtrll.display2};border:0px !important"
-					value="#{graficasCtrll.datos2}">
+				<p:outputPanel style="margin-bottom:10px !important">
+					<p:dataTable id="table2" var="dato"
+						style="display:#{graficasCtrll.display2};border:0px !important"
+						value="#{graficasCtrll.datosDetalles}">
 
-					<p:column headerText="Retiros Cancelados">
-						<h:outputText value="#{dato.cancelados}" style="float:right;" />
-					</p:column>
-
-					<p:column headerText="Retiros Capturada">
-						<h:outputText value="#{dato.capturada}" style="float:right;" />
-					</p:column>
-
-					<p:column headerText="Retiros Prev Liquida">
-						<h:outputText value="#{dato.prevLiquida}" style="float:right;" />
-					</p:column>
-
-					<p:column headerText="Retiros Liquidados">
-						<h:outputText value="#{dato.liquidados}" style="float:right;" />
-					</p:column>
-					<p:column headerText="Retiros Liquida Mens">
-						<h:outputText value="#{dato.liquidaMens}" style="float:right;" />
-					</p:column>
-				</p:dataTable>
-
-				<p:panelGrid id="graf2" class="ui-noborder"
-					style="margin-top:20px !important;display:#{graficasCtrll.display2}">
-					<p:row>
-						<p:column style="width:400px">
-							<p:barChart model="#{graficasCtrll.barModel2}"
-								style="width: 100%; height: 400px;margin-right:50px !important" />
+						<p:column headerText="RETIROS" style="width:110px !important">
+							<h:outputText value="#{dato.RETIROS}" style="float:left;" />
 						</p:column>
-						<p:column style="width:400px">
-							<p:donutChart model="#{graficasCtrll.donutModel}"
-								style="width: 100%; height: 400px;" />
+
+						<p:column headerText="ESTATUS" style="width:150px !important">
+							<h:outputText value="#{dato.ESTATUS}" style="float:left;" />
 						</p:column>
-					</p:row>
-				</p:panelGrid>
+
+						<p:column headerText="IVRT">
+							<h:outputText value="#{dato.IVRT}" style="float:right;" />
+						</p:column>
+
+						<p:column headerText="NEG PEN">
+							<h:outputText value="#{dato.NEG_PEN}" style="float:right;" />
+						</p:column>
+						<p:column headerText="SAR X NEG">
+							<h:outputText value="#{dato.SAR_X_NEG}" style="float:right;" />
+						</p:column>
+						<p:column headerText="SAR">
+							<h:outputText value="#{dato.SAR}" style="float:right;" />
+						</p:column>
+						<p:column headerText="DESEMPLEO"  style="width:72px">
+							<h:outputText value="#{dato.DESEMPLEO}" style="float:right;" />
+						</p:column>
+						<p:column headerText="MATRIMONIO" style="width:72px">
+							<h:outputText value="#{dato.MATRIMONIO}" style="float:right;" />
+						</p:column>
+						<p:column headerText="FRACC AFORE">
+							<h:outputText value="#{dato.FRACC_AFORE}" style="float:right;" />
+						</p:column>
+						<p:column headerText="FRACC AFORE B">
+							<h:outputText value="#{dato.FRACC_AFORE_B}" style="float:right;" />
+						</p:column>
+						<p:column headerText="RETIRO 2 PORC">
+							<h:outputText value="#{dato.RETIRO_2_PORC}" style="float:right;" />
+						</p:column>
+					</p:dataTable>
+				</p:outputPanel>
+
+				<p:outputPanel style="margin-bottom:50px !important">
+					<p:panelGrid id="graf2" class="ui-noborder"
+						style="display:#{graficasCtrll.display2}">
+						<p:row>
+							<p:column style="width:400px;padding-right:140px !important">
+								<p:barChart model="#{graficasCtrll.barModel2_1}"
+									style="width: 100%; height: 400px;margin-right:50px !important" />
+							</p:column>
+							<p:column style="width:400px">
+								<p:barChart model="#{graficasCtrll.barModel2_2}"
+									style="width: 100%; height: 400px;margin-right:50px !important" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:outputPanel>
 			</p:panel>
 		</h:form>
 	</ui:define>

@@ -1,18 +1,16 @@
 package mx.axxib.aforedigitalgt.dal;
 
 import java.util.List;
-
-import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
-import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
+import mx.axxib.aforedigitalgt.eml.DatosGraficasDetalleOut;
+import mx.axxib.aforedigitalgt.eml.DatosGraficasTotalesOut;
+import mx.axxib.aforedigitalgt.eml.GraficasDetalleOut;
+import mx.axxib.aforedigitalgt.eml.GraficasTotalesOut;
 import mx.axxib.aforedigitalgt.eml.TipoSubTransacOut;
 import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
 
@@ -63,4 +61,48 @@ import mx.axxib.aforedigitalgt.eml.TipoTransacOut;
 			 throw GenericException(e); 
 		  }
 		}
+		@SuppressWarnings("unchecked")
+		public DatosGraficasTotalesOut getDatosTotales() throws AforeException {
+		  try {	
+			String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.PARCIALIDADES_PACKAGE).concat(".").concat(Constantes.OBTENER_DATOS_GRAFICAS);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "GraficasTotalesOut");
+
+			query.registerStoredProcedureParameter("P_PERIODO_FEC", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("CP_TOTALES", void.class, ParameterMode.REF_CURSOR);				
+			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);			
+				
+			DatosGraficasTotalesOut resp= new DatosGraficasTotalesOut();
+			List<GraficasTotalesOut> output= query.getResultList();	
+			resp.setP_PERIODO_FEC((String) query.getOutputParameterValue("P_PERIODO_FEC"));
+			resp.setGraficasTotales(output);
+			resp.setP_MENSAJE((String) query.getOutputParameterValue("P_MENSAJE"));
+			resp.setP_ESTATUS((Integer) query.getOutputParameterValue("P_ESTATUS"));
+			
+			return resp;
+		  }catch(Exception e) {
+			 throw GenericException(e); 
+		  }
+		}
+		
+		@SuppressWarnings("unchecked")
+		public DatosGraficasDetalleOut getDetalleGraficas() throws AforeException {
+			try {	
+				String storedFullName =  Constantes.USUARIO_PENSION.concat(".").concat(Constantes.PARCIALIDADES_PACKAGE).concat(".").concat(Constantes.OBTENER_DETALLE_GRAFICAS);
+				StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName,"GraficasDetalleOut");		
+
+				query.registerStoredProcedureParameter("CP_DETALLE", void.class, ParameterMode.REF_CURSOR);				
+				query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+				query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);								
+				DatosGraficasDetalleOut resp= new DatosGraficasDetalleOut();
+				List<GraficasDetalleOut> output= query.getResultList();					
+				resp.setGraficasDetalle(output);
+				resp.setP_MENSAJE((String) query.getOutputParameterValue("P_MENSAJE"));
+				resp.setP_ESTATUS((Integer) query.getOutputParameterValue("P_ESTATUS"));
+				
+				return resp;
+			  }catch(Exception e) {
+				 throw GenericException(e); 
+			  }
+		}		
 }

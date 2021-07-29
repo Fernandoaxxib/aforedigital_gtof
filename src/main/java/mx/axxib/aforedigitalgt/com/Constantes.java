@@ -19,6 +19,9 @@ public class Constantes {
 	// GRAFICAS
 	public static final String APRO_SOLIC_PRC_TIPO_TRANSAC = "PRC_TIPO_TRANSAC";
 	public static final String APRO_SOLIC_PRC_TIPO_SUBTRAN = "PRC_TIPO_SUBTRAN";
+	public static final String PARCIALIDADES_PACKAGE="PKG_PARCIALIDADES";
+	public static final String OBTENER_DATOS_GRAFICAS= "PRC_GRAFICAS";
+	public static final String OBTENER_DETALLE_GRAFICAS= "PRC_GRAFICAS_DETALLE";
 
 	// Aprobación de solicitudes X tipo de retiro FOAPSORE
 	public static final String APRO_SOLIC_TIPO_RETIRO_PACKAGE = "PKG_RET_FOAPSORE";
