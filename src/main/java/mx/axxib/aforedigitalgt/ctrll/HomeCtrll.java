@@ -60,4 +60,20 @@ public class HomeCtrll extends ControllerBase {
 		}
 		return "";
 	}
+	
+	public String getNombreUsuario() {
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+			return  authentication.getName();
+		} catch (Exception e) {
+			GenericException(e);
+		}
+		return "";
+	}
+	public void exit() throws Exception {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
+	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();		
+		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+		.handleNavigation(FacesContext.getCurrentInstance(), null, "/login.jsf?init=true&faces-redirect=true");
+	}
 }

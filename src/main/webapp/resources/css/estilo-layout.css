@@ -298,3 +298,70 @@ span.ui-chkbox-icon.ui-icon.ui-icon-check.ui-c{
 	background-color: #59ad40;
 	background-image: url(/aforedigitalgt/javax.faces.resource/images/ui-icons_ffffff_256x240.png.jsf?ln=primefaces-omega);	
 }
+.circle-left-head {
+    display: inline-block;
+    width: 25%;
+    height: auto;
+    border-radius: 100%;
+    margin: -5px 1rem !important;
+    margin-left: -15px !important;
+}
+.user-circle-color{
+	color:#59ad40;
+}
+
+.circle-left-head2 {
+    display: inline-block;
+    width: 13%;
+    height: auto;
+    border-radius: 100%;    
+    margin-right: 5px;
+    margin-top:5px;
+}
+
+.m1.ui-menu{  
+    position: absolute !important;
+    background-color: #f1f1f1;
+    min-width: 174px !important;
+    width:174px !important;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;    
+    margin-top: 24px !important;
+    border-radius: 0px !important;  
+    color: #8e8b8b !important;
+}
+.m1 li.ui-widget-header.ui-corner-all{
+	background: transparent !important;
+    border: 0px !important;
+}
+
+.m1.ui-menu a:hover{
+	     color: #fff ;
+         border: 1px solid #ea324a;
+         background: #ea324a;
+         text-decoration: none;
+}
+.m1.ui-menu a{
+	color:#8e8b8b;
+}
+.m1.ui-menu.ui-widget-content{
+	  border:transparent !important;	
+}
+
+.m1 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{
+	opacity:1 !important;
+}
+
+.m1.ui-menu .ui-menuitem-text{
+	padding-left: 10px !important;
+	margin-top: -2px !important;
+} 
+.m1.ui-widget{
+	font-size:12px !important;
+}
+.separador.ui-separator.ui-state-default{
+	border: 1px solid #e9ecef !important;
+	border-top: 0 none !important;
+	height:1px;
+}

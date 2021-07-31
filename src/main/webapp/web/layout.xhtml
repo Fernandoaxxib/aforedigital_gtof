@@ -20,6 +20,10 @@
 		rel="stylesheet" type="text/css"></link>
 	<link type="text/css" rel="stylesheet"
 		href="#{request.contextPath}/resources/css/font-montserrat.css"></link>
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
 
 	<script type="text/javascript">
 		function showDialog() {
@@ -68,11 +72,30 @@
 
 
 				<p:panelGrid columns="2" style="width:100%; text-align: right">
-					<h:outputText class="texto" value="#{home.saludo()}" />
-
-					<h:form onsubmit="this.action='#{request.contextPath}/logout';">
-						<h:commandLink class="cerrar"
-							value="#{msg.login_boton_cerrarSesion}"></h:commandLink>
+					<h:form>
+						<h:commandButton id="dynaButton" styleClass="circle-left-head2"
+							image="#{request.contextPath}/javax.faces.resource/Imagenes/perfil.jpg.jsf"
+							type="button" />
+						<p:menu styleClass="m1" overlay="true" trigger="dynaButton"
+							my="left top" at="left bottom">
+							<p:submenu>
+								<p:menuitem disabled="true">
+									<h:graphicImage styleClass="circle-left-head"
+										library="Imagenes" name="perfil.jpg" height="35px"
+										width="35px" />
+									<h:outputText style="margin-top:-15px"
+										value="#{home.getNombreUsuario()}" />
+								</p:menuitem>
+								<p:separator styleClass="separador" />
+								<p:menuitem value="Disponible" disabled="true"
+									icon="fa fa-fw fa-circle user-circle-color" />
+								<p:separator styleClass="separador" />
+								<p:menuitem value="Mi Perfil" disabled="true"
+									icon="fa fa-fw fa-user" />
+								<p:menuitem value="Cerrar Sesión" action="#{home.exit}"
+									icon="fa fa-fw fa-power-off" />
+							</p:submenu>
+						</p:menu>
 					</h:form>
 				</p:panelGrid>
 
@@ -83,7 +106,7 @@
 
 		</pe:layoutPane>
 
-		<pe:layoutPane id="centro" class="content" position="center" 
+		<pe:layoutPane id="centro" class="content" position="center"
 			resizable="false" closable="false">
 			<ui:insert name="center" />
 		</pe:layoutPane>
