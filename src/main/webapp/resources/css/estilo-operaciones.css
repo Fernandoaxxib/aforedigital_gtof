@@ -26,6 +26,13 @@
 	
 }
 
+.cata.ui-state-default {
+	background: #06549c
+		url("#{request.contextPath}/javax.faces.resource/Imagenes/iconos-menu-operaciones-5.png.jsf")
+		center/80% no-repeat;
+	
+}
+
 .ui-state-hover {
  box-shadow: 3px 1px 2px gray, 0 0 25px gray, 0 0 25px gray;
 }
@@ -53,7 +60,7 @@
 
 .btn-p {
 	margin-top: 26px;
-	margin-left: 52px;
+	
 	background: #59ad40;
 	color: white;
 	padding-top: 20px !important;

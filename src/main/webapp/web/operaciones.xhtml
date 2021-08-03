@@ -17,7 +17,7 @@
 
 
 				<p:panelGrid class="no-border tb"
-					style="margin-top:30px; width: 100%; text-align:center;">
+					style="margin-top:50px; width: 100%; text-align:center;">
 					<p:row>
 						<p:column style="text-align:center;">
 							<h:outputLabel class="btn-p"
@@ -29,14 +29,14 @@
 				<p:panelGrid class="no-border tb"
 					style="margin-top:70px; width: 100%; text-align:center;">
 					<p:row>
-						<p:column style="width:400px; text-align: right;">							
+						<p:column style="width:35%; text-align: right;">							
 							<p:commandButton ajax="false" styleClass="tran corn"
 								value="TRANSACCIONES Y DISPOSICIONES"
 								onclick="showDialog(); return true"
 								actionListener="#{menu.graficas}">
 							</p:commandButton>
 						</p:column>
-						<p:column style="width:150px; text-align: center;">
+						<p:column style="width:15%; text-align: center;">
 							<p:commandButton ajax="false" styleClass="proc corn"
 								value="SEGUIMIENTO DE PROCESOS"
 								onclick="showDialog(); return true"
@@ -44,15 +44,15 @@
 							</p:commandButton>
 						</p:column>
 
-						<p:column style="width:150px; text-align: left;">
+						<p:column style="width:15%; text-align: center;">
 							<p:commandButton ajax="false" styleClass="repo corn"
 								value="CONSULTAS Y REPORTES GENERALES"
 								onclick="showDialog(); return true"
 								actionListener="#{menu.reportes}">
 							</p:commandButton>
 						</p:column>
-						<p:column style="width:350px; text-align: left;">
-							<p:commandButton ajax="false" styleClass="repo corn"
+						<p:column style="width:35%; text-align: left;">
+							<p:commandButton ajax="false" styleClass="cata corn"
 								value="CATÁLOGOS GENERALES"
 								onclick="showDialog(); return true"
 								actionListener="#{menu.catalogos}">
