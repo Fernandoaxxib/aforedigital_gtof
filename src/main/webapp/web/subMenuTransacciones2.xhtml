@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+	<style>
+.ui-menu {
+	white-space: nowrap;
+	width: auto !important;
+}
+</style>
+</h:head>
+<h:body>
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/all.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="font-awesome/5.12.0/css/v4-shims.min-jsf.css" />
+	<h:form>
+		<p:commandButton id="dynaButton" class="estiloBoton"
+			value="#{menu.menuSeleccionado}" type="button"
+			style="border:0px;width:100% !important;background:white !important;text-align: left;padding-left: 10px;"
+			icon="textBoton" />
+		<p:menu value="#{menu.menuSeleccionado}" styleClass="styleMenu"
+			overlay="true" trigger="dynaButton" my="left top" at="left bottom">
+			<p:menuitem value="APROBACIÓN DE SOLICITUDES POR TIPO DE RETIRO"
+				styleClass="itemStyle" actionListener="#{menu.selectedMenu(1)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="DESEMPLEO PARCIALIDADES" styleClass="itemStyle"
+				actionListener="#{menu.selectedMenu(2)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="VENTA DE TÍTULOS" styleClass="itemStyle"
+				actionListener="#{menu.selectedMenu(3)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="CARGA OP84 Y OP85" styleClass="itemStyle"
+				actionListener="#{menu.selectedMenu(4)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="NOTIFICACIONES DE PAGO" styleClass="itemStyle"
+				actionListener="#{menu.selectedMenu(5)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="CARGA MASIVA RIGHT FAX" styleClass="itemStyle"
+				actionListener="#{menu.selectedMenu(6)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="CERTIFICACIÓN DE INACTIVIDAD"
+				styleClass="itemStyle" actionListener="#{menu.selectedMenu(7)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="RECHAZO DE SOLICITUDES" styleClass="itemStyle"
+				actionListener="#{menu.selectedMenu(8)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="REINVERSIONES A BÁSICAS PARCIALIDADES (DESEMPLEO)"
+				styleClass="itemStyle" actionListener="#{menu.selectedMenu(9)}"
+				oncomplete="showDialog(); return true" />
+			<p:menuitem value="DESMARCA MASIVA DE CUENTAS (CARGA BATCH)"
+				styleClass="itemStyle" actionListener="#{menu.selectedMenu(10)}"
+				oncomplete="showDialog(); return true" />
+		</p:menu>
+	</h:form>
+</h:body>
+</html>

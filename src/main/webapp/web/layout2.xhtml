@@ -70,38 +70,58 @@
 					<h:outputLink class="texto" href="#">PRIVACIDAD</h:outputLink>
 				</p:panelGrid>
 
-
 				<p:panelGrid columns="2" style="width:100%; text-align: right">
-					<h:form>
-						<h:commandButton id="dynaButton" styleClass="circle-left-head2"
-							image="#{request.contextPath}/javax.faces.resource/Imagenes/perfil.jpg.jsf"
-							type="button" />
+					<h:commandButton id="dynaButton" styleClass="circle-left-head2"
+						image="#{request.contextPath}/javax.faces.resource/Imagenes/perfil.jpg.jsf"
+						type="button" />
+
+					<h:form id="formPerfil">
 						<p:menu styleClass="m1" overlay="true" trigger="dynaButton"
 							my="left top" at="left bottom">
 							<p:submenu>
 								<p:menuitem disabled="true">
-									<h:graphicImage styleClass="circle-left-head"
-										library="Imagenes" name="perfil.jpg" height="35px"
-										width="35px" />
-									<h:outputText style="margin-top:-15px"
-										value="#{home.getNombreUsuario()}" />
+									<p:outputPanel
+										style="white-space: normal; width: 134px !important; height: auto;">
+										<div class="ui-g"
+											style="background: #59ad40; width: 181px !important; margin-left: -18px !important; height: auto !important; margin-top: -16px !important;">
+											<div class="ui-g-6"
+												style="padding-left: 21px; padding-top: 10px; width: 50%;">
+												<h:graphicImage styleClass="circle-left-head"
+													library="Imagenes" name="perfil.jpg" height="35px"
+													width="35px" />
+											</div>
+											<div class="ui-g-6"
+												style="width: 65% !important; height: auto !important; margin-left: -36px; margin-top: 10px; white-space: normal;">
+												<h:outputText style="color:#fff"
+													value="#{home.nombreUsuario}" />
+											</div>
+										</div>
+									</p:outputPanel>
+								</p:menuitem>
+								<p:menuitem disabled="true" icon="fa fa-fw fa-envelope">
+									<p:outputPanel
+										style="white-space: normal; width: 134px !important; height: auto;">
+										<h:outputText value="#{home.emailUsuario}" />
+									</p:outputPanel>
+								</p:menuitem>
+								<p:menuitem disabled="true" icon="fa fa-fw fa-briefcase">
+									<p:outputPanel
+										style="white-space: normal; width: 134px !important; height: auto;">
+										<h:outputText value="#{home.perfilUsuario}" />
+									</p:outputPanel>
 								</p:menuitem>
 								<p:separator styleClass="separador" />
 								<p:menuitem value="Disponible" disabled="true"
 									icon="fa fa-fw fa-circle user-circle-color" />
 								<p:separator styleClass="separador" />
-								<p:menuitem value="Mi Perfil" disabled="true"
-									icon="fa fa-fw fa-user" />
+								<p:menuitem value="Mi Perfil" icon="fa fa-fw fa-user" />
 								<p:menuitem value="Cerrar Sesión" action="#{home.exit}"
 									icon="fa fa-fw fa-power-off" />
 							</p:submenu>
 						</p:menu>
 					</h:form>
 				</p:panelGrid>
-
 			</p:panelGrid>
-
-
 		</pe:layoutPane>
 
 		<pe:layoutPane id="izquierdo" class="content" position="west"

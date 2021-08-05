@@ -300,10 +300,9 @@ span.ui-chkbox-icon.ui-icon.ui-icon-check.ui-c{
 }
 .circle-left-head {
     display: inline-block;
-    width: 25%;
+    width: 60%;
     height: auto;
     border-radius: 100%;
-    margin: -5px 1rem !important;
     margin-left: -15px !important;
 }
 .user-circle-color{
@@ -339,14 +338,17 @@ span.ui-chkbox-icon.ui-icon.ui-icon-check.ui-c{
 .m1.ui-menu a:hover{
 	     color: #fff ;
          border: 1px solid #ea324a;
+         border-radius:0px !important;
          background: #ea324a;
          text-decoration: none;
+         width:164px !important;
+         box-shadow: none !important;
 }
 .m1.ui-menu a{
 	color:#8e8b8b;
 }
 .m1.ui-menu.ui-widget-content{
-	  border:transparent !important;	
+	  border:transparent !important;		        
 }
 
 .m1 .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{
@@ -359,9 +361,37 @@ span.ui-chkbox-icon.ui-icon.ui-icon-check.ui-c{
 } 
 .m1.ui-widget{
 	font-size:12px !important;
+	font-family: sans-serif !important;
 }
 .separador.ui-separator.ui-state-default{
-	border: 1px solid #e9ecef !important;
-	border-top: 0 none !important;
-	height:1px;
+	width: 104%;
+    margin-left: -4px;
+    border: 0px solid #e9ecef !important;
+    border-top: 0 none !important;
+    height: 3px;
+    background: #e9ecef;
+}
+.textBoton{	
+	background-image: url(/aforedigitalgt/javax.faces.resource/Imagenes/menu.png.jsf) !important;
+	background-position: center;
+}
+.estiloBoton .ui-button-text{	
+    color: #00529b !important;    
+    font-weight: 600 !important;
+    width: 390px !important;
+}
+.itemStyle{
+	font-size: 12px !important;
+	padding: 6px 5px !important;
+    font-weight: 500 !important;
+    color:#00529b !important;
+    width:97% !important;
+}
+.styleMenu.ui-menu{
+	top:92px !important;
+}
+
+.m1.ui-menu .ui-menuitem-text .ui-outputpanel{
+	word-wrap: break-word !important;
+    width: 135px !important;
 }

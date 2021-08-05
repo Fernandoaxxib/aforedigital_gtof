@@ -241,4 +241,9 @@ public class Constantes {
 	public static final String SALDOS_ACTUALES_CLIENTE_CARGA_SALDOS="PRC_CARGA_SALDOS";
 	public static final String SALDOS_ACTUALES_CLIENTE_CARGA_NUEVO_NIVEL="PRC_CARGA_NUEVO_NIVEL";
 	
+	//DATOS DEL USUARIO
+	public static final String DATOS_USUARIO_PACKAGE="PKG_ADMIN_SEC";
+	public static final String DATOS_USUARIO_VALIDA_ACCESO="PRC_VALID_ACCESO";
+	public static final String DATOS_USUARIO_OBTIENE_DATOS="PRC_LIST_USUARIOS";	
+	  
 }
