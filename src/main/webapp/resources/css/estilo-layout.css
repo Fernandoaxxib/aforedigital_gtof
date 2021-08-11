@@ -370,6 +370,7 @@ span.ui-chkbox-icon.ui-icon.ui-icon-check.ui-c{
     border-top: 0 none !important;
     height: 3px;
     background: #e9ecef;
+    margin-bottom:5px;
 }
 .textBoton{	
 	background-image: url(/aforedigitalgt/javax.faces.resource/Imagenes/menu.png.jsf) !important;

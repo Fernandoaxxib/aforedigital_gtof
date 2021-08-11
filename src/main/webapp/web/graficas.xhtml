@@ -26,7 +26,8 @@
 				<p:outputPanel style="margin-bottom:25px !important">
 					<p:dataTable id="table1" var="dato"
 						style="display:#{graficasCtrll.display};border:0px !important;"
-						value="#{graficasCtrll.datosTotales}">
+						value="#{graficasCtrll.datosTotales}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}">
 
 						<p:column headerText="Tipo retiro" style="width:110px !important;">
 							<h:outputText value="#{dato.TIPO_RETIRO}" style="float:left;" />
@@ -71,18 +72,30 @@
 						style="display:#{graficasCtrll.display}">
 						<p:row>
 							<p:column style="width:300px">
-								<p:pieChart model="#{graficasCtrll.pieModel}" style="width: 100%; height: 400px;margin-right:50px !important">
-									<p:ajax event="itemSelect"	listener="#{graficasCtrll.itemSelect}" update="form:graf1 form:graf2 form:graf3 form:table1 form:table2 form:btn" />
+								<p:pieChart model="#{graficasCtrll.pieModel}"
+									rendered="#{graficasCtrll.pieModel != null}"
+									style="width: 100%; height: 400px;margin-right:50px !important">
+									<p:ajax event="itemSelect"
+										listener="#{graficasCtrll.itemSelect}"
+										update="form:graf1 form:graf2 form:graf3 form:table1 form:table2 form:btn" />
 								</p:pieChart>
 							</p:column>
 							<p:column style="width:300px">
-								<p:barChart model="#{graficasCtrll.barModel1_1}" style="width: 100%; height: 400px;margin-right:50px !important">
-									<p:ajax event="itemSelect" listener="#{graficasCtrll.itemSelect2}" update="form:graf1 form:graf2 form:graf3 form:table1 form:table2 form:btn" />
+								<p:barChart model="#{graficasCtrll.barModel1_1}"
+									rendered="#{graficasCtrll.barModel1_1 != null}"
+									style="width: 100%; height: 400px;margin-right:50px !important">
+									<p:ajax event="itemSelect"
+										listener="#{graficasCtrll.itemSelect2}"
+										update="form:graf1 form:graf2 form:graf3 form:table1 form:table2 form:btn" />
 								</p:barChart>
 							</p:column>
 							<p:column style="width:300px">
-								<p:barChart model="#{graficasCtrll.barModel1_2}" style="width: 100%; height: 400px;margin-right:50px !important">
-									<p:ajax event="itemSelect" listener="#{graficasCtrll.itemSelect3}" update="form:graf1 form:graf2 form:graf3 form:table1 form:table2 form:btn" />
+								<p:barChart model="#{graficasCtrll.barModel1_2}"
+									rendered="#{graficasCtrll.barModel1_2 != null}"
+									style="width: 100%; height: 400px;margin-right:50px !important">
+									<p:ajax event="itemSelect"
+										listener="#{graficasCtrll.itemSelect3}"
+										update="form:graf1 form:graf2 form:graf3 form:table1 form:table2 form:btn" />
 								</p:barChart>
 							</p:column>
 						</p:row>
@@ -101,7 +114,8 @@
 				<p:outputPanel style="margin-bottom:10px !important">
 					<p:dataTable id="table2" var="dato"
 						style="display:#{graficasCtrll.display2};border:0px !important"
-						value="#{graficasCtrll.datosDetalles}">
+						value="#{graficasCtrll.datosDetalles}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}">
 
 						<p:column headerText="Tipo retiro" style="width:110px !important">
 							<h:outputText value="#{dato.RETIROS}" style="float:left;" />
@@ -143,17 +157,23 @@
 				</p:outputPanel>
 
 				<p:outputPanel style="margin-bottom:60px !important">
-					<p:panelGrid id="graf2" class="ui-noborder" style="display:#{graficasCtrll.display3}">
+					<p:panelGrid id="graf2" class="ui-noborder"
+						style="display:#{graficasCtrll.display3}">
 						<p:row>
 							<p:column style="width:600px">
-								<p:barChart model="#{graficasCtrll.barModel2_1}" style="width: 100%; height: 400px;margin-left:180px !important" />
-							</p:column>							
+								<p:barChart model="#{graficasCtrll.barModel2_1}"
+									rendered="#{graficasCtrll.barModel2_1 != null}"
+									style="width: 100%; height: 400px;margin-left:180px !important" />
+							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:panelGrid id="graf3" class="ui-noborder" style="display:#{graficasCtrll.display4}">
-						<p:row>							
+					<p:panelGrid id="graf3" class="ui-noborder"
+						style="display:#{graficasCtrll.display4}">
+						<p:row>
 							<p:column style="width:600px">
-								<p:barChart model="#{graficasCtrll.barModel2_2}" style="width: 100%; height: 400px;margin-left:180px !important" />
+								<p:barChart model="#{graficasCtrll.barModel2_2}"
+									rendered="#{graficasCtrll.barModel2_2 != null}"
+									style="width: 100%; height: 400px;margin-left:180px !important" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
