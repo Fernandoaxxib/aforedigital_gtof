@@ -45,7 +45,7 @@ public class CargaRightCtrll extends ControllerBase {
 	private boolean mostrarCarga;
 
 	private String path = "/RESPALDOS/openserv/";
-	private String ext = ".csv";
+	private String ext = ".csv"; 
 
 	@Override
 	public void iniciar() {
