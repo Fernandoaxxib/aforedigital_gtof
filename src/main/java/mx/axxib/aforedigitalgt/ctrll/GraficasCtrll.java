@@ -441,15 +441,62 @@ public class GraficasCtrll extends ControllerBase {
 			});
 			barDataSet9.setData(values9);
 
-			data.addChartDataSet(barDataSet);
-			data.addChartDataSet(barDataSet2);
-			data.addChartDataSet(barDataSet3);
-			data.addChartDataSet(barDataSet4);
-			data.addChartDataSet(barDataSet5);
-			data.addChartDataSet(barDataSet6);
-			data.addChartDataSet(barDataSet7);
-			data.addChartDataSet(barDataSet8);
-			data.addChartDataSet(barDataSet9);
+			
+			for(int i=0;i<barDataSet.getData().size();i++) {
+				if(barDataSet.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet2.getData().size();i++) {
+				if(barDataSet2.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet2);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet3.getData().size();i++) {
+				if(barDataSet3.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet3);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet4.getData().size();i++) {
+				if(barDataSet4.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet4);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet5.getData().size();i++) {
+				if(barDataSet5.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet5);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet6.getData().size();i++) {
+				if(barDataSet6.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet6);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet7.getData().size();i++) {
+				if(barDataSet7.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet7);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet8.getData().size();i++) {
+				if(barDataSet8.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet8);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet9.getData().size();i++) {
+				if(barDataSet9.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet9);
+					break;
+				}
+			}
+			
 
 			List<String> labels = new ArrayList<>();
 			datosDetallesParciales.forEach(x -> {
@@ -532,7 +579,8 @@ public class GraficasCtrll extends ControllerBase {
 			barDataSet4.setLabel("SAR");
 			barDataSet4.setBackgroundColor("rgb(255, 126, 194,0.2)");
 			barDataSet4.setBorderColor("rgb(255,126, 194)");
-			barDataSet4.setBorderWidth(1);
+			barDataSet4.setBorderWidth(1);		
+			
 			List<Number> values4 = new ArrayList<>();
 			datosDetallesTotales.forEach(x -> {
 				values4.add(x.getSAR());
@@ -594,15 +642,60 @@ public class GraficasCtrll extends ControllerBase {
 			});
 			barDataSet9.setData(values9);
 
-			data.addChartDataSet(barDataSet);
-			data.addChartDataSet(barDataSet2);
-			data.addChartDataSet(barDataSet3);
-			data.addChartDataSet(barDataSet4);
-			data.addChartDataSet(barDataSet5);
-			data.addChartDataSet(barDataSet6);
-			data.addChartDataSet(barDataSet7);
-			data.addChartDataSet(barDataSet8);
-			data.addChartDataSet(barDataSet9);
+			for(int i=0;i<barDataSet.getData().size();i++) {
+				if(barDataSet.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet2.getData().size();i++) {
+				if(barDataSet2.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet2);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet3.getData().size();i++) {
+				if(barDataSet3.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet3);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet4.getData().size();i++) {
+				if(barDataSet4.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet4);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet5.getData().size();i++) {
+				if(barDataSet5.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet5);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet6.getData().size();i++) {
+				if(barDataSet6.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet6);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet7.getData().size();i++) {
+				if(barDataSet7.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet7);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet8.getData().size();i++) {
+				if(barDataSet8.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet8);
+					break;
+				}
+			}
+			for(int i=0;i<barDataSet9.getData().size();i++) {
+				if(barDataSet9.getData().get(i).intValue()>0) {
+					data.addChartDataSet(barDataSet9);
+					break;
+				}
+			}
 
 			List<String> labels = new ArrayList<>();
 			datosDetallesTotales.forEach(x -> {

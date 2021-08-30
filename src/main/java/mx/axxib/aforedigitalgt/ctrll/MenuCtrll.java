@@ -84,6 +84,7 @@ public class MenuCtrll extends ControllerBase {
 		submenu = menu;
 		navigateMenu();
 	}
+	
 
 	public void selectedMenu(String opcion) {
 		switch (opcion) {
