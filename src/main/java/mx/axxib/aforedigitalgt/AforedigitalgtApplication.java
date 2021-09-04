@@ -40,7 +40,7 @@ public class AforedigitalgtApplication extends SpringBootServletInitializer{
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(AforedigitalgtApplication.class);
-    }
+    } 
 	
 	@Bean
 	public ServletRegistrationBean<FacesServlet> servletRegistrationBean() {
