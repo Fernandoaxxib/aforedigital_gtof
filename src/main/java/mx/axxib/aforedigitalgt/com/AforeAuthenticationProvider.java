@@ -26,7 +26,7 @@ import org.springframework.web.client.RestTemplate;
 public class AforeAuthenticationProvider implements AuthenticationProvider {
 
 	@Value("${servicio.Login}")
-	private String urlLogin;
+	private String urlLogin; 
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
