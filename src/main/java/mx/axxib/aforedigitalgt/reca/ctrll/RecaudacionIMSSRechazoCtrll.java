@@ -6,22 +6,22 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
-import mx.axxib.aforedigitalgt.reca.serv.CentroPatronalEmpresarialServ;
-import mx.axxib.aforedigitalgt.reca.serv.LiquidarMovimientosServ;
+import mx.axxib.aforedigitalgt.reca.serv.RecaudacionIMSSRechazoServ;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Controlador de liquidar movimientos
+//** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudacion IMSS Rechazo
 //** Interventor Principal: JSAS
 //** Fecha Creación: 16/Nov/2021
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")
-@Component(value = "liquidarMovimientos")
-@ELBeanName(value = "liquidarMovimientos")
-public class LiquidarMovimientosCtrll extends ControllerBase {
+@Component(value = "recaudacionRechazo")
+@ELBeanName(value = "recaudacionRechazo")
+public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
+
 
 	@Autowired
-	private LiquidarMovimientosServ serv;
+	private RecaudacionIMSSRechazoServ serv;
 
 	@Override
 	public void iniciar() {

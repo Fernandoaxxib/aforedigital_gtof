@@ -7,21 +7,21 @@ import org.springframework.stereotype.Component;
 
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
 import mx.axxib.aforedigitalgt.reca.serv.CentroPatronalEmpresarialServ;
-import mx.axxib.aforedigitalgt.reca.serv.LiquidarMovimientosServ;
+import mx.axxib.aforedigitalgt.serv.CargaRightServ;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Controlador de liquidar movimientos
+//** FUNCIONALIDAD DEL OBJETO: Controlador de Centro Patronal Empresarial
 //** Interventor Principal: JSAS
 //** Fecha Creación: 16/Nov/2021
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")
-@Component(value = "liquidarMovimientos")
-@ELBeanName(value = "liquidarMovimientos")
-public class LiquidarMovimientosCtrll extends ControllerBase {
+@Component(value = "centroPatronal")
+@ELBeanName(value = "centroPatronal")
+public class CentroPatronalEmpresarialCtrll extends ControllerBase {
 
 	@Autowired
-	private LiquidarMovimientosServ serv;
+	private CentroPatronalEmpresarialServ serv;
 
 	@Override
 	public void iniciar() {
