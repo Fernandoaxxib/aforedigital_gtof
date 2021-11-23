@@ -1,10 +1,11 @@
 package mx.axxib.aforedigitalgt.reca.ctrll;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
+import mx.axxib.aforedigitalgt.reca.serv.ActualizaSaldosBonoBonoServ;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Actualiza Saldos y Bono de Pensión - Bono
@@ -16,6 +17,9 @@ import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
 @Component(value = "actualizaSaldosBonoBono")
 @ELBeanName(value = "actualizaSaldosBonoBono")
 public class ActualizaSaldosBonoBonoCtrll extends ControllerBase{
+	
+	@Autowired
+	private  ActualizaSaldosBonoBonoServ service;
 
 	@Override
 	public void iniciar() {

@@ -4,29 +4,28 @@ import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
-import mx.axxib.aforedigitalgt.reca.serv.GenerarMovimientosImssServ;
+import mx.axxib.aforedigitalgt.reca.serv.NominaEmpleadosBanServ;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Controlador de Generación de Movimientos Semanas de Cotizaciónn IMSS
+//** FUNCIONALIDAD DEL OBJETO: Controlador de Nómina Empleados Grupo Financiero Banorte
 //** Interventor Principal: JJSC
-//** Fecha Creación: 16/NOV/2021
+//** Fecha Creación: 22/NOV/2021
 //** Última Modificación:
 //***********************************************//
 
 @Scope(value = "session")
-@Component(value = "generarMovimientosImss")
-@ELBeanName(value = "generarMovimientosImss")
-public class GenerarMovimientosImssCtrll extends ControllerBase {
+@Component(value = "nominaEmpleadosBan")
+@ELBeanName(value = "nominaEmpleadosBan")
+public class NominaEmpleadosBanCtrll extends ControllerBase{
 
 	@Autowired
-	private GenerarMovimientosImssServ service;
+	private NominaEmpleadosBanServ serv;
 	
 	@Override
 	public void iniciar() {
 		super.iniciar();
-		if (init) {					
+		if (init) {						
 			init = false;
 		}
 	}
