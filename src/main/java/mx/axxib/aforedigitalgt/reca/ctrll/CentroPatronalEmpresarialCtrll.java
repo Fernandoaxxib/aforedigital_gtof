@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.serv.CargaRightServ;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Centro Patronal Empresarial
 //** Interventor Principal: JSAS
-//** Fecha Creación: 16/Nov/2021
+//** Fecha Creación: 23/Nov/2021
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")

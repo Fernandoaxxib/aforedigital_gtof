@@ -6,13 +6,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
-import mx.axxib.aforedigitalgt.reca.serv.LiquidarMovimientosServ;
 import mx.axxib.aforedigitalgt.reca.serv.LiquidarRendimientosServ;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de liquidar rendimientos
 //** Interventor Principal: JSAS
-//** Fecha Creación: 16/Nov/2021
+//** Fecha Creación: 30/Nov/2021
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")

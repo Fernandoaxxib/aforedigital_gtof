@@ -9,7 +9,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de liquidar rendimientos
 //** Interventor Principal: JSAS
-//** Fecha Creación: 16/Nov/2021
+//** Fecha Creación: 30/Nov/2021
 //** Última Modificación:
 //***********************************************//
 
