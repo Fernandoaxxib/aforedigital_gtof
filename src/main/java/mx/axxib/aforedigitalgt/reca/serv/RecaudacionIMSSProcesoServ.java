@@ -9,7 +9,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Recaudacion IMSS Proceso
 //** Interventor Principal: JSAS
-//** Fecha Creación: 16/Nov/2021
+//** Fecha Creación: 13/Dic/2021
 //** Última Modificación:
 //***********************************************//
 

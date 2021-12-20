@@ -10,6 +10,8 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.dal.RepoBase;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
+import mx.axxib.aforedigitalgt.reca.eml.LiquidarRenConsultaOut;
+import mx.axxib.aforedigitalgt.reca.eml.LiquidarRenOut;
 import mx.axxib.aforedigitalgt.reca.eml.LiquidarRendimientoIn;
 
 //***********************************************//
@@ -23,17 +25,20 @@ import mx.axxib.aforedigitalgt.reca.eml.LiquidarRendimientoIn;
 @Transactional
 public class LiquidarRendimientosRepo extends RepoBase {
 
-	public BaseOut lote() throws AforeException {
+	@SuppressWarnings("unchecked")
+	public LiquidarRenOut lote() throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_PACKAGE).concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_LOTE);
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LiquidarRenLotes");
+			
 			
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
-			BaseOut res = new BaseOut();
+			LiquidarRenOut res = new LiquidarRenOut();
+			res.setLotes(query.getResultList());
 			res.setEstatus( (Integer) query.getOutputParameterValue("on_Estatus") );
 			res.setMensaje( (String) query.getOutputParameterValue("oc_Mensaje") );
 					
@@ -43,17 +48,23 @@ public class LiquidarRendimientosRepo extends RepoBase {
 		}
 	}
 	
-	public BaseOut consulta() throws AforeException {
+	@SuppressWarnings("unchecked")
+	public LiquidarRenConsultaOut consulta(LiquidarRendimientoIn in) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_PACKAGE).concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_CONSULTA);
-			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LiquidarRenConsulta");
+			
+			query.registerStoredProcedureParameter("oc_ID_LOTE", String.class, ParameterMode.IN);
 			
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
-			BaseOut res = new BaseOut();
+			query.setParameter("oc_ID_LOTE", in.getIdLote()); //No está definido en el stored un parametro de entrada pero es necesario para buscar por lote
+			
+			LiquidarRenConsultaOut res = new LiquidarRenConsultaOut();
+			res.setMontos(query.getResultList());
 			res.setEstatus( (Integer) query.getOutputParameterValue("on_Estatus") );
 			res.setMensaje( (String) query.getOutputParameterValue("oc_Mensaje") );
 					
@@ -61,6 +72,8 @@ public class LiquidarRendimientosRepo extends RepoBase {
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
+		
+
 	}
 	
 	public BaseOut liquidar(LiquidarRendimientoIn in) throws AforeException {

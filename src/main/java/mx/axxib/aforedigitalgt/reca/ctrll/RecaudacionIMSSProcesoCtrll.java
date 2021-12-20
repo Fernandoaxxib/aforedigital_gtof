@@ -11,7 +11,7 @@ import mx.axxib.aforedigitalgt.reca.serv.RecaudacionIMSSProcesoServ;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudacion IMSS Proceso
 //** Interventor Principal: JSAS
-//** Fecha Creación: 16/Nov/2021
+//** Fecha Creación: 13/Dic/2021
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")

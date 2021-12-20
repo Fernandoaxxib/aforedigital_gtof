@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Entidad de retorno de liquidar movimientos
 //** Interventor Principal: JSAS
-//** Fecha Creación: 17/Nov/2020
+//** Fecha Creación: 17/Nov/2021
 //** Última Modificación:
 //***********************************************//
 @Data
