@@ -1,8 +1,5 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import javax.persistence.MappedSuperclass;
 
 import lombok.AllArgsConstructor;

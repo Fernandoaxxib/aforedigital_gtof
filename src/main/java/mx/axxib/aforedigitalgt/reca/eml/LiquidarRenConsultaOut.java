@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Entidad de retorno de liquidar rendimientos
+//** FUNCIONALIDAD DEL OBJETO: Entidad de retorno de recaudacion imss rechazo
 //** Interventor Principal: JSAS
 //** Fecha Creación: 20/Dic/2021
 //** Última Modificación:

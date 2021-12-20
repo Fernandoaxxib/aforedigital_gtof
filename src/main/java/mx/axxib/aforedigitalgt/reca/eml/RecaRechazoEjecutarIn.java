@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Entidad de retorno de recaudación imss
 //** Interventor Principal: JSAS
-//** Fecha Creación: 13/Dic/2021
+//** Fecha Creación: 20/Dic/2021
 //** Última Modificación:
 //***********************************************//
 @Data
@@ -19,15 +19,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @MappedSuperclass
 
-public class RecaProcesoEjecutarIn {
-	private String opcion;
+public class RecaRechazoEjecutarIn {
+
 	private String idOperacion;
 	private Date fechaLote;
 	private String secLote;
-	private Date fecha;
-	private String archivo;
-	private String directorio;
-	
-
+	private String tipoRegistro;
+	private String idServicio;
+	private String consecutivo;
+	private String nss;
 }
-

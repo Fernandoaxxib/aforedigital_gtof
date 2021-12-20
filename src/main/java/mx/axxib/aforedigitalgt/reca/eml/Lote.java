@@ -26,15 +26,17 @@ import lombok.NoArgsConstructor;
 		@SqlResultSetMapping(name = "Lotes", 
 				classes = { @ConstructorResult(targetClass = Lote.class, 
 					columns = {
-						@ColumnResult(name = "por definir", type = String.class),
-						@ColumnResult(name = "por definir", type = String.class),
-						@ColumnResult(name = "por definir", type = String.class)
+						@ColumnResult(name = "LOTE_PROCESO", type = String.class),
+						@ColumnResult(name = "IDOPER", type = String.class),
+						@ColumnResult(name = "FEC_TRANS", type = Date.class),
+						@ColumnResult(name = "SECUENCIA", type = String.class)
 					
 					})
 				})
 })
 
 public class Lote {
+	private String lote;
 	private String idOperacion;
 	private Date fechaLote;
 	private String secLote;
