@@ -24,17 +24,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @MappedSuperclass
 @SqlResultSetMappings({
-		@SqlResultSetMapping(name = "LiquidarLotes", 
+		@SqlResultSetMapping(name = "LiquidarLote", 
 				classes = { @ConstructorResult(targetClass = LiquidarLotes.class, 
 					columns = {
 						@ColumnResult(name = "ID_LOTE", type = String.class),
 						@ColumnResult(name = "NUM_MOVIMTO", type = String.class),
-						@ColumnResult(name = "MON_MOVIMTO", type = String.class),
-						@ColumnResult(name = "FEC_MOVIMTO", type = String.class),
+						@ColumnResult(name = "MON_MOVIMTO", type = BigDecimal.class),
+						@ColumnResult(name = "FEC_MOVIMTO", type = Date.class),
 						@ColumnResult(name = "ESTADO", type = String.class),
-						@ColumnResult(name = "COD_TIPSALDO", type = Date.class),
-						@ColumnResult(name = "TOT_CUOTA", type = Date.class),
-						@ColumnResult(name = "DESCRIPCION", type = Date.class),
+						@ColumnResult(name = "COD_TIPSALDO", type = String.class),
+						@ColumnResult(name = "TOT_CUOTA", type = BigDecimal.class),
+						@ColumnResult(name = "DESCRIPCION", type = String.class),
 						@ColumnResult(name = "COD_INVERSION", type = String.class),
 						@ColumnResult(name = "DESCRIPCION", type = String.class)
 					})
@@ -54,14 +54,26 @@ public class LiquidarLotes {
 	private String descSubcuenta;
 }
 
-//ID_LOTE	VARCHAR2
-//NUM_MOVIMTO(MOVIMIENTOS )	NUMBER
-//MON_MOVIMTO (MONTO)	NUMBER
-//FEC_MOVIMTO   	DATE
-//ESTADO   	VARCHAR2
-//COD_TIPSALDO  	VARCHAR2
-//TOT_CUOTA   	NUMBER
-//DESCRIPCION(DESC_SIEFORE)	VARCHAR2
-//COD_INVERSION   	VARCHAR2
-//DESCRIPCION(DESC_SUBCTA )	VARCHAR2
+//ID_LOTE
+//NUM_MOVIMTO(MOVIMIENTOS )
+//MON_MOVIMTO (MONTO)
+//FEC_MOVIMTO   
+//ESTADO   
+//COD_TIPSALDO  
+//TOT_CUOTA   
+//DESCRIPCION(DESC_SIEFORE)
+//COD_INVERSION   
+//DESCRIPCION(DESC_SUBCTA )
+
+   
+
+
+   
+   
+  
+   
+
+
+
+
 
