@@ -22,9 +22,9 @@ public class GenerarMovimientosImssServ extends ServiceBase {
 	@Autowired
 	private GenerarMovimientosImssRepo repo;
 	
-	public MovimientosOut getDetalle() throws AforeException {
+	public MovimientosOut getDetalle(Date PFEC_INI, Date PFEC_FIN) throws AforeException {
 		try {
-			return repo.getDetalle();
+			return repo.getDetalle(PFEC_INI, PFEC_FIN);
 		}catch(Exception e) {
 			throw GenericException(e);
 		}
@@ -33,6 +33,14 @@ public class GenerarMovimientosImssServ extends ServiceBase {
 	public MovimientosOut generarMovimientos(Date PFEC_INI,Date PFEC_FIN,Integer pcant) throws AforeException{
 		try {
 			return repo.generarMovimientos(PFEC_INI,PFEC_FIN,pcant);
+		}catch(Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public MovimientosOut procesar(Integer P_PROCESAR,String P_nss) throws AforeException{
+		try {
+			return repo.procesar(P_PROCESAR, P_nss);
 		}catch(Exception e) {
 			throw GenericException(e);
 		}

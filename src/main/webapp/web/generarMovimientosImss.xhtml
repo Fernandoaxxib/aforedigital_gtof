@@ -8,7 +8,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{generarMovimientosImss.iniciar}" type="preRenderView" />
+		<f:event listener="#{generarMovimientosImss.iniciar}"
+			type="preRenderView" />
 	</f:metadata>
 
 
@@ -24,19 +25,75 @@
 		<h:outputScript name="js/calendar-localization.js" />
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="GENERACIÓN DE MOVIMIENTOS SEMANAS DE COTIZACIÓN IMSS">
+			<p:panel id="busqueda"
+				header="GENERACIÓN DE MOVIMIENTOS SEMANAS DE COTIZACIÓN IMSS">
 				<p:panelGrid id="fechas" styleClass="ui-noborder">
-					
+					<p:row>
+						<p:column style="width:78px">
+							<p:outputLabel value="Fecha inicio:" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fInicio" value="" locale="es" showIcon="true"
+								pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
+								style="margin-left:-6px"
+								inputStyle="width:132px; text-align:right;" readonlyInput="true">
 
+							</p:datePicker>
+						</p:column>
+						<p:column style="width:78px">
+							<p:outputLabel value="Fecha fin:" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fFin" value="" locale="es" showIcon="true"
+								pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
+								style="margin-left:-6px"
+								inputStyle="width:132px; text-align:right;" readonlyInput="true">
+
+							</p:datePicker>
+						</p:column>
+					</p:row>
 				</p:panelGrid>
 
+				<p:dataTable id="table1" var="mon" class="sinfondo" value="generarMovimientosImss.listaMovimientos"
+					widgetVar="listSolicitudes"
+					emptyMessage="#{msg.aprob_msj_sinDatos}" style="border:0px"
+					rows="10" paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="5,10,15">
 
-				
 
-				
+
+					<p:column headerText="Fecha Pago" width="70">
+						<h:outputText value="" style="float:right;" />
+					</p:column>
+					<p:column headerText="Num. Resolución" width="90">
+						<h:outputText value="" />
+					</p:column>
+					<p:column headerText="NSS" width="140">
+						<h:outputText value="" />
+					</p:column>
+					<p:column headerText="Nombre" width="140">
+						<h:outputText value="" />
+					</p:column>
+					<p:column headerText="Fecha Retiro" width="140">
+						<h:outputText value="" />
+					</p:column>
+					<p:column headerText="Monto Reintegrar" width="140">
+						<h:outputText value="" />
+					</p:column>
+					<p:column headerText="Semanas Reintegro" width="140">
+						<h:outputText value="" />
+					</p:column>
+					<p:column headerText="Estatus Expediente" width="140">
+						<h:outputText value="" />
+					</p:column>
+
+				</p:dataTable>
+
+
+
 
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{notificacionPagos}" />
+					<ui:param name="base" value="#{generarMovimientosImss}" />
 				</ui:include>
 			</p:panel>
 		</h:form>

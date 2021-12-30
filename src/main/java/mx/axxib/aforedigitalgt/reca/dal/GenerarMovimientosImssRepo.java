@@ -23,7 +23,7 @@ public class GenerarMovimientosImssRepo  extends RepoBase{
 
 	
 	@SuppressWarnings("unchecked")
-	public MovimientosOut getDetalle() throws AforeException {
+	public MovimientosOut getDetalle(Date PFEC_INI, Date PFEC_FIN) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.GENERACION_MOVIMIENTOS_COTIZACION_IMSS_PACKAGE)
 					.concat(".").concat(Constantes.GENERACION_MOVIMIENTOS_COTIZACION_IMSS_GET_DETALLE);
@@ -53,7 +53,7 @@ public class GenerarMovimientosImssRepo  extends RepoBase{
 			
 			query.registerStoredProcedureParameter("PFEC_INI", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("PFEC_FIN", Date.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("pcant", void.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("pcant", Integer.class, ParameterMode.INOUT);
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
@@ -69,4 +69,27 @@ public class GenerarMovimientosImssRepo  extends RepoBase{
     	  throw GenericException(e);
       }				
 	}
+	
+	public MovimientosOut procesar(Integer P_PROCESAR,String P_nss) throws AforeException{
+	      try {
+	    	  String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.GENERACION_MOVIMIENTOS_COTIZACION_IMSS_PACKAGE)
+						.concat(".").concat(Constantes.GENERACION_MOVIMIENTOS_COTIZACION_IMSS_PROCESAR);
+				StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
+				
+				query.registerStoredProcedureParameter("P_PROCESAR", Integer.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter("P_nss", String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
+				query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+				
+				query.setParameter("P_PROCESAR", P_PROCESAR);
+				query.setParameter("P_nss", P_nss);
+				
+				MovimientosOut res = new MovimientosOut();
+				res.setP_ESTATUS( (Integer) query.getOutputParameterValue("P_ESTATUS") );
+				res.setP_MENSAJE( (String) query.getOutputParameterValue("P_MENSAJE") );
+				return res;
+	      }catch(Exception e) {
+	    	  throw GenericException(e);
+	      }				
+		}
 }
