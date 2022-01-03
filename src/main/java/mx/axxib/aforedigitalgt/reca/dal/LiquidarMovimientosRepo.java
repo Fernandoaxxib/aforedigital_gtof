@@ -27,15 +27,19 @@ import mx.axxib.aforedigitalgt.reca.eml.LiquidarRenOut;
 public class LiquidarMovimientosRepo extends RepoBase {
 	
 	@SuppressWarnings("unchecked")
-	public LiquidarRenOut lote() throws AforeException {
+	public LiquidarRenOut lote(Date fecha) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.LIQUIDAR_MOVIMIENTOS_PACKAGE).concat(".")
 					.concat(Constantes.LIQUIDAR_MOVIMIENTOS_LOTES);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LiquidarRenLotes");
 			
+			
+			query.registerStoredProcedureParameter("FEC_LOTE", Date.class, ParameterMode.IN);
 //			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 //			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
+			
+			query.setParameter("P_FECLOTE", fecha);
 
 			LiquidarRenOut res = new LiquidarRenOut();
 			res.setLotes(query.getResultList());

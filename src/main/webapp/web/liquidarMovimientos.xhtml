@@ -25,18 +25,94 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="LIQUIDAR MOVIMIENTOS">
-				<p:panelGrid id="fechas" styleClass="ui-noborder">
-					
-
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fecha" 
+								inputStyle="width:120px; text-align:right;"
+								value="#{liquidarMovimientos.fecha}" showIcon="true" locale="es"
+								yearNavigator="true" monthNavigator="true" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Lote: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="lotes" 
+								style="width:120px; vertical-align: inherit;"
+								value="#{liquidarMovimientos.lote}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="" />
+								<f:selectItems value="#{liquidarMovimientos.lotes}" var="c"
+									itemLabel="#{c.idLote}" itemValue="#{c.idLote}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:5px;"
+								actionListener="#{liquidarMovimientos.consultar}"
+								update="pGrid pMov result"
+								value="Buscar" />
+						</p:column>
+					</p:row>
 				</p:panelGrid>
 
-
-				
-
-				
+				<p:panel id="pMov" header="MOVIMIENTOS" style="margin-top:20px">
+					<p:dataTable id="movimientos" var="mon" paginatorPosition="bottom"
+						emptyMessage="#{liquidarMovimientos.mensajeTabla}"
+						value="#{liquidarMovimientos.movimientos}" rows="5"
+						paginator="true" rowsPerPageTemplate="5,10,15">
+		
+		     			<p:column headerText="Lote"
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.idLote}" />
+						</p:column>
+						
+						<p:column headerText="Total regs"
+							style="width:50px;text-align: center;">
+							<h:outputText value="#{mon.noMovimientos}" />
+						</p:column>
+						
+						<p:column headerText="Monto total" style="width:100px;">
+							<h:outputText value="#{mon.monto}" style="float:center">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Acciones" style="width:100px;">
+							<h:outputText value="#{mon.totalCuota}" style="float:center">
+								<f:convertNumber type="currency" currencySymbol="$"
+													minFractionDigits="6" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Fecha movimiento" style="width:100px;">
+							<h:outputText value="#{mon.fecha}" style="center">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Estado"
+							style="width:50px;text-align: center;">
+							<h:outputText value="#{mon.estado}" />
+						</p:column>
+						
+						<p:column headerText="Subcuenta"
+							style="width:150px;text-align: center;">
+							<h:outputText value="#{mon.descSubcuenta}" />
+						</p:column>
+						
+						<p:column headerText="Siefore"
+							style="width:150px;text-align: center;">
+							<h:outputText value="#{mon.descSiefore}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
 
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{notificacionPagos}" />
+					<ui:param name="base" value="#{liquidarMovimientos}" />
 				</ui:include>
 			</p:panel>
 		</h:form>
