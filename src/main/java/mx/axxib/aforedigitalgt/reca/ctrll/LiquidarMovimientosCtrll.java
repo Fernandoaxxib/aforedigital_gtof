@@ -1,7 +1,10 @@
 package mx.axxib.aforedigitalgt.reca.ctrll;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import javax.faces.component.UIInput;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +54,39 @@ public class LiquidarMovimientosCtrll extends ControllerBase {
 
 	@Getter
 	private String mensajeTabla;
+	
+	@Getter
+	private BigDecimal acciones;
+	
+	@Getter
+	private BigDecimal acciones1;
+	
+	@Getter
+	private BigDecimal acciones2;
+	
+	@Getter
+	private BigDecimal acciones3;
+	
+	@Getter
+	private BigDecimal acciones4;
+	
+	@Getter
+	private BigDecimal monto;
+	
+	@Getter
+	private BigDecimal monto1;
+	
+	@Getter
+	private BigDecimal monto2;
+	
+	@Getter
+	private BigDecimal monto3;
+	
+	@Getter
+	private BigDecimal monto4;
+	
+	@Getter
+	private boolean mostrarLiquidar;
 
 	@Override
 	public void iniciar() {
@@ -65,7 +101,27 @@ public class LiquidarMovimientosCtrll extends ControllerBase {
 	}
 
 	private void limpiar() {
+		
 		mensajeTabla = null;
+		fecha = null;
+		lote = null;
+		lotes = null;
+		limpiarBusqueda();
+	}
+	
+	private void limpiarBusqueda() {
+		mostrarLiquidar = false;
+		movimientos = null;
+		acciones = null;
+		acciones1 = null;
+		acciones2 = null;
+		acciones3 = null;
+		acciones4 = null;
+		monto = null;
+		monto1 = null;
+		monto2 = null;
+		monto3 = null;
+		monto4 = null;
 	}
 
 	public void consultarLotes() throws Exception {
@@ -88,78 +144,97 @@ public class LiquidarMovimientosCtrll extends ControllerBase {
 
 		} catch (Exception e) {
 			resultados.add(GenericException(e));
-		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
-		}
+		} 
 	}
 
-	public void consultar() throws Exception {
-		mensajeTabla = null;
-		// TODO: Elegir si buscará por fecha o lote
-//		if(fecha != null) {
-//			buscarFecha();
-//		} else if(lote != null){
-//			buscarLote();
+//	public void buscarFecha() throws Exception {
+//		ProcessResult pr = new ProcessResult();
+//
+//		try {
+//			pr.setFechaInicial(DateUtil.getNowDate());
+//			pr.setDescProceso("Consultar por fecha");
+//
+//			LiquidarBusquedaOut res = serv.buscarFecha(fecha);
+//			if (res.getEstatus() == 1) {
+//				movimientos = res.getLotes();
+//				if (movimientos != null && movimientos.size() > 0) {
+//
+//				} else {
+//					mensajeTabla = "Sin información";
+//				}
+//				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+//			} else {
+//				if (res.getEstatus() == 2) {
+//					GenerarErrorNegocio(res.getMensaje());
+//				} else if (res.getEstatus() == 0) {
+//					pr.setStatus(res.getMensaje());
+//				}
+//			}
+//
+//		} catch (Exception e) {
+//			resultados.add(GenericException(e));
+//		} finally {
+//			pr.setFechaFinal(DateUtil.getNowDate());
+//			resultados.add(pr);
 //		}
-	}
+//	}
 
-	public void buscarFecha() throws Exception {
-		ProcessResult pr = new ProcessResult();
+	public boolean isFormValid(ProcessResult pr) {
+		if (fecha == null) {
+			UIInput fini = (UIInput) findComponent("fecha");
+			fini.setValid(false);
 
-		try {
-			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Consultar por fecha");
-
-			LiquidarBusquedaOut res = serv.buscarFecha(fecha);
-			if (res.getEstatus() == 1) {
-				movimientos = res.getLotes();
-				if (movimientos != null && movimientos.size() > 0) {
-
-				} else {
-					mensajeTabla = "Sin información";
-				}
-				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-			} else {
-				if (res.getEstatus() == 2) {
-					GenerarErrorNegocio(res.getMensaje());
-				} else if (res.getEstatus() == 0) {
-					pr.setStatus(res.getMensaje());
-				}
-			}
-
-		} catch (Exception e) {
-			resultados.add(GenericException(e));
-		} finally {
-			pr.setFechaFinal(DateUtil.getNowDate());
-			resultados.add(pr);
+			pr.setStatus("Debe elegir un fecha");
+			return false;
 		}
+
+		if (lote == null) {
+			UIInput radio = (UIInput) findComponent("lotes");
+			radio.setValid(false);
+
+			pr.setStatus("Debe elegir un lote");
+			return false;
+		}
+
+		return true;
 	}
 
 	public void buscarLote() throws Exception {
 		ProcessResult pr = new ProcessResult();
 
 		try {
+			limpiarBusqueda();
 			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Consultar por lote");
-
-			LiquidarBusquedaOut res = serv.buscarLote(lote);
-			if (res.getEstatus() == 1) {
-				movimientos = res.getLotes();
-				if (movimientos != null && movimientos.size() > 0) {
-
+			pr.setDescProceso("Buscar");
+			if (isFormValid(pr)) {
+				LiquidarBusquedaOut res = serv.buscarLote(lote, fecha);
+				if (res.getEstatus() == 1) {
+					movimientos = res.getLotes();
+					if (movimientos != null && movimientos.size() > 0) {
+						acciones = res.getAcciones();
+						acciones1 = res.getAcciones1();
+						acciones2 = res.getAcciones2();
+						acciones3 = res.getAcciones3();
+						acciones4 = res.getAcciones4();
+						monto = res.getMonto();
+						monto1 = res.getMonto1();
+						monto2 = res.getMonto2();
+						monto3 = res.getMonto3();
+						monto4 = res.getMonto4();
+						
+						mostrarLiquidar = true;
+					} else {
+						mensajeTabla = "Sin información";
+					}
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
-					mensajeTabla = "Sin información";
-				}
-				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-			} else {
-				if (res.getEstatus() == 2) {
-					GenerarErrorNegocio(res.getMensaje());
-				} else if (res.getEstatus() == 0) {
-					pr.setStatus(res.getMensaje());
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
 				}
 			}
-
 		} catch (Exception e) {
 			resultados.add(GenericException(e));
 		} finally {
@@ -174,7 +249,7 @@ public class LiquidarMovimientosCtrll extends ControllerBase {
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Liquidar lote");
-			BaseOut res = serv.liquidar(lote, "FO");
+			BaseOut res = serv.liquidar(lote, fecha);
 			if (res.getEstatus() == 1) {
 				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 			} else {

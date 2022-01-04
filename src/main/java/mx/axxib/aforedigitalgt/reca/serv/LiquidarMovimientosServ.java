@@ -42,17 +42,17 @@ public class LiquidarMovimientosServ extends ServiceBase {
 		}
 	}
 	
-	public LiquidarBusquedaOut buscarLote(String lote) throws AforeException {
+	public LiquidarBusquedaOut buscarLote(String lote, Date fecha) throws AforeException {
 		try {
-			return repo.buscarLote(lote);
+			return repo.buscarLote(lote, fecha);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public BaseOut liquidar(String lote, String usuario) throws AforeException {
+	public BaseOut liquidar(String lote, Date fecha) throws AforeException {
 		try {
-			return repo.liquidar(lote, usuario);
+			return repo.liquidar(lote, fecha);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

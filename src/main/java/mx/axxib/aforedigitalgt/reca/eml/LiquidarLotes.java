@@ -28,22 +28,22 @@ import lombok.NoArgsConstructor;
 				classes = { @ConstructorResult(targetClass = LiquidarLotes.class, 
 					columns = {
 						@ColumnResult(name = "ID_LOTE", type = String.class),
-						@ColumnResult(name = "NUM_MOVIMTO", type = String.class),
-						@ColumnResult(name = "MON_MOVIMTO", type = BigDecimal.class),
+						@ColumnResult(name = "MOVIMIENTOS", type = String.class),
+						@ColumnResult(name = "MONTO", type = BigDecimal.class),
 						@ColumnResult(name = "FEC_MOVIMTO", type = Date.class),
 						@ColumnResult(name = "ESTADO", type = String.class),
 						@ColumnResult(name = "COD_TIPSALDO", type = String.class),
 						@ColumnResult(name = "TOT_CUOTA", type = BigDecimal.class),
-						@ColumnResult(name = "DESCRIPCION", type = String.class),
+						@ColumnResult(name = "DESC_SIEFORE", type = String.class),
 						@ColumnResult(name = "COD_INVERSION", type = String.class),
-						@ColumnResult(name = "DESCRIPCION", type = String.class)
+						@ColumnResult(name = "DESC_SUBCTA", type = String.class)
 					})
 				})
 })
 
 public class LiquidarLotes {
 	private String idLote;
-	private String noMovimientos;
+	private String movimientos;
 	private BigDecimal monto;
 	private Date fecha;
 	private String estado;

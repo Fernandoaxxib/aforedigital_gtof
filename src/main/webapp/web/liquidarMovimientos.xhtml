@@ -8,7 +8,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{liquidarMovimientos.iniciar}" type="preRenderView" />
+		<f:event listener="#{liquidarMovimientos.iniciar}"
+			type="preRenderView" />
 	</f:metadata>
 
 
@@ -31,17 +32,22 @@
 							<p:outputLabel value="Fecha: " styleClass="etiqueta" />
 						</p:column>
 						<p:column>
-							<p:datePicker id="fecha" 
+							<p:datePicker id="fecha"
 								inputStyle="width:120px; text-align:right;"
 								value="#{liquidarMovimientos.fecha}" showIcon="true" locale="es"
 								yearNavigator="true" monthNavigator="true" pattern="dd-MM-yyyy"
-								readonlyInput="true" />
+								readonlyInput="true">
+								<p:ajax update="lotes result" event="change"
+									listener="#{liquidarMovimientos.consultarLotes}" />
+								<p:ajax update="lotes result" event="dateSelect"
+									listener="#{liquidarMovimientos.consultarLotes}" />
+							</p:datePicker>
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Lote: " styleClass="etiqueta" />
 						</p:column>
 						<p:column>
-							<p:selectOneMenu id="lotes" 
+							<p:selectOneMenu id="lotes"
 								style="width:120px; vertical-align: inherit;"
 								value="#{liquidarMovimientos.lote}">
 								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
@@ -52,9 +58,14 @@
 						</p:column>
 						<p:column>
 							<p:commandButton class="blue" style="margin-left:5px;"
-								actionListener="#{liquidarMovimientos.consultar}"
-								update="pGrid pMov result"
-								value="Buscar" />
+								actionListener="#{liquidarMovimientos.buscarLote}"
+								update="pGrid pMov result" value="Buscar" />
+						</p:column>
+						
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:5px;"
+								actionListener="#{liquidarMovimientos.liquidar}" rendered="#{liquidarMovimientos.mostrarLiquidar}"
+								update="result" value="Liquidar" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -64,51 +75,126 @@
 						emptyMessage="#{liquidarMovimientos.mensajeTabla}"
 						value="#{liquidarMovimientos.movimientos}" rows="5"
 						paginator="true" rowsPerPageTemplate="5,10,15">
-		
-		     			<p:column headerText="Lote"
+
+						<p:column headerText="Lote"
 							style="width:100px;text-align: center;">
 							<h:outputText value="#{mon.idLote}" />
 						</p:column>
-						
+
 						<p:column headerText="Total regs"
 							style="width:50px;text-align: center;">
 							<h:outputText value="#{mon.noMovimientos}" />
 						</p:column>
-						
+
 						<p:column headerText="Monto total" style="width:100px;">
 							<h:outputText value="#{mon.monto}" style="float:center">
 								<f:convertNumber type="currency" currencySymbol="$" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Acciones" style="width:100px;">
 							<h:outputText value="#{mon.totalCuota}" style="float:center">
 								<f:convertNumber type="currency" currencySymbol="$"
-													minFractionDigits="6" />
+									minFractionDigits="6" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Fecha movimiento" style="width:100px;">
 							<h:outputText value="#{mon.fecha}" style="center">
 								<f:convertDateTime pattern="dd-MM-yyyy" />
 							</h:outputText>
 						</p:column>
-						
+
 						<p:column headerText="Estado"
 							style="width:50px;text-align: center;">
 							<h:outputText value="#{mon.estado}" />
 						</p:column>
-						
+
 						<p:column headerText="Subcuenta"
 							style="width:150px;text-align: center;">
 							<h:outputText value="#{mon.descSubcuenta}" />
 						</p:column>
-						
+
 						<p:column headerText="Siefore"
 							style="width:150px;text-align: center;">
 							<h:outputText value="#{mon.descSiefore}" />
 						</p:column>
 					</p:dataTable>
+
+					<p:panelGrid id="totales" width="100%" styleClass="ui-noborder"  style="margin-top:20px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Montos" styleClass="etiqueta"/>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Acciones" styleClass="etiqueta"/>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Total por Siefore XXINTE0: "
+									 />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.monto}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.acciones}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Total por Siefore XXINTE1: "
+									 />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.monto1}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.acciones1}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Total por Siefore XXINTE2: "
+									 />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.monto2}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.acciones2}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Total por Siefore XXINTE3: "
+									 />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.monto3}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.acciones3}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Total por Siefore XXINTE4: "
+									 />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.monto4}" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{liquidarMovimientos.acciones4}" />
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
 				</p:panel>
 
 				<ui:include src="processResult.xhtml">
