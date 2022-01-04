@@ -134,6 +134,11 @@ public class LiquidarMovimientosCtrll extends ControllerBase {
 			LiquidarRenOut res = serv.lote(fecha);
 			if (res.getEstatus() == 1) {
 				lotes = res.getLotes();
+				if(lotes.size() == 0) {
+					pr.setStatus("No se encontraron lotes para esa fecha");
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
+				}
 			} else {
 				if (res.getEstatus() == 2) {
 					GenerarErrorNegocio(res.getMensaje());
@@ -205,7 +210,7 @@ public class LiquidarMovimientosCtrll extends ControllerBase {
 		try {
 			limpiarBusqueda();
 			pr.setFechaInicial(DateUtil.getNowDate());
-			pr.setDescProceso("Buscar");
+			pr.setDescProceso("Buscar movimientos");
 			if (isFormValid(pr)) {
 				LiquidarBusquedaOut res = serv.buscarLote(lote, fecha);
 				if (res.getEstatus() == 1) {
