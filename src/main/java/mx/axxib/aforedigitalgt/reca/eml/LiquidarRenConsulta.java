@@ -1,5 +1,7 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
+import java.math.BigDecimal;
+
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.MappedSuperclass;
@@ -24,9 +26,9 @@ import lombok.NoArgsConstructor;
 		@SqlResultSetMapping(name = "LiquidarRenConsulta", 
 				classes = { @ConstructorResult(targetClass = LiquidarRenConsulta.class, 
 					columns = {
-						@ColumnResult(name = "CLAVE", type = String.class), // no está definido en el stored pero respondieron que así debería ir ?
-						@ColumnResult(name = "MONTO", type = String.class), // no está definido en el stored pero respondieron que así debería ir ?
-						@ColumnResult(name = "MONTO_PENDIENTE", type = String.class) // no está definido en el stored pero respondieron que así debería ir ?
+						@ColumnResult(name = "CLAVE_PROCESAR", type = String.class), 
+						@ColumnResult(name = "MONTO", type = BigDecimal.class), 
+						@ColumnResult(name = "MONTO_PENDIENTE", type = BigDecimal.class) 
 					
 					})
 				})
@@ -35,7 +37,7 @@ import lombok.NoArgsConstructor;
 
 public class LiquidarRenConsulta {
 	private String clave;
-	private String monto;
-	private String montoPendiente;
+	private BigDecimal monto;
+	private BigDecimal montoPendiente;
 	
 }

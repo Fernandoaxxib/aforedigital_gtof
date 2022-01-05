@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{liquidarRendimientos.iniciar}"
+			type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="LIQUIDAR RENDIMIENTOS">
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Lote: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="lotes"
+								style="width:120px; vertical-align: inherit;"
+								value="#{liquidarRendimientos.lote}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="" />
+								<f:selectItems value="#{liquidarRendimientos.lotes}" var="c"
+									itemLabel="#{c.idLote}" itemValue="#{c.idLote}" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:5px;"
+								actionListener="#{liquidarRendimientos.consultarLote}"
+								update="pGrid pMov result" value="Buscar" />
+						</p:column>
+
+						<p:column>
+							<p:selectBooleanCheckbox style="margin-left:5px;margin-top:4px;" itemLabel="Liq. Gubernamental"
+								value="#{liquidarRendimientos.opcion}" rendered="#{liquidarRendimientos.mostrarLiquidar}"/>
+						</p:column>
+						
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:0px;"
+								actionListener="#{liquidarRendimientos.liquidar}" rendered="#{liquidarRendimientos.mostrarLiquidar}"
+								update="result" value="Liquidar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panel id="pMov" header="RENDIMIENTOS" style="margin-top:20px">
+					<p:dataTable id="movimientos" var="mon" paginatorPosition="bottom"
+						emptyMessage="#{liquidarRendimientos.mensajeTabla}"
+						value="#{liquidarRendimientos.rendimientos}" rows="5"
+						paginator="true" rowsPerPageTemplate="5,10,15">
+
+						<p:column headerText="Clave procesar"
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.clave}" />
+						</p:column>
+
+					
+						<p:column headerText="Monto" style="width:100px;">
+							<h:outputText value="#{mon.monto}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+						
+						<p:column headerText="Monto pendiente" style="width:100px;">
+							<h:outputText value="#{mon.montoPendiente}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						
+					</p:dataTable>
+				</p:panel>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{liquidarRendimientos}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

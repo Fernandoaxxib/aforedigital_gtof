@@ -12,7 +12,6 @@ import mx.axxib.aforedigitalgt.dal.RepoBase;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.reca.eml.LiquidarRenConsultaOut;
 import mx.axxib.aforedigitalgt.reca.eml.LiquidarRenOut;
-import mx.axxib.aforedigitalgt.reca.eml.LiquidarRendimientoIn;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Liquidar rendimientos
@@ -33,7 +32,7 @@ public class LiquidarRendimientosRepo extends RepoBase {
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_LOTE);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LiquidarRenLotes");
 			
-			
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
@@ -49,7 +48,7 @@ public class LiquidarRendimientosRepo extends RepoBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public LiquidarRenConsultaOut consulta(LiquidarRendimientoIn in) throws AforeException {
+	public LiquidarRenConsultaOut consulta(String lote) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_PACKAGE).concat(".")
@@ -57,11 +56,12 @@ public class LiquidarRendimientosRepo extends RepoBase {
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LiquidarRenConsulta");
 			
 			query.registerStoredProcedureParameter("oc_ID_LOTE", String.class, ParameterMode.IN);
-			
+			query.registerStoredProcedureParameter("OC_SEGUIMIENTO", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("OC_CURSOR", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
-			query.setParameter("oc_ID_LOTE", in.getIdLote()); //No está definido en el stored un parametro de entrada pero es necesario para buscar por lote
+			query.setParameter("oc_ID_LOTE", lote); 
 			
 			LiquidarRenConsultaOut res = new LiquidarRenConsultaOut();
 			res.setMontos(query.getResultList());
@@ -76,30 +76,21 @@ public class LiquidarRendimientosRepo extends RepoBase {
 
 	}
 	
-	public BaseOut liquidar(LiquidarRendimientoIn in) throws AforeException {
+	public BaseOut liquidar(String lote, String tipo) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_PACKAGE).concat(".")
 					.concat(Constantes.LIQUIDAR_RENDIMIENTOS_LIQUIDAR);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 			
-			
 			query.registerStoredProcedureParameter("oc_ID_LOTE", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("on_TOTAL", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_TRAN_DISREND", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_SUBTRAN_DISREND", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("on_TRAN_COMPTIT", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_TIPO", String.class, ParameterMode.IN);
-
+			
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
-			query.setParameter("oc_ID_LOTE", in.getIdLote());
-			query.setParameter("on_TOTAL", in.getTotal());
-			query.setParameter("oc_TRAN_DISREND", in.getTransaccion());
-			query.setParameter("oc_SUBTRAN_DISREND", in.getSubTrans());
-			query.setParameter("on_TRAN_COMPTIT", in.getTransComp());
-			query.setParameter("oc_TIPO", in.getTipo());
+			query.setParameter("oc_ID_LOTE", lote);
+			query.setParameter("oc_TIPO",tipo);
 			
 			BaseOut res = new BaseOut();
 			res.setEstatus( (Integer) query.getOutputParameterValue("on_Estatus") );
