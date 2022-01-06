@@ -27,15 +27,17 @@
 		<h:form id="form">
 			<p:panel id="busqueda"
 				header="GENERACIÓN DE MOVIMIENTOS SEMANAS DE COTIZACIÓN IMSS">
-				<p:panelGrid id="fechas" styleClass="ui-noborder">
+				<p:panelGrid id="fechas" styleClass="ui-noborder" style="margin-bottom:20px !important">
 					<p:row>
 						<p:column style="width:78px">
 							<p:outputLabel value="Fecha inicio:" />
 						</p:column>
 						<p:column>
-							<p:datePicker id="fInicio" value="" locale="es" showIcon="true"
-								pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
-								style="margin-left:-6px"
+							<p:datePicker id="fInicio"
+								value="#{generarMovimientosImss.fechaInicio}" locale="es"
+								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+								monthNavigator="true" style="margin-left:-6px"
+								maxdate="#{generarMovimientosImss.fecActual}"
 								inputStyle="width:132px; text-align:right;" readonlyInput="true">
 
 							</p:datePicker>
@@ -44,53 +46,70 @@
 							<p:outputLabel value="Fecha fin:" />
 						</p:column>
 						<p:column>
-							<p:datePicker id="fFin" value="" locale="es" showIcon="true"
-								pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
-								style="margin-left:-6px"
+							<p:datePicker id="fFin"
+								value="#{generarMovimientosImss.fechaFin}" locale="es"
+								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+								monthNavigator="true" style="margin-left:-6px"
+								maxdate="#{generarMovimientosImss.fecActual}"
 								inputStyle="width:132px; text-align:right;" readonlyInput="true">
 
 							</p:datePicker>
 						</p:column>
+						<p:column>
+						   <p:commandButton id="btnConsultar"
+									styleClass="blue ui-button-text" type="submit"
+									value="Consultar"									
+									action="#{generarMovimientosImss.consultar}" ajax="true"
+									global="true"
+									update="form:fInicio form:fFin form:table1 form:result" />
+						</p:column>
+						<p:column>
+						   <p:commandButton id="btnGenerar"
+									styleClass="blue ui-button-text" type="submit"
+									value="Generar Movimientos"									
+									action="#{generarMovimientosImss.generarMovimientos}" ajax="true"
+									global="true"
+									update="form:table1 form:result" />
+						</p:column>
 					</p:row>
 				</p:panelGrid>
 
-				<p:dataTable id="table1" var="mon" class="sinfondo" value="generarMovimientosImss.listaMovimientos"
+				<p:dataTable id="table1" var="mon" class="sinfondo"
+					value="#{generarMovimientosImss.listaMovimientos}"
 					widgetVar="listSolicitudes"
-					emptyMessage="#{msg.aprob_msj_sinDatos}" style="border:0px"
-					rows="10" paginator="true" paginatorPosition="bottom"
-					rowsPerPageTemplate="5,10,15">
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					selection="#{generarMovimientosImss.selectedMovimiento}"
+					rowKey="#{mon.NSS}" style="border:0px" rows="10" paginator="true"
+					paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
 
 
-
-					<p:column headerText="Fecha Pago" width="70">
-						<h:outputText value="" style="float:right;" />
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center;" />
+					<p:column headerText="Fecha Pago" width="60">
+						<h:outputText value="#{mon.SP_FEC_PAGO}" style="float:right;" />
 					</p:column>
-					<p:column headerText="Num. Resolución" width="90">
-						<h:outputText value="" />
+					<p:column headerText="Num. Resolución" width="80">
+						<h:outputText value="#{mon.NUM_RESOLUCION}" style="float:right;" />
 					</p:column>
-					<p:column headerText="NSS" width="140">
-						<h:outputText value="" />
+					<p:column headerText="NSS" width="60">
+						<h:outputText value="#{mon.NSS}" style="float:right;"/>
 					</p:column>
 					<p:column headerText="Nombre" width="140">
-						<h:outputText value="" />
+						<h:outputText value="#{mon.NOMBRE}" />
 					</p:column>
-					<p:column headerText="Fecha Retiro" width="140">
-						<h:outputText value="" />
+					<p:column headerText="Fecha Retiro" width="40">
+						<h:outputText value="#{mon.MR_FEC_RETIRO}" style="float:right;"/>
 					</p:column>
-					<p:column headerText="Monto Reintegrar" width="140">
-						<h:outputText value="" />
+					<p:column headerText="Monto Reintegrar" width="60">
+						<h:outputText value="#{mon.MR_MONTO_REINTEGRAR}" style="float:right;"/>
 					</p:column>
-					<p:column headerText="Semanas Reintegro" width="140">
-						<h:outputText value="" />
+					<p:column headerText="Semanas Reintegro" width="40">
+						<h:outputText value="#{mon.MR_SEMANAS_REINTEGRAR}" style="float:right;"/>
 					</p:column>
-					<p:column headerText="Estatus Expediente" width="140">
-						<h:outputText value="" />
+					<p:column headerText="Estatus Expediente" width="100">
+						<h:outputText value="#{mon.DESC_ENVIO_IMG}" />
 					</p:column>
-
 				</p:dataTable>
-
-
-
 
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{generarMovimientosImss}" />

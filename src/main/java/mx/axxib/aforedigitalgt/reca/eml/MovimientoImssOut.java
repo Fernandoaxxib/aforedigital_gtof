@@ -1,6 +1,7 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
 import java.math.BigDecimal;
+
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.MappedSuperclass;
@@ -23,23 +24,23 @@ import lombok.NoArgsConstructor;
 						@ColumnResult(name = "NSS", type = String.class),
 						@ColumnResult(name = "NOMBRE", type = String.class),
 						@ColumnResult(name = "MR_FEC_RETIRO", type = String.class),
-						@ColumnResult(name = "MR_MONTO_REINTEGRAR", type = BigDecimal.class),
+						@ColumnResult(name = "MR_MONTO_REINTEGRAR", type = Double.class),
 						@ColumnResult(name = "MR_SEMANAS_REINTEGRAR", type = String.class),
-						@ColumnResult(name = "NUM_RESOLUCION", type = BigDecimal.class),												
+						@ColumnResult(name = "NUM_RESOLUCION", type = Integer.class),												
 						@ColumnResult(name = "CVE_ENVIO_IMG", type = String.class),
 						@ColumnResult(name = "DESC_ENVIO_IMG", type = String.class)
 					})
 				})
 })
-public class MovimientoImssOut {
+public class MovimientoImssOut{
 
 	       private String SP_FEC_PAGO;
 		   private String NSS;
 		   private String NOMBRE;
 		   private String MR_FEC_RETIRO;
-		   private BigDecimal MR_MONTO_REINTEGRAR; 
+		   private Double MR_MONTO_REINTEGRAR; 
 		   private String MR_SEMANAS_REINTEGRAR;
-		   private BigDecimal NUM_RESOLUCION; 
+		   private Integer NUM_RESOLUCION; 
 		   private String CVE_ENVIO_IMG;
 		   private String DESC_ENVIO_IMG; 
 

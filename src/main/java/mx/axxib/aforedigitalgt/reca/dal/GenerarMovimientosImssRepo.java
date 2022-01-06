@@ -1,6 +1,8 @@
 package mx.axxib.aforedigitalgt.reca.dal;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.dal.RepoBase;
+import mx.axxib.aforedigitalgt.reca.eml.MovimientoImssOut;
 import mx.axxib.aforedigitalgt.reca.eml.MovimientosOut;
 
 //***********************************************//
@@ -35,8 +38,12 @@ public class GenerarMovimientosImssRepo  extends RepoBase{
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			
+			query.setParameter("PFEC_INI", PFEC_INI);
+			query.setParameter("PFEC_FIN", PFEC_FIN);
+			
 			MovimientosOut res = new MovimientosOut();
-			res.setListaMovimientos(query.getResultList());
+			List<MovimientoImssOut> listaMovimientos =query.getResultList();
+			res.setListaMovimientos(listaMovimientos);
 			res.setP_ESTATUS( (Integer) query.getOutputParameterValue("P_ESTATUS") );
 			res.setP_MENSAJE( (String) query.getOutputParameterValue("P_MENSAJE") );
 			return res;
