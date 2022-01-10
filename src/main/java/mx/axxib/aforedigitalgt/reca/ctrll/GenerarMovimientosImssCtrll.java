@@ -2,16 +2,13 @@ package mx.axxib.aforedigitalgt.reca.ctrll;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.faces.component.UIInput;
-
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
-import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;

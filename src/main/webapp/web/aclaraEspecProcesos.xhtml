@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{aclaraEspecProcesos.iniciar}"
+			type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+	
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green" outcome="/web/aclaraEspecProcesos.jsf"
+				includeViewParams="true" value="Procesos">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px"
+				outcome="/web/aclaraEspecPunteo.jsf" includeViewParams="true"
+				value="Punteo">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px"
+				outcome="/web/aclaraEspecHist.jsf" includeViewParams="true"
+				value="Histórico">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="PROCESOS">
+				
+				<p:panel header="Carga de archivo para punteo">
+					<p:panelGrid class="ui-noborder">
+						<p:row>
+							<p:column style="width:78px">
+								<p:outputLabel value="#{msg.retPar_imss_op84_lblRuta}" />
+							</p:column>
+							<p:column class="outputlabel-shadow"
+								style="width:290px;height:17px !important">
+								<p:outputLabel value="" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column style="width:68px">
+								<p:outputLabel value="Archivo:" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nombreArchivo" maxlength="50"
+									placeholder="YYYYMMDD.OP84"
+									value="" style="width:306px" />
+							</p:column>
+							<p:column>
+								<p:commandButton styleClass="blue ui-button-text" type="submit"
+									value="Cargar"
+									 ajax="true" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>				
+				<p:panel header="Punteo automático" style="margin-top:20px">					
+					<p:panelGrid class="ui-noborder" >
+						<p:row>							
+							<p:column>
+								<p:commandButton styleClass="blue ui-button-text" type="submit"
+									value="Punteo Automático"
+									 ajax="true" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{aclaraEspecProcesos}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

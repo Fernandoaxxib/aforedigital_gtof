@@ -11,7 +11,7 @@ import mx.axxib.aforedigitalgt.reca.serv.AclaraEspecProcesosServ;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Aclaraciones Especiales - Procesos
 //** Interventor Principal: JJSC
-//** Fecha Creación: 17/NOV/2021
+//** Fecha Creación: 06/01/2022
 //** Última Modificación:
 
 @Scope(value = "session")
