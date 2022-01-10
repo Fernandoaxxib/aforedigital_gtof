@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class RecaProcesoEjecutarIn {
 	private String opcion;
 	private String idOperacion;
-	private Date fechaLote;
+	private String fechaLote;
 	private String secLote;
 	private Date fecha;
 	private String archivo;

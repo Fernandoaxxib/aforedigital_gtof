@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{recaudacionProceso.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+	
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green" outcome="/web/recaudacionIMSSProceso.jsf"
+				includeViewParams="true" value="PROCESO">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/recaudacionIMSSReporte.jsf" includeViewParams="true"
+				value="REPORTE">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="RECAUDACIONES IMSS">
+				<p:panelGrid id="main" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column  style="width:300px">
+							<p:selectOneRadio id="opcion" layout="responsive" columns="1"
+								value="#{recaudacionProceso.opcion}" unselectable="true">
+								<p:ajax update="pGrid"
+									listener="#{recaudacionProceso.changeOpcion}" />
+								<f:selectItem itemLabel="Carga archivo" itemValue="30" />
+								<f:selectItem itemLabel="Generar archivo" itemValue="20" />
+								<f:selectItem itemLabel="Generar movimientos" itemValue="10" />
+								<f:selectItem itemLabel="Reversar" itemValue="40" />
+							</p:selectOneRadio>
+						</p:column>
+						<p:column style="vertical-align: text-top;">
+							<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+								<p:row rendered="#{recaudacionProceso.mostrarLote}">
+									<p:column>
+										<p:outputLabel value="Id operación: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:selectOneMenu id="lotes"
+											style="width:120px; vertical-align: inherit;" var="t"
+											converter="selectOneMenuConverter"
+											value="#{recaudacionProceso.lote}">
+
+											<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+												itemValue="" />
+											<f:selectItems value="#{recaudacionProceso.lotes}" var="c"
+												itemLabel="#{c.idOperacion}" itemValue="#{c}" />
+											<p:ajax update="pGrid" event="change" />
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Lote" />
+												</f:facet>
+												<h:outputText value="#{t.lote}" />
+											</p:column>
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Oper" />
+												</f:facet>
+												<h:outputText value="#{t.idOperacion}" />
+											</p:column>
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Fecha" />
+												</f:facet>
+												<h:outputText value="#{t.fechaLote}" />
+											</p:column>
+											<p:column>
+												<f:facet name="header">
+													<h:outputText value="Sec" />
+												</f:facet>
+												<h:outputText value="#{t.secLote}" />
+											</p:column>
+										</p:selectOneMenu>
+									</p:column>
+
+								</p:row>
+								<p:row rendered="#{recaudacionProceso.mostrarLote}">
+									<p:column  style="height:24px">
+										<p:outputLabel value="Fecha lote: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="#{recaudacionProceso.lote.fechaLote}" />
+									</p:column>
+								</p:row>
+								<p:row rendered="#{recaudacionProceso.mostrarLote}">
+									<p:column  style="height:24px">
+										<p:outputLabel value="Sec. lote: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="#{recaudacionProceso.lote.secLote}" />
+									</p:column>
+								</p:row>
+								<p:row rendered="#{recaudacionProceso.mostrarFecha}">
+									<p:column>
+										<p:outputLabel value="Fecha: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:datePicker id="fecha"
+											inputStyle="width:120px; text-align:right;"
+											value="#{recaudacionProceso.fecha}" showIcon="true"
+											locale="es" yearNavigator="true" monthNavigator="true"
+											pattern="dd-MM-yyyy" readonlyInput="true">
+										</p:datePicker>
+									</p:column>
+								</p:row>
+								<p:row rendered="#{recaudacionProceso.mostrarArchivo}">
+									<p:column>
+										<p:outputLabel value="Nombre del archivo: "
+											styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:inputText id="archivo"
+											value="#{recaudacionProceso.archivo}" maxlength="20"
+											style="width:215px"></p:inputText>
+									</p:column>
+								</p:row>
+								<p:row rendered="#{recaudacionProceso.mostrarDirectorio}">
+									<p:column style="height:24px">
+										<p:outputLabel value="Directorio: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="#{recaudacionProceso.directorio}" />
+									</p:column>
+								</p:row>
+								<p:row rendered="#{recaudacionProceso.mostrarEjecutar}">
+									<p:column>
+										<p:commandButton class="blue"
+											actionListener="#{recaudacionProceso.ejecutar}"
+											update="pGrid result" value="ejecutar" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{recaudacionProceso}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

@@ -14,6 +14,7 @@ import mx.axxib.aforedigitalgt.dal.RepoBase;
 import mx.axxib.aforedigitalgt.eml.BaseOut;
 import mx.axxib.aforedigitalgt.reca.eml.LotesOut;
 import mx.axxib.aforedigitalgt.reca.eml.RecaProcesoEjecutarIn;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Recaudacion IMSS Reportes
@@ -37,6 +38,7 @@ public class RecaudacionIMSSReportesRepo extends RepoBase {
 					.concat(Constantes.RECAUDACION_IMSS_PROCESO_LOTE);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "Lotes");
 			
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
@@ -58,6 +60,7 @@ public class RecaudacionIMSSReportesRepo extends RepoBase {
 //		                                      ic_SecLoteR IN VARCHAR2,
 //		                                      on_Estatus OUT NUMBER,
 //		                                      oc_Mensaje OUT VARCHAR2);
+		
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.RECAUDACION_IMSS_PACKAGE).concat(".")
@@ -74,7 +77,7 @@ public class RecaudacionIMSSReportesRepo extends RepoBase {
 
 			query.setParameter("ic_OpcionR", in.getOpcion());
 			query.setParameter("ic_IdOperR", in.getIdOperacion());
-			query.setParameter("id_FecLoteR", in.getFechaLote());
+			query.setParameter("id_FecLoteR", DateUtil.getDateToString(in.getFechaLote(),"yyyyMMdd"));
 			query.setParameter("ic_SecLoteR", in.getSecLote());
 			
 			BaseOut res = new BaseOut();

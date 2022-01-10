@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -33,6 +34,26 @@ public class DateUtil {
 		SimpleDateFormat formatter = new SimpleDateFormat(format);
 		return formatter.format(date);
 	}
+	
+	/**
+	 * Convierte un string a fecha (Date) con el formato definido
+	 * @param sDate String a convertir
+	 * @param format Formato en el que será convertida la fecha
+	 * @return La fecha en tipo Date en el formato definido
+	 */
+	public static Date getDateToString(String sDate, String format) {
+		
+		Date date = null;
+	    try {
+	    	SimpleDateFormat formatter = new SimpleDateFormat(format);
+			date = formatter.parse(sDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}  
+	    return date;
+	}
+	
+	
 	
 	/**
 	 * Obtiene la fecha actual en zona horario de México

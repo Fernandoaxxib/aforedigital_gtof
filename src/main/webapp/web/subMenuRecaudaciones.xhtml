@@ -26,6 +26,10 @@
 			<f:selectItem itemLabel="GENERACIÓN DE MOVIMIENTOS" itemValue="/web/generarMovimientosImss.jsf" />
 			
 			<f:selectItem itemLabel="LIQUIDAR RENDIMIENTOS" itemValue="/web/liquidarRendimientos.jsf" />
+			
+			<f:selectItem itemLabel="RECAUDACIONES IMSS" itemValue="/web/recaudacionIMSSProceso.jsf" />
+			
+			
             
 			<p:ajax event="change" listener="#{menu.navigateSub}" oncomplete="PF('statusDialog').show();" />
 		</p:selectOneMenu>

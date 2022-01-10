@@ -37,6 +37,7 @@ public class RecaudacionIMSSProcesoRepo extends RepoBase {
 					.concat(Constantes.RECAUDACION_IMSS_PROCESO_LOTE);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "Lotes");
 			
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
@@ -70,12 +71,13 @@ public class RecaudacionIMSSProcesoRepo extends RepoBase {
 			
 			query.registerStoredProcedureParameter("ic_Opcionp", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_IdOperp", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("id_FecLotep", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("id_FecLotep", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_SecLotep", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("id_Fechap", Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_Archivop", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_Directoriop", String.class, ParameterMode.IN);
 			
+			query.registerStoredProcedureParameter("oc_Avancep", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 

@@ -1,33 +1,62 @@
 package mx.axxib.aforedigitalgt.reca.ctrll;
 
+import java.util.List;
+
+import javax.faces.component.UIInput;
+
 import org.ocpsoft.rewrite.el.ELBeanName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import lombok.Getter;
+import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.ConstantesMsg;
+import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
+import mx.axxib.aforedigitalgt.eml.BaseOut;
+import mx.axxib.aforedigitalgt.reca.eml.Lote;
+import mx.axxib.aforedigitalgt.reca.eml.LotesOut;
+import mx.axxib.aforedigitalgt.reca.eml.RecaProcesoEjecutarIn;
 import mx.axxib.aforedigitalgt.reca.serv.RecaudacionIMSSReportesServ;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudacion IMSS Reportes
 //** Interventor Principal: JSAS
-//** Fecha Creación: 16/Nov/2021
+//** Fecha Creación: 13/Ene/2022
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")
-@Component(value = "recaudacionReportes")
-@ELBeanName(value = "recaudacionReportes")
+@Component(value = "recaudacionReporte")
+@ELBeanName(value = "recaudacionReporte")
 public class RecaudacionIMSSReportesCtrll extends ControllerBase {
 
 	@Autowired
 	private RecaudacionIMSSReportesServ serv;
+	
+	@Getter
+	@Setter
+	private Lote lote;
+	
+	@Getter
+	@Setter
+	private String opcion;
+
+	@Getter
+	@Setter
+	private List<Lote> lotes;
+
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
 			
+			opcion = null;
+			lotes = null;
 			limpiar();
+			consultarLotes();
 
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
@@ -35,8 +64,87 @@ public class RecaudacionIMSSReportesCtrll extends ControllerBase {
 	}
 
 	private void limpiar() {
+		lote = null;
 		
 	}
+	
+	public void consultarLotes() {
+		ProcessResult pr = new ProcessResult();
 
+		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Consultar lotes");
+
+			LotesOut res = serv.lotes();
+			if (res.getEstatus() == null) { // TODO sustituir null por 1, actualmente el stored no devuelve status
+				lotes = res.getLotes();
+				if (lotes.size() == 0) {
+					pr.setStatus("No se encontraron lotes");
+					pr.setFechaFinal(DateUtil.getNowDate());
+					resultados.add(pr);
+				}
+			} else {
+				if (res.getEstatus() == 2) {
+					GenerarErrorNegocio(res.getMensaje());
+				} else if (res.getEstatus() == 0) {
+					pr.setStatus(res.getMensaje());
+				}
+			}
+
+		} catch (Exception e) {
+			resultados.add(GenericException(e));
+		}
+	}
+	
+	public boolean isFormValid(ProcessResult pr) {
+		if (lote == null) {
+			UIInput radio = (UIInput) findComponent("lotes");
+			radio.setValid(false);
+
+			pr.setStatus("Debe elegir un Id operación");
+			return false;
+		}
+		if (opcion == null) {
+			UIInput radio = (UIInput) findComponent("opcion");
+			radio.setValid(false);
+
+			pr.setStatus("Debe elegir una opción");
+			return false;
+		}
+		return true;
+	}
+
+	public void ejecutar() {
+		ProcessResult pr = new ProcessResult();
+
+		try {
+			pr.setFechaInicial(DateUtil.getNowDate());
+			pr.setDescProceso("Ejecutar");
+			if (isFormValid(pr)) {
+				RecaProcesoEjecutarIn parametros = new RecaProcesoEjecutarIn();
+				parametros.setOpcion(opcion);
+				if (lote != null) {
+					parametros.setFechaLote(lote.getFechaLote());
+					parametros.setIdOperacion(lote.getIdOperacion());
+					parametros.setSecLote(lote.getSecLote());
+				}
+				BaseOut res = serv.reporteEjecutar(parametros);
+				if (res.getEstatus() == null) { // TODO sustituir null por 1
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (res.getEstatus() == 2) {
+						GenerarErrorNegocio(res.getMensaje());
+					} else if (res.getEstatus() == 0) {
+						pr.setStatus(res.getMensaje());
+					}
+				}
+			}
+		} catch (Exception e) {
+			resultados.add(GenericException(e));
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
 	
 }

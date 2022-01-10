@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{recaudacionReporte.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="blue"
+				outcome="/web/recaudacionIMSSProceso.jsf" includeViewParams="true"
+				value="PROCESO">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="green" style="margin-left:13px !important"
+				outcome="/web/recaudacionIMSSReporte.jsf" includeViewParams="true"
+				value="REPORTE">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="RECAUDACIONES IMSS REPORTE">
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+
+					<p:row>
+
+						<p:column style="width:15%">
+							<p:outputLabel value="Id operación: " style="margin-left:6px" styleClass="etiqueta" />
+						</p:column>
+						<p:column  style="width:15%">
+							<p:selectOneMenu id="lotes"
+								style="width:120px; vertical-align: inherit;" var="t"
+								converter="selectOneMenuConverter"
+								value="#{recaudacionReporte.lote}">
+
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="" />
+								<f:selectItems value="#{recaudacionReporte.lotes}" var="c"
+									itemLabel="#{c.idOperacion}" itemValue="#{c}" />
+								<p:ajax update="pGrid" event="change" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Lote" />
+									</f:facet>
+									<h:outputText value="#{t.lote}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Oper" />
+									</f:facet>
+									<h:outputText value="#{t.idOperacion}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Fecha" />
+									</f:facet>
+									<h:outputText value="#{t.fechaLote}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Sec" />
+									</f:facet>
+									<h:outputText value="#{t.secLote}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column  style="width:15%">
+							<p:outputLabel value="Fecha lote: " style="margin-left:-6px" styleClass="etiqueta" />
+						</p:column>
+						<p:column  style="width:15%">
+							<p:outputLabel value="#{recaudacionReporte.lote.fechaLote}" />
+						</p:column>
+
+						<p:column  style="width:15%">
+							<p:outputLabel value="Sec. lote: " style="margin-left:-6px" styleClass="etiqueta" />
+						</p:column>
+						<p:column  style="width:15%">
+							<p:outputLabel value="#{recaudacionReporte.lote.secLote}" />
+						</p:column>
+					</p:row>
+
+
+					<p:row>
+						<p:column colspan="6">
+							<p:selectOneRadio id="opcion" layout="responsive" columns="3"
+								value="#{recaudacionReporte.opcion}" unselectable="true">
+								
+								<f:selectItem itemLabel="Reporte Global" itemValue="10" />
+								<f:selectItem itemLabel="Reporte Voluntarias" itemValue="20" />
+								<f:selectItem itemLabel="Reporte Siefores" itemValue="50" />
+								<f:selectItem itemLabel="Reporte Resumen" itemValue="40" />
+								<f:selectItem itemLabel="Reporte Complementarias" itemValue="30" />
+							</p:selectOneRadio>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="6">
+							<p:commandButton class="blue"
+								actionListener="#{recaudacionReporte.ejecutar}"
+								update="pGrid result" value="ejecutar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{recaudacionReporte}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>
