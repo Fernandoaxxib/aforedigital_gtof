@@ -11,7 +11,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Aclaraciones Especiales - Punteo
 //** Interventor Principal: JJSC
-//** Fecha Creación: 17/NOV/2021
+//** Fecha Creación: 06/01/2022
 //** Última Modificación:
 //***********************************************//
 @Service
@@ -28,17 +28,17 @@ public class AclaraEspecPunteoServ extends ServiceBase{
 		}
 	}
 	
-	public InfoPunteoOut llenarDatosPunteo(String ic_Nss) throws AforeException {
+	public InfoPunteoOut llenarDatosPunteo() throws AforeException {
 		try {			
-			return repo.llenarDatosPunteo(ic_Nss);
+			return repo.llenarDatosPunteo();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public RespuestaOut actualizarPunteo() throws AforeException {
+	public RespuestaOut actualizarPunteo(String ic_Nss,String ic_Aceptado) throws AforeException {
 		try {			
-			return repo.actualizarPunteo();
+			return repo.actualizarPunteo( ic_Nss, ic_Aceptado);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

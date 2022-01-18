@@ -8,8 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{aclaraEspecPunteo.iniciar}"
-			type="preRenderView" />
+		<f:event listener="#{aclaraEspecPunteo.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -20,11 +19,12 @@
 	<ui:define name="submenu">
 		<ui:include src="subMenuRecaudaciones.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="botones">
 		<h:form>
-			<p:linkButton styleClass="blue" outcome="/web/aclaraEspecProcesos.jsf"
-				includeViewParams="true" value="Procesos">
+			<p:linkButton styleClass="blue"
+				outcome="/web/aclaraEspecProcesos.jsf" includeViewParams="true"
+				value="Procesos">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 			<p:linkButton styleClass="green" style="margin-left:13px"
@@ -45,12 +45,43 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="PUNTEO">
-				
+
 				<p:panel header="DATOS DE PUNTEO">
-					
-				</p:panel>				
-				<p:panel header="DATOS DE AFILIACIÓN" style="margin-top:20px">					
-					
+					<p:dataTable id="table1" var="mon" class="sinfondo"
+						value="#{aclaraEspecPunteo.datosPunteo}"
+						widgetVar="listSolicitudes"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"
+						selection="#{aclaraEspecPunteo.selectedDato}" rowKey="#{mon.NSS}"
+						style="border:0px" rows="10" paginator="true"
+						paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
+
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center;" />
+						<p:column headerText="NSS" width="60">
+							<h:outputText value="#{mon.NSS}" style="float:right;" />
+						</p:column>
+						<p:column headerText="RFC" width="80">
+							<h:outputText value="#{mon.RFC}" style="float:right;" />
+						</p:column>
+						<p:column headerText="NOMBRE" width="60">
+							<h:outputText value="#{mon.NOMBRE}" style="float:right;" />
+						</p:column>
+						<p:column headerText="Estado" width="140">
+							<h:outputText value="#{mon.STATUS}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel header="DATOS DE AFILIACIÓN" style="margin-top:20px">
+					<p:panelGrid id="fechas" styleClass="ui-noborder" style="margin-bottom:20px !important">
+						<p:row>
+							<p:column style="width:78px">
+								<p:outputLabel value="NSS:" />
+							</p:column>
+							<p:column style="width:78px">
+								<p:outputLabel value="NSS:" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:panel>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{aclaraEspecPunteo}" />

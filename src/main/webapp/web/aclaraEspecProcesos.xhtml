@@ -20,11 +20,12 @@
 	<ui:define name="submenu">
 		<ui:include src="subMenuRecaudaciones.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="botones">
 		<h:form>
-			<p:linkButton styleClass="green" outcome="/web/aclaraEspecProcesos.jsf"
-				includeViewParams="true" value="Procesos">
+			<p:linkButton styleClass="green"
+				outcome="/web/aclaraEspecProcesos.jsf" includeViewParams="true"
+				value="Procesos">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 			<p:linkButton styleClass="blue" style="margin-left:13px"
@@ -45,7 +46,7 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="PROCESOS">
-				
+
 				<p:panel header="Carga de archivo para punteo">
 					<p:panelGrid class="ui-noborder">
 						<p:row>
@@ -54,7 +55,7 @@
 							</p:column>
 							<p:column class="outputlabel-shadow"
 								style="width:290px;height:17px !important">
-								<p:outputLabel value="" />
+								<p:outputLabel value="#{aclaraEspecProcesos.ruta}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -64,25 +65,24 @@
 								<p:outputLabel value="Archivo:" />
 							</p:column>
 							<p:column>
-								<p:inputText id="nombreArchivo" maxlength="50"
-									placeholder="YYYYMMDD.OP84"
-									value="" style="width:306px" />
+								<p:inputText id="nombreArchivo" maxlength="20"
+									value="#{aclaraEspecProcesos.archivo}" style="width:345px" />
 							</p:column>
 							<p:column>
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
-									value="Cargar"
-									 ajax="true" />
+									value="Cargar" action="#{aclaraEspecProcesos.cargarArchivo}"
+									update="form:result" ajax="true" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-				</p:panel>				
-				<p:panel header="Punteo automático" style="margin-top:20px">					
-					<p:panelGrid class="ui-noborder" >
-						<p:row>							
+				</p:panel>
+				<p:panel header="Punteo automático" style="margin-top:20px">
+					<p:panelGrid class="ui-noborder">
+						<p:row>
 							<p:column>
 								<p:commandButton styleClass="blue ui-button-text" type="submit"
-									value="Punteo Automático"
-									 ajax="true" />
+								    action="#{aclaraEspecProcesos.ejecutarPunteoAut}" update="form:result"
+									value="Punteo Automático" ajax="true" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>

@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Actualiza Saldos y Bono de Pensión - Bono
 //** Interventor Principal: JJSC
-//** Fecha Creación: 18/NOV/2021
+//** Fecha Creación: 10/01/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -39,10 +39,18 @@ public class ActualizaSaldosBonoBonoServ extends ServiceBase{
 		}
 	}
 	
-	public RespuestaOut ejecutarBono() throws AforeException {
+	public RespuestaOut ejecutarBono(String ic_Lote1, String ic_Fecha_Aplicado1, String ic_Cod_Inversion1) throws AforeException {
 		try {
-			return repo.ejecutarBono();
+			return repo.ejecutarBono( ic_Lote1,  ic_Fecha_Aplicado1,  ic_Cod_Inversion1);
 		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public RespuestaOut getMontosBonoPen(String ic_lote1, Integer in_cod_inversion1) throws AforeException {
+		try {
+			return repo.getMontosBonoPen(ic_lote1, in_cod_inversion1);
+		}catch(Exception e) {
 			throw GenericException(e);
 		}
 	}

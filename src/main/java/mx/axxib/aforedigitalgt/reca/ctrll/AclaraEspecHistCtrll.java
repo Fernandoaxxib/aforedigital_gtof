@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.reca.serv.AclaraEspecHistServ;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Aclaraciones Especiales - Histórico
 //** Interventor Principal: JJSC
-//** Fecha Creación: 17/NOV/2021
+//** Fecha Creación: 06/01/2022
 //** Última Modificación:
 
 @Scope(value = "session")

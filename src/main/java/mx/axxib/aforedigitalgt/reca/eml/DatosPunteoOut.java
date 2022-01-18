@@ -1,7 +1,5 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
-import java.util.Date;
-
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.MappedSuperclass;
@@ -17,13 +15,14 @@ import lombok.Data;
 		@ConstructorResult(targetClass = DatosPunteoOut.class, columns = {
 				@ColumnResult(name = "NSS", type = String.class), 
 				@ColumnResult(name = "RFC", type = String.class),
-				@ColumnResult(name = "NOMBRE", type = Date.class) 
+				@ColumnResult(name = "NOMBRE", type = String.class),
+				@ColumnResult(name = "STATUS", type = String.class)
 }) 
 }) 
 })
 public class DatosPunteoOut {
-
 	private String NSS;
 	private String RFC;
 	private String NOMBRE;
+	private String STATUS;
 }

@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Aclaraciones Especiales - Procesos
 //** Interventor Principal: JJSC
-//** Fecha Creación: 17/NOV/2021
+//** Fecha Creación: 06/01/2022
 //** Última Modificación:
 //***********************************************//
 @Service

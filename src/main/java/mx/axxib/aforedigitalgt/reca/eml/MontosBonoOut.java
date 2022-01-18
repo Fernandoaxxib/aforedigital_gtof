@@ -1,6 +1,5 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecaIssLoteOut {
+public class MontosBonoOut {
 
-	private List<LoteIssOut> lotes;
-	private List<LoteSepaOut> lotesSepa;
-	private Integer on_Estatus;
-	private String oc_Mensaje;
+	private Integer on_udis;
+	private Integer on_monto_udis;
 	
 }

@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RespuestaOut {
 
+	private MontosRecaOut montosRecaIsss;
+	private MontosBonoOut montosBono;
 	private String oc_Mensaje;
 	private Integer on_Estatus;
 }

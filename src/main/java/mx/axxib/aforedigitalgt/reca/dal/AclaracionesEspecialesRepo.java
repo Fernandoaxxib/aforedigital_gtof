@@ -13,7 +13,7 @@ import mx.axxib.aforedigitalgt.reca.eml.RespuestaOut;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Aclaraciones Especiales
 //** Interventor Principal: JJSC
-//** Fecha Creación: 17/NOV/2021
+//** Fecha Creación: 06/01/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -104,14 +104,13 @@ public class AclaracionesEspecialesRepo extends RepoBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public InfoPunteoOut llenarDatosPunteo(String ic_Nss) throws AforeException {
+	public InfoPunteoOut llenarDatosPunteo() throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.ACLARACIONES_ESPECIALES_PACKAGE).concat(".")
 					.concat(Constantes.ACLARACIONES_ESPECIALES_LLENA_DATOS_PUNTEO);			
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "DatosPunteoOut");
-			
-			query.registerStoredProcedureParameter("ic_Nss", String.class, ParameterMode.IN);		
+						
 			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
@@ -128,7 +127,7 @@ public class AclaracionesEspecialesRepo extends RepoBase {
 		}
 	}
 	
-	public RespuestaOut actualizarPunteo() throws AforeException {
+	public RespuestaOut actualizarPunteo(String ic_Nss,String ic_Aceptado) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.ACLARACIONES_ESPECIALES_PACKAGE).concat(".")
@@ -139,7 +138,10 @@ public class AclaracionesEspecialesRepo extends RepoBase {
 			query.registerStoredProcedureParameter("ic_Aceptado", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
-
+			
+			query.setParameter("ic_Nss", ic_Nss);
+			query.setParameter("ic_Aceptado", ic_Aceptado);		
+			
 			RespuestaOut res = new RespuestaOut();
 			
 			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));

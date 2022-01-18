@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{actualizaSaldosBonoSepa.iniciar}"
+			type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="blue"
+				outcome="/web/actualizaSaldosBonoReca.jsf" includeViewParams="true"
+				value="Recaudación ISSSTE">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="blue" style="margin-left:13px"
+				outcome="/web/actualizaSaldosBonoBono.jsf" includeViewParams="true"
+				value="Bono de Pensión">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+			<p:linkButton styleClass="green" style="margin-left:13px"
+				outcome="/web/actualizaSaldosBonoSepa.jsf" includeViewParams="true"
+				value="Separación de Cuentas">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{actualizaSaldosBonoSepa.listLotes}"
+					filteredValue="#{actualizaSaldosBonoSepa.filtro}"
+					globalFilterFunction="#{actualizaSaldosBonoSepa.globalFilterFunction}"
+					selectionMode="single"
+					selection="#{actualizaSaldosBonoSepa.selectedLote}"
+					rowKey="#{registro.lote_carga}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{actualizaSaldosBonoSepa.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE LOTES" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Número de lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Lote Carga" styleClass="gridCell-right">
+						<h:outputText value="#{registro.lote_carga}" />
+					</p:column>
+					<p:column headerText="Aceptado" styleClass="gridCell-right">
+						<h:outputText value="#{registro.acept}" />
+					</p:column>
+					<p:column headerText="Rechazado" styleClass="gridCell-right">
+						<h:outputText value="#{registro.rech}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{actualizaSaldosBonoSepa.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update="form:vLote"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
+		<h:form id="form">
+			<p:panel id="pnl1" header="ACTUALIZAR IMPORTE FOVISSSTE">
+				<p:panelGrid styleClass="ui-noborder" style="margin-bottom:20px">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Lote: " />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vLote" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;border:#{actualizaSaldosBonoSepa.border}">
+								<p:outputLabel style="padding-right:10px"
+									value="#{actualizaSaldosBonoSepa.lote}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+								value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha de aplicado: " />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fechaAplicado"
+								value="#{actualizaSaldosBonoSepa.fecha}" locale="es"
+								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+								monthNavigator="true"
+								inputStyle="width:100px; text-align:right;" readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Cod. Inversión: " />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combSiefore" style="width:100px" var="t"
+								converter="selectOneMenuConverter"
+								value="#{actualizaSaldosBonoSepa.selectedIssSiefore}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems
+									value="#{actualizaSaldosBonoSepa.listaIssSiefore}" var="c"
+									itemLabel="#{c.cod_inversion}" itemValue="#{c}" />
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Código Inversión" />
+									</f:facet>
+									<h:outputText value="#{t.cod_inversion}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Descripción" />
+									</f:facet>
+									<h:outputText value="#{t.descripcion}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnConsultar" styleClass="blue"
+								type="submit"
+								update="form:monto92 form:aivs92 form:monto08 form:aivs08 form:monto92_2 form:aivs92_2 form:monto08_2 form:aivs08_2 form:vLote form:fechaAplicado form:result form:btnConsultar"
+								action="#{actualizaSaldosBonoSepa.consultar}" ajax="true"
+								style="margin-left:10px" value="Consultar" />
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnEjecutar" styleClass="blue"
+								update="form:result"
+								action="#{actualizaSaldosBonoSepa.ejecutar}"
+								style="margin-left:10px" value="Ejecutar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+
+				<p:panel id="p2" header="TOTALES ENTRADAS"
+					style="margin-bottom:20px">
+					<p:panelGrid styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Monto Pendiente 92:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel id="monto92" style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="AIVS 92:" style="margin-left:50px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel id="aivs92" style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Monto Pendiente 2008:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel id="monto08" style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente08}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="AIVS 2008:" style="margin-left:50px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel id="aivs08" style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs08}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+
+				<p:panel id="p3" header="CON MARCA DE CRÉDITO (SUBSECUENTES)">
+					<p:panelGrid styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Monto Pendiente 92:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel id="monto92_2" class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente_C}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="AIVS 92:" style="margin-left:50px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel id="aivs92_2" class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs_C}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Monto Pendiente 2008:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel id="monto08_2" class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente08_C}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="AIVS 2008:" style="margin-left:50px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel id="aivs08_2" class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
+									<p:outputLabel style="padding-right:10px"
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs08_C}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+
+
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{actualizaSaldosBonoSepa}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

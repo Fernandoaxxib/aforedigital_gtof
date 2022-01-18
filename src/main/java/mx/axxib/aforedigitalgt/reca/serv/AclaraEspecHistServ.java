@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Aclaraciones Especiales - Histórico
 //** Interventor Principal: JJSC
-//** Fecha Creación: 17/NOV/2021
+//** Fecha Creación: 06/01/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -29,10 +29,10 @@ public class AclaraEspecHistServ  extends ServiceBase{
 		}
 	}
 	
-	public InfoPunteoOut llenarDatosPunteo(String ic_Nss) throws AforeException {
+	public InfoPunteoOut llenarDatosPunteo() throws AforeException {
 		try {
 			
-			return repo.llenarDatosPunteo(ic_Nss);
+			return repo.llenarDatosPunteo();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
