@@ -320,7 +320,11 @@ public class Constantes {
 	public static final String LIQUIDAR_LOTEOP71_FO_DETA ="PRC_FO_DETA";
 	public static final String LIQUIDAR_LOTEOP71_BTN_LIQUIDAR ="PRC_BOTON_LIQUIDAR";
     
-
+	//APLICAR LOTE RECAUDA ISSSTE
+	public static final String APLICAR_LOTE_RECAUDA_PACKAGE="PKG_RECA_FOMOVISS";
+	public static final String APLICAR_LOTE_RECAUDA_EJECUTAR="PRC_EJECUTAR";
+	public static final String APLICAR_LOTE_RECAUDA_LOTE_BONO="PRC_RG_LOTE_BONO";
+	public static final String APLICAR_LOTE_RECAUDA_LOTE_RECA="PRC_RG_LOTE_RECA";
 	
 
 }
