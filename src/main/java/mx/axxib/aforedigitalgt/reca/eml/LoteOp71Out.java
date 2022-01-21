@@ -7,9 +7,11 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.SqlResultSetMappings;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @MappedSuperclass
 @SqlResultSetMappings({ @SqlResultSetMapping(name = "LoteOp71Out", classes = {
 		@ConstructorResult(targetClass = LoteOp71Out.class, columns = {

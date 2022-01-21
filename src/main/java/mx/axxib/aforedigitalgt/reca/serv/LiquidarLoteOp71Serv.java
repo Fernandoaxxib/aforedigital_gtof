@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Liquidar lote op71
 //** Interventor Principal: JJSC
-//** Fecha Creación: 30/DIC/2021
+//** Fecha Creación: 18/01/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -64,6 +64,15 @@ public class LiquidarLoteOp71Serv extends ServiceBase{
 			throws AforeException {
 		try {			
 			return repo.liquidar(ic_identif_operacion, ic_fecha_transferencia, ic_secuencia_lote, in_monto_liquidado, in_importes_aceptados, ic_siefore, ic_agrupacion);
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+	
+	public LiquidarLoteOp71Out getDetalle(String ic_identif_operacion, String id_fecha_transferencia,
+			String ic_secuencia_lote, String ic_Siefore, String ic_agrupacion) throws AforeException {
+		try {			
+			return repo.getDetalle(ic_identif_operacion, id_fecha_transferencia, ic_secuencia_lote, ic_Siefore, ic_agrupacion);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

@@ -26,5 +26,5 @@ public class LiquidarLoteOp71Out {
 	private List<LoteOp71Out> listaLotes;
 	private List<SieforeOut> listaSiefore;
 	private List<SectorOut> listaSectores;
-	
+	private List<OperacionOut> listaOperaciones;
 }

@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.reca.eml.LiquidarLoteOp71Out;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Liquidar LoteOP71
 //** Interventor Principal: JJSC
-//** Fecha Creación: 29/Dic/2021
+//** Fecha Creación: 18/01/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -90,9 +90,8 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			String ic_secuencia_lote, String id_fec_aplicado, String ic_descripcion1, String ic_cod_inversion)
 			throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
-					.concat(Constantes.LIQUIDAR_LOTEOP71_PACKAGE).concat(".")
-					.concat(Constantes.LIQUIDAR_LOTEOP71_BTN_GENERAR_INTERFACE);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.LIQUIDAR_LOTEOP71_PACKAGE)
+					.concat(".").concat(Constantes.LIQUIDAR_LOTEOP71_BTN_GENERAR_INTERFACE);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("ic_identif_operacion", String.class, ParameterMode.IN);
@@ -101,7 +100,7 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			query.registerStoredProcedureParameter("id_fec_aplicado", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_descripcion1", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_cod_inversion", String.class, ParameterMode.IN);
-			
+
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
@@ -120,18 +119,13 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			throw GenericException(e);
 		}
 	}
-	
-	public LiquidarLoteOp71Out liquidar(String ic_identif_operacion,
-            String ic_fecha_transferencia,String ic_secuencia_lote,
-            Double in_monto_liquidado,
-            Double in_importes_aceptados,
-            String ic_siefore,
-            String ic_agrupacion)
-			throws AforeException {
+
+	public LiquidarLoteOp71Out liquidar(String ic_identif_operacion, String ic_fecha_transferencia,
+			String ic_secuencia_lote, Double in_monto_liquidado, Double in_importes_aceptados, String ic_siefore,
+			String ic_agrupacion) throws AforeException {
 		try {
-			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
-					.concat(Constantes.LIQUIDAR_LOTEOP71_PACKAGE).concat(".")
-					.concat(Constantes.LIQUIDAR_LOTEOP71_BTN_LIQUIDAR);
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.LIQUIDAR_LOTEOP71_PACKAGE)
+					.concat(".").concat(Constantes.LIQUIDAR_LOTEOP71_BTN_LIQUIDAR);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 
 			query.registerStoredProcedureParameter("ic_identif_operacion", String.class, ParameterMode.IN);
@@ -141,7 +135,7 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			query.registerStoredProcedureParameter("in_importes_aceptados", Double.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_siefore", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_agrupacion", String.class, ParameterMode.IN);
-			
+
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
@@ -156,6 +150,41 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			LiquidarLoteOp71Out res = new LiquidarLoteOp71Out();
 			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
 			res.setOc_Mensaje((String) query.getOutputParameterValue("oc_Mensaje"));
+			return res;
+		} catch (Exception e) {
+			throw GenericException(e);
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public LiquidarLoteOp71Out getDetalle(String ic_identif_operacion, String id_fecha_transferencia,
+			String ic_secuencia_lote, String ic_Siefore, String ic_agrupacion) throws AforeException {
+		try {
+			String storedFullName = Constantes.USUARIO_PENSION.concat(".").concat(Constantes.LIQUIDAR_LOTEOP71_PACKAGE)
+					.concat(".").concat(Constantes.LIQUIDAR_LOTEOP71_FO_DETA);
+			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "OperacionOut");
+
+			query.registerStoredProcedureParameter("ic_identif_operacion", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("id_fecha_transferencia", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_secuencia_lote", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_Siefore", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_agrupacion", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("oc_cursor", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+
+			query.setParameter("ic_identif_operacion", ic_identif_operacion);
+			query.setParameter("id_fecha_transferencia", id_fecha_transferencia);
+			query.setParameter("ic_secuencia_lote", ic_secuencia_lote);
+			query.setParameter("ic_Siefore", ic_Siefore);
+			query.setParameter("ic_agrupacion", ic_agrupacion);
+
+			LiquidarLoteOp71Out res = new LiquidarLoteOp71Out();
+			res.setListaOperaciones(query.getResultList());
+			
+			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
+			res.setOc_Mensaje((String) query.getOutputParameterValue("oc_Mensaje"));
+
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);

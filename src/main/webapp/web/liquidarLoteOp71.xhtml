@@ -22,9 +22,111 @@
 	
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
+		
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{liquidarLoteOp71.listLotes}"
+					filteredValue="#{liquidarLoteOp71.filtro}"
+					globalFilterFunction="#{liquidarLoteOp71.globalFilterFunction}"
+					selectionMode="single"
+					selection="#{liquidarLoteOp71.selectedLote}"
+					rowKey="#{registro.fec_lote}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{liquidarLoteOp71.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE LOTES" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Fecha lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Id. Operación" styleClass="gridCell-right">
+						<h:outputText value="#{registro.id_operacion}" />
+					</p:column>
+					<p:column headerText="Fecha lote" styleClass="gridCell-right">
+						<h:outputText value="#{registro.fec_lote}" />
+					</p:column>
+					<p:column headerText="Consecutivo" styleClass="gridCell-right">
+						<h:outputText value="#{registro.consecutivo_dia}" />
+					</p:column>
+					
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{liquidarLoteOp71.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update="form:vLote form:vConsec form:vFecha"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="LIQUIDAR LOTE OP71">
+				<p:panelGrid styleClass="ui-noborder" style="margin-bottom:20px">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Id. Operación " />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vLote" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;border:#{liquidarLoteOp71.border}">
+								<p:outputLabel style="padding-right:10px"
+									value="#{liquidarLoteOp71.id_operacion}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+								value="..."  update="dlg1" oncomplete="PF('dlg2').show();"/>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha lote: " />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vFecha" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;">
+								<p:outputLabel style="padding-right:10px"
+									value="#{liquidarLoteOp71.fec_lote}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Consecutivo: " />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vConsec" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;">
+								<p:outputLabel style="padding-right:10px"
+									value="#{liquidarLoteOp71.consecutivo_dia}" />
+							</p:outputPanel>
+						</p:column>
+						
+					</p:row>
+				</p:panelGrid>
+				
 				
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{liquidarLoteOp71}" />
