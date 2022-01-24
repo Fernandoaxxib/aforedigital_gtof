@@ -1,7 +1,5 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
-import java.util.Date;
-
 import javax.persistence.MappedSuperclass;
 
 import lombok.AllArgsConstructor;
@@ -22,10 +20,10 @@ import lombok.NoArgsConstructor;
 public class RecaRechazoEjecutarIn {
 
 	private String idOperacion;
-	private Date fechaLote;
+	private String fechaLote;
 	private String secLote;
-	private String tipoRegistro;
+	private Integer tipoRegistro;
 	private String idServicio;
-	private String consecutivo;
+	private Integer consecutivo;
 	private String nss;
 }

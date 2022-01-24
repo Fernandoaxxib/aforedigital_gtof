@@ -1,0 +1,247 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{recaudacionRechazo.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="blue"
+				outcome="/web/recaudacionIMSSProceso.jsf" includeViewParams="true"
+				value="PROCESO">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/recaudacionIMSSReporte.jsf" includeViewParams="true"
+				value="REPORTE">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="green" style="margin-left:13px !important"
+				outcome="/web/recaudacionIMSSRechazo.jsf" includeViewParams="true"
+				value="RECHAZO">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="RECAUDACIONES IMSS RECHAZO">
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+
+					<p:row>
+
+						<p:column style="width:15%">
+							<p:outputLabel value="Id operación: " style="margin-left:6px"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:15%">
+							<p:selectOneMenu id="lotes"
+								style="width:120px; vertical-align: inherit;" var="t"
+								converter="selectOneMenuConverter"
+								value="#{recaudacionRechazo.lote}">
+
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="" />
+								<f:selectItems value="#{recaudacionRechazo.lotes}" var="c"
+									itemLabel="#{c.idOperacion}" itemValue="#{c}" />
+								<p:ajax update="pGrid pMov" event="change" listener="#{recaudacionRechazo.changeLote}" />
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Lote" />
+									</f:facet>
+									<h:outputText value="#{t.lote}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Oper" />
+									</f:facet>
+									<h:outputText value="#{t.idOperacion}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Fecha" />
+									</f:facet>
+									<h:outputText value="#{t.fechaLote}" />
+								</p:column>
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Sec" />
+									</f:facet>
+									<h:outputText value="#{t.secLote}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+
+						<p:column style="width:15%">
+							<p:outputLabel value="Fecha lote: " style="margin-left:-6px"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:15%">
+							<p:outputLabel value="#{recaudacionRechazo.lote.fechaLote}" />
+						</p:column>
+
+						<p:column style="width:15%">
+							<p:outputLabel value="Sec. lote: " style="margin-left:-9px"
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:15%">
+							<p:outputLabel value="#{recaudacionRechazo.lote.secLote}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="6">
+							<p:commandButton class="blue"
+								actionListener="#{recaudacionRechazo.buscar}"
+								update="pGrid pMov result" value="buscar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panel id="pMov" header="RECHAZOS" style="margin-top:20px">
+					<p:dataTable id="movimientos" var="mon" paginatorPosition="bottom"
+						emptyMessage="#{recaudacionRechazo.mensajeTabla}"
+						selection="#{recaudacionRechazo.selectedSolicitud}"
+						widgetVar="listSolicitudes"
+						rowKey="#{mon.nss}"
+						value="#{recaudacionRechazo.rechazos}" rows="5" paginator="true"
+						rowsPerPageTemplate="5,10,15">
+						
+						<f:facet name="header">
+						<p:panelGrid class="no-border no-padding" style="margin-top:10px;">
+							<p:row>
+								<p:column
+									style="text-align: left !important;width: 35px !important;">
+									<p:commandButton id="btnMarcar"
+										styleClass="blue ui-button-text" type="submit"
+										update="movimientos"
+										action="#{recaudacionRechazo.marcarTodos}"
+										onclick="PF('listSolicitudes').selectAllRows()"
+										value="Marcar Todos"
+										rendered="#{recaudacionRechazo.mostrarEjecutar}"
+										 ajax="true"
+										global="false" />
+								</p:column>
+								<p:column
+									style="text-align: left !important;width: 40px !important;">
+									<p:commandButton id="btnDesmarcar"
+										styleClass="blue ui-button-text" type="submit"
+										update="movimientos"
+										action="#{recaudacionRechazo.desmarcarTodos}"
+										onclick="PF('listSolicitudes').unselectAllRows()"
+										value="Desmarcar Todos"
+										rendered="#{recaudacionRechazo.mostrarEjecutar}"
+										 ajax="true"
+										global="false" />
+								</p:column>
+								<p:column
+									style="text-align: left !important;width: 65px !important;">
+									<p:commandButton id="btnAprobar"
+										styleClass="blue ui-button-text"
+										action="#{recaudacionRechazo.ejecutar}" type="submit"
+										update="movimientos form:result"
+										value="Procesar seleccionados"
+										rendered="#{recaudacionRechazo.mostrarEjecutar}"
+										 ajax="true"
+										global="true" />
+								</p:column>
+								<p:column
+									style="text-align: right !important;width: 100px !important;">
+									<p:outputPanel>
+										<h:outputLabel for="registros"
+											value="#{msg.aprob_label_totalRegistros}"
+											style="font-size:12px" />
+										<h:outputText id="totalRegistros"
+											value="#{recaudacionRechazo.count}" />
+									</p:outputPanel>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</f:facet>
+
+						<p:ajax event="rowSelectCheckbox"
+							listener="#{recaudacionRechazo.seleccion}"
+							update="movimientos" global="false" />
+
+						<p:ajax event="rowUnselectCheckbox"
+							listener="#{recaudacionRechazo.deseleccion}"
+							update="movimientos" global="false" />
+
+						<f:facet name="paginatorBottomLeft">
+							<p:outputPanel style="margin-top:5px">
+								<p:outputLabel value="Registros seleccionados: " />
+								<p:outputLabel id="count"
+									value="#{recaudacionRechazo.seleccionados}" />
+							</p:outputPanel>
+						</f:facet>
+
+						<p:column selectionMode="multiple"
+							style="width:16px;text-align:center;" />
+
+						<p:column headerText="NSS" style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.nss}" />
+						</p:column>
+
+						<p:column headerText="CURP"
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.curp}" />
+						</p:column>
+
+						<p:column headerText="Clave rechazo"
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.claveMotivoRechazo}" />
+						</p:column>
+
+						<p:column headerText="RCV" style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.rcv}" />
+						</p:column>
+
+						<p:column headerText="Vol."
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.aportacionesVol}" />
+						</p:column>
+
+						<p:column headerText="Com."
+							style="width:100px;text-align: center;">
+							<h:outputText value="#{mon.aportacionesCom}" />
+						</p:column>
+
+						<p:column headerText="Motivo rechazo"
+							style="width:200px;text-align: center;">
+							<h:outputText value="#{mon.motivoRechazo}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{recaudacionRechazo}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

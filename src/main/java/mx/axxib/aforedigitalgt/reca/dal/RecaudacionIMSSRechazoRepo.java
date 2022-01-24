@@ -1,7 +1,5 @@
 package mx.axxib.aforedigitalgt.reca.dal;
 
-import java.util.Date;
-
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
@@ -26,6 +24,7 @@ import mx.axxib.aforedigitalgt.reca.eml.RecaudacionPatronalOut;
 @Repository
 @Transactional
 public class RecaudacionIMSSRechazoRepo extends RepoBase {
+	
 	@SuppressWarnings("unchecked")
 	public LotesOut lotes() throws AforeException {
 //		PROCEDURE PRC_LOTE(SL_QUERY  OUT CURSOR_QUERY,
@@ -37,6 +36,7 @@ public class RecaudacionIMSSRechazoRepo extends RepoBase {
 					.concat(Constantes.RECAUDACION_IMSS_PROCESO_LOTE);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "Lotes");
 			
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
@@ -52,7 +52,7 @@ public class RecaudacionIMSSRechazoRepo extends RepoBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public RecaudacionPatronalOut patronal(String idOperacion, Date fechaLote, String secLote) throws AforeException {
+	public RecaudacionPatronalOut patronal(RecaRechazoEjecutarIn in) throws AforeException {
 //		PROCEDURE PRC_RECA_PATRONAL(ic_IdOper IN VARCHAR2,
 //                ic_FecLote IN VARCHAR2,
 //                ic_SecLote IN VARCHAR2,
@@ -78,15 +78,16 @@ public class RecaudacionIMSSRechazoRepo extends RepoBase {
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "RecaudacionPatronal");
 			
 			query.registerStoredProcedureParameter("ic_IdOper", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("ic_FecLote", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_FecLote", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_SecLote", String.class, ParameterMode.IN);
-		
+			
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 
-			query.setParameter("ic_IdOper", idOperacion);
-			query.setParameter("ic_FecLote", fechaLote);
-			query.setParameter("ic_SecLote", secLote);
+			query.setParameter("ic_IdOper", in.getIdOperacion());
+			query.setParameter("ic_FecLote", in.getFechaLote());
+			query.setParameter("ic_SecLote", in.getSecLote());
 			
 			RecaudacionPatronalOut res = new RecaudacionPatronalOut();
 			res.setRechazos(query.getResultList());
@@ -118,11 +119,11 @@ public class RecaudacionIMSSRechazoRepo extends RepoBase {
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 			
 			query.registerStoredProcedureParameter("ic_IdOper", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("ic_FecchaTrans", Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("ic_FecchaTrans", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_SecLote", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("in_TipoReg", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("in_TipoReg", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_IdServ", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("in_Cons", String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter("in_Cons", Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_NumNssTrab", String.class, ParameterMode.IN);
 		
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);

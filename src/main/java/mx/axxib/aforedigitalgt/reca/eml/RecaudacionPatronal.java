@@ -25,9 +25,9 @@ import lombok.NoArgsConstructor;
 				classes = { @ConstructorResult(targetClass = RecaudacionPatronal.class, 
 					columns = {
 						@ColumnResult(name = "identificador_operacion", type = String.class), 
-						@ColumnResult(name = "tipo_registro", type = String.class), 
+						@ColumnResult(name = "tipo_registro", type = Integer.class), 
 						@ColumnResult(name = "identificador_servicio", type = String.class),
-						@ColumnResult(name = "consecutivo", type = String.class),
+						@ColumnResult(name = "consecutivo", type = Integer.class),
 						@ColumnResult(name = "numero_nss_trabajador", type = String.class),
 						@ColumnResult(name = "curp", type = String.class),
 						@ColumnResult(name = "clave_motivo_rechazo", type = String.class),
@@ -44,9 +44,9 @@ import lombok.NoArgsConstructor;
 
 public class RecaudacionPatronal {
 	private String idOper;
-	private String tipoRegistro;
+	private Integer tipoRegistro;
 	private String idServicio;
-	private String consecutivo;
+	private Integer consecutivo;
 	private String nss;
 	private String curp;
 	private String claveMotivoRechazo;
