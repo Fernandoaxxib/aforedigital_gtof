@@ -335,5 +335,12 @@ public class Constantes {
 	public static final String CONCILIACION_SEMACOTI_IMSS_PACKAGE = "PKG_RECA_FORSCIMP";
 	public static final String CONCILIACION_SEMACOTI_IMSS_BUSCAR = "PRC_BUSCAR";
 	public static final String CONCILIACION_SEMACOTI_IMSS_DATOS = "PRC_DATOS";
+	
+	// CONTINGENCIA
+	public static final String CONTINGENCIA_PACKAGE = "PKG_RECA_FORSCIMP";
+	public static final String CONTINGENCIA_FOLIO = "PRC_FOLIO_SOL";
+	public static final String CONTINGENCIA_SELLOS = "PRC_SELLOS";
+	public static final String CONTINGENCIA_ASIGNAR = "PRC_BTN_ASIGNAR";
+	public static final String CONTINGENCIA_EXPEDIENTE = "PRC_ENVIAR_EXPEDIENTE";
 
 }
