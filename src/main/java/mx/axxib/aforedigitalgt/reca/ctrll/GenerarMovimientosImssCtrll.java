@@ -120,6 +120,13 @@ public class GenerarMovimientosImssCtrll extends ControllerBase {
 
 					try {
 						MovimientosOut mov = service.procesar(1, x.getNSS());
+						if(mov.getP_ESTATUS() == 2) {
+							GenerarErrorNegocio(mov.getP_MENSAJE());
+						} else if(mov.getP_ESTATUS() == 0) {
+							pr2.setStatus(mov.getP_MENSAJE());
+							pr2.setFechaFinal(DateUtil.getNowDate());
+							resultados.add(pr2);
+						}
 					} catch (Exception e) {
 						pr2 = GenericException(e);
 						pr2.setFechaFinal(DateUtil.getNowDate());

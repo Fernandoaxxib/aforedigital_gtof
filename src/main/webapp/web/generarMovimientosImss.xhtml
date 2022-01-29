@@ -27,7 +27,8 @@
 		<h:form id="form">
 			<p:panel id="busqueda"
 				header="GENERACIÓN DE MOVIMIENTOS SEMANAS DE COTIZACIÓN IMSS">
-				<p:panelGrid id="fechas" styleClass="ui-noborder" style="margin-bottom:20px !important">
+				<p:panelGrid id="fechas" styleClass="ui-noborder"
+					style="margin-bottom:20px !important">
 					<p:row>
 						<p:column style="width:78px">
 							<p:outputLabel value="Fecha inicio:" />
@@ -56,20 +57,17 @@
 							</p:datePicker>
 						</p:column>
 						<p:column>
-						   <p:commandButton id="btnConsultar"
-									styleClass="blue ui-button-text" type="submit"
-									value="Consultar"									
-									action="#{generarMovimientosImss.consultar}" ajax="true"
-									global="true"
-									update="form:fInicio form:fFin form:table1 form:result" />
+							<p:commandButton id="btnConsultar"
+								styleClass="blue ui-button-text" type="submit" value="Consultar"
+								action="#{generarMovimientosImss.consultar}" ajax="true"
+								global="true"
+								update="form:fInicio form:fFin form:table1 form:result" />
 						</p:column>
 						<p:column>
-						   <p:commandButton id="btnGenerar"
-									styleClass="blue ui-button-text" type="submit"
-									value="Generar Movimientos"									
-									action="#{generarMovimientosImss.generarMovimientos}" ajax="true"
-									global="true"
-									update="form:table1 form:result" />
+							<p:commandButton id="btnGenerar" styleClass="blue ui-button-text"
+								type="submit" value="Generar Movimientos"
+								action="#{generarMovimientosImss.generarMovimientos}"
+								ajax="true" global="true" update="form:table1 form:result" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -92,19 +90,23 @@
 						<h:outputText value="#{mon.NUM_RESOLUCION}" style="float:right;" />
 					</p:column>
 					<p:column headerText="NSS" width="60">
-						<h:outputText value="#{mon.NSS}" style="float:right;"/>
+						<h:outputText value="#{mon.NSS}" style="float:right;" />
 					</p:column>
 					<p:column headerText="Nombre" width="140">
 						<h:outputText value="#{mon.NOMBRE}" />
 					</p:column>
 					<p:column headerText="Fecha Retiro" width="40">
-						<h:outputText value="#{mon.MR_FEC_RETIRO}" style="float:right;"/>
+						<h:outputText value="#{mon.MR_FEC_RETIRO}" style="float:right;" />
 					</p:column>
 					<p:column headerText="Monto Reintegrar" width="60">
-						<h:outputText value="#{mon.MR_MONTO_REINTEGRAR}" style="float:right;"/>
+						<h:outputText value="#{mon.MR_MONTO_REINTEGRAR}"
+							style="float:right;">
+							<f:convertNumber pattern="##,##0.00" />
+						</h:outputText>
 					</p:column>
 					<p:column headerText="Semanas Reintegro" width="40">
-						<h:outputText value="#{mon.MR_SEMANAS_REINTEGRAR}" style="float:right;"/>
+						<h:outputText value="#{mon.MR_SEMANAS_REINTEGRAR}"
+							style="float:right;" />
 					</p:column>
 					<p:column headerText="Estatus Expediente" width="100">
 						<h:outputText value="#{mon.DESC_ENVIO_IMG}" />
