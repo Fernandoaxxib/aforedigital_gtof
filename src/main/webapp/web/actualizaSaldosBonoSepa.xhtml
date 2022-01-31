@@ -107,7 +107,8 @@
 
 		<h:form id="form">
 			<p:panel id="pnl1" header="ACTUALIZAR IMPORTE FOVISSSTE">
-				<p:panelGrid styleClass="ui-noborder" style="margin-bottom:20px">
+				<p:panelGrid id="pnlBotones" styleClass="ui-noborder"
+					style="margin-bottom:20px">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Lote: " />
@@ -130,12 +131,12 @@
 							<p:datePicker id="fechaAplicado"
 								value="#{actualizaSaldosBonoSepa.fecha}" locale="es"
 								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
-								monthNavigator="true"
+								monthNavigator="true" maxdate="#{actualizaSaldosBonoSepa.today}"
 								inputStyle="width:100px; text-align:right;" readonlyInput="true">
 							</p:datePicker>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Cod. Inversión: " />
+							<p:outputLabel value="Código. Inversión: " />
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="combSiefore" style="width:100px" var="t"
@@ -164,13 +165,13 @@
 						<p:column>
 							<p:commandButton id="btnConsultar" styleClass="blue"
 								type="submit"
-								update="form:monto92 form:aivs92 form:monto08 form:aivs08 form:monto92_2 form:aivs92_2 form:monto08_2 form:aivs08_2 form:vLote form:fechaAplicado form:result form:btnConsultar"
+								update="form:pnlBotones form:monto92 form:aivs92 form:monto08 form:aivs08 form:monto92_2 form:aivs92_2 form:monto08_2 form:aivs08_2  form:result form:btnConsultar"
 								action="#{actualizaSaldosBonoSepa.consultar}" ajax="true"
 								style="margin-left:10px" value="Consultar" />
 						</p:column>
 						<p:column>
 							<p:commandButton id="btnEjecutar" styleClass="blue"
-								update="form:result"
+								update="form:pnlBotones form:result"
 								action="#{actualizaSaldosBonoSepa.ejecutar}"
 								style="margin-left:10px" value="Ejecutar" />
 						</p:column>
@@ -189,7 +190,9 @@
 								<p:outputPanel class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel id="monto92" style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 							<p:column>
@@ -199,7 +202,9 @@
 								<p:outputPanel class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel id="aivs92" style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_aivs}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 						</p:row>
@@ -211,7 +216,9 @@
 								<p:outputPanel class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel id="monto08" style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente08}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente08}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 							<p:column>
@@ -221,7 +228,9 @@
 								<p:outputPanel class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel id="aivs08" style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_aivs08}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs08}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 						</p:row>
@@ -238,7 +247,9 @@
 								<p:outputPanel id="monto92_2" class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente_C}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente_C}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 							<p:column>
@@ -248,7 +259,9 @@
 								<p:outputPanel id="aivs92_2" class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_aivs_C}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs_C}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 						</p:row>
@@ -260,7 +273,9 @@
 								<p:outputPanel id="monto08_2" class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente08_C}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_monto_pendiente08_C}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 							<p:column>
@@ -270,7 +285,9 @@
 								<p:outputPanel id="aivs08_2" class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel style="padding-right:10px"
-										value="#{actualizaSaldosBonoSepa.montos.on_aivs08_C}" />
+										value="#{actualizaSaldosBonoSepa.montos.on_aivs08_C}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 						</p:row>

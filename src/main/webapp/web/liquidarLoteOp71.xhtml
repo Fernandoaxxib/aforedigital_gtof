@@ -8,8 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{liquidarLoteOp71.iniciar}"
-			type="preRenderView" />
+		<f:event listener="#{liquidarLoteOp71.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 	<ui:define name="menu">
@@ -19,10 +18,10 @@
 	<ui:define name="submenu">
 		<ui:include src="subMenuRecaudaciones.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
-		
+
 		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
 			width="45%" resizable="false" styleClass="styleWhite">
 			<h:form>
@@ -30,8 +29,7 @@
 					scrollHeight="250" value="#{liquidarLoteOp71.listLotes}"
 					filteredValue="#{liquidarLoteOp71.filtro}"
 					globalFilterFunction="#{liquidarLoteOp71.globalFilterFunction}"
-					selectionMode="single"
-					selection="#{liquidarLoteOp71.selectedLote}"
+					selectionMode="single" selection="#{liquidarLoteOp71.selectedLote}"
 					rowKey="#{registro.fec_lote}" emptyMessage="Sin información"
 					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
 
@@ -72,12 +70,13 @@
 					<p:column headerText="Consecutivo" styleClass="gridCell-right">
 						<h:outputText value="#{registro.consecutivo_dia}" />
 					</p:column>
-					
+
 				</p:dataTable>
 				<p:outputPanel style="margin-top:20px;text-align:right">
 					<p:commandButton value="Aceptar"
 						actionListener="#{liquidarLoteOp71.opcionSeleccionada2}"
-						oncomplete="PF('dlg2').hide();" update="form:vLote form:vConsec form:vFecha"
+						oncomplete="PF('dlg2').hide();"
+						update="form:vLote form:vConsec form:vFecha"
 						styleClass="blue ui-button-text" />
 					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
 						styleClass="blue ui-button-text" style="margin-left:13px" />
@@ -94,21 +93,21 @@
 						</p:column>
 						<p:column>
 							<p:outputPanel id="vLote" class="outputlabel-shadow"
-								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;border:#{liquidarLoteOp71.border}">
+								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:-15px;border:#{liquidarLoteOp71.border}">
 								<p:outputLabel style="padding-right:10px"
 									value="#{liquidarLoteOp71.id_operacion}" />
 							</p:outputPanel>
 						</p:column>
 						<p:column>
 							<p:commandButton id="btnC" styleClass="blue" style="width:35px"
-								value="..."  update="dlg1" oncomplete="PF('dlg2').show();"/>
+								value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fecha lote: " />
+							<p:outputLabel value="Fecha lote:" />
 						</p:column>
 						<p:column>
 							<p:outputPanel id="vFecha" class="outputlabel-shadow"
-								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;">
+								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:15px;">
 								<p:outputLabel style="padding-right:10px"
 									value="#{liquidarLoteOp71.fec_lote}" />
 							</p:outputPanel>
@@ -118,16 +117,130 @@
 						</p:column>
 						<p:column>
 							<p:outputPanel id="vConsec" class="outputlabel-shadow"
-								style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px;">
+								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:10px;">
 								<p:outputLabel style="padding-right:10px"
 									value="#{liquidarLoteOp71.consecutivo_dia}" />
 							</p:outputPanel>
 						</p:column>
-						
+						<p:column>
+							<p:commandButton styleClass="blue" style="margin-right:10px" type="submit"
+								value="Consultar" id="btnConsultar" update="form:table1 form:result form:vLote form:grid2"
+								action="#{liquidarLoteOp71.consultar}" />
+
+							<p:commandButton styleClass="blue" type="submit"
+								value="Liquidar" id="btnLiquidar" update="form:result"
+								action="#{liquidarLoteOp71.liquidar}" />
+						</p:column>
 					</p:row>
 				</p:panelGrid>
-				
-				
+				<p:panelGrid id="grid2" styleClass="ui-noborder" style="margin-bottom:20px">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Siefore:" style="margin-right:35px" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combSiefore"
+								style="width:90px;margin-right: 32px" var="t"
+								converter="selectOneMenuConverter"
+								value="#{liquidarLoteOp71.selectedSiefore}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{liquidarLoteOp71.listaSiefore}" var="c"
+									itemLabel="#{c.clave_procesar}" itemValue="#{c}" />
+
+								<p:column>
+									<h:outputText value="#{t.clave_procesar}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Agrupación:" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combAgrupacion"
+								style="width: 90px;margin-right: 15px;"
+								value="#{liquidarLoteOp71.agrupacion}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+								<f:selectItem itemLabel="AGRUPACIÓN RCV" itemValue="RCV" />
+								<f:selectItem itemLabel="AGRUPACIÓN GUB" itemValue="GUB" />
+								<f:selectItem itemLabel="TODAS" itemValue="TOD" />
+							</p:selectOneMenu>
+						</p:column>
+						<p:column style="width:500px">
+							<p:selectBooleanCheckbox value="#{liquidarLoteOp71.band}"
+								itemLabel="Generar Interface">
+								<p:ajax listener="#{liquidarLoteOp71.habilitar}"
+									update="form:pnl3" />
+							</p:selectBooleanCheckbox>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnl3" styleClass="ui-noborder"
+					style="margin-bottom:20px">
+					<p:row>
+						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
+							<p:outputLabel value="Siefore:" />
+						</p:column>
+						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
+							<p:selectOneMenu id="combSectores" style="width:90px" var="t"
+								converter="selectOneMenuConverter"
+								value="#{liquidarLoteOp71.selectedSector}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{liquidarLoteOp71.listaSectores}" var="c"
+									itemLabel="#{c.clave_procesar}" itemValue="#{c}" />
+
+								<p:column>
+									<h:outputText value="#{t.clave_procesar}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
+							<p:outputLabel value="Fecha aplicado:" />
+						</p:column>
+						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
+							<p:datePicker id="fAplicado" value="#{liquidarLoteOp71.fecha}"
+								locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								yearNavigator="true" monthNavigator="true"
+								style="margin-left:-6px"
+								inputStyle="width:132px; text-align:right;"
+								maxdate="#{liquidarLoteOp71.fecActual}" readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:dataTable id="table1" var="mon" class="sinfondo"
+					value="#{liquidarLoteOp71.listaOperaciones}"
+					widgetVar="listSolicitudes"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					rowKey="#{mon.oc_desc_concepto}" style="border:0px" rows="10"
+					paginator="true" paginatorPosition="bottom"
+					rowsPerPageTemplate="5,10,15">
+
+
+
+					<p:column headerText="Concepto" width="150">
+						<h:outputText value="#{mon.oc_desc_concepto}" style="float:left;" />
+					</p:column>
+					<p:column headerText="Monto a liquidar" width="40">
+						<h:outputText value="#{mon.on_importes_aceptados}"
+							style="float:right;" />
+					</p:column>
+					<p:column headerText="Monto liquidado" width="40">
+						<h:outputText value="#{mon.on_monto_liquidado}"
+							style="float:right;" />
+					</p:column>
+					<p:column headerText="Monto abono" width="40">
+						<h:outputText value="#{mon.on_monto_abono}" style="float:right;" />
+					</p:column>
+					<p:column headerText="Fecha aplicado" width="40">
+						<h:outputText value="#{mon.od_fec_aplicado}" style="float:right;" />
+					</p:column>
+					<p:column headerText="Estado" width="40">
+						<h:outputText value="#{mon.oc_estado}" style="float:right;" />
+					</p:column>
+				</p:dataTable>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{liquidarLoteOp71}" />
 				</ui:include>

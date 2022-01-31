@@ -79,7 +79,10 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private Date fecha;
-	
+
+	@Getter
+	private Date today;
+
 	@Getter
 	@Setter
 	private String fechaCadena;
@@ -94,11 +97,12 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 				lote1 = null;
 				fecha = null;
 				border = "";
+				today = new Date();
 				montos = null;
 				filtro = null;
 				listLotes = null;
 				selectedLote = null;
-				fechaCadena=null;
+				fechaCadena = null;
 				listaIssSiefore = null;
 				selectedIssSiefore = null;
 				getLotes();
@@ -114,18 +118,13 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 		listaIssSiefore = resp.getListaIssSiefore();
 	}
 
-	public void getLotes() {
-		try {
-			if (listLotes == null) {
-				listLotes = service.getIssLote().getLotes();
-			} else {
-				PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
-			}
-			lote = null;
-		} catch (Exception e) {
-			GenericException(e);
+	public void getLotes() throws Exception {
+		if (listLotes == null) {
+			listLotes = service.getIssLote().getLotes();
+		} else {
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		}
-
+		lote = null;
 	}
 
 	public void consultar() {
@@ -133,7 +132,6 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 		try {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Consultar montos");
-
 			if (isFormValid(pr)) {
 				RespuestaOut res = service.getMontosRecaIsss(lote,
 						Integer.valueOf(selectedIssSiefore.getCod_inversion()));
@@ -170,9 +168,10 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 				return false;
 			} else {
 				DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-				fechaCadena = dateFormat.format(fecha);       
-				
+				fechaCadena = dateFormat.format(fecha);
 				if (selectedIssSiefore == null) {
+					UIInput combo = (UIInput) findComponent("combSiefore");
+					combo.setValid(false);
 					pr.setDescProceso("Selección de código de inversión");
 					pr.setStatus("El código de inversión es requerido");
 					return false;
@@ -209,7 +208,8 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 			pr.setDescProceso("Ejecutar");
 
 			if (isFormValid(pr)) {
-				RespuestaOut res = service.ejecutarRecaudacion(lote,fechaCadena, selectedIssSiefore.getCod_inversion(),"1");
+				RespuestaOut res = service.ejecutarRecaudacion(lote, fechaCadena, selectedIssSiefore.getCod_inversion(),
+						"1");
 				if (res.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -218,7 +218,7 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 					} else if (res.getOn_Estatus() == 0) {
 						pr.setStatus(res.getOc_Mensaje());
 					}
-				}				
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);

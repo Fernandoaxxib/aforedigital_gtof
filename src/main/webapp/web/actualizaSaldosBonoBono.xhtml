@@ -110,7 +110,8 @@
 
 		<h:form id="form">
 			<p:panel id="p1" header="BONO DE PENSIÓN">
-				<p:panelGrid styleClass="ui-noborder" style="margin-bottom:20px">
+				<p:panelGrid id="pnlBotones" styleClass="ui-noborder"
+					style="margin-bottom:20px">
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Lote: " />
@@ -133,12 +134,12 @@
 							<p:datePicker id="fechaAplicado"
 								value="#{actualizaSaldosBonoBono.fecha}" locale="es"
 								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
-								monthNavigator="true"
+								monthNavigator="true" maxdate="#{actualizaSaldosBonoBono.today}"
 								inputStyle="width:100px; text-align:right;" readonlyInput="true">
 							</p:datePicker>
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Cod. Inversión: " />
+							<p:outputLabel value="Código. Inversión: " />
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="combSiefore" style="width:100px" var="t"
@@ -167,14 +168,15 @@
 						<p:column>
 							<p:commandButton id="btnConsultar" styleClass="blue"
 								type="submit"
-								update="form:udis form:pesos form:vLote form:fechaAplicado form:result form:btnConsultar"
+								update="form:pnlBotones form:udis form:pesos form:result form:btnConsultar"
 								action="#{actualizaSaldosBonoBono.consultar}" ajax="true"
 								style="margin-left:10px" value="Consultar" />
 						</p:column>
 						<p:column>
 							<p:commandButton id="btnEjecutar" styleClass="blue"
 								action="#{actualizaSaldosBonoBono.ejecutar}"
-								update="form:result" style="margin-left:10px" value="Ejecutar" />
+								update="form:pnlBotones form:result" style="margin-left:10px"
+								value="Ejecutar" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
@@ -190,7 +192,9 @@
 								<p:outputPanel class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel id="udis" style="padding-right:10px"
-										value="#{actualizaSaldosBonoBono.montos.on_udis}" />
+										value="#{actualizaSaldosBonoBono.montos.on_udis}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 							<p:column>
@@ -200,7 +204,9 @@
 								<p:outputPanel class="outputlabel-shadow"
 									style="text-align: right !important;padding-top:5px;width:120px;height:17px !important;margin-right:-15px">
 									<p:outputLabel id="pesos" style="padding-right:10px"
-										value="#{actualizaSaldosBonoBono.montos.on_monto_udis}" />
+										value="#{actualizaSaldosBonoBono.montos.on_monto_udis}">
+										<f:convertNumber pattern="##,##0.000000" />
+									</p:outputLabel>
 								</p:outputPanel>
 							</p:column>
 						</p:row>

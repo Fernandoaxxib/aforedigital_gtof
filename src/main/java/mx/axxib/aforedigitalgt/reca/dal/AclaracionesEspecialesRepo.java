@@ -118,8 +118,8 @@ public class AclaracionesEspecialesRepo extends RepoBase {
 			InfoPunteoOut res = new InfoPunteoOut();
 			
 			res.setDatosPunteo(query.getResultList());
-			res.setOn_Estatus((Integer) query.getOutputParameterValue("P_ESTATUS") );
-			res.setOc_Mensaje((String) query.getOutputParameterValue("P_MENSAJE"));
+			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus") );
+			res.setOc_Mensaje((String) query.getOutputParameterValue("oc_Mensaje"));
 			
 			return res;
 		} catch (Exception e) {

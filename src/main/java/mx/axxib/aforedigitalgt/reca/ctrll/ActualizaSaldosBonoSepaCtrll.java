@@ -34,11 +34,11 @@ import mx.axxib.aforedigitalgt.util.DateUtil;
 @Scope(value = "session")
 @Component(value = "actualizaSaldosBonoSepa")
 @ELBeanName(value = "actualizaSaldosBonoSepa")
-public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
+public class ActualizaSaldosBonoSepaCtrll extends ControllerBase {
 
 	@Autowired
 	private ActualizaSaldosBonoSepaServ service;
-	
+
 	@Getter
 	@Setter
 	private String lote;
@@ -68,16 +68,19 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 	private LoteSepaOut lote1;
 
 	@Getter
+	private Date today;
+
+	@Getter
 	@Setter
 	MontosRecaOut montos;
-	
+
 	@Getter
 	private String border;
-	
+
 	@Getter
 	@Setter
 	private Date fecha;
-	
+
 	@Getter
 	@Setter
 	private String fechaCadena;
@@ -90,12 +93,13 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 			try {
 				lote = null;
 				lote1 = null;
-				fecha=null;
-				border="";
+				fecha = null;
+				border = "";
+				today = new Date();
 				montos = null;
 				filtro = null;
 				listLotes = null;
-				fechaCadena=null;
+				fechaCadena = null;
 				selectedLote = null;
 				listaIssSiefore = null;
 				selectedIssSiefore = null;
@@ -112,18 +116,13 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 		listaIssSiefore = resp.getListaIssSiefore();
 	}
 
-	public void getLotes() {
-		try {
-			if (listLotes == null) {
-				listLotes = service.getSeparacionLote().getLotesSepa();
-			} else {
-				PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
-			}
-			lote = null;
-		} catch (Exception e) {
-			GenericException(e);
+	public void getLotes() throws Exception {
+		if (listLotes == null) {
+			listLotes = service.getSeparacionLote().getLotesSepa();
+		} else {
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		}
-
+		lote = null;
 	}
 
 	public void consultar() {
@@ -133,15 +132,15 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 			pr.setDescProceso("Consultar montos");
 
 			if (isFormValid(pr)) {
-				RespuestaOut res = service.getMontosSepa(lote,Integer.valueOf(selectedIssSiefore.getCod_inversion()));
-				if(res.getOn_Estatus()==null) {
+				RespuestaOut res = service.getMontosSepa(lote, Integer.valueOf(selectedIssSiefore.getCod_inversion()));
+				if (res.getOn_Estatus() == null) {
 					montos = res.getMontosRecaIsss();
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-				}else {
-					if(res.getOn_Estatus()==2) {
+				} else {
+					if (res.getOn_Estatus() == 2) {
 						GenerarErrorNegocio("Error en base de datos");
 					}
-				}							
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
@@ -158,22 +157,24 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 			pr.setFechaFinal(DateUtil.getNowDate());
 			return false;
 		} else {
-			border="";			
-			if(fecha==null) {
+			border = "";
+			if (fecha == null) {
 				UIInput radio = (UIInput) findComponent("fechaAplicado");
 				radio.setValid(false);
 				pr.setDescProceso("Fecha de aplicado");
 				pr.setStatus("La fecha de aplicado es requerida");
 				return false;
-			}else {
+			} else {
 				DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 				fechaCadena = dateFormat.format(fecha);
-				if (selectedIssSiefore == null) {			
+				if (selectedIssSiefore == null) {
+					UIInput combo = (UIInput) findComponent("combSiefore");
+					combo.setValid(false);
 					pr.setDescProceso("Selección de código de inversión");
 					pr.setStatus("El código de inversión es requerido");
 					return false;
 				}
-			}			
+			}
 		}
 		return true;
 	}
@@ -197,6 +198,7 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 			lote = lote1.getLote_carga();
 		}
 	}
+
 	public void ejecutar() {
 		ProcessResult pr = new ProcessResult();
 		try {
@@ -204,7 +206,7 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 			pr.setDescProceso("Ejecutar");
 
 			if (isFormValid(pr)) {
-				RespuestaOut res = service.ejecutarSeparacion(lote,fechaCadena,selectedIssSiefore.getCod_inversion());
+				RespuestaOut res = service.ejecutarSeparacion(lote, fechaCadena, selectedIssSiefore.getCod_inversion());
 				if (res.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -213,7 +215,7 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 					} else if (res.getOn_Estatus() == 0) {
 						pr.setStatus(res.getOc_Mensaje());
 					}
-				}				
+				}
 			}
 		} catch (Exception e) {
 			pr = GenericException(e);
@@ -222,6 +224,4 @@ public class ActualizaSaldosBonoSepaCtrll extends ControllerBase{
 			resultados.add(pr);
 		}
 	}
-	
-	
 }
