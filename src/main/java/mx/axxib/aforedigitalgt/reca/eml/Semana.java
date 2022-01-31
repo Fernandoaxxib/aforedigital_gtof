@@ -11,6 +11,7 @@ import javax.persistence.SqlResultSetMappings;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import mx.axxib.aforedigitalgt.util.DateUtil;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Entidad de retorno de conciliación semanas de cotización IMSS
@@ -32,9 +33,9 @@ import lombok.NoArgsConstructor;
 						@ColumnResult(name = "MR_NUMERO_RESOLUCION", type = String.class),
 						@ColumnResult(name = "FEC_MOVIMTO", type = Date.class),
 						@ColumnResult(name = "NUM_MOVIMTO", type = Integer.class),
-						@ColumnResult(name = "SP_FEC_PAGO", type = Date.class),
-						@ColumnResult(name = "LQ_FEC_CONSULTA", type = Date.class),
-						@ColumnResult(name = "NP_FEC_RETIRO", type = Date.class)
+						@ColumnResult(name = "SP_FEC_PAGO", type = String.class),
+						@ColumnResult(name = "LQ_FEC_CONSULTA", type = String.class),
+						@ColumnResult(name = "NP_FEC_RETIRO", type = String.class)
 						
 					
 					})
@@ -48,7 +49,11 @@ public class Semana {
 	private String noResolucion;
 	private Date fechaMov;
 	private Integer noMov;
-	private Date fechaPago;
-	private Date fechaConsulta;
-	private Date fechaRetiro;
+	private String fechaPago;
+	private String fechaConsulta;
+	private String fechaRetiro;
+	
+	public Date getFechaPagoDate() {
+		 return DateUtil.getDateToString(fechaPago, "yyyy-MM-dd");
+	}
 }

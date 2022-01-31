@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{conciSemCotIMSS.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="blue"
+				outcome="/web/conciliacionSemanas.jsf" includeViewParams="true"
+				value="CONCILIACIÓN">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="green" style="margin-left:13px !important"
+				outcome="/web/cargaConciliados.jsf" includeViewParams="true"
+				value="CARGA">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/reporteConciliados.jsf" includeViewParams="true"
+				value="REPORTE">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/contingencia.jsf" includeViewParams="true"
+				value="CONTINGENCIA">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="CARGA CONCILIADOS">
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+
+					
+				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{conciSemCotIMSS}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

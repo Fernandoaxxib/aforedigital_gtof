@@ -1,0 +1,179 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{conciSemCotIMSS.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green"
+				outcome="/web/conciliacionSemanas.jsf" includeViewParams="true"
+				value="CONCILIACIÓN">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/cargaConciliados.jsf" includeViewParams="true"
+				value="CARGA">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/reporteConciliados.jsf" includeViewParams="true"
+				value="REPORTE">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/contingencia.jsf" includeViewParams="true"
+				value="CONTINGENCIA">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="CONCILIACIÓN SEMANAS COT. IMSS">
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="#{msg.modDesParc_solicitud_nss}" />
+							<p:inputText id="nss" value="#{conciSemCotIMSS.nss}"
+								maxlength="11" style="margin-left:5px;width:90px"></p:inputText>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha Inicial: " />
+							<p:datePicker id="fechaI"
+								inputStyle="width:120px; text-align:right;" yearNavigator="true"
+								monthNavigator="true" value="#{conciSemCotIMSS.fechaI}"
+								showIcon="true" locale="es" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha Final: " />
+							<p:datePicker id="fechaF" value="#{conciSemCotIMSS.fechaF}"
+								yearNavigator="true" monthNavigator="true"
+								inputStyle="width:120px; text-align:right;" showIcon="true"
+								locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
+
+						</p:column>
+
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{conciSemCotIMSS.buscar}"
+								update="pGrid pMontos pDet result" value="Consultar" />
+						</p:column>
+					</p:row>
+
+				</p:panelGrid>
+
+
+				<p:panel id="pMontos" header="Semanas" style="margin-top:20px">
+					<p:dataTable id="sem" var="mon"
+						emptyMessage="#{conciSemCotIMSS.mensajeTabla}"
+						selection="#{conciSemCotIMSS.selectedSemana}" rowKey="#{mon.nss}"
+						value="#{conciSemCotIMSS.semanas}">
+
+						<p:ajax event="rowSelectRadio" update="form:pDet form:result" />
+						<p:column id="radio" selectionMode="single"
+							style="width:20px;text-align:center" />
+
+						<p:column headerText="NSS">
+							<h:outputText value="#{mon.nss}" />
+						</p:column>
+
+						<p:column headerText="Nombre" style="width:250px">
+							<h:outputText value="#{mon.nombre}" />
+						</p:column>
+
+						<p:column headerText="No. resolución">
+							<h:outputText value="#{mon.noResolucion}" style="float:right"/>
+						</p:column>
+
+						<p:column headerText="Fecha reintegro">
+							<h:outputText value="#{mon.fechaMov}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Fecha pago">
+							<h:outputText value="#{mon.fechaPagoDate}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Semanas reintegradas" style="text-align:center">
+							<h:outputText value="#{mon.semReintegradas}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+
+				<p:panel id="pDet" header="Detalle" style="margin-top:20px">
+					<p:dataTable id="det" var="mon"
+						emptyMessage="#{conciSemCotIMSS.mensajeTabla}"
+						value="#{conciSemCotIMSS.detalle}">
+
+						<p:column headerText="Siefore" style="width:300px">
+							<h:outputText value="#{mon.descInversion}" />
+						</p:column>
+
+						<p:column headerText="Subcuenta">
+							<h:outputText value="#{mon.descSubcuenta}" />
+						</p:column>
+
+						<p:column headerText="Monto reintegrado">
+							<h:outputText value="#{mon.montoMov}" style="float:right">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Fecha movimiento">
+							<h:outputText value="#{mon.fechaMov}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Estado" style="width:50px;text-align:center">
+							<h:outputText value="#{mon.estado}" />
+						</p:column>
+
+						<p:column headerText="Fecha aplicado">
+							<h:outputText value="#{mon.fechaAplicado}" style="float:right">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+				</p:panel>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{conciSemCotIMSS}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+
+
+</ui:composition>

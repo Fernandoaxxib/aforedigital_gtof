@@ -50,8 +50,6 @@ public class SemanaDetalle {
 	private BigDecimal montoMov; //Monto
 	private Date fechaMov; //Fecha movimiento
 	private Date fechaAplicado; //Fecha aplicado
-	private Integer estado; //Estado
-	private Date fechaPago;
-	private Date fechaConsulta;
-	private Date fechaRetiro;
+	private String estado; //Estado
+
 }

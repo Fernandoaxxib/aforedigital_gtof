@@ -53,11 +53,13 @@ public class ConciSemCotIMSSCtrll extends ControllerBase {
 	private List<Semana> semanas;
 	
 	@Getter
-	@Setter
 	private Semana selectedSemana;
 	
 	@Getter
 	private List<SemanaDetalle> detalle;
+	
+	@Getter
+	private String mensajeTabla;
 
 	@Override
 	public void iniciar() {
@@ -71,6 +73,7 @@ public class ConciSemCotIMSSCtrll extends ControllerBase {
 	}
 
 	private void limpiar() {
+		mensajeTabla = null;
 		fechaI = null;
 		fechaF = null;
 		nss = null;
@@ -91,6 +94,11 @@ public class ConciSemCotIMSSCtrll extends ControllerBase {
 				if (res.getEstatus() == 1) { 
 					semanas = res.getSemanas();
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					if (semanas != null && semanas.size() > 0) {
+						
+					} else {
+						mensajeTabla = "Sin información";
+					}
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
@@ -109,6 +117,14 @@ public class ConciSemCotIMSSCtrll extends ControllerBase {
 	
 	
 	public boolean isFormValid(ProcessResult pr) {
+		if (!ValidateUtil.isNSS(nss)) {
+			UIInput radio = (UIInput) findComponent("nss");
+			radio.setValid(false);
+
+			pr.setStatus("NSS no válido");
+			return false;
+		}
+		
 		if (fechaI == null) {
 			UIInput fini = (UIInput) findComponent("fechaI");
 			fini.setValid(false);
@@ -125,15 +141,26 @@ public class ConciSemCotIMSSCtrll extends ControllerBase {
 			return false;
 		}
 		
-		if (!ValidateUtil.isNSS(nss)) {
-			UIInput radio = (UIInput) findComponent("nss");
-			radio.setValid(false);
+		if (!DateUtil.isValidDates(fechaI, fechaF)) {
+			UIInput fini = (UIInput) findComponent("fechaI");
+			fini.setValid(false);
 
-			pr.setStatus("NSS no válido");
+			UIInput ffin = (UIInput) findComponent("fechaF");
+			ffin.setValid(false);
+
+			pr.setStatus("La fecha final debe ser mayor o igual a la inicial");
 			return false;
 		}
 		
+
+		
 		return true;
+	}
+	
+	public void setSelectedSemana(Semana selected) {
+		this.selectedSemana = selected;
+		if (this.selectedSemana != null)
+			detalle();
 	}
 
 	public void detalle() {
@@ -146,6 +173,11 @@ public class ConciSemCotIMSSCtrll extends ControllerBase {
 				DatosConciOut res = serv.datos(selectedSemana.getNoMov(), selectedSemana.getFechaMov());
 				if (res.getEstatus() == 1) {
 					detalle = res.getDetalle();
+					if (detalle != null && detalle.size() > 0) {
+						
+					} else {
+						mensajeTabla = "Sin información";
+					}
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
