@@ -62,7 +62,7 @@ public class ContingenciaRepo extends RepoBase {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.CONTINGENCIA_PACKAGE).concat(".")
-					.concat(Constantes.CONTINGENCIA_EXPEDIENTE);
+					.concat(Constantes.CONTINGENCIA_ASIGNAR);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName);
 			
 			query.registerStoredProcedureParameter("P_SELLOS", String.class, ParameterMode.IN);

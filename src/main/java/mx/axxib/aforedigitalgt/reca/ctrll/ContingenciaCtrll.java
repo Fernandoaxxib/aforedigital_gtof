@@ -1,10 +1,13 @@
 package mx.axxib.aforedigitalgt.reca.ctrll;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.component.UIInput;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -19,6 +22,7 @@ import mx.axxib.aforedigitalgt.reca.eml.Sello;
 import mx.axxib.aforedigitalgt.reca.eml.SellosOut;
 import mx.axxib.aforedigitalgt.reca.serv.ContingenciaServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Contingencia
@@ -36,14 +40,20 @@ public class ContingenciaCtrll extends ControllerBase {
 	
 	@Getter
 	@Setter
-	private Integer folioSol;
+	private String folioSol;
 	
 	@Getter
 	private List<Sello> sellos;
 	
 	@Getter
 	@Setter
+	private List<Sello> filtro;
+	
+	@Getter
+	@Setter
 	private Sello selectedSello;
+	
+	
 	
 	@Getter
 	@Setter
@@ -53,6 +63,12 @@ public class ContingenciaCtrll extends ControllerBase {
 	@Setter
 	private String opcion;
 
+	public String getSello() {
+		if(selectedSello != null) {
+			return selectedSello.getSello();
+		}
+		return null;
+	}
 
 	@Override
 	public void iniciar() {
@@ -60,6 +76,7 @@ public class ContingenciaCtrll extends ControllerBase {
 		if (init) {
 			
 			limpiar();
+			
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
 		}
@@ -73,6 +90,18 @@ public class ContingenciaCtrll extends ControllerBase {
 		opcion = null;
 	}
 	
+	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (filterText == null || filterText.equals("")) {
+			return true;
+		}
+		Sello sell = (Sello) value;
+		return sell.getSello().toLowerCase().contains(filterText)
+				|| sell.getNss().toLowerCase().contains(filterText)
+				|| sell.getCurp().toLowerCase().contains(filterText)
+				|| sell.getEstatusFolio().toLowerCase().contains(filterText);
+	}
+	
 	public void buscarSellos() {
 		ProcessResult pr = new ProcessResult();
 		try {
@@ -81,10 +110,29 @@ public class ContingenciaCtrll extends ControllerBase {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Buscar sellos");
 			if (isFormValid(pr)) {
-				SellosOut res = serv.sellos(folioSol);
+				SellosOut res = serv.sellos(Integer.valueOf(folioSol));
 				if (res.getEstatus() == 1) { 
 					sellos = res.getSellos();
+					
+					sellos = new ArrayList<Sello>(); // TODO: Quitar dummy
+					
+					Sello s1 = new Sello();
+					s1.setSello("Sello");
+					s1.setCurp("CURP");
+					s1.setNss("0123456789");
+					s1.setEstatusFolio("Estatus");
+					sellos.add(s1);
+					
+					Sello s2 = new Sello();
+					s2.setSello("Sello2");
+					s2.setCurp("CURP");
+					s2.setNss("987654321");
+					s2.setEstatusFolio("Estatus2");
+					sellos.add(s2);
+					
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					PrimeFaces.current().executeScript("PF('listaSellos').clearFilters()");
+					PrimeFaces.current().executeScript("PF('dlg2').show();");
 				} else {
 					if (res.getEstatus() == 2) {
 						GenerarErrorNegocio(res.getMensaje());
@@ -103,12 +151,20 @@ public class ContingenciaCtrll extends ControllerBase {
 	
 	
 	public boolean isFormValid(ProcessResult pr) {
-		if (folioSol == null) {
+		if (folioSol == null || folioSol.equals("")) {
 			UIInput fini = (UIInput) findComponent("folioSol");
 			fini.setValid(false);
 
-			pr.setStatus("Debe introducir un folio");
+			pr.setStatus("Debe introducir un folio de solicitud");
 			return false;
+		} else {
+			if(!ValidateUtil.isInteger(folioSol)) {
+				UIInput fini = (UIInput) findComponent("folioSol");
+				fini.setValid(false);
+
+				pr.setStatus("Debe introducir un folio válido");
+				return false;
+			}
 		}
 		
 		return true;
@@ -120,7 +176,7 @@ public class ContingenciaCtrll extends ControllerBase {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Asignar");
 			if (selectedSello != null) {
-				BaseOut res = serv.asignar(selectedSello.getSello(), folioSol.toString());
+				BaseOut res = serv.asignar(selectedSello.getSello(), folioSol);
 				if (res.getEstatus() == 1) { 
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -130,6 +186,11 @@ public class ContingenciaCtrll extends ControllerBase {
 						pr.setStatus(res.getMensaje());
 					}
 				}
+			} else {
+				UIInput fini = (UIInput) findComponent("sello");
+				fini.setValid(false);
+
+				pr.setStatus("Debe elegir un sello");
 			}
 		} catch (Exception e) {
 			resultados.add(GenericException(e));
@@ -140,7 +201,7 @@ public class ContingenciaCtrll extends ControllerBase {
 	}
 	
 	public boolean isFormValid2(ProcessResult pr) {
-		if (noSol == null) {
+		if (noSol == null || noSol.equals("")) {
 			UIInput fini = (UIInput) findComponent("noSol");
 			fini.setValid(false);
 
@@ -151,7 +212,7 @@ public class ContingenciaCtrll extends ControllerBase {
 			UIInput radio = (UIInput) findComponent("opcion");
 			radio.setValid(false);
 
-			pr.setStatus("Debe elegir una opción");
+			pr.setStatus("Debe elegir un tipo de envío");
 			return false;
 		}
 		return true;

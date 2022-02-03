@@ -2,10 +2,12 @@ package mx.axxib.aforedigitalgt.reca.ctrll;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.faces.component.UIInput;
 
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.PrimeFaces;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +66,10 @@ public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private List<RecaudacionPatronal> selectedSolicitud;
+	
+	@Getter
+	@Setter
+	private List<Lote> filtro;
 
 	@Override
 	public void iniciar() {
@@ -72,7 +78,6 @@ public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
 			lote = null;
 			lotes = null;
 			limpiar();
-			consultarLotes();
 
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
@@ -85,6 +90,25 @@ public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
 		mostrarEjecutar = false;
 		rechazos = null;
 	}
+	
+	public String getLoteDesc() {
+		if(lote != null) {
+			return lote.getIdOperacion();
+		}
+		return null;
+	}
+	
+	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (filterText == null || filterText.equals("")) {
+			return true;
+		}
+		Lote lot = (Lote) value;
+		return lot.getLote().toLowerCase().contains(filterText)
+				|| lot.getIdOperacion().toLowerCase().contains(filterText)
+				|| lot.getFechaLote().toLowerCase().contains(filterText)
+				|| lot.getSecLote().toLowerCase().contains(filterText);
+	}
 
 	public void consultarLotes() {
 		ProcessResult pr = new ProcessResult();
@@ -93,14 +117,25 @@ public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
 
 			pr.setFechaInicial(DateUtil.getNowDate());
 			pr.setDescProceso("Consultar lotes");
+			
+			LotesOut res = null;
+			if(lotes == null) {
+				 res = serv.lotes();
+			} else {
+				res = new LotesOut();
+				res.setEstatus(null); // TODO: sustituir null por 1, actualmente el stored no devuelve status
+				res.setLotes(lotes);
+			}
 
-			LotesOut res = serv.lotes();
 			if (res.getEstatus() == null) { // TODO sustituir null por 1, actualmente el stored no devuelve status
 				lotes = res.getLotes();
 				if (lotes.size() == 0) {
 					pr.setStatus("No se encontraron lotes");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
+				} else {
+					PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
+					PrimeFaces.current().executeScript("PF('dlg2').show();");
 				}
 			} else {
 				if (res.getEstatus() == 2) {
@@ -115,10 +150,6 @@ public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
 		}
 	}
 	
-	public void changeLote()  {
-		 limpiar();
-	}
-
 	public boolean isFormValid(ProcessResult pr) {
 		if (lote == null) {
 			UIInput radio = (UIInput) findComponent("lotes");

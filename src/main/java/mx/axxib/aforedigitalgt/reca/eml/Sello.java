@@ -45,6 +45,7 @@ public class Sello {
 	private String sello;
 	private String estatusFolio;
 	private String curp;
+	private String curpTrabajador;
 	private String nss;
 	private Date fechaSol;
 	private Date fechaAlta;

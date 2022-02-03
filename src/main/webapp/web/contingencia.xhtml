@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{conciSemCotIMSS.iniciar}" type="preRenderView" />
+		<f:event listener="#{contingencia.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -51,15 +51,134 @@
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
 
-		<h:form id="form">
-			<p:panel id="busqueda" header="CONTINGENCIA">
-				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaSellos"
+					scrollable="true" scrollHeight="250" value="#{contingencia.sellos}"
+					filteredValue="#{contingencia.filtro}"
+					globalFilterFunction="#{contingencia.globalFilterFunction}"
+					selectionMode="single" selection="#{contingencia.selectedSello}"
+					rowKey="#{registro.sello}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
 
-					
-				</p:panelGrid>
+					<p:ajax process="@this" event="rowSelect"
+						 />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE SELLOS" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaSellos').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Sello|NSS|CURP|Estatus">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Sello" styleClass="gridCell-right">
+						<h:outputText value="#{registro.sello}" />
+					</p:column>
+						<p:column headerText="NSS" styleClass="gridCell-right">
+						<h:outputText value="#{registro.nss}" />
+					</p:column>
+					<p:column headerText="CURP" styleClass="gridCell-right">
+						<h:outputText value="#{registro.curp}" />
+					</p:column>
+					<p:column headerText="Estatus" styleClass="gridCell-right">
+						<h:outputText value="#{registro.estatusFolio}" />
+					</p:column>
+				
+
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						
+						oncomplete="PF('dlg2').hide();" update="form:pBus"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="CONTINGENCIA" >
+				<p:panel id="bus" header="Búsqueda y asignación de sello" style="margin-top:10px">
+					<p:panelGrid id="pBus" styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Folio de solicitud:" />
+							</p:column>
+							<p:column>
+								<p:inputText id="folioSol" value="#{contingencia.folioSol}"
+									style="width:150px" maxlength="20"></p:inputText>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Sello:" />
+							</p:column>
+							<p:column>
+								<p:inputText id="sello" value="#{contingencia.sello}"
+									readonly="true" style="width:150px" maxlength="20"></p:inputText>
+								<p:commandButton id="btnD" styleClass="blue" style="width:35px" actionListener="#{contingencia.buscarSellos}"
+									value="..." update="pBus dlg1 result" />
+							</p:column>
+							<p:column>
+								<p:commandButton class="blue"
+									actionListener="#{contingencia.asignar}" update="pBus pExp result"
+									value="Asignar" />
+							</p:column>
+						</p:row>
+
+					</p:panelGrid>
+				</p:panel>
+
+				<p:panel id="exp" header="Envío de expediente de servicio" style="margin-top:20px">
+					<p:panelGrid id="pExp" styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="No. de solicitud:" />
+							</p:column>
+							<p:column>
+								<p:inputText id="noSol" value="#{contingencia.noSol}"
+									style="width:150px" maxlength="20"></p:inputText>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Tipo de envío:" />
+							</p:column>
+							<p:column>
+								<p:selectOneRadio id="opcion"
+									value="#{contingencia.opcion}" >
+
+									<f:selectItem itemLabel="Masiva" itemValue="MASI" />
+									<f:selectItem itemLabel="Individual" itemValue="INDI" />
+								</p:selectOneRadio>
+							</p:column>
+							<p:column>
+								<p:commandButton class="blue"
+									actionListener="#{contingencia.enviarExpediente}"
+									update="pExp result" value="Envíar expediente" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
 
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{conciSemCotIMSS}" />
+					<ui:param name="base" value="#{contingencia}" />
 				</ui:include>
 			</p:panel>
 		</h:form>

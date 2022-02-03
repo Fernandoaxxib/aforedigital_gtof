@@ -399,3 +399,7 @@
 .styleTable3 .ui-datatable .ui-widget-header{
 	border:0px;
 } 
+
+.ui-selectonemenu-panel .ui-selectonemenu-filter-container .ui-icon{
+	right: 20px !important;
+}

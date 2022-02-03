@@ -33,7 +33,7 @@
 				value="REPORTE">
 				<f:param name="init" value="true" />
 			</p:linkButton>
-			
+
 			<p:linkButton styleClass="blue" style="margin-left:13px !important"
 				outcome="/web/recaudacionIMSSRechazo.jsf" includeViewParams="true"
 				value="RECHAZO">
@@ -45,6 +45,68 @@
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
 
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{recaudacionReporte.lotes}"
+					filteredValue="#{recaudacionReporte.filtro}"
+					globalFilterFunction="#{recaudacionReporte.globalFilterFunction}"
+					selectionMode="single" selection="#{recaudacionReporte.lote}"
+					rowKey="#{registro.lote}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA DE LOTES" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote|Id. Operación|Fecha|Sec">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Lote" styleClass="gridCell-right">
+						<h:outputText value="#{registro.lote}" />
+					</p:column>
+					<p:column headerText="Id Operación" styleClass="gridCell-right">
+						<h:outputText value="#{registro.idOperacion}" />
+					</p:column>
+					<p:column headerText="Fecha" styleClass="gridCell-right">
+						<h:outputText value="#{registro.fechaLote}" />
+					</p:column>
+					<p:column headerText="Sec" styleClass="gridCell-right">
+						<h:outputText value="#{registro.secLote}" />
+					</p:column>
+
+
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar" oncomplete="PF('dlg2').hide();"
+						update="form:pGrid" styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+
 		<h:form id="form">
 			<p:panel id="busqueda" header="RECAUDACIONES IMSS REPORTE">
 				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
@@ -52,57 +114,30 @@
 					<p:row>
 
 						<p:column style="width:15%">
-							<p:outputLabel value="Id operación: " style="margin-left:6px" styleClass="etiqueta" />
+							<p:outputLabel value="Id operación: " style="margin-left:6px"
+								styleClass="etiqueta" />
 						</p:column>
-						<p:column  style="width:15%">
-							<p:selectOneMenu id="lotes"
-								style="width:120px; vertical-align: inherit;" var="t"
-								converter="selectOneMenuConverter"
-								value="#{recaudacionReporte.lote}">
-
-								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
-									itemValue="" />
-								<f:selectItems value="#{recaudacionReporte.lotes}" var="c"
-									itemLabel="#{c.idOperacion}" itemValue="#{c}" />
-								<p:ajax update="pGrid" event="change" />
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Lote" />
-									</f:facet>
-									<h:outputText value="#{t.lote}" />
-								</p:column>
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Oper" />
-									</f:facet>
-									<h:outputText value="#{t.idOperacion}" />
-								</p:column>
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Fecha" />
-									</f:facet>
-									<h:outputText value="#{t.fechaLote}" />
-								</p:column>
-								<p:column>
-									<f:facet name="header">
-										<h:outputText value="Sec" />
-									</f:facet>
-									<h:outputText value="#{t.secLote}" />
-								</p:column>
-							</p:selectOneMenu>
+						<p:column style="width:15%">
+							<p:inputText id="lotes" value="#{recaudacionReporte.loteDesc}"
+								readonly="true" style="width:50px" maxlength="20"></p:inputText>
+							<p:commandButton id="btnD" styleClass="blue" style="width:35px"
+								actionListener="#{recaudacionReporte.consultarLotes}"
+								value="..." update="pGrid dlg1 result" />
 						</p:column>
 
-						<p:column  style="width:15%">
-							<p:outputLabel value="Fecha lote: " style="margin-left:-6px" styleClass="etiqueta" />
+						<p:column style="width:15%">
+							<p:outputLabel value="Fecha lote: " 
+								styleClass="etiqueta" />
 						</p:column>
-						<p:column  style="width:15%">
+						<p:column style="width:15%">
 							<p:outputLabel value="#{recaudacionReporte.lote.fechaLote}" />
 						</p:column>
 
-						<p:column  style="width:15%">
-							<p:outputLabel value="Sec. lote: " style="margin-left:-9px" styleClass="etiqueta" />
+						<p:column style="width:15%">
+							<p:outputLabel value="Sec. lote: " style="margin-left:-9px"
+								styleClass="etiqueta" />
 						</p:column>
-						<p:column  style="width:15%">
+						<p:column style="width:15%">
 							<p:outputLabel value="#{recaudacionReporte.lote.secLote}" />
 						</p:column>
 					</p:row>
@@ -112,7 +147,7 @@
 						<p:column colspan="6">
 							<p:selectOneRadio id="opcion" layout="responsive" columns="3"
 								value="#{recaudacionReporte.opcion}" unselectable="true">
-								
+
 								<f:selectItem itemLabel="Reporte Global" itemValue="10" />
 								<f:selectItem itemLabel="Reporte Voluntarias" itemValue="20" />
 								<f:selectItem itemLabel="Reporte Siefores" itemValue="50" />

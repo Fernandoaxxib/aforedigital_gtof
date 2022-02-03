@@ -49,6 +49,7 @@
 						<p:column>
 							<p:selectOneMenu id="lotes"
 								style="width:120px; vertical-align: inherit;"
+								filter="true" filterMatchMode="startsWith"
 								value="#{liquidarMovimientos.lote}">
 								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
 									itemValue="" />
