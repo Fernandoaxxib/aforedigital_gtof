@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.reca.ctrll;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import lombok.Getter;
 import lombok.Setter;
+import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
@@ -67,7 +69,10 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 	private String id_operacion;
 	@Getter
 	@Setter
-	private Integer consecutivo_dia;
+	private String fec_lote;
+	@Getter
+	@Setter
+	private String consecutivo_dia;
 	@Getter
 	@Setter
 	private List<SieforeOut> listaSiefore;
@@ -80,9 +85,6 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 	@Getter
 	@Setter
 	private SectorOut selectedSector;
-	@Getter
-	@Setter
-	private Integer fec_lote;
 
 	@Getter
 	private Date fecActual;
@@ -116,16 +118,20 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 				border = null;
 				filtro = null;
 				selected = null;
+				fec_lote = null;
 				listLotes = null;
 				agrupacion = null;
+				id_operacion = null;
 				selectedLote = null;
 				listaSiefore = null;
+				selectedSector = null;
+				consecutivo_dia = null;
 				selectedSiefore = null;
 				listaOperaciones = null;
 				fecActual = DateUtil.getNowDate();
 				getLotes();
 				getSiefore();
-				getSectores();				
+				getSectores();
 			} catch (Exception e) {
 				resultados.add(GenericException(e));
 			}
@@ -193,30 +199,65 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 	public void opcionSeleccionada2() {
 		if (lote1 != null) {
 			// lote = lote1.getId_operacion();
+			selectedSiefore = null;
+			agrupacion = null;
 			id_operacion = lote1.getId_operacion();
-			consecutivo_dia = lote1.getConsecutivo_dia();
-			fec_lote = lote1.getFec_lote();
+			consecutivo_dia = Integer.toString(lote1.getConsecutivo_dia());
+			fec_lote = Integer.toString(lote1.getFec_lote());
 		}
 	}
 
 	public void consultar() {
+		listaOperaciones = null;
 		ProcessResult pr = new ProcessResult();
-
 		try {
 			pr.setDescProceso("Consultar montos");
 			pr.setFechaInicial(DateUtil.getNowDate());
-			// LiquidarLoteOp71Out resp = service.getDetalle("71", "20191223", "799", "%",
-			// "TOD");
 
 			if (isFormValid(pr)) {
-				LiquidarLoteOp71Out resp = service.getDetalle(id_operacion, Integer.toString(fec_lote),
-						Integer.toString(consecutivo_dia), selectedSiefore.getCod_inversion(), agrupacion);
-				if (resp.getOn_Estatus() == null) {
+				LiquidarLoteOp71Out resp = service.getDetalle(id_operacion, fec_lote, consecutivo_dia,
+						selectedSiefore.getCod_inversion(), agrupacion);
+				if (resp.getOn_Estatus() == 1) {
 					listaOperaciones = resp.getListaOperaciones();
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (resp.getOn_Estatus() == 2) {
 						GenerarErrorNegocio(resp.getOc_Mensaje());
+					} else if (resp.getOn_Estatus() == 0) {
+						pr.setStatus(resp.getOc_Mensaje());
+						listaOperaciones = resp.getListaOperaciones();
+					}
+				}
+			}
+		} catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+
+	public void generarInterfase() {
+		ProcessResult pr = new ProcessResult();
+
+		try {
+			pr.setDescProceso("Generar Interfase");
+			pr.setFechaInicial(DateUtil.getNowDate());
+
+			if (isFormValid2(pr)) {
+				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+				String fechaComoCadena = sdf.format(fecha);
+
+				LiquidarLoteOp71Out resp = service.generarInterface(id_operacion, fec_lote, consecutivo_dia,
+						fechaComoCadena, selectedSector.getClave_procesar(), selectedSector.getCod_inversion());
+				if (resp.getOn_Estatus() == 1) {
+					listaOperaciones = resp.getListaOperaciones();
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (resp.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(resp.getOc_Mensaje());
+					} else if (resp.getOn_Estatus() == 0) {
+						pr.setStatus(resp.getOc_Mensaje());
 					}
 				}
 			}
@@ -232,21 +273,49 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 		if (id_operacion == null) {
 			border = "2px solid #ff0028 !important;";
 			pr.setStatus("Por favor seleccione la información requerida");
-			pr.setFechaFinal(DateUtil.getNowDate());			
+			pr.setFechaFinal(DateUtil.getNowDate());
 			return false;
 		} else {
+			border = "";
 			if (selectedSiefore == null) {
 				UIInput siefore = (UIInput) findComponent("combSiefore");
 				siefore.setValid(false);
 				pr.setStatus("Por favor seleccione Siefore");
-				pr.setFechaFinal(DateUtil.getNowDate());				
+				pr.setFechaFinal(DateUtil.getNowDate());
 				return false;
 			} else {
 				if (agrupacion == null) {
 					UIInput siefore = (UIInput) findComponent("combAgrupacion");
 					siefore.setValid(false);
 					pr.setStatus("Por favor seleccione agrupación");
-					pr.setFechaFinal(DateUtil.getNowDate());					
+					pr.setFechaFinal(DateUtil.getNowDate());
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public boolean isFormValid2(ProcessResult pr) {
+		if (id_operacion == null) {
+			border = "2px solid #ff0028 !important;";
+			pr.setStatus("Por favor seleccione la información requerida");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			return false;
+		} else {
+			border = "";
+			if (selectedSector == null) {
+				UIInput siefore = (UIInput) findComponent("combSectores");
+				siefore.setValid(false);
+				pr.setStatus("Por favor seleccione Siefore");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				return false;
+			} else {
+				if (fecha == null) {
+					UIInput siefore = (UIInput) findComponent("fAplicado");
+					siefore.setValid(false);
+					pr.setStatus("Por favor seleccionar la fecha de aplicado");
+					pr.setFechaFinal(DateUtil.getNowDate());
 					return false;
 				}
 			}
@@ -255,9 +324,47 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 	}
 
 	public void liquidar() {
+		ProcessResult pr = new ProcessResult();
+		pr.setDescProceso("Liquidar lote");
+		pr.setFechaInicial(DateUtil.getNowDate());
+		if (listaOperaciones != null) {
+			if (!listaOperaciones.isEmpty()) {
+				if (isFormValid(pr)) {
+					try {
+						listaOperaciones.forEach(x -> {
+							try {
+								LiquidarLoteOp71Out resp = service.liquidar(id_operacion, fec_lote, consecutivo_dia,
+										Double.parseDouble(x.getOn_monto_liquidado()),
+										Double.parseDouble(x.getOn_importes_aceptados()),
+										selectedSiefore.getCod_inversion(), agrupacion);
+							} catch (NumberFormatException | AforeException e) {
+								GenericException(e);
+							}
+						});
+
+						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+					} catch (Exception e) {
+						pr = GenericException(e);
+					} finally {
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);
+					}
+				}
+			}else {
+				pr.setStatus("NO EXISTEN DATOS PARA LIQUIDAR");
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		} else {
+			pr.setStatus("Por favor consultar los montos");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
 	}
 
 	public void habilitar() {
+		fecha = null;
+		selectedSector = null;
 		if (band) {
 			selected = "1";
 		} else {

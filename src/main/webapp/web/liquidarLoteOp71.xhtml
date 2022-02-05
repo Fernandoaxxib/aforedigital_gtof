@@ -76,7 +76,7 @@
 					<p:commandButton value="Aceptar"
 						actionListener="#{liquidarLoteOp71.opcionSeleccionada2}"
 						oncomplete="PF('dlg2').hide();"
-						update="form:vLote form:vConsec form:vFecha"
+						update="form:vLote form:vConsec form:vFecha form:grid2"
 						styleClass="blue ui-button-text" />
 					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
 						styleClass="blue ui-button-text" style="margin-left:13px" />
@@ -86,10 +86,10 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="LIQUIDAR LOTE OP71">
-				<p:panelGrid styleClass="ui-noborder" style="margin-bottom:20px">
+				<p:panelGrid id="grid1" styleClass="ui-noborder" style="margin-bottom:20px">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Id. Operación " />
+							<p:outputLabel value="Id. Operación " style="margin-right:15px"/>
 						</p:column>
 						<p:column>
 							<p:outputPanel id="vLote" class="outputlabel-shadow"
@@ -103,11 +103,11 @@
 								value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Fecha lote:" />
+							<p:outputLabel value="Fecha lote:" style="margin-right:7px" />
 						</p:column>
 						<p:column>
 							<p:outputPanel id="vFecha" class="outputlabel-shadow"
-								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:15px;">
+								style="text-align: right !important;padding-top:5px;width:135px;height:17px !important;margin-right:15px;">
 								<p:outputLabel style="padding-right:10px"
 									value="#{liquidarLoteOp71.fec_lote}" />
 							</p:outputPanel>
@@ -123,24 +123,26 @@
 							</p:outputPanel>
 						</p:column>
 						<p:column>
-							<p:commandButton styleClass="blue" style="margin-right:10px" type="submit"
-								value="Consultar" id="btnConsultar" update="form:table1 form:result form:vLote form:grid2"
+							<p:commandButton styleClass="blue" style="margin-right:10px"
+								type="submit" value="Consultar" id="btnConsultar"
+								update="form:table1 form:result form:vLote form:grid2"
 								action="#{liquidarLoteOp71.consultar}" />
 
-							<p:commandButton styleClass="blue" type="submit"
-								value="Liquidar" id="btnLiquidar" update="form:result"
+							<p:commandButton styleClass="blue" type="submit" value="Liquidar"
+								id="btnLiquidar" update="form:grid1 form:grid2 form:result"
 								action="#{liquidarLoteOp71.liquidar}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
-				<p:panelGrid id="grid2" styleClass="ui-noborder" style="margin-bottom:20px">
+				<p:panelGrid id="grid2" styleClass="ui-noborder"
+					style="margin-bottom:20px">
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Siefore:" style="margin-right:35px" />
+							<p:outputLabel value="Siefore:" style="margin-right:50px" />
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="combSiefore"
-								style="width:90px;margin-right: 32px" var="t"
+								style="width:130px" var="t"
 								converter="selectOneMenuConverter"
 								value="#{liquidarLoteOp71.selectedSiefore}">
 								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
@@ -158,7 +160,7 @@
 						</p:column>
 						<p:column>
 							<p:selectOneMenu id="combAgrupacion"
-								style="width: 90px;margin-right: 15px;"
+								style="width: 125px;margin-right: 15px;"
 								value="#{liquidarLoteOp71.agrupacion}">
 								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
 								<f:selectItem itemLabel="AGRUPACIÓN RCV" itemValue="RCV" />
@@ -179,10 +181,21 @@
 					style="margin-bottom:20px">
 					<p:row>
 						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
-							<p:outputLabel value="Siefore:" />
+							<p:outputLabel value="Fecha aplicado:" />
 						</p:column>
 						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
-							<p:selectOneMenu id="combSectores" style="width:90px" var="t"
+							<p:datePicker id="fAplicado" value="#{liquidarLoteOp71.fecha}"
+								locale="es" showIcon="true" pattern="dd-MM-yyyy"
+								yearNavigator="true" monthNavigator="true"								
+								inputStyle="width:116px; text-align:right;"
+								maxdate="#{liquidarLoteOp71.fecActual}" readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
+							<p:outputLabel value="Siefore:" style="margin-right:27px"/>
+						</p:column>
+						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
+							<p:selectOneMenu id="combSectores" style="width:125px;margin-right:15px" var="t"
 								converter="selectOneMenuConverter"
 								value="#{liquidarLoteOp71.selectedSector}">
 								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
@@ -196,16 +209,9 @@
 							</p:selectOneMenu>
 						</p:column>
 						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
-							<p:outputLabel value="Fecha aplicado:" />
-						</p:column>
-						<p:column rendered="#{liquidarLoteOp71.selected eq 1}">
-							<p:datePicker id="fAplicado" value="#{liquidarLoteOp71.fecha}"
-								locale="es" showIcon="true" pattern="dd-MM-yyyy"
-								yearNavigator="true" monthNavigator="true"
-								style="margin-left:-6px"
-								inputStyle="width:132px; text-align:right;"
-								maxdate="#{liquidarLoteOp71.fecActual}" readonlyInput="true">
-							</p:datePicker>
+							<p:commandButton styleClass="blue" type="submit" value="Generar Interfase"
+								id="btnGenInterf" update="form:pnl3 form:result"
+								action="#{liquidarLoteOp71.generarInterfase}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
