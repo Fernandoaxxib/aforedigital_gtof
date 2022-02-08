@@ -1,5 +1,7 @@
 package mx.axxib.aforedigitalgt.reca.dal;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
@@ -8,6 +10,7 @@ import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.com.Constantes;
 import mx.axxib.aforedigitalgt.dal.RepoBase;
 import mx.axxib.aforedigitalgt.reca.eml.LiquidarLoteOp71Out;
+import mx.axxib.aforedigitalgt.reca.eml.OperacionOut;
 
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Liquidar LoteOP71
@@ -169,9 +172,9 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			query.registerStoredProcedureParameter("ic_secuencia_lote", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_Siefore", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("ic_agrupacion", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("oc_cursor", void.class, ParameterMode.REF_CURSOR);
-			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
-			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("ON_ESTATUS", Integer.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("OC_MENSAJE", String.class, ParameterMode.OUT);
 
 			query.setParameter("ic_identif_operacion", ic_identif_operacion);
 			query.setParameter("id_fecha_transferencia", id_fecha_transferencia);
@@ -179,12 +182,20 @@ public class LiquidarLoteOp71Repo extends RepoBase {
 			query.setParameter("ic_Siefore", ic_Siefore);
 			query.setParameter("ic_agrupacion", ic_agrupacion);
 
-			LiquidarLoteOp71Out res = new LiquidarLoteOp71Out();
-			res.setListaOperaciones(query.getResultList());
+			LiquidarLoteOp71Out res = new LiquidarLoteOp71Out();	
+			List<OperacionOut> listaOperaciones=null;
 			
-			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus"));
-			res.setOc_Mensaje((String) query.getOutputParameterValue("oc_Mensaje"));
-
+			res.setOn_Estatus((Integer) query.getOutputParameterValue("ON_ESTATUS"));
+			res.setOc_Mensaje((String) query.getOutputParameterValue("OC_MENSAJE"));
+			
+			if(res.getOn_Estatus()==1) {
+			    listaOperaciones= query.getResultList();
+			}else if(res.getOn_Estatus()==0) {
+				listaOperaciones= new ArrayList<OperacionOut>();
+			}
+			
+			res.setListaOperaciones(listaOperaciones);
+																		
 			return res;
 		} catch (Exception e) {
 			throw GenericException(e);
