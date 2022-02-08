@@ -15,7 +15,7 @@ import mx.axxib.aforedigitalgt.reca.eml.SellosOut;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Contingencia
 //** Interventor Principal: JSAS
-//** Fecha Creación: 27/Ene/2022
+//** Fecha Creación: 7/Feb/2022
 //** Última Modificación:
 //***********************************************//
 

@@ -27,7 +27,7 @@ import mx.axxib.aforedigitalgt.util.ValidateUtil;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Controlador de Contingencia
 //** Interventor Principal: JSAS
-//** Fecha Creación: 27/Ene/2022
+//** Fecha Creación: 7/Feb/2022
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")

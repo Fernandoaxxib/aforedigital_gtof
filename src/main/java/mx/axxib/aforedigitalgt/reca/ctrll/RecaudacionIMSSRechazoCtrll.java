@@ -243,6 +243,8 @@ public class RecaudacionIMSSRechazoCtrll extends ControllerBase {
 					}
 				}
 				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+			} else {
+				pr.setStatus("Debe seleccionar al menos un rechazo");
 			}
 		} catch (Exception e) {
 			resultados.add(GenericException(e));

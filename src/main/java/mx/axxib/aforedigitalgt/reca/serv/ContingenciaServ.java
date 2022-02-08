@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Contingencia
 //** Interventor Principal: JSAS
-//** Fecha Creación: 27/Ene/2022
+//** Fecha Creación: 7/Feb/2022
 //** Última Modificación:
 //***********************************************//
 

@@ -347,6 +347,7 @@ public class Constantes {
 	public static final String REPORTE_CONCILIADOS_PACKAGE = "PKG_RECA_FORSCIMP";
 	public static final String REPORTE_CONCILIADOS_REFPAGO = "PRC_REPORTE_REFPAGO";
 	public static final String REPORTE_CONCILIADOS_SOLPEND = "PRC_REPORTE_SOLPEND";
+	public static final String REPORTE_CONCILIADOS_REPSALDOSSIEF = "PRC_RepSaldosSief";
 	public static final String REPORTE_CONCILIADOS_REPSALDOSINDI = "PRC_RepSaldosIndi";
 	public static final String REPORTE_CONCILIADOS_SOLOPLIQ = "PRC_REPORTE_SOLOPLIQ";
 	public static final String REPORTE_CONCILIADOS_CARGAR_ARCHIVO = "PRC_CARGAR_ARCHIVO";
