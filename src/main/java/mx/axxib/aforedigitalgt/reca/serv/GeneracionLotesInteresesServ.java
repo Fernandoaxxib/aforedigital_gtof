@@ -11,7 +11,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de generación de lotes intereses 
 //** Interventor Principal: JJSC
-//** Fecha Creación: 06/01/2022
+//** Fecha Creación: 07/02/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -47,8 +47,8 @@ public class GeneracionLotesInteresesServ  extends ServiceBase{
 		}
 	}
 
-	public InteresesTranOut generarLotes(Integer P_TIPO_ACCION, Date P_FEC_OPERACION, Integer P_LOTE, String P_ARCHIVO,
-			String P_RUTA, Integer P_LOTE_REVERSA) throws AforeException {
+	public InteresesTranOut generarLotes(Integer P_TIPO_ACCION, Date P_FEC_OPERACION, String P_LOTE, String P_ARCHIVO,
+			String P_RUTA, String P_LOTE_REVERSA) throws AforeException {
 		try {			
 			return repo.generarLotes(P_TIPO_ACCION, P_FEC_OPERACION, P_LOTE, P_ARCHIVO, P_RUTA, P_LOTE_REVERSA);
 		} catch (Exception e) {

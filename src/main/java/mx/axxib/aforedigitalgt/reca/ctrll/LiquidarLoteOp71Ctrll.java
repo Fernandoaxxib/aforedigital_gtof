@@ -161,23 +161,19 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 	}
 
 	public void getLotes() throws Exception {
-		try {
-			if (listLotes == null) {
-				LiquidarLoteOp71Out resp = service.getLote();
-				if (resp.getOn_Estatus() == null) {
-					listLotes = resp.getListaLotes();
-				} else {
-					if (resp.getOn_Estatus() == 2) {
-						GenerarErrorNegocio(resp.getOc_Mensaje());
-					}
-				}
+		if (listLotes == null) {
+			LiquidarLoteOp71Out resp = service.getLote();
+			if (resp.getOn_Estatus() == null) {
+				listLotes = resp.getListaLotes();
 			} else {
-				PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
+				if (resp.getOn_Estatus() == 2) {
+					GenerarErrorNegocio(resp.getOc_Mensaje());
+				}
 			}
-			lote = null;
-		} catch (Exception e) {
-			GenericException(e);
+		} else {
+			PrimeFaces.current().executeScript("PF('listaLotes').clearFilters()");
 		}
+		lote = null;
 	}
 
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
@@ -350,7 +346,7 @@ public class LiquidarLoteOp71Ctrll extends ControllerBase {
 						resultados.add(pr);
 					}
 				}
-			}else {
+			} else {
 				pr.setStatus("NO EXISTEN DATOS PARA LIQUIDAR");
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
