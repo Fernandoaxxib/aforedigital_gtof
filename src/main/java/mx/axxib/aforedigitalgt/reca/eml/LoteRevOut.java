@@ -13,19 +13,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-@SqlResultSetMappings({
-		@SqlResultSetMapping(name = "LoteRevOut", 
-				classes = { @ConstructorResult(targetClass = LoteRevOut.class, 
-					columns = {
-						@ColumnResult(name = "lote_carga", type = String.class), 
-						@ColumnResult(name = "IMP_TOTAL_IT", type = Double.class), 
-						@ColumnResult(name = "MONTO_PENDIENTE", type = Integer.class) 
-					
-					})
-				})
-})
+@SqlResultSetMappings({ @SqlResultSetMapping(name = "LoteRevOut", classes = {
+		@ConstructorResult(targetClass = LoteRevOut.class, columns = {
+				@ColumnResult(name = "IMP_TOTAL_IT", type = Double.class),
+				@ColumnResult(name = "lote_carga", type = String.class),
+				@ColumnResult(name = "Tot_Registros", type = String.class) }) }) })
 public class LoteRevOut {
-	private String lote_carga;
+
 	private Double IMP_TOTAL_IT;
-	private Integer Tot_Registros;
+	private String lote_carga;
+	private String registros;
 }
