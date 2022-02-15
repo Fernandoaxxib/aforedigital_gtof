@@ -28,9 +28,9 @@ public class AclaraEspecPunteoServ extends ServiceBase{
 		}
 	}
 	
-	public InfoPunteoOut llenarDatosPunteo() throws AforeException {
+	public InfoPunteoOut llenarDatosPunteo(String P_NSS,String P_RFC, String P_NOMBRE) throws AforeException {
 		try {			
-			return repo.llenarDatosPunteo();
+			return repo.llenarDatosPunteo( P_NSS, P_RFC,  P_NOMBRE);
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

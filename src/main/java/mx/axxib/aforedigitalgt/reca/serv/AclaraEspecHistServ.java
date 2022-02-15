@@ -29,12 +29,5 @@ public class AclaraEspecHistServ  extends ServiceBase{
 		}
 	}
 	
-	public InfoPunteoOut llenarDatosPunteo() throws AforeException {
-		try {
-			
-			return repo.llenarDatosPunteo();
-		} catch (Exception e) {
-			throw GenericException(e);
-		}
-	}
+	
 }

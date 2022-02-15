@@ -44,9 +44,88 @@
 		<h:outputScript name="js/calendar-localization.js" />
 
 		<h:form id="form">
-			<p:panel id="busqueda" header="PUNTEO">
+			<p:panel id="pnl1" header="PUNTEO">
 
 				<p:panel header="DATOS DE PUNTEO">
+					<p:panelGrid id="pnl2" class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Casos de NSS actual:"
+									style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:70px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecPunteo.casosActual}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Casos Restantes:"
+									style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:70px;height:17px !important;">
+									<p:outputLabel value="#{aclaraEspecPunteo.casosRestantes}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid id="pnl3" class="ui-noborder" style="margin-top:20px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="NSS:" style="margin-right:41px" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nss" value="#{aclaraEspecPunteo.nss}"
+									maxlength="50" style="width:150px;margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="RFC:" style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rfc" value="#{aclaraEspecPunteo.rfc}"
+									maxlength="50" style="width:150px;margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="Aceptado:" style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:selectOneMenu id="combAceptado"
+									style="width: 80px;margin-right: 15px;"
+									value="#{aclaraEspecPunteo.aceptado}">
+									<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+									<f:selectItem itemLabel="SI" itemValue="S" />
+									<f:selectItem itemLabel="NO" itemValue="N" />
+								</p:selectOneMenu>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid id="pnl4" class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Nombre:" style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nombre" value="#{aclaraEspecPunteo.nombre}"
+									maxlength="70" style="width:408px;margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:commandButton styleClass="blue" type="submit"
+									value="Consultar" id="btnConsultar"
+									update="form:table1 form:pnl2 form:pnl3 form:pnl4 form:pnl5 form:result"
+									style="margin-right:20px"
+									action="#{aclaraEspecPunteo.consultar}" />
+							</p:column>
+							<p:column>
+								<p:commandButton styleClass="blue" type="submit"
+									value="Actualizar" id="btnActualizar" update="form:pnl3 form:pnl4 form:result"
+									action="#{aclaraEspecPunteo.actualizar}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+				<p:panel style="margin-top:20px">
 					<p:dataTable id="table1" var="mon" class="sinfondo"
 						value="#{aclaraEspecPunteo.datosPunteo}"
 						widgetVar="listSolicitudes"
@@ -57,28 +136,61 @@
 
 						<p:column selectionMode="multiple"
 							style="width:16px;text-align:center;" />
-						<p:column headerText="NSS" width="60">
+						<p:column headerText="NSS" width="50">
 							<h:outputText value="#{mon.NSS}" style="float:right;" />
 						</p:column>
-						<p:column headerText="RFC" width="80">
+						<p:column headerText="RFC" width="50">
 							<h:outputText value="#{mon.RFC}" style="float:right;" />
 						</p:column>
-						<p:column headerText="NOMBRE" width="60">
+						<p:column headerText="NOMBRE" width="120">
 							<h:outputText value="#{mon.NOMBRE}" style="float:right;" />
 						</p:column>
-						<p:column headerText="Estado" width="140">
+						<p:column headerText="Estado" width="50">
 							<h:outputText value="#{mon.STATUS}" />
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 				<p:panel header="DATOS DE AFILIACIÓN" style="margin-top:20px">
-					<p:panelGrid id="fechas" styleClass="ui-noborder" style="margin-bottom:20px !important">
+					<p:panelGrid id="pnl5" styleClass="ui-noborder"
+						style="margin-bottom:20px !important">
 						<p:row>
 							<p:column style="width:78px">
 								<p:outputLabel value="NSS:" />
 							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecPunteo.nss_afil}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column style="width:100px">
+								<p:outputLabel value="Código Estado:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecPunteo.cod_estado}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+						<p:row>
 							<p:column style="width:78px">
-								<p:outputLabel value="NSS:" />
+								<p:outputLabel value="RFC:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecPunteo.rfc_afil}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column style="width:100px">
+								<p:outputLabel value="Tipo Solicitud:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecPunteo.tip_solicitud}" />
+								</p:outputPanel>
 							</p:column>
 						</p:row>
 					</p:panelGrid>

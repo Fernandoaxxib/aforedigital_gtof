@@ -104,19 +104,46 @@ public class AclaracionesEspecialesRepo extends RepoBase {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public InfoPunteoOut llenarDatosPunteo() throws AforeException {
+	public InfoPunteoOut llenarDatosPunteo(String P_NSS,String P_RFC, String P_NOMBRE) throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.ACLARACIONES_ESPECIALES_PACKAGE).concat(".")
 					.concat(Constantes.ACLARACIONES_ESPECIALES_LLENA_DATOS_PUNTEO);			
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "DatosPunteoOut");
 						
+			query.registerStoredProcedureParameter("P_NSS", String.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("P_RFC", String.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("P_NOMBRE", String.class, ParameterMode.INOUT);
+			query.registerStoredProcedureParameter("P_Casos", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_Aceptado", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_Restantes", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_nss_afil", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_rfc_afil", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_nombre_afil", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_cod_estado_afil", String.class, ParameterMode.OUT);
+			query.registerStoredProcedureParameter("P_tip_solicitud_afil", String.class, ParameterMode.OUT);						
 			query.registerStoredProcedureParameter("SL_QUERY", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("oc_Mensaje", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("on_Estatus", Integer.class, ParameterMode.OUT);
 			
+			query.setParameter("P_NSS", P_NSS);
+			query.setParameter("P_RFC", P_RFC);	
+			query.setParameter("P_NOMBRE", P_NOMBRE);		
+			
 			InfoPunteoOut res = new InfoPunteoOut();
 			
+			
+			res.setIc_Nss((String) query.getOutputParameterValue("P_NSS"));
+			res.setIc_rfc_afil((String) query.getOutputParameterValue("P_RFC"));
+			res.setIc_nombre_afil((String) query.getOutputParameterValue("P_NOMBRE"));
+			res.setIc_Casos((String) query.getOutputParameterValue("P_Casos"));
+			res.setIc_Aceptado((String) query.getOutputParameterValue("P_Aceptado"));
+			res.setIc_Restantes((String) query.getOutputParameterValue("P_Restantes"));
+			res.setIc_nss_afil((String) query.getOutputParameterValue("P_nss_afil"));
+			res.setIc_rfc_afil((String) query.getOutputParameterValue("P_rfc_afil"));
+			res.setIc_nombre_afil((String) query.getOutputParameterValue("P_nombre_afil"));
+			res.setIc_cod_estado_afil((String) query.getOutputParameterValue("P_cod_estado_afil"));
+			res.setIc_tip_solicitud_afil((String) query.getOutputParameterValue("P_tip_solicitud_afil"));			
 			res.setDatosPunteo(query.getResultList());
 			res.setOn_Estatus((Integer) query.getOutputParameterValue("on_Estatus") );
 			res.setOc_Mensaje((String) query.getOutputParameterValue("oc_Mensaje"));

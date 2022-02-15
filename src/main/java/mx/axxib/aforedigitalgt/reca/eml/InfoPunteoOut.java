@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InfoPunteoOut {
-	
+public class InfoPunteoOut {	
 	private String ic_Nss;
     private String ic_Aceptado;
     private String ic_Restantes;
@@ -22,7 +21,5 @@ public class InfoPunteoOut {
     private String ic_tip_solicitud_afil;	
 	private String oc_Mensaje;
 	private Integer on_Estatus;
-	private List<DatosPunteoOut> datosPunteo;
-	
-	
+	private List<DatosPunteoOut> datosPunteo;	
 }
