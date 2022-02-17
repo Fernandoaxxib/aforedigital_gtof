@@ -10,7 +10,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Servicio de Aplicar lote recauda Issste
 //** Interventor Principal: JJSC
-//** Fecha Creación: 18/01/2022
+//** Fecha Creación: 14/02/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -29,17 +29,17 @@ public class AplicarLoteRecaudaServ extends ServiceBase {
 		}
 	}
 	
-	public RespAplicarOut getLotesBono(String P_lote_carga) throws AforeException {
+	public RespAplicarOut getLotesBono() throws AforeException {
 		try {
-			return repo.getLotesBono(P_lote_carga);
+			return repo.getLotesBono();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}
 	}
 	
-	public RespAplicarOut getLotesReca(String P_lote_carga) throws AforeException {
+	public RespAplicarOut getLotesReca() throws AforeException {
 		try {
-			return repo.getLotesReca(P_lote_carga);
+			return repo.getLotesReca();
 		} catch (Exception e) {
 			throw GenericException(e);
 		}

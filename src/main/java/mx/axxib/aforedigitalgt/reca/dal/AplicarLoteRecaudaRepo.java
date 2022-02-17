@@ -12,7 +12,7 @@ import mx.axxib.aforedigitalgt.reca.eml.RespAplicarOut;
 //***********************************************//
 //** FUNCIONALIDAD DEL OBJETO: Repositorio de Aplicar lote recauda Issste
 //** Interventor Principal: JJSC
-//** Fecha Creación: 18/01/2022
+//** Fecha Creación: 14/02/2022
 //** Última Modificación:
 //***********************************************//
 
@@ -51,15 +51,14 @@ public class AplicarLoteRecaudaRepo extends RepoBase {
 	}
 
 	@SuppressWarnings("unchecked")
-	public RespAplicarOut getLotesBono(String P_lote_carga) throws AforeException {
+	public RespAplicarOut getLotesBono() throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.APLICAR_LOTE_RECAUDA_PACKAGE).concat(".")
 					.concat(Constantes.APLICAR_LOTE_RECAUDA_LOTE_BONO);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteIssOut");
 
-			query.registerStoredProcedureParameter("P_lote_carga", String.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter("CP_RECAUDACION", void.class, ParameterMode.REF_CURSOR);
+			query.registerStoredProcedureParameter("CP_BONO", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 
@@ -72,21 +71,21 @@ public class AplicarLoteRecaudaRepo extends RepoBase {
 			throw GenericException(e);
 		}
 	}
+
 	@SuppressWarnings("unchecked")
-	public RespAplicarOut getLotesReca(String P_lote_carga) throws AforeException {
+	public RespAplicarOut getLotesReca() throws AforeException {
 		try {
 			String storedFullName = Constantes.USUARIO_PENSION.concat(".")
 					.concat(Constantes.APLICAR_LOTE_RECAUDA_PACKAGE).concat(".")
-					.concat(Constantes.APLICAR_LOTE_RECAUDA_LOTE_BONO);
+					.concat(Constantes.APLICAR_LOTE_RECAUDA_LOTE_RECA);
 			StoredProcedureQuery query = entityManager.createStoredProcedureQuery(storedFullName, "LoteIssOut");
 
-			query.registerStoredProcedureParameter("P_lote_carga", String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter("CP_RECAUDACION", void.class, ParameterMode.REF_CURSOR);
 			query.registerStoredProcedureParameter("P_MENSAJE", String.class, ParameterMode.OUT);
 			query.registerStoredProcedureParameter("P_ESTATUS", Integer.class, ParameterMode.OUT);
 
 			RespAplicarOut res = new RespAplicarOut();
-			res.setLotesBono(query.getResultList());
+			res.setLotesReca(query.getResultList());
 			res.setP_MENSAJE((String) query.getOutputParameterValue("P_MENSAJE"));
 			res.setP_ESTATUS((Integer) query.getOutputParameterValue("P_ESTATUS"));
 			return res;

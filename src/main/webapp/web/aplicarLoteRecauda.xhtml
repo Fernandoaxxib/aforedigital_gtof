@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{aplicarLoteRecauda.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{aplicarLoteRecauda.lotesBono}"
+					filteredValue="#{aplicarLoteRecauda.filtro}"
+					globalFilterFunction="#{aplicarLoteRecauda.globalFilterFunction}"
+					selectionMode="single"
+					selection="#{aplicarLoteRecauda.selectedLote}"
+					rowKey="#{registro.lote_carga}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{aplicarLoteRecauda.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="SELECCIONAR LOTE:" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Lote Carga" styleClass="gridCell-right">
+						<h:outputText value="#{registro.lote_carga}" />
+					</p:column>
+					<p:column headerText="Aceptado" styleClass="gridCell-right">
+						<h:outputText value="#{registro.acept}" />
+					</p:column>
+					<p:column headerText="Rechazado" styleClass="gridCell-right">
+						<h:outputText value="#{registro.rech}" />
+					</p:column>
+					<p:column headerText="No aplica" styleClass="gridCell-right">
+						<h:outputText value="#{registro.no_apl}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{aplicarLoteRecauda.opcionSeleccionada}"
+						oncomplete="PF('dlg2').hide();" update="form:pnl3"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<p:dialog id="dlg2" appendTo="@(body)" widgetVar="dlg4" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes2"
+					scrollable="true" scrollHeight="250"
+					value="#{aplicarLoteRecauda.lotesReca}"
+					filteredValue="#{aplicarLoteRecauda.filtro2}"
+					globalFilterFunction="#{aplicarLoteRecauda.globalFilterFunction2}"
+					selectionMode="single"
+					selection="#{aplicarLoteRecauda.selectedLote2}"
+					rowKey="#{registro.lote_carga}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{aplicarLoteRecauda.onRowSelect2}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="SELECCIONAR LOTE:" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter2"
+								onkeyup="PF('listaLotes2').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Lote Carga" styleClass="gridCell-right">
+						<h:outputText value="#{registro.lote_carga}" />
+					</p:column>
+					<p:column headerText="Aceptado" styleClass="gridCell-right">
+						<h:outputText value="#{registro.acept}" />
+					</p:column>
+					<p:column headerText="Rechazado" styleClass="gridCell-right">
+						<h:outputText value="#{registro.rech}" />
+					</p:column>
+					<p:column headerText="No aplica" styleClass="gridCell-right">
+						<h:outputText value="#{registro.no_apl}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{aplicarLoteRecauda.opcionSeleccionada2}"
+						oncomplete="PF('dlg4').hide();" update="form:pnl3"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg4').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<h:form id="form">
+			<p:panel id="pnl1" header="Aplicar Lote Recauda Issste"
+				style="margin-bottom:20px">
+				<div class="ui-g">
+					<div class="ui-g-6" style="width: 35%">
+						<p:panelGrid id="pnl2" class="ui-noborder">
+							<p:selectOneRadio id="radioSelect" layout="pageDirection"
+								value="#{aplicarLoteRecauda.radioSelected}">
+								<p:ajax listener="#{aplicarLoteRecauda.radioSelected}"
+									global="false" update="form:pnl3 form:pnl4" />
+								<f:selectItem itemLabel="Recaudación Issste" itemValue="R" />
+								<f:selectItem itemLabel="Bono de Pensión" itemValue="B" />
+								<f:selectItem itemLabel="Bono de Pensión Redención"
+									itemValue="BR" />
+								<f:selectItem itemLabel="Bono de Pensión Ajuste" itemValue="BA" />
+								<f:selectItem itemLabel="Bono Redención Anticipada"
+									itemValue="RA" />
+							</p:selectOneRadio>
+						</p:panelGrid>
+					</div>
+					<div class="ui-g-6">
+						<p:panelGrid id="pnl3" class="ui-noborder" style="margin-top:20px">
+							<p:row>
+								<p:column
+									rendered="#{aplicarLoteRecauda.radioSelected eq 'B' or aplicarLoteRecauda.radioSelected eq 'BR' or aplicarLoteRecauda.radioSelected eq 'BA' or aplicarLoteRecauda.radioSelected eq 'RA'}">
+									<p:outputLabel value="Lote:" style="margin-right:127px" />
+								</p:column>
+								<p:column
+									rendered="#{aplicarLoteRecauda.radioSelected eq 'B' or aplicarLoteRecauda.radioSelected eq 'BR' or aplicarLoteRecauda.radioSelected eq 'BA' or aplicarLoteRecauda.radioSelected eq 'RA'}">
+									<p:outputPanel id="vLote" class="outputlabel-shadow"
+										style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:-15px;border:#{aplicarLoteRecauda.border}">
+										<p:outputLabel style="padding-right:10px"
+											value="#{aplicarLoteRecauda.lote}" />
+									</p:outputPanel>
+								</p:column>
+								<p:column
+									rendered="#{aplicarLoteRecauda.radioSelected eq 'B' or aplicarLoteRecauda.radioSelected eq 'BR' or aplicarLoteRecauda.radioSelected eq 'BA' or aplicarLoteRecauda.radioSelected eq 'RA'}">
+									<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+										value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+								</p:column>
+								<p:column rendered="#{aplicarLoteRecauda.radioSelected eq 'R'}">
+									<p:outputLabel value="Lote:" style="margin-right:127px" />
+								</p:column>
+								<p:column rendered="#{aplicarLoteRecauda.radioSelected eq 'R'}">
+									<p:outputPanel id="vLote2" class="outputlabel-shadow"
+										style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:-15px;border:#{aplicarLoteRecauda.border2}">
+										<p:outputLabel style="padding-right:10px"
+											value="#{aplicarLoteRecauda.lote2}" />
+									</p:outputPanel>
+								</p:column>
+								<p:column rendered="#{aplicarLoteRecauda.radioSelected eq 'R'}">
+									<p:commandButton id="btnC2" styleClass="blue"
+										style="width:35px" value="..." update="dlg2"
+										oncomplete="PF('dlg4').show();" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid id="pnl4" class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column>
+									<p:outputLabel value="Fecha de movimientos:"
+										style="margin-right:15px" />
+								</p:column>
+								<p:column>
+									<p:datePicker id="fechaMovimientos"
+										value="#{aplicarLoteRecauda.fecha}" locale="es"
+										showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+										monthNavigator="true" maxdate="#{aplicarLoteRecauda.today}"
+										inputStyle="width:113px; text-align:right;"
+										readonlyInput="true">
+									</p:datePicker>
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+						<p:panelGrid id="pnl5" class="ui-noborder" style="margin-top:10px">
+							<p:row>
+								<p:column>
+									<p:commandButton styleClass="blue" type="submit"
+										value="Ejecutar" id="btnEjecutar"
+										update="form:pnl3 form:pnl4 form:result"
+										action="#{aplicarLoteRecauda.ejecutar}" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</div>
+				</div>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{aplicarLoteRecauda}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

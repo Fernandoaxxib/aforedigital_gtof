@@ -140,7 +140,7 @@ public class ActualizaSaldosBonoRecaCtrll extends ControllerBase {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getOn_Estatus() == 2) {
-						GenerarErrorNegocio("Error en base de datos");
+						GenerarErrorNegocio(res.getOc_Mensaje());
 					}
 				}
 			}
