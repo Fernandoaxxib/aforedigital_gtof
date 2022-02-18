@@ -357,5 +357,11 @@ public class Constantes {
 	public static final String CARGA_CONCILIADOS_PACKAGE = "PKG_RECA_FORSCIMP";
 	public static final String CARGA_CONCILIADOS_CARGA_ARCHIVO = "PRC_CARGA_ARCHIVO";
 	public static final String CARGA_CONCILIADOS_CONCILIAR_ARCHIVO = "PRC_CONCILIAR_ARCHIVO";
+	
+	//APLICAR LOTE INTERESES EN TRANSITO ISSSTE
+	public static final String APLICAR_LOTE_OP71_PACKAGE="PKG_RECA_FOMOVITI";
+	public static final String APLICAR_LOTE_OP71_EJECUTAR="PRC_EJECUTAR";
+	public static final String APLICAR_LOTE_OP71_GET_LOTES="PRC_RG_LOTES_RECA";
+	
 
 }

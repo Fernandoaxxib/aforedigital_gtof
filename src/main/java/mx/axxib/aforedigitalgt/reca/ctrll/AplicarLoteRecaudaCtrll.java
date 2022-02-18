@@ -124,7 +124,7 @@ public class AplicarLoteRecaudaCtrll extends ControllerBase {
 		pr.setDescProceso("Ejecutar");
 		try {
 			if (isFormValid(pr)) {
-				RespAplicarOut res = service.ejecutar(lote2, 0, lote, radioSelected);
+				RespAplicarOut res = service.ejecutar(lote2, fecha, lote, radioSelected);
 				if (res.getP_ESTATUS() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {

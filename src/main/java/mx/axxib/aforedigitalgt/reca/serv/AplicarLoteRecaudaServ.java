@@ -1,5 +1,7 @@
 package mx.axxib.aforedigitalgt.reca.serv;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import mx.axxib.aforedigitalgt.com.AforeException;
@@ -20,7 +22,7 @@ public class AplicarLoteRecaudaServ extends ServiceBase {
 	@Autowired
 	private AplicarLoteRecaudaRepo repo;
 	
-	public RespAplicarOut ejecutar(String P_lote_recauda, Integer P_fecha_mov, String P_lote_bono, String P_opciones)
+	public RespAplicarOut ejecutar(String P_lote_recauda, Date P_fecha_mov, String P_lote_bono, String P_opciones)
 			throws AforeException {
 		try {
 			return repo.ejecutar(P_lote_recauda, P_fecha_mov, P_lote_bono, P_opciones);

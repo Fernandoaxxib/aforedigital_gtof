@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{aplicarLoteOp71.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{aplicarLoteOp71.listLotes}"
+					filteredValue="#{aplicarLoteOp71.filtro}"
+					globalFilterFunction="#{aplicarLoteOp71.globalFilterFunction}"
+					selectionMode="single" selection="#{aplicarLoteOp71.selectedLote}"
+					rowKey="#{registro.lote_carga}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{aplicarLoteOp71.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="ARCHIVOS DE CARGA A REVERSAR POR LOTE" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Lote Carga" styleClass="gridCell-right">
+						<h:outputText value="#{registro.lote_carga}" />
+					</p:column>
+					<p:column headerText="Aceptados" styleClass="gridCell-right">
+						<h:outputText value="#{registro.acept}" />
+					</p:column>
+					<p:column headerText="Rechazados" styleClass="gridCell-right">
+						<h:outputText value="#{registro.rech}" />
+					</p:column>
+					<p:column headerText="No aplica" styleClass="gridCell-right">
+						<h:outputText value="#{registro.no_apl}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{aplicarLoteOp71.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update="form:pnl2"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<h:form id="form">
+			<p:panel id="pnl1" header="Aplicar lote Intereses en Transito Issste"
+				style="margin-bottom:20px">
+				<p:panelGrid id="pnl2" class="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Lote:" style="margin-right:127px" />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vLote" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:-15px;border:#{aplicarLoteOp71.border}">
+								<p:outputLabel style="padding-right:10px"
+									value="#{aplicarLoteOp71.lote}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+								value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnl3" class="ui-noborder" style="margin-top:10px">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha de movimientos:"
+								style="margin-right:15px" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fechaMovimientos"
+								value="#{aplicarLoteOp71.fecha}" locale="es" showIcon="true"
+								pattern="dd-MM-yyyy" yearNavigator="true" monthNavigator="true"
+								maxdate="#{aplicarLoteOp71.today}"
+								inputStyle="width:113px; text-align:right;" readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnl4" class="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:commandButton styleClass="blue" type="submit" value="Ejecutar"
+								ajax="true" action="#{aplicarLoteOp71.ejecutar}" global="true"
+								update="form:pnl2 form:pnl3 form:result" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{aplicarLoteOp71}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
