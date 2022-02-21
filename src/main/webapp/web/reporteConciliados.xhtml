@@ -1,6 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
+
 <ui:composition template="layout3.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -8,8 +10,9 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{conciSemCotIMSS.iniciar}" type="preRenderView" />
+		<f:event listener="#{reporteConciliados.iniciar}" type="preRenderView" />
 	</f:metadata>
+
 
 
 	<ui:define name="menu">
@@ -53,13 +56,163 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="REPORTE CONCILIADOS">
-				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
 
-					
+				<p:panelGrid id="main" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column style="width:300px">
+							<p:selectOneRadio id="opcion" layout="responsive" columns="1"
+								value="#{reporteConciliados.opcion}" unselectable="true">
+								<p:ajax update="pGrid"
+									listener="#{reporteConciliados.changeOpcion}" />
+								<f:selectItem itemLabel="Sol. con referencia de pago"
+									itemValue="1" />
+								<f:selectItem itemLabel="Sol. de reintegros pendientes"
+									itemValue="2" />
+								<f:selectItem itemLabel="Saldos totales a liq. por día"
+									itemValue="3" />
+								<f:selectItem itemLabel="Sol. de reintegro a op." itemValue="4" />
+							</p:selectOneRadio>
+						</p:column>
+						<p:column style="vertical-align: text-top;">
+							<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+								<p:row rendered="#{reporteConciliados.mostrarFechaI}">
+									<p:column>
+										<p:outputLabel value="Fecha: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:datePicker id="fechaI"
+											inputStyle="width:120px; text-align:right;"
+											yearNavigator="true" monthNavigator="true"
+											value="#{reporteConciliados.fechaI}" showIcon="true"
+											locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
+									</p:column>
+								</p:row>
+
+								<p:row rendered="#{reporteConciliados.mostrarFechaF}">
+									<p:column>
+										<p:outputLabel value="Fecha fin: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:datePicker id="fechaF"
+											inputStyle="width:120px; text-align:right;"
+											yearNavigator="true" monthNavigator="true"
+											value="#{reporteConciliados.fechaF}" showIcon="true"
+											locale="es" pattern="dd-MM-yyyy" readonlyInput="true" />
+									</p:column>
+								</p:row>
+								<p:row rendered="#{reporteConciliados.mostrarEstatus}">
+									<p:column style="height:24px">
+										<p:outputLabel value="Estatus: " styleClass="etiqueta" />
+									</p:column>
+									<p:column>
+										<p:selectOneMenu id="estatus"
+											style="width:200px; vertical-align: inherit;"
+											value="#{reporteConciliados.selectedEstatus}">
+											<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+												itemValue="" />
+											<f:selectItems value="#{reporteConciliados.estatus}" var="c"
+												itemLabel="#{c.descripcion}" itemValue="#{c.estatus}" />
+										</p:selectOneMenu>
+									</p:column>
+								</p:row>
+								<p:row rendered="#{reporteConciliados.mostrarRefPago}">
+									<p:column>
+										<p:commandButton class="blue"
+											onclick="PrimeFaces.monitorDownload(showDialog, hideDialog)"
+											actionListener="#{reporteConciliados.reporteRefPago}"
+											ajax="false" update="pGrid result" value="Descargar">
+											<p:fileDownload value="#{reporteConciliados.file}" />
+											<p:remoteCommand name="hideDialog" update="pGrid result" />
+										</p:commandButton>
+
+									</p:column>
+								</p:row>
+								<p:row rendered="#{reporteConciliados.mostrarReintPen}">
+									<p:column>
+										<p:commandButton class="blue"
+											actionListener="#{reporteConciliados.reporteReintPen}"
+											update="pGrid result" value="Ejecutar" />
+									</p:column>
+								</p:row>
+								<p:row rendered="#{reporteConciliados.mostrarSaldosSief}">
+									<p:column colspan="2">
+										<p:commandButton class="blue"
+											onclick="PrimeFaces.monitorDownload(showDialog, hideDialog)"
+											actionListener="#{reporteConciliados.reporteSaldosSief}"
+											ajax="false" update="pGrid result"
+											value="Descargar saldos Sief">
+											<p:fileDownload value="#{reporteConciliados.file}" />
+											<p:remoteCommand name="hideDialog" update="pGrid result" />
+										</p:commandButton>
+
+										<p:commandButton class="blue"
+											onclick="PrimeFaces.monitorDownload(showDialog, hideDialog)"
+											actionListener="#{reporteConciliados.reporteSaldosIndi}"
+											ajax="false" update="pGrid result"
+											value="Descargar saldos Indi.">
+											<p:fileDownload value="#{reporteConciliados.file}" />
+											<p:remoteCommand name="hideDialog" update="pGrid result" />
+										</p:commandButton>
+									</p:column>
+								</p:row>
+								<p:row rendered="#{reporteConciliados.mostrarReintOp}">
+									<p:column>
+										<p:commandButton class="blue"
+											actionListener="#{reporteConciliados.reporteReintOp}"
+											update="pGrid result" value="Ejecutar" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:column>
+					</p:row>
 				</p:panelGrid>
 
+
+				<p:panel id="panel2"
+					header="VALIDACIÓN DE ENVÍO DE NOTIFICACIÓN IMSS"
+					style="margin-top:20px">
+					<p:panelGrid id="pGrid2" width="100%" styleClass="ui-noborder">
+						<p:row>
+							<p:column style="height:24px">
+								<p:outputLabel value="Directorio: " styleClass="etiqueta" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="#{reporteConciliados.directorio}" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Nombre del archivo: "
+									styleClass="etiqueta" />
+							</p:column>
+							<p:column>
+								<p:inputText id="archivo" value="#{reporteConciliados.archivo}"
+									maxlength="20" style="width:215px"></p:inputText>
+							</p:column>
+						</p:row>
+						<p:column>
+							<p:outputLabel value="Fecha de notificación: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fechaN"
+								inputStyle="width:120px; text-align:right;" yearNavigator="true"
+								monthNavigator="true" value="#{reporteConciliados.fechaN}"
+								showIcon="true" locale="es" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
+						</p:column>
+						<p:row>
+							<p:column>
+								<p:commandButton class="blue"
+									actionListener="#{reporteConciliados.cargarArchivo}"
+									update="pGrid2 result" value="Cargar archivo" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{conciSemCotIMSS}" />
+					<ui:param name="base" value="#{reporteConciliados}" />
 				</ui:include>
 			</p:panel>
 		</h:form>
