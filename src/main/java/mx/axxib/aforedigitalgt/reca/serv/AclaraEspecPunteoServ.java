@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import mx.axxib.aforedigitalgt.com.AforeException;
 import mx.axxib.aforedigitalgt.reca.dal.AclaracionesEspecialesRepo;
 import mx.axxib.aforedigitalgt.reca.eml.InfoPunteoOut;
-import mx.axxib.aforedigitalgt.reca.eml.RespuestaOut;
 import mx.axxib.aforedigitalgt.serv.ServiceBase;
 
 //***********************************************//
@@ -36,7 +35,7 @@ public class AclaraEspecPunteoServ extends ServiceBase{
 		}
 	}
 	
-	public RespuestaOut actualizarPunteo(String ic_Nss,String ic_Aceptado) throws AforeException {
+	public InfoPunteoOut actualizarPunteo(String ic_Nss,String ic_Aceptado) throws AforeException {
 		try {			
 			return repo.actualizarPunteo( ic_Nss, ic_Aceptado);
 		} catch (Exception e) {

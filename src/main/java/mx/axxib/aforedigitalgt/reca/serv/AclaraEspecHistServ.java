@@ -20,14 +20,28 @@ public class AclaraEspecHistServ  extends ServiceBase{
 	@Autowired
 	private AclaracionesEspecialesRepo repo;
 
-	
-	public InfoPunteoOut cargarInfoHist(String ic_Nss) throws AforeException {
-		try {
-			return repo.cargarInfoHist(ic_Nss);
-		} catch (Exception e) {
-			throw GenericException(e);
+		public InfoPunteoOut cargarInfoHist(String ic_Nss) throws AforeException {
+			try {				
+				return repo.cargarInfoHist(ic_Nss);
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
 		}
-	}
-	
-	
+		
+		public InfoPunteoOut llenarDatosHistorico(String P_NSS,String P_RFC, String P_NOMBRE) throws AforeException {
+			try {											
+				return repo.llenarDatosHistorico(P_NSS, P_RFC, P_NOMBRE);
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
+		}	
+		
+		public InfoPunteoOut actualizarHistorico(String ic_Nss, String ic_Aceptado) throws AforeException {
+			try {				
+				return repo.actualizarHistorico(ic_Nss, ic_Aceptado);
+			} catch (Exception e) {
+				throw GenericException(e);
+			}
+		}
+		
 }

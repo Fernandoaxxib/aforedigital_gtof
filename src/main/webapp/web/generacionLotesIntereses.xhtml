@@ -106,18 +106,19 @@
 							<p:row>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 20}">
-									<p:outputLabel value="Archivo:" style="margin-right:15px"/>
+									<p:outputLabel value="Archivo:" style="margin-right:15px" />
 								</p:column>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 20}">
-									<p:inputText id="archivo" value="#{generacionLotesIntereses.archivo}"
-										maxlength="50" style="width:480px" />
+									<p:inputText id="archivo"
+										value="#{generacionLotesIntereses.archivo}" maxlength="50"
+										style="width:480px" />
 								</p:column>
 							</p:row>
 							<p:row>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 20}">
-									<p:outputLabel value="Ruta:" style="margin-right:15px"/>
+									<p:outputLabel value="Ruta:" style="margin-right:15px" />
 								</p:column>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 20}">
@@ -133,7 +134,8 @@
 							<p:row>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 10}">
-									<p:outputLabel value="Fecha Operación: " style="margin-right:15px"/>
+									<p:outputLabel value="Fecha Operación: "
+										style="margin-right:15px" />
 								</p:column>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 10}">
@@ -143,7 +145,7 @@
 										<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
 											noSelectionOption="true" />
 										<f:selectItems value="#{generacionLotesIntereses.listFechas}"
-											var="c" itemLabel="#{c.clave_procesar}" itemValue="#{c}" />
+											var="c" itemLabel="#{c.FECHA}" itemValue="#{c}" />
 
 										<p:column>
 											<h:outputText value="#{t.FECHA}" />
@@ -179,14 +181,15 @@
 								</p:column>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 10}">
-									<p:inputText id="archivo2" value="#{generacionLotesIntereses.archivo2}"
-										maxlength="50" style="width:480px" />
+									<p:inputText id="archivo2"
+										value="#{generacionLotesIntereses.archivo2}" maxlength="50"
+										style="width:480px" />
 								</p:column>
 							</p:row>
 							<p:row>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 10}">
-									<p:outputLabel value="Ruta: " style="margin-right:15px"/>
+									<p:outputLabel value="Ruta: " style="margin-right:15px" />
 								</p:column>
 								<p:column
 									rendered="#{generacionLotesIntereses.radioSelected eq 10}">

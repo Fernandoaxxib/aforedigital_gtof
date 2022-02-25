@@ -111,51 +111,85 @@ public class GenerarMovimientosImssCtrll extends ControllerBase {
 		pr.setFechaInicial(DateUtil.getNowDate());
 		pr.setDescProceso("GENERACIÓN DE MOVIMIENTOS");
 
-		if (listaMovimientos != null) {
-			if (selectedMovimiento != null && !selectedMovimiento.isEmpty()) {
-				selectedMovimiento.forEach(x -> {
-					ProcessResult pr2 = new ProcessResult();
-					pr2.setFechaInicial(DateUtil.getNowDate());
-					pr2.setDescProceso("PROCESAR MOVIMIENTO");
+		if (fechaInicio != null && fechaFin != null) {
+			if (DateUtil.isValidDates(fechaInicio, fechaFin)) {
+				if (listaMovimientos != null) {
+					if (!listaMovimientos.isEmpty()) {
+						if (selectedMovimiento != null && !selectedMovimiento.isEmpty()) {
+							selectedMovimiento.forEach(x -> {
+								ProcessResult pr2 = new ProcessResult();
+								pr2.setFechaInicial(DateUtil.getNowDate());
+								pr2.setDescProceso("PROCESAR MOVIMIENTO");
 
-					try {
-						MovimientosOut mov = service.procesar(1, x.getNSS());
-						if(mov.getP_ESTATUS() == 2) {
-							GenerarErrorNegocio(mov.getP_MENSAJE());
-						} else if(mov.getP_ESTATUS() == 0) {
-							pr2.setStatus(mov.getP_MENSAJE());
-							pr2.setFechaFinal(DateUtil.getNowDate());
-							resultados.add(pr2);
+								try {
+									MovimientosOut mov = service.procesar(1, x.getNSS());
+									if (mov.getP_ESTATUS() == 2) {
+										GenerarErrorNegocio(mov.getP_MENSAJE());
+									} else if (mov.getP_ESTATUS() == 0) {
+										pr2.setStatus(mov.getP_MENSAJE());
+										pr2.setFechaFinal(DateUtil.getNowDate());
+										resultados.add(pr2);
+									}
+								} catch (Exception e) {
+									pr2 = GenericException(e);
+									pr2.setFechaFinal(DateUtil.getNowDate());
+									resultados.add(pr2);
+								}
+							});
+
+							try {
+								MovimientosOut m = service.generarMovimientos(fechaInicio, fechaFin, 0);
+								if (m.getP_ESTATUS() == 1) {
+									pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+								} else {
+									if (m.getP_ESTATUS() == 2) {
+										GenerarErrorNegocio(m.getP_MENSAJE());
+									} else if (m.getP_ESTATUS() == 0) {
+										pr.setStatus(m.getP_MENSAJE());
+									}
+								}
+							} catch (Exception e) {
+								pr = GenericException(e);
+							} finally {
+								pr.setFechaFinal(DateUtil.getNowDate());
+								resultados.add(pr);
+							}
+						} else {
+							pr.setStatus("Debe seleccionar por lo menos un registro");
+							pr.setFechaFinal(DateUtil.getNowDate());
+							resultados.add(pr);
 						}
-					} catch (Exception e) {
-						pr2 = GenericException(e);
-						pr2.setFechaFinal(DateUtil.getNowDate());
-						resultados.add(pr2);
+					} else {
+						pr.setStatus("NO HAY MOVIMIENTOS");
+						pr.setFechaFinal(DateUtil.getNowDate());
+						resultados.add(pr);
 					}
-				});
-
-				try {
-					MovimientosOut m = service.generarMovimientos(fechaInicio, fechaFin, 0);
-					if (m.getP_ESTATUS() == 1) {
-						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
-					}else {
-						if(m.getP_ESTATUS() == 2) {
-							GenerarErrorNegocio(m.getP_MENSAJE());
-						} else if(m.getP_ESTATUS() == 0) {
-							pr.setStatus(m.getP_MENSAJE());
-						} 
-					}
-				} catch (Exception e) {
-					pr = GenericException(e);
-				}finally {
+				} else {
+					pr.setStatus("DEBE REALIZAR LA CONSULTA DE MOVIMIENTOS");
 					pr.setFechaFinal(DateUtil.getNowDate());
 					resultados.add(pr);
 				}
 			} else {
-				pr.setStatus("Debe seleccionar por lo menos un registro");
+				UIInput radio = (UIInput) findComponent("fInicio");
+				radio.setValid(false);
+
+				UIInput radio2 = (UIInput) findComponent("fFin");
+				radio2.setValid(false);
+
+				pr.setStatus("La fecha inicial debe ser menor o igual a la fecha final");
 				pr.setFechaFinal(DateUtil.getNowDate());
 				resultados.add(pr);
 			}
+		} else {
+			UIInput f1 = (UIInput) findComponent("fInicio");
+			f1.setValid(false);
+
+			UIInput f2 = (UIInput) findComponent("fFin");
+			f2.setValid(false);
+
+			pr.setStatus("Rango de fecha requerido");
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
 		}
 	}
 }

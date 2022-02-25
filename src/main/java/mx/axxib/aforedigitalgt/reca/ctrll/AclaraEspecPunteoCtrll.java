@@ -3,6 +3,7 @@ package mx.axxib.aforedigitalgt.reca.ctrll;
 import java.util.List;
 import javax.faces.component.UIInput;
 import org.ocpsoft.rewrite.el.ELBeanName;
+import org.primefaces.event.SelectEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,6 @@ import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
 import mx.axxib.aforedigitalgt.reca.eml.DatosPunteoOut;
 import mx.axxib.aforedigitalgt.reca.eml.InfoPunteoOut;
-import mx.axxib.aforedigitalgt.reca.eml.RespuestaOut;
 import mx.axxib.aforedigitalgt.reca.serv.AclaraEspecPunteoServ;
 import mx.axxib.aforedigitalgt.util.DateUtil;
 
@@ -36,7 +36,7 @@ public class AclaraEspecPunteoCtrll extends ControllerBase {
 
 	@Getter
 	@Setter
-	private List<DatosPunteoOut> selectedDato;
+	private DatosPunteoOut selectedDato;
 
 	@Getter
 	@Setter
@@ -53,6 +53,9 @@ public class AclaraEspecPunteoCtrll extends ControllerBase {
 	@Getter
 	@Setter
 	private String aceptado;
+	@Getter
+	@Setter
+	private String nss_aceptado;
 
 	@Getter
 	@Setter
@@ -76,37 +79,39 @@ public class AclaraEspecPunteoCtrll extends ControllerBase {
 
 	@Getter
 	@Setter
-	private String casosActual;
-
-	@Getter
-	@Setter
 	private String casosRestantes;
 
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
-			init = false;
-			datosPunteo = null;
-			selectedDato = null;
+			init = false;					
 			nss = null;
 			rfc = null;
-			nombre = null;
 			limpiar();
 		}
 	}
 
-	public void limpiar() {				
-		nss = null;
-		rfc = null;
+	public void limpiar() {		
 		nombre = null;
 		aceptado = null;
 		nss_afil = null;
 		rfc_afil = null;
-		cod_estado = null;		
+		cod_estado = null;
+		nombre_afil = null;
+		datosPunteo = null;		
+		selectedDato = null;
+		tip_solicitud = null;
+		casosRestantes = null;
+	}
+
+	public void limpiar2() {
+		aceptado = null;
+		nss_afil = null;
+		rfc_afil = null;
+		cod_estado = null;
 		nombre_afil = null;
 		datosPunteo = null;
-		casosActual = null;
 		selectedDato = null;
 		tip_solicitud = null;
 		casosRestantes = null;
@@ -116,12 +121,11 @@ public class AclaraEspecPunteoCtrll extends ControllerBase {
 		ProcessResult pr = new ProcessResult();
 		pr.setDescProceso("Consultar datos de punteo");
 		pr.setFechaInicial(DateUtil.getNowDate());
-		if (!rfc.isEmpty() || !nss.isEmpty() || !nombre.isEmpty()) {
+		if (!rfc.isEmpty() || !nss.isEmpty()) {
 			try {
 				InfoPunteoOut resp = service.llenarDatosPunteo(nss, rfc, nombre);
-				if (resp.getOn_Estatus() == null) {
-					datosPunteo = resp.getDatosPunteo();
-					casosActual = resp.getIc_Casos();
+				if (resp.getOn_Estatus() == 1) {
+					datosPunteo = resp.getDatosPunteo();					
 					casosRestantes = resp.getIc_Restantes();
 					nss = resp.getIc_nss_afil();
 					rfc = resp.getIc_rfc_afil();
@@ -176,7 +180,7 @@ public class AclaraEspecPunteoCtrll extends ControllerBase {
 				pr.setFechaFinal(DateUtil.getNowDate());
 
 			} else {
-				RespuestaOut resp = service.actualizarPunteo(nss, aceptado);
+				InfoPunteoOut resp = service.actualizarPunteo(nss, aceptado);
 				if (resp.getOn_Estatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
@@ -185,6 +189,63 @@ public class AclaraEspecPunteoCtrll extends ControllerBase {
 					} else if (resp.getOn_Estatus() == 0) {
 						pr.setStatus(resp.getOc_Mensaje());
 					}
+				}
+			}
+		} catch (Exception e) {
+			pr = GenericException(e);
+		} finally {
+			pr.setFechaFinal(DateUtil.getNowDate());
+			resultados.add(pr);
+		}
+	}
+
+	public void editar(DatosPunteoOut dato) {
+		aceptado = dato.getSTATUS();
+		nss_aceptado = dato.getNSS();
+	}
+
+	public void guardar() {
+		if (nss_aceptado != null && aceptado != null) {
+			ProcessResult pr = new ProcessResult();
+			pr.setDescProceso("Actualizar estado");
+			pr.setFechaInicial(DateUtil.getNowDate());
+			try {
+				InfoPunteoOut resp = service.actualizarPunteo(nss_aceptado, aceptado);
+				if (resp.getOn_Estatus() == 1) {
+					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+				} else {
+					if (resp.getOn_Estatus() == 2) {
+						GenerarErrorNegocio(resp.getOc_Mensaje());
+					} else if (resp.getOn_Estatus() == 0) {
+						pr.setStatus(resp.getOc_Mensaje());
+					}
+				}
+			} catch (Exception e) {
+				pr = GenericException(e);
+			} finally {
+				pr.setFechaFinal(DateUtil.getNowDate());
+				resultados.add(pr);
+			}
+		}
+	}
+
+	public void onRowSelect(SelectEvent<DatosPunteoOut> event) {
+		ProcessResult pr = new ProcessResult();
+		pr.setDescProceso("Consultar datos de afiliación");
+		pr.setFechaInicial(DateUtil.getNowDate());
+		try {
+			InfoPunteoOut resp = service.cargarInfoPunteo(event.getObject().getNSS());
+			if (resp.getOn_Estatus() == null) {
+				this.nss_afil = resp.getIc_nss_afil();
+				this.rfc_afil = resp.getIc_rfc_afil();
+				this.cod_estado = resp.getIc_cod_estado_afil();
+				this.tip_solicitud = resp.getIc_tip_solicitud_afil();
+				pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
+			} else {
+				if (resp.getOn_Estatus() == 2) {
+					GenerarErrorNegocio(resp.getOc_Mensaje());
+				} else if (resp.getOn_Estatus() == 0) {
+					pr.setStatus(resp.getOc_Mensaje());
 				}
 			}
 		} catch (Exception e) {

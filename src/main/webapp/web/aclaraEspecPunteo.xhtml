@@ -42,23 +42,50 @@
 
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
+        <p:dialog styleClass="styleWhite" header="Punteo"
+			appendTo="@(body)" widgetVar="dlg" showEffect="fade" modal="true"
+			resizable="false">
+			<h:form id="formDlg">
+				<p:messages autoUpdate="true" />
+				<p:panelGrid id="dGrid" styleClass="ui-noborder">
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel id="mensaje"
+								value="Editar estado de punteo" styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Aceptado: " />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combAceptado"
+								style="width: 80px;margin-right: 15px;"
+								value="#{aclaraEspecPunteo.aceptado}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+								<f:selectItem itemLabel="SI" itemValue="S" />
+								<f:selectItem itemLabel="NO" itemValue="N" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Guardar"
+						actionListener="#{aclaraEspecPunteo.guardar}"
+						oncomplete="PF('dlg').hide();" update="form:table1 form:result"
+						styleClass="blue" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg').hide();"
+						update="form:table1 form:result" styleClass="blue"
+						style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
 		<h:form id="form">
 			<p:panel id="pnl1" header="PUNTEO">
-
 				<p:panel header="DATOS DE PUNTEO">
 					<p:panelGrid id="pnl2" class="ui-noborder" style="margin-top:10px">
 						<p:row>
-							<p:column>
-								<p:outputLabel value="Casos de NSS actual:"
-									style="margin-right:15px" />
-							</p:column>
-							<p:column>
-								<p:outputPanel class="outputlabel-shadow"
-									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:70px;height:17px !important;margin-right:15px">
-									<p:outputLabel value="#{aclaraEspecPunteo.casosActual}" />
-								</p:outputPanel>
-							</p:column>
 							<p:column>
 								<p:outputLabel value="Casos Restantes:"
 									style="margin-right:15px" />
@@ -71,7 +98,7 @@
 							</p:column>
 						</p:row>
 					</p:panelGrid>
-					<p:panelGrid id="pnl3" class="ui-noborder" style="margin-top:20px">
+					<p:panelGrid id="pnl3" class="ui-noborder" style="margin-top:10px">
 						<p:row>
 							<p:column>
 								<p:outputLabel value="NSS:" style="margin-right:41px" />
@@ -88,16 +115,11 @@
 									maxlength="50" style="width:150px;margin-right:15px" />
 							</p:column>
 							<p:column>
-								<p:outputLabel value="Aceptado:" style="margin-right:15px" />
-							</p:column>
-							<p:column>
-								<p:selectOneMenu id="combAceptado"
-									style="width: 80px;margin-right: 15px;"
-									value="#{aclaraEspecPunteo.aceptado}">
-									<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-									<f:selectItem itemLabel="SI" itemValue="S" />
-									<f:selectItem itemLabel="NO" itemValue="N" />
-								</p:selectOneMenu>
+								<p:commandButton styleClass="blue" type="submit"
+									value="Consultar" id="btnConsultar"
+									update="form:table1 form:pnl2 form:pnl3 form:pnl4 form:pnl5 form:result"
+									style="margin-right:20px"
+									action="#{aclaraEspecPunteo.consultar}" />
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -107,20 +129,10 @@
 								<p:outputLabel value="Nombre:" style="margin-right:15px" />
 							</p:column>
 							<p:column>
-								<p:inputText id="nombre" value="#{aclaraEspecPunteo.nombre}"
-									maxlength="70" style="width:408px;margin-right:15px" />
-							</p:column>
-							<p:column>
-								<p:commandButton styleClass="blue" type="submit"
-									value="Consultar" id="btnConsultar"
-									update="form:table1 form:pnl2 form:pnl3 form:pnl4 form:pnl5 form:result"
-									style="margin-right:20px"
-									action="#{aclaraEspecPunteo.consultar}" />
-							</p:column>
-							<p:column>
-								<p:commandButton styleClass="blue" type="submit"
-									value="Actualizar" id="btnActualizar" update="form:pnl3 form:pnl4 form:result"
-									action="#{aclaraEspecPunteo.actualizar}" />
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:400px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecPunteo.nombre}" />
+								</p:outputPanel>
 							</p:column>
 						</p:row>
 					</p:panelGrid>
@@ -128,25 +140,37 @@
 				<p:panel style="margin-top:20px">
 					<p:dataTable id="table1" var="mon" class="sinfondo"
 						value="#{aclaraEspecPunteo.datosPunteo}"
-						widgetVar="listSolicitudes"
 						emptyMessage="#{msg.aprob_msj_sinDatos}"
+						widgetVar="listSolicitudes" selectionMode="single"
 						selection="#{aclaraEspecPunteo.selectedDato}" rowKey="#{mon.NSS}"
 						style="border:0px" rows="10" paginator="true"
 						paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
 
-						<p:column selectionMode="multiple"
-							style="width:16px;text-align:center;" />
-						<p:column headerText="NSS" width="50">
+						<p:ajax event="rowSelect"
+							listener="#{aclaraEspecPunteo.onRowSelect}"
+							update="form:table1 form:pnl5 form:result" />
+						<p:ajax event="rowUnselect"
+							listener="#{aclaraEspecPunteo.onRowUnselect}"
+							update="form:table1 form:pnl5 form:result" />
+
+
+						<p:column headerText="NSS">
 							<h:outputText value="#{mon.NSS}" style="float:right;" />
 						</p:column>
-						<p:column headerText="RFC" width="50">
+						<p:column headerText="RFC">
 							<h:outputText value="#{mon.RFC}" style="float:right;" />
 						</p:column>
-						<p:column headerText="NOMBRE" width="120">
+						<p:column headerText="NOMBRE">
 							<h:outputText value="#{mon.NOMBRE}" style="float:right;" />
 						</p:column>
-						<p:column headerText="Estado" width="50">
+						<p:column headerText="Estado">
 							<h:outputText value="#{mon.STATUS}" />
+						</p:column>
+						<p:column style="widt:60px">
+							<p:commandButton styleClass="botonEdicion"
+								update="formDlg:combAceptado" icon="ui-icon ui-icon-pencil"
+								title="Editar" actionListener="#{aclaraEspecPunteo.editar(mon)}"
+								oncomplete="PF('dlg').show();"></p:commandButton>
 						</p:column>
 					</p:dataTable>
 				</p:panel>

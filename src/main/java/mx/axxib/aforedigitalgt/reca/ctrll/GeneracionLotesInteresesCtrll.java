@@ -169,7 +169,7 @@ public class GeneracionLotesInteresesCtrll extends ControllerBase {
 			pr.setFechaInicial(DateUtil.getNowDate());
 			if (validacion2(pr)) {
 				try {
-					InteresesTranOut resp = service.generarLotes(10, null, selectedLote.getLote_carga(), archivo2,
+					InteresesTranOut resp = service.generarLotes(10, selectedFecha.getFECHA(), selectedLote.getLote_carga(), archivo2,
 							ruta2, null);
 					if (resp.getP_ESTATUS() == 1) {
 						pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));

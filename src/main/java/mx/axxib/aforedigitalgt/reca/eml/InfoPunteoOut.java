@@ -22,4 +22,5 @@ public class InfoPunteoOut {
 	private String oc_Mensaje;
 	private Integer on_Estatus;
 	private List<DatosPunteoOut> datosPunteo;	
+	private List<DatosHistoricoOut> datosHistorico;	
 }

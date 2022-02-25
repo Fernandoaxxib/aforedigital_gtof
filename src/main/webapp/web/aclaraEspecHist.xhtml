@@ -8,8 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{aclaraEspecHist.iniciar}"
-			type="preRenderView" />
+		<f:event listener="#{aclaraEspecHist.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -20,11 +19,12 @@
 	<ui:define name="submenu">
 		<ui:include src="subMenuRecaudaciones.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="botones">
 		<h:form>
-			<p:linkButton styleClass="blue" outcome="/web/aclaraEspecProcesos.jsf"
-				includeViewParams="true" value="Procesos">
+			<p:linkButton styleClass="blue"
+				outcome="/web/aclaraEspecProcesos.jsf" includeViewParams="true"
+				value="Procesos">
 				<f:param name="init" value="true" />
 			</p:linkButton>
 			<p:linkButton styleClass="blue" style="margin-left:13px"
@@ -42,15 +42,172 @@
 
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
+		<p:dialog styleClass="styleWhite" header="Punteo Histórico"
+			appendTo="@(body)" widgetVar="dlg" showEffect="fade" modal="true"
+			resizable="false">
+			<h:form id="formDlg">
+				<p:messages autoUpdate="true" />
+				<p:panelGrid id="dGrid" styleClass="ui-noborder">
+					<p:row>
+						<p:column colspan="2">
+							<p:outputLabel id="mensaje"
+								value="Editar estado de punteo histórico" styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Aceptado: " />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combAceptado"
+								style="width: 80px;margin-right: 15px;"
+								value="#{aclaraEspecHist.aceptado}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+								<f:selectItem itemLabel="SI" itemValue="S" />
+								<f:selectItem itemLabel="NO" itemValue="N" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+				</p:panelGrid>
 
+
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Guardar"
+						actionListener="#{aclaraEspecHist.guardar}"
+						oncomplete="PF('dlg').hide();" update="form:table1 form:result"
+						styleClass="blue" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg').hide();"
+						update="form:table1 form:result" styleClass="blue"
+						style="margin-left:13px" />
+
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
 		<h:form id="form">
-			<p:panel id="busqueda" header="HISTÓRICO">
-				
+			<p:panel id="pnl1" header="HISTÓRICO">
+
 				<p:panel header="PUNTEO HISTÓRICO">
-					
-				</p:panel>				
-				<p:panel header="DATOS DE AFILIACIÓN" style="margin-top:20px">					
-					
+					<p:panelGrid id="pnl2" class="ui-noborder" style="margin-top:20px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="NSS:" style="margin-right:41px" />
+							</p:column>
+							<p:column>
+								<p:inputText id="nss" value="#{aclaraEspecHist.nss}"
+									maxlength="50" style="width:150px;margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:outputLabel value="RFC:" style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:inputText id="rfc" value="#{aclaraEspecHist.rfc}"
+									maxlength="50" style="width:150px;margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:commandButton styleClass="blue" type="submit"
+									value="Consultar" id="btnConsultar"
+									update="form:table1 form:pnl2 form:pnl4 form:result"
+									style="margin-right:20px" action="#{aclaraEspecHist.consultar}" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid id="pnl3" class="ui-noborder" style="margin-top:10px">
+						<p:row>
+							<p:column>
+								<p:outputLabel value="Nombre:" style="margin-right:15px" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:400px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecHist.nombre}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
+
+				<p:panel style="margin-top:20px">
+					<p:dataTable id="table1" var="mon" class="sinfondo"
+						value="#{aclaraEspecHist.datosHistorico}"
+						emptyMessage="#{msg.aprob_msj_sinDatos}"
+						widgetVar="listSolicitudes" selectionMode="single"
+						selection="#{aclaraEspecHist.selectedDato}" rowKey="#{mon.NSS}"
+						style="border:0px" rows="10" paginator="true"
+						paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
+
+						<p:ajax event="rowSelect"
+							listener="#{aclaraEspecHist.onRowSelect}"
+							update="form:table1 form:pnl4 form:result" />
+						<p:ajax event="rowUnselect"
+							listener="#{aclaraEspecHist.onRowUnselect}"
+							update="form:table1 form:pnl4 form:result" />
+
+
+						<p:column headerText="NSS">
+							<h:outputText value="#{mon.NSS}" style="float:right;" />
+						</p:column>
+						<p:column headerText="RFC">
+							<h:outputText value="#{mon.RFC}" style="float:right;" />
+						</p:column>
+						<p:column headerText="NOMBRE">
+							<h:outputText value="#{mon.NOMBRE}" style="float:right;" />
+						</p:column>
+						<p:column headerText="Estado">
+							<h:outputText value="#{mon.STATUS}" />
+						</p:column>
+						<p:column style="widt:60px">
+							<p:commandButton styleClass="botonEdicion"
+								update="formDlg:combAceptado"
+								icon="ui-icon ui-icon-pencil" title="Editar"
+								actionListener="#{aclaraEspecHist.editar(mon)}"
+								oncomplete="PF('dlg').show();"></p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+				<p:panel header="DATOS DE AFILIACIÓN" style="margin-top:20px">
+					<p:panelGrid id="pnl4" styleClass="ui-noborder"
+						style="margin-bottom:20px !important">
+						<p:row>
+							<p:column style="width:78px">
+								<p:outputLabel value="NSS:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecHist.nss_afil}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column style="width:100px">
+								<p:outputLabel value="Código Estado:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecHist.cod_estado}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:78px">
+								<p:outputLabel value="RFC:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecHist.rfc_afil}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column style="width:100px">
+								<p:outputLabel value="Tipo Solicitud:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel class="outputlabel-shadow"
+									style="text-align: right !important;padding-right: 5px;padding-top:5px;width:160px;height:17px !important;margin-right:15px">
+									<p:outputLabel value="#{aclaraEspecHist.tip_solicitud}" />
+								</p:outputPanel>
+							</p:column>
+						</p:row>
+					</p:panelGrid>
 				</p:panel>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{aclaraEspecHist}" />
