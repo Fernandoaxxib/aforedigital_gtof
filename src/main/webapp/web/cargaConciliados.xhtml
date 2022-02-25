@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{conciSemCotIMSS.iniciar}" type="preRenderView" />
+		<f:event listener="#{cargaConciliados.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -54,12 +54,75 @@
 		<h:form id="form">
 			<p:panel id="busqueda" header="CARGA CONCILIADOS">
 				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column style="height:24px">
+							<p:outputLabel value="Directorio: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="#{cargaConciliados.directorio}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Nombre del archivo: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:inputText id="archivo" value="#{cargaConciliados.archivo}"
+								maxlength="20" style="width:215px"></p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Lote generado: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:inputText id="lote" value="#{cargaConciliados.lote}"
+								readonly="true" style="width:150px" maxlength="20"></p:inputText>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="2">
+							<p:selectOneRadio id="opcion" value="#{cargaConciliados.opcion}"
+								unselectable="true">
 
-					
+								<f:selectItem itemLabel="Prevalidación" itemValue="PREVA" />
+								<f:selectItem itemLabel="Normal" itemValue="NORMAL" />
+
+							</p:selectOneRadio>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{cargaConciliados.cargarArchivo}"
+								update="pGrid result" value="Cargar archivo" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{cargaConciliados.conciliarArchivo}"
+								update="pGrid result" value="Conciliar archivo" />
+						</p:column>
+					</p:row>
+
 				</p:panelGrid>
 
+				<p:panel id="pMontos" header="Resultados de la conciliación"
+					style="margin-top:20px">
+					<p:dataTable id="sem" var="mon" emptyMessage="Sin información"
+						value="#{cargaConciliados.estados}">
+
+						<p:column headerText="Estado">
+							<h:outputText value="#{mon.estado}" />
+						</p:column>
+
+						<p:column headerText="Referencia">
+							<h:outputText value="#{mon.referencia}" />
+						</p:column>
+					</p:dataTable>
+				</p:panel>
+
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{conciSemCotIMSS}" />
+					<ui:param name="base" value="#{cargaConciliados}" />
 				</ui:include>
 			</p:panel>
 		</h:form>
