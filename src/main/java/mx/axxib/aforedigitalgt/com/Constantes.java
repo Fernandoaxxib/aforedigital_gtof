@@ -364,4 +364,12 @@ public class Constantes {
 	public static final String APLICAR_LOTE_OP71_PACKAGE = "PKG_RECA_FOMOVITI";
 	public static final String APLICAR_LOTE_OP71_EJECUTAR = "PRC_EJECUTAR";
 	public static final String APLICAR_LOTE_OP71_GET_LOTES = "PRC_RG_LOTES_RECA";	
+	
+	// COMPRA TITULOS
+	public static final String COMPRA_TITULOS_PACKAGE = "PKG_RECAUDACION_FOCOMTIT";
+	public static final String COMPRA_TITULOS_EMPRESAS = "PRC_NOM_EMPRESA";
+	public static final String COMPRA_TITULOS_MONTO_FECHA = "PRC_OBTIENE_MONTO_TOTAL";
+	public static final String COMPRA_TITULOS_MONTO_LOTE = "PRC_OBTIENE_MONTO_TOTAL_LOTE";
+	public static final String COMPRA_TITULOS_EJECUTA = "PRC_EJECUTA";
+	public static final String COMPRA_TITULOS_COMPRA = "PRC_compra_titulos_ct";
 }
