@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RespuestaDispOut {
-
 	private List<LoteDispOut> lotes;
 	private List<EmpresaOut> listaEmpresas;
 	private List<EmpresaOut> lotesEmpresa;	
+	private Integer P_VALOR;
 	private String oc_IND_ACCION;
 	private Integer on_Estatus;
 	private String oc_Mensaje;

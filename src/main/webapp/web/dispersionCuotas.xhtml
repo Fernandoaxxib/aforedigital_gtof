@@ -8,8 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{nominaEmpleadosBan.iniciar}"
-			type="preRenderView" />
+		<f:event listener="#{nominaEmpleadosBan.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 	<ui:define name="menu">
@@ -19,13 +18,183 @@
 	<ui:define name="submenu">
 		<ui:include src="subMenuRecaudaciones.xhtml" />
 	</ui:define>
-	
+
 	<ui:define name="center">
 		<h:outputScript name="js/calendar-localization.js" />
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{nominaEmpleadosBan.listLotes}"
+					filteredValue="#{nominaEmpleadosBan.filtro}"
+					globalFilterFunction="#{nominaEmpleadosBan.globalFilterFunction}"
+					selectionMode="single"
+					selection="#{nominaEmpleadosBan.selectedLote}"
+					rowKey="#{registro.lote}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
 
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{nominaEmpleadosBan.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA EMPRESAS" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Empresa" styleClass="gridCell-right">
+						<h:outputText value="#{registro.empresa}" />
+					</p:column>
+					<p:column headerText="Lote" styleClass="gridCell-right">
+						<h:outputText value="#{registro.lote}" />
+					</p:column>
+					<p:column headerText="Importe" styleClass="gridCell-right">
+						<h:outputText value="#{registro.importe}" />
+					</p:column>
+					<p:column headerText="Registros" styleClass="gridCell-right">
+						<h:outputText value="#{registro.registros}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{nominaEmpleadosBan.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update="form:pnl5"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<p:dialog id="dlg3" appendTo="@(body)" widgetVar="dlg4" modal="true"
+			width="30%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:panelGrid styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="#{nominaEmpleadosBan.msj}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:column>
+						<p:commandButton value="Dispersar" oncomplete="PF('dlg4').hide();"
+						    actionListener="#{nominaEmpleadosBan.dispersar}"
+							update="form:pnl5 form:result" styleClass="blue ui-button-text" />
+					</p:column>
+					<p:column>
+						<p:commandButton value="Cerrar" onclick="PF('dlg4').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+					</p:column>
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
 		<h:form id="form">
-			<p:panel id="busqueda" header="DISPERSIÓN DE CUOTAS">
-				
+			<p:panel id="pnl1" header="DISPERSIÓN DE CUOTAS">
+				<p:panelGrid id="pnl2" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:selectBooleanCheckbox value="#{nominaEmpleadosBan.check}"
+								itemLabel="Aportaciones voluntarias ventanilla" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnl3" styleClass="ui-noborder">
+					<p:row>
+						<p:column style="width:135px">
+							<p:outputLabel value="Número de lote:" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combLotes" style="width:150px" var="t"
+								converter="selectOneMenuConverter"
+								value="#{nominaEmpleadosBan.selectedLot}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{nominaEmpleadosBan.lotesDisp}" var="c"
+									itemLabel="#{c.num_referencia}" itemValue="#{c}" />
+
+								<p:column>
+									<f:facet name="header">
+										<h:outputText value="Lotes" />
+									</f:facet>
+									<h:outputText value="#{t.num_referencia}" />
+								</p:column>
+
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue" type="submit"
+								value="Aplicar Dispersión" ajax="true"
+								action="#{nominaEmpleadosBan.aplicarDispersion}" global="true"
+								update="form:pnl2 form:pnl3 form:result" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panel id="pnl4" header="DISPERSIÓN DE DE EMPRESAS"
+					style="margin-top:20px">
+					<p:panelGrid id="pnl5" styleClass="ui-noborder">
+						<p:row>
+							<p:column style="width:120px">
+								<p:outputLabel value="Empresa:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel id="vLote" class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:160px;height:17px !important;margin-right:-15px;border:#{nominaEmpleadosBan.border}">
+									<p:outputLabel style="padding-right:10px"
+										value="#{nominaEmpleadosBan.empresa}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+									value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column style="width:120px">
+								<p:outputLabel value="Lote:" />
+							</p:column>
+							<p:column>
+								<p:outputPanel id="vLote2" class="outputlabel-shadow"
+									style="text-align: right !important;padding-top:5px;width:160px;height:17px !important;margin-right:-15px;border:#{nominaEmpleadosBan.border}">
+									<p:outputLabel style="padding-right:10px"
+										value="#{nominaEmpleadosBan.lote}" />
+								</p:outputPanel>
+							</p:column>
+							<p:column>
+								<p:commandButton id="btnC2" styleClass="blue" style="width:35px"
+									value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+					<p:panelGrid id="pnl6" styleClass="ui-noborder">
+						<p:row>
+							<p:column>
+								<p:commandButton id="btnDispVol" styleClass="blue"
+									style="margin-left:185px" update="dlg3 form:pnl5 form:result"
+									action="#{nominaEmpleadosBan.aplicarDispersionVol}"
+									value="Dispersión Vol. Empresa" />
+							</p:column>
+						</p:row>
+					</p:panelGrid>
+				</p:panel>
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{nominaEmpleadosBan}" />
 				</ui:include>
