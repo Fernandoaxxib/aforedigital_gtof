@@ -40,7 +40,7 @@
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-		
+
 		</h:form>
 	</ui:define>
 
@@ -49,7 +49,63 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="CÁLCULO PARA CONTABILIDAD">
-				
+
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fecha"
+								inputStyle="width:120px; text-align:right;"
+								value="#{calculoCont.fecha}" showIcon="true" locale="es"
+								yearNavigator="true" monthNavigator="true" pattern="dd-MM-yyyy"
+								readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Cálculo diario del bono de pensión: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+											actionListener="#{calculoCont.calculoDiario}"
+											update="pGrid result" value="Ejecutar" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Archivo de contabilidad: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+											actionListener="#{calculoCont.archivo}"
+											update="pGrid result" value="Generar" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Reporte del cálculo del bono de pensión: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+											actionListener="#{calculoCont.calculoBono}"
+											update="pGrid result" value="Generar" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Generación automática del bono de pensión: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+											actionListener="#{calculoCont.generacionAuto}"
+											update="pGrid result" value="Generar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
 				<ui:include src="processResult.xhtml">
 					<ui:param name="base" value="#{calculoCont}" />
 				</ui:include>
