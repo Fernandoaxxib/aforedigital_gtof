@@ -372,4 +372,22 @@ public class Constantes {
 	public static final String COMPRA_TITULOS_MONTO_LOTE = "PRC_OBTIENE_MONTO_TOTAL_LOTE";
 	public static final String COMPRA_TITULOS_EJECUTA = "PRC_EJECUTA";
 	public static final String COMPRA_TITULOS_COMPRA = "PRC_compra_titulos_ct";
+	
+	// CÁLCULO CONTABILIDAD
+	public static final String CALCULO_CONTABILIDAD_PACKAGE = "PKG_RECA_FOBONCON";
+	public static final String CALCULO_CONTABILIDAD_DIA_BONO = "PRC_CAL_DIA_BONO_PENSION";
+	public static final String CALCULO_CONTABILIDAD_ARCHIVO = "PRC_ARCHIVO_DE_CONTABILIDAD";
+	public static final String CALCULO_CONTABILIDAD_REP_CAL = "PRC_REP_CALC_BONO_PENSION";
+	public static final String CALCULO_CONTABILIDAD_GENERA = "PRC_GENERACION_AUTOM_BONO_PENSION";
+	
+	// CONSULTA BONO PENSIÓN
+	public static final String CONSULTA_BONO_PACKAGE = "PKG_RECA_FOBONCON";
+	public static final String CONSULTA_BONO_PENSION = "PRC_CONSULTA_BONO_DE_PENSION";
+	public static final String CONSULTA_BONO_FECHA = "PRC_FECHA_CORTE";
+	
+	// INTERFACES
+	public static final String INTERFACES_PACKAGE = "PKG_RECA_FOBONCON";
+	public static final String INTERFACES_LOTE = "PRC_LOTE";
+	public static final String INTERFACES_INVERSION = "PRC_INVERSION";
+	public static final String INTERFACES_INTERFACES = "PRC_INTERFACES";
 }
