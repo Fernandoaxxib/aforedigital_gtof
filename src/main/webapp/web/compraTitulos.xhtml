@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{compraTitulos.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="busqueda" header="COMPRA DE TÍTULOS">
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Empresa: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="empresa"
+								style="width:200px; vertical-align: inherit;"
+								value="#{compraTitulos.selectedEmpresa}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="" />
+								<f:selectItems value="#{compraTitulos.empresas}" var="c"
+									itemLabel="#{c.descripcion}" itemValue="#{c.empresa}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="2">
+							<p:selectOneRadio id="opcion" value="#{compraTitulos.opcion}"
+								unselectable="true">
+								<p:ajax update="pGrid" listener="#{compraTitulos.changeOpcion}" />
+								<f:selectItem itemLabel="Lote" itemValue="1" />
+								<f:selectItem itemLabel="Fecha" itemValue="2" />
+
+							</p:selectOneRadio>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column rendered="#{compraTitulos.mostrarLote}">
+							<p:outputLabel value="Lote: " styleClass="etiqueta" />
+						</p:column>
+						<p:column rendered="#{compraTitulos.mostrarLote}">
+							<p:inputText id="lote" value="#{compraTitulos.lote}"
+								style="width:150px" maxlength="20"></p:inputText>
+						</p:column>
+
+						<p:column rendered="#{compraTitulos.mostrarFecha}">
+							<p:outputLabel value="Fecha: " styleClass="etiqueta" />
+						</p:column>
+						<p:column rendered="#{compraTitulos.mostrarFecha}">
+							<p:datePicker id="fecha"
+								inputStyle="width:120px; text-align:right;"
+								value="#{compraTitulos.fecha}" showIcon="true" locale="es"
+								yearNavigator="true" monthNavigator="true" pattern="dd-MM-yyyy"
+								readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+						<p:column rendered="#{compraTitulos.mostrarFecha}">
+							<p:selectBooleanCheckbox value="#{compraTitulos.generar}"
+								itemLabel="Generar compra fracción" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:5px;"
+								actionListener="#{compraTitulos.buscar}"
+								rendered="#{compraTitulos.mostrarBuscar}" update="pGrid result"
+								value="Buscar" />
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:5px;"
+								actionListener="#{compraTitulos.compraTitulos}"
+								rendered="#{compraTitulos.mostrarCom}" update="result"
+								value="Comprar títulos" />
+						</p:column>
+
+						<p:column>
+							<p:commandButton class="blue" style="margin-left:5px;"
+								actionListener="#{compraTitulos.compraTitulosCT}"
+								rendered="#{compraTitulos.mostrarComCT}" update="result"
+								value="Comprar títulos CT" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:dataTable id="tabla" var="val" style="margin-top:20px"
+					emptyMessage="#{compraTitulos.mensajeTabla}"
+					value="#{compraTitulos.datos}" paginator="true" rows="20">
+					
+					<p:column headerText="Siefore">
+						<h:outputText value="#{val.siefore}" />
+
+					</p:column>
+
+					<p:column headerText="Total pendiente de compra">
+						<h:outputText value="#{val.totalPendCompra}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Valor actual de la cuota">
+						<h:outputText value="#{val.valorActCuota}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Total en cuotas">
+						<h:outputText value="#{val.totalCuota}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Pesos aporte de afore">
+						<h:outputText value="#{val.aporteAforePesos}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+						<p:column headerText="Aporte de afore">
+						<h:outputText value="#{val.aporteAfore}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+					<p:column headerText="Total en cuotas a comprar">
+						<h:outputText value="#{val.totalCuotasComprar}" style="float:right">
+							<f:convertNumber type="currency" currencySymbol="$" />
+						</h:outputText>
+					</p:column>
+					
+				</p:dataTable>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{compraTitulos}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
