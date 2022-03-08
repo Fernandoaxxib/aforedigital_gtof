@@ -391,4 +391,12 @@ public class Constantes {
 	public static final String INTERFACES_LOTE = "PRC_LOTE";
 	public static final String INTERFACES_INVERSION = "PRC_INVERSION";
 	public static final String INTERFACES_INTERFACES = "PRC_INTERFACES";
+	
+	//RECAUDACION - IMSS
+	public static final String RECAUDACION_PACKAGE="PKG_RECA_FOSALINF";
+	public static final String RECAUDACION_BTN_CARGAR="PRC_BOTON_CARGAR";
+	public static final String RECAUDACION_LISTA_CARGA="PRC_LISTA_CARGA";
+	public static final String RECAUDACION_BTN_APLICAR="PRC_BOTON_APLICAR";
+	public static final String RECAUDACION_LISTA_LOTE="PRC_LISTA_LOTE";
+	public static final String RECAUDACION_BTN_COMPRAR="PRC_BOTON_COMPRAR_TITULOS";
 }
