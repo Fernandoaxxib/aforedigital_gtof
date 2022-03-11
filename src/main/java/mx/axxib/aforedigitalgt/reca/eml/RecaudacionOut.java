@@ -1,11 +1,11 @@
-package mx.axxib.aforedigitalgt.eml;
+package mx.axxib.aforedigitalgt.reca.eml;
 
+import java.math.BigDecimal;
 import java.util.List;
 import javax.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import mx.axxib.aforedigitalgt.reca.eml.LoteDesmarcar;
 
 @Data
 @AllArgsConstructor
@@ -14,6 +14,8 @@ import mx.axxib.aforedigitalgt.reca.eml.LoteDesmarcar;
 public class RecaudacionOut {	
 	private String mensaje;
 	private Integer estatus;
+	private BigDecimal totComprar;
+	private Integer partComprar;
 	private List<LoteDesmarcar> listDesmarcar;
 	private List<Recaudacion> listRecaudacion;
 }

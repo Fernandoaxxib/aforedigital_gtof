@@ -1,4 +1,4 @@
-package mx.axxib.aforedigitalgt.eml;
+package mx.axxib.aforedigitalgt.reca.eml;
 
 import java.util.Date;
 
@@ -18,9 +18,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @SqlResultSetMappings({ @SqlResultSetMapping(name = "Recaudacion", classes = {
 		@ConstructorResult(targetClass = Recaudacion.class, columns = {
-				@ColumnResult(name = "IDENTIFICADOR_OPERACION", type = Integer.class),
+				@ColumnResult(name = "IDENTIFICADOR_OPERACION", type = String.class),
 				@ColumnResult(name = "FECHA_TRANSFERENCIA", type = Date.class),
-				@ColumnResult(name = "SECUENCIA_LOTE", type = String.class) }) }) })
+				@ColumnResult(name = "SECUENCIA_LOTE", type = Integer.class) }) }) })
 
 public class Recaudacion {
 	private String identificador;

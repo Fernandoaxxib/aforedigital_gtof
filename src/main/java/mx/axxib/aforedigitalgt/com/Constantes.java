@@ -398,5 +398,6 @@ public class Constantes {
 	public static final String RECAUDACION_LISTA_CARGA="PRC_LISTA_CARGA";
 	public static final String RECAUDACION_BTN_APLICAR="PRC_BOTON_APLICAR";
 	public static final String RECAUDACION_LISTA_LOTE="PRC_LISTA_LOTE";
-	public static final String RECAUDACION_BTN_COMPRAR="PRC_BOTON_COMPRAR_TITULOS";
+	public static final String RECAUDACION_BTN_ACTUALIZAR="PRC_BOTON_ACTUALIZA_SALDOS";
+	public static final String RECAUDACION_OBTIENE_TOTAL="PRC_OBTIENEMONTOTOTAL";
 }

@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{recaudacionActualiza.iniciar}"
+			type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="botones">
+		<h:form>
+			<p:linkButton styleClass="green"
+				outcome="/web/recaudacionActualiza.jsf" includeViewParams="true"
+				value="ACTUALIZA">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+			<p:linkButton styleClass="blue" style="margin-left:13px !important"
+				outcome="/web/recaudacionCarga.jsf" includeViewParams="true"
+				value="CARGA">
+				<f:param name="init" value="true" />
+			</p:linkButton>
+
+		</h:form>
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="45%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{recaudacionActualiza.listLotes}"
+					filteredValue="#{recaudacionActualiza.filtro}"
+					globalFilterFunction="#{recaudacionActualiza.globalFilterFunction}"
+					selectionMode="single"
+					selection="#{recaudacionActualiza.selectedLote}"
+					rowKey="#{registro.secuenciaLote}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{recaudacionActualiza.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA LOTES" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Identificador de operación"
+						styleClass="gridCell-right">
+						<h:outputText value="#{registro.identificador}" />
+					</p:column>
+					<p:column headerText="Fecha de transferencia"
+						styleClass="gridCell-right">
+						<h:outputText value="#{registro.fechaTransferencia}">
+							<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Secuencia lote" styleClass="gridCell-right">
+						<h:outputText value="#{registro.secuenciaLote}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{recaudacionActualiza.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update="form:pnl2 form:pnl3"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<h:form id="form">
+			<p:panel id="pnl1" header="ACTUALIZACION DE SALDOS INFONAVIT">
+				<p:panelGrid id="pnl2" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Identificador de Operación: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vLote" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:-15px;border:#{recaudacionActualiza.border}">
+								<p:outputLabel style="padding-right:10px"
+									value="#{recaudacionActualiza.lote}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+								value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha 43BIS: " styleClass="etiqueta"
+								style="margin-right:40px" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fecha43"
+								value="#{recaudacionActualiza.fecha43}" locale="es"
+								showIcon="true" pattern="dd-MM-yyyy" yearNavigator="true"
+								monthNavigator="true" maxdate="#{recaudacionActualiza.today}"
+								inputStyle="width:113px; text-align:right;" readonlyInput="true">
+							</p:datePicker>
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue" type="submit" value="Actualiza Saldos"
+								ajax="true" action="#{recaudacionActualiza.actualizarSaldos}" global="true"
+								update="form:pnl2 form:pnl3 form:result" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:panelGrid id="pnl3" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha de transferencia: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:135px;text-align:right">
+							<p:outputLabel value="#{recaudacionActualiza.fechaTransferencia}">
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy" />
+							</p:outputLabel>
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Monto pendiente:" styleClass="etiqueta"
+								style="margin-left:45px" />
+						</p:column>
+						<p:column style="width:135px;text-align:right">
+							<p:outputLabel value="#{recaudacionActualiza.montoPendiente}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Secuencia Lote: " styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:135px;text-align:right">
+							<p:outputLabel value="#{recaudacionActualiza.secuenciaLote}" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Participación:" styleClass="etiqueta"
+								style="margin-left:45px" />
+						</p:column>
+						<p:column style="width:135px;text-align:right">
+							<p:outputLabel value="#{recaudacionActualiza.participacion}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{recaudacionActualiza}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
