@@ -43,7 +43,44 @@
 		<h:form id="form">
 			<p:panel id="pnl1" header="CARGA DE ARCHIVO">
 				<p:panelGrid id="pnl2" styleClass="ui-noborder">
-					
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Nombre del archivo: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:inputText id="archivo" value="#{recaudacionCarga.archivo}"
+								maxlength="20" style="width:215px"></p:inputText>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{recaudacionCarga.cargar}"
+								update="form:pnl2 form:result" value="Cargar" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha Operación:"  styleClass="etiqueta" style="margin-right:15px" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="combLote" style="width:130px" var="t"
+								converter="selectOneMenuConverter"
+								value="#{recaudacionCarga.selectedLote}">
+								<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{recaudacionCarga.listDesmarcar}"
+									var="c" itemLabel="#{c.lote}" itemValue="#{c}" />
+
+								<p:column>
+									<h:outputText value="#{t.lote}" />
+								</p:column>
+							</p:selectOneMenu>
+						</p:column>
+						<p:column>
+							<p:commandButton class="blue"
+								actionListener="#{recaudacionCarga.aplicar}"
+								update="form:pnl2 form:result" value="Aplicar" />
+						</p:column>
+					</p:row>
 				</p:panelGrid>
 
 				<ui:include src="processResult.xhtml">
