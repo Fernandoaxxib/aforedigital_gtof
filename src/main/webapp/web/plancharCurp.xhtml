@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{plancharCurp.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+		<p:dialog id="dlg1" appendTo="@(body)" widgetVar="dlg2" modal="true"
+			width="30%" resizable="false" styleClass="styleWhite">
+			<h:form>
+				<p:dataTable var="registro" widgetVar="listaLotes" scrollable="true"
+					scrollHeight="250" value="#{plancharCurp.listLotes}"
+					filteredValue="#{plancharCurp.filtro}"
+					globalFilterFunction="#{plancharCurp.globalFilterFunction}"
+					selectionMode="single" selection="#{plancharCurp.selectedLote}"
+					rowKey="#{registro.lote_carga}" emptyMessage="Sin información"
+					style="padding-bottom:10px;border:0px" styleClass="styleTable2">
+
+					<p:ajax process="@this" event="rowSelect"
+						listener="#{plancharCurp.onRowSelect}" />
+
+					<p:ajax event="filter" global="false" />
+
+
+					<f:facet name="header">
+						<p:outputPanel style="text-align:center;margin-bottom:20px">
+							<h:outputLabel
+								style="font-family: 'Montserrat';font-size: 14px; margin: 20px auto 30px auto;color: #3c3c3c;"
+								value="LISTA LOTES" />
+						</p:outputPanel>
+					</f:facet>
+
+					<f:facet name="header">
+						<p:outputPanel
+							style="text-align:left;margin-bottom:10px;margin-top:10px;margin-left:2px">
+							<h:outputLabel style="margin-right:20px;font-weight:normal;"
+								value="#{msg.aprob_label_filtro}" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('listaLotes').filter()"
+								onkeypress="if (event.keyCode == 13) { return false; }"
+								style="width:270px !important;background:#ffffff !important;font-size:12px !important"
+								placeholder="Lote">
+							</p:inputText>
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Lote" style="text-align:center">
+						<h:outputText value="#{registro.lote_carga}" />
+					</p:column>
+				</p:dataTable>
+				<p:outputPanel style="margin-top:20px;text-align:right">
+					<p:commandButton value="Aceptar"
+						actionListener="#{plancharCurp.opcionSeleccionada2}"
+						oncomplete="PF('dlg2').hide();" update="form:pnl2"
+						styleClass="blue ui-button-text" />
+					<p:commandButton value="Cerrar" onclick="PF('dlg2').hide();"
+						styleClass="blue ui-button-text" style="margin-left:13px" />
+				</p:outputPanel>
+			</h:form>
+		</p:dialog>
+		<h:form id="form">
+			<p:panel id="pnl1" header="RECHAZOS">
+				<p:panelGrid id="pnl2" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Lote: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputPanel id="vLote" class="outputlabel-shadow"
+								style="text-align: right !important;padding-top:5px;width:100px;height:17px !important;margin-right:-15px;border:#{plancharCurp.border}">
+								<p:outputLabel style="padding-right:10px"
+									value="#{plancharCurp.lote}" />
+							</p:outputPanel>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnC" styleClass="blue" style="width:35px"
+								value="..." update="dlg1" oncomplete="PF('dlg2').show();" />
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue" type="submit"
+								value="Consultar" ajax="true" action="#{plancharCurp.consultar}"
+								global="true" update="form:pnl2 form:table1 form:result" />
+						</p:column>
+						<p:column>
+							<p:commandButton styleClass="blue" type="submit" disabled="#{plancharCurp.disabled2}"
+								value="Procesar" ajax="true" action="#{plancharCurp.procesar}"
+								global="true" update="form:pnl2 form:table1 form:result" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+				<p:dataTable id="table1" var="mon" class="sinfondo"
+					value="#{plancharCurp.listDatosTrabajadores}"
+					widgetVar="listSolicitudes"
+					emptyMessage="#{msg.aprob_msj_sinDatos}"
+					selection="#{plancharCurp.selectedTrabajadores}"
+					rowKey="#{mon.nss}" style="border:0px" rows="10" paginator="true"
+					paginatorPosition="bottom" rowsPerPageTemplate="5,10,15">
+
+					<p:ajax event="page" global="false" />
+
+					<p:ajax event="rowSelectCheckbox"
+						listener="#{plancharCurp.seleccion}" update="table1 form:pnl2"
+						global="false" />
+					<p:ajax event="rowUnselectCheckbox"
+						listener="#{plancharCurp.deseleccion}" update="table1 form:pnl2"
+						global="false" />
+
+
+					<p:ajax event="rowSelect" listener="#{plancharCurp.seleccion}"
+						update="table1 form:pnl2" global="false" />
+
+					<p:ajax event="rowUnselect" listener="#{plancharCurp.deseleccion}"
+						update="table1 form:pnl2" global="false" />
+
+
+					<f:facet name="header">
+						<p:panelGrid class="no-border no-padding" style="margin-top:10px;">
+							<p:row>
+								<p:column
+									style="text-align: left !important;width: 5px !important;">
+									<p:commandButton id="btnMarcar"
+										styleClass="blue ui-button-text" type="submit"
+										update="table1 form:pnl2"
+										action="#{plancharCurp.marcarTodos}"
+										onclick="PF('listSolicitudes').selectAllRows()"
+										value="Marcar Todos"
+										disabled="#{plancharCurp.disabled}" ajax="true"
+										global="false" />
+								</p:column>
+								<p:column
+									style="text-align: left !important;width: 40px !important;">
+									<p:commandButton id="btnDesmarcar"
+										styleClass="blue ui-button-text" type="submit"
+										update="table1 form:pnl2"
+										action="#{plancharCurp.desmarcarTodos}"
+										onclick="PF('listSolicitudes').unselectAllRows()"
+										value="Desmarcar Todos"
+										disabled="#{plancharCurp.disabled}" ajax="true"
+										global="false" />
+								</p:column>
+							</p:row>
+						</p:panelGrid>
+					</f:facet>
+
+					<p:column selectionMode="multiple"
+						style="width:16px;text-align:center;" />
+
+					<p:column headerText="Nss trabajador" width="70"
+						selectRow="#{plancharCurp.seleccionado}">
+						<h:outputText value="#{mon.nss}" style="float:right;" />
+					</p:column>
+					<p:column headerText="Curp" width="140">
+						<h:outputText value="#{mon.curp}" style="float:right;" />
+					</p:column>
+					<p:column headerText="Cuenta" width="130">
+						<h:outputText value="#{mon.codCuenta}" style="float:right;"/>
+					</p:column>
+					<p:column headerText="Inversión" width="120">
+						<h:outputText value="#{mon.codInversion}" style="float:right" />
+					</p:column>
+					<p:column headerText="Resultado operacion" width="70">
+						<h:outputText value="#{mon.resulOpera}" style="float:right" />
+					</p:column>					
+				</p:dataTable>
+
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{plancharCurp}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
