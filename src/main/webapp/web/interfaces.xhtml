@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{calculoCont.iniciar}" type="preRenderView" />
+		<f:event listener="#{interfaces.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -40,7 +40,7 @@
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-		
+
 		</h:form>
 	</ui:define>
 
@@ -49,9 +49,72 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="INTERFACES">
-				
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Lote: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="lote" style="width:120px"
+							filter="true" filterMatchMode="startsWith"
+								converter="selectOneMenuConverter" value="#{interfaces.lote}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{interfaces.lotes}" var="c"
+									itemLabel="#{c.lote}" itemValue="#{c}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Inversión: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:selectOneMenu id="inversion" style="width:120px"
+								converter="selectOneMenuConverter" value="#{interfaces.inversion}">
+								<f:selectItem itemLabel="#{msg.modDesParc_combo_default}"
+									itemValue="#{null}" noSelectionOption="true" />
+								<f:selectItems value="#{interfaces.inversiones}" var="c"
+									itemLabel="#{c.clave}" itemValue="#{c}" />
+							</p:selectOneMenu>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Fecha: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:datePicker id="fecha"
+								inputStyle="width:120px; text-align:right;" yearNavigator="true"
+								monthNavigator="true" value="#{interfaces.fecha}"
+								showIcon="true" locale="es" pattern="dd-MM-yyyy"
+								readonlyInput="true" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="2">
+							<p:selectOneRadio id="opcion" value="#{interfaces.opcion}">
+								<f:selectItem itemLabel="Bono redención anticipada"
+									itemValue="R" />
+								<f:selectItem itemLabel="Baja de bono redención" itemValue="B" />
+							</p:selectOneRadio>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="2">
+							<p:commandButton class="blue"
+								actionListener="#{interfaces.generar}" update="pGrid result"
+								value="Generar" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{calculoCont}" />
+					<ui:param name="base" value="#{interfaces}" />
 				</ui:include>
 			</p:panel>
 		</h:form>

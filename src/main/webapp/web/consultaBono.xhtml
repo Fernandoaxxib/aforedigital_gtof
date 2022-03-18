@@ -8,7 +8,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 	<f:metadata>
-		<f:event listener="#{calculoCont.iniciar}" type="preRenderView" />
+		<f:event listener="#{consultaBono.iniciar}" type="preRenderView" />
 	</f:metadata>
 
 
@@ -40,7 +40,7 @@
 				<f:param name="init" value="true" />
 			</p:linkButton>
 
-		
+
 		</h:form>
 	</ui:define>
 
@@ -49,9 +49,209 @@
 
 		<h:form id="form">
 			<p:panel id="busqueda" header="CONSULTA DEL BONO PENSIÓN">
-				
+				<p:panelGrid id="pGrid" width="100%" styleClass="ui-noborder">
+					<p:row>
+						<p:column style="padding:10px;" colspan="5">
+							<p:outputLabel value="CURP: " styleClass="etiqueta" />
+
+							<p:inputText id="curp" value="#{consultaBono.curp}"
+								maxlength="18" style="width:150px" />
+							<p:commandButton class="blue"
+								actionListener="#{consultaBono.consultarBono}"
+								update="pGrid pGrid2 result" value="Buscar" />
+
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column style="width:200px;">
+							<p:outputLabel value="Edad " styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:200px;">
+							<p:outputLabel value="A. Paterno " styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:200px;">
+							<p:outputLabel value="A. Materno " styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:200px;">
+							<p:outputLabel value="Nombre " styleClass="etiqueta" />
+						</p:column>
+						<p:column style="width:200px;">
+							<p:outputLabel value="Bono total " styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.edad}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.APaterno}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.AMaterno}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.nombre}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.bonoTotal}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Bono inicial " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Monto pesos " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha acreditación " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha vencimiento " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Valor UDI " styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.bonoIni}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.montoPesos}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.fecAcredit}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.fecVenc}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.valorUDI}" />
+						</p:column>
+
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:outputLabel value="Ajuste bono " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Monto pesos " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha ajuste " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Fecha vencimiento " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Valor UDI " styleClass="etiqueta" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.ajusteBono}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.montoPesos2}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.montoPesos2}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.fecAjusteVenc}">
+								<f:convertDateTime pattern="dd-MM-yyyy" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.bono.valorAudi}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:panelGrid id="pGrid2" width="100%" styleClass="ui-noborder"
+					style="margin-top:20px;" >
+					<p:row rendered="#{consultaBono.mostrar}">
+						<p:column colspan="5" style="padding:10px;">
+							<p:outputLabel value="Fecha corte: " styleClass="etiqueta" />
+
+							<p:datePicker id="fecha"
+								inputStyle="width:120px; text-align:right;"
+								value="#{consultaBono.fecha}" showIcon="true" locale="es"
+								yearNavigator="true" monthNavigator="true" pattern="dd-MM-yyyy"
+								readonlyInput="true">
+							</p:datePicker>
+							<p:commandButton class="blue"
+								actionListener="#{consultaBono.fechaCorte}"
+								update="pGrid2 result" value="Buscar fecha" />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{consultaBono.mostrar}">
+						<p:column>
+							<p:outputLabel value="Valor UDIS día: " styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.fechaCorte.valorUDI}" />
+						</p:column>
+					</p:row>
+					<p:row rendered="#{consultaBono.mostrar}">
+						<p:column>
+							<p:outputLabel value="Valor pago anticipado UDIS: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.fechaCorte.pagoAnt}" />
+						</p:column>
+					</p:row>
+					<p:row rendered="#{consultaBono.mostrar}">
+						<p:column>
+							<p:outputLabel value="Complemento valor nominal UDIS: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.fechaCorte.compVal}" />
+						</p:column>
+					</p:row>
+					<p:row rendered="#{consultaBono.mostrar}">
+						<p:column>
+							<p:outputLabel value="Valor en pesos valor pago anticipado: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.fechaCorte.valorPesos}" />
+						</p:column>
+					</p:row>
+					<p:row rendered="#{consultaBono.mostrar}">
+						<p:column>
+							<p:outputLabel value="Valor en pesos complemento valor nominal: "
+								styleClass="etiqueta" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{consultaBono.fechaCorte.valorPesosCom}" />
+						</p:column>
+					</p:row>
+
+
+				</p:panelGrid>
+
 				<ui:include src="processResult.xhtml">
-					<ui:param name="base" value="#{calculoCont}" />
+					<ui:param name="base" value="#{consultaBono}" />
 				</ui:include>
 			</p:panel>
 		</h:form>
