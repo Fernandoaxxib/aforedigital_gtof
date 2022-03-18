@@ -405,4 +405,10 @@ public class Constantes {
 	public static final String APORTACIONES_VOLUNTARIAS_PACKAGE = "PKG_RECA_FOCONAPO";
 	public static final String APORTACIONES_VOLUNTARIAS_APORTACIONES = "PRC_CONS_APORTACION_VOL";
 	public static final String APORTACIONES_VOLUNTARIAS_INDEPENDIENTES = "PRC_CONS_APO_INDEPENDIENTES";
+	
+	// PLANCHAR CURP
+    public static final String PLANCHAR_CURP_PACKAGE = "PKG_RECA_FORCHIST";
+    public static final String PLANCHAR_CURP_GET_DATOS_TRABAJADOR = "PRC_DATOS_TRABAJADOR";
+    public static final String PLANCHAR_CURP_GET_LOTES = "PRC_LOTE";
+    public static final String PLANCHAR_CURP_PROCESAR = "PRC_PROCESAR";	
 }
