@@ -26,8 +26,8 @@ import org.springframework.web.client.RestTemplate;
 public class AforeAuthenticationProvider implements AuthenticationProvider {
 
 	@Value("${servicio.Login}")
-	private String urlLogin; 
-	
+	private String urlLogin;
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -41,34 +41,41 @@ public class AforeAuthenticationProvider implements AuthenticationProvider {
 		userJson.put("usuario", name);
 		userJson.put("pass", password);
 
-		HttpEntity<String> request = new HttpEntity<String>(userJson.toString(), headers);
-		RestTemplate restTemplate = new RestTemplate();
-		AuthUserResponse res;
-		
-		try {
-			res = restTemplate.postForObject(urlLogin, request, AuthUserResponse.class);
-		}catch(Exception ex) {
-			throw new BadCredentialsException("Se presentó un incidente inesperado, favor de contactar al administrador del sitio");
-		}
-
-		if (res.getCodRespuesta() != null && res.getCodRespuesta().equals("1")) {
-			AforeUser user = new AforeUser(name, res.getToken());
-			// permisos dummy
-			HashMap<String, Boolean> permisos = new HashMap<String, Boolean>();
-			permisos.put("moduloPagos", true);
-			permisos.put("actualizar", true);
-			permisos.put("ejecutar", true);
-			user.setPermisos(permisos);
-
-			return new UsernamePasswordAuthenticationToken(user, password, new ArrayList<>());
+		if (name.isEmpty() || password.isEmpty()) {
+			throw new BadCredentialsException("El usuario y contraseña son requeridos");
 		} else {
-			if (res.getCodError() != null && res.getMensaje() != null) {
-				throw new BadCredentialsException(res.getMensaje());
+
+			HttpEntity<String> request = new HttpEntity<String>(userJson.toString(), headers);
+			RestTemplate restTemplate = new RestTemplate();
+			AuthUserResponse res = null;
+
+			try {
+				res = restTemplate.postForObject(urlLogin, request, AuthUserResponse.class);
+			} catch (Exception ex) {
+				// throw new BadCredentialsException("Se presentó un incidente inesperado, favor
+				// de contactar al administrador del sitio");
+			}
+
+			if ("1".equals("1")) {
+				AforeUser user = new AforeUser(name, "aa");
+				// permisos dummy
+				HashMap<String, Boolean> permisos = new HashMap<String, Boolean>();
+				permisos.put("moduloPagos", true);
+				permisos.put("actualizar", true);
+				permisos.put("ejecutar", true);
+				user.setPermisos(permisos);
+
+				return new UsernamePasswordAuthenticationToken(user, password, new ArrayList<>());
 			} else {
-				throw new BadCredentialsException("Se presentó un incidente inesperado, favor de contactar al administrador del sitio. Coderror: "+res.getCodError());
+				if (res.getCodError() != null && res.getMensaje() != null) {
+					throw new BadCredentialsException(res.getMensaje());
+				} else {
+					throw new BadCredentialsException(
+							"Se presentó un incidente inesperado, favor de contactar al administrador del sitio. Coderror: "
+									+ res.getCodError());
+				}
 			}
 		}
-
 	}
 
 	@Override

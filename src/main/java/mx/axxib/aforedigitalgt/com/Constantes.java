@@ -411,4 +411,12 @@ public class Constantes {
     public static final String PLANCHAR_CURP_GET_DATOS_TRABAJADOR = "PRC_DATOS_TRABAJADOR";
     public static final String PLANCHAR_CURP_GET_LOTES = "PRC_LOTE";
     public static final String PLANCHAR_CURP_PROCESAR = "PRC_PROCESAR";	
+    
+    
+    //FOCAPDOM
+    public static final String FOCAPDOM_PACKAGE="PKG_RECA_FOCAPDOM";
+    public static final String FOCAPDOM_CARGA_MASIVA_BTN_EJECUTAR="PRC_CARGAMASIVA_BOTON_EJECUTAR";
+    public static final String FOCAPDOM_DATOS_INICIALES="PRC_DATOS_INICIALES";
+    
+    
 }

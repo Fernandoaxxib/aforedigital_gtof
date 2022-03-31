@@ -1,0 +1,423 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="layout3.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+	<f:metadata>
+		<f:event listener="#{focapdomCaptura.iniciar}" type="preRenderView" />
+	</f:metadata>
+
+
+	<ui:define name="menu">
+		<ui:include src="menu.xhtml" />
+	</ui:define>
+
+	<ui:define name="submenu">
+		<ui:include src="subMenuRecaudaciones.xhtml" />
+	</ui:define>
+
+	<ui:define name="center">
+		<h:outputScript name="js/calendar-localization.js" />
+
+		<h:form id="form">
+			<p:panel id="pnl1" header="CAPTURA">
+				<div class="ui-g">
+					<div class="ui-g-4">
+						<p:panel id="pnl2" style="margin-top:20px;height:374px">
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:outputLabel value="DATOS DEL TRABAJADOR"
+											styleClass="etiqueta" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="NSS" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="nss" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="CURP" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="curp" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="RFC" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="rfc" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Nombre" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="nombre" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Apellido Paterno" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="apellidoP" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Apellido Materno" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="apellidoM" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Email" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="email" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Fuente" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="fuente" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+					<div class="ui-g-4">
+						<p:panel id="pnl3" style="margin-top:7px;border:0px !important">
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:panel style="width:300px;height:145px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="ESTATUS" styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Solicitud" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="solicitud" value="" readonly="true"
+															style="width:120px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:inputText value="" readonly="true" style="width:20px" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Registro" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="registro" value="" readonly="true"
+															style="width:120px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:inputText value="" readonly="true" style="width:20px" />
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Trabajador" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="trabajador" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:panel style="width:300px;height:215px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="IDENTIFICACIÓN"
+															styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Tipo persona" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="tipoP" value="" readonly="true"
+															style="width:80px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:inputText value="" readonly="true" style="width:20px" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Tipo documento" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="tipoD" value="" readonly="true"
+															style="width:80px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:inputText value="" readonly="true" style="width:20px" />
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Número documento"
+															style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="nomDoc" value="" readonly="true"
+															style="width:100px" maxlength="20" />
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+					<div class="ui-g-4">
+						<p:panel id="pnl4" style="margin-top:7px;border:0px !important">
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:panel style="width:280px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="FECHAS" styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Fecha solicitud" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="fechaS" value="" readonly="true"
+															style="width:150px" maxlength="20" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Fecha captura" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="fechaC" value="" readonly="true"
+															style="width:150px" maxlength="20" />
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:panel style="width:280px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="DEFINICIÓN" styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Origen" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="origen" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Periodicidad" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="periodicidad" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Beneficiario fiscal"
+															style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="beneficiarioF" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Origen captura" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="origenC" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Origen Recursos" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="origenR" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:outputLabel value="Otros" style="width:100px" />
+													</p:column>
+													<p:column>
+														<p:inputText id="otros" value="" readonly="true"
+															style="width:130px" maxlength="20" />
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-3">
+						<p:panel id="pnl5" style="border:0px !important">
+							<p:panelGrid class="ui-noborder" style="width:260px">
+								<p:row>
+									<p:column>
+										<p:panel style="width:220px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="TIPO DE APORTACIÓN"
+															styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:selectOneRadio id="customRadio1" layout="pageDirection"
+															value="" style="">
+															<f:selectItem itemLabel="Vol. No Deducible" itemValue="1" />
+															<f:selectItem itemLabel="Vol. Deducible" itemValue="2" />
+															<f:selectItem itemLabel="Complementarias" itemValue="3" />
+															<f:selectItem itemLabel="Ahorro a largo plazo"
+																itemValue="4" />
+														</p:selectOneRadio>
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+					<div class="ui-g-3">
+						<p:panel id="pnl6" style="border:0px !important">
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:panel style="width:170px;height:165px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="TIPO DE SIEFORE"
+															styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:selectOneRadio id="customRadio2" layout="pageDirection"
+															value="" style="">
+															<f:selectItem itemLabel="Multifondo 1" itemValue="1" />
+															<f:selectItem itemLabel="Multifondo 2" itemValue="2" />
+															<f:selectItem itemLabel="Ahorro I." itemValue="3" />
+														</p:selectOneRadio>
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+					<div class="ui-g-6">
+						<p:panel id="pnl7" style="border:0px !important">
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:panel style="width:280px">
+											<p:panelGrid class="ui-noborder">
+												<p:row>
+													<p:column>
+														<p:outputLabel value="TIPO DE SIEFORE"
+															styleClass="etiqueta" />
+													</p:column>
+												</p:row>
+												<p:row>
+													<p:column>
+														<p:selectOneRadio id="customRadio3" layout="pageDirection"
+															value="" style="">
+															<f:selectItem itemLabel="Multifondo 1" itemValue="1" />
+															<f:selectItem itemLabel="Multifondo 2" itemValue="2" />
+															<f:selectItem itemLabel="Ahorro I." itemValue="3" />
+														</p:selectOneRadio>
+													</p:column>
+												</p:row>
+											</p:panelGrid>
+										</p:panel>
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+				</div>
+				<ui:include src="processResult.xhtml">
+					<ui:param name="base" value="#{focapdomCaptura}" />
+				</ui:include>
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>
