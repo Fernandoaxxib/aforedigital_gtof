@@ -8,54 +8,58 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import lombok.Getter;
-import lombok.Setter;
 import mx.axxib.aforedigitalgt.com.ConstantesMsg;
 import mx.axxib.aforedigitalgt.com.ProcessResult;
 import mx.axxib.aforedigitalgt.ctrll.ControllerBase;
-import mx.axxib.aforedigitalgt.reca.eml.AportacionesVoluntariasOut;
-import mx.axxib.aforedigitalgt.reca.serv.AportacionesVoluntariasServ;
+import mx.axxib.aforedigitalgt.reca.eml.RecaudacionIsssteArchivoRespuestaOut;
+import mx.axxib.aforedigitalgt.reca.serv.RecaudacionIsssteArchivoRespuestaServ;
+import mx.axxib.aforedigitalgt.util.ValidateUtil;
 
 //***********************************************//
-//** FUNCIONALIDAD DEL OBJETO: Controlador de Interfaces de Aportaciones Voluntarias
+//** FUNCIONALIDAD DEL OBJETO: Controlador de Recaudacion ISSSTE
 //** Interventor Principal: EAG
-//** Fecha Creación: 07/Abril/2022
+//** Fecha Creación: 04/Abril/2022
 //** Última Modificación:
 //***********************************************//
 @Scope(value = "session")
-@Component(value = "aportacionesVoluntarias")
-@ELBeanName(value = "aportacionesVoluntarias")
-public class AportacionesVoluntariasCtrll extends ControllerBase {
+@Component(value = "recaudacionIsssteArchivoRespuesta")
+@ELBeanName(value = "recaudacionIsssteArchivoRespuesta")
+public class RecaudacionIsssteArchivoRespuestaCtrll extends ControllerBase {
 
 	@Autowired
-	private AportacionesVoluntariasServ serv;
-	
+	private RecaudacionIsssteArchivoRespuestaServ serv;
+
 	@Getter
-	@Setter
-	private Integer sucursal;
+	private String lote;
 	
+	
+
 	@Override
 	public void iniciar() {
 		super.iniciar();
 		if (init) {
+
 			limpiar();
-			
+
 			// Cancelar inicialización sobre la misma pantalla
 			init = false;
 		}
 	}
 
 	private void limpiar() {
-		
-		sucursal = null;
-		
+		lote = null;
 	}
 	
-	public void consultaAportacionesVoluntarias() {
+	public void lote() {
 		ProcessResult pr = new ProcessResult();
+		
 		try {
-			if (sucursal != null) {
-				AportacionesVoluntariasOut res = serv.consultaAportacionesVoluntarias(sucursal);
-				if (res.getEstatus() == 1) { 
+		pr.setDescProceso("LOTE");
+
+		if (lote != null) {
+			try {
+				RecaudacionIsssteArchivoRespuestaOut res = serv.lote();
+				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getEstatus() == 2) {
@@ -64,12 +68,13 @@ public class AportacionesVoluntariasCtrll extends ControllerBase {
 						pr.setStatus(res.getMensaje());
 					}
 				}
-			} else {
-				UIInput fini = (UIInput) findComponent("sucursal");
-				fini.setValid(false);
-
-				pr.setStatus("Debe elegir una sucursal");
+			} catch (Exception e) {
+				pr = GenericException(e);
 			}
+		}else {
+			pr.setStatus("Se requiere el número de lote");
+		}
+		
 		} catch (Exception e) {
 			resultados.add(GenericException(e));
 		} finally {
@@ -77,13 +82,13 @@ public class AportacionesVoluntariasCtrll extends ControllerBase {
 		}
 	}
 	
-	
-	public void consultaAportacionesVoluntariasIndependientes() {
+	public void iniciaProceso() {
 		ProcessResult pr = new ProcessResult();
 		try {
-			if (sucursal != null) {
-				AportacionesVoluntariasOut res = serv.consultaAportacionesVoluntarias(sucursal);
-				if (res.getEstatus() == 1) { 
+			pr.setDescProceso("Inicia Proceso");
+			if (isFormValid(pr)) {
+				RecaudacionIsssteArchivoRespuestaOut res = serv.iniciaProceso(lote);
+				if (res.getEstatus() == 1) {
 					pr.setStatus(aforeMessage.getMessage(ConstantesMsg.EJECUCION_SP_OK, null));
 				} else {
 					if (res.getEstatus() == 2) {
@@ -92,11 +97,6 @@ public class AportacionesVoluntariasCtrll extends ControllerBase {
 						pr.setStatus(res.getMensaje());
 					}
 				}
-			} else {
-				UIInput fini = (UIInput) findComponent("sucursal");
-				fini.setValid(false);
-
-				pr.setStatus("Debe elegir una sucursal");
 			}
 		} catch (Exception e) {
 			resultados.add(GenericException(e));
@@ -105,5 +105,24 @@ public class AportacionesVoluntariasCtrll extends ControllerBase {
 		}
 	}
 	
+	public boolean isFormValid(ProcessResult pr) {
+		if (lote == null || lote.equals("")) {
+			UIInput radio = (UIInput) findComponent("lote");
+			radio.setValid(false);
+
+			pr.setStatus("Debe elegir un lote");
+			return false;
+		} else if (!ValidateUtil.isValidFileName(lote)) {
+			UIInput radio = (UIInput) findComponent("lote");
+			radio.setValid(false);
+
+			pr.setStatus("Nombre de lote inválido");
+			return false;
+		}
+
+
+		return true;
+	}
+
 	
 }
