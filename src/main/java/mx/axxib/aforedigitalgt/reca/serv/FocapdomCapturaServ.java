@@ -3,7 +3,7 @@ package mx.axxib.aforedigitalgt.reca.serv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import mx.axxib.aforedigitalgt.com.AforeException;
-import mx.axxib.aforedigitalgt.reca.dal.FocapdomRepo;
+import mx.axxib.aforedigitalgt.reca.dal.FocapdomCapturaRepo;
 import mx.axxib.aforedigitalgt.reca.eml.FocapdomOut;
 import mx.axxib.aforedigitalgt.serv.ServiceBase;
 
@@ -17,7 +17,7 @@ import mx.axxib.aforedigitalgt.serv.ServiceBase;
 public class FocapdomCapturaServ extends ServiceBase {
 
 	@Autowired
-	private FocapdomRepo repo;
+	private FocapdomCapturaRepo repo;
 
 	public FocapdomOut getDatosIniciales() throws AforeException {
 		try {

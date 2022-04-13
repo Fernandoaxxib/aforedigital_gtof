@@ -20,7 +20,7 @@ import mx.axxib.aforedigitalgt.reca.eml.FocapdomOut;
 
 @Repository
 @Transactional
-public class FocapdomRepo extends RepoBase {
+public class FocapdomCapturaRepo extends RepoBase {
 
 	public FocapdomOut getDatosIniciales() throws AforeException {
 		try {
