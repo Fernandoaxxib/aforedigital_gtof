@@ -1,5 +1,6 @@
 package mx.axxib.aforedigitalgt.reca.eml;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class DatosInicialesFocapdom {
 	private Integer comtel_cve_compania;
 	@Getter
 	@Setter
-	Integer estatus_incre;
+	private Integer estatus_incre;
 	@Getter
 	@Setter
 	private Integer cve_est_sol;
@@ -122,4 +123,28 @@ public class DatosInicialesFocapdom {
 	@Getter
 	@Setter
 	private String fecha_cobro;
+	@Getter
+	@Setter
+	private String dummy_orig_captura;
+	@Getter
+	@Setter
+	private Integer cve_orig_recursos;
+	@Getter
+	@Setter
+	private String descripcion_orig_recursos;
+	@Getter
+	@Setter
+	private BigDecimal valorIncremento;
+	@Getter
+	@Setter
+	private String dummy_incrementalidad_periodicidad;
+	@Getter
+	@Setter
+	private String numCelular;	
+	@Getter
+	@Setter
+	private String nominaAsesor;
+	@Getter
+	@Setter
+	private String nombreAsesor;
 }

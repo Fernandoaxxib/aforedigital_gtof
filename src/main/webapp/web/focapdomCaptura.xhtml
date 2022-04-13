@@ -21,8 +21,7 @@
 	</ui:define>
 
 	<ui:define name="center">
-		<h:outputScript name="js/calendar-localization.js" />
-
+		<h:outputScript name="js/calendar-localization.js" />		
 		<h:form id="form">
 			<p:panel id="pnl1" header="CAPTURA">
 				<div class="ui-g">
@@ -30,7 +29,7 @@
 						<p:panel id="pnl2" style="margin-top:20px;height:374px">
 							<p:panelGrid class="ui-noborder">
 								<p:row>
-									<p:column>
+									<p:column colspan="2">
 										<p:outputLabel value="DATOS DEL TRABAJADOR"
 											styleClass="etiqueta" />
 									</p:column>
@@ -127,11 +126,14 @@
 														<p:outputLabel value="Solicitud" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="solicitud" value="" readonly="true"
-															style="width:120px" maxlength="20" />
+														<p:inputText id="solicitud"
+															value="#{focapdomCaptura.datosIniciales.solicitud}"
+															readonly="true" style="width:120px" maxlength="20" />
 													</p:column>
 													<p:column>
-														<p:inputText value="" readonly="true" style="width:20px" />
+														<p:inputText
+															value="#{focapdomCaptura.datosIniciales.cve_est_sol}"
+															readonly="true" style="width:20px" />
 													</p:column>
 												</p:row>
 												<p:row>
@@ -139,11 +141,14 @@
 														<p:outputLabel value="Registro" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="registro" value="" readonly="true"
-															style="width:120px" maxlength="20" />
+														<p:inputText id="registro"
+															value="#{focapdomCaptura.datosIniciales.desc_est_reg}"
+															readonly="true" style="width:120px" maxlength="20" />
 													</p:column>
 													<p:column>
-														<p:inputText value="" readonly="true" style="width:20px" />
+														<p:inputText
+															value="#{focapdomCaptura.datosIniciales.cve_est_reg}"
+															readonly="true" style="width:20px" />
 													</p:column>
 												</p:row>
 											</p:panelGrid>
@@ -176,11 +181,25 @@
 														<p:outputLabel value="Tipo persona" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="tipoP" value="" readonly="true"
-															style="width:80px" maxlength="20" />
+														<p:inputText id="tipoP"
+															value="#{focapdomCaptura.datosIniciales.dummy_tipo_persona}"
+															readonly="true" style="width:80px" maxlength="20" />
 													</p:column>
 													<p:column>
-														<p:inputText value="" readonly="true" style="width:20px" />
+														<p:selectOneMenu id="combTipoPersona" style="width:20px"
+															var="t" converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedTipoPersona}">
+															<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems value="#{focapdomCaptura.listTipoPersona}"
+																var="c" itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.descripcion}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedTipoPersona}"
+																update="form:pnl3" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
 												<p:row>
@@ -188,11 +207,27 @@
 														<p:outputLabel value="Tipo documento" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="tipoD" value="" readonly="true"
-															style="width:80px" maxlength="20" />
+														<p:inputText id="tipoD"
+															value="#{focapdomCaptura.datosIniciales.dummy_tipo_identificacion}"
+															readonly="true" style="width:80px" maxlength="20" />
 													</p:column>
 													<p:column>
-														<p:inputText value="" readonly="true" style="width:20px" />
+														<p:selectOneMenu id="combTipoIdentificacion"
+															style="width:20px" var="t"
+															converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedTipoIdentificacion}">
+															<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems
+																value="#{focapdomCaptura.listTipoIdentificacion}"
+																var="c" itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.descripcion}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedTipoIdentificacion}"
+																update="form:pnl3" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
 											</p:panelGrid>
@@ -262,8 +297,25 @@
 														<p:outputLabel value="Origen" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="origen" value="" readonly="true"
-															style="width:130px" maxlength="20" />
+														<p:inputText id="origen"
+															value="#{focapdomCaptura.datosIniciales.dummy_origen_aporta}"
+															readonly="true" style="width:130px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:selectOneMenu id="combOrigen" style="width:20px"
+															var="t" converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedOrigen}">
+															<f:selectItem itemLabel="Seleccionar" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems value="#{focapdomCaptura.listOrigen}"
+																var="c" itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.valor}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedOrigen}"
+																update="form:pnl4" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
 												<p:row>
@@ -271,8 +323,26 @@
 														<p:outputLabel value="Periodicidad" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="periodicidad" value="" readonly="true"
-															style="width:130px" maxlength="20" />
+														<p:inputText id="periodicidad"
+															value="#{focapdomCaptura.datosIniciales.dummy_periodo}"
+															readonly="true" style="width:130px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:selectOneMenu id="combPeriodicidad" style="width:20px"
+															var="t" converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedPeriodicidad}">
+															<f:selectItem itemLabel="" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems
+																value="#{focapdomCaptura.listPeriodicidad}" var="c"
+																itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.valor}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedPeriodicidad}"
+																update="form:pnl4" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
 												<p:row>
@@ -281,8 +351,26 @@
 															style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="beneficiarioF" value="" readonly="true"
-															style="width:130px" maxlength="20" />
+														<p:inputText id="beneficiarioF"
+															value="#{focapdomCaptura.datosIniciales.dummy_beneficiario_fiscal}"
+															readonly="true" style="width:130px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:selectOneMenu id="combBenFiscal" style="width:20px"
+															var="t" converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedBeneficiario}">
+															<f:selectItem itemLabel="" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems
+																value="#{focapdomCaptura.listBeneficiario}" var="c"
+																itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.descripcion}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedBeneficiario}"
+																update="form:pnl4" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
 												<p:row>
@@ -290,8 +378,26 @@
 														<p:outputLabel value="Origen captura" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="origenC" value="" readonly="true"
-															style="width:130px" maxlength="20" />
+														<p:inputText id="origenC"
+															value="#{focapdomCaptura.datosIniciales.dummy_orig_captura}"
+															readonly="true" style="width:130px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:selectOneMenu id="combOrigenCaptura" style="width:20px"
+															var="t" converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedOrigenCaptura}">
+															<f:selectItem itemLabel="" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems
+																value="#{focapdomCaptura.listOrigenCaptura}" var="c"
+																itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.descripcion}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedOrigenCaptura}"
+																update="form:pnl4" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
 												<p:row>
@@ -299,16 +405,38 @@
 														<p:outputLabel value="Origen Recursos" style="width:100px" />
 													</p:column>
 													<p:column>
-														<p:inputText id="origenR" value="" readonly="true"
-															style="width:130px" maxlength="20" />
+														<p:inputText id="origenR"
+															value="#{focapdomCaptura.datosIniciales.descripcion_orig_recursos}"
+															readonly="true" style="width:130px" maxlength="20" />
+													</p:column>
+													<p:column>
+														<p:selectOneMenu id="combOrigenRecursos"
+															style="width:20px" var="t"
+															converter="selectOneMenuConverter"
+															value="#{focapdomCaptura.selectedOrigenRecursos}">
+															<f:selectItem itemLabel="" itemValue="#{null}"
+																noSelectionOption="true" />
+															<f:selectItems
+																value="#{focapdomCaptura.listOrigenRecursos}" var="c"
+																itemLabel="#{c.cve}" itemValue="#{c}" />
+															<p:column>
+																<h:outputText value="#{t.descripcion}" />
+															</p:column>
+															<p:ajax event="change"
+																listener="#{focapdomCaptura.selectedOrigenRecursos}"
+																update="form:pnl4" global="false" />
+														</p:selectOneMenu>
 													</p:column>
 												</p:row>
+											</p:panelGrid>
+											<p:panelGrid class="ui-noborder">
 												<p:row>
 													<p:column>
 														<p:outputLabel value="Otros" style="width:100px" />
 													</p:column>
-													<p:column>
-														<p:inputText id="otros" value="" readonly="true"
+													<p:column colspan="2">
+														<p:inputText id="otros"
+															value="#{focapdomCaptura.datosIniciales.orig_monto_otros}"
 															style="width:130px" maxlength="20" />
 													</p:column>
 												</p:row>
@@ -321,93 +449,377 @@
 					</div>
 				</div>
 				<div class="ui-g">
-					<div class="ui-g-3">
-						<p:panel id="pnl5" style="border:0px !important">
-							<p:panelGrid class="ui-noborder" style="width:260px">
-								<p:row>
-									<p:column>
-										<p:panel style="width:220px">
-											<p:panelGrid class="ui-noborder">
-												<p:row>
-													<p:column>
-														<p:outputLabel value="TIPO DE APORTACIÓN"
-															styleClass="etiqueta" />
-													</p:column>
-												</p:row>
-												<p:row>
-													<p:column>
-														<p:selectOneRadio id="customRadio1" layout="pageDirection"
-															value="" style="">
-															<f:selectItem itemLabel="Vol. No Deducible" itemValue="1" />
-															<f:selectItem itemLabel="Vol. Deducible" itemValue="2" />
-															<f:selectItem itemLabel="Complementarias" itemValue="3" />
-															<f:selectItem itemLabel="Ahorro a largo plazo"
-																itemValue="4" />
-														</p:selectOneRadio>
-													</p:column>
-												</p:row>
-											</p:panelGrid>
-										</p:panel>
-									</p:column>
-								</p:row>
-							</p:panelGrid>
-						</p:panel>
-					</div>
-					<div class="ui-g-3">
-						<p:panel id="pnl6" style="border:0px !important">
-							<p:panelGrid class="ui-noborder">
-								<p:row>
-									<p:column>
-										<p:panel style="width:170px;height:165px">
-											<p:panelGrid class="ui-noborder">
-												<p:row>
-													<p:column>
-														<p:outputLabel value="TIPO DE SIEFORE"
-															styleClass="etiqueta" />
-													</p:column>
-												</p:row>
-												<p:row>
-													<p:column>
-														<p:selectOneRadio id="customRadio2" layout="pageDirection"
-															value="" style="">
-															<f:selectItem itemLabel="Multifondo 1" itemValue="1" />
-															<f:selectItem itemLabel="Multifondo 2" itemValue="2" />
-															<f:selectItem itemLabel="Ahorro I." itemValue="3" />
-														</p:selectOneRadio>
-													</p:column>
-												</p:row>
-											</p:panelGrid>
-										</p:panel>
-									</p:column>
-								</p:row>
-							</p:panelGrid>
-						</p:panel>
+					<div class="ui-g-6">
+						<div class="ui-g">
+							<div class="ui-g-6">
+								<p:panel id="pnl5">
+									<p:panelGrid class="ui-noborder">
+										<p:row>
+											<p:column>
+												<p:outputLabel value="TIPO DE APORTACIÓN"
+													styleClass="etiqueta" />
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:selectOneRadio id="customRadio1" layout="pageDirection"
+													value="" style="">
+													<f:selectItem itemLabel="Vol. No Deducible" itemValue="1" />
+													<f:selectItem itemLabel="Vol. Deducible" itemValue="2" />
+													<f:selectItem itemLabel="Complementarias" itemValue="3" />
+													<f:selectItem itemLabel="Ahorro a largo plazo"
+														itemValue="4" />
+												</p:selectOneRadio>
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</p:panel>
+							</div>
+							<div class="ui-g-6">
+								<p:panel id="pnl6" style="height:165px">
+									<p:panelGrid class="ui-noborder">
+										<p:row>
+											<p:column>
+												<p:outputLabel value="TIPO DE SIEFORE" styleClass="etiqueta" />
+											</p:column>
+										</p:row>
+										<p:row>
+											<p:column>
+												<p:selectOneRadio id="customRadio2" layout="pageDirection"
+													value="" style="">
+													<f:selectItem itemLabel="Multifondo 1" itemValue="1" />
+													<f:selectItem itemLabel="Multifondo 2" itemValue="2" />
+													<f:selectItem itemLabel="Ahorro I." itemValue="3" />
+												</p:selectOneRadio>
+											</p:column>
+										</p:row>
+									</p:panelGrid>
+								</p:panel>
+							</div>
+						</div>
+						<div class="ui-g">
+							<p:panel id="pnl7" style="margin-left:5px;width:474px">
+								<p:panelGrid class="ui-noborder">
+									<p:row>
+										<p:column>
+											<p:outputLabel value="INCREMENTALIDAD" styleClass="etiqueta" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:outputLabel value="Tipo movimiento" style="width:100px" />
+										</p:column>
+										<p:column>
+											<p:inputText id="tipoMovimiento"
+												value="#{focapdomCaptura.datosIniciales.dummy_tip_mov}"
+												readonly="true" style="width:160px" maxlength="20" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="combTipoMovimiento" style="width:20px"
+												var="t" converter="selectOneMenuConverter"
+												value="#{focapdomCaptura.selectedTipoMovimiento}">
+												<f:selectItem itemLabel="" itemValue="#{null}"
+													noSelectionOption="true" />
+												<f:selectItems value="#{focapdomCaptura.listTipoMovimiento}"
+													var="c" itemLabel="#{c.cve}" itemValue="#{c}" />
+												<p:column>
+													<h:outputText value="#{t.descripcion}" />
+												</p:column>
+												<p:ajax event="change"
+													listener="#{focapdomCaptura.selectedTipoMovimiento}"
+													update="form:pnl7" global="false" />
+											</p:selectOneMenu>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:outputLabel value="Tipo incremento" style="width:100px" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="combTipoIncremento" style="width:145px"
+												var="t" converter="selectOneMenuConverter"
+												value="#{focapdomCaptura.selectedTipoIncremento}">
+												<f:selectItems value="#{focapdomCaptura.listTipoIncremento}"
+													var="c" itemLabel="#{c.descripcion}" itemValue="#{c}" />
+												<p:column>
+													<h:outputText value="#{t.descripcion}" />
+												</p:column>
+												<p:ajax event="change"
+													listener="#{focapdomCaptura.selectedTipoIncremento}"
+													update="form:pnl7" global="false" />
+											</p:selectOneMenu>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:outputLabel
+												value="#{focapdomCaptura.etiquetaValorIncremento}"
+												style="width:100px" />
+										</p:column>
+										<p:column>
+											<p:inputText id="valorInc"
+												value="#{focapdomCaptura.datosIniciales.valorIncremento}"
+												style="width:160px" maxlength="20" />
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:outputLabel value="Periodicidad" style="width:100px" />
+										</p:column>
+										<p:column>
+											<p:inputText id="periodicidad2"
+												value="#{focapdomCaptura.datosIniciales.dummy_incrementalidad_periodicidad}"
+												readonly="true" style="width:160px" maxlength="20" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="combIncrePeriodicidad"
+												style="width:145px" var="t"
+												converter="selectOneMenuConverter"
+												value="#{focapdomCaptura.selectedTipoPeriodo}">
+
+												<f:selectItem itemLabel="" itemValue="#{null}"
+													noSelectionOption="true" />
+												<f:selectItems value="#{focapdomCaptura.listTipoPeriodo}"
+													var="c" itemLabel="#{c.cve}" itemValue="#{c}" />
+												<p:column>
+													<h:outputText value="#{t.valor}" />
+												</p:column>
+												<p:ajax event="change"
+													listener="#{focapdomCaptura.selectedTipoPeriodo}"
+													update="form:pnl7" global="false" />
+											</p:selectOneMenu>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:outputLabel value="Comp. Celular" style="width:100px" />
+										</p:column>
+										<p:column>
+											<p:inputText id="compCelular"
+												value="#{focapdomCaptura.datosIniciales.dummy_comp_celular}"
+												readonly="true" style="width:160px" maxlength="20" />
+										</p:column>
+										<p:column>
+											<p:selectOneMenu id="combCompaniaCelular" style="width:145px"
+												var="t" converter="selectOneMenuConverter"
+												value="#{focapdomCaptura.selectedCompaniaCelular}">
+
+												<f:selectItem itemLabel="" itemValue="#{null}"
+													noSelectionOption="true" />
+												<f:selectItems
+													value="#{focapdomCaptura.listCompaniaCelular}" var="c"
+													itemLabel="#{c.cve}" itemValue="#{c}" />
+												<p:column>
+													<h:outputText value="#{t.compania}" />
+												</p:column>
+												<p:ajax event="change"
+													listener="#{focapdomCaptura.selectedCompaniaCelular}"
+													update="form:pnl7" global="false" />
+											</p:selectOneMenu>
+										</p:column>
+									</p:row>
+									<p:row>
+										<p:column>
+											<p:outputLabel value="Núm. Celular" style="width:100px" />
+										</p:column>
+										<p:column>
+											<p:inputText id="numCelular"
+												value="#{focapdomCaptura.datosIniciales.numCelular}"
+												readonly="true" style="width:160px" maxlength="20" />
+										</p:column>
+									</p:row>
+								</p:panelGrid>
+							</p:panel>
+						</div>
 					</div>
 					<div class="ui-g-6">
-						<p:panel id="pnl7" style="border:0px !important">
+						<p:panel id="pnl8" style="width:473px;margin-top:5px;height:412px">
 							<p:panelGrid class="ui-noborder">
 								<p:row>
 									<p:column>
-										<p:panel style="width:280px">
-											<p:panelGrid class="ui-noborder">
-												<p:row>
-													<p:column>
-														<p:outputLabel value="TIPO DE SIEFORE"
-															styleClass="etiqueta" />
-													</p:column>
-												</p:row>
-												<p:row>
-													<p:column>
-														<p:selectOneRadio id="customRadio3" layout="pageDirection"
-															value="" style="">
-															<f:selectItem itemLabel="Multifondo 1" itemValue="1" />
-															<f:selectItem itemLabel="Multifondo 2" itemValue="2" />
-															<f:selectItem itemLabel="Ahorro I." itemValue="3" />
-														</p:selectOneRadio>
-													</p:column>
-												</p:row>
-											</p:panelGrid>
-										</p:panel>
+										<p:outputLabel value="DOMICILIACIÓN" styleClass="etiqueta" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Banco" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="banco"
+											value="#{focapdomCaptura.datosIniciales.dummy_banco}"
+											readonly="true" style="width:160px" maxlength="20" />
+									</p:column>
+									<p:column>
+										<p:selectOneMenu id="combBanco" style="width:20px" var="t"
+											converter="selectOneMenuConverter"
+											value="#{focapdomCaptura.selectedBanco}">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems value="#{focapdomCaptura.listBancos}" var="c"
+												itemLabel="#{c.cve}" itemValue="#{c}" />
+											<p:column>
+												<h:outputText value="#{t.nombre}" />
+											</p:column>
+											<p:ajax event="change"
+												listener="#{focapdomCaptura.selectedBanco}"
+												update="form:pnl8" global="false" />
+										</p:selectOneMenu>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Tipo cuenta" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="tipoCuenta"
+											value="#{focapdomCaptura.datosIniciales.dummy_tipo_cuenta}"
+											readonly="true" style="width:160px" maxlength="20" />
+									</p:column>
+									<p:column>
+										<p:selectOneMenu id="combTipoCuenta" style="width:20px"
+											var="t" converter="selectOneMenuConverter"
+											value="#{focapdomCaptura.selectedTipoCuenta}">
+											<f:selectItem itemLabel="" itemValue="#{null}"
+												noSelectionOption="true" />
+											<f:selectItems value="#{focapdomCaptura.listTipoCuenta}"
+												var="c" itemLabel="#{c.cve}" itemValue="#{c}" />
+											<p:column>
+												<h:outputText value="#{t.descripcion}" />
+											</p:column>
+											<p:ajax event="change"
+												listener="#{focapdomCaptura.selectedTipoCuenta}"
+												update="form:pnl8" global="false" />
+										</p:selectOneMenu>
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Num. Cuenta" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="numCuenta" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Confirmar Num. Cuenta"
+											style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="confNumCuenta" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="F. Exp. Tarjeta" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="fExpTarjeta" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="No. Contrato Tarjeta"
+											style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="noContratoTarjeta" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Frec. Cobro" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="frecCobro" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Monto" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="monto" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Monto máximo" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="montoMax" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Monto acumulado" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="montoAcumulado" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+							</p:panelGrid>
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Asesor" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="numAsesor"
+											value="#{focapdomCaptura.datosIniciales.nominaAsesor}" style="width:75px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="nombreAsesor"
+											value="#{focapdomCaptura.datosIniciales.nombreAsesor}" readonly="true"
+											style="width:160px" />
+									</p:column>									
+								</p:row>
+							</p:panelGrid>
+						</p:panel>
+					</div>
+				</div>
+				<div class="ui-g">
+					<div class="ui-g-12">
+						<p:panel id="pnl9" style="margin-top:5px;">
+							<p:panelGrid class="ui-noborder">
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Cant Rech" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="cantRech" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Fec. Aplicación" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="fecAplicacion" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel value="Texto payw" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="textoP" value="" readonly="true"
+											style="width:160px" maxlength="20" />
+									</p:column>
+									<p:column>
+										<p:outputLabel value="Obs" style="width:100px" />
+									</p:column>
+									<p:column>
+										<p:inputText id="obs" value="" readonly="true"
+											style="width:160px" maxlength="20" />
 									</p:column>
 								</p:row>
 							</p:panelGrid>
