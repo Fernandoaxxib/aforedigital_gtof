@@ -457,4 +457,17 @@ public class Constantes {
 	public static final String REPORTE_INTERESES_TRANSITO_OP71A_PACKAGE = "PKG_RECA_FOREPINT";
 	public static final String REPORTE_INTERESES_TRANSITO_OP71A_LOTE = "PRC_LOTE";
 	public static final String REPORTE_INTERESES_TRANSITO_OP71A_REPORTE = "PRC_GENERAR_REPORTE";
+	
+	public static final String PKG_RECA_FOCAPDOM = "PKG_RECA_FOCAPDOM";
+	public static final String PRC_CAPTURA_B_DETA_AFILIA = "PRC_CAPTURA_B_DETA_AFILIA";
+	public static final String PRC_CAPTURA_B_DETA_FACTURA = "PRC_CAPTURA_B_DETA_FACTURA";
+	public static final String PRC_CAPTURA_B_DETA_MOVTOS = "PRC_CAPTURA_B_DETA_MOVTOS";
+	public static final String PRC_ACTUALIZA_VERSION_APP_VOL = "PRC_ACTUALIZA_VERSION_APP_VOL";
+	public static final String PRC_B_GENERAR_ARCHIVO = "PRC_B_GENERAR_ARCHIVO";
+	public static final String PRC_B_SOL_POR_AFILIAR = "PRC_B_SOL_POR_AFILIAR";
+	public static final String PRC_B_BUSCAR	= "PRC_B_BUSCAR";
+	public static final String PRC_B_PENDIENTES	= "PRC_B_PENDIENTES";
+	public static final String PRC_B_CARGA_ARCHIVO	= "PRC_B_CARGA_ARCHIVO";
+	public static final String PRC_TOT_CARGA_ARCH_AFIL	= "PRC_TOT_CARGA_ARCH_AFIL";
+	public static final String PRC_B_PENDIENTES_F	= "PRC_B_PENDIENTES_F";
 }
